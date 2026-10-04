@@ -1,5 +1,25 @@
 # Informe de mercado: software de gestión de turnos y agenda para consultorios odontológicos en Argentina
 
+## Resumen ejecutivo
+
+**Qué se investigó.** Se relevaron 26 sistemas de gestión de turnos y agenda aptos para consultorios odontológicos: 16 de origen argentino o con presencia comercial en Argentina, 7 latinoamericanos o regionales sin presencia argentina comprobada y 3 referentes internacionales. Se usaron exclusivamente fuentes públicas (sitios oficiales, precios, centros de ayuda, manuales, términos, tiendas y plataformas de reseñas), consultadas el 2026-10-03, sin contactar proveedores ni crear cuentas. Cada afirmación se clasificó como **comprobada** (visible en documentación o ayuda) o **declarada** (solo afirmación comercial); lo que no tiene respaldo público figura como "No evidenciado".
+
+**Hallazgos principales.**
+1. **La evidencia pública es escasa.** El mejor puntaje ponderado es 3,50 sobre 5 (Odonthia), seguido por DentalCore (3,15), Dentalink (3,00), Open Dental (2,95) y Bilog (2,80). Los puntajes miden evidencia pública, no capacidad real.
+2. **Los recordatorios por WhatsApp son el estándar declarado del mercado,** pero solo Dentalink y Odonthia los tienen comprobados en documentación, y ningún sistema evidencia el uso de la API oficial de WhatsApp Business.
+3. **La prevención de solapamientos casi no está demostrada.** Solo Odonthia la comprueba en forma completa y Open Dental en forma parcial; la agenda por sillón o box solo está comprobada en Odonthia, Open Dental y DentalBox.
+4. **El cumplimiento normativo argentino está poco evidenciado.** La Ley 25.326 está comprobada en cuatro sistemas, la Ley 26.529 solo en uno y ninguno evidencia la Ley 27.706; solo OdontoSoft Millennium tiene auditoría comprobada.
+5. **Los precios son opacos en el segmento local:** Bilog, ClinIA, Geblix, OdontoGRAMA y OdonticLabs no publican precios, OdontoApp solo tiene una cifra no verificada y DentalTec publica únicamente el costo de la mensajería; varios cotizan en dólares y las integraciones locales (ARCA, Mercado Pago, obras sociales) son solo declaradas.
+
+**MVP recomendado.** Un sistema web para consultorios pequeños (2 a 5 profesionales, varios sillones, con recepción) cuyo núcleo sea una **agenda sin conflictos**, el vacío más claro del mercado:
+- **Imprescindibles:** prevención de solapamientos por profesional y por sillón validada en el dominio; turnos dentro del horario y fuera de bloqueos, nunca en el pasado; duración variable por prestación; ciclo de vida del turno con cinco estados e historial de transiciones; tres roles (odontólogo, recepción, administrador); datos mínimos y ficticios del paciente; vistas diaria y semanal.
+- **Diferenciadores:** mensajes de rechazo explicativos ante cada conflicto y vista de recepción por sillón.
+- **Para etapas posteriores:** búsqueda del primer hueco disponible, WhatsApp, reserva online del paciente, lista de espera, sobreturnos controlados, cobros e integraciones locales, historia clínica y multisede.
+
+El primer change se limita a **crear un turno sin solapamientos por profesional y por sillón**; la interfaz se construye después, sobre esa lógica ya probada.
+
+---
+
 ## Introducción
 
 **Objetivo.** Caracterizar la oferta de software de gestión de turnos y agenda odontológica disponible para el mercado argentino, evaluar comparativamente su evidencia pública y derivar recomendaciones para el diseño del producto en desarrollo: un sistema web de gestión de turnos y agenda para consultorios odontológicos pequeños de Argentina (2 a 5 profesionales, varios sillones y recepción).
@@ -36,34 +56,34 @@
 
 ### A.1 Identificación y modelo comercial
 
-| # | Producto | Empresa | País | URL oficial | Segmento | Modalidad | Presencia en AR | Modelo comercial |
-|---|---|---|---|---|---|---|---|---|
-| 1 | Odonthia | Genera Impacto | Argentina | https://odonthia.com/ | Odontólogo independiente y consultorio; equipo y sedes | SaaS (Supabase sobre AWS São Paulo) | Sí: precios en ARS | Plan gratuito sin límite de pacientes y sin tarjeta; IA ARS 20.900/mes; Max ARS 46.900/mes (USD 26/44 en LatAm); créditos de IA extra (ARS 8.400 / 36.900) |
-| 2 | Bilog | Bilog (razón social: No evidenciado) | Argentina | https://bilog.com.ar/ | Consultorios y clínicas; varios consultorios | SaaS con apps iOS/Android; modo local mencionado en términos | Sí: soporte local, más de 20 años (D) | Suscripción mensual sin permanencia ni costo de configuración (D); precios: No evidenciado (/precios 404); prueba gratuita: No evidenciado |
-| 3 | DentalCore | Alfredo Di Tullio (responsable) | Argentina (La Plata) | https://dentalcore.app/ | Consultorios y clínicas multiprofesional/multisede | SaaS | Sí: ARCA, Mercado Pago, planes de salud argentinos (D) | Plan único USD 50/mes (2 usuarios) + USD 10 por usuario; todo incluido; cobro en moneda local al tipo de cambio; garantía de 14 días |
-| 4 | ClinIA | Emprinet | Argentina | https://www.clinia.com.ar/odontologia | Odontólogos y centros; multisede | Web/nube (D) | Sí: AFIP, RENAPER, PUCO, PAMI (D); teléfono local | Precio a medida; demo gratuita; precios publicados: No evidenciado |
-| 5 | DentalTec | Tándem Digital | Argentina (San Juan) | https://web.dentaltec.com.ar/ | Odontólogos, instituciones y círculos odontológicos | SaaS web | Sí: circuito de obras sociales y círculos (D) | Licencia "por odontólogo" sin precio; mensajería WhatsApp USD 9/25/48 (50/150/300 mensajes); demo gratuita (D) |
-| 6 | Órbita | Órbita Global | Argentina (La Plata) | https://hiorbita.com/ | Consultorio, clínica y red | SaaS | Sí: clientes locales declarados; cobro en USD/ARS/USDT | Gestión: Consultorio USD 25/mes, Clínica USD 113/mes; Órbita Chat USD 150-200/mes; complementos USD 20-90; prueba gratuita: No evidenciado |
-| 7 | OdontoSoft Millennium | GB Systems | Argentina (Buenos Aires) | https://gbsystems.com/os/ | Odontólogo independiente a clínica grande | Instalación local Windows; módulo web opcional | Sí: sede en Buenos Aires | Licencia perpetua USD 390/799/1.199 o suscripción USD 35/65/99; módulo web USD 120; demo |
-| 8 | OdontoApp | Sovil (Juan Segundo Sosa) | Argentina | https://odontoapp.com.ar/ | Odontólogo independiente y consultorio | SaaS | Sí: CUIT y contacto locales | Prueba de 14 días sin tarjeta, mensual sin permanencia (C, términos); precios: No evidenciado |
-| 9 | OdontoGRAMA | Solsoftware | Argentina | https://odontograma.com.ar/ | Consultorio odontológico | SaaS | Sí: contacto local | Acceso gratuito a todas las funciones (D); precios: No evidenciado |
-| 10 | OdonticLabs | ISLabs | Argentina (Villa María) | http://islabs.com.ar/OdonticLabs/ | Consultorio y clínica; mono y multiusuario | Instalación local (modalidad exacta: No evidenciado) | Sí: soporte zonal (D) | Cotización por formulario; "sin mantenimiento mensual" (D); precios: No evidenciado |
-| 11 | Geblix | Micro Fit S.A. | Argentina (inferido) | https://www.geblix.com/ | Salud multiespecialidad, incluye odontología | SaaS | Sí: teléfonos locales | Demo gratuita a pedido (D); prueba gratuita autoservicio: No evidenciado (enlace "Empezá a probarla hoy" responde 404); precios: No evidenciado |
-| 12 | SimpleTurno | 5Studios | No evidenciado (foco AR inferido) | https://simpleturno.com/rubros/odontologia | Odontólogo independiente y pequeñas clínicas (horizontal) | SaaS web; app iOS | Precios en ARS y Mercado Pago | Gratis $0 (1 profesional); Pro $12.900/mes; sin tarjeta; cancelable |
-| 13 | Turnito | No evidenciado | Argentina | https://turnito.app/ | Profesionales y servicios (horizontal, sin vertical dental) | SaaS web | Sí: sitio /ar/, ARS | Free $0 (comisión 5 %); Plus $9.900; Advance $20.300; Pro $34.800/mes; prueba: No evidenciado |
-| 14 | Dentalink | Healthatom | Chile | https://www.softwaredentalink.com/ar/ | Consultorio y clínica; multisucursal | SaaS | Sitio /ar/ (D); línea telefónica argentina: No evidenciado | Planes Esencial/Pro/Titanium a cotizar; sin permanencia; adicionales (receta electrónica, telemedicina); prueba coordinada con ventas (D) |
-| 15 | AgendaPro | AgendaPro | Chile (según prensa) | https://agendapro.com/ar/dental/software-odontologico | Horizontal con vertical dental; multisede | SaaS; apps iOS/Android | Sí: ARS con IVA (C) | Individual ARS 13.900; Básico 33.900; Premium 44.900; Pro 314.900/mes; prueba gratuita; WhatsApp desde ARS 7.900 (50 mensajes) |
-| 16 | Doctoralia (Pro / Clinic Cloud) | Doctoralia / Docplanner (grupo no confirmado) | No evidenciado | https://pro.doctoralia.com/ar/precio | Especialistas y centros pequeños/medianos | SaaS; apps | Precios en ARS (C); sitio .com.ar no accesible | Starter ARS 25.000, Plus 35.000, VIP 55.000/mes facturado anualmente; sitio web ARS 4.000/mes; Clinic Cloud 29/49/79 EUR; prueba en AR: No evidenciado |
-| 17 | DentalBox | AppLab Software LLC | EE. UU. (operación en español) | https://www.dentalbox.app/ | Independiente a cadena (planes por boxes) | SaaS; apps nativas | Argentina en lista de países (D) | USD 24,99/39,99/59,99/89,99 (página de precios) vs. 21/33/50/75 (portada); 7 días sin tarjeta; precio en ARS: No evidenciado |
-| 18 | Doctocliq | No evidenciado | Perú (inferido) | https://www.doctocliq.com/ | Independiente, consultorio, clínica; multiespecialidad | SaaS; apps | No evidenciado | Plan gratuito (30 pacientes/mes); USD 19/29/49; 7 días sin tarjeta; complementos pagos |
-| 19 | Dentidesk | DentiDesk Chile SpA | Chile | https://www.dentidesk.com | Clínica, centro médico, gremios, facultades | SaaS; app de agenda | No evidenciado | Prueba de 15 días; precios: No evidenciado (Capterra: desde USD 50, dato del proveedor) |
-| 20 | Clinicorp | Clinicorp | Brasil | https://www.clinicorp.com/ | Consultorio a franquicias | SaaS; app del paciente | No evidenciado | R$ 159,90 / 369,90/mes; IA y Enterprise a consultar; demo; sin permanencia |
-| 21 | Simples Dental | Simples Dental Software S.A. | Brasil | https://www.simplesdental.com/ | Independiente, consultorio, clínica | SaaS; apps | No evidenciado | R$ 137,41/229,08/320,74/mes (anual); 7 días sin tarjeta; WhatsApp e IA con cargo aparte |
-| 22 | Dental Office | Dental Office | Brasil | https://www.dentaloffice.com.br/ | Independiente, consultorio, clínica, escuelas | SaaS; apps | No evidenciado | R$ 39,90 a 298,54/mes; prueba de 7 días |
-| 23 | Agendit | Agendit | Paraguay | https://agendit.com.py/ | Horizontal (belleza, bienestar, salud) | SaaS | No evidenciado | Gs 110.000 a 660.000/mes; prueba: No evidenciado |
-| 24 | Open Dental | Open Dental Software | EE. UU. | https://www.opendental.com/ | Prácticas de cualquier tamaño | Local (.NET) + servicios en nube | No evidenciado | USD 89/mes por ubicación ("otros países"); eServices USD 5-165; prueba y garantía de 90 días |
-| 25 | Dentrix | Henry Schein One | EE. UU. | https://www.dentrix.com/ | Consultorio a grupos multisede | Nube e instalación local | No evidenciado | Precios: No evidenciado (requiere demo) |
-| 26 | Odontonet | Aseting Informática S.L. | España | https://www.odontonet.es/ | Clínica dental | SaaS | No evidenciado | Precios: No evidenciado; módulos con descuentos de hasta 50 %; prueba: No evidenciado |
+| # | Producto | Empresa | País | URL oficial | Fecha de consulta | Segmento | Modalidad | Presencia en AR | Modelo comercial |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Odonthia | Genera Impacto | Argentina | https://odonthia.com/ | 2026-10-03 | Odontólogo independiente y consultorio; equipo y sedes | SaaS (Supabase sobre AWS São Paulo) | Sí: precios en ARS | Plan gratuito sin límite de pacientes y sin tarjeta; IA ARS 20.900/mes; Max ARS 46.900/mes (USD 26/44 en LatAm); créditos de IA extra (ARS 8.400 / 36.900) |
+| 2 | Bilog | Bilog (razón social: No evidenciado) | Argentina | https://bilog.com.ar/ | 2026-10-03 | Consultorios y clínicas; varios consultorios | SaaS con apps iOS/Android; modo local mencionado en términos | Sí: soporte local, más de 20 años (D) | Suscripción mensual sin permanencia ni costo de configuración (D); precios: No evidenciado (/precios 404); prueba gratuita: No evidenciado |
+| 3 | DentalCore | Alfredo Di Tullio (responsable) | Argentina (La Plata) | https://dentalcore.app/ | 2026-10-03 | Consultorios y clínicas multiprofesional/multisede | SaaS | Sí: ARCA, Mercado Pago, planes de salud argentinos (D) | Plan único USD 50/mes (2 usuarios) + USD 10 por usuario; todo incluido; cobro en moneda local al tipo de cambio; garantía de 14 días |
+| 4 | ClinIA | Emprinet | Argentina | https://www.clinia.com.ar/odontologia | 2026-10-03 | Odontólogos y centros; multisede | Web/nube (D) | Sí: AFIP, RENAPER, PUCO, PAMI (D); teléfono local | Precio a medida; demo gratuita; precios publicados: No evidenciado |
+| 5 | DentalTec | Tándem Digital | Argentina (San Juan) | https://web.dentaltec.com.ar/ | 2026-10-03 | Odontólogos, instituciones y círculos odontológicos | SaaS web | Sí: circuito de obras sociales y círculos (D) | Licencia "por odontólogo" sin precio; mensajería WhatsApp USD 9/25/48 (50/150/300 mensajes); demo gratuita (D) |
+| 6 | Órbita | Órbita Global | Argentina (La Plata) | https://hiorbita.com/ | 2026-10-03 | Consultorio, clínica y red | SaaS | Sí: clientes locales declarados; cobro en USD/ARS/USDT | Gestión: Consultorio USD 25/mes, Clínica USD 113/mes; Órbita Chat USD 150-200/mes; complementos USD 20-90; prueba gratuita: No evidenciado |
+| 7 | OdontoSoft Millennium | GB Systems | Argentina (Buenos Aires) | https://gbsystems.com/os/ | 2026-10-03 | Odontólogo independiente a clínica grande | Instalación local Windows; módulo web opcional | Sí: sede en Buenos Aires | Licencia perpetua USD 390/799/1.199 o suscripción USD 35/65/99; módulo web USD 120; demo |
+| 8 | OdontoApp | Sovil (Juan Segundo Sosa) | Argentina | https://odontoapp.com.ar/ | 2026-10-03 | Odontólogo independiente y consultorio | SaaS | Sí: CUIT y contacto locales | Prueba de 14 días sin tarjeta, mensual sin permanencia (C, términos); precios: No evidenciado |
+| 9 | OdontoGRAMA | Solsoftware | Argentina | https://odontograma.com.ar/ | 2026-10-03 | Consultorio odontológico | SaaS | Sí: contacto local | Acceso gratuito a todas las funciones (D); precios: No evidenciado |
+| 10 | OdonticLabs | ISLabs | Argentina (Villa María) | http://islabs.com.ar/OdonticLabs/ | 2026-10-03 | Consultorio y clínica; mono y multiusuario | Instalación local (modalidad exacta: No evidenciado) | Sí: soporte zonal (D) | Cotización por formulario; "sin mantenimiento mensual" (D); precios: No evidenciado |
+| 11 | Geblix | Micro Fit S.A. | Argentina (inferido) | https://www.geblix.com/ | 2026-10-03 | Salud multiespecialidad, incluye odontología | SaaS | Sí: teléfonos locales | Demo gratuita a pedido (D); prueba gratuita autoservicio: No evidenciado (enlace "Empezá a probarla hoy" responde 404); precios: No evidenciado |
+| 12 | SimpleTurno | 5Studios | No evidenciado (foco AR inferido) | https://simpleturno.com/rubros/odontologia | 2026-10-03 | Odontólogo independiente y pequeñas clínicas (horizontal) | SaaS web; app iOS | Precios en ARS y Mercado Pago | Gratis $0 (1 profesional); Pro $12.900/mes; sin tarjeta; cancelable |
+| 13 | Turnito | No evidenciado | Argentina | https://turnito.app/ | 2026-10-03 | Profesionales y servicios (horizontal, sin vertical dental) | SaaS web | Sí: sitio /ar/, ARS | Free $0 (comisión 5 %); Plus $9.900; Advance $20.300; Pro $34.800/mes; prueba: No evidenciado |
+| 14 | Dentalink | Healthatom | Chile | https://www.softwaredentalink.com/ar/ | 2026-10-03 | Consultorio y clínica; multisucursal | SaaS | Sitio /ar/ (D); línea telefónica argentina: No evidenciado | Planes Esencial/Pro/Titanium a cotizar; sin permanencia; adicionales (receta electrónica, telemedicina); prueba coordinada con ventas (D) |
+| 15 | AgendaPro | AgendaPro | Chile (según prensa) | https://agendapro.com/ar/dental/software-odontologico | 2026-10-03 | Horizontal con vertical dental; multisede | SaaS; apps iOS/Android | Sí: ARS con IVA (C) | Individual ARS 13.900; Básico 33.900; Premium 44.900; Pro 314.900/mes; prueba gratuita; WhatsApp desde ARS 7.900 (50 mensajes) |
+| 16 | Doctoralia (Pro / Clinic Cloud) | Doctoralia / Docplanner (grupo no confirmado) | No evidenciado | https://pro.doctoralia.com/ar/precio | 2026-10-03 | Especialistas y centros pequeños/medianos | SaaS; apps | Precios en ARS (C); sitio .com.ar no accesible | Starter ARS 25.000, Plus 35.000, VIP 55.000/mes facturado anualmente; sitio web ARS 4.000/mes; Clinic Cloud 29/49/79 EUR; prueba en AR: No evidenciado |
+| 17 | DentalBox | AppLab Software LLC | EE. UU. (operación en español) | https://www.dentalbox.app/ | 2026-10-03 | Independiente a cadena (planes por boxes) | SaaS; apps nativas | Argentina en lista de países (D) | USD 24,99/39,99/59,99/89,99 (página de precios) vs. 21/33/50/75 (portada); 7 días sin tarjeta; precio en ARS: No evidenciado |
+| 18 | Doctocliq | No evidenciado | Perú (inferido) | https://www.doctocliq.com/ | 2026-10-03 | Independiente, consultorio, clínica; multiespecialidad | SaaS; apps | No evidenciado | Plan gratuito (30 pacientes/mes); USD 19/29/49; 7 días sin tarjeta; complementos pagos |
+| 19 | Dentidesk | DentiDesk Chile SpA | Chile | https://www.dentidesk.com | 2026-10-03 | Clínica, centro médico, gremios, facultades | SaaS; app de agenda | No evidenciado | Prueba de 15 días; precios: No evidenciado (Capterra: desde USD 50, dato del proveedor) |
+| 20 | Clinicorp | Clinicorp | Brasil | https://www.clinicorp.com/ | 2026-10-03 | Consultorio a franquicias | SaaS; app del paciente | No evidenciado | R$ 159,90 / 369,90/mes; IA y Enterprise a consultar; demo; sin permanencia |
+| 21 | Simples Dental | Simples Dental Software S.A. | Brasil | https://www.simplesdental.com/ | 2026-10-03 | Independiente, consultorio, clínica | SaaS; apps | No evidenciado | R$ 137,41/229,08/320,74/mes (anual); 7 días sin tarjeta; WhatsApp e IA con cargo aparte |
+| 22 | Dental Office | Dental Office | Brasil | https://www.dentaloffice.com.br/ | 2026-10-03 | Independiente, consultorio, clínica, escuelas | SaaS; apps | No evidenciado | R$ 39,90 a 298,54/mes; prueba de 7 días |
+| 23 | Agendit | Agendit | Paraguay | https://agendit.com.py/ | 2026-10-03 | Horizontal (belleza, bienestar, salud) | SaaS | No evidenciado | Gs 110.000 a 660.000/mes; prueba: No evidenciado |
+| 24 | Open Dental | Open Dental Software | EE. UU. | https://www.opendental.com/ | 2026-10-03 | Prácticas de cualquier tamaño | Local (.NET) + servicios en nube | No evidenciado | USD 89/mes por ubicación ("otros países"); eServices USD 5-165; prueba y garantía de 90 días |
+| 25 | Dentrix | Henry Schein One | EE. UU. | https://www.dentrix.com/ | 2026-10-03 | Consultorio a grupos multisede | Nube e instalación local | No evidenciado | Precios: No evidenciado (requiere demo) |
+| 26 | Odontonet | Aseting Informática S.L. | España | https://www.odontonet.es/ | 2026-10-03 | Clínica dental | SaaS | No evidenciado | Precios: No evidenciado; módulos con descuentos de hasta 50 %; prueba: No evidenciado |
 
 ### A.2 Capacidades por área
 
@@ -281,6 +301,8 @@ Las demostraciones **quedan fuera del alcance de esta fase**: no se contactó a 
 
 ### D.3 MVP sugerido
 
+**Primer change.** El primer change se limita a **crear un turno sin solapamientos por profesional y por sillón**, como lógica de dominio pura y con tests automatizados por escenario. El resto de los imprescindibles se distribuye en changes posteriores; la interfaz web se construye sobre la lógica ya probada.
+
 **Imprescindibles (núcleo de dominio):**
 1. Agenda con vistas diaria y semanal, filtrable por profesional y por sillón.
 2. Prevención de solapamientos por profesional **y** por sillón, validada en el dominio (no solo en la interfaz), con motivo de rechazo explícito.
@@ -289,21 +311,21 @@ Las demostraciones **quedan fuera del alcance de esta fase**: no se contactó a 
 5. Ciclo de vida del turno: dar, cancelar y reprogramar, con los estados reservado, confirmado, atendido, ausente y cancelado, y transiciones válidas explícitas.
 6. Roles: odontólogo, secretaría/recepción y administrador/dueño.
 7. Paciente con datos mínimos (nombre, DNI, teléfono, obra social como texto), sin información clínica.
-8. **Historial de transiciones del turno** (quién, cuándo, de qué estado a cuál).
+8. **Historial de transiciones del turno** (quién, cuándo, de qué estado a cuál). Aceptado dentro del MVP; se implementa en el change del ciclo de vida del turno, no en el primer change.
 
-**Diferenciadores de bajo costo (dentro o inmediatamente después del MVP):**
-1. Búsqueda del primer hueco disponible que cumpla a la vez con profesional, sillón y duración de la prestación (inspirada en el Pinboard y la lista ASAP de Open Dental).
-2. Mensajes de rechazo explicativos ante conflictos (qué turno o qué bloqueo genera el choque), como diferencial frente a un mercado que no demuestra esta validación.
-3. Vista de recepción por sillón (referencia: DentalBox, Open Dental).
+**Diferenciadores del MVP:**
+1. Mensajes de rechazo explicativos ante conflictos (qué turno o qué bloqueo genera el choque), como diferencial frente a un mercado que no demuestra esta validación. Acompañan a la validación de solapamientos desde el primer change.
+2. Vista de recepción por sillón (referencia: DentalBox, Open Dental), en el change de interfaz.
 
 **Para etapas posteriores:**
-1. Confirmación y recordatorio por WhatsApp mediante enlace con texto precargado (sin API), y luego la API oficial.
-2. Reserva online del paciente con aprobación del consultorio.
-3. Lista de espera para cubrir cancelaciones.
-4. Regla de no superposición de turnos del mismo paciente.
-5. Sobreturnos controlados con alerta y autorización.
-6. Señas y cobros (Mercado Pago), facturación ARCA y obras sociales (validación de cobertura).
-7. Historia clínica y odontograma; multisede; reportes de ausentismo; exportación de datos.
+1. Búsqueda del primer hueco disponible que cumpla a la vez con profesional, sillón y duración de la prestación (inspirada en el Pinboard y la lista ASAP de Open Dental).
+2. Confirmación y recordatorio por WhatsApp mediante enlace con texto precargado (sin API), y luego la API oficial.
+3. Reserva online del paciente con aprobación del consultorio.
+4. Lista de espera para cubrir cancelaciones.
+5. Regla de no superposición de turnos del mismo paciente.
+6. Sobreturnos controlados con alerta y autorización.
+7. Señas y cobros (Mercado Pago), facturación ARCA y obras sociales (validación de cobertura).
+8. Historia clínica y odontograma; multisede; reportes de ausentismo; exportación de datos.
 
 **Comparación con las decisiones del usuario:**
 
@@ -313,13 +335,314 @@ Las demostraciones **quedan fuera del alcance de esta fase**: no se contactó a 
 | Solapamiento del mismo paciente | Diferido | Diferido, con el modelo preparado para añadirlo | Coincide |
 | Sobreturnos | Prohibidos en el MVP | Prohibidos en el MVP. El mercado (Odonthia, Open Dental) los permite con alerta, por lo que conviene modelar la regla para habilitarlos luego | Coincide, con matiz de diseño |
 | Duración variable, horario laboral, bloqueos, sin turnos en el pasado | Incluidos | Incluidos | Coincide |
-| Estados y ciclo de vida | Cinco estados | Cinco estados más el historial de transiciones | **Difiere:** se agrega el registro de transiciones (no figura en las decisiones del usuario) por el vacío de trazabilidad (C.3.3) |
+| Estados y ciclo de vida | Cinco estados | Cinco estados con transiciones válidas explícitas | Coincide |
+| Historial de transiciones del turno | Aceptado en el MVP, dentro del change del ciclo de vida (no en el primer change) | Incluido en el MVP por el vacío de trazabilidad del mercado (C.3.3) | Coincide |
+| Alcance del primer change | Solo crear un turno sin solapamientos por profesional y por sillón | Núcleo de dominio validado antes de la interfaz | Coincide |
 | Roles | Tres roles | Tres roles | Coincide |
 | Datos del paciente | Mínimos, ficticios, sin datos clínicos | Mínimos, sin datos clínicos | Coincide |
 | Integraciones externas | Ninguna en el MVP | Ninguna en el MVP; primera evolución: enlace de WhatsApp sin API | Coincide; se sugiere priorizar el enlace de WhatsApp en la etapa 2, dado que es la expectativa de mercado más extendida |
 | Autogestión del paciente | Posterior al MVP | Posterior al MVP | Coincide |
-| Búsqueda de primer hueco | No mencionada | Diferenciador opcional | **Difiere:** sugerencia adicional, sujeta al plazo de 5 días |
+| Búsqueda de primer hueco | Para etapas posteriores | Para etapas posteriores | Coincide |
+| Diferenciadores del MVP | Mensajes de rechazo explicativos y vista de recepción por sillón (esta última en el change de interfaz) | Los mismos dos | Coincide |
 
 ---
 
 ## Verificación de fuentes
+
+---
+
+## Referencias
+
+Fuentes citadas en las fichas de relevamiento (`docs/discovery/sources/`), agrupadas por sistema en el orden de la tabla A.1. Todas las consultas e intentos de consulta se realizaron el 2026-10-03. La columna "Estado" distingue las fuentes efectivamente consultadas de las que no fueron accesibles (error HTTP o de conexión), las que no se abrieron (solo se vieron en un buscador o enlazadas) y los fragmentos de buscador no verificables. Solo las fuentes consultadas sustentan evidencia en el informe.
+
+### Odonthia
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://odonthia.com/ | 2026-10-03 | Consultada |
+| F2 | precios | https://odonthia.com/planes | 2026-10-03 | Consultada |
+| F3 | oficial (funcionalidades) | https://odonthia.com/funcionalidades | 2026-10-03 | Consultada |
+| F4 | oficial (seguridad) | https://odonthia.com/seguridad | 2026-10-03 | Consultada |
+| F5 | ayuda (documentación: agenda y turnos) | https://odonthia.com/docs/agenda-y-turnos.md | 2026-10-03 | Consultada |
+| F6 | ayuda (documentación: reserva online) | https://odonthia.com/docs/reserva-online.md | 2026-10-03 | Consultada |
+| F7 | ayuda (índice de documentación) | https://odonthia.com/docs | 2026-10-03 | Consultada |
+
+### Bilog
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://bilog.com.ar/ | 2026-10-03 | Consultada |
+| F2 | ayuda | https://docs.bilog.com.ar | 2026-10-03 | Consultada |
+| F3 | precios (no accesible, 404) | https://bilog.com.ar/precios | 2026-10-03 | **No accesible** |
+| F4 | oficial (términos y condiciones) | https://bilog.com.ar/terms_and_conditions | 2026-10-03 | Consultada |
+| F5 | tienda (App Store) | https://apps.apple.com/ar/app/bilog-gesti%C3%B3n-odontol%C3%B3gica/id1554140449 | 2026-10-03 | Consultada |
+| F6 | búsqueda web (fragmento, no verificable) | resultados de búsqueda sobre bilog.com.ar | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F7 | tienda (Google Play, no accesible) | https://play.google.com/store/apps/details?id=com.bilog.gomobile | 2026-10-03 | **No accesible** |
+
+### DentalCore
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://dentalcore.app/ | 2026-10-03 | Consultada |
+| F2 | precios | https://dentalcore.app/pricing | 2026-10-03 | Consultada |
+| F3 | ayuda (FAQ, respuestas no visibles) | https://dentalcore.app/faq | 2026-10-03 | Consultada |
+| F4 | oficial (términos) | https://dentalcore.app/terms | 2026-10-03 | Consultada |
+| F5 | oficial (acerca de) | https://dentalcore.app/about | 2026-10-03 | Consultada |
+| F6 | oficial (privacidad) | https://dentalcore.app/privacy | 2026-10-03 | Consultada |
+
+### ClinIA
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.clinia.com.ar/odontologia | 2026-10-03 | Consultada |
+| F2 | oficial (catálogo funcional PDF) | https://www.clinia.com.ar/catalogo-funcional.pdf | 2026-10-03 | Consultada |
+| F3 | ayuda (FAQ) | https://www.clinia.com.ar/faq | 2026-10-03 | Consultada |
+| F4 | oficial (seguridad) | https://www.clinia.com.ar/seguridad | 2026-10-03 | Consultada |
+| F5 | oficial (privacidad y términos, enlazados; no inspeccionados) | https://www.clinia.com.ar/privacidad ; https://www.clinia.com.ar/terminos | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+
+### DentalTec
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial / precios de mensajería | https://web.dentaltec.com.ar/ | 2026-10-03 | Consultada |
+| F2 | oficial (funcionalidades) | https://web.dentaltec.com.ar/funcionalidades | 2026-10-03 | Consultada |
+| F3 | ayuda (preguntas frecuentes) | https://web.dentaltec.com.ar/preguntas-frecuentes | 2026-10-03 | Consultada |
+| F4 | video (no inspeccionado) | https://www.youtube.com/playlist?list=PL4MN1RxFkCQqzCEsz2TGIlTROOwmLFdBG | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+
+### Órbita
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://hiorbita.com/ | 2026-10-03 | Consultada |
+| F2 | precios | https://hiorbita.com/precios | 2026-10-03 | Consultada |
+| F3 | oficial (privacidad) | https://hiorbita.com/politica-de-privacidad | 2026-10-03 | **No accesible** |
+
+### OdontoSoft Millennium
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://gbsystems.com/os/ | 2026-10-03 | Consultada |
+| F2 | ayuda (FAQ) | https://gbsystems.com/os/faqs.htm | 2026-10-03 | Consultada |
+| F3 | oficial (producto) | https://gbsystems.com/os/producto.htm | 2026-10-03 | Consultada |
+| F4 | oficial (resultado de búsqueda, mismo dominio) | https://gbsystems.com/os/suscripcion.htm | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+| F5 | oficial (módulo web) | https://gbsystems.com/os/web.htm | 2026-10-03 | Consultada |
+| F6 | oficial (empresa) | https://gbsystems.com/os/acerca.htm | 2026-10-03 | Consultada |
+| F7 | oficial (SMS) | https://gbsystems.com/os/sms.htm | 2026-10-03 | Consultada |
+| F8 | precios | https://gbsystems.com/os/precios.htm | 2026-10-03 | Consultada |
+| F9 | reseñas (búsqueda sin resultados verificables) | WebSearch "OdontoSoft Millennium GB Systems opiniones reseñas" | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+
+### OdontoApp
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://odontoapp.com.ar/ | 2026-10-03 | Consultada |
+| F2 | oficial (términos) | https://odontoapp.com.ar/terminos | 2026-10-03 | Consultada |
+| F3 | oficial (privacidad) | https://odontoapp.com.ar/privacidad | 2026-10-03 | Consultada |
+| F4 | búsqueda (resumen de terceros, no verificado) | https://odontoapp.com.ar/ vía WebSearch | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F5 | tienda | https://apps.apple.com/bo/app/odontoapp/id1462363537 | 2026-10-03 | **No accesible** |
+
+### OdontoGRAMA
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://odontograma.com.ar/ | 2026-10-03 | Consultada |
+| F2 | oficial (empresa proveedora; no inspeccionada) | https://solsoftware.com.ar/ | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+| F3 | búsqueda web (fragmentos secundarios) | resultados de búsqueda "OdontoGRAMA Solsoftware" | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F4 | precios, ayuda, términos, privacidad, video, tiendas | no halladas / no accesibles | 2026-10-03 | **No accesible** |
+
+### OdonticLabs
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | http://islabs.com.ar/OdonticLabs/ | 2026-10-03 | Consultada |
+
+### Geblix
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://microfit.com.ar/software-de-gestion-odontologica/ | 2026-10-03 | Consultada |
+| F2 | oficial | https://www.geblix.com/ | 2026-10-03 | Consultada |
+| F3 | oficial (acceso de prueba enlazado desde F1; no accesible, HTTP 404) | https://www.geblix.com/inicio/referral | 2026-10-03 | **No accesible** |
+| F4 | precios | https://microfit.com.ar/ (sin precios en las páginas consultadas) | 2026-10-03 | Consultada parcialmente |
+
+### SimpleTurno
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial / precios (rubro odontología) | https://simpleturno.com/rubros/odontologia | 2026-10-03 | Consultada |
+| F2 | oficial (home, FAQ) | https://simpleturno.com/ | 2026-10-03 | Consultada |
+| F3 | oficial (política de privacidad) | https://simpleturno.com/privacidad | 2026-10-03 | **No accesible** |
+| F4 | oficial (comparativa del proveedor, material comercial) | https://simpleturno.com/comparar/simpleturno-vs-turnito | 2026-10-03 | Consultada |
+| F5 | oficial (empresa proveedora) | https://5studios.dev/ | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+
+### Turnito
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial / precios | https://turnito.app/ | 2026-10-03 | Consultada |
+| F2 | oficial (versión Argentina, FAQ y precios) | https://turnito.app/ar/ | 2026-10-03 | Consultada |
+| F3 | oficial (rubro médico) | https://turnito.app/ar/app-turnos-medicos/ | 2026-10-03 | Consultada |
+| F4 | resultado de búsqueda (reseñas Google declaradas por el sitio) | WebSearch "Turnito app Argentina reseñas" | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F5 | oficial (página de precios) | https://turnito.app/precios | 2026-10-03 | **No accesible** |
+
+### Dentalink
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.softwaredentalink.com/ar/ | 2026-10-03 | Consultada |
+| F2 | precios | https://www.softwaredentalink.com/ar/planes | 2026-10-03 | Consultada |
+| F3 | ayuda | https://ayuda.softwaredentalink.com/es/collections/9620066-conoce-todos-los-modulos-de-dentalink | 2026-10-03 | Consultada |
+| F4 | oficial | https://www.softwaredentalink.com/ar/experiencia-de-pacientes/odontograma-y-periodontograma | 2026-10-03 | Consultada |
+| F5 | oficial (resultado de búsqueda, no abierto) | https://www.softwaredentalink.com/experiencia-de-pacientes/agenda | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+| F6 | oficial (blog, resumen de búsqueda) | https://www.softwaredentalink.com/blog/recordatorios-citas-whatsapp | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F7 | oficial | https://www.softwaredentalink.com/ar/soporte | 2026-10-03 | Consultada |
+| F8 | oficial (misma página que F1) | https://www.softwaredentalink.com/ar/ | 2026-10-03 | Consultada |
+| F9 | oficial de tercero (Órbita) | https://hiorbita.com/ | 2026-10-03 | Consultada |
+| F10 | reseñas | https://www.capterra.com/p/196361/Dentalink/ (vía resultado de búsqueda; página no abierta) | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+
+### AgendaPro
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://agendapro.com/ar/dental/software-odontologico | 2026-10-03 | Consultada |
+| F2 | precios | https://agendapro.com/ar/planes | 2026-10-03 | Consultada |
+| F3 | oficial | https://agendapro.com/ar/precios (devolvió 404 en un intento; el contenido citado proviene de la página oficial de software médico) https://agendapro.com/ar/centro-medico/software-para-centro-medico | 2026-10-03 | **No accesible** |
+| F4 | oficial (blog; resultado de búsqueda, no abierto) | https://agendapro.com/blog/recordatorios-automaticos-de-agendapro/ | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+| F5 | oficial (resultado de búsqueda, no abierto) | https://agendapro.com/ar/centro-medico/software-para-centro-medico | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+| F6 | prensa (origen) | https://www.ex-ante.cl/negocios/agendapro-firma-chilena-gestiona-reservas/ | 2026-10-03 | Consultada |
+| F7 | prensa (origen) | https://www.t13.cl/noticia/emprendedores/agendapro-startup-chilena-busca-impulsar-negocios-bienestar-y-salud | 2026-10-03 | Consultada |
+| F8 | ayuda | http://ayuda.agendapro.com/es/ (solo categorías; artículos no leídos) | 2026-10-03 | Consultada parcialmente |
+| F9 | tienda | https://play.google.com/store/apps/details?id=com.ionicframework.agendaproappiframe903400&hl=en_US | 2026-10-03 | Consultada |
+| F10 | tienda | https://apps.apple.com/mx/app/agendapro-business/id1218956898 | 2026-10-03 | Consultada |
+
+### Doctoralia (Pro / Clinic Cloud)
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.doctoralia.com.ar/ | 2026-10-03 | **No accesible** |
+| F1b | oficial | https://pro.doctoralia.com.ar/ | 2026-10-03 | **No accesible** |
+| F2 | precios (Doctoralia Pro Argentina) | https://pro.doctoralia.com/ar/precio | 2026-10-03 | Consultada |
+| F3 | oficial (agenda online, WhatsApp, lista de espera) | https://pro.doctoralia.com/ar/video-consulta-en-linea-1 (redirige desde academy.doctoraliar.com) | 2026-10-03 | Consultada |
+| F4 | reseñas (Capterra) | https://www.capterra.com/p/253301/Doctoralia-Pro/ | 2026-10-03 | Consultada |
+| F5 | oficial (Clinic Cloud) | https://clinic-cloud.com/ | 2026-10-03 | Consultada |
+| F6 | reseñas (GetApp) | https://www.getapp.com/customer-management-software/a/doctoralia-pro/ | 2026-10-03 | Consultada |
+| F7 | precios (Clinic Cloud) | https://clinic-cloud.com/tarifas | 2026-10-03 | Consultada |
+| F8 | tienda App Store / Google Play, YouTube oficial | No consultados | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+
+### DentalBox
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.dentalbox.app/ | 2026-10-03 | Consultada |
+| F2 | precios | https://www.dentalbox.app/precios | 2026-10-03 | Consultada |
+| F3 | oficial (función agenda) | https://www.dentalbox.app/funciones/agenda | 2026-10-03 | Consultada |
+| F4 | oficial (función recordatorios) | https://www.dentalbox.app/funciones/recordatorios | 2026-10-03 | Consultada |
+| F5 | oficial (resumen de búsqueda sobre el sitio) | https://www.dentalbox.app/ (resultado de WebSearch con extractos de funciones) | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F6 | oficial (función odontograma) | https://www.dentalbox.app/funciones/odontograma | 2026-10-03 | Consultada |
+| F7 | oficial, no concluyente (pantalla de inicio de sesión, sin contenido) | https://www.dentalbox.app/argentina | 2026-10-03 | Consultada parcialmente |
+| F8 | tienda | https://play.google.com/store/apps/details?id=com.applabsoftware.dentalbox&hl=en_US (no accesible vía WebFetch; solo extracto de resultado de búsqueda) | 2026-10-03 | **No accesible** |
+| F9 | oficial | https://www.dentalbox.app/ (datos de empresa) | 2026-10-03 | Consultada |
+| F10 | oficial (función pagos) | https://www.dentalbox.app/funciones/pagos | 2026-10-03 | Consultada |
+| F11 | oficial (seguridad) | https://www.dentalbox.app/seguridad | 2026-10-03 | Consultada |
+| F12 | reseñas (Capterra, listado general; sin ficha de DentalBox) | https://www.capterra.com/dental-software/ | 2026-10-03 | Consultada |
+
+### Doctocliq
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.doctocliq.com/ | 2026-10-03 | Consultada |
+| F2 | precios | https://www.doctocliq.com/planes-y-precios | 2026-10-03 | Consultada |
+| F3 | oficial (artículo del propio proveedor, contenido comercial) | https://www.doctocliq.com/mejor-software-dental | 2026-10-03 | Consultada |
+| F4 | oficial (resultado de búsqueda, extracto) | https://www.doctocliq.com/software-dental-gratis-doctocliq | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F5 | oficial, no accesible (404) | https://www.doctocliq.com/precios | 2026-10-03 | **No accesible** |
+
+### Dentidesk
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.dentidesk.com | 2026-10-03 | Consultada |
+| F2 | oficial (funcionalidades) | https://www.dentidesk.com/dentidesk/feature | 2026-10-03 | Consultada |
+| F3 | oficial (soluciones) | https://www.dentidesk.com/dentidesk/solution | 2026-10-03 | Consultada |
+| F4 | oficial (artículo de novedades) | https://www.dentidesk.com/dentidesk/detail/48 | 2026-10-03 | Consultada |
+| F5 | tienda | https://apps.apple.com/cl/app/dentidesk-app/id6741155287 | 2026-10-03 | Consultada |
+| F6 | reseñas / listado | https://www.capterra.com/p/184029/DENTIDESK/ | 2026-10-03 | Consultada |
+| F7 | oficial, no accesible (404) | https://www.dentidesk.com/precios | 2026-10-03 | **No accesible** |
+| F8 | oficial, no consultado (video) | https://www.youtube.com/@dentideskcanaloficialsoftw2220 | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+
+### Clinicorp
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.clinicorp.com/ | 2026-10-03 | Consultada |
+| F2 | precios | https://www.clinicorp.com/planos | 2026-10-03 | Consultada |
+| F3 | oficial | https://www.clinicorp.com/agentes-clinicorp-ia | 2026-10-03 | Consultada |
+| F4 | oficial | https://www.clinicorp.com/gestao-financeira-clinipay | 2026-10-03 | Consultada |
+| F5 | reseñas | https://www.reclameaqui.com.br/empresa/clinicorp/ | 2026-10-03 | Consultada |
+
+### Simples Dental
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.simplesdental.com/ | 2026-10-03 | Consultada |
+| F2 | precios | https://www.simplesdental.com/planos-e-precos | 2026-10-03 | Consultada |
+| F3 | tienda (Google Play; solo extracto de búsqueda) | https://play.google.com/store/apps/details?id=com.simplesdental&hl=en_US | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F4 | tienda (App Store) | https://apps.apple.com/app/id954861717 | 2026-10-03 | Consultada |
+| F5 | reseñas | https://www.capterra.com/p/219187/Simples-Dental/ | 2026-10-03 | Consultada |
+| F6 | reseñas | https://www.getapp.com/healthcare-pharmaceuticals-software/a/simples-dental/ | 2026-10-03 | Consultada |
+| F7 | oficial (política de privacidad; contenido detallado no accesible) | https://www.simplesdental.com/politica | 2026-10-03 | Consultada parcialmente |
+| F8 | oficial, no accesible (404) | https://www.simplesdental.com/planos | 2026-10-03 | **No accesible** |
+
+### Dental Office
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial/precios | https://www.dentaloffice.com.br/ | 2026-10-03 | Consultada |
+| F2 | oficial | https://www.dentaloffice.com.br/agenda-para-dentistas/ | 2026-10-03 | Consultada |
+| F3 | oficial | https://www.dentaloffice.com.br/funcionalidades/ | 2026-10-03 | Consultada |
+| F4 | oficial (páginas /planos/ y /prontuario/) | https://www.dentaloffice.com.br/planos/ | 2026-10-03 | **No abierta** (solo vista en buscador o enlazada) |
+| F5 | reseñas | https://www.reclameaqui.com.br/empresa/dental-office/ | 2026-10-03 | Consultada |
+| F6 | reseñas (Google, vía resumen de búsqueda) | resumen de WebSearch; sin URL directa | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F7 | tienda | https://apps.apple.com/br/app/dental-office/id1567047922 | 2026-10-03 | **No accesible** |
+
+### Agendit
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial y precios (misma página) | https://agendit.com.py/ | 2026-10-03 | Consultada |
+| F2 | precios, no accesible (404) | https://agendit.com.py/planes | 2026-10-03 | **No accesible** |
+
+### Open Dental
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.opendental.com/ | 2026-10-03 | Consultada |
+| F2 | ayuda (manual) | https://www.opendental.com/manual/appointments.html | 2026-10-03 | Consultada |
+| F3 | oficial | https://www.opendental.com/site/websched.html | 2026-10-03 | Consultada |
+| F4 | ayuda (manual) | https://www.opendental.com/manual/asaplist.html | 2026-10-03 | Consultada |
+| F5 | precios | https://www.opendental.com/site/fees.html | 2026-10-03 | Consultada |
+| F6 | precios | https://www.opendental.com/site/order.html | 2026-10-03 | Consultada |
+| F7 | ayuda (manual, seguridad) | https://www.opendental.com/manual/securityadmin.html | 2026-10-03 | **No accesible** |
+| F8 | reseñas | https://www.capterra.com/p/122350/Open-Dental/reviews/ | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F9 | ayuda (manual, Web Sched) | https://www.opendental.com/manual/websched.html | 2026-10-03 | **No accesible** |
+
+### Dentrix
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.dentrix.com/ | 2026-10-03 | Consultada |
+| F2 | oficial | https://www.dentrix.com/dental-solutions/ | 2026-10-03 | Consultada |
+| F3 | oficial | https://www.dentrix.com/dental-solutions/marketing-and-patient-experience/ | 2026-10-03 | Consultada |
+| F4 | oficial | https://www.dentrix.com/dental-solutions/dentrix-connected-care-essentials/ | 2026-10-03 | Consultada |
+| F5 | reseñas | https://www.capterra.com/p/2329/Dentrix/reviews/ | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+
+### Odontonet
+
+| Ref. | Tipo | URL | Fecha | Estado |
+|---|---|---|---|---|
+| F1 | oficial | https://www.odontonet.es/ | 2026-10-03 | Consultada |
+| F2 | precios | https://www.odontonet.es/precios/ | 2026-10-03 | Consultada |
+| F3 | oficial | https://www.odontonet.es/modulos/ | 2026-10-03 | Consultada |
+| F4 | reseñas | https://www.capterra.com/p/10012758/Odontonet/ | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F5 | reseñas (directorio) | https://www.capterra.es/directory/20027/dental/deployment-options/mac/software | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F6 | reseñas (blog de terceros) | https://www.akeito.com/blog/odontonet-opiniones/ | 2026-10-03 | **Fragmento de buscador** (no verificable) |
+| F7 | oficial | https://www.odontonet.es/modulos/portal-del-paciente/ | 2026-10-03 | **No accesible** |

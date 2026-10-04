@@ -87,5 +87,6 @@
 | # | Tipo (oficial/precios/ayuda/video/tienda/reseñas) | URL | Fecha de consulta |
 |---|---|---|---|
 | F1 | oficial | https://microfit.com.ar/software-de-gestion-odontologica/ | 2026-10-03 |
-| F2 | oficial | https://www.geblix.com/ | 2026-10-03 || F3 | oficial (acceso de prueba enlazado desde F1; no accesible, HTTP 404) | https://www.geblix.com/inicio/referral | 2026-10-03 |
+| F2 | oficial | https://www.geblix.com/ | 2026-10-03 |
+| F3 | oficial (acceso de prueba enlazado desde F1; no accesible, HTTP 404) | https://www.geblix.com/inicio/referral | 2026-10-03 |
 | F4 | precios | https://microfit.com.ar/ (sin precios en las páginas consultadas) | 2026-10-03 (no hay página de precios accesible) |
