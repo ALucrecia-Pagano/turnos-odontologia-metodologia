@@ -8,7 +8,7 @@ Convención de intervalos: todo turno o bloqueo es un intervalo **semiabierto** 
 
 Origen: checklist §7, reglas 1 a 6 (vigentes en el MVP). Estas reglas se validan en el dominio puro.
 
-**Primer change (`crear-turno-sin-solapamientos`)**: solo RN-AG-01, RN-AG-02, RN-AG-07 (duración por prestación), RN-AG-08 (qué estados ocupan agenda) y la parte mínima de RN-AG-09 (duración mayor que cero, `INVALID_DURATION`), más la convención de intervalos semiabiertos. Van en `horarios-y-bloqueos` (change 2): RN-AG-04, RN-AG-05, RN-AG-06, el resto de RN-AG-09 (múltiplo de 5, máximo 480), RN-AG-10, RN-AG-11 y el formato completo de RN-AG-12 (decisión Q-13).
+**C-02 (`crear-turno-sin-solapamientos`)**: solo RN-AG-01, RN-AG-02, RN-AG-07 (duración por prestación), RN-AG-08 (qué estados ocupan agenda) y la parte mínima de RN-AG-09 (duración mayor que cero, `INVALID_DURATION`), más la convención de intervalos semiabiertos. Van a C-03 a C-08 (decisión Q-13): RN-AG-04 (C-05), RN-AG-05 (C-06), RN-AG-06 (C-07), el resto de RN-AG-09 (múltiplo de 5, máximo 480) y RN-AG-11 (C-03), RN-AG-10 (C-04) y el formato completo de RN-AG-12 (C-08).
 
 - **RN-AG-01**: Un profesional no puede tener dos turnos activos superpuestos. *(Checklist 7.1)* Código de rechazo: `PROFESSIONAL_OVERLAP`.
 - **RN-AG-02**: Un sillón/box no puede asignarse a dos turnos activos superpuestos. *(Checklist 7.2)* Código: `CHAIR_OVERLAP`.
@@ -43,7 +43,7 @@ Estados: `reservado`, `confirmado`, `atendido`, `ausente`, `cancelado`. Origen: 
 - **RN-TU-03**: Reprogramar (cambiar inicio, profesional, sillón y/o duración) solo es posible en `reservado` o `confirmado`. Revalida **todas** las reglas RN-AG excluyendo al propio turno de la comprobación de solapamiento. **Suposición:** el turno reprogramado vuelve a `reservado` (la confirmación previa deja de valer) y se registra en el historial.
 - **RN-TU-04**: Cancelar no exige anticipación mínima en el MVP (**Suposición**; Q-01). Un turno puede cancelarse en cualquier momento mientras esté en `reservado` o `confirmado`.
 - **RN-TU-05**: Marcar `ausente` solo es válido si `now >= inicio` del turno (**Suposición**; Q-02). Marcar `atendido` también exige `now >= inicio`.
-- **RN-TU-06**: Cada cambio de estado o reprogramación genera una entrada **inmutable** de historial: quién (`changed_by`), cuándo (`changed_at`), de qué estado a cuál. El historial es append-only. *(Checklist §5; se implementa en el change del ciclo de vida, no en el primero.)*
+- **RN-TU-06**: Cada cambio de estado o reprogramación genera una entrada **inmutable** de historial: quién (`changed_by`), cuándo (`changed_at`), de qué estado a cuál. El historial es append-only. *(Checklist §5; se implementa en C-12 `historial-de-transiciones`, no en C-02.)*
 
 ## Dominio: Disponibilidad (RN-DI)
 

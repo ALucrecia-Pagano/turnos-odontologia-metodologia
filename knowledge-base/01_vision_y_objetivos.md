@@ -21,14 +21,14 @@
 
 ## Alcance v0.1 (MVP)
 
-- Crear un turno sin solapamientos por profesional ni por sillón, con mensajes de conflicto que indican qué turno o bloqueo choca (**primer change, solo lógica de dominio**: solapamiento por profesional y por sillón, duración por prestación (rechazando duración no positiva) y turnos consecutivos; sin horarios, bloqueos ni el resto de las validaciones, que van en el change siguiente).
+- Crear un turno sin solapamientos por profesional ni por sillón, con mensajes de conflicto que indican qué turno o bloqueo choca (**C-02, solo lógica de dominio**: solapamiento por profesional y por sillón, duración por prestación (rechazando duración no positiva) y turnos consecutivos; sin horarios, bloqueos ni el resto de las validaciones, que van en C-03 a C-08).
 - Horario de atención por profesional y bloqueos (vacaciones, feriados, ausencias).
 - Catálogo de prestaciones con duración por defecto, editable al dar el turno.
 - Ciclo de vida del turno: cancelar y reprogramar; estados `reservado`, `confirmado`, `atendido`, `ausente`, `cancelado`; transiciones válidas explícitas.
 - Historial de cambios de estado del turno (quién, cuándo, de qué estado a cuál).
 - Datos mínimos y **ficticios** del paciente: nombre, DNI, teléfono, obra social como texto.
 - Tres roles: odontólogo, recepción, administrador.
-- Interfaz web con vistas diaria y semanal por profesional y por sillón, y vista de recepción por sillón (change posterior al dominio; frontend cuidado).
+- Interfaz web con vistas diaria y semanal por profesional y por sillón, y vista de recepción por sillón (C-22 a C-29, posteriores al dominio y la API; frontend cuidado).
 - Diferenciadores: mensajes de rechazo explicativos y vista de recepción por sillón.
 
 ## Fuera de alcance (MVP)
@@ -44,16 +44,16 @@
 
 ## Métricas de éxito
 
-Orientadas a la entrega académica (trabajo individual). El **2026-10-08** se presenta un **avance**; la **entrega final** es la semana siguiente (fecha **a confirmar**). Las métricas rigen para la entrega final; para el avance se espera, como mínimo, el primer change (dominio puro de crear turno sin solapamientos) completo y con tests en verde (el alcance exacto del avance no está definido: a confirmar con la cátedra):
+Orientadas a la entrega académica (trabajo individual). Hay un avance el 2026-10-08 sin contenido exigido definido; la **entrega final** es la semana siguiente (fecha **a confirmar**). Las métricas rigen para la entrega final:
 
 | Métrica | Criterio |
 |---------|----------|
 | Cobertura de escenarios | Cada escenario del spec tiene al menos un test automatizado (Vitest, Strict TDD) |
 | Integridad de agenda | Ninguna combinación de entradas válidas produce dos turnos activos solapados para un mismo profesional o sillón |
 | Claridad de rechazo | Todo rechazo devuelve un código estable y un mensaje en español que identifica el turno o bloqueo en conflicto |
-| Primer change terminable | El change de dominio puro queda completo y verde antes de empezar la interfaz |
+| C-02 terminable | El change de dominio puro (C-02, sobre la base de C-01) queda completo y verde antes de empezar la interfaz |
 | Higiene del repo | Sin credenciales ni datos reales en el repositorio |
 
 ## Restricciones relevantes
 
-Avance 2026-10-08 y entrega final la semana siguiente (fecha a confirmar) · trabajo individual · tests para cada escenario del spec · solo datos ficticios · sin credenciales en el repo · primer change chico (dominio puro) y UI en un change posterior · interfaz web con frontend cuidado. Detalle de riesgos en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
+Avance el 2026-10-08 sin contenido exigido definido; entrega final la semana siguiente (fecha a confirmar) · trabajo individual · tests para cada escenario del spec · solo datos ficticios · sin credenciales en el repo · C-02 chico (dominio puro) y UI en changes posteriores (C-22 a C-29) · interfaz web con frontend cuidado. Detalle de riesgos en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).

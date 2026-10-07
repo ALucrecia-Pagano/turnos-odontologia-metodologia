@@ -1,6 +1,6 @@
 # Preguntas Abiertas
 
-Ninguna bloquea el primer change (dominio puro de crear turno), salvo donde se indica. Las preguntas Q-01 a Q-07 vienen del checklist §11; para cada una el MVP propone un default marcado **Suposición:** (ver [09_decisiones_y_supuestos.md](09_decisiones_y_supuestos.md)).
+Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito técnico), salvo donde se indica. Las preguntas Q-01 a Q-07 vienen del checklist §11; para cada una el MVP propone un default marcado **Suposición:** (ver [09_decisiones_y_supuestos.md](09_decisiones_y_supuestos.md)).
 
 ## Inconsistencias detectadas
 
@@ -27,25 +27,25 @@ Ninguna bloquea el primer change (dominio puro de crear turno), salvo donde se i
 
 | ID | Prioridad | Pregunta | Default propuesto en el MVP | Bloquea | Decisor |
 |----|-----------|----------|-----------------------------|---------|---------|
-| Q-06 | Alta | ¿Zona horaria y granularidad de horario? | **Suposición:** `America/Argentina/Buenos_Aires`; 5 min; duración 5–480 min (SU-01, SU-02) | Change 2 (horarios y bloqueos; la zona horaria). La granularidad de 5 min va al change 2 (Q-13) | Autora |
-| Q-03 | Alta | ¿Qué transiciones de estado son válidas (reprogramar atendido, reactivar cancelado)? | **Suposición:** tabla de RN-TU-02; terminales atendido/ausente/cancelado (SU-03) | Change 4 (ciclo de vida) | Autora |
-| Q-04 | Alta | ¿Qué pasa con los turnos existentes al crear un bloqueo que los pisa? | **Suposición:** no se cancelan; se informan para reprogramar (SU-05) | Change 2 (horarios y bloqueos) | Autora |
-| Q-05 | Media | ¿Algunas prestaciones exigen un sillón específico? | **Suposición:** no; cualquier prestación en cualquier sillón (SU-04) | Change 3 (catálogo) | Autora |
-| Q-01 | Media | ¿Anticipación mínima para cancelar (p. ej. 24 h)? | **Suposición:** sin mínimo (SU-08) | Change 4 | Autora |
-| Q-02 | Media | ¿Se puede marcar "ausente" antes de la hora de inicio? | **Suposición:** no; solo con `now >= inicio` (SU-08) | Change 4 | Autora |
+| Q-06 | Alta | ¿Zona horaria y granularidad de horario? | **Suposición:** `America/Argentina/Buenos_Aires`; 5 min; duración 5–480 min (SU-01, SU-02) | C-04 (la zona horaria) y C-03 (granularidad de 5 min, Q-13) | Autora |
+| Q-03 | Alta | ¿Qué transiciones de estado son válidas (reprogramar atendido, reactivar cancelado)? | **Suposición:** tabla de RN-TU-02; terminales atendido/ausente/cancelado (SU-03) | C-10 (transiciones de estado) | Autora |
+| Q-04 | Alta | ¿Qué pasa con los turnos existentes al crear un bloqueo que los pisa? | **Suposición:** no se cancelan; se informan para reprogramar (SU-05) | C-06 (bloqueos de agenda) | Autora |
+| Q-05 | Media | ¿Algunas prestaciones exigen un sillón específico? | **Suposición:** no; cualquier prestación en cualquier sillón (SU-04) | C-09 (catálogo) | Autora |
+| Q-01 | Media | ¿Anticipación mínima para cancelar (p. ej. 24 h)? | **Suposición:** sin mínimo (SU-08) | C-10 | Autora |
+| Q-02 | Media | ¿Se puede marcar "ausente" antes de la hora de inicio? | **Suposición:** no; solo con `now >= inicio` (SU-08) | C-10 | Autora |
 | Q-07 | Cerrada | ¿Stack de implementación? | **Resuelta:** TypeScript full-stack (DD-01 a DD-05) | — | Autora |
-| Q-08 | Media | ¿Qué estados ocupan agenda (¿`ausente` libera el hueco?) | **Suposición:** reservado/confirmado/atendido ocupan (SU-07) | Change 1 (la regla de solapamiento depende de esto) | Autora |
-| Q-09 | Media | ¿Hace falta autenticación real en la entrega? | **Suposición:** no; rol simulado (SU-06) | Change 6 (UI) | Cátedra / Autora |
-| Q-10 | Media | ¿El odontólogo puede dar turnos nuevos o solo recepción/administrador? | **Suposición:** solo recepción y administrador (ver 03) | Change 5 (API) | Autora |
-| Q-11 | Baja | Al reprogramar, ¿el turno vuelve a `reservado` o conserva `confirmado`? | **Suposición:** vuelve a `reservado` (RN-TU-03) | Change 4 | Autora |
-| Q-12 | Baja | ¿Se admiten turnos que cruzan medianoche? | **Suposición:** no (RN-AG-10) | Change 2 (validaciones del turno, Q-13) | Autora |
-| Q-13 | Cerrada | **Resuelta el 2026-10-07.** ¿Qué otras reglas entran en el primer change además de solapamientos, duración y turnos consecutivos? Candidatas (no incluidas, DD-09): no en el pasado (US-005), validación de duración y granularidad (US-007 CA-1), existencia/estado de profesional, sillón y prestación (US-007 CA-2), turno que cruza medianoche (US-007 CA-3), contrato de errores con mensajes y códigos completos (US-006) | **Resuelta:** al change 1 solo entra el rechazo de duración no positiva (`INVALID_DURATION`, parte mínima de US-007 CA-1 / RN-AG-09), porque un intervalo con fin <= inicio rompe la lógica de solapamiento. Granularidad de 5 min, medianoche (RN-AG-10), no en el pasado (US-005), referencias (RN-AG-11) y mensajes completos (US-006) van al change 2 `horarios-y-bloqueos`, que concentra la zona horaria (DD-09) | — | Autora |
+| Q-08 | Media | ¿Qué estados ocupan agenda (¿`ausente` libera el hueco?) | **Suposición:** reservado/confirmado/atendido ocupan (SU-07) | C-02 (la regla de solapamiento depende de esto) | Autora |
+| Q-09 | Media | ¿Hace falta autenticación real en la entrega? | **Suposición:** no; rol simulado (SU-06) | C-16 (API base y rol simulado) y C-22 (web base) | Cátedra / Autora |
+| Q-10 | Media | ¿El odontólogo puede dar turnos nuevos o solo recepción/administrador? | **Suposición:** solo recepción y administrador (ver 03) | C-16 (matriz RBAC) y C-19 (API dar turno) | Autora |
+| Q-11 | Baja | Al reprogramar, ¿el turno vuelve a `reservado` o conserva `confirmado`? | **Suposición:** vuelve a `reservado` (RN-TU-03) | C-11 (reprogramar turno) | Autora |
+| Q-12 | Baja | ¿Se admiten turnos que cruzan medianoche? | **Suposición:** no (RN-AG-10) | C-04 (turno en un día, Q-13) | Autora |
+| Q-13 | Cerrada | **Resuelta el 2026-10-07.** ¿Qué otras reglas entran en C-02 además de solapamientos, duración y turnos consecutivos? Candidatas (no incluidas, DD-09): no en el pasado (US-005), validación de duración y granularidad (US-007 CA-1), existencia/estado de profesional, sillón y prestación (US-007 CA-2), turno que cruza medianoche (US-007 CA-3), contrato de errores con mensajes y códigos completos (US-006) | **Resuelta:** a C-02 solo entra el rechazo de duración no positiva (`INVALID_DURATION`, parte mínima de US-007 CA-1 / RN-AG-09), porque un intervalo con fin <= inicio rompe la lógica de solapamiento. Granularidad de 5 min y referencias (RN-AG-11) van a C-03, medianoche (RN-AG-10) a C-04, no en el pasado (US-005) a C-07 y mensajes completos (US-006) a C-08; la zona horaria queda en C-04 (DD-09) | — | Autora |
 
 ## Riesgos del discovery (seguimiento)
 
 | # | Riesgo | Mitigación en la KB |
 |---|--------|---------------------|
-| R1 | Plazo acotado: el 2026-10-08 se presenta un avance y la entrega final es la semana siguiente (fecha a confirmar); trabajo individual | Primer change = solo crear turno sin solapamientos (DD-09); para el avance se prioriza dejarlo completo y con tests; plan de contingencia en 08. Pendiente: confirmar la fecha de entrega final y qué se espera exactamente en el avance |
+| R1 | Plazo acotado: la entrega final es la semana posterior al 2026-10-08 (fecha a confirmar; hay un avance el 2026-10-08 sin contenido exigido definido); trabajo individual | C-02 = solo crear turno sin solapamientos (DD-09); changes chicos y ordenados en `CHANGES.md`; plan de contingencia en 08 (recortables: C-24, C-27, C-28, C-29, C-18; no se recortan tests). Pendiente: confirmar la fecha de entrega final |
 | R2 | Reglas de agenda incompletas (casos borde, horarios, zona horaria) | Tablas de casos borde en 06; zona y granularidad fijadas como suposiciones |
 | R3 | Calidad del frontend al quedar al final | Lineamientos de UI en 08; priorización explícita |
 | R4 | "Competencia sin prevención de solapamientos" es solo falta de evidencia pública | Redactado como "no evidenciado" en 01 |
@@ -57,7 +57,7 @@ Ninguna bloquea el primer change (dominio puro de crear turno), salvo donde se i
 
 ## Puntos no evidenciados en el Discovery
 
-Cosas que el informe (`docs/discovery/informe-discovery.md`) o el checklist dejaron como "No evidenciado", declaradas sin comprobar o sin dato. "No evidenciado" no significa que no exista: significa que no pudo constatarse con fuentes públicas. Ninguna bloquea el primer change; se listan porque pueden cambiar el producto o su posicionamiento.
+Cosas que el informe (`docs/discovery/informe-discovery.md`) o el checklist dejaron como "No evidenciado", declaradas sin comprobar o sin dato. "No evidenciado" no significa que no exista: significa que no pudo constatarse con fuentes públicas. Ninguna bloquea C-02; se listan porque pueden cambiar el producto o su posicionamiento.
 
 | # | Qué no se evidenció | Dónde en el informe | Impacto en el producto |
 |---|---------------------|---------------------|------------------------|

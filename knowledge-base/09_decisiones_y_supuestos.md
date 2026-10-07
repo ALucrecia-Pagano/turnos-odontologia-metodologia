@@ -4,7 +4,7 @@
 
 ### DD-01 — Stack TypeScript full-stack
 **Decisión**: TypeScript en todas las capas: dominio puro, API Node.js, frontend React + Vite, tests con Vitest.
-**Contexto**: el discovery dejó el stack libre ("lo define la autora"); la autora lo confirmó. Trabajo individual; el 2026-10-08 se presenta un avance y la entrega final es la semana siguiente (fecha a confirmar).
+**Contexto**: el discovery dejó el stack libre ("lo define la autora"); la autora lo confirmó. Trabajo individual; hay un avance el 2026-10-08 sin contenido exigido definido y la entrega final es la semana siguiente (fecha a confirmar).
 **Alternativas consideradas**: Python/FastAPI + React; Java/Spring + React.
 **Justificación**: un solo lenguaje permite compartir el dominio entre API y UI (tipos y pre-validación) y reduce el cambio de contexto en trabajo individual con plazo acotado.
 **Trade-offs aceptados**: menos "enterprise" que Java; el tipado de TS no es una garantía en runtime (por eso Zod en el borde).
@@ -49,10 +49,10 @@
 **Justificación**: sostiene el diferenciador "mensajes de conflicto claros" (la secretaria ve todo lo que debe corregir).
 **Trade-offs aceptados**: ligera redundancia de mensajes.
 
-### DD-09 — Primer change = solo "crear un turno sin solapamientos por profesional y por sillón"
-**Decisión**: el primer change (`crear-turno-sin-solapamientos`) cubre únicamente la regla de no solapamiento: solapamiento por profesional (RN-AG-01), solapamiento por sillón (RN-AG-02), duración del turno según la prestación (RN-AG-07), rechazo de duración no positiva (`INVALID_DURATION`, parte mínima de RN-AG-09 / US-007 CA-1: un intervalo con fin <= inicio rompe la lógica de solapamiento semiabierto) y el caso borde de turnos consecutivos (fin == inicio no es solapamiento; intervalos semiabiertos). Corresponde a US-001 (acotada), US-002, US-003 y el criterio de duración positiva de US-007, en `packages/domain`; sin API, sin BD, sin UI. Horario de atención y bloqueos (US-004), no en el pasado (US-005), mensajes completos (US-006) y el resto de US-007 (granularidad de 5 min, referencias, medianoche) pasan al change 2 `horarios-y-bloqueos`, que concentra la zona horaria.
-**Contexto**: el primer change debe ser chico y terminable; la regla de solapamiento es el diferenciador del producto y se puede probar sin ninguna otra regla.
-**Origen**: decisión del usuario en el Discovery; checklist §5 y restricciones de la cátedra (primer change chico y terminable). Alcance de reglas adicionales decidido en Q-13 (resuelta 2026-10-07) en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
+### DD-09 — C-02 = solo "crear un turno sin solapamientos por profesional y por sillón"
+**Decisión**: el change evaluado en el ciclo OPSX del TP es C-02 `crear-turno-sin-solapamientos` (C-01 `fundacion-monorepo-y-dominio` es su prerrequisito técnico: monorepo y paquete de dominio vacío, sin lógica de negocio). C-02 cubre únicamente la regla de no solapamiento: solapamiento por profesional (RN-AG-01), solapamiento por sillón (RN-AG-02), duración del turno según la prestación (RN-AG-07), rechazo de duración no positiva (`INVALID_DURATION`, parte mínima de RN-AG-09 / US-007 CA-1: un intervalo con fin <= inicio rompe la lógica de solapamiento semiabierto) y el caso borde de turnos consecutivos (fin == inicio no es solapamiento; intervalos semiabiertos). Corresponde a US-001 (acotada), US-002, US-003 y el criterio de duración positiva de US-007, en `packages/domain`; sin API, sin BD, sin UI. Horario de atención y bloqueos (US-004), no en el pasado (US-005), mensajes completos (US-006) y el resto de US-007 (granularidad de 5 min, referencias, medianoche) pasan a C-03 a C-08 (`validar-duracion-y-referencias`, `hora-local-y-turno-en-un-dia`, `horario-de-atencion`, `bloqueos-de-agenda`, `no-turnos-en-el-pasado`, `mensajes-de-conflicto-en-espanol`); la zona horaria queda en C-04.
+**Contexto**: C-02 debe ser chico y terminable; la regla de solapamiento es el diferenciador del producto y se puede probar sin ninguna otra regla.
+**Origen**: decisión del usuario en el Discovery; checklist §5 y restricciones de la cátedra (change chico y terminable). Alcance de reglas adicionales decidido en Q-13 (resuelta 2026-10-07) en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
 
 ## Supuestos inferidos
 

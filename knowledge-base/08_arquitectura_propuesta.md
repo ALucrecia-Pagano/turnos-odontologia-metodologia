@@ -61,7 +61,7 @@ Regla de dependencias: `apps/*` → `packages/domain`; **`domain` no importa nad
 
 | Capa | Herramienta | Qué cubre |
 |------|-------------|-----------|
-| Dominio (unit) | Vitest | Todos los escenarios de 06 (en el primer change: US-001 acotada, US-002, US-003 y US-007 CA-1 parcial); tablas de casos; reloj inyectado |
+| Dominio (unit) | Vitest | Todos los escenarios de 06 (en C-02: US-001 acotada, US-002, US-003 y US-007 CA-1 parcial); tablas de casos; reloj inyectado |
 | API (integración) | Vitest + `fastify.inject` + SQLite `:memory:` | Contratos HTTP, transacciones, códigos 400/401/403/409/422 |
 | UI (componentes) | Vitest + Testing Library | Formularios y mensajes de error (changes de UI) |
 
@@ -92,7 +92,7 @@ Ciclo obligatorio: RED → GREEN → TRIANGULATE → REFACTOR; mínimo 2 casos p
 
 ## Frontend cuidado
 
-Lineamientos para el change de UI (el discovery exige "frontend cuidado" y lo señala como riesgo por quedar al final del plazo; la UI llega después del avance del 2026-10-08, salvo que se decida lo contrario):
+Lineamientos para los changes de UI (C-22 a C-29; el discovery exige "frontend cuidado" y lo señala como riesgo por quedar al final del plazo; la UI arranca recién con la API completa, ver CHANGES.md):
 
 - Sistema de diseño mínimo con tokens (color, espaciado, tipografía) en `shared/`; estados por color consistentes con el estado del turno.
 - Estados de carga, vacío y error en toda vista; mensajes de conflicto del dominio mostrados tal cual y con contexto.
@@ -102,6 +102,6 @@ Lineamientos para el change de UI (el discovery exige "frontend cuidado" y lo se
 
 ## Plan de contingencia de plazo
 
-Hitos: **avance el 2026-10-08** y **entrega final la semana siguiente (fecha a confirmar)**. Para el avance, lo mínimo es el primer change terminado; el resto se ordena hacia la entrega final.
+Hitos: hay un avance el 2026-10-08 sin contenido exigido definido, y la entrega final es la semana siguiente (fecha a confirmar). El orden de trabajo lo fija `CHANGES.md` y no se ancla a ninguna fecha intermedia.
 
-Si el plazo aprieta: priorizar (1) dominio completo con tests, (2) API mínima de turnos, (3) UI con agenda diaria y formulario de turno. Postergar vista semanal y vista por sillón antes que recortar tests.
+Si el plazo aprieta: priorizar el camino crítico de `CHANGES.md` (dominio completo con tests, API de turnos, UI con agenda diaria y formulario de turno). Recortar en este orden los changes fuera del camino crítico: C-24 (vista semanal), C-27 (vista por sillón), C-28 y C-29 (UI de horarios, bloqueos y catálogos; con seeds y la API alcanza para operar) y C-18 (API de horarios; los horarios pueden venir de seeds). Postergar vistas antes que recortar tests.

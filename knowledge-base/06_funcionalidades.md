@@ -1,28 +1,30 @@
 # Funcionalidades
 
-Organizadas por épica e historia de usuario (US-NNN). Cada criterio de aceptación (CA) es un **escenario con test automatizado** (Vitest). El primer change cubre únicamente la regla "crear un turno sin solapamientos por profesional y por sillón" (US-001 acotada, US-002, US-003 y el criterio mínimo de duración positiva de US-007; dominio puro). El resto de la Épica 1 (US-004, US-005, US-006 y el resto de US-007) pasa al change 2: ver la tabla y las marcas **Change** en cada historia.
+Organizadas por épica e historia de usuario (US-NNN). Cada criterio de aceptación (CA) es un **escenario con test automatizado** (Vitest). El change C-02 `crear-turno-sin-solapamientos` cubre únicamente la regla "crear un turno sin solapamientos por profesional y por sillón" (US-001 acotada, US-002, US-003 y el criterio mínimo de duración positiva de US-007; dominio puro; C-01 es su prerrequisito técnico). El resto de la Épica 1 (US-004, US-005, US-006 y el resto de US-007) pasa a C-03 a C-08: ver las marcas **Change** en cada historia.
 
-## Orden de changes sugerido
+## Orden de changes
 
-| # | Change (nombre propuesto) | Épicas | Capa |
+| Change | Slug | Historias | Capa |
 |---|---------------------------|--------|------|
-| 1 | `crear-turno-sin-solapamientos` | 1 (solo US-001, US-002, US-003 y US-007 CA-1 parcial: duración positiva) | Dominio puro (`packages/domain`) |
-| 2 | `horarios-y-bloqueos` (horarios, bloqueos y validaciones del turno) | 1 (US-004, US-005, US-006, resto de US-007) y 2 | Dominio + persistencia |
-| 3 | `catalogo-prestaciones` | 3 | Dominio + persistencia |
-| 4 | `ciclo-de-vida-del-turno` | 4 | Dominio + API + historial |
-| 5 | `api-agenda` | 1–5 | API REST + SQLite |
-| 6 | `ui-agenda-web` | 5, 6 | React + Vite |
+| C-01 | `fundacion-monorepo-y-dominio` | — (prerrequisito técnico) | Monorepo + `packages/domain` vacío |
+| C-02 | `crear-turno-sin-solapamientos` | 1 (solo US-001, US-002, US-003 y US-007 CA-1 parcial: duración positiva) | Dominio puro (`packages/domain`) |
+| C-03 a C-08 | `validar-duracion-y-referencias`, `hora-local-y-turno-en-un-dia`, `horario-de-atencion`, `bloqueos-de-agenda`, `no-turnos-en-el-pasado`, `mensajes-de-conflicto-en-espanol` | 1 (US-004, US-005, US-006, resto de US-007) y 2 | Dominio |
+| C-09 | `catalogo-y-pacientes-dominio` | 3 | Dominio |
+| C-10 a C-12 | `transiciones-de-estado-del-turno`, `reprogramar-turno`, `historial-de-transiciones` | 4 | Dominio |
+| C-13 a C-15 | `db-sqlite-y-catalogos`, `persistencia-horarios-y-bloqueos`, `persistencia-turnos-e-historial` | 1–5 | Persistencia SQLite |
+| C-16 a C-21 | `api-base-y-rol-simulado` a `api-consulta-de-agenda` | 1–5 | API REST |
+| C-22 a C-29 | `web-base-y-rol-simulado` a `ui-catalogos-y-pacientes` | 5, 6 | React + Vite |
 
-**Decisión de la autora (Q-13, 2026-10-07):** US-005 (no dar turnos en el pasado), US-006 (mensajes de conflicto completos) y el resto de US-007 (granularidad, referencias, medianoche) van al change 2, porque "no en el pasado" y los mensajes en hora local necesitan la zona horaria, que vive en ese change. Del primer change solo entra el criterio de duración positiva de US-007. No se renumera ninguna historia.
+**Decisión de la autora (Q-13, 2026-10-07):** US-005 (no dar turnos en el pasado), US-006 (mensajes de conflicto completos) y el resto de US-007 (granularidad, referencias, medianoche) van a C-03 a C-08, porque "no en el pasado" y los mensajes en hora local necesitan la zona horaria, que vive en C-04. De C-02 solo entra el criterio de duración positiva de US-007. No se renumera ninguna historia.
 
-El orden exacto lo fija el roadmap (`CHANGES.md`); esta tabla es una propuesta.
+La fuente de verdad del orden, las dependencias y el detalle de cada change es `CHANGES.md`; esta tabla es solo un resumen.
 
 ## Épica 1: Creación de turnos sin conflictos
 
-El primer change es **solo** la regla de no solapamiento por profesional y por sillón, con la duración del turno (por prestación), el rechazo de duración no positiva y el caso borde de turnos consecutivos (intervalos semiabiertos). Horario de atención, bloqueos y el resto de las validaciones del turno pasan al change `horarios-y-bloqueos`.
+C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con la duración del turno (por prestación), el rechazo de duración no positiva y el caso borde de turnos consecutivos (intervalos semiabiertos). Horario de atención, bloqueos y el resto de las validaciones del turno pasan a C-03 a C-08.
 
 ### US-001 — Dar un turno válido
-**Change:** 1 (`crear-turno-sin-solapamientos`), acotada a solapamientos, duración (positiva) y turnos consecutivos.
+**Change:** C-02 (`crear-turno-sin-solapamientos`), acotada a solapamientos, duración (positiva) y turnos consecutivos.
 
 **Como** secretaria
 **Quiero** dar un turno eligiendo paciente, profesional, sillón y prestación
@@ -34,10 +36,10 @@ El primer change es **solo** la regla de no solapamiento por profesional y por s
 - [ ] CA-3: `end = start + duración`; el intervalo es semiabierto.
 - [ ] CA-4: dos turnos consecutivos (uno termina cuando empieza el otro) del mismo profesional y sillón **son válidos**.
 
-**Reglas relacionadas**: RN-AG-07, RN-TU-01 (la validez de la duración, RN-AG-09, entra solo en su parte mínima: ver US-007; RN-AG-10 va al change 2)
+**Reglas relacionadas**: RN-AG-07, RN-TU-01 (la validez de la duración, RN-AG-09, entra solo en su parte mínima: ver US-007; RN-AG-10 va a C-04)
 
 ### US-002 — Rechazar solapamiento de profesional
-**Change:** 1.
+**Change:** C-02.
 
 **Como** secretaria
 **Quiero** que el sistema rechace un turno que pisa otro del mismo profesional
@@ -53,7 +55,7 @@ El primer change es **solo** la regla de no solapamiento por profesional y por s
 **Reglas**: RN-AG-01, RN-AG-03, RN-AG-08, RN-AG-12
 
 ### US-003 — Rechazar solapamiento de sillón
-**Change:** 1.
+**Change:** C-02.
 
 **Como** secretaria
 **Quiero** que el sistema rechace un turno que usa un sillón ya ocupado
@@ -66,7 +68,7 @@ El primer change es **solo** la regla de no solapamiento por profesional y por s
 **Reglas**: RN-AG-02, RN-AG-12
 
 ### US-004 — Respetar horario de atención y bloqueos
-**Change:** 2 (`horarios-y-bloqueos`); sale del primer change.
+**Change:** C-05 (`horario-de-atencion`: CA-1 a CA-3, CA-6, CA-7) y C-06 (`bloqueos-de-agenda`: CA-4, CA-5); sale de C-02.
 
 **Como** odontólogo
 **Quiero** que no me asignen turnos fuera de mi horario ni en mis bloqueos
@@ -83,7 +85,7 @@ El primer change es **solo** la regla de no solapamiento por profesional y por s
 **Reglas**: RN-AG-04, RN-AG-05, RN-DI-01, RN-GL-03
 
 ### US-005 — No dar turnos en el pasado
-**Change:** 2 (`horarios-y-bloqueos`); necesita la zona horaria (Q-13).
+**Change:** C-07 (`no-turnos-en-el-pasado`); necesita el reloj inyectado y la zona horaria de C-04 (Q-13).
 
 **Como** secretaria
 **Quiero** que el sistema rechace turnos con fecha/hora pasada
@@ -97,7 +99,7 @@ El primer change es **solo** la regla de no solapamiento por profesional y por s
 **Reglas**: RN-AG-06, RN-GL-04
 
 ### US-006 — Mensajes de conflicto claros
-**Change:** 2 (`horarios-y-bloqueos`); los mensajes en hora local necesitan la zona horaria (Q-13). El primer change igual devuelve `code` y el id del turno que choca (US-002 CA-1, US-003 CA-1) y todas las violaciones de solapamiento (US-003 CA-2); el texto en español con nombres y rango horario local queda para este change.
+**Change:** C-08 (`mensajes-de-conflicto-en-espanol`); los mensajes en hora local necesitan la zona horaria de C-04 (Q-13). C-02 igual devuelve `code` y el id del turno que choca (US-002 CA-1, US-003 CA-1) y todas las violaciones de solapamiento (US-003 CA-2); el texto en español con nombres y rango horario local queda para este change.
 
 **Como** secretaria
 **Quiero** saber qué turno o bloqueo causa el rechazo
@@ -110,7 +112,7 @@ El primer change es **solo** la regla de no solapamiento por profesional y por s
 **Reglas**: RN-AG-12
 
 ### US-007 — Validar referencias y duración
-**Change:** dividida (Q-13). CA-1 **parcial** (duración 0 o negativa → `INVALID_DURATION`) en el change 1: un intervalo con `fin <= inicio` rompe la lógica de solapamiento semiabierto. El resto de CA-1 (múltiplo de 5, máximo 480), CA-2 y CA-3 en el change 2 (`horarios-y-bloqueos`).
+**Change:** dividida (Q-13). CA-1 **parcial** (duración 0 o negativa → `INVALID_DURATION`) en C-02: un intervalo con `fin <= inicio` rompe la lógica de solapamiento semiabierto. El resto de CA-1 (múltiplo de 5, máximo 480) y CA-2 en C-03 (`validar-duracion-y-referencias`); CA-3 en C-04 (`hora-local-y-turno-en-un-dia`).
 
 **Como** sistema
 **Quiero** rechazar entradas inválidas

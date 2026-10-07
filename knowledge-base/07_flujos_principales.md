@@ -2,7 +2,7 @@
 
 ## Flujo 1: Dar un turno
 
-> Flujo completo del MVP. El primer change implementa solo el núcleo de dominio `validateNewAppointment` con las reglas de solapamiento por profesional y por sillón (RN-AG-01, RN-AG-02), la duración por prestación, el rechazo de duración no positiva (`INVALID_DURATION`) y el caso de turnos consecutivos; no incluye API, transacción ni los códigos de horario, bloqueo, pasado ni referencias (`OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`), que van en el change 2.
+> Flujo completo del MVP. C-02 implementa solo el núcleo de dominio `validateNewAppointment` con las reglas de solapamiento por profesional y por sillón (RN-AG-01, RN-AG-02), la duración por prestación, el rechazo de duración no positiva (`INVALID_DURATION`) y el caso de turnos consecutivos; no incluye API, transacción ni los códigos de horario, bloqueo, pasado ni referencias (`OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`), que van en C-03 a C-08 (el flujo completo con mensajes en español se cierra en C-08).
 
 **Disparador**: la secretaria completa el formulario de turno.
 **Actor**: secretaria / recepción (o administrador).

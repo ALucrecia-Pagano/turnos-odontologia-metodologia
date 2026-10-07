@@ -35,7 +35,7 @@ Leyenda: C crear · R leer · U actualizar · D borrar · `—` sin acceso · `p
 
 ### Autenticación en el MVP
 
-**Suposición:** el MVP **no implementa autenticación real**. El rol se simula con una sesión de desarrollo (selector de rol en la UI y cabecera `X-Role` / `X-User-Id` en la API, solo con `NODE_ENV != production`). Motivo: plazo acotado (avance el 2026-10-08, entrega final la semana siguiente, fecha a confirmar), restricción de no guardar credenciales en el repo y foco del MVP en la lógica de agenda. Autenticación real (hash de contraseñas, sesión/JWT) queda para un change posterior y sería dominio de gobernanza **CRITICAL** (requiere aprobación humana explícita antes de escribir código). Ver SU-06.
+**Suposición:** el MVP **no implementa autenticación real**. El rol se simula con una sesión de desarrollo (selector de rol en la UI y cabecera `X-Role` / `X-User-Id` en la API, solo con `NODE_ENV != production`). Motivo: plazo acotado (entrega final la semana posterior al 2026-10-08, fecha a confirmar), restricción de no guardar credenciales en el repo y foco del MVP en la lógica de agenda. Autenticación real (hash de contraseñas, sesión/JWT) queda para un change posterior y sería dominio de gobernanza **CRITICAL** (requiere aprobación humana explícita antes de escribir código). Ver SU-06.
 
 ## Rutas públicas
 
