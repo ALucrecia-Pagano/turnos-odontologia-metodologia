@@ -1,6 +1,6 @@
 {
   "version": 4,
-  "step": "discovery",
+  "step": "kb",
   "owner": "active-orchestrator",
   "discovery": {
     "created_by": "discovery-research",
@@ -38,32 +38,136 @@
       "https://odontoapp.com.ar/"
     ],
     "competitors": [
-      { "name": "Odonthia", "notes_file": "docs/discovery/sources/odonthia.md", "score": 3.50 },
-      { "name": "DentalCore", "notes_file": "docs/discovery/sources/dentalcore.md", "score": 3.15 },
-      { "name": "Dentalink", "notes_file": "docs/discovery/sources/dentalink.md", "score": 3.00 },
-      { "name": "Open Dental", "notes_file": "docs/discovery/sources/open-dental.md", "score": 2.95 },
-      { "name": "Bilog", "notes_file": "docs/discovery/sources/bilog.md", "score": 2.80 },
-      { "name": "DentalBox", "notes_file": "docs/discovery/sources/dentalbox.md", "score": 2.70 },
-      { "name": "OdontoSoft Millennium", "notes_file": "docs/discovery/sources/odontosoft-millennium.md", "score": 2.60 },
-      { "name": "ClinIA", "notes_file": "docs/discovery/sources/clinia.md", "score": 2.55 },
-      { "name": "Clinicorp", "notes_file": "docs/discovery/sources/clinicorp.md", "score": 2.50 },
-      { "name": "Simples Dental", "notes_file": "docs/discovery/sources/simples-dental.md", "score": 2.50 },
-      { "name": "Odontonet", "notes_file": "docs/discovery/sources/odontonet.md", "score": 2.40 },
-      { "name": "AgendaPro", "notes_file": "docs/discovery/sources/agendapro.md", "score": 2.35 },
-      { "name": "Dental Office", "notes_file": "docs/discovery/sources/dental-office.md", "score": 2.30 },
-      { "name": "Órbita", "notes_file": "docs/discovery/sources/orbita.md", "score": 2.25 },
-      { "name": "Dentrix", "notes_file": "docs/discovery/sources/dentrix.md", "score": 2.20 },
-      { "name": "DentalTec", "notes_file": "docs/discovery/sources/dentaltec.md", "score": 2.20 },
-      { "name": "Doctoralia", "notes_file": "docs/discovery/sources/doctoralia.md", "score": 2.15 },
-      { "name": "Turnito", "notes_file": "docs/discovery/sources/turnito.md", "score": 2.10 },
-      { "name": "SimpleTurno", "notes_file": "docs/discovery/sources/simpleturno.md", "score": 2.05 },
-      { "name": "Doctocliq", "notes_file": "docs/discovery/sources/doctocliq.md", "score": 1.95 },
-      { "name": "Agendit", "notes_file": "docs/discovery/sources/agendit.md", "score": 1.90 },
-      { "name": "Dentidesk", "notes_file": "docs/discovery/sources/dentidesk.md", "score": 1.75 },
-      { "name": "Geblix", "notes_file": "docs/discovery/sources/geblix.md", "score": 1.50 },
-      { "name": "OdonticLabs", "notes_file": "docs/discovery/sources/odonticlabs.md", "score": 1.35 },
-      { "name": "OdontoGRAMA", "notes_file": "docs/discovery/sources/odontograma.md", "score": 1.30 },
-      { "name": "OdontoApp", "notes_file": "docs/discovery/sources/odontoapp.md", "score": 1.05 }
+      {
+        "name": "Odonthia",
+        "notes_file": "docs/discovery/sources/odonthia.md",
+        "score": 3.25
+      },
+      {
+        "name": "DentalCore",
+        "notes_file": "docs/discovery/sources/dentalcore.md",
+        "score": 3.15
+      },
+      {
+        "name": "Dentalink",
+        "notes_file": "docs/discovery/sources/dentalink.md",
+        "score": 3
+      },
+      {
+        "name": "Open Dental",
+        "notes_file": "docs/discovery/sources/open-dental.md",
+        "score": 2.95
+      },
+      {
+        "name": "Bilog",
+        "notes_file": "docs/discovery/sources/bilog.md",
+        "score": 2.8
+      },
+      {
+        "name": "DentalBox",
+        "notes_file": "docs/discovery/sources/dentalbox.md",
+        "score": 2.7
+      },
+      {
+        "name": "OdontoSoft Millennium",
+        "notes_file": "docs/discovery/sources/odontosoft-millennium.md",
+        "score": 2.6
+      },
+      {
+        "name": "ClinIA",
+        "notes_file": "docs/discovery/sources/clinia.md",
+        "score": 2.55
+      },
+      {
+        "name": "Clinicorp",
+        "notes_file": "docs/discovery/sources/clinicorp.md",
+        "score": 2.5
+      },
+      {
+        "name": "Simples Dental",
+        "notes_file": "docs/discovery/sources/simples-dental.md",
+        "score": 2.5
+      },
+      {
+        "name": "Odontonet",
+        "notes_file": "docs/discovery/sources/odontonet.md",
+        "score": 2.4
+      },
+      {
+        "name": "AgendaPro",
+        "notes_file": "docs/discovery/sources/agendapro.md",
+        "score": 2.35
+      },
+      {
+        "name": "Dental Office",
+        "notes_file": "docs/discovery/sources/dental-office.md",
+        "score": 2.3
+      },
+      {
+        "name": "Órbita",
+        "notes_file": "docs/discovery/sources/orbita.md",
+        "score": 2.25
+      },
+      {
+        "name": "Dentrix",
+        "notes_file": "docs/discovery/sources/dentrix.md",
+        "score": 2.2
+      },
+      {
+        "name": "DentalTec",
+        "notes_file": "docs/discovery/sources/dentaltec.md",
+        "score": 2.2
+      },
+      {
+        "name": "Doctoralia",
+        "notes_file": "docs/discovery/sources/doctoralia.md",
+        "score": 2.15
+      },
+      {
+        "name": "Turnito",
+        "notes_file": "docs/discovery/sources/turnito.md",
+        "score": 2.1
+      },
+      {
+        "name": "SimpleTurno",
+        "notes_file": "docs/discovery/sources/simpleturno.md",
+        "score": 2.05
+      },
+      {
+        "name": "Doctocliq",
+        "notes_file": "docs/discovery/sources/doctocliq.md",
+        "score": 1.95
+      },
+      {
+        "name": "Agendit",
+        "notes_file": "docs/discovery/sources/agendit.md",
+        "score": 1.9
+      },
+      {
+        "name": "Dentidesk",
+        "notes_file": "docs/discovery/sources/dentidesk.md",
+        "score": 1.75
+      },
+      {
+        "name": "Geblix",
+        "notes_file": "docs/discovery/sources/geblix.md",
+        "score": 1.5
+      },
+      {
+        "name": "OdonticLabs",
+        "notes_file": "docs/discovery/sources/odonticlabs.md",
+        "score": 1.35
+      },
+      {
+        "name": "OdontoGRAMA",
+        "notes_file": "docs/discovery/sources/odontograma.md",
+        "score": 1.3
+      },
+      {
+        "name": "OdontoApp",
+        "notes_file": "docs/discovery/sources/odontoapp.md",
+        "score": 1.05
+      }
     ],
     "problema": "Los consultorios odontológicos pequeños de Argentina (2 a 5 profesionales, varios sillones, con secretaria) gestionan la agenda en papel, planillas o WhatsApp, lo que produce solapamientos de profesionales y sillones; el sistema garantiza una agenda sin conflictos.",
     "usuarios": [
@@ -136,6 +240,31 @@
       "¿Algunas prestaciones exigen un sillón específico?",
       "¿Zona horaria y granularidad? (propuesta: America/Argentina/Buenos_Aires)",
       "¿Stack de implementación?"
+    ]
+  },
+  "kb": {
+    "created_by": "kb-creator",
+    "source": "ingest",
+    "discovery": {
+      "problem": "Los consultorios odontológicos pequeños de Argentina (2 a 5 profesionales, varios sillones, con secretaria) gestionan la agenda en papel, planillas o WhatsApp, lo que produce solapamientos de profesionales y sillones; el sistema garantiza una agenda sin conflictos.",
+      "system_type": "web_app",
+      "domain": "salud: gestion de turnos y agenda de consultorios odontologicos",
+      "scale": "team",
+      "stack": "TypeScript full-stack: dominio puro + Vitest, Node.js + Fastify + SQLite (API REST), React + Vite",
+      "needs_infra": true
+    },
+    "files": [
+      "knowledge-base/01_vision_y_objetivos.md",
+      "knowledge-base/02_descripcion_general.md",
+      "knowledge-base/03_actores_y_roles.md",
+      "knowledge-base/04_modelo_de_datos.md",
+      "knowledge-base/05_reglas_de_negocio.md",
+      "knowledge-base/06_funcionalidades.md",
+      "knowledge-base/07_flujos_principales.md",
+      "knowledge-base/08_arquitectura_propuesta.md",
+      "knowledge-base/09_decisiones_y_supuestos.md",
+      "knowledge-base/10_preguntas_abiertas.md",
+      "knowledge-base/README.md"
     ]
   }
 }
