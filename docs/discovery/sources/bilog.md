@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Producto | Bilog (Gestión Odontológica; app móvil "Bilog Gestión Odontológica"; asistente iAngela) [F1][F5] |
-| Empresa proveedora | Bilog (Bilog Soluciones Informáticas según resultados de búsqueda); razón social completa: No evidenciado [F1] |
+| Empresa proveedora | Bilog (Bilog Soluciones Informáticas según resultados de búsqueda); razón social completa: No evidenciado [F1]. Desarrollador publicado en la ficha de App Store: Aldo Pernumian (es el desarrollador que figura en la tienda, no la razón social; verificado manualmente el 2026-10-06) [F5] |
 | País de origen | Argentina (sitio oficial) [F1] |
 | URL oficial | https://bilog.com.ar/ |
 | Segmento objetivo | Consultorios y clínicas; soporta gestión de varios consultorios (Declarado) [F1] |
@@ -48,11 +48,11 @@
 ## 7. Operación
 - Gestión multi-sucursal ("varios consultorios") (Declarado) [F1]
 - Soporte local en Argentina y vía WhatsApp (Declarado); centro de ayuda público (Comprobado su existencia) [F1][F2]
-- Exportación: ante la cancelación del servicio puede entregar datos en CSV (Comprobado) [F4]
+- Exportación: los términos contemplan una exportación opcional de datos (p. ej., CSV). La cláusula 10 dice que Bilog "podrá poner a disposición una exportación... en formatos estándar... tales como CSV u otros formatos técnicos equivalentes": es una facultad del proveedor, no una obligación (Comprobado en términos; verificado manualmente el 2026-10-06) [F4]
 - Roles y permisos, auditoría, capacitación: No evidenciado (el centro de ayuda no los lista) [F2]
 
 ## 8. Seguridad y cumplimiento
-- Cita la Ley 25.326: el tratamiento queda sujeto a la legislación vigente, incluida la Ley 25.326 (Comprobado en términos) [F4]
+- Cita la Ley 25.326: el tratamiento queda sujeto a la legislación vigente, incluida la Ley 25.326 (Comprobado en términos, cláusula 13.3; verificado manualmente el 2026-10-06) [F4]
 - Medidas de seguridad "razonables y proporcionadas": controles de acceso, salvaguardas técnicas, monitoreo y respaldos (Comprobado, texto legal) [F4]
 - Respaldos periódicos en modalidad nube; en modalidad local, a cargo del usuario (Comprobado) [F4]
 - El usuario es responsable del cumplimiento normativo del tratamiento de datos; no se garantiza disponibilidad ininterrumpida (Comprobado) [F4]
@@ -65,12 +65,12 @@
 
 ## 10. Fortalezas, limitaciones y diferenciales evidentes
 **Fortalezas:** trayectoria declarada de más de 20 años; app nativa móvil publicada en tiendas; centro de ayuda público con cobertura de liquidaciones, caja y presupuestos; términos que citan la Ley 25.326 y la política de respaldos.
-**Limitaciones:** sin precios públicos; no se evidencia prueba gratuita, roles/auditoría ni integración explícita con ARCA o Mercado Pago; la valoración de App Store (3,5/5, 15 valoraciones) incluye comentarios sobre pérdida de eficiencia de flujo tras una actualización [F5].
+**Limitaciones:** sin precios públicos; no se evidencia prueba gratuita, roles/auditoría ni integración explícita con ARCA o Mercado Pago; la valoración de App Store es de 3,5/5 con 15 valoraciones [F5]; una reseña con comentarios sobre pérdida de eficiencia de flujo tras una actualización no fue verificada manualmente.
 **Diferenciales:** asistente de IA (iAngela) con análisis radiográfico declarado; proceso de liquidación a obras sociales y profesionales.
 
 ## 11. Evidencia de adopción
 - "+1.500 clínicas y consultorios, +5.000 usuarios activos, +10 millones de pacientes, +150.000 turnos mensuales" (Declarado) [F1]
-- App Store Argentina: 3,5 sobre 5, 15 valoraciones [F5]
+- App Store Argentina: 3,5 sobre 5, 15 valoraciones (verificado manualmente el 2026-10-06) [F5]
 - Google Play: ficha no accesible mediante la herramienta; puntaje no relevado [F7]
 - Capterra/GetApp: no se hallaron reseñas verificables específicas
 
@@ -80,7 +80,7 @@
 - Integraciones locales y WhatsApp: WhatsApp/SMS declarado; ARCA, Mercado Pago y API no evidenciados.
 - Administración, cobros, facturación: caja, liquidaciones y reportes comprobados en ayuda; facturación electrónica comprobada en tienda.
 - Experiencia del paciente: reserva online y QR declarados, sin demostración.
-- Seguridad, exportación, trazabilidad: Ley 25.326 citada, respaldos y exportación CSV al cierre comprobados; auditoría no evidenciada.
+- Seguridad, exportación, trazabilidad: Ley 25.326 citada y respaldos comprobados; exportación opcional de datos (p. ej., CSV) contemplada en los términos; auditoría no evidenciada.
 - Precio y facilidad de adopción: sin precios ni prueba gratuita publicados; sin permanencia (declarado).
 
 ## Fuentes

@@ -12,11 +12,14 @@
 
 ## 1. Gestión de agenda
 - Vistas día, semana y mes; botón "Compacto" para móvil (Comprobado, documentación) [F5]
-- Múltiples profesionales: una columna por profesional, con color propio; no permite que un profesional esté en dos lugares a la vez (Comprobado) [F5]
-- Múltiples sillones: se configura por sede la cantidad de pacientes simultáneos; con valor 1, impide solapamientos entre profesionales (Comprobado) [F5]
+- Múltiples profesionales: una columna por profesional, con color propio; de fábrica, la agenda "solo controla que un profesional no esté en dos lugares a la vez" (Comprobado) [F5]
+- Múltiples sillones: el campo "Sillones" es una cantidad por sede ("cuántos pacientes podés atender a la vez"), no una asignación de sillón por turno (Comprobado) [F5]
+- Solapamientos: en la agenda interna, al superar la capacidad "te AVISA pero no te frena" y "el botón de forzar el sobreturno sigue estando"; el bloqueo real existe solo en la reserva online, donde el horario desaparece (Comprobado) [F5]
+- Turno fuera del horario del profesional: "es un aviso, no un bloqueo"; se puede "Agendar igual" (Comprobado) [F5]
 - Duración variable: sugerida desde la lista de precios y ajustable por turno (Comprobado) [F5]
-- Bloqueos: botón "Bloquear días", hasta 90 días consecutivos, no cancela turnos existentes (Comprobado) [F5]
-- Sobreturnos: alerta al exceder la capacidad y permite forzar (Comprobado) [F5]
+- Bloqueos: botón "Bloquear días", hasta 90 días consecutivos; "Bloquear un día no cancela los turnos que ya tenías agendados ahí: esos los seguís viendo y los reprogramás vos" (Comprobado) [F5]
+- Sobreturnos: aviso al exceder la capacidad y permite forzar (Comprobado) [F5]
+- Verificación manual de F5 por la autora el 2026-10-06: corrige la redacción anterior, que afirmaba que la capacidad por sede "impide" solapamientos.
 - Sala de espera con lista por orden de llegada; se marca en rojo tras 20 minutos (Comprobado) [F5]
 
 ## 2. Turnos digitales
@@ -27,7 +30,7 @@
 - Chatbot, lista de espera (distinta de la sala de espera): No evidenciado
 
 ## 3. Automatización
-- Recordatorio por WhatsApp: el mensaje incluye paciente, fecha, hora, profesional, servicio, sede y enlace de confirmación; en la documentación el personal abre el chat con el texto precargado y lo envía manualmente (Comprobado) [F5]
+- Recordatorio por WhatsApp: el mensaje incluye paciente, fecha, hora, profesional, servicio, sede y enlace de confirmación; en la documentación el personal abre el chat con el texto precargado y lo envía manualmente: "Se abre el chat del paciente con el mensaje ya escrito, y vos lo revisás y lo enviás: no se manda solo" (Comprobado; verificado manualmente el 2026-10-06) [F5]
 - Planes pagos: "WhatsApp automático" incluido (Declarado) [F2]
 - Seguimiento de ausentes, recuperación, controles periódicos, campañas: No evidenciado
 
@@ -55,7 +58,7 @@
 - Roles: Titulares, Profesionales y Administrativos (Comprobado) [F4]
 - Exportación completa de pacientes, historias, turnos y cuentas en Excel desde Configuración; archivos (radiografías, fotos) por solicitud (Comprobado) [F4]
 - Documentación pública (/docs) y soporte prioritario en plan Max (Declarado) [F2][F5]
-- Auditoría general de acciones: No evidenciado (solo registro de firma remota) [F4]
+- Registro de actividad de la cuenta: "sacar una marca de ausente queda anotada en el registro de actividad de la cuenta", y al borrar una seña "queda registrado quién lo hizo" (Comprobado; verificado manualmente el 2026-10-06) [F5]; registro de firma remota [F4]. Alcance general de la auditoría: No evidenciado
 
 ## 8. Seguridad y cumplimiento
 - Datos en PostgreSQL (Supabase) sobre AWS São Paulo, Brasil; HTTPS/TLS y AES-256 en reposo (Comprobado) [F4]
@@ -74,19 +77,19 @@
 ## 10. Fortalezas, limitaciones y diferenciales evidentes
 **Fortalezas:** plan gratuito sin límite de pacientes con agenda y odontograma; documentación pública detallada y verificable de agenda, reserva online, sedes y roles; precios en ARS y USD publicados; exportación Excel y respaldos diarios.
 **Limitaciones:** el recordatorio por WhatsApp documentado es de envío manual en el plan base; sin evidencia de facturación ARCA, obras sociales ni Mercado Pago; datos alojados en Brasil; Ley 25.326 no citada; funciones de IA con costo por créditos.
-**Diferenciales:** modelo gratuito de base; reserva online con aprobación y control de capacidad por sede; firma digital con trazabilidad (hash SHA-256).
+**Diferenciales:** modelo gratuito de base; reserva online con aprobación; control de capacidad por sede con aviso en la agenda interna y bloqueo en la reserva online; registro de actividad de la cuenta; firma digital con trazabilidad (hash SHA-256).
 
 ## 11. Evidencia de adopción
 - "2.714 consultorios registrados usando Odonthia" (Declarado) [F1]
 - Casos de éxito y reseñas verificables (Capterra, Google Play, App Store): no halladas
 
 ## Evidencia para puntuación (no puntuar, solo resumir en 1 línea por criterio)
-- Turnos y automatización: agenda multi-profesional, bloqueos, sobreturnos y reserva online comprobados; recordatorio WhatsApp manual en base, automático en plan pago (declarado).
+- Turnos y automatización: agenda multi-profesional, bloqueos, sobreturnos y reserva online comprobados; el control de solapamientos en la agenda interna es un aviso forzable (bloquea solo en la reserva online); recordatorio WhatsApp manual en base, automático en plan pago (declarado).
 - Clínica odontológica: odontograma, periodontograma y presupuestos declarados; firma digital comprobada.
 - Integraciones locales y WhatsApp: WhatsApp y calendarios declarados; sin ARCA ni Mercado Pago.
 - Administración, cobros, facturación: señas comprobadas; caja declarada; sin facturación fiscal evidenciada.
 - Experiencia del paciente: reserva online personalizable, QR y confirmación por enlace comprobados.
-- Seguridad, exportación, trazabilidad: cifrado, respaldos diarios, roles y exportación Excel comprobados; Ley 25.326 no citada.
+- Seguridad, exportación, trazabilidad: cifrado, respaldos diarios, roles, exportación Excel y registro de actividad de la cuenta comprobados; Ley 25.326 no citada.
 - Precio y facilidad de adopción: plan gratuito, sin tarjeta, importación CSV; planes de pago publicados.
 
 ## Fuentes
@@ -96,6 +99,6 @@
 | F2 | precios | https://odonthia.com/planes | 2026-10-03 |
 | F3 | oficial (funcionalidades) | https://odonthia.com/funcionalidades | 2026-10-03 |
 | F4 | oficial (seguridad) | https://odonthia.com/seguridad | 2026-10-03 |
-| F5 | ayuda (documentación: agenda y turnos) | https://odonthia.com/docs/agenda-y-turnos.md | 2026-10-03 |
+| F5 | ayuda (documentación: agenda y turnos; verificada manualmente el 2026-10-06) | https://odonthia.com/docs/agenda-y-turnos.md | 2026-10-03 |
 | F6 | ayuda (documentación: reserva online) | https://odonthia.com/docs/reserva-online.md | 2026-10-03 |
 | F7 | ayuda (índice de documentación) | https://odonthia.com/docs | 2026-10-03 |

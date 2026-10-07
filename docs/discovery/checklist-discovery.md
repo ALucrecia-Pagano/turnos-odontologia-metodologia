@@ -43,7 +43,7 @@ Los cinco primeros por evidencia pública ponderada (matriz B) son:
 
 | Puesto | Sistema | Total |
 |---|---|---|
-| 1 | Odonthia | 3,50 |
+| 1 | Odonthia | 3,25 |
 | 2 | DentalCore | 3,15 |
 | 3 | Dentalink | 3,00 |
 | 4 | Open Dental | 2,95 |
@@ -126,7 +126,8 @@ Los cinco primeros por evidencia pública ponderada (matriz B) son:
 5. El tamaño del segmento (2 a 5 profesionales, con secretaria y varios sillones) no tiene datos de mercado que lo respalden.
 6. Sin recordatorios por WhatsApp, el MVP puede parecer incompleto frente a herramientas gratuitas como Odonthia, SimpleTurno o Turnito.
 7. Un producto real exigiría cumplir la Ley 25.326 (datos personales) y la Ley 26.529 (derechos del paciente). En el mercado es habitual alojar los datos en el exterior.
-8. La evidencia de mercado proviene de resúmenes de páginas. El sitio argentino de Doctoralia no fue accesible, y las cifras de adopción son declaraciones de los proveedores.
+8. La evidencia de mercado proviene de resúmenes de páginas. El sitio argentino de Doctoralia no fue accesible, y las cifras de adopción son declaraciones de los proveedores. El 2026-10-06 la autora verificó manualmente cinco fuentes (ver "Verificación de fuentes" en el informe); el resto no se verificó a mano.
+9. **El MVP puede resultar demasiado estricto en el uso real.** El competidor mejor documentado (Odonthia) eligió avisar en lugar de bloquear: en su agenda interna, superar la capacidad o agendar fuera de horario genera un aviso que se puede forzar ("una urgencia un domingo es legítima"). El MVP, en cambio, prohíbe los sobreturnos y rechaza los turnos fuera de horario.
 
 ## 11. Preguntas abiertas
 
@@ -136,6 +137,7 @@ Ninguna bloquea el cierre de Discovery. Se resuelven en la propuesta del change 
 2. ¿Un turno puede marcarse "ausente" antes de su hora de inicio?
 3. ¿Qué transiciones de estado son válidas? Por ejemplo, si se puede reprogramar un turno atendido o reactivar uno cancelado.
 4. ¿Qué pasa con los turnos existentes cuando se crea un bloqueo que los pisa?
+   *Referencia de mercado, no decidida:* en Odonthia, "bloquear un día no cancela los turnos que ya tenías agendados ahí: esos los seguís viendo y los reprogramás vos" (documentación de agenda, verificada manualmente el 2026-10-06).
 5. ¿Algunas prestaciones exigen un sillón específico?
 6. ¿Qué zona horaria y qué granularidad de horario se usan? Se propone America/Argentina/Buenos_Aires.
 7. ¿Con qué stack se implementa? Lo define la autora.
