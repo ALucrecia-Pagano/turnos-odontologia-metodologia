@@ -28,7 +28,7 @@
 - Historial de cambios de estado del turno (quién, cuándo, de qué estado a cuál).
 - Datos mínimos y **ficticios** del paciente: nombre, DNI, teléfono, obra social como texto.
 - Tres roles: odontólogo, recepción, administrador.
-- Interfaz web con vistas diaria y semanal por profesional y por sillón, y vista de recepción por sillón (C-22 a C-29, posteriores al dominio y la API; frontend cuidado).
+- Interfaz web con vistas diaria y semanal por profesional y por sillón, y vista de recepción por sillón (C-25 a C-33, posteriores al dominio y la API; frontend cuidado).
 - Diferenciadores: mensajes de rechazo explicativos y vista de recepción por sillón.
 
 ## Fuera de alcance (MVP)
@@ -56,4 +56,4 @@ Orientadas a la entrega académica (trabajo individual). El avance del 2026-10-0
 
 ## Restricciones relevantes
 
-Avance el 2026-10-08 (solo Discovery, ya hecho); entrega final el jueves 2026-10-15 · trabajo individual · tests para cada escenario del spec · solo datos ficticios · sin credenciales en el repo · C-02 chico (dominio puro) y UI en changes posteriores (C-22 a C-29) · interfaz web con frontend cuidado. Detalle de riesgos en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
+Avance el 2026-10-08 (solo Discovery, ya hecho); entrega final el jueves 2026-10-15 · trabajo individual · tests para cada escenario del spec · solo datos ficticios · sin credenciales en el repo · C-02 chico (dominio puro) y UI en changes posteriores (C-25 a C-33) · interfaz web con frontend cuidado. Detalle de riesgos en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).

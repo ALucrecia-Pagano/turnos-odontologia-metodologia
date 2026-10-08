@@ -53,7 +53,7 @@
 **Trade-offs aceptados**: ligera redundancia de mensajes.
 
 ### DD-09 — C-02 = solo "crear un turno sin solapamientos por profesional y por sillón"
-**Decisión**: el change evaluado en el ciclo OPSX del TP es C-02 `crear-turno-sin-solapamientos` (C-01 `fundacion-monorepo-y-dominio` es su prerrequisito técnico: estructura del repo y paquete de dominio vacío, sin lógica de negocio). C-02 cubre únicamente la regla de no solapamiento: solapamiento por profesional (RN-AG-01), solapamiento por sillón (RN-AG-02), duración del turno según la prestación (RN-AG-07), rechazo de duración no positiva (`INVALID_DURATION`, parte mínima de RN-AG-09 / US-007 CA-1: un intervalo con fin <= inicio rompe la lógica de solapamiento semiabierto) y el caso borde de turnos consecutivos (fin == inicio no es solapamiento; intervalos semiabiertos). Corresponde a US-001 (acotada), US-002, US-003 y el criterio de duración positiva de US-007, en el paquete de dominio de Python (`backend/app/domain`, tests con pytest); sin API, sin BD, sin JWT, sin UI. El cambio de stack de DD-01 no modifica este alcance ni sus escenarios. Horario de atención y bloqueos (US-004), no en el pasado (US-005), mensajes completos (US-006) y el resto de US-007 (granularidad de 5 min, referencias, medianoche) pasan a C-03 a C-08 (`validar-duracion-y-referencias`, `hora-local-y-turno-en-un-dia`, `horario-de-atencion`, `bloqueos-de-agenda`, `no-turnos-en-el-pasado`, `mensajes-de-conflicto-en-espanol`); la zona horaria queda en C-04.
+**Decisión**: el change evaluado en el ciclo OPSX del TP es C-02 `crear-turno-sin-solapamientos` (C-01 `fundacion-backend-y-dominio` es su prerrequisito técnico: `backend/` con pytest y paquete de dominio vacío, sin lógica de negocio). C-02 cubre únicamente la regla de no solapamiento: solapamiento por profesional (RN-AG-01), solapamiento por sillón (RN-AG-02), duración del turno según la prestación (RN-AG-07), rechazo de duración no positiva (`INVALID_DURATION`, parte mínima de RN-AG-09 / US-007 CA-1: un intervalo con fin <= inicio rompe la lógica de solapamiento semiabierto) y el caso borde de turnos consecutivos (fin == inicio no es solapamiento; intervalos semiabiertos). Corresponde a US-001 (acotada), US-002, US-003 y el criterio de duración positiva de US-007, en el paquete de dominio de Python (`backend/app/domain`, tests con pytest); sin API, sin BD, sin JWT, sin UI. El cambio de stack de DD-01 no modifica este alcance ni sus escenarios. Horario de atención y bloqueos (US-004), no en el pasado (US-005), mensajes completos (US-006) y el resto de US-007 (granularidad de 5 min, referencias, medianoche) pasan a C-03 a C-08 (`validar-duracion-y-referencias`, `hora-local-y-turno-en-un-dia`, `horario-de-atencion`, `bloqueos-de-agenda`, `no-turnos-en-el-pasado`, `mensajes-de-conflicto-en-espanol`); la zona horaria queda en C-04.
 **Contexto**: C-02 debe ser chico y terminable; la regla de solapamiento es el diferenciador del producto y se puede probar sin ninguna otra regla.
 **Origen**: decisión del usuario en el Discovery; checklist §5 y restricciones de la cátedra (change chico y terminable). Alcance de reglas adicionales decidido en Q-13 (resuelta 2026-10-07) en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
 
@@ -68,7 +68,7 @@
 ### DD-11 — Autenticación con JWT (reemplaza al rol simulado)
 **Decisión**: la autenticación usa **JWT**. `POST /api/auth/login` recibe usuario y contraseña y devuelve un token de acceso firmado con `JWT_SECRET` (claims `sub`, `role`, `exp`); las rutas protegidas exigen `Authorization: Bearer <token>`. Las contraseñas se guardan solo como hash. Se mantienen los tres roles (`odontologo`, `recepcion`, `administrador`) y la matriz RBAC de [03_actores_y_roles.md](03_actores_y_roles.md).
 **Contexto**: impuesto por la cátedra (DD-01). Reemplaza a SU-06 v1 (rol simulado sin autenticación).
-**Alcance**: es un change posterior a C-02, en la API base (C-16) y el login de la web (C-22). **No** es parte de C-02, que es solo dominio. Gobernanza **CRITICAL**: aprobación humana explícita antes de escribir código.
+**Alcance**: es un change posterior a C-02: `autenticacion-jwt-y-roles` (C-19) en la API y `ui-login-y-sesion` (C-26) en la web. **No** es parte de C-02, que es solo dominio. Gobernanza **CRITICAL**: aprobación humana explícita antes de escribir código.
 **Trade-offs aceptados**: hay que manejar secretos (`JWT_SECRET`, contraseñas del seed) solo por `.env`; sin refresh tokens ni revocación en el MVP (**Suposición:** un token de acceso con vencimiento corto alcanza, SU-06).
 **Origen**: decisión de la cátedra (2026-10-08).
 
@@ -110,7 +110,7 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Suposición:** un solo token de acceso con vencimiento corto (`JWT_EXPIRES_MIN`); sin refresh tokens, sin revocación, sin recuperación de contraseña ni alta de usuarios por autoservicio (los usuarios los crea el administrador o el seed). Hash de contraseñas con un algoritmo lento estándar (bcrypt o argon2).
 **Origen**: DD-11 (JWT exigido por la cátedra) + plazo acotado.
 **Riesgo si es falso**: la cátedra puede esperar cierre de sesión con revocación o refresh tokens.
-**Cómo validar**: confirmar con la cátedra al llegar a C-16. Es dominio de gobernanza CRITICAL.
+**Cómo validar**: confirmar con la cátedra al llegar a C-19. Es dominio de gobernanza CRITICAL.
 **Reemplaza a**: SU-06 v1 — "Sin autenticación real en el MVP: el rol se simula con sesión de desarrollo; sin contraseñas ni JWT". **Reemplazada por la decisión de la cátedra (2026-10-08)**; ver DD-11.
 
 ### SU-07 — Qué estados ocupan agenda
@@ -131,10 +131,10 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Riesgo si es falso**: casi nulo en consultorios diurnos.
 
 ### SU-10 — Versiones y herramientas complementarias del stack de la cátedra
-**Suposición:** Python 3.12 o superior; FastAPI 0.110+, Pydantic 2, SQLAlchemy 2, PostgreSQL 16, Redis 7, pytest 8; React 18, TypeScript 5 (`strict`), Vite 5; Docker Compose v2. Herramientas que la cátedra no nombra y la KB propone: **Alembic** para migraciones (la de SQLAlchemy), **mypy `--strict`** para el chequeo de tipos del backend, el paquete `tzdata` para que `zoneinfo` funcione en Windows. La herramienta de tests de componentes del frontend se elige al llegar a C-22.
+**Suposición:** Python 3.12 o superior; FastAPI 0.110+, Pydantic 2, SQLAlchemy 2, PostgreSQL 16, Redis 7, pytest 8; React 18, TypeScript 5 (`strict`), Vite 5; Docker Compose v2. Herramientas que la cátedra no nombra y la KB propone: **Alembic** para migraciones (la de SQLAlchemy), **mypy `--strict`** para el chequeo de tipos del backend, el paquete `tzdata` para que `zoneinfo` funcione en Windows. La herramienta de tests de componentes del frontend se elige al llegar a C-25.
 **Origen**: versiones estables al momento; la KB no las fija como contrato.
 **Riesgo si es falso**: ajuste menor de dependencias.
-**Cómo validar**: confirmar al inicializar `backend/pyproject.toml` y `frontend/package.json` (C-01).
+**Cómo validar**: confirmar al inicializar `backend/pyproject.toml` (C-01), Docker Compose (C-13), Alembic (C-14) y `frontend/package.json` (C-25).
 
 ### SU-11 — Sin funcionalidades asincrónicas en el MVP
 **Suposición:** ninguna funcionalidad del MVP es asincrónica; Redis se levanta en Compose pero no se usa hasta los recordatorios u otras funcionalidades de la épica 7 (DD-10).

@@ -69,7 +69,7 @@ Regla de dependencias: `api`, `usecases`, `repositories`, `db` y `auth` → `dom
 |------|-------------|-----------|
 | Dominio (unit) | pytest (`@pytest.mark.parametrize` para tablas de casos) | Todos los escenarios de 06 (en C-02: US-001 acotada, US-002, US-003 y US-007 CA-1 parcial); reloj inyectado; sin BD ni red |
 | API (integración) | pytest + `TestClient` de FastAPI + PostgreSQL de test (servicio de Compose) | Contratos HTTP, JWT, transacciones y bloqueo de filas, códigos 400/401/403/409/422 |
-| UI (componentes) | **Suposición:** herramienta a definir al llegar a C-22 (SU-10) | Formularios, login y mensajes de error (changes de UI) |
+| UI (componentes) | **Suposición:** herramienta a definir al llegar a C-25 (SU-10) | Formularios, login y mensajes de error (changes de UI) |
 
 Los tests de integración usan PostgreSQL real (no un sustituto en memoria) porque el bloqueo de filas y `timestamptz` son parte de lo que se prueba.
 
@@ -77,7 +77,7 @@ Ciclo obligatorio: RED → GREEN → TRIANGULATE → REFACTOR; mínimo 2 casos p
 
 ## Seguridad
 
-- **Autenticación**: **JWT** (DD-11). `POST /api/auth/login` valida usuario y contraseña (guardada solo como hash) y devuelve un token de acceso firmado con `JWT_SECRET`, con `sub` (id de usuario), `role` y `exp`. Las rutas protegidas exigen `Authorization: Bearer <token>`. Es un change posterior a C-02 (la API base, C-16) y de gobernanza **CRITICAL**: aprobación humana explícita antes de escribir código.
+- **Autenticación**: **JWT** (DD-11). `POST /api/auth/login` valida usuario y contraseña (guardada solo como hash) y devuelve un token de acceso firmado con `JWT_SECRET`, con `sub` (id de usuario), `role` y `exp`. Las rutas protegidas exigen `Authorization: Bearer <token>`. Es un change posterior a C-02 (C-19 `autenticacion-jwt-y-roles`; el login de la web en C-26) y de gobernanza **CRITICAL**: aprobación humana explícita antes de escribir código.
 - **Autorización**: matriz RBAC de 03, aplicada con una dependencia de FastAPI a partir del rol del token; el dominio recibe el actor para las reglas de propiedad (RN-AC-01).
 - **Validación de input**: esquemas Pydantic en el borde de la API; el dominio revalida sus invariantes.
 - **Inyección SQL**: solo consultas de SQLAlchemy con parámetros ligados, nunca concatenación de SQL.
@@ -133,7 +133,7 @@ Todas se leen de `.env` (no versionado). `.env.example` lista los nombres **sin 
 
 ## Frontend cuidado
 
-Lineamientos para los changes de UI (C-22 a C-29; el discovery exige "frontend cuidado" y lo señala como riesgo por quedar al final del plazo; la UI arranca recién con la API completa, ver CHANGES.md):
+Lineamientos para los changes de UI (C-25 a C-33; el discovery exige "frontend cuidado" y lo señala como riesgo por quedar al final del plazo; la UI arranca recién con la API completa, ver CHANGES.md):
 
 - Sistema de diseño mínimo con tokens (color, espaciado, tipografía) en `shared/`; estados por color consistentes con el estado del turno.
 - Estados de carga, vacío y error en toda vista; mensajes de conflicto del dominio mostrados tal cual y con contexto.
@@ -145,4 +145,4 @@ Lineamientos para los changes de UI (C-22 a C-29; el discovery exige "frontend c
 
 Hitos: el avance del 2026-10-08 solo pide el Discovery (ya hecho), y la entrega final es el jueves 2026-10-15. El orden de trabajo lo fija `CHANGES.md` y no se ancla a ninguna fecha intermedia.
 
-Si el plazo aprieta: priorizar el camino crítico de `CHANGES.md` (dominio completo con tests, API de turnos, UI con agenda diaria y formulario de turno). Recortar en este orden los changes fuera del camino crítico: C-24 (vista semanal), C-27 (vista por sillón), C-28 y C-29 (UI de horarios, bloqueos y catálogos; con seeds y la API alcanza para operar) y C-18 (API de horarios; los horarios pueden venir de seeds). Postergar vistas antes que recortar tests.
+Si el plazo aprieta: priorizar el camino crítico de `CHANGES.md` (dominio completo con tests, API de turnos, UI con agenda diaria y formulario de turno). Recortar en este orden los changes fuera del camino crítico: C-31 (vista por sillón, diferenciador), C-28 (vista semanal, imprescindible según el informe), C-32 y C-33 (UI de horarios, bloqueos y catálogos; con seeds y la API alcanza para operar) y C-21 (API de horarios; los horarios pueden venir de seeds). Postergar vistas antes que recortar tests.

@@ -42,7 +42,7 @@ Leyenda: C crear · R leer · U actualizar · D borrar · `—` sin acceso · `p
 - Las contraseñas se guardan solo como hash. Los usuarios del seed son ficticios y su contraseña sale de `.env` (`SEED_USER_PASSWORD`); ninguna credencial queda en el repo.
 - **Suposición:** sin refresh tokens ni revocación en el MVP (SU-06).
 
-Es un change posterior a C-02 (API base, C-16; login en la web, C-22) y de gobernanza **CRITICAL**: requiere aprobación humana explícita antes de escribir código. Ver DD-11.
+Es un change posterior a C-02 (autenticación en la API, C-19; login en la web, C-26) y de gobernanza **CRITICAL**: requiere aprobación humana explícita antes de escribir código. Ver DD-11.
 
 ## Rutas públicas
 

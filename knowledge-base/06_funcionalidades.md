@@ -6,16 +6,15 @@ Organizadas por épica e historia de usuario (US-NNN). Cada criterio de aceptaci
 
 | Change | Slug | Historias | Capa |
 |---|---------------------------|--------|------|
-| C-01 | `fundacion-monorepo-y-dominio` | — (prerrequisito técnico) | Estructura `backend/` + `frontend/`, Docker Compose y paquete de dominio Python vacío (`backend/app/domain`) |
+| C-01 | `fundacion-backend-y-dominio` | — (prerrequisito técnico) | `backend/` con pytest y paquete de dominio Python vacío (`backend/app/domain`) |
 | C-02 | `crear-turno-sin-solapamientos` | 1 (solo US-001, US-002, US-003 y US-007 CA-1 parcial: duración positiva) | Dominio puro en Python (`backend/app/domain`, pytest) |
 | C-03 a C-08 | `validar-duracion-y-referencias`, `hora-local-y-turno-en-un-dia`, `horario-de-atencion`, `bloqueos-de-agenda`, `no-turnos-en-el-pasado`, `mensajes-de-conflicto-en-espanol` | 1 (US-004, US-005, US-006, resto de US-007) y 2 | Dominio |
 | C-09 | `catalogo-y-pacientes-dominio` | 3 | Dominio |
 | C-10 a C-12 | `transiciones-de-estado-del-turno`, `reprogramar-turno`, `historial-de-transiciones` | 4 | Dominio |
-| C-13 a C-15 | `db-sqlite-y-catalogos`, `persistencia-horarios-y-bloqueos`, `persistencia-turnos-e-historial` | 1–5 | Persistencia PostgreSQL + SQLAlchemy |
-| C-16 a C-21 | `api-base-y-rol-simulado` a `api-consulta-de-agenda` | 1–5 | API REST FastAPI (C-16 incluye la autenticación JWT) |
-| C-22 a C-29 | `web-base-y-rol-simulado` a `ui-catalogos-y-pacientes` | 5, 6 | React + TypeScript + Vite (C-22 incluye el login) |
-
-> Los slugs de C-01, C-13, C-16 y C-22 todavía reflejan el stack anterior (`monorepo`, `sqlite`, `rol-simulado`). Se renombran al actualizar `CHANGES.md`, que es la fuente de verdad de los nombres; esta tabla los copia tal cual.
+| C-13 a C-14 | `docker-compose-y-postgres`, `migraciones-alembic` | — (infraestructura) | Docker Compose (PostgreSQL + Redis sin uso) y Alembic |
+| C-15 a C-17 | `persistencia-catalogos-y-pacientes`, `persistencia-horarios-y-bloqueos`, `persistencia-turnos-e-historial` | 1–5 | Persistencia PostgreSQL + SQLAlchemy |
+| C-18 a C-24 | `api-base-fastapi`, `autenticacion-jwt-y-roles` (6) a `api-consulta-de-agenda` | 1–6 | API REST FastAPI (C-19: autenticación JWT) |
+| C-25 a C-33 | `frontend-base-react-vite`, `ui-login-y-sesion` (6) a `ui-catalogos-y-pacientes` | 5, 6 | React + TypeScript + Vite (C-26: login) |
 
 **Decisión de la autora (Q-13, 2026-10-07):** US-005 (no dar turnos en el pasado), US-006 (mensajes de conflicto completos) y el resto de US-007 (granularidad, referencias, medianoche) van a C-03 a C-08, porque "no en el pasado" y los mensajes en hora local necesitan la zona horaria, que vive en C-04. De C-02 solo entra el criterio de duración positiva de US-007. No se renumera ninguna historia.
 
