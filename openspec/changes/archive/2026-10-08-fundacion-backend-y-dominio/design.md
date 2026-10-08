@@ -106,6 +106,8 @@ El helper parametriza la allowlist como constante de módulo, no como argumento:
 
 `test_domain_dependencies.py` primero verifica que `app/domain/__init__.py` existe (para no pasar en vacío si la ruta está mal) y luego hace `assert violations == [], formatted`, donde `formatted` tiene una línea por violación: `"{ruta relativa a backend}:{línea}: import no permitido en el dominio: '{módulo}'"`. La ruta del dominio se obtiene de `app.domain.__path__[0]`, no de una ruta escrita a mano. El formateo termina en una función pura del helper (`format_violations(violations: list[ForbiddenImport], base: Path) -> str`) para poder testearlo aparte.
 
+**Desvío en el apply (2026-10-08):** la ruta del dominio se obtiene con `importlib.util.find_spec("app.domain")` (de `spec.submodule_search_locations`) y no con `app.domain.__path__[0]`. Motivo: `__path__` exige importar el paquete, lo que ejecuta `app/domain/__init__.py`. Con el import prohibido de la tarea 5.1, el test se caía con `ModuleNotFoundError` antes de que la guardia reportara la violación. `find_spec` ubica el paquete sin ejecutarlo, así que la guardia siempre llega a mostrar su mensaje. Se mantiene que la ruta no se escribe a mano.
+
 ### D8 — Smoke test concreto
 
 `test_smoke.py` con dos casos: (a) `app.domain` es un paquete (`hasattr(app.domain, "__path__")` / `__spec__.submodule_search_locations` no vacío); (b) `Path(app.domain.__file__).parent` coincide con `backend/app/domain` calculado desde la ubicación del test (`Path(__file__).parents[2] / "app" / "domain"`), lo que prueba la instalación editable contra el código del repo.

@@ -179,7 +179,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 ## FASE 1 — Fundación y primer change
 
 ### [C-01] `fundacion-backend-y-dominio`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-10-08)
 - **Scope**: fundación mínima en Python. Sin lógica de negocio, sin Docker, sin PostgreSQL, sin Redis y sin frontend (van en C-13, C-14 y C-25).
   - `backend/pyproject.toml`: paquete instalable (`[build-system]` con hatchling; `pip install -e ".[dev]"` en un venv local), `requires-python = ">=3.12"`, extras `dev` (pytest 8, mypy), dependencia `tzdata` (para que `zoneinfo` funcione en Windows), configuración de pytest (`testpaths = ["tests"]`) y de `mypy --strict` con `python_version = "3.12"` sobre `app` y `tests` (SU-10).
   - Paquete `backend/app/` con `backend/app/domain/__init__.py` vacío.
