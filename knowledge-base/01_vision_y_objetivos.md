@@ -48,7 +48,7 @@ Orientadas a la entrega académica (trabajo individual). El avance del 2026-10-0
 
 | Métrica | Criterio |
 |---------|----------|
-| Cobertura de escenarios | Cada escenario del spec tiene al menos un test automatizado (Vitest, Strict TDD) |
+| Cobertura de escenarios | Cada escenario del spec tiene al menos un test automatizado (pytest, Strict TDD) |
 | Integridad de agenda | Ninguna combinación de entradas válidas produce dos turnos activos solapados para un mismo profesional o sillón |
 | Claridad de rechazo | Todo rechazo devuelve un código estable y un mensaje en español que identifica el turno o bloqueo en conflicto |
 | C-02 terminable | El change de dominio puro (C-02, sobre la base de C-01) queda completo y verde antes de empezar la interfaz |

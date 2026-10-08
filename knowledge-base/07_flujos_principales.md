@@ -2,23 +2,23 @@
 
 ## Flujo 1: Dar un turno
 
-> Flujo completo del MVP. C-02 implementa solo el núcleo de dominio `validateNewAppointment` con las reglas de solapamiento por profesional y por sillón (RN-AG-01, RN-AG-02), la duración por prestación, el rechazo de duración no positiva (`INVALID_DURATION`) y el caso de turnos consecutivos; no incluye API, transacción ni los códigos de horario, bloqueo, pasado ni referencias (`OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`), que van en C-03 a C-08 (el flujo completo con mensajes en español se cierra en C-08).
+> Flujo completo del MVP. C-02 implementa solo el núcleo de dominio `validate_new_appointment` (Python puro) con las reglas de solapamiento por profesional y por sillón (RN-AG-01, RN-AG-02), la duración por prestación, el rechazo de duración no positiva (`INVALID_DURATION`) y el caso de turnos consecutivos; no incluye API, transacción ni los códigos de horario, bloqueo, pasado ni referencias (`OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`), que van en C-03 a C-08 (el flujo completo con mensajes en español se cierra en C-08).
 
 **Disparador**: la secretaria completa el formulario de turno.
 **Actor**: secretaria / recepción (o administrador).
 
 **Pasos**:
 1. La UI envía `POST /api/appointments` con `{ patientId, professionalId, chairId, serviceId, startAt, durationMin? }` (`startAt` en ISO-8601 con offset; `durationMin` opcional).
-2. La API valida la forma de la entrada (Zod) y el rol (RN-AC-01).
-3. La API abre una transacción `BEGIN IMMEDIATE`.
-4. Carga el **contexto**: profesional, sillón, prestación, paciente, tramos laborales del profesional, bloqueos del día, turnos activos del profesional y del sillón que puedan solaparse, y `now`.
-5. Llama a `validateNewAppointment(input, context)` del dominio (puro).
+2. La API verifica el JWT (`Authorization: Bearer`), valida la forma de la entrada (esquema Pydantic) y el rol (RN-AC-01).
+3. La API abre una transacción en PostgreSQL y toma `SELECT ... FOR UPDATE` sobre la fila del profesional y la del sillón (en orden fijo).
+4. Carga el **contexto** con los repositorios SQLAlchemy: profesional, sillón, prestación, paciente, tramos laborales del profesional, bloqueos del día, turnos activos del profesional y del sillón que puedan solaparse, y `now` (UTC).
+5. Llama a `validate_new_appointment(input, context)` del dominio (Python puro).
 6. Si el resultado es `ok`: inserta el turno en `reservado` y la entrada de historial (`from_status` nulo) en la misma transacción; `COMMIT`; responde `201` con el turno.
 7. Si hay violaciones: `ROLLBACK`; responde `409` (solapamiento) o `422` (regla de validez) con la lista de violaciones.
 
 ```
-Recepción → UI → API ──(contexto)──► SQLite
-                  │  validateNewAppointment (dominio puro)
+Recepción → UI → API ──(contexto)──► PostgreSQL
+                  │  validate_new_appointment (dominio puro)
                   │◄─ ok | violaciones[]
                   ├─ ok  → INSERT turno + historial → 201
                   └─ err → 409/422 { violations: [...] }
@@ -43,9 +43,9 @@ Recepción → UI → API ──(contexto)──► SQLite
 
 **Casos de error**:
 - Entrada malformada → `400`.
-- Rol sin permiso → `403`; sin rol → `401`.
+- Rol sin permiso → `403`; sin JWT, o JWT inválido o vencido → `401`.
 - Referencia inexistente → `422 UNKNOWN_REFERENCE`.
-- Carrera entre dos altas simultáneas → la segunda se valida tras la primera dentro de su transacción y recibe el conflicto.
+- Carrera entre dos altas simultáneas para el mismo profesional o sillón → la segunda espera el bloqueo de fila, se valida tras el `COMMIT` de la primera y recibe el conflicto.
 
 ## Flujo 2: Reprogramar un turno
 
@@ -85,4 +85,4 @@ Recepción → UI → API ──(contexto)──► SQLite
 
 ## Flujo 6: Desarrollo guiado por tests (proceso)
 
-Cada escenario de [06_funcionalidades.md](06_funcionalidades.md) → un test Vitest en `packages/domain/test/` **antes** de escribir la regla (RED → GREEN → TRIANGULATE → REFACTOR). El dominio se prueba con tablas de casos y reloj fijo inyectado.
+Cada escenario de [06_funcionalidades.md](06_funcionalidades.md) → un test de pytest en `backend/tests/domain/` **antes** de escribir la regla (RED → GREEN → TRIANGULATE → REFACTOR). El dominio se prueba con tablas de casos (`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.

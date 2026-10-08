@@ -23,6 +23,12 @@ Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito téc
 **Impacto**: el MVP puede resultar demasiado rígido en uso real.
 **Resolución propuesta**: mantener estricto en el MVP (decisión de la autora) y modelar las reglas como componibles para habilitar sobreturnos/forzado con autorización en un change posterior (ver RN-AG-03).
 
+### IN-04 — Stack anterior fuera de la knowledge-base
+**Documento A dice** (esta KB, desde el 2026-10-08): stack de la cátedra (Python + FastAPI + JWT + SQLAlchemy + PostgreSQL + Redis + Docker Compose; React + TypeScript + Vite).
+**Documento B dice** (`CHANGES.md`, `CLAUDE.md`, `AGENTS.md`, `.atl/skill-registry.md` y el estado compartido): stack TypeScript full-stack (Fastify, SQLite, workspaces de npm, rol simulado), incluidos los slugs de C-01, C-13, C-16 y C-22.
+**Impacto**: alto para los agentes: leen `CLAUDE.md`/`AGENTS.md` primero y aplicarían el stack viejo (por ejemplo, la regla dura de `packages/domain` y las skills de TS). No afecta las reglas de negocio ni los escenarios de C-02.
+**Resolución propuesta**: regenerar `CHANGES.md` (roadmap-generator), `CLAUDE.md`/`AGENTS.md` (agent-instruction) y el registro de skills a partir de esta KB, en un paso aparte y **antes** del `/opsx:propose` de C-01.
+
 ## Preguntas abiertas (priorizadas)
 
 | ID | Prioridad | Pregunta | Default propuesto en el MVP | Bloquea | Decisor |
@@ -33,9 +39,10 @@ Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito téc
 | Q-05 | Media | ¿Algunas prestaciones exigen un sillón específico? | **Suposición:** no; cualquier prestación en cualquier sillón (SU-04) | C-09 (catálogo) | Autora |
 | Q-01 | Media | ¿Anticipación mínima para cancelar (p. ej. 24 h)? | **Suposición:** sin mínimo (SU-08) | C-10 | Autora |
 | Q-02 | Media | ¿Se puede marcar "ausente" antes de la hora de inicio? | **Suposición:** no; solo con `now >= inicio` (SU-08) | C-10 | Autora |
-| Q-07 | Cerrada | ¿Stack de implementación? | **Resuelta:** TypeScript full-stack (DD-01 a DD-05) | — | Autora |
+| Q-07 | Cerrada | ¿Stack de implementación? | **Resuelta por la cátedra (2026-10-08):** backend Python + FastAPI + JWT + SQLAlchemy + PostgreSQL + Redis, Docker Compose; frontend React + TypeScript + Vite (DD-01). Reemplaza la respuesta anterior (TypeScript full-stack, DD-01 v1) | — | Cátedra |
 | Q-08 | Media | ¿Qué estados ocupan agenda (¿`ausente` libera el hueco?) | **Suposición:** reservado/confirmado/atendido ocupan (SU-07) | C-02 (la regla de solapamiento depende de esto) | Autora |
-| Q-09 | Media | ¿Hace falta autenticación real en la entrega? | **Suposición:** no; rol simulado (SU-06) | C-16 (API base y rol simulado) y C-22 (web base) | Cátedra / Autora |
+| Q-09 | Cerrada | ¿Hace falta autenticación real en la entrega? | **Resuelta por la cátedra (2026-10-08):** sí, con JWT y los tres roles (DD-11). Queda abierto solo su alcance: sin refresh tokens ni revocación (**Suposición**, SU-06) | C-16 (API base) y C-22 (web base) | Cátedra |
+| Q-14 | Media | ¿La cátedra espera algún uso concreto de Redis en la entrega? | **Suposición:** no; el MVP no tiene funcionalidades asincrónicas y Redis queda levantado sin uso (DD-10, SU-11) | C-01 (servicio en Compose); ningún change de dominio | Cátedra |
 | Q-10 | Media | ¿El odontólogo puede dar turnos nuevos o solo recepción/administrador? | **Suposición:** solo recepción y administrador (ver 03) | C-16 (matriz RBAC) y C-19 (API dar turno) | Autora |
 | Q-11 | Baja | Al reprogramar, ¿el turno vuelve a `reservado` o conserva `confirmado`? | **Suposición:** vuelve a `reservado` (RN-TU-03) | C-11 (reprogramar turno) | Autora |
 | Q-12 | Baja | ¿Se admiten turnos que cruzan medianoche? | **Suposición:** no (RN-AG-10) | C-04 (turno en un día, Q-13) | Autora |
@@ -54,6 +61,7 @@ Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito téc
 | R7 | Un producto real exige Leyes 25.326 y 26.529 | Solo datos ficticios; datos mínimos; fuera de alcance del MVP |
 | R8 | Evidencia de mercado basada en resúmenes de páginas | Ver limitaciones del informe |
 | R9 | MVP demasiado estricto en uso real | Ver IN-03 |
+| R10 | Cambio de stack impuesto por la cátedra el 2026-10-08, a una semana de la entrega: más infraestructura (PostgreSQL, Redis, Docker) y JWT, con el mismo plazo | C-02 no cambia y se prueba con pytest puro, sin Docker; Redis sin uso en el MVP (SU-11); JWT en C-16, fuera del camino de C-02; se mantiene el plan de contingencia de 08 |
 
 ## Puntos no evidenciados en el Discovery
 
@@ -75,4 +83,4 @@ Cosas que el informe (`docs/discovery/informe-discovery.md`) o el checklist deja
 
 ## Campos de discovery de la KB con incertidumbre
 
-Los seis campos de `state.kb.discovery` se infirieron con confianza razonable (`problem` desde el discovery; `stack`, `system_type` desde la decisión confirmada; `scale` desde el segmento 2–5 profesionales). Única nota: [DISCOVERY] `scale` se fijó en `team` porque el consultorio es una sola organización con pocos usuarios internos; si se agregara reserva online del paciente pasaría a `public_multi_user`. Confirmar si cambia el alcance.
+Los seis campos de `state.kb.discovery` se infirieron con confianza razonable (`problem` desde el discovery; `stack`, `system_type` desde la decisión de stack, hoy la de la cátedra del 2026-10-08 (DD-01; ver IN-04 para el estado compartido); `scale` desde el segmento 2–5 profesionales). Única nota: [DISCOVERY] `scale` se fijó en `team` porque el consultorio es una sola organización con pocos usuarios internos; si se agregara reserva online del paciente pasaría a `public_multi_user`. Confirmar si cambia el alcance.

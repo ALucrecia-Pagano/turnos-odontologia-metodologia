@@ -35,13 +35,21 @@ Leyenda: C crear · R leer · U actualizar · D borrar · `—` sin acceso · `p
 
 ### Autenticación en el MVP
 
-**Suposición:** el MVP **no implementa autenticación real**. El rol se simula con una sesión de desarrollo (selector de rol en la UI y cabecera `X-Role` / `X-User-Id` en la API, solo con `NODE_ENV != production`). Motivo: plazo acotado (entrega final el jueves 2026-10-15), restricción de no guardar credenciales en el repo y foco del MVP en la lógica de agenda. Autenticación real (hash de contraseñas, sesión/JWT) queda para un change posterior y sería dominio de gobernanza **CRITICAL** (requiere aprobación humana explícita antes de escribir código). Ver SU-06.
+**Decisión de la cátedra (2026-10-08):** la autenticación es con **JWT** y reemplaza al rol simulado que proponía la versión anterior de esta KB (SU-06 v1). Se mantienen los tres roles (`odontologo`, `recepcion`, `administrador`) y la matriz RBAC de arriba.
+
+- `POST /api/auth/login` recibe usuario y contraseña y devuelve un token de acceso con `sub` (id de usuario), `role` y `exp`, firmado con `JWT_SECRET`.
+- Las rutas protegidas exigen `Authorization: Bearer <token>`; la API toma el rol y el usuario del token, no de cabeceras enviadas por el cliente.
+- Las contraseñas se guardan solo como hash. Los usuarios del seed son ficticios y su contraseña sale de `.env` (`SEED_USER_PASSWORD`); ninguna credencial queda en el repo.
+- **Suposición:** sin refresh tokens ni revocación en el MVP (SU-06).
+
+Es un change posterior a C-02 (API base, C-16; login en la web, C-22) y de gobernanza **CRITICAL**: requiere aprobación humana explícita antes de escribir código. Ver DD-11.
 
 ## Rutas públicas
 
 | Ruta | Descripción |
 |------|-------------|
 | `GET /api/health` | Estado del servicio |
+| `POST /api/auth/login` | Inicio de sesión; devuelve el JWT |
 | (Posterior al MVP) reserva online del paciente | No existe en el MVP |
 
-En el MVP todo el resto de la API requiere identificar un rol (sesión simulada).
+En el MVP todo el resto de la API requiere un JWT válido: sin token o con token inválido o vencido → `401`; rol sin permiso → `403`.

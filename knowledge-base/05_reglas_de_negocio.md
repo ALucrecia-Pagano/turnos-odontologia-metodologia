@@ -62,7 +62,7 @@ Estados: `reservado`, `confirmado`, `atendido`, `ausente`, `cancelado`. Origen: 
 ## Dominio: Acceso (RN-AC)
 
 - **RN-AC-01**: Permisos por rol según la matriz de [03_actores_y_roles.md](03_actores_y_roles.md); un Odontólogo solo modifica horarios, bloqueos y estados de **sus propios** turnos.
-- **RN-AC-02**: El MVP no guarda credenciales; la identificación de rol es simulada (SU-06).
+- **RN-AC-02**: El usuario se identifica con un JWT emitido al iniciar sesión; el rol sale del token. Las contraseñas se guardan solo como hash y ningún secreto (clave de firma, contraseñas) se versiona en el repo (DD-11, SU-06). *Antes de la decisión de la cátedra (2026-10-08): "el MVP no guarda credenciales; la identificación de rol es simulada".*
 
 ## Dominio: Excepciones globales (RN-GL)
 

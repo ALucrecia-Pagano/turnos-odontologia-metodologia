@@ -1,19 +1,21 @@
 # Funcionalidades
 
-Organizadas por épica e historia de usuario (US-NNN). Cada criterio de aceptación (CA) es un **escenario con test automatizado** (Vitest). El change C-02 `crear-turno-sin-solapamientos` cubre únicamente la regla "crear un turno sin solapamientos por profesional y por sillón" (US-001 acotada, US-002, US-003 y el criterio mínimo de duración positiva de US-007; dominio puro; C-01 es su prerrequisito técnico). El resto de la Épica 1 (US-004, US-005, US-006 y el resto de US-007) pasa a C-03 a C-08: ver las marcas **Change** en cada historia.
+Organizadas por épica e historia de usuario (US-NNN). Cada criterio de aceptación (CA) es un **escenario con test automatizado** (pytest en el dominio y la API). El change C-02 `crear-turno-sin-solapamientos` cubre únicamente la regla "crear un turno sin solapamientos por profesional y por sillón" (US-001 acotada, US-002, US-003 y el criterio mínimo de duración positiva de US-007; dominio puro; C-01 es su prerrequisito técnico). El resto de la Épica 1 (US-004, US-005, US-006 y el resto de US-007) pasa a C-03 a C-08: ver las marcas **Change** en cada historia.
 
 ## Orden de changes
 
 | Change | Slug | Historias | Capa |
 |---|---------------------------|--------|------|
-| C-01 | `fundacion-monorepo-y-dominio` | — (prerrequisito técnico) | Monorepo + `packages/domain` vacío |
-| C-02 | `crear-turno-sin-solapamientos` | 1 (solo US-001, US-002, US-003 y US-007 CA-1 parcial: duración positiva) | Dominio puro (`packages/domain`) |
+| C-01 | `fundacion-monorepo-y-dominio` | — (prerrequisito técnico) | Estructura `backend/` + `frontend/`, Docker Compose y paquete de dominio Python vacío (`backend/app/domain`) |
+| C-02 | `crear-turno-sin-solapamientos` | 1 (solo US-001, US-002, US-003 y US-007 CA-1 parcial: duración positiva) | Dominio puro en Python (`backend/app/domain`, pytest) |
 | C-03 a C-08 | `validar-duracion-y-referencias`, `hora-local-y-turno-en-un-dia`, `horario-de-atencion`, `bloqueos-de-agenda`, `no-turnos-en-el-pasado`, `mensajes-de-conflicto-en-espanol` | 1 (US-004, US-005, US-006, resto de US-007) y 2 | Dominio |
 | C-09 | `catalogo-y-pacientes-dominio` | 3 | Dominio |
 | C-10 a C-12 | `transiciones-de-estado-del-turno`, `reprogramar-turno`, `historial-de-transiciones` | 4 | Dominio |
-| C-13 a C-15 | `db-sqlite-y-catalogos`, `persistencia-horarios-y-bloqueos`, `persistencia-turnos-e-historial` | 1–5 | Persistencia SQLite |
-| C-16 a C-21 | `api-base-y-rol-simulado` a `api-consulta-de-agenda` | 1–5 | API REST |
-| C-22 a C-29 | `web-base-y-rol-simulado` a `ui-catalogos-y-pacientes` | 5, 6 | React + Vite |
+| C-13 a C-15 | `db-sqlite-y-catalogos`, `persistencia-horarios-y-bloqueos`, `persistencia-turnos-e-historial` | 1–5 | Persistencia PostgreSQL + SQLAlchemy |
+| C-16 a C-21 | `api-base-y-rol-simulado` a `api-consulta-de-agenda` | 1–5 | API REST FastAPI (C-16 incluye la autenticación JWT) |
+| C-22 a C-29 | `web-base-y-rol-simulado` a `ui-catalogos-y-pacientes` | 5, 6 | React + TypeScript + Vite (C-22 incluye el login) |
+
+> Los slugs de C-01, C-13, C-16 y C-22 todavía reflejan el stack anterior (`monorepo`, `sqlite`, `rol-simulado`). Se renombran al actualizar `CHANGES.md`, que es la fuente de verdad de los nombres; esta tabla los copia tal cual.
 
 **Decisión de la autora (Q-13, 2026-10-07):** US-005 (no dar turnos en el pasado), US-006 (mensajes de conflicto completos) y el resto de US-007 (granularidad, referencias, medianoche) van a C-03 a C-08, porque "no en el pasado" y los mensajes en hora local necesitan la zona horaria, que vive en C-04. De C-02 solo entra el criterio de duración positiva de US-007. No se renumera ninguna historia.
 
@@ -94,7 +96,7 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 - [ ] CA-1: inicio < `now` → `IN_THE_PAST`.
 - [ ] CA-2: inicio == `now` → válido.
 - [ ] CA-3: inicio > `now` → válido.
-- [ ] CA-4: el reloj se inyecta; el dominio no llama a `Date.now()`.
+- [ ] CA-4: el reloj se inyecta; el dominio no llama a `datetime.now()`.
 
 **Reglas**: RN-AG-06, RN-GL-04
 
@@ -192,11 +194,12 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 **Como** secretaria, **quiero** que el formulario muestre el motivo del rechazo, **para** corregirlo sin adivinar.
 - [ ] CA-1: se muestran los mensajes del dominio tal cual (código + texto). CA-2: el formulario sugiere duración por defecto de la prestación.
 
-## Épica 6: Roles y acceso simulado
+## Épica 6: Roles y acceso
 
-### US-050 — Sesión con rol simulado
-**Como** usuario de desarrollo, **quiero** elegir un rol, **para** probar los permisos sin credenciales.
+### US-050 — Sesión con rol (JWT)
+**Como** usuario del consultorio, **quiero** iniciar sesión y operar con mi rol, **para** que la API aplique mis permisos.
 - [ ] CA-1: la API aplica la matriz RBAC de 03 según el rol. CA-2: sin rol → `401`; rol sin permiso → `403`.
+- *El rol sale del JWT (DD-11), que reemplaza al rol simulado por decisión de la cátedra (2026-10-08). Los criterios de aceptación no cambian: "sin rol" = sin JWT válido.*
 
 ## Épica 7: Backlog posterior al MVP (no implementar)
 
