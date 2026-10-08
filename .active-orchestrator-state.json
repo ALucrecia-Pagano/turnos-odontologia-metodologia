@@ -275,52 +275,64 @@
     "created_by": "find-skill",
     "recommended": [
       {
-        "name": "tdd",
-        "repo": "mattpocock/skills",
-        "installs": "1M",
-        "why": "Red-green-refactor TDD in TypeScript; matches Strict TDD on the pure domain layer."
+        "name": "python-testing-patterns",
+        "repo": "wshobson/agents",
+        "installs": "34.7K",
+        "why": "pytest fixtures, parametrization and test patterns for the pure-Python domain (Strict TDD)."
       },
       {
-        "name": "vitest",
-        "repo": "antfu/skills",
-        "installs": "39.4K",
-        "why": "Vitest config, mocking and test patterns for the domain and API tests."
+        "name": "python-pro",
+        "repo": "jeffallan/claude-skills",
+        "installs": "7.8K",
+        "why": "Modern Python 3.12+ with type hints and mypy --strict style."
       },
       {
-        "name": "fastify-best-practices",
-        "repo": "mcollina/skills",
-        "installs": "66.8K",
-        "why": "Fastify routes, schemas, plugins and error handling, by a Fastify core maintainer."
+        "name": "fastapi",
+        "repo": "fastapi/fastapi",
+        "installs": "11.6K",
+        "why": "Official FastAPI skill: routes, Pydantic 2 models, dependencies, error handling."
       },
       {
-        "name": "vercel-react-best-practices",
-        "repo": "vercel-labs/agent-skills",
-        "installs": "775.9K",
-        "why": "React performance and component patterns for the agenda UI."
+        "name": "auth-implementation-patterns",
+        "repo": "wshobson/agents",
+        "installs": "17.7K",
+        "why": "JWT Bearer auth, roles and permissions patterns for the 3-role API."
+      },
+      {
+        "name": "sqlalchemy-alembic-expert-best-practices-code-review",
+        "repo": "wispbit-ai/skills",
+        "installs": "1.8K",
+        "why": "SQLAlchemy 2.x repositories and Alembic migrations best practices."
+      },
+      {
+        "name": "supabase-postgres-best-practices",
+        "repo": "supabase/agent-skills",
+        "installs": "435.1K",
+        "why": "PostgreSQL 16 schema, indexing and constraint practices (timestamptz, exclusion/overlap queries)."
+      },
+      {
+        "name": "docker-patterns",
+        "repo": "affaan-m/ecc",
+        "installs": "12.7K",
+        "why": "Dockerfile and Docker Compose patterns for backend/frontend/postgres/redis services."
       },
       {
         "name": "frontend-design",
         "repo": "anthropics/skills",
         "installs": "960.4K",
-        "why": "Official skill for polished, distinctive web UI."
+        "why": "Official skill for a polished, distinctive React UI."
+      },
+      {
+        "name": "vercel-react-best-practices",
+        "repo": "vercel-labs/agent-skills",
+        "installs": "775.9K",
+        "why": "React component and performance patterns for the agenda UI."
       },
       {
         "name": "web-design-guidelines",
         "repo": "vercel-labs/agent-skills",
         "installs": "708.5K",
         "why": "UI/UX and accessibility review checklist for the polished frontend."
-      },
-      {
-        "name": "nodejs-backend-patterns",
-        "repo": "wshobson/agents",
-        "installs": "47.1K",
-        "why": "Node.js backend layering, validation and error handling for the REST API."
-      },
-      {
-        "name": "codebase-design",
-        "repo": "mattpocock/skills",
-        "installs": "751.8K",
-        "why": "Module and boundary design that supports a pure domain layer separate from I/O."
       }
     ],
     "installed": [
@@ -331,9 +343,17 @@
       {
         "name": "vitest",
         "repo": "antfu/skills"
+      },
+      {
+        "name": "python-testing-patterns",
+        "repo": "wshobson/agents"
+      },
+      {
+        "name": "python-pro",
+        "repo": "jeffallan/claude-skills"
       }
     ],
-    "deferred_note": "Frontend/API skills (fastify-best-practices, frontend-design, vercel-react-best-practices, web-design-guidelines, nodejs-backend-patterns, codebase-design) se re-evalúan al llegar a C-16+."
+    "deferred_note": "Stack de la cátedra (Python/FastAPI/SQLAlchemy/PostgreSQL/React). Skills de backend se evalúan al llegar a C-13+ (infra/API) y las de frontend a C-25."
   },
   "registry": {
     "created_by": "skill-registry",
