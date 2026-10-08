@@ -181,11 +181,11 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 ### [C-01] `fundacion-backend-y-dominio`
 - **Estado**: `[ ]` pendiente
 - **Scope**: fundación mínima en Python. Sin lógica de negocio, sin Docker, sin PostgreSQL, sin Redis y sin frontend (van en C-13, C-14 y C-25).
-  - `backend/pyproject.toml`: Python 3.12+, dependencias de desarrollo (pytest, mypy), dependencia `tzdata` (para que `zoneinfo` funcione en Windows), configuración de pytest (`testpaths = tests`) y de `mypy --strict` (SU-10).
+  - `backend/pyproject.toml`: paquete instalable (`[build-system]` con hatchling; `pip install -e ".[dev]"` en un venv local), `requires-python = ">=3.12"`, extras `dev` (pytest 8, mypy), dependencia `tzdata` (para que `zoneinfo` funcione en Windows), configuración de pytest (`testpaths = ["tests"]`) y de `mypy --strict` con `python_version = "3.12"` sobre `app` y `tests` (SU-10).
   - Paquete `backend/app/` con `backend/app/domain/__init__.py` vacío.
-  - `backend/tests/domain/test_smoke.py`: test de humo que importa `app.domain` y corre en verde con `pytest`.
-  - Test de dependencias del dominio: recorre los módulos de `app/domain` (con `ast`) y falla si alguno importa `fastapi`, `sqlalchemy`, `redis` o `pydantic` (DD-06).
-  - `.gitignore` raíz: `.env`, `.venv/`, `__pycache__/`, `.pytest_cache/`, `.mypy_cache/`.
+  - `backend/tests/domain/test_smoke.py`: test de humo que comprueba que `app.domain` es un paquete y que se resuelve al directorio `backend/app/domain` del repo.
+  - Guardia de dependencias del dominio por **lista permitida** (DD-06, KB 08 §Regla de dependencias): un helper de tests analiza con `ast` todos los módulos de `app/domain` y reporta todo import cuyo primer segmento (comparado exacto, no por prefijo) no sea `__future__`, `collections`, `dataclasses`, `datetime`, `enum`, `typing`, `zoneinfo` o `tzdata`, salvo imports relativos y `app.domain.*`. Quedan prohibidos frameworks (`fastapi`, `sqlalchemy`, `redis`, `pydantic`), módulos de I/O (`os`, `pathlib`, …) y otras capas de `app`. El mensaje nombra archivo, línea e import ofensivo. Imports dinámicos: limitación documentada.
+  - `.gitignore` raíz: se agregan `.venv/`, `__pycache__/`, `.pytest_cache/`, `.mypy_cache/` (ya tenía `node_modules/` y `.env`).
   - README corto de `backend/` con cómo crear el entorno virtual, instalar y correr `pytest` y `mypy`.
 - **Dependencias**: ninguna
 - **Governance**: BAJO
@@ -280,6 +280,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - Reloj inyectado `now: datetime` (UTC) en el contexto del dominio; ninguna regla llama a `datetime.now()` (RN-GL-04, US-005 CA-4).
   - `rules/past.py`: inicio < `now` → `IN_THE_PAST`; inicio == `now` y > `now` válidos (RN-AG-06; US-005 CA-1 a CA-3).
   - Tests: los tres casos de borde con relojes fijos; un test que verifica (con `ast`) que ningún módulo de `app/domain` llama a `datetime.now`, `datetime.utcnow` ni `time.time`.
+  - Idea (del explore de C-01): implementar esa detección de reloj global extendiendo el helper `ast` de la guardia de dependencias de C-01 (`tests/domain/import_guard.py`), en vez de un recorrido nuevo; C-01 no la incluye a propósito.
 - **Dependencias**: `C-02`
 - **Governance**: MEDIO
 - **Leer antes**:
