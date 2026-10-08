@@ -4,7 +4,7 @@
 
 ### DD-01 — Stack TypeScript full-stack
 **Decisión**: TypeScript en todas las capas: dominio puro, API Node.js, frontend React + Vite, tests con Vitest.
-**Contexto**: el discovery dejó el stack libre ("lo define la autora"); la autora lo confirmó. Trabajo individual; hay un avance el 2026-10-08 sin contenido exigido definido y la entrega final es la semana siguiente (fecha a confirmar).
+**Contexto**: el discovery dejó el stack libre ("lo define la autora"); la autora lo confirmó. Trabajo individual; el avance del 2026-10-08 solo pide el Discovery (ya hecho) y la entrega final es el jueves 2026-10-15.
 **Alternativas consideradas**: Python/FastAPI + React; Java/Spring + React.
 **Justificación**: un solo lenguaje permite compartir el dominio entre API y UI (tipos y pre-validación) y reduce el cambio de contexto en trabajo individual con plazo acotado.
 **Trade-offs aceptados**: menos "enterprise" que Java; el tipado de TS no es una garantía en runtime (por eso Zod en el borde).

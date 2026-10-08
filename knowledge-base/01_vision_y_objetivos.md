@@ -44,7 +44,7 @@
 
 ## Métricas de éxito
 
-Orientadas a la entrega académica (trabajo individual). Hay un avance el 2026-10-08 sin contenido exigido definido; la **entrega final** es la semana siguiente (fecha **a confirmar**). Las métricas rigen para la entrega final:
+Orientadas a la entrega académica (trabajo individual). El avance del 2026-10-08 solo pide el Discovery (ya hecho); la **entrega final** es el **jueves 2026-10-15**. Las métricas rigen para la entrega final:
 
 | Métrica | Criterio |
 |---------|----------|
@@ -56,4 +56,4 @@ Orientadas a la entrega académica (trabajo individual). Hay un avance el 2026-1
 
 ## Restricciones relevantes
 
-Avance el 2026-10-08 sin contenido exigido definido; entrega final la semana siguiente (fecha a confirmar) · trabajo individual · tests para cada escenario del spec · solo datos ficticios · sin credenciales en el repo · C-02 chico (dominio puro) y UI en changes posteriores (C-22 a C-29) · interfaz web con frontend cuidado. Detalle de riesgos en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
+Avance el 2026-10-08 (solo Discovery, ya hecho); entrega final el jueves 2026-10-15 · trabajo individual · tests para cada escenario del spec · solo datos ficticios · sin credenciales en el repo · C-02 chico (dominio puro) y UI en changes posteriores (C-22 a C-29) · interfaz web con frontend cuidado. Detalle de riesgos en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).

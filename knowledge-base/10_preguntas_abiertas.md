@@ -45,7 +45,7 @@ Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito téc
 
 | # | Riesgo | Mitigación en la KB |
 |---|--------|---------------------|
-| R1 | Plazo acotado: la entrega final es la semana posterior al 2026-10-08 (fecha a confirmar; hay un avance el 2026-10-08 sin contenido exigido definido); trabajo individual | C-02 = solo crear turno sin solapamientos (DD-09); changes chicos y ordenados en `CHANGES.md`; plan de contingencia en 08 (recortables: C-24, C-27, C-28, C-29, C-18; no se recortan tests). Pendiente: confirmar la fecha de entrega final |
+| R1 | Plazo acotado: la entrega final es el jueves 2026-10-15 (el avance del 2026-10-08 solo pide el Discovery, ya hecho); trabajo individual | C-02 = solo crear turno sin solapamientos (DD-09); changes chicos y ordenados en `CHANGES.md`; plan de contingencia en 08 (recortables: C-24, C-27, C-28, C-29, C-18; no se recortan tests) |
 | R2 | Reglas de agenda incompletas (casos borde, horarios, zona horaria) | Tablas de casos borde en 06; zona y granularidad fijadas como suposiciones |
 | R3 | Calidad del frontend al quedar al final | Lineamientos de UI en 08; priorización explícita |
 | R4 | "Competencia sin prevención de solapamientos" es solo falta de evidencia pública | Redactado como "no evidenciado" en 01 |

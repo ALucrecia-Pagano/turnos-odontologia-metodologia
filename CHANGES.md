@@ -5,7 +5,7 @@
 > Cada change es chico: una sola funcionalidad, terminable en una sesión de trabajo.
 > **Leer este archivo antes de ejecutar cualquier `/opsx:propose`.**
 > Alcance: solo el MVP de la sección D.3 de `docs/discovery/informe-discovery.md`. Lo diferido está en la sección **Backlog (post-MVP)**, al final.
-> No hay fechas por change. La entrega final es la semana posterior al 2026-10-08 (fecha a confirmar); el roadmap no se arma alrededor de ninguna fecha intermedia.
+> No hay fechas por change. La entrega final es el jueves 2026-10-15 (el avance del 2026-10-08 solo pide el Discovery, ya hecho); el roadmap no se arma alrededor de ninguna fecha intermedia.
 
 ---
 

@@ -102,6 +102,6 @@ Lineamientos para los changes de UI (C-22 a C-29; el discovery exige "frontend c
 
 ## Plan de contingencia de plazo
 
-Hitos: hay un avance el 2026-10-08 sin contenido exigido definido, y la entrega final es la semana siguiente (fecha a confirmar). El orden de trabajo lo fija `CHANGES.md` y no se ancla a ninguna fecha intermedia.
+Hitos: el avance del 2026-10-08 solo pide el Discovery (ya hecho), y la entrega final es el jueves 2026-10-15. El orden de trabajo lo fija `CHANGES.md` y no se ancla a ninguna fecha intermedia.
 
 Si el plazo aprieta: priorizar el camino crítico de `CHANGES.md` (dominio completo con tests, API de turnos, UI con agenda diaria y formulario de turno). Recortar en este orden los changes fuera del camino crítico: C-24 (vista semanal), C-27 (vista por sillón), C-28 y C-29 (UI de horarios, bloqueos y catálogos; con seeds y la API alcanza para operar) y C-18 (API de horarios; los horarios pueden venir de seeds). Postergar vistas antes que recortar tests.
