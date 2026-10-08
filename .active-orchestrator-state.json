@@ -1,6 +1,6 @@
 {
   "version": 4,
-  "step": "roadmap",
+  "step": "done",
   "owner": "active-orchestrator",
   "discovery": {
     "created_by": "discovery-research",
@@ -270,5 +270,93 @@
   "roadmap": {
     "created_by": "roadmap-generator",
     "changes_file": "CHANGES.md"
+  },
+  "skills": {
+    "created_by": "find-skill",
+    "recommended": [
+      {
+        "name": "tdd",
+        "repo": "mattpocock/skills",
+        "installs": "1M",
+        "why": "Red-green-refactor TDD in TypeScript; matches Strict TDD on the pure domain layer."
+      },
+      {
+        "name": "vitest",
+        "repo": "antfu/skills",
+        "installs": "39.4K",
+        "why": "Vitest config, mocking and test patterns for the domain and API tests."
+      },
+      {
+        "name": "fastify-best-practices",
+        "repo": "mcollina/skills",
+        "installs": "66.8K",
+        "why": "Fastify routes, schemas, plugins and error handling, by a Fastify core maintainer."
+      },
+      {
+        "name": "vercel-react-best-practices",
+        "repo": "vercel-labs/agent-skills",
+        "installs": "775.9K",
+        "why": "React performance and component patterns for the agenda UI."
+      },
+      {
+        "name": "frontend-design",
+        "repo": "anthropics/skills",
+        "installs": "960.4K",
+        "why": "Official skill for polished, distinctive web UI."
+      },
+      {
+        "name": "web-design-guidelines",
+        "repo": "vercel-labs/agent-skills",
+        "installs": "708.5K",
+        "why": "UI/UX and accessibility review checklist for the polished frontend."
+      },
+      {
+        "name": "nodejs-backend-patterns",
+        "repo": "wshobson/agents",
+        "installs": "47.1K",
+        "why": "Node.js backend layering, validation and error handling for the REST API."
+      },
+      {
+        "name": "codebase-design",
+        "repo": "mattpocock/skills",
+        "installs": "751.8K",
+        "why": "Module and boundary design that supports a pure domain layer separate from I/O."
+      }
+    ],
+    "installed": [
+      {
+        "name": "tdd",
+        "repo": "mattpocock/skills"
+      },
+      {
+        "name": "vitest",
+        "repo": "antfu/skills"
+      }
+    ],
+    "deferred_note": "Frontend/API skills (fastify-best-practices, frontend-design, vercel-react-best-practices, web-design-guidelines, nodejs-backend-patterns, codebase-design) se re-evalúan al llegar a C-16+."
+  },
+  "registry": {
+    "created_by": "skill-registry",
+    "file": ".atl/skill-registry.md"
+  },
+  "agents": {
+    "created_by": "agent-instruction",
+    "files": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "reglas_applied": [
+      "dominio-puro",
+      "reglas-solo-en-dominio",
+      "utc-zona-ar",
+      "rechazos-tipados",
+      "sin-any",
+      "dominio-sin-mocks",
+      "solo-datos-ficticios",
+      "sin-credenciales",
+      "idioma-codigo",
+      "no-commit-sin-pedido",
+      "conventional-commits-es"
+    ]
   }
 }
