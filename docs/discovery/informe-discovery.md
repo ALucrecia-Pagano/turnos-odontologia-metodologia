@@ -1,3 +1,31 @@
+<div align="center">
+
+# Informe de Discovery
+
+## Sistema de gestión de turnos y agenda para consultorios odontológicos
+
+<br>
+
+**Trabajo de Integración: del Discovery al primer Change, con SDD y Active Stack**
+
+Metodología I · Tecnicatura Universitaria en Programación
+
+UTN, Facultad Regional Mendoza
+
+<br>
+
+**Alumna:** Amanda Pagano 
+
+**Docente:** Juan Cruz Robledo
+
+**Fecha de entrega:** 15 de octubre de 2026
+
+**Repositorio:** https://github.com/ALucrecia-Pagano/turnos-odontologia-metodologia
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
 # Informe de mercado: software de gestión de turnos y agenda para consultorios odontológicos en Argentina
 
 ## Resumen ejecutivo
@@ -19,6 +47,7 @@
 El primer change se limita a **crear un turno sin solapamientos por profesional y por sillón**; la interfaz se construye después, sobre esa lógica ya probada.
 
 ---
+<div style="page-break-before: always;"></div>
 
 ## Introducción
 
