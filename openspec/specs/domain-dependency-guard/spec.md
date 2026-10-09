@@ -7,11 +7,15 @@ Garantizar, con una verificación automática que corre en la suite de tests, qu
 ## Requirements
 
 ### Requirement: Lista permitida de dependencias del dominio
-Todo import de un módulo de `app/domain` SHALL estar permitido solo si cumple una de estas condiciones: es relativo (`from . import x`, `from .rules import y`); su primer segmento es `__future__`, `collections`, `dataclasses`, `datetime`, `enum`, `typing`, `zoneinfo` o `tzdata`; o es un import absoluto de `app.domain` o de un submódulo `app.domain.*`. Cualquier otro import MUST reportarse como violación.
+Todo import de un módulo de `app/domain` SHALL estar permitido solo si cumple una de estas condiciones: es relativo (`from . import x`, `from .rules import y`); su primer segmento es `__future__`, `collections`, `dataclasses`, `datetime`, `enum`, `typing`, `uuid`, `zoneinfo` o `tzdata`; o es un import absoluto de `app.domain` o de un submódulo `app.domain.*`. Cualquier otro import MUST reportarse como violación.
 
 #### Scenario: Import de un módulo de la biblioteca estándar permitido
 - **WHEN** un módulo del dominio contiene `import datetime`
 - **THEN** la guardia no reporta violaciones para ese import
+
+#### Scenario: Import del tipo de identificador
+- **WHEN** un módulo del dominio contiene `import uuid` o `from uuid import UUID`
+- **THEN** la guardia no reporta violaciones para esos imports
 
 #### Scenario: Import relativo a un módulo propio
 - **WHEN** un módulo del dominio contiene `from . import model`

@@ -10,8 +10,9 @@ DOMAIN_ALLOWED_MODULES: frozenset[str] = frozenset(
         "datetime",
         "enum",
         "typing",
-        "zoneinfo",
         "tzdata",
+        "uuid",
+        "zoneinfo",
     }
 )
 

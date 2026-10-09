@@ -34,6 +34,8 @@ def test_find_forbidden_imports_framework_import_reports_module(tmp_path: Path) 
         "from __future__ import annotations\n",
         "from collections.abc import Sequence\n",
         "import tzdata\n",
+        "import uuid\n",
+        "from uuid import UUID\n",
     ],
 )
 def test_find_forbidden_imports_allowed_import_reports_nothing(
@@ -75,6 +77,7 @@ def test_find_forbidden_imports_forbidden_import_reports_one_violation(
         ("import fastapi_utils\n", "fastapi_utils"),
         ("import datetime_utils\n", "datetime_utils"),
         ("from datetimes import parse\n", "datetimes"),
+        ("import uuid_utils\n", "uuid_utils"),
     ],
 )
 def test_find_forbidden_imports_name_with_allowed_prefix_is_distinct_module(

@@ -195,14 +195,15 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/02_descripcion_general.md` §Stack tecnológico
 
 ### [C-02] `crear-turno-sin-solapamientos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-10-08)
 - **Scope**: es el "change 1" de la KB (DD-09). Dominio puro en Python en `backend/app/domain`, sin API, sin BD, sin JWT, sin UI. Tests con pytest.
   - `model.py`: `@dataclass(frozen=True)` `Appointment` y `Service` (con `default_duration_min`); `AppointmentStatus` (`reservado`, `confirmado`, `atendido`, `ausente`, `cancelado`); instantes como `datetime` con zona (UTC).
   - `violations.py`: `ViolationCode` (`Enum`) con `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_DURATION`; `Violation` (código, mensaje, id del turno que choca); resultado tipado `Ok` o lista de violaciones.
   - `intervals.py`: intervalo semiabierto `[inicio, fin)` y función de solapamiento (DD-07).
   - `rules/overlap.py`: `PROFESSIONAL_OVERLAP` (RN-AG-01) y `CHAIR_OVERLAP` (RN-AG-02) con el id del turno que choca; los estados `cancelado` y `ausente` no ocupan agenda (RN-AG-08); ambas violaciones se reportan juntas (US-003 CA-2).
   - `appointment/validate_new_appointment`: duración por defecto de la prestación o explícita (RN-AG-07); `end = start + duración`; turnos consecutivos válidos (fin == inicio); el turno nuevo nace en `reservado`.
-  - Parte mínima de RN-AG-09: duración <= 0 → `INVALID_DURATION` (US-007 CA-1 parcial).
+  - Parte mínima de RN-AG-09 en `rules/duration.py`: duración <= 0 → `INVALID_DURATION` (US-007 CA-1 parcial); si hay violación de duración se devuelve `Rejected` sin evaluar solapamientos.
+  - Los ids son `uuid.UUID` inyectados por el llamador (el dominio nunca genera ids); `uuid` se agrega a la allowlist de la guardia de dependencias.
   - Tests (pytest, todo escenario es un test; tablas con `@pytest.mark.parametrize`): US-001 CA-1 a CA-4, US-002 CA-1 a CA-6, US-003 CA-1 a CA-3, `INVALID_DURATION` con 0 y negativo, turno cancelado y turno ausente que no bloquean; mínimo 2 casos por comportamiento.
   - Queda afuera: horario, bloqueos, pasado, múltiplo de 5, máximo 480, referencias, medianoche, texto en español completo (van a C-03 a C-08).
 - **Dependencias**: `C-01`
