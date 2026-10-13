@@ -338,22 +338,75 @@
     "installed": [
       {
         "name": "tdd",
-        "repo": "mattpocock/skills"
+        "repo": "mattpocock/skills",
+        "scope": "project"
       },
       {
         "name": "vitest",
-        "repo": "antfu/skills"
+        "repo": "antfu/skills",
+        "scope": "project"
       },
       {
         "name": "python-testing-patterns",
-        "repo": "wshobson/agents"
+        "repo": "wshobson/agents",
+        "scope": "project"
       },
       {
         "name": "python-pro",
-        "repo": "jeffallan/claude-skills"
+        "repo": "jeffallan/claude-skills",
+        "scope": "project"
+      },
+      {
+        "name": "fastapi",
+        "repo": "fastapi/fastapi",
+        "scope": "project"
+      },
+      {
+        "name": "auth-implementation-patterns",
+        "repo": "wshobson/agents",
+        "scope": "project"
+      },
+      {
+        "name": "sqlalchemy-alembic-expert-best-practices-code-review",
+        "repo": "wispbit-ai/skills",
+        "scope": "project"
+      },
+      {
+        "name": "supabase-postgres-best-practices",
+        "repo": "supabase/agent-skills",
+        "scope": "project"
+      },
+      {
+        "name": "docker-patterns",
+        "repo": "affaan-m/ecc",
+        "scope": "project"
+      },
+      {
+        "name": "frontend-design",
+        "repo": "anthropics/skills",
+        "scope": "project"
+      },
+      {
+        "name": "vercel-react-best-practices",
+        "repo": "vercel-labs/agent-skills",
+        "scope": "project"
+      },
+      {
+        "name": "web-design-guidelines",
+        "repo": "vercel-labs/agent-skills",
+        "scope": "project"
       }
     ],
-    "deferred_note": "Stack de la cátedra (Python/FastAPI/SQLAlchemy/PostgreSQL/React). Skills de backend se evalúan al llegar a C-13+ (infra/API) y las de frontend a C-25."
+    "install_scope": {
+      "scope": "project",
+      "dirs": [
+        ".claude/skills",
+        ".agents/skills"
+      ],
+      "lockfile": "skills-lock.json",
+      "command": "npx skills add <repo> --skill <name> -a '*' --copy -y (luego se dejaron solo .claude/skills y .agents/skills)",
+      "reason": "Pedido del profesor: skills versionadas en el repo para que las tenga quien clone"
+    }
   },
   "registry": {
     "created_by": "skill-registry",

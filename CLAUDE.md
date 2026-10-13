@@ -58,12 +58,15 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 
 | Agente | Rol | Skills que carga |
 |--------|-----|------------------|
-| **Dominio** | `backend/app/domain`: reglas de agenda en Python puro, Strict TDD con pytest | `tdd` |
-| **Backend API** | `backend/app`: FastAPI, Pydantic, JWT, repositorios SQLAlchemy, Alembic | `tdd` (las skills de Python/FastAPI se evalúan aparte) |
-| **Frontend** | `frontend/`: React + TypeScript + Vite | `vitest` (desde C-25; las skills de React/diseño se evalúan al llegar a C-25) |
+| **Dominio** | `backend/app/domain`: reglas de agenda en Python puro, Strict TDD con pytest | `tdd`, `python-testing-patterns`, `python-pro` (sin mocks en el dominio: la regla dura prevalece) |
+| **Backend API** | `backend/app`: FastAPI, Pydantic, JWT, repositorios SQLAlchemy, Alembic | `tdd`, `python-testing-patterns`, `python-pro`, `fastapi`, `auth-implementation-patterns`, `sqlalchemy-alembic-expert-best-practices-code-review`, `supabase-postgres-best-practices` |
+| **Infraestructura** | `docker-compose.yml`, Dockerfiles, Alembic (C-13/C-14) | `docker-patterns`, `sqlalchemy-alembic-expert-best-practices-code-review`, `supabase-postgres-best-practices` |
+| **Frontend** | `frontend/`: React + TypeScript + Vite (desde C-25) | `vitest`, `frontend-design`, `vercel-react-best-practices`, `web-design-guidelines` |
 | **Orquestación** | OPSX + fundación del proyecto | `active-orchestrator`, `kb-creator`, `roadmap-generator`, `agent-instruction`, `discovery-research`, `web-scraper`, `find-skill`, `skill-creator` |
 
 Cargá la skill correspondiente al contexto ANTES de escribir código.
+
+> Las 12 skills de Dominio, Backend API, Infraestructura y Frontend están instaladas **en el proyecto** (`.claude/skills/`, espejadas en `.agents/skills/`; origen en `skills-lock.json`), así que vienen con el clon. Las de Orquestación son de **Active Stack** y viven en el usuario (`~/.claude/skills/`): requieren tener Active Stack instalado.
 
 > Los compact rules de cada skill los resuelve el orquestador desde `.atl/skill-registry.md` (generado por `skill-registry`; versionado en el repo).
 

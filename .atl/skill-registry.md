@@ -6,28 +6,38 @@ See `_shared/skill-resolver.md` for the full resolution protocol.
 
 ## User Skills
 
-Domain skills (relevant to code in this project):
+Domain skills, PROJECT level (copies versioned in the repo; mirrored in `.agents/skills/`):
 
 | Trigger | Skill | Path |
 |---------|-------|------|
-| Build features or fix bugs test-first, "red-green-refactor", integration tests | tdd | C:\Users\hp\.agents\skills\tdd\SKILL.md |
-| Writing Python tests, pytest suites, fixtures, parametrization, TDD in Python | python-testing-patterns | C:\Users\hp\.agents\skills\python-testing-patterns\SKILL.md |
-| Python 3.11+ type safety, mypy strict, dataclasses, async, structured error handling | python-pro | C:\Users\hp\.agents\skills\python-pro\SKILL.md |
-| Writing tests, mocking, coverage config, test filtering, fixtures (Vitest) | vitest | C:\Users\hp\.agents\skills\vitest\SKILL.md |
+| Build features or fix bugs test-first, "red-green-refactor", integration tests | tdd | .claude/skills/tdd/SKILL.md |
+| Writing Python tests, pytest suites, fixtures, parametrization, TDD in Python | python-testing-patterns | .claude/skills/python-testing-patterns/SKILL.md |
+| Python 3.11+ type safety, mypy strict, dataclasses, async, structured error handling | python-pro | .claude/skills/python-pro/SKILL.md |
+| FastAPI APIs, Pydantic models, dependencies, routers, response models | fastapi | .claude/skills/fastapi/SKILL.md |
+| JWT/OAuth2/session auth, RBAC, securing APIs | auth-implementation-patterns | .claude/skills/auth-implementation-patterns/SKILL.md |
+| SQLAlchemy models/queries, Alembic migrations, schema changes | sqlalchemy-alembic-expert-best-practices-code-review | .claude/skills/sqlalchemy-alembic-expert-best-practices-code-review/SKILL.md |
+| Postgres schema, column types, migrations, indexes, constraints, slow queries | supabase-postgres-best-practices | .claude/skills/supabase-postgres-best-practices/SKILL.md |
+| Dockerfiles, Docker Compose services, container security | docker-patterns | .claude/skills/docker-patterns/SKILL.md |
+| Building/reshaping UI with intentional visual design | frontend-design | .claude/skills/frontend-design/SKILL.md |
+| Writing/reviewing React components, performance patterns | vercel-react-best-practices | .claude/skills/vercel-react-best-practices/SKILL.md |
+| Review UI for accessibility / UX / Web Interface Guidelines | web-design-guidelines | .claude/skills/web-design-guidelines/SKILL.md |
+| Writing frontend tests, mocking, coverage (Vitest) | vitest | .claude/skills/vitest/SKILL.md |
 
-Foundation / workflow skills (not for domain code; listed for completeness):
+Foundation / workflow skills (user level, NOT in the project; not for domain code):
+
+> These are Active Stack skills, installed by Active Stack in the user's home (`~/.claude/skills/`), not in this repo. Using them requires Active Stack to be installed.
 
 | Trigger | Skill | Path |
 |---------|-------|------|
-| Start project foundation flow | active-orchestrator | C:\Users\hp\.agents\skills\active-orchestrator\SKILL.md |
-| Generate AGENTS.md / CLAUDE.md | agent-instruction | C:\Users\hp\.agents\skills\agent-instruction\SKILL.md |
-| Discovery / market research before KB | discovery-research | C:\Users\hp\.agents\skills\discovery-research\SKILL.md |
-| Find / install skills | find-skill | C:\Users\hp\.agents\skills\find-skill\SKILL.md |
-| Find / install skills (alias) | find-skills | C:\Users\hp\.agents\skills\find-skills\SKILL.md |
-| Create knowledge-base/ | kb-creator | C:\Users\hp\.agents\skills\kb-creator\SKILL.md |
-| Generate CHANGES.md roadmap | roadmap-generator | C:\Users\hp\.agents\skills\roadmap-generator\SKILL.md |
-| Create / improve skills | skill-creator | C:\Users\hp\.agents\skills\skill-creator\SKILL.md |
-| Research a competitor from a URL | web-scraper | C:\Users\hp\.agents\skills\web-scraper\SKILL.md |
+| Start project foundation flow | active-orchestrator | ~/.claude/skills/active-orchestrator/SKILL.md |
+| Generate AGENTS.md / CLAUDE.md | agent-instruction | ~/.claude/skills/agent-instruction/SKILL.md |
+| Discovery / market research before KB | discovery-research | ~/.claude/skills/discovery-research/SKILL.md |
+| Find / install skills | find-skill | ~/.claude/skills/find-skill/SKILL.md |
+| Find / install skills (alias) | find-skills | ~/.claude/skills/find-skills/SKILL.md |
+| Create knowledge-base/ | kb-creator | ~/.claude/skills/kb-creator/SKILL.md |
+| Generate CHANGES.md roadmap | roadmap-generator | ~/.claude/skills/roadmap-generator/SKILL.md |
+| Create / improve skills | skill-creator | ~/.claude/skills/skill-creator/SKILL.md |
+| Research a competitor from a URL | web-scraper | ~/.claude/skills/web-scraper/SKILL.md |
 
 Project-level OPSX command skills (`.agents/skills/`): source-command-opsx-apply, -archive, -explore, -propose, -sync, -update.
 
@@ -67,6 +77,77 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 - Google-style docstrings on public APIs; format with `black`, lint with `ruff`; apply auto-fixes then re-validate.
 - Workflow: analyze, design interfaces (protocols/dataclasses), implement, test (pytest), validate (mypy --strict, black, ruff).
 - Load `references/type-system.md`, `testing.md`, `async-patterns.md` only when the task needs them.
+
+### fastapi
+> Applies to BACKEND API only (`backend/app`, not the domain). Business rules stay in the domain; handlers map typed results to 409 (agenda conflict) / 422 (validity) / 400 (malformed).
+- Use `Annotated[...]` for params and dependencies (`Path`, `Query`, `Depends`); define reusable aliases (`CurrentUserDep = Annotated[User, Depends(get_current_user)]`).
+- Never use `...` (Ellipsis) as default for required params/fields; no `RootModel`.
+- Declare return types or `response_model` (filters sensitive fields, serializes in Rust). Do NOT use `ORJSONResponse`/`UJSONResponse` (deprecated).
+- Put `prefix`, `tags`, shared `dependencies` on the `APIRouter`, not in `include_router()`.
+- Pydantic 2 models only at the HTTP edge; never leak them into `app/domain`.
+- Run with the `fastapi` CLI (`fastapi dev` / `fastapi run`); entrypoint in `pyproject.toml` `[tool.fastapi]`.
+- Details in `references/` (dependencies, pydantic, responses, path-operations) when needed.
+
+### auth-implementation-patterns
+> Applies to BACKEND API (C-19 JWT, 3 roles). Secrets only in `.env` (`JWT_SECRET`), never committed.
+- Hash passwords with bcrypt/argon2; never store plain text.
+- Short-lived access tokens (15-30 min) with expiration (`exp`); rotate secrets.
+- Always authorize server-side (role check per endpoint via dependency); never trust client-side checks or client data.
+- Rate limit auth endpoints; log failed logins and security events; use HTTPS.
+- JWT in localStorage is XSS-prone; prefer httpOnly secure cookies, or document the tradeoff for the Bearer SPA.
+- Validate all input (email format, password strength); secure password-reset tokens with expiry.
+- Details in `references/details.md`.
+
+### sqlalchemy-alembic-expert-best-practices-code-review
+> Applies to infrastructure (C-13/C-14+). ORM only in repositories, never in `app/domain`.
+- Create indexes with `postgresql_concurrently=True` inside an autocommit block (`op.get_context().autocommit_block()`).
+- Every query pattern must be backed by an index; do not add indexes already covered by a composite index; max 3 columns on non-unique indexes.
+- Unique constraints: create a unique index concurrently first, then attach the constraint using it.
+- Foreign keys and CHECK constraints: add `NOT VALID` first, then `VALIDATE CONSTRAINT` in a separate step.
+- Column type changes: multi-step (add new column, backfill, swap) to avoid table locks.
+- Details per rule in `rules/*.md`.
+
+### supabase-postgres-best-practices
+> Applies to PostgreSQL 16 schema/migrations/queries (instants as `timestamptz`, UTC).
+- Priority order: query performance, connection management, security/RLS, schema design, locking, data access, monitoring.
+- Index columns used in WHERE/JOIN/ORDER BY; use partial and composite indexes where they fit; verify with EXPLAIN.
+- Schema design: correct column types (`timestamptz`, not `timestamp`), explicit constraints (NOT NULL, FK, CHECK), index every foreign key.
+- Overlap protection may be backed by DB constraints, but the definitive rule lives in the domain.
+- Use a connection pool; keep transactions short to limit locking.
+- Read `references/<prefix>-*.md` (e.g. `query-missing-indexes.md`, `_sections.md`) for the specific rule.
+
+### docker-patterns
+> Applies to C-13 (services `backend`, `frontend`, `postgres`, `redis`). Secrets NEVER in `docker-compose.yml`/Dockerfile (project hard rule): use `.env` + `.env.example` with names only.
+- Pin image tags (never `:latest`); `postgres:16`, `redis:7`.
+- Multi-stage Dockerfiles (deps, dev, build, production); production image minimal, run as non-root user.
+- Compose: `healthcheck` + `depends_on: condition: service_healthy` for postgres; named volumes for DB data; `docker-compose.override.yml` for dev-only settings.
+- Expose only needed ports; custom network, services reach each other by service name.
+- Keep a `.dockerignore`; no secrets baked in image layers; drop capabilities / read-only rootfs where possible.
+- Ignore the "Hardened CLI Installer Harnesses" section (not relevant here).
+
+### frontend-design
+> Applies to `frontend/` (C-25+). "Frontend cuidado" is a project requirement.
+- Make deliberate, subject-specific choices of palette, type and layout; avoid templated defaults (cream + terracotta, SaaS card kit, tracked ALL-CAPS eyebrows, arrow on every button).
+- Plan first (4-6 named hex colors, type roles, layout, principles), review against the brief, then build.
+- One or two type families, clear type scale, line length under 80 characters; no accent-on-single-word headlines.
+- Motion only to draw attention or answer a user action; respect reduced motion.
+- Quality floor: responsive to mobile, visible keyboard focus, accessible contrast.
+- Copy: plain user-facing language (Spanish here), active verbs ("Guardar turno"); errors say what failed and how to fix it.
+
+### vercel-react-best-practices
+> Applies to `frontend/` (React 18 + Vite SPA). Ignore Next.js/RSC/server-* rules (not applicable).
+- Eliminate waterfalls: `Promise.all()` for independent fetches; defer `await` into the branch that uses it.
+- Bundle: import directly, avoid barrel files; lazy-load heavy components (`React.lazy`) and defer third-party code.
+- Dedupe client fetching (SWR-style); passive listeners for scroll.
+- Re-renders: derive state during render (not effects); functional `setState`; primitive effect deps; `useState(() => ...)` lazy init; never define components inside components.
+- Memoize only expensive work; `startTransition`/`useDeferredValue` for non-urgent updates.
+- Conditional render with ternary, not `&&` on possibly falsy numbers; hoist static JSX; `content-visibility` for long lists (agenda grids).
+- JS: build a `Map` for repeated lookups; batch DOM/CSS changes.
+
+### web-design-guidelines
+> Review skill for `frontend/`: fetch the latest rules with WebFetch from `https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md` before reviewing.
+- Read the target files, apply all fetched rules, output terse `file:line` findings in the fetched format.
+- If no files are given, ask which files/pattern to review.
 
 ### vitest
 > Applies to FRONTEND only (`frontend/`, from C-25). Not for backend/domain Python tests.
@@ -113,8 +194,9 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 | Role | Scope | Skills |
 |------|-------|--------|
 | Dominio | `backend/app/domain` | tdd, python-testing-patterns, python-pro (with no-mock override) |
-| Backend API | `backend/app` | tdd, python-testing-patterns, python-pro |
-| Frontend | `frontend/` (from C-25) | vitest |
+| Backend API | `backend/app` | tdd, python-testing-patterns, python-pro, fastapi, auth-implementation-patterns, sqlalchemy-alembic-expert-best-practices-code-review, supabase-postgres-best-practices |
+| Infraestructura | `docker-compose.yml`, Dockerfiles, Alembic (C-13/C-14) | docker-patterns, sqlalchemy-alembic-expert-best-practices-code-review, supabase-postgres-best-practices |
+| Frontend | `frontend/` (from C-25) | vitest, frontend-design, vercel-react-best-practices, web-design-guidelines |
 | Orquestacion | OPSX + foundation | active-orchestrator, kb-creator, roadmap-generator, agent-instruction, discovery-research, web-scraper, find-skill, skill-creator |
 
 Read the convention files listed above for project-specific patterns and rules. All referenced paths have been extracted; no need to read index files to discover more.
