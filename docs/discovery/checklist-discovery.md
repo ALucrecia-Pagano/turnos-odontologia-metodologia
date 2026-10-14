@@ -104,20 +104,20 @@ Los cinco primeros por evidencia pública ponderada (matriz B) son:
 
 | Restricción | Origen |
 |---|---|
-| Entrega el jueves 8 de octubre de 2026 | Cátedra |
+| Entrega el jueves 8 de octubre de 2026 (reemplazada: la entrega final es el jueves 2026-10-15; el 2026-10-08 fue el avance) | Cátedra |
 | Trabajo individual | Cátedra |
 | Tests automatizados que cubran cada escenario del spec | Cátedra |
 | Solo datos ficticios; nunca datos reales de pacientes | Cátedra |
 | Sin claves ni credenciales en el repositorio | Cátedra |
 | Primer change chico y terminable, centrado en la lógica de dominio de la agenda; la interfaz va en un change posterior | Cátedra |
-| Stack libre, definido por la autora | Decisión propia |
+| Stack libre, definido por la autora (reemplazada el 2026-10-08: stack fijado por la cátedra, ver KB DD-01) | Decisión propia |
 | Interfaz gráfica web con un frontend cuidado | Decisión propia |
 | Sin contactar proveedores ni crear cuentas para evaluar productos | Consigna de investigación |
 
 ## 10. Riesgos
 
 **Señalados por la autora:**
-1. **Plazo de 5 días:** no llegar a terminar la lógica de dominio y la interfaz con calidad para el 8/10.
+1. **Plazo de 5 días:** no llegar a terminar la lógica de dominio y la interfaz con calidad para el 8/10. Actualización: el plazo pasó al jueves 2026-10-15 y la interfaz quedó en changes posteriores (C-25 a C-33).
 2. **Reglas de agenda incompletas:** que aparezcan casos borde de solapamiento, horarios o zona horaria no previstos en el spec.
 3. **Calidad del frontend:** que la interfaz no quede cuidada por llegar al final del plazo.
 
