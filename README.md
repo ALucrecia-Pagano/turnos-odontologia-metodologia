@@ -61,6 +61,16 @@ python -m venv .venv
 .\.venv\Scripts\python -m pytest
 .\.venv\Scripts\python -m mypy
 ```
+### Linux / macOS
+
+```bash
+git clone https://github.com/ALucrecia-Pagano/turnos-odontologia-metodologia.git
+cd turnos-odontologia-metodologia/backend
+python3 -m venv .venv
+.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pytest
+.venv/bin/python -m mypy
+```
 
 Para ver los detalles del backend (módulos del dominio, un ejemplo de uso y
 cómo funciona la guardia de dependencias), leé
