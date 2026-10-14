@@ -81,5 +81,7 @@ cómo funciona la guardia de dependencias), leé
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
+| Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
+
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no
 contiene credenciales.
