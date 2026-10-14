@@ -44,7 +44,7 @@ Los cinco primeros por evidencia pública ponderada (matriz B) son:
 | Puesto | Sistema | Total |
 |---|---|---|
 | 1 | Odonthia | 3,25 |
-| 2 | DentalCore | 3,15 |
+| 2 | DentalCore | 3,10 |
 | 3 | Dentalink | 3,00 |
 | 4 | Open Dental | 2,95 |
 | 5 | Bilog | 2,80 |

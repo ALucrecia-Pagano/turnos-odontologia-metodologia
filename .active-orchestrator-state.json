@@ -46,7 +46,7 @@
       {
         "name": "DentalCore",
         "notes_file": "docs/discovery/sources/dentalcore.md",
-        "score": 3.15
+        "score": 3.1
       },
       {
         "name": "Dentalink",
@@ -214,12 +214,12 @@
     ],
     "integraciones": [],
     "restricciones": [
-      "Entrega el jueves 8 de octubre de 2026; trabajo individual",
+      "Entrega el jueves 15 de octubre de 2026; trabajo individual",
       "Tests automatizados que cubran cada escenario del spec",
       "Solo datos ficticios de pacientes",
       "Sin claves ni credenciales en el repositorio",
       "Primer change chico y terminable, centrado en la lógica de dominio de la agenda; interfaz en un change posterior",
-      "Stack libre, definido por la autora",
+      "Stack fijado por la cátedra",
       "Interfaz gráfica web con frontend cuidado"
     ],
     "riesgos": [
@@ -250,7 +250,7 @@
       "system_type": "web_app",
       "domain": "salud: gestion de turnos y agenda de consultorios odontologicos",
       "scale": "team",
-      "stack": "TypeScript full-stack: dominio puro + Vitest, Node.js + Fastify + SQLite (API REST), React + Vite",
+      "stack": "Python + FastAPI + JWT + SQLAlchemy + PostgreSQL + Redis + Docker Compose; React + TypeScript + Vite (decisión de la cátedra del 2026-10-08)",
       "needs_infra": true
     },
     "files": [

@@ -23,12 +23,12 @@ Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito téc
 **Impacto**: el MVP puede resultar demasiado rígido en uso real.
 **Resolución propuesta**: mantener estricto en el MVP (decisión de la autora) y modelar las reglas como componibles para habilitar sobreturnos/forzado con autorización en un change posterior (ver RN-AG-03).
 
-### IN-04 — Stack anterior fuera de la knowledge-base (PARCIALMENTE RESUELTA)
-**Estado:** `CHANGES.md` se regeneró el 2026-10-08 con el stack de la cátedra (33 changes; C-01 pasó a `fundacion-backend-y-dominio`). Quedan pendientes los demás archivos.
+### IN-04 — Stack anterior fuera de la knowledge-base (RESUELTA)
+**Estado:** resuelta. `CHANGES.md` se regeneró el 2026-10-08 con el stack de la cátedra (33 changes; C-01 pasó a `fundacion-backend-y-dominio`); `AGENTS.md` y `CLAUDE.md` se actualizaron el 2026-10-08 (commit `c5e1ce4`) y `.atl/skill-registry.md` el mismo día (commit `38029ea`); el estado compartido (`.active-orchestrator-state.json`: stack, fecha de entrega y restricción de stack) se sincronizó el 2026-10-14.
 **Documento A dice** (esta KB y `CHANGES.md`, desde el 2026-10-08): stack de la cátedra (Python + FastAPI + JWT + SQLAlchemy + PostgreSQL + Redis + Docker Compose; React + TypeScript + Vite).
-**Documento B dice** (`CLAUDE.md`, `AGENTS.md`, `.atl/skill-registry.md` y el estado compartido): stack TypeScript full-stack (Fastify, SQLite, workspaces de npm, rol simulado), numeración vieja de los changes de persistencia, API y UI, y 29 changes.
-**Impacto**: alto para los agentes: leen `CLAUDE.md`/`AGENTS.md` primero y aplicarían el stack viejo (por ejemplo, la regla dura de `packages/domain` y las skills de TS). No afecta las reglas de negocio ni los escenarios de C-02.
-**Resolución propuesta**: regenerar `CLAUDE.md`/`AGENTS.md` (agent-instruction) y el registro de skills a partir de esta KB y de `CHANGES.md`, en un paso aparte y **antes** del `/opsx:propose` de C-01.
+**Documento B decía** (`CLAUDE.md`, `AGENTS.md`, `.atl/skill-registry.md` y el estado compartido): stack TypeScript full-stack (Fastify, SQLite, workspaces de npm, rol simulado), numeración vieja de los changes de persistencia, API y UI, y 29 changes.
+**Impacto**: era alto para los agentes, que leen `CLAUDE.md`/`AGENTS.md` primero y habrían aplicado el stack viejo (por ejemplo, la regla dura de `packages/domain` y las skills de TS). No afectaba las reglas de negocio ni los escenarios de C-02.
+**Resolución**: `CLAUDE.md`/`AGENTS.md` y el registro de skills se regeneraron a partir de esta KB y de `CHANGES.md` antes del `/opsx:propose` de C-01, y el estado compartido se alineó después; ya no hay discrepancia con la KB.
 
 ## Preguntas abiertas (priorizadas)
 
