@@ -10,7 +10,7 @@ Depende de C-02 porque amplía su regla de duración (`rules/duration.py`), su r
 
 ## What Changes
 
-- **Duración válida completa** (RN-AG-09, RN-DI-05 solo en la parte de la duración, SU-02): además de ser mayor que cero, la duración efectiva tiene que ser múltiplo de 5 minutos y no superar 480 minutos. Los límites quedan como constantes del módulo `rules/duration.py`. Si la duración rompe más de una condición (por ejemplo 485), se informa **una sola** `INVALID_DURATION` cuyo mensaje nombra todas las razones.
+- **Duración válida completa** (RN-AG-09, RN-DI-05 solo en la parte de la duración, SU-02): además de ser mayor que cero, la duración efectiva tiene que ser múltiplo de 5 minutos y no superar 480 minutos. Los límites quedan como constantes del módulo `rules/duration.py`. Si la duración rompe más de una condición (por ejemplo 487), se informa **una sola** `INVALID_DURATION` cuyo mensaje nombra todas las razones.
 - **Referencias** (RN-AG-11, US-007 CA-2): el profesional, el sillón y la prestación tienen que existir y estar activos; el paciente tiene que existir. Códigos nuevos `UNKNOWN_REFERENCE` (no existe) e `INACTIVE_REFERENCE` (existe pero está inactivo). El paciente no tiene estado activo, así que solo puede dar `UNKNOWN_REFERENCE`.
 - **Quién resuelve las referencias**: quien llama busca cada id y le pasa al dominio la entidad encontrada o `None`. El dominio decide. El pedido de turno suma `service_id`. **BREAKING** (solo interno): cambia la firma de `validate_new_appointment`; los tests de C-02 se adaptan en la llamada sin cambiar lo que verifican.
 - **Modelos mínimos**: `Professional(id, active)`, `Chair(id, active)`, `Patient(id)` y `active: bool = True` en `Service`. Los nombres y el resto de los datos llegan con C-09.

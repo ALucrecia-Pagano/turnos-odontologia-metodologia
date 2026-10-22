@@ -18,6 +18,20 @@ class ViolationCode(Enum):
     PROFESSIONAL_OVERLAP = "PROFESSIONAL_OVERLAP"
     CHAIR_OVERLAP = "CHAIR_OVERLAP"
     INVALID_DURATION = "INVALID_DURATION"
+    UNKNOWN_REFERENCE = "UNKNOWN_REFERENCE"
+    INACTIVE_REFERENCE = "INACTIVE_REFERENCE"
+
+
+class ReferenceKind(Enum):
+    """Tipo de referencia que fallo (paciente, profesional, sillon o prestacion).
+
+    El valor es igual al nombre. Lo usa el frontend para marcar el campo del formulario.
+    """
+
+    PATIENT = "PATIENT"
+    PROFESSIONAL = "PROFESSIONAL"
+    CHAIR = "CHAIR"
+    SERVICE = "SERVICE"
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,11 +42,14 @@ class Violation:
         code: Codigo estable.
         message: Mensaje en espanol.
         conflicting_appointment_id: Id del turno en conflicto, si corresponde.
+        reference_kind: Tipo de referencia que fallo, solo en las violaciones de
+            referencias (`UNKNOWN_REFERENCE` / `INACTIVE_REFERENCE`); `None` en el resto.
     """
 
     code: ViolationCode
     message: str
     conflicting_appointment_id: UUID | None = None
+    reference_kind: ReferenceKind | None = None
 
 
 @dataclass(frozen=True, slots=True)

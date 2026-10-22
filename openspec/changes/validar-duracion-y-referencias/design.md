@@ -111,7 +111,7 @@ Reúne las razones incumplidas y, si hay alguna, devuelve **una** violación cuy
 
 - Si `duration_min <= 0`: solo la razón "debe ser mayor que cero minutos". El múltiplo de 5 no aporta nada para un valor no positivo (0 y -15 ya son múltiplos de 5).
 - Si no: "debe ser múltiplo de 5 minutos" si `duration_min % DURATION_STEP_MIN != 0`, y "no puede superar los 480 minutos" si `duration_min > MAX_DURATION_MIN`.
-- Mensaje: `"La duración del turno no es válida (se recibió {n} minutos): {razones unidas con ' y '}."`. Ejemplo para 485: `"La duración del turno no es válida (se recibió 485 minutos): debe ser múltiplo de 5 minutos y no puede superar los 480 minutos."`. Sigue conteniendo el valor recibido, como pide el escenario de C-02 con -15.
+- Mensaje: `"La duración del turno no es válida (se recibió {n} minutos): {razones unidas con ' y '}."`. Ejemplo para 487: `"La duración del turno no es válida (se recibió 487 minutos): debe ser múltiplo de 5 minutos y no puede superar los 480 minutos."`. Sigue conteniendo el valor recibido, como pide el escenario de C-02 con -15.
 
 **Por qué**: el código describe el campo inválido, no cada subregla, y dos violaciones iguales se verían repetidas en el formulario. Los límites son constantes del módulo porque SU-02 dice "constante configurable": si el catálogo real necesita otro máximo, se cambia en un solo lugar.
 
@@ -199,6 +199,16 @@ Solo `Service.active` tiene valor por defecto (`True`, decidido en el explore, D
 ## Decisiones confirmadas por la autora
 
 **Fecha: 2026-10-22.** D1 a D7 en el explore, tal como están en `docs/evidencias/explore-C-03.md`. D8, D9 y D10 en la revisión del propose. Queda para el punto de control el texto de los mensajes (D5 y D7).
+
+## Desvíos durante el apply
+
+- Se modificó una aserción de un test de C-02 (`test_validate_new_appointment.py`, mensaje de -15). Comparaba el texto exacto, el formato de D5 lo cambia y la spec solo pide que el mensaje mencione el valor recibido. Lo aprobó la autora en el punto de control 3.4 (2026-10-22).
+- En la tarea 3.3 se tocó `tests/domain/test_model.py`, que la tarea no nombraba: se sumó `service_id` a una construcción de `NewAppointmentRequest`. Sin eso fallaban 3 tests y mypy. No cambió ninguna aserción.
+- **Corrección 485 → 487.** El explore (decisión 5) y de ahí el proposal, la spec y el design D5 daban 485 como ejemplo de una duración que rompe dos condiciones, pero 485 es múltiplo de 5 (5 × 97) y solo supera el máximo. Lo detectó el test de la tarea 6.5 (falló porque el mensaje no contenía "múltiplo de 5"). La autora aprobó el cambio el 2026-10-22; se corrigió en `spec.md` (dos escenarios), `design.md` (D5), `proposal.md` y `tasks.md` (6.5), y se dejó una nota en `docs/evidencias/explore-C-03.md` sin borrar el 485 original. El 485 se mantiene donde solo debe superar el máximo (spec, tareas 6.4 y 7.4, `CHANGES.md`).
+- **Tarea 4.3.** El test usa `duration_min=0` en vez de 30: con 30 el `Rejected` dependía de la regla de referencias del grupo 5, que todavía no existía; con 0 el rechazo viene de la duración y sigue valiendo después. Además pasó de entrada (sin rojo), porque la verificación de ids de 4.2 ya cubre el caso de referencias `None`.
+- **Tarea 6.4 (aceptaciones y rechazo de 32 por defecto) y 6.5 (487)** pasaron en verde de entrada, sin verse en rojo: `check_duration` ya tenía la lógica de múltiplo de 5, máximo y mensaje con todas las razones desde 6.2/6.3.
+- **Tareas 7.2 a 7.5.** Solo 7.1 se vio en rojo. Al hacer 7.2 se armaron de una vez los dos grupos (`_request_validity_violations`, `_agenda_conflict_violations`) y se sacó el `NotImplementedError`, de modo que 7.3 (cubierta antes por un test escrito en 5.3, que sí falló por esa rama), 7.4, 7.5 y el refactor 7.6 pasaron de entrada. En `validate_new_appointment` la condición `duration is None` solo acota el tipo: sin duración efectiva siempre hay `UNKNOWN_REFERENCE`, así que no hay un `raise` nuevo en el dominio.
+- **Tarea 5.6.** El test de "horario ocupado" pasó de entrada por el corte; se quitó el corte temporalmente y fallaron 13 tests, y se restauró.
 
 ## Risks / Trade-offs
 

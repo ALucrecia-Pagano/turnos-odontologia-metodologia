@@ -22,6 +22,7 @@ def _request(start_at: datetime) -> NewAppointmentRequest:
         patient_id=PATIENT,
         professional_id=P1,
         chair_id=S1,
+        service_id=SVC,
         start_at=start_at,
     )
 

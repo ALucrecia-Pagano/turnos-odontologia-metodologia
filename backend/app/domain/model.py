@@ -35,6 +35,43 @@ def _to_utc(field_name: str, value: datetime) -> datetime:
 
 
 @dataclass(frozen=True, slots=True)
+class Professional:
+    """Profesional de la agenda (modelo minimo: solo lo que usan las reglas).
+
+    Attributes:
+        id: Identificador del profesional.
+        active: `True` si el profesional esta activo.
+    """
+
+    id: UUID
+    active: bool
+
+
+@dataclass(frozen=True, slots=True)
+class Chair:
+    """Sillon del consultorio (modelo minimo: solo lo que usan las reglas).
+
+    Attributes:
+        id: Identificador del sillon.
+        active: `True` si el sillon esta activo.
+    """
+
+    id: UUID
+    active: bool
+
+
+@dataclass(frozen=True, slots=True)
+class Patient:
+    """Paciente (modelo minimo: las reglas solo piden que exista).
+
+    Attributes:
+        id: Identificador del paciente.
+    """
+
+    id: UUID
+
+
+@dataclass(frozen=True, slots=True)
 class Service:
     """Prestacion del catalogo, con su duracion por defecto.
 
@@ -42,23 +79,24 @@ class Service:
         id: Identificador de la prestacion.
         default_duration_min: Duracion por defecto en minutos. No se valida aca: la
             duracion efectiva se valida en `rules/duration.py`.
+        active: `True` si la prestacion esta activa.
     """
 
     id: UUID
     default_duration_min: int
+    active: bool = True
 
 
 @dataclass(frozen=True, slots=True)
 class NewAppointmentRequest:
     """Pedido de un turno nuevo.
 
-    No lleva `service_id`: la prestacion llega como argumento aparte al validar.
-
     Attributes:
         id: Id del turno nuevo, generado por el llamador.
         patient_id: Paciente.
         professional_id: Profesional.
         chair_id: Sillon.
+        service_id: Prestacion pedida.
         start_at: Inicio del turno (con zona horaria; se normaliza a UTC).
         duration_min: Duracion explicita en minutos, o `None` para usar la de la prestacion.
 
@@ -70,11 +108,29 @@ class NewAppointmentRequest:
     patient_id: UUID
     professional_id: UUID
     chair_id: UUID
+    service_id: UUID
     start_at: datetime
     duration_min: int | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "start_at", _to_utc("start_at", self.start_at))
+
+
+@dataclass(frozen=True, slots=True)
+class AppointmentReferences:
+    """Referencias del pedido que resolvio el llamador: la entidad o `None` si no existe.
+
+    Attributes:
+        patient: Paciente, o `None` si no existe.
+        professional: Profesional, o `None` si no existe.
+        chair: Sillon, o `None` si no existe.
+        service: Prestacion, o `None` si no existe.
+    """
+
+    patient: Patient | None
+    professional: Professional | None
+    chair: Chair | None
+    service: Service | None
 
 
 @dataclass(frozen=True, slots=True)

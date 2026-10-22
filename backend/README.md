@@ -34,18 +34,29 @@ mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 
 | Módulo | Contenido |
 |---|---|
-| `model` | `AppointmentStatus`, `Service`, `Appointment`, `NewAppointmentRequest` (instantes con zona, normalizados a UTC) |
-| `violations` | `ViolationCode`, `Violation`, `Ok`, `Rejected`, `ValidationResult` |
+| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences` (instantes con zona, normalizados a UTC) |
+| `violations` | `ViolationCode`, `ReferenceKind`, `Violation`, `Ok`, `Rejected`, `ValidationResult` |
 | `intervals` | `Interval` semiabierto `[inicio, fin)` y `overlaps` |
-| `rules/` | `duration` (duración positiva) y `overlap` (profesional y sillón) |
+| `rules/` | `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas) y `overlap` (profesional y sillón) |
 | `appointment/` | `validate_new_appointment` |
+
+`validate_new_appointment` evalúa en dos grupos y nunca los mezcla: primero la validez del
+pedido (referencias y duración, todas juntas, en ese orden) y, solo si no hay ninguna,
+los conflictos de agenda (solapamientos).
 
 ```python
 from datetime import datetime, timezone
 from uuid import UUID
 
 from app.domain.appointment import validate_new_appointment
-from app.domain.model import NewAppointmentRequest, Service
+from app.domain.model import (
+    AppointmentReferences,
+    Chair,
+    NewAppointmentRequest,
+    Patient,
+    Professional,
+    Service,
+)
 from app.domain.violations import Ok, Rejected
 
 request = NewAppointmentRequest(
@@ -53,11 +64,18 @@ request = NewAppointmentRequest(
     patient_id=UUID(int=2),
     professional_id=UUID(int=3),
     chair_id=UUID(int=4),
+    service_id=UUID(int=5),
     start_at=datetime(2026, 10, 20, 13, 0, tzinfo=timezone.utc),
 )
-service = Service(id=UUID(int=5), default_duration_min=30)
+# Quien llama resuelve cada referencia (entidad, o None si no existe).
+references = AppointmentReferences(
+    patient=Patient(id=UUID(int=2)),
+    professional=Professional(id=UUID(int=3), active=True),
+    chair=Chair(id=UUID(int=4), active=True),
+    service=Service(id=UUID(int=5), default_duration_min=30),
+)
 
-match validate_new_appointment(request, service, existing_appointments=[]):
+match validate_new_appointment(request, references, existing_appointments=[]):
     case Ok(appointment):
         print(appointment.end_at)  # 2026-10-20 13:30:00+00:00
     case Rejected(violations):

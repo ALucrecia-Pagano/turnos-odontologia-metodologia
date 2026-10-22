@@ -5,8 +5,17 @@ from uuid import UUID
 import pytest
 
 from app.domain.appointment import validate_new_appointment
-from app.domain.model import Appointment, AppointmentStatus, NewAppointmentRequest, Service
-from app.domain.violations import Ok, Rejected, ViolationCode
+from app.domain.model import (
+    Appointment,
+    AppointmentReferences,
+    AppointmentStatus,
+    Chair,
+    NewAppointmentRequest,
+    Patient,
+    Professional,
+    Service,
+)
+from app.domain.violations import Ok, ReferenceKind, Rejected, ViolationCode
 
 PATIENT = UUID("00000000-0000-0000-0000-0000000000c1")
 P1 = UUID("00000000-0000-0000-0000-000000000001")
@@ -50,6 +59,18 @@ def _appt_a() -> Appointment:
     return _existing(APPT_A, P1, S1, _at(13), _at(13, 30))
 
 
+def _refs(
+    *,
+    patient: Patient | None = Patient(PATIENT),
+    professional: Professional | None = Professional(P1, active=True),
+    chair: Chair | None = Chair(S1, active=True),
+    service: Service | None = Service(SVC_30, 30),
+) -> AppointmentReferences:
+    return AppointmentReferences(
+        patient=patient, professional=professional, chair=chair, service=service
+    )
+
+
 def _request(
     start_at: datetime,
     *,
@@ -63,8 +84,26 @@ def _request(
         patient_id=PATIENT,
         professional_id=professional_id,
         chair_id=chair_id,
+        service_id=SVC_30,
         start_at=start_at,
         duration_min=duration_min,
+    )
+
+
+def test_validate_new_appointment_all_references_existing_and_active_returns_ok() -> None:
+    result = validate_new_appointment(_request(_at(13)), _refs(), [])
+
+    assert result == Ok(
+        Appointment(
+            id=T_NEW,
+            patient_id=PATIENT,
+            professional_id=P1,
+            chair_id=S1,
+            service_id=SVC_30,
+            start_at=_at(13),
+            end_at=_at(13, 30),
+            status=AppointmentStatus.RESERVED,
+        )
     )
 
 
@@ -73,7 +112,7 @@ def test_validate_new_appointment_free_professional_and_chair_returns_ok_with_re
 ):
     service = Service(id=SVC_30, default_duration_min=30)
 
-    result = validate_new_appointment(_request(_at(13)), service, [])
+    result = validate_new_appointment(_request(_at(13)), _refs(service=service), [])
 
     assert result == Ok(
         Appointment(
@@ -97,7 +136,7 @@ def _ok_end(result: object) -> datetime:
 def test_validate_new_appointment_explicit_duration_replaces_service_default() -> None:
     service = Service(id=SVC_30, default_duration_min=45)
 
-    result = validate_new_appointment(_request(_at(13), duration_min=20), service, [])
+    result = validate_new_appointment(_request(_at(13), duration_min=20), _refs(service=service), [])
 
     assert _ok_end(result) == _at(13, 20)
 
@@ -115,7 +154,9 @@ def test_validate_new_appointment_effective_duration_sets_end(
 ) -> None:
     service = Service(id=SVC_30, default_duration_min=default_min)
 
-    result = validate_new_appointment(_request(_at(13), duration_min=explicit_min), service, [])
+    result = validate_new_appointment(
+        _request(_at(13), duration_min=explicit_min), _refs(service=service), []
+    )
 
     assert _ok_end(result) == expected_end
 
@@ -124,7 +165,7 @@ def test_validate_new_appointment_start_in_buenos_aires_time_returns_utc_appoint
     service = Service(id=SVC_30, default_duration_min=30)
     start_local = datetime(2026, 10, 20, 10, 0, tzinfo=timezone(timedelta(hours=-3)))
 
-    result = validate_new_appointment(_request(start_local), service, [])
+    result = validate_new_appointment(_request(start_local), _refs(service=service), [])
 
     assert isinstance(result, Ok)
     assert result.appointment.start_at.isoformat() == "2026-10-20T13:00:00+00:00"
@@ -139,7 +180,7 @@ def _summary(result: object) -> list[tuple[ViolationCode, UUID | None]]:
 def test_validate_new_appointment_explicit_zero_duration_is_rejected_as_invalid_duration() -> None:
     service = Service(id=SVC_30, default_duration_min=30)
 
-    result = validate_new_appointment(_request(_at(13), duration_min=0), service, [])
+    result = validate_new_appointment(_request(_at(13), duration_min=0), _refs(service=service), [])
 
     assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
 
@@ -157,7 +198,9 @@ def test_validate_new_appointment_non_positive_effective_duration_is_rejected(
 ) -> None:
     service = Service(id=SVC_30, default_duration_min=default_min)
 
-    result = validate_new_appointment(_request(_at(13), duration_min=explicit_min), service, [])
+    result = validate_new_appointment(
+        _request(_at(13), duration_min=explicit_min), _refs(service=service), []
+    )
 
     assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
 
@@ -165,12 +208,14 @@ def test_validate_new_appointment_non_positive_effective_duration_is_rejected(
 def test_validate_new_appointment_invalid_duration_message_mentions_received_value() -> None:
     service = Service(id=SVC_30, default_duration_min=30)
 
-    result = validate_new_appointment(_request(_at(13), duration_min=-15), service, [])
+    result = validate_new_appointment(
+        _request(_at(13), duration_min=-15), _refs(service=service), []
+    )
 
     assert isinstance(result, Rejected)
     assert "-15" in result.violations[0].message
     assert result.violations[0].message == (
-        "La duración del turno debe ser mayor que cero minutos (se recibió -15)."
+        "La duración del turno no es válida (se recibió -15 minutos): debe ser mayor que cero minutos."
     )
 
 
@@ -178,7 +223,7 @@ def test_validate_new_appointment_same_professional_overlap_is_rejected_with_con
     service = Service(id=SVC_30, default_duration_min=30)
 
     result = validate_new_appointment(
-        _request(_at(13, 15), chair_id=S2), service, [_appt_a()]
+        _request(_at(13, 15), chair_id=S2), _refs(service=service, chair=Chair(S2, active=True)), [_appt_a()]
     )
 
     assert _summary(result) == [(ViolationCode.PROFESSIONAL_OVERLAP, APPT_A)]
@@ -192,7 +237,13 @@ def _validate(
     default_min: int = 30,
 ) -> object:
     return validate_new_appointment(
-        request, Service(id=SVC_30, default_duration_min=default_min), existing
+        request,
+        _refs(
+            professional=Professional(request.professional_id, active=True),
+            chair=Chair(request.chair_id, active=True),
+            service=Service(id=SVC_30, default_duration_min=default_min),
+        ),
+        existing,
     )
 
 
@@ -416,3 +467,280 @@ def test_validate_new_appointment_existing_appointment_in_other_timezone_still_c
     result = _validate(_request(_at(13, 15), chair_id=S2, duration_min=30), existing)
 
     assert _summary(result) == [(ViolationCode.PROFESSIONAL_OVERLAP, APPT_A)]
+
+
+OTHER_ID = UUID("00000000-0000-0000-0000-0000000000e9")
+
+
+@pytest.mark.parametrize(
+    ("references", "field"),
+    [
+        pytest.param(_refs(patient=Patient(OTHER_ID)), "patient", id="paciente"),
+        pytest.param(
+            _refs(professional=Professional(OTHER_ID, active=True)), "professional", id="profesional"
+        ),
+        pytest.param(_refs(chair=Chair(OTHER_ID, active=True)), "chair", id="sillon"),
+        pytest.param(_refs(service=Service(OTHER_ID, 30)), "service", id="prestacion"),
+    ],
+)
+def test_validate_new_appointment_reference_with_other_id_raises_value_error_naming_field(
+    references: AppointmentReferences, field: str
+) -> None:
+    with pytest.raises(ValueError, match=field):
+        validate_new_appointment(_request(_at(13)), references, [])
+
+
+def test_validate_new_appointment_all_references_none_is_not_a_value_error() -> None:
+    references = _refs(patient=None, professional=None, chair=None, service=None)
+
+    result = validate_new_appointment(_request(_at(13), duration_min=0), references, [])
+
+    assert isinstance(result, Rejected)
+
+
+def _kinds(result: object) -> list[tuple[ViolationCode, ReferenceKind | None]]:
+    assert isinstance(result, Rejected)
+    return [(v.code, v.reference_kind) for v in result.violations]
+
+
+def test_validate_new_appointment_unknown_professional_is_rejected_as_unknown_reference() -> None:
+    result = validate_new_appointment(_request(_at(13)), _refs(professional=None), [])
+
+    assert _kinds(result) == [(ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.PROFESSIONAL)]
+
+
+@pytest.mark.parametrize(
+    ("references", "kind"),
+    [
+        pytest.param(_refs(patient=None), ReferenceKind.PATIENT, id="paciente"),
+        pytest.param(_refs(professional=None), ReferenceKind.PROFESSIONAL, id="profesional"),
+        pytest.param(_refs(chair=None), ReferenceKind.CHAIR, id="sillon"),
+        pytest.param(_refs(service=None), ReferenceKind.SERVICE, id="prestacion"),
+    ],
+)
+def test_validate_new_appointment_unknown_reference_reports_matching_kind(
+    references: AppointmentReferences, kind: ReferenceKind
+) -> None:
+    result = validate_new_appointment(_request(_at(13), duration_min=30), references, [])
+
+    assert _kinds(result) == [(ViolationCode.UNKNOWN_REFERENCE, kind)]
+
+
+def test_validate_new_appointment_unknown_service_without_explicit_duration_skips_duration() -> (
+    None
+):
+    result = validate_new_appointment(_request(_at(13)), _refs(service=None), [])
+
+    assert _kinds(result) == [(ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.SERVICE)]
+
+
+@pytest.mark.parametrize(
+    ("references", "kind"),
+    [
+        pytest.param(
+            _refs(professional=Professional(P1, active=False)),
+            ReferenceKind.PROFESSIONAL,
+            id="profesional",
+        ),
+        pytest.param(_refs(chair=Chair(S1, active=False)), ReferenceKind.CHAIR, id="sillon"),
+        pytest.param(
+            _refs(service=Service(SVC_30, 30, active=False)), ReferenceKind.SERVICE, id="prestacion"
+        ),
+    ],
+)
+def test_validate_new_appointment_inactive_reference_reports_matching_kind(
+    references: AppointmentReferences, kind: ReferenceKind
+) -> None:
+    result = validate_new_appointment(_request(_at(13)), references, [])
+
+    assert _kinds(result) == [(ViolationCode.INACTIVE_REFERENCE, kind)]
+
+
+def test_validate_new_appointment_several_failing_references_are_reported_in_fixed_order() -> None:
+    references = _refs(
+        patient=None,
+        professional=Professional(P1, active=False),
+        chair=None,
+        service=Service(SVC_30, 30, active=False),
+    )
+
+    result = validate_new_appointment(_request(_at(13), duration_min=30), references, [])
+
+    assert _kinds(result) == [
+        (ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.PATIENT),
+        (ViolationCode.INACTIVE_REFERENCE, ReferenceKind.PROFESSIONAL),
+        (ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.CHAIR),
+        (ViolationCode.INACTIVE_REFERENCE, ReferenceKind.SERVICE),
+    ]
+
+
+def test_validate_new_appointment_reference_violation_in_busy_slot_reports_no_overlap() -> None:
+    result = validate_new_appointment(
+        _request(_at(13)), _refs(chair=Chair(S1, active=False)), [_appt_a()]
+    )
+
+    assert _kinds(result) == [(ViolationCode.INACTIVE_REFERENCE, ReferenceKind.CHAIR)]
+
+
+@pytest.mark.parametrize(
+    ("references", "code", "kind", "expected_id"),
+    [
+        pytest.param(
+            _refs(chair=None),
+            ViolationCode.UNKNOWN_REFERENCE,
+            ReferenceKind.CHAIR,
+            S1,
+            id="sillon-inexistente",
+        ),
+        pytest.param(
+            _refs(professional=Professional(P1, active=False)),
+            ViolationCode.INACTIVE_REFERENCE,
+            ReferenceKind.PROFESSIONAL,
+            P1,
+            id="profesional-inactivo",
+        ),
+    ],
+)
+def test_validate_new_appointment_reference_violation_has_kind_id_in_message_and_no_conflict(
+    references: AppointmentReferences, code: ViolationCode, kind: ReferenceKind, expected_id: UUID
+) -> None:
+    result = validate_new_appointment(_request(_at(13)), references, [])
+
+    assert isinstance(result, Rejected)
+    (violation,) = result.violations
+    assert (violation.code, violation.reference_kind) == (code, kind)
+    assert str(expected_id) in violation.message
+    assert violation.conflicting_appointment_id is None
+
+
+@pytest.mark.parametrize("explicit_min", [7, 32])
+def test_validate_new_appointment_duration_not_multiple_of_five_is_invalid_duration(
+    explicit_min: int,
+) -> None:
+    result = validate_new_appointment(_request(_at(13), duration_min=explicit_min), _refs(), [])
+
+    assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
+
+
+def test_validate_new_appointment_duration_above_maximum_is_invalid_duration() -> None:
+    result = validate_new_appointment(_request(_at(13), duration_min=490), _refs(), [])
+
+    assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
+
+
+@pytest.mark.parametrize(
+    ("start", "explicit_min", "default_min", "expected_end"),
+    [
+        pytest.param(_at(8), 480, 30, _at(16), id="maxima"),
+        pytest.param(_at(13), 5, 30, _at(13, 5), id="minima"),
+        pytest.param(_at(13), 30, 485, _at(13, 30), id="explicita-reemplaza-defecto-invalido"),
+    ],
+)
+def test_validate_new_appointment_valid_duration_boundaries_return_ok(
+    start: datetime, explicit_min: int, default_min: int, expected_end: datetime
+) -> None:
+    result = validate_new_appointment(
+        _request(start, duration_min=explicit_min),
+        _refs(service=Service(SVC_30, default_min)),
+        [],
+    )
+
+    assert isinstance(result, Ok)
+    assert (result.appointment.start_at, result.appointment.end_at) == (start, expected_end)
+
+
+def test_validate_new_appointment_default_duration_not_multiple_of_five_is_rejected() -> None:
+    result = validate_new_appointment(
+        _request(_at(13)), _refs(service=Service(SVC_30, 32)), []
+    )
+
+    assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
+
+
+
+def test_validate_new_appointment_duration_breaking_two_conditions_gives_one_violation() -> None:
+    result = validate_new_appointment(_request(_at(13), duration_min=487), _refs(), [])
+
+    assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
+
+
+def test_validate_new_appointment_duration_breaking_two_conditions_message_names_all_reasons() -> (
+    None
+):
+    result = validate_new_appointment(_request(_at(13), duration_min=487), _refs(), [])
+
+    assert isinstance(result, Rejected)
+    message = result.violations[0].message
+    assert "487" in message
+    assert "múltiplo de 5" in message
+    assert "480" in message
+
+
+def test_validate_new_appointment_invalid_reference_and_duration_are_reported_together() -> None:
+    result = validate_new_appointment(
+        _request(_at(13), duration_min=7), _refs(professional=None), []
+    )
+
+    assert _kinds(result) == [
+        (ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.PROFESSIONAL),
+        (ViolationCode.INVALID_DURATION, None),
+    ]
+
+
+@pytest.mark.parametrize(
+    ("references", "explicit_min", "expected"),
+    [
+        pytest.param(
+            _refs(service=None),
+            7,
+            [
+                (ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.SERVICE),
+                (ViolationCode.INVALID_DURATION, None),
+            ],
+            id="prestacion-inexistente-con-explicita-invalida",
+        ),
+        pytest.param(
+            _refs(service=Service(SVC_30, 485, active=False)),
+            None,
+            [
+                (ViolationCode.INACTIVE_REFERENCE, ReferenceKind.SERVICE),
+                (ViolationCode.INVALID_DURATION, None),
+            ],
+            id="prestacion-inactiva-con-defecto-invalido",
+        ),
+    ],
+)
+def test_validate_new_appointment_service_problem_and_invalid_duration_are_reported_in_order(
+    references: AppointmentReferences,
+    explicit_min: int | None,
+    expected: list[tuple[ViolationCode, ReferenceKind | None]],
+) -> None:
+    result = validate_new_appointment(
+        _request(_at(13), duration_min=explicit_min), references, []
+    )
+
+    assert _kinds(result) == expected
+
+
+@pytest.mark.parametrize(
+    ("duration_min", "expected"),
+    [
+        pytest.param(
+            30,
+            [
+                (ViolationCode.PROFESSIONAL_OVERLAP, None),
+                (ViolationCode.CHAIR_OVERLAP, None),
+            ],
+            id="solapamientos",
+        ),
+        pytest.param(7, [(ViolationCode.INVALID_DURATION, None)], id="duracion-invalida"),
+    ],
+)
+def test_validate_new_appointment_non_reference_violations_have_no_reference_kind(
+    duration_min: int, expected: list[tuple[ViolationCode, ReferenceKind | None]]
+) -> None:
+    result = validate_new_appointment(
+        _request(_at(13, 15), duration_min=duration_min), _refs(), [_appt_a()]
+    )
+
+    assert _kinds(result) == expected

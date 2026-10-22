@@ -21,6 +21,8 @@ La consigna pide guardar el resultado o un resumen del relevamiento del explore.
 | 6 | ¿El inicio múltiplo de 5 minutos (RN-DI-05) entra en C-03? | No: pasa a C-04, y el scope de C-04 en `CHANGES.md` ya está actualizado. | La grilla de 5 minutos tiene sentido en hora local, que vive en C-04, y C-03 no crece. El código de violación para el inicio se define en C-04. |
 | 7 | ¿En qué orden van las violaciones de referencias? | Paciente, profesional, sillón, prestación. | Es el orden de los campos de `POST /api/appointments` (KB 07): un orden estable y fácil de testear. |
 
+> Nota (2026-10-22, apply): 485 es múltiplo de 5 (5 × 97), así que solo rompe el máximo. El ejemplo correcto de una duración que rompe las dos condiciones es 487. El error lo detectó el test de la tarea 6.5 y se corrigió en la spec, el design, el proposal y tasks.
+
 ## Pedidos para el propose
 
 - Los límites de duración (granularidad de 5 y máximo de 480) quedan como constantes del módulo `rules/duration.py`, como dice SU-02 ("constante configurable").

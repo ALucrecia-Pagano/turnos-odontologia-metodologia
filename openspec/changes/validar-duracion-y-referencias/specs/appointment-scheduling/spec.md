@@ -51,7 +51,7 @@ La duración efectiva SHALL ser mayor que cero, múltiplo de 5 minutos y de 480 
 
 #### Scenario: Duración que rompe dos condiciones
 - **GIVEN** una prestación con duración por defecto de 30 minutos
-- **WHEN** se pide un turno a las 13:00 con duración explícita de 485 minutos, que no es múltiplo de 5 y supera el máximo
+- **WHEN** se pide un turno a las 13:00 con duración explícita de 487 minutos, que no es múltiplo de 5 y supera el máximo
 - **THEN** el resultado es `Rejected` con exactamente una violación `INVALID_DURATION`, no dos
 
 #### Scenario: Duración máxima válida
@@ -136,8 +136,8 @@ Cada violación SHALL tener un código estable, un mensaje no vacío en español
 - **THEN** la violación `INVALID_DURATION` no tiene id de turno en conflicto y su mensaje en español menciona la duración recibida (-15)
 
 #### Scenario: Mensaje de duración que rompe dos condiciones
-- **WHEN** se pide un turno con duración explícita de 485 minutos
-- **THEN** la única violación `INVALID_DURATION` tiene un mensaje en español que menciona 485, el múltiplo de 5 minutos y el máximo de 480 minutos
+- **WHEN** se pide un turno con duración explícita de 487 minutos
+- **THEN** la única violación `INVALID_DURATION` tiene un mensaje en español que menciona 487, el múltiplo de 5 minutos y el máximo de 480 minutos
 
 #### Scenario: Tipo de referencia en las violaciones de referencias
 - **GIVEN** que el sillón S2 del pedido no existe (primer caso) o que el profesional P1 del pedido está inactivo (segundo caso)
