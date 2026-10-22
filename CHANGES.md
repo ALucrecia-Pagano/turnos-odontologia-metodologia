@@ -221,7 +221,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 > Estos changes salen de partir en cinco el "change 2" `horarios-y-bloqueos` de la KB (decisión Q-13 + regla de tamaño: un change = una funcionalidad). Todos extienden `validate_new_appointment` agregando una regla componible en `rules/`, por lo que, salvo C-05 (que usa C-04), son independientes entre sí.
 
 ### [C-03] `validar-duracion-y-referencias`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-10-22)
 - **Scope**:
   - `rules/duration.py`: duración múltiplo de 5 y máximo 480 min → `INVALID_DURATION` (RN-AG-09 completa, RN-DI-05 (solo la duración; el inicio va a C-04); el caso <= 0 ya está en C-02).
   - `rules/references.py`: profesional, sillón o prestación inexistentes → `UNKNOWN_REFERENCE`; inactivos → `INACTIVE_REFERENCE`; paciente inexistente (RN-AG-11).

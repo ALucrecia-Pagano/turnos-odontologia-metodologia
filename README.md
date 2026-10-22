@@ -24,8 +24,9 @@ Fijado por la cátedra:
 ## Estado actual
 
 - **Implementado:** el dominio de C-01 (fundación del backend y guardia de
-  dependencias del dominio) y C-02 (crear un turno sin solapamientos por
-  profesional y por sillón).
+  dependencias del dominio), C-02 (crear un turno sin solapamientos por
+  profesional y por sillón) y C-03 (validar la duración completa y que el
+  paciente, el profesional, el sillón y la prestación existan y estén activos).
 - **Planificado:** la API REST, la base de datos y el frontend. El plan completo
   está en [CHANGES.md](CHANGES.md).
 
@@ -88,6 +89,7 @@ cómo funciona la guardia de dependencias), leé
 | Skill registry | [.atl/skill-registry.md](.atl/skill-registry.md) |
 | Specs vigentes | [openspec/specs/](openspec/specs/) |
 | Change archivado de C-02 | [openspec/changes/archive/2026-10-08-crear-turno-sin-solapamientos/](openspec/changes/archive/2026-10-08-crear-turno-sin-solapamientos/) |
+| Change archivado de C-03 | [openspec/changes/archive/2026-10-22-validar-duracion-y-referencias/](openspec/changes/archive/2026-10-22-validar-duracion-y-referencias/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
