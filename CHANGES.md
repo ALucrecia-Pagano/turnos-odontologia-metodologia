@@ -238,7 +238,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Scope**:
   - `intervals.py`: conversión de instante UTC a día y minutos desde las 00:00 en `America/Argentina/Buenos_Aires` con `zoneinfo.ZoneInfo` (zona recibida por parámetro, sin dependencias de framework); formateo de hora local para los mensajes.
   - `rules/same_day.py`: turno que cruza la medianoche local → rechazo (RN-AG-10, US-007 CA-3).
-  - Inicio en la grilla de 5 minutos en hora local: minutos múltiplo de 5, segundos y microsegundos en cero (parte de inicio de RN-DI-05; viene de C-03 por la decisión Q6 del explore de C-03). El código de violación está por definir en el propose, porque no está en el catálogo de KB 07.
+  - Inicio en la grilla de 5 minutos en hora local: minutos múltiplo de 5, segundos y microsegundos en cero (parte de inicio de RN-DI-05; viene de C-03 por la decisión Q6 del explore de C-03). El catálogo de KB 07 no tiene código para ninguna de las dos reglas: el explore de C-04 define `CROSSES_MIDNIGHT` (medianoche) e `INVALID_START_TIME` (grilla).
   - Tests: un instante UTC que en hora local cae en otro día; turno 23:30–00:30 rechazado; 23:00–23:55 válido; inicio 10:03 rechazado; inicio 10:05 válido; inicio con segundos rechazado.
 - **Dependencias**: `C-02`
 - **Governance**: MEDIO

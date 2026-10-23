@@ -21,7 +21,7 @@ Origen: checklist §7, reglas 1 a 6 (vigentes en el MVP). Estas reglas se valida
 - **RN-AG-09**: Validez de la duración: entero positivo, múltiplo de 5 minutos y como máximo 480 minutos (8 h). **Suposición** (SU-02).
 - **RN-AG-10**: Un turno no cruza la medianoche: inicio y fin caen en el mismo día local. **Suposición** (simplifica RN-AG-04).
 - **RN-AG-11**: El profesional, el sillón y la prestación del turno deben existir y estar activos; el paciente debe existir. Código: `UNKNOWN_REFERENCE` / `INACTIVE_REFERENCE`.
-- **RN-AG-12**: El dominio devuelve **todas** las violaciones detectadas (no solo la primera), ordenadas por prioridad: referencias → duración → pasado → horario laboral → bloqueo → solapamiento de profesional → solapamiento de sillón. Cada violación incluye código, mensaje en español y, si aplica, el id del turno o bloqueo que choca. *(Diferenciador: mensajes de rechazo explicativos.)*
+- **RN-AG-12**: El dominio devuelve **todas** las violaciones detectadas (no solo la primera), ordenadas por prioridad: referencias → duración → inicio en la grilla (`INVALID_START_TIME`) → cruce de medianoche (`CROSSES_MIDNIGHT`) → pasado → horario laboral → bloqueo → solapamiento de profesional → solapamiento de sillón. Cada violación incluye código, mensaje en español y, si aplica, el id del turno o bloqueo que choca. *(Diferenciador: mensajes de rechazo explicativos.)*
 - **RN-AG-13**: Servicios sin sillón específico: cualquier prestación puede darse en cualquier sillón activo. **Suposición** (SU-04); pregunta abierta Q-05.
 
 ## Dominio: Ciclo de vida del turno (RN-TU)
