@@ -7,9 +7,9 @@ si el catalogo real necesita otro maximo, se cambia en un solo lugar.
 
 from typing import Final
 
+from app.domain.rules.grid import GRID_STEP_MIN
 from app.domain.violations import Violation, ViolationCode
 
-DURATION_STEP_MIN: Final = 5
 MAX_DURATION_MIN: Final = 480
 
 
@@ -30,8 +30,8 @@ def check_duration(duration_min: int) -> list[Violation]:
     reasons: list[str] = []
     if duration_min <= 0:
         reasons.append("debe ser mayor que cero minutos")
-    elif duration_min % DURATION_STEP_MIN != 0:
-        reasons.append(f"debe ser múltiplo de {DURATION_STEP_MIN} minutos")
+    elif duration_min % GRID_STEP_MIN != 0:
+        reasons.append(f"debe ser múltiplo de {GRID_STEP_MIN} minutos")
     if duration_min > MAX_DURATION_MIN:
         reasons.append(f"no puede superar los {MAX_DURATION_MIN} minutos")
     if not reasons:

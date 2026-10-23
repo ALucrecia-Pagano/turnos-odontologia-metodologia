@@ -39,6 +39,8 @@ def test_rejected_keeps_violations_in_given_order(ids: list[UUID]) -> None:
         (ViolationCode.INVALID_DURATION, "INVALID_DURATION"),
         (ViolationCode.UNKNOWN_REFERENCE, "UNKNOWN_REFERENCE"),
         (ViolationCode.INACTIVE_REFERENCE, "INACTIVE_REFERENCE"),
+        (ViolationCode.CROSSES_MIDNIGHT, "CROSSES_MIDNIGHT"),
+        (ViolationCode.INVALID_START_TIME, "INVALID_START_TIME"),
     ],
 )
 def test_violation_code_value_is_stable_api_code(code: ViolationCode, serialized: str) -> None:

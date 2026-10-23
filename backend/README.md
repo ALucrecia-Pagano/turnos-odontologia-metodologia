@@ -34,19 +34,22 @@ mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 
 | Módulo | Contenido |
 |---|---|
-| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences` (instantes con zona, normalizados a UTC) |
+| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences` y `ScheduleContext` (la zona horaria que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
 | `violations` | `ViolationCode`, `ReferenceKind`, `Violation`, `Ok`, `Rejected`, `ValidationResult` |
-| `intervals` | `Interval` semiabierto `[inicio, fin)` y `overlaps` |
-| `rules/` | `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas) y `overlap` (profesional y sillón) |
+| `intervals` | `Interval` semiabierto `[inicio, fin)`, `overlaps` y la hora local: `local_day_and_minutes` y `format_local_time` |
+| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local) y `overlap` (profesional y sillón) |
 | `appointment/` | `validate_new_appointment` |
 
 `validate_new_appointment` evalúa en dos grupos y nunca los mezcla: primero la validez del
-pedido (referencias y duración, todas juntas, en ese orden) y, solo si no hay ninguna,
-los conflictos de agenda (solapamientos).
+pedido (referencias, duración, inicio en la grilla y medianoche local, todas juntas, en ese
+orden) y, solo si no hay ninguna, los conflictos de agenda (solapamientos). La grilla del
+inicio y la medianoche se evalúan en la zona de `ScheduleContext`, que el llamador pasa
+siempre (sin valor por defecto).
 
 ```python
 from datetime import datetime, timezone
 from uuid import UUID
+from zoneinfo import ZoneInfo
 
 from app.domain.appointment import validate_new_appointment
 from app.domain.model import (
@@ -55,6 +58,7 @@ from app.domain.model import (
     NewAppointmentRequest,
     Patient,
     Professional,
+    ScheduleContext,
     Service,
 )
 from app.domain.violations import Ok, Rejected
@@ -75,7 +79,10 @@ references = AppointmentReferences(
     service=Service(id=UUID(int=5), default_duration_min=30),
 )
 
-match validate_new_appointment(request, references, existing_appointments=[]):
+# La zona la arma el borde (API) a partir de APP_TIMEZONE; el dominio la recibe.
+context = ScheduleContext(tz=ZoneInfo("America/Argentina/Buenos_Aires"))
+
+match validate_new_appointment(request, references, existing_appointments=[], context=context):
     case Ok(appointment):
         print(appointment.end_at)  # 2026-10-20 13:30:00+00:00
     case Rejected(violations):

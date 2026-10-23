@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
 from uuid import UUID
+from zoneinfo import ZoneInfo
 
 from app.domain.intervals import Interval
 
@@ -131,6 +132,21 @@ class AppointmentReferences:
     professional: Professional | None
     chair: Chair | None
     service: Service | None
+
+
+@dataclass(frozen=True, slots=True)
+class ScheduleContext:
+    """Contexto de la agenda que recibe el dominio junto con el pedido.
+
+    La zona se recibe por parametro: el dominio no la lee del entorno ni la fija (SU-01).
+    El borde (API) convierte `APP_TIMEZONE` en `ZoneInfo`. Los proximos changes suman
+    aca horarios, bloqueos y `now` sin volver a cambiar la firma.
+
+    Attributes:
+        tz: Zona horaria en la que se evaluan la grilla del inicio y la medianoche.
+    """
+
+    tz: ZoneInfo
 
 
 @dataclass(frozen=True, slots=True)

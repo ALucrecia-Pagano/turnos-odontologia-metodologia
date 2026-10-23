@@ -61,13 +61,18 @@ El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido:
 - **WHEN** se pide un turno a las 23:33 hora local del 2026-10-20 (02:33 UTC del 2026-10-21) con duración explícita de 60 minutos, que terminaría a las 00:33 hora local del día siguiente
 - **THEN** el resultado es `Rejected` con dos violaciones, en este orden: `INVALID_START_TIME` y `CROSSES_MIDNIGHT`
 
+#### Scenario: Inicio con segundos en un turno que cruza la medianoche por segundos
+- **GIVEN** una prestación con duración por defecto de 30 minutos y ningún turno existente
+- **WHEN** se pide un turno a las 23:30:30 hora local del 2026-10-20 (02:30:30 UTC del 2026-10-21) con duración explícita de 30 minutos, que terminaría a las 00:00:30 hora local del día siguiente (03:00:30 UTC)
+- **THEN** el resultado es `Rejected` con dos violaciones, en este orden: `INVALID_START_TIME` y `CROSSES_MIDNIGHT`
+
 #### Scenario: Inicio fuera de la grilla en un horario ocupado
 - **GIVEN** el turno existente A (P1, S1, de 13:00 a 13:30)
 - **WHEN** se pide un turno de 30 minutos para P1 en S1 a las 10:03 hora local (13:03 UTC)
 - **THEN** el resultado es `Rejected` con una sola violación, `INVALID_START_TIME`, sin violaciones de solapamiento
 
 ### Requirement: Contenido de cada violación
-Cada violación SHALL tener un código estable, un mensaje no vacío en español y, en las de solapamiento, el id del turno con el que choca; el mensaje MUST incluir ese id. Las violaciones de referencias SHALL indicar el tipo de referencia que falló (`reference_kind`: `PATIENT`, `PROFESSIONAL`, `CHAIR` o `SERVICE`) y su mensaje MUST incluir el id de esa referencia; las demás violaciones no llevan tipo de referencia. El mensaje de `INVALID_DURATION` MUST mencionar la duración recibida y cada condición incumplida. El mensaje de `INVALID_START_TIME` MUST mencionar la hora de inicio recibida en hora local y cada condición incumplida. El mensaje de `CROSSES_MIDNIGHT` MUST mencionar el inicio y el fin del turno en hora local. Las horas de los mensajes SHALL mostrarse con formato `HH:MM`, o `HH:MM:SS` si la hora tiene segundos o microsegundos distintos de cero (los microsegundos no se muestran). Ni `INVALID_START_TIME` ni `CROSSES_MIDNIGHT` llevan id de turno en conflicto. El texto completo, con nombres y rango horario local, queda para C-08. Las violaciones de negocio se devuelven en el resultado y nunca como excepción.
+Cada violación SHALL tener un código estable, un mensaje no vacío en español y, en las de solapamiento, el id del turno con el que choca; el mensaje MUST incluir ese id. Las violaciones de referencias SHALL indicar el tipo de referencia que falló (`reference_kind`: `PATIENT`, `PROFESSIONAL`, `CHAIR` o `SERVICE`) y su mensaje MUST incluir el id de esa referencia; las demás violaciones no llevan tipo de referencia. El mensaje de `INVALID_DURATION` MUST mencionar la duración recibida y cada condición incumplida. El mensaje de `INVALID_START_TIME` MUST mencionar la hora de inicio recibida en hora local (`se recibió {hora}, hora local`) y cada condición incumplida, con el inicio como sujeto: si los minutos no son múltiplo de 5, la razón MUST decir "debe caer en un minuto múltiplo de 5"; si el inicio tiene segundos o fracciones de segundo, la razón MUST decir "no puede tener segundos ni fracciones de segundo"; las dos razones se unen con " y ". El mensaje de `CROSSES_MIDNIGHT` MUST mencionar el inicio y el fin del turno en hora local. Las horas de los mensajes SHALL mostrarse con formato `HH:MM`, o `HH:MM:SS` si la hora tiene segundos o microsegundos distintos de cero (los microsegundos no se muestran). Ni `INVALID_START_TIME` ni `CROSSES_MIDNIGHT` llevan id de turno en conflicto. El texto completo, con nombres y rango horario local, queda para C-08. Las violaciones de negocio se devuelven en el resultado y nunca como excepción.
 
 #### Scenario: Mensajes de las violaciones de solapamiento
 - **GIVEN** el turno existente A
@@ -96,7 +101,7 @@ Cada violación SHALL tener un código estable, un mensaje no vacío en español
 
 #### Scenario: Mensaje de inicio fuera de la grilla
 - **WHEN** se pide un turno de 30 minutos a las 10:03 hora local (13:03 UTC)
-- **THEN** la violación `INVALID_START_TIME` tiene un mensaje en español que contiene la hora local `10:03` y menciona el múltiplo de 5 minutos
+- **THEN** la violación `INVALID_START_TIME` tiene un mensaje en español que contiene `10:03, hora local` y la razón "debe caer en un minuto múltiplo de 5"
 - **AND** la violación no tiene id de turno en conflicto ni tipo de referencia
 
 #### Scenario: Mensaje de cruce de medianoche
@@ -107,7 +112,7 @@ Cada violación SHALL tener un código estable, un mensaje no vacío en español
 ## ADDED Requirements
 
 ### Requirement: Turno dentro de un solo día local
-El inicio y el fin del turno MUST caer en el mismo día local (RN-AG-10, SU-09, US-007 CA-3). Si el turno cruza la medianoche local, el dominio SHALL rechazarlo con una violación `CROSSES_MIDNIGHT`. Por el intervalo semiabierto (DD-07), un turno que termina justo a las 00:00 locales no ocupa el día siguiente y MUST ser válido. La medianoche solo se evalúa si hay una duración efectiva válida.
+El inicio y el fin del turno MUST caer en el mismo día local (RN-AG-10, SU-09, US-007 CA-3). Si el turno cruza la medianoche local, el dominio SHALL rechazarlo con una violación `CROSSES_MIDNIGHT`. Por el intervalo semiabierto (DD-07), un turno que termina justo a las 00:00 locales no ocupa el día siguiente y MUST ser válido. La medianoche se evalúa con el instante completo del fin, incluidos segundos y fracciones de segundo: un fin a las 00:00:30 locales del día siguiente cruza la medianoche. La medianoche solo se evalúa si hay una duración efectiva válida, y se evalúa aunque el inicio esté fuera de la grilla.
 
 #### Scenario: Turno que cruza la medianoche local
 - **GIVEN** una prestación con duración por defecto de 30 minutos y ningún turno existente
@@ -147,11 +152,13 @@ En hora local, el inicio del turno MUST tener minutos múltiplos de 5 y segundos
 - **WHEN** se pide un turno a las 10:05:30 hora local (13:05:30 UTC, primer caso) o a las 10:05:00.250000 hora local (13:05:00.250000 UTC, segundo caso)
 - **THEN** en ambos casos el resultado es `Rejected` con exactamente una violación `INVALID_START_TIME`
 - **AND** el mensaje contiene la hora local con segundos: `10:05:30` en el primer caso y `10:05:00` en el segundo
+- **AND** en ambos casos el mensaje dice "no puede tener segundos ni fracciones de segundo"
 
 #### Scenario: Inicio que rompe dos condiciones
 - **GIVEN** una prestación con duración por defecto de 30 minutos y ningún turno existente
 - **WHEN** se pide un turno a las 10:03:30 hora local (13:03:30 UTC), con minutos fuera de la grilla y segundos distintos de cero
 - **THEN** el resultado es `Rejected` con exactamente una violación `INVALID_START_TIME`, no dos
+- **AND** su mensaje es exactamente "El inicio del turno no es válido (se recibió 10:03:30, hora local): debe caer en un minuto múltiplo de 5 y no puede tener segundos ni fracciones de segundo."
 
 ### Requirement: Hora local en la zona horaria recibida
 Las reglas de hora local (grilla del inicio y medianoche) SHALL evaluarse en la zona horaria que el dominio recibe como parámetro: `America/Argentina/Buenos_Aires` en el consultorio (SU-01, RN-GL-03, DD-07). El dominio MUST NOT fijar la zona ni leerla del entorno, y MUST NOT evaluar esas reglas sobre la hora UTC.
