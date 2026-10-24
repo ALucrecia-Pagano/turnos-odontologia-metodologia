@@ -32,7 +32,7 @@ Los 29 escenarios del delta de la spec `appointment-scheduling` tienen al menos 
 
 ## Los 29 escenarios del delta y su test
 
-En el orden de [la delta spec](../../openspec/changes/hora-local-y-turno-en-un-dia/specs/appointment-scheduling/spec.md). Todos los tests están en `backend/tests/domain/test_validate_new_appointment.py` y llevan el prefijo `test_validate_new_appointment_`, que se omite en la tabla. En los parametrizados, el id del caso va entre corchetes. Los escenarios de C-02 y C-03 que este change no toca siguen cubiertos por los tests de [verify-C-02.md](verify-C-02.md) y [verify-C-03.md](verify-C-03.md), que siguen en verde.
+En el orden de [la delta spec](../../openspec/changes/archive/2026-10-23-hora-local-y-turno-en-un-dia/specs/appointment-scheduling/spec.md). Todos los tests están en `backend/tests/domain/test_validate_new_appointment.py` y llevan el prefijo `test_validate_new_appointment_`, que se omite en la tabla. En los parametrizados, el id del caso va entre corchetes. Los escenarios de C-02 y C-03 que este change no toca siguen cubiertos por los tests de [verify-C-02.md](verify-C-02.md) y [verify-C-03.md](verify-C-03.md), que siguen en verde.
 
 Nuevos (16), marcados con **N**; el resto ya existía en los requisitos modificados (13). El escenario "Inicio con segundos en un turno que cruza la medianoche por segundos" se agregó durante el apply (hallazgo 8 de los desvíos).
 
@@ -83,7 +83,7 @@ La adaptación de las 28 llamadas existentes de `test_validate_new_appointment.p
 
 ## Desvíos durante el apply
 
-El detalle está en la sección "Desvíos durante el apply" de [design.md](../../openspec/changes/hora-local-y-turno-en-un-dia/design.md). Los principales:
+El detalle está en la sección "Desvíos durante el apply" de [design.md](../../openspec/changes/archive/2026-10-23-hora-local-y-turno-en-un-dia/design.md). Los principales:
 
 1. **Adición aprobada en 4.4:** `format_local_time` lanza `ValueError` con un instante *naive*, como `local_day_and_minutes` (helper privado `_to_local`). No estaba en las tareas originales.
 2. **Redacción de `INVALID_START_TIME` aprobada en 4.4** ("... (se recibió {hora}, hora local): ..." con las razones "debe caer en un minuto múltiplo de 5" y "no puede tener segundos ni fracciones de segundo").

@@ -25,8 +25,10 @@ Fijado por la cátedra:
 
 - **Implementado:** el dominio de C-01 (fundación del backend y guardia de
   dependencias del dominio), C-02 (crear un turno sin solapamientos por
-  profesional y por sillón) y C-03 (validar la duración completa y que el
-  paciente, el profesional, el sillón y la prestación existan y estén activos).
+  profesional y por sillón), C-03 (validar la duración completa y que el
+  paciente, el profesional, el sillón y la prestación existan y estén activos)
+  y C-04 (hora local: inicio en la grilla de 5 minutos y turno dentro de un
+  solo día local, evaluados en la zona horaria recibida).
 - **Planificado:** la API REST, la base de datos y el frontend. El plan completo
   está en [CHANGES.md](CHANGES.md).
 
@@ -90,10 +92,12 @@ cómo funciona la guardia de dependencias), leé
 | Specs vigentes | [openspec/specs/](openspec/specs/) |
 | Change archivado de C-02 | [openspec/changes/archive/2026-10-08-crear-turno-sin-solapamientos/](openspec/changes/archive/2026-10-08-crear-turno-sin-solapamientos/) |
 | Change archivado de C-03 | [openspec/changes/archive/2026-10-22-validar-duracion-y-referencias/](openspec/changes/archive/2026-10-22-validar-duracion-y-referencias/) |
+| Change archivado de C-04 | [openspec/changes/archive/2026-10-23-hora-local-y-turno-en-un-dia/](openspec/changes/archive/2026-10-23-hora-local-y-turno-en-un-dia/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
 | Evidencias de C-03 (explore, verify y salidas de pytest y mypy) | [explore-C-03.md](docs/evidencias/explore-C-03.md), [verify-C-03.md](docs/evidencias/verify-C-03.md), [pytest-C-03.txt](docs/evidencias/pytest-C-03.txt) y [mypy-C-03.txt](docs/evidencias/mypy-C-03.txt) |
+| Evidencias de C-04 (explore, verify y salidas de pytest y mypy) | [explore-C-04.md](docs/evidencias/explore-C-04.md), [verify-C-04.md](docs/evidencias/verify-C-04.md), [pytest-C-04.txt](docs/evidencias/pytest-C-04.txt) y [mypy-C-04.txt](docs/evidencias/mypy-C-04.txt) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no
