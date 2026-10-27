@@ -254,7 +254,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Estado**: `[ ]` pendiente
 - **Scope**:
   - Modelo `WorkingHours` (profesional, día de la semana, tramo `[inicio, fin)` en minutos locales) y validación de un conjunto de tramos: sin solapamiento ni `inicio >= fin` (RN-DI-01, RN-DI-02; US-010 CA-1 y CA-2).
-  - `rules/working_hours.py`: el turno debe caer completo dentro de un tramo → `OUTSIDE_WORKING_HOURS` (RN-AG-04).
+  - `rules/working_hours.py`: el turno debe caer completo dentro de un tramo → `OUTSIDE_WORKING_HOURS` (RN-AG-04). El explore de C-05 decide: los tramos llegan en `ScheduleContext.working_hours`, la regla va primera en el grupo 2, los tramos contiguos se fusionan, y el conjunto de tramos se valida con `INVALID_WORKING_HOURS` y `OVERLAPPING_WORKING_HOURS`.
   - Tests: US-004 CA-1, CA-2, CA-3, CA-6, CA-7 (instante UTC que en hora local queda fuera); varios tramos por día; día sin tramos.
 - **Dependencias**: `C-04`
 - **Governance**: MEDIO

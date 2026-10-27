@@ -14,7 +14,7 @@
 4. Carga el **contexto** con los repositorios SQLAlchemy: profesional, sillón, prestación, paciente, tramos laborales del profesional, bloqueos del día, turnos activos del profesional y del sillón que puedan solaparse, y `now` (UTC).
 5. Llama a `validate_new_appointment(input, context)` del dominio (Python puro).
 6. Si el resultado es `ok`: inserta el turno en `reservado` y la entrada de historial (`from_status` nulo) en la misma transacción; `COMMIT`; responde `201` con el turno.
-7. Si hay violaciones: `ROLLBACK`; responde `409` (solapamiento) o `422` (regla de validez) con la lista de violaciones.
+7. Si hay violaciones: `ROLLBACK`; responde `409` (conflicto de agenda: horario de atención y solapamientos) o `422` (validez del pedido) con la lista de violaciones.
 
 ```
 Recepción → UI → API ──(contexto)──► PostgreSQL
@@ -39,7 +39,7 @@ Recepción → UI → API ──(contexto)──► PostgreSQL
 }
 ```
 
-**Códigos de violación**: `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_TRANSITION`.
+**Códigos de violación**: `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_TRANSITION`, `INVALID_WORKING_HOURS`, `OVERLAPPING_WORKING_HOURS` (estos dos últimos, al cargar el horario de atención: RN-DI-02).
 
 **Casos de error**:
 - Entrada malformada → `400`.
