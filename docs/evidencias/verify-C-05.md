@@ -30,7 +30,7 @@ OPSX no tiene un comando propio de verify, así que la verificación se hizo a m
 
 ## Los 47 escenarios del delta y su test
 
-En el orden de [la delta spec](../../openspec/changes/horario-de-atencion/specs/appointment-scheduling/spec.md). Los tests de `Alta`, `Todas las violaciones`, `Hora local` y `Turno dentro del horario de atención` están en `backend/tests/domain/test_validate_new_appointment.py` y llevan el prefijo `test_validate_new_appointment_`, que se omite en la tabla; los de `Validez de un conjunto de tramos` están en `backend/tests/domain/test_working_hours.py` con el prefijo `test_validate_working_hours_`. En los parametrizados, el id del caso va entre corchetes. Los 14 escenarios que ya existían en los requisitos modificados siguen cubiertos por los mismos tests de C-02 a C-04 (no se cambió ninguna llamada ni aserción; solo `CTX` suma los tramos de día completo). Los escenarios de C-02 a C-04 que este change no toca siguen cubiertos por [verify-C-02.md](verify-C-02.md), [verify-C-03.md](verify-C-03.md) y [verify-C-04.md](verify-C-04.md).
+En el orden de [la delta spec](../../openspec/changes/archive/2026-10-26-horario-de-atencion/specs/appointment-scheduling/spec.md). Los tests de `Alta`, `Todas las violaciones`, `Hora local` y `Turno dentro del horario de atención` están en `backend/tests/domain/test_validate_new_appointment.py` y llevan el prefijo `test_validate_new_appointment_`, que se omite en la tabla; los de `Validez de un conjunto de tramos` están en `backend/tests/domain/test_working_hours.py` con el prefijo `test_validate_working_hours_`. En los parametrizados, el id del caso va entre corchetes. Los 14 escenarios que ya existían en los requisitos modificados siguen cubiertos por los mismos tests de C-02 a C-04 (no se cambió ninguna llamada ni aserción; solo `CTX` suma los tramos de día completo). Los escenarios de C-02 a C-04 que este change no toca siguen cubiertos por [verify-C-02.md](verify-C-02.md), [verify-C-03.md](verify-C-03.md) y [verify-C-04.md](verify-C-04.md).
 
 Nuevos (33), marcados con **N**; los otros 14 ya existían. Dos de los nuevos ("Turno que termina a la medianoche local, después del fin del tramo" y "Tramo contenido en otro") son hallazgos del apply que volvieron a la spec.
 
@@ -100,7 +100,7 @@ Tests extra de mensajes de tramos (D9, no son escenarios): `invalid_slot_message
 
 ## Desvíos durante el apply
 
-El detalle está en la sección "Desvíos durante el apply" de [design.md](../../openspec/changes/horario-de-atencion/design.md). Los principales:
+El detalle está en la sección "Desvíos durante el apply" de [design.md](../../openspec/changes/archive/2026-10-26-horario-de-atencion/design.md). Los principales:
 
 1. **Punto de control 3.5 (2026-10-26), dos ajustes de la autora:** el mensaje sin tramos termina en ": no atiende los {día en plural}." (spec y D6 actualizados) y se quitó de `test_model.py` el test que solo comprobaba los cuatro valores de `WorkingHours`.
 2. **Hallazgos del apply que volvieron a la spec (5.6 y 5.8):** quitar el fin 1440 no hacía fallar ningún escenario, así que se agregó el test del tramo `[1200, 1380)` con el turno 23:30–00:00 → rechazo; y el test del tramo `[600, 700)` contenido en `[540, 780)` fija que la unión toma el mayor fin. La autora decidió que eran comportamiento que la spec no cubría: hoy son los escenarios "Turno que termina a la medianoche local, después del fin del tramo" y "Tramo contenido en otro".
