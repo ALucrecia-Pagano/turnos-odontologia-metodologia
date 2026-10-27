@@ -34,17 +34,18 @@ mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 
 | Módulo | Contenido |
 |---|---|
-| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences` y `ScheduleContext` (la zona horaria que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
+| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional) y `ScheduleContext` (la zona horaria y los tramos `working_hours` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
 | `violations` | `ViolationCode`, `ReferenceKind`, `Violation`, `Ok`, `Rejected`, `ValidationResult` |
 | `intervals` | `Interval` semiabierto `[inicio, fin)`, `overlaps` y la hora local: `local_day_and_minutes` y `format_local_time` |
-| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local) y `overlap` (profesional y sillón) |
+| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local), `working_hours` (horario de atención del turno y validez de un conjunto de tramos) y `overlap` (profesional y sillón) |
 | `appointment/` | `validate_new_appointment` |
 
 `validate_new_appointment` evalúa en dos grupos y nunca los mezcla: primero la validez del
 pedido (referencias, duración, inicio en la grilla y medianoche local, todas juntas, en ese
-orden) y, solo si no hay ninguna, los conflictos de agenda (solapamientos). La grilla del
-inicio y la medianoche se evalúan en la zona de `ScheduleContext`, que el llamador pasa
-siempre (sin valor por defecto).
+orden) y, solo si no hay ninguna, los conflictos de agenda (grupo 2: horario de atención,
+después solapamientos del profesional y del sillón). La grilla del inicio, la medianoche y
+el horario de atención se evalúan en la zona de `ScheduleContext`, que el llamador pasa
+siempre junto con los tramos (sin valor por defecto).
 
 ```python
 from datetime import datetime, timezone
@@ -60,6 +61,7 @@ from app.domain.model import (
     Professional,
     ScheduleContext,
     Service,
+    WorkingHours,
 )
 from app.domain.violations import Ok, Rejected
 
@@ -80,7 +82,13 @@ references = AppointmentReferences(
 )
 
 # La zona la arma el borde (API) a partir de APP_TIMEZONE; el dominio la recibe.
-context = ScheduleContext(tz=ZoneInfo("America/Argentina/Buenos_Aires"))
+# Los tramos del horario de atencion (dia ISO 1 = lunes ... 7 = domingo, minutos locales
+# desde las 00:00; 540 = 09:00, 780 = 13:00) tambien los pasa quien llama, sin valor por
+# defecto. El dominio elige los del profesional y del dia local del pedido.
+working_hours = (WorkingHours(UUID(int=3), weekday=2, start_minute=540, end_minute=780),)
+context = ScheduleContext(
+    tz=ZoneInfo("America/Argentina/Buenos_Aires"), working_hours=working_hours
+)
 
 match validate_new_appointment(request, references, existing_appointments=[], context=context):
     case Ok(appointment):

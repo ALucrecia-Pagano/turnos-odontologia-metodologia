@@ -15,6 +15,7 @@ from app.domain.rules.overlap import check_chair_overlap, check_professional_ove
 from app.domain.rules.references import check_references
 from app.domain.rules.same_day import check_same_local_day
 from app.domain.rules.start_time import check_start_time
+from app.domain.rules.working_hours import check_working_hours
 from app.domain.violations import Ok, Rejected, ValidationResult, Violation
 
 
@@ -84,15 +85,33 @@ def _effective_duration(
 
 
 def _agenda_conflict_violations(
-    candidate: Appointment, existing_appointments: Sequence[Appointment]
+    candidate: Appointment, existing_appointments: Sequence[Appointment], context: ScheduleContext
 ) -> list[Violation]:
-    """Grupo 2, conflictos de agenda: profesional y despues sillon (RN-AG-12).
+    """Grupo 2, conflictos de agenda: horario, profesional y despues sillon (RN-AG-12).
 
-    C-05 a C-07 suman aca horario laboral, bloqueos y pasado, o en el grupo 1 si son
+    El horario de atencion (RN-AG-04) va primero: el orden es horario -> profesional ->
+    sillon. Los tramos salen de `context.working_hours` y se evaluan en `context.tz`
+    (RN-GL-03, DD-07). C-06 y C-07 suman aca bloqueos y pasado, o en el grupo 1 si son
     reglas de validez del pedido.
+
+    Args:
+        candidate: Turno nuevo, con el pedido ya valido.
+        existing_appointments: Turnos existentes de la agenda.
+        context: Contexto de la agenda (zona horaria y tramos del horario de atencion).
+
+    Returns:
+        Las violaciones de conflicto, todas juntas y en orden estable.
     """
-    return check_professional_overlap(candidate, existing_appointments) + check_chair_overlap(
-        candidate, existing_appointments
+    return (
+        check_working_hours(
+            candidate.professional_id,
+            candidate.start_at,
+            candidate.end_at,
+            context.working_hours,
+            context.tz,
+        )
+        + check_professional_overlap(candidate, existing_appointments)
+        + check_chair_overlap(candidate, existing_appointments)
     )
 
 
@@ -106,17 +125,18 @@ def validate_new_appointment(
 
     Evalua en dos grupos. Grupo 1, validez del pedido (referencias, duracion, inicio en la
     grilla y medianoche local, todas juntas y en ese orden): si hay alguna se devuelve
-    `Rejected` sin evaluar el grupo 2. Grupo 2, conflictos de agenda (solapamientos por
-    profesional y por sillon). Un resultado nunca mezcla violaciones de los dos grupos.
+    `Rejected` sin evaluar el grupo 2. Grupo 2, conflictos de agenda (horario de atencion
+    del profesional y despues solapamientos por profesional y por sillon). Un resultado nunca mezcla violaciones de los dos grupos.
 
     Args:
         request: Pedido de turno nuevo.
         references: Referencias resueltas por el llamador (entidad o `None`); la
             prestacion aporta la duracion por defecto.
         existing_appointments: Turnos existentes de la agenda.
-        context: Contexto de la agenda (zona horaria). Sin valor por defecto: el
-            llamador debe pasarlo (SU-01). La grilla del inicio y la medianoche se evaluan
-            en `context.tz`.
+        context: Contexto de la agenda (zona horaria y tramos del horario de atencion).
+            Sin valor por defecto: el llamador debe pasarlo (SU-01). La grilla del inicio,
+            la medianoche y el horario de atencion se evaluan en `context.tz`. Los tramos
+            se suponen validos (`validate_working_hours`): esta funcion no los revalida.
 
     Returns:
         `Ok` con el turno en estado `reservado`, o `Rejected` con las violaciones.
@@ -144,7 +164,7 @@ def validate_new_appointment(
         end_at=end_at,
         status=AppointmentStatus.RESERVED,
     )
-    conflict_violations = _agenda_conflict_violations(candidate, existing_appointments)
+    conflict_violations = _agenda_conflict_violations(candidate, existing_appointments, context)
     if conflict_violations:
         return Rejected(tuple(conflict_violations))
     return Ok(candidate)

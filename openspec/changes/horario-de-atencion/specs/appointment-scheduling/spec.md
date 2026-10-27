@@ -103,9 +103,9 @@ Las reglas de hora local (grilla del inicio, medianoche y horario de atención) 
 ## ADDED Requirements
 
 ### Requirement: Turno dentro del horario de atención
-El turno MUST caer completo dentro de un tramo del horario de atención del profesional del pedido para el día de la semana local del turno, evaluado en hora local (RN-AG-04, RN-GL-03; US-004 CA-1, CA-2, CA-3, CA-6 y CA-7). Si no, el dominio SHALL rechazarlo con una sola violación `OUTSIDE_WORKING_HOURS`, sin id de turno en conflicto ni tipo de referencia. Un tramo `[inicio, fin)` es semiabierto (DD-07): el turno es válido si empieza en el inicio del tramo o después y termina en el fin del tramo o antes; un turno que termina a las 00:00 locales tiene su fin en el minuto 1440 del día de su inicio. Los tramos del mismo profesional y día que son contiguos (uno termina justo donde empieza el otro) cuentan como un solo tramo; si hay un hueco entre dos tramos, un turno que lo pisa se rechaza. Un día sin tramos del profesional es un día en que no atiende. El dominio SHALL elegir por sí mismo los tramos que corresponden (del profesional del pedido y del día local del turno): la corrección del resultado MUST NOT depender de que el llamador haya filtrado la lista. Un turno existente puede quedar fuera del horario (por ejemplo, si el horario cambió después): el horario solo se evalúa sobre el turno nuevo.
+El turno MUST caer completo dentro de un tramo del horario de atención del profesional del pedido para el día de la semana local del turno, evaluado en hora local (RN-AG-04, RN-GL-03; US-004 CA-1, CA-2, CA-3, CA-6 y CA-7). Si no, el dominio SHALL rechazarlo con una sola violación `OUTSIDE_WORKING_HOURS`, sin id de turno en conflicto ni tipo de referencia. Un tramo `[inicio, fin)` es semiabierto (DD-07): el turno es válido si empieza en el inicio del tramo o después y termina en el fin del tramo o antes; un turno que termina a las 00:00 locales tiene su fin en el minuto 1440 del día de su inicio. Los tramos del mismo profesional y día que son contiguos (uno termina justo donde empieza el otro) cuentan como un solo tramo, y lo mismo pasa con los que se pisan (por ejemplo, uno contenido en otro): se unen desde el menor inicio hasta el mayor fin, así que un tramo contenido en otro no lo acorta; si hay un hueco entre dos tramos, un turno que lo pisa se rechaza. Un día sin tramos del profesional es un día en que no atiende. El dominio SHALL elegir por sí mismo los tramos que corresponden (del profesional del pedido y del día local del turno): la corrección del resultado MUST NOT depender de que el llamador haya filtrado la lista. Un turno existente puede quedar fuera del horario (por ejemplo, si el horario cambió después): el horario solo se evalúa sobre el turno nuevo.
 
-El mensaje de `OUTSIDE_WORKING_HOURS` MUST mencionar el inicio y el fin del turno en hora local y, si el profesional tiene tramos ese día, todos los tramos del día ordenados por inicio, con los tramos contiguos ya unidos y el fin de la medianoche como `24:00`: "El turno de {inicio} a {fin} (hora local) queda fuera del horario de atención del profesional: el {día} atiende de {inicio del tramo} a {fin del tramo}", con los tramos unidos por ", " y el último por " y ", y un punto final. Si el profesional no tiene tramos ese día, el mensaje termina en ": el profesional no atiende los {día en plural}." El día de la semana va en español y en minúscula (lunes, martes, miércoles, jueves, viernes, sábado, domingo; en plural: lunes, martes, miércoles, jueves, viernes, sábados, domingos). El texto completo, con el nombre del profesional, queda para C-08.
+El mensaje de `OUTSIDE_WORKING_HOURS` MUST mencionar el inicio y el fin del turno en hora local y, si el profesional tiene tramos ese día, todos los tramos del día ordenados por inicio, con los tramos contiguos ya unidos y el fin de la medianoche como `24:00`: "El turno de {inicio} a {fin} (hora local) queda fuera del horario de atención del profesional: el {día} atiende de {inicio del tramo} a {fin del tramo}", con los tramos unidos por ", " y el último por " y ", y un punto final. Si el profesional no tiene tramos ese día, el mensaje termina en ": no atiende los {día en plural}." El día de la semana va en español y en minúscula (lunes, martes, miércoles, jueves, viernes, sábado, domingo; en plural: lunes, martes, miércoles, jueves, viernes, sábados, domingos). El texto completo, con el nombre del profesional, queda para C-08.
 
 Horario base de los escenarios de este requisito, salvo que se diga otra cosa: P1 atiende el martes (día ISO 2) en `[540, 780)` (de 09:00 a 13:00) y `[900, 1140)` (de 15:00 a 19:00), y no tiene tramos el domingo (día ISO 7). Los turnos son de P1 en S1, el martes 2026-10-20, sin turnos existentes.
 
@@ -184,6 +184,11 @@ Horario base de los escenarios de este requisito, salvo que se diga otra cosa: P
 - **WHEN** se pide un turno el martes 2026-10-20 de 23:30 a 00:00 hora local (de 02:30 a 03:00 UTC del 2026-10-21), con duración explícita de 30 minutos
 - **THEN** el resultado es `Ok`, porque el fin del turno es el minuto 1440, igual al fin del tramo
 
+#### Scenario: Turno que termina a la medianoche local, después del fin del tramo
+- **GIVEN** que P1 solo tiene el tramo `[1200, 1380)` (de 20:00 a 23:00) el martes
+- **WHEN** se pide un turno el martes 2026-10-20 de 23:30 a 00:00 hora local (de 02:30 a 03:00 UTC del 2026-10-21), con duración explícita de 30 minutos
+- **THEN** el resultado es `Rejected` con exactamente una violación `OUTSIDE_WORKING_HOURS`, porque el fin del turno es el minuto 1440 (no el minuto 0 del día siguiente) y queda después del fin del tramo, el minuto 1380
+
 #### Scenario: Tramo de otro profesional
 - **GIVEN** que P2 atiende el martes en `[540, 780)` y P1 no tiene tramos el martes
 - **WHEN** se pide un turno para P1 de 10:00 a 10:30 hora local (de 13:00 a 13:30 UTC), con duración explícita de 30 minutos
@@ -194,6 +199,11 @@ Horario base de los escenarios de este requisito, salvo que se diga otra cosa: P
 - **WHEN** se pide un turno de 12:30 a 13:30 hora local (de 15:30 a 16:30 UTC), con duración explícita de 60 minutos
 - **THEN** el resultado es `Ok`, porque los dos tramos contiguos cuentan como uno solo, de 09:00 a 17:00
 
+#### Scenario: Tramo contenido en otro
+- **GIVEN** que P1 atiende el martes en `[540, 780)` (de 09:00 a 13:00) y `[600, 700)` (de 10:00 a 11:40), contenido en el primero, recibidos en ese orden
+- **WHEN** se pide un turno de 12:00 a 12:30 hora local (de 15:00 a 15:30 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok` con el turno de 15:00 a 15:30 UTC, porque los dos tramos se unen en `[540, 780)` (de 09:00 a 13:00): el tramo contenido no acorta al que lo contiene
+
 #### Scenario: Mensaje de un turno fuera de los tramos del día
 - **GIVEN** el horario base
 - **WHEN** se pide un turno de 12:30 a 13:30 hora local (de 15:30 a 16:30 UTC), con duración explícita de 60 minutos
@@ -203,7 +213,7 @@ Horario base de los escenarios de este requisito, salvo que se diga otra cosa: P
 #### Scenario: Mensaje de un turno en un día sin tramos
 - **GIVEN** el horario base, en el que P1 no tiene tramos el domingo
 - **WHEN** se pide un turno el domingo 2026-10-25 de 10:00 a 10:30 hora local (de 13:00 a 13:30 UTC), con duración explícita de 30 minutos
-- **THEN** la violación `OUTSIDE_WORKING_HOURS` tiene exactamente el mensaje "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención del profesional: el profesional no atiende los domingos."
+- **THEN** la violación `OUTSIDE_WORKING_HOURS` tiene exactamente el mensaje "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención del profesional: no atiende los domingos."
 
 #### Scenario: Mensaje con tramos contiguos y un tramo hasta la medianoche
 - **GIVEN** que P1 atiende el martes en `[1200, 1440)` (de 20:00 a 24:00), `[780, 1020)` (de 13:00 a 17:00) y `[540, 780)` (de 09:00 a 13:00), recibidos en ese orden

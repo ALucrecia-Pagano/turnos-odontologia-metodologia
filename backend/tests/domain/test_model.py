@@ -4,7 +4,7 @@ from uuid import UUID
 import pytest
 
 from app.domain.intervals import Interval
-from app.domain.model import Appointment, AppointmentStatus, NewAppointmentRequest
+from app.domain.model import Appointment, AppointmentStatus, NewAppointmentRequest, WorkingHours
 
 APPT_NEW = UUID("00000000-0000-0000-0000-0000000000f1")
 PATIENT = UUID("00000000-0000-0000-0000-0000000000c1")
@@ -114,3 +114,18 @@ def test_appointment_interval_spans_start_to_end_in_utc() -> None:
     assert appointment.interval == Interval(
         datetime(2026, 10, 20, 13, 0, tzinfo=UTC), datetime(2026, 10, 20, 13, 30, tzinfo=UTC)
     )
+
+
+@pytest.mark.parametrize(
+    ("weekday", "start_minute", "end_minute"),
+    [
+        (0, 800, 700),
+        (8, -5, 1445),
+    ],
+)
+def test_working_hours_with_invalid_values_is_built_without_raising(
+    weekday: int, start_minute: int, end_minute: int
+) -> None:
+    slot = WorkingHours(P1, weekday, start_minute, end_minute)
+
+    assert (slot.weekday, slot.start_minute, slot.end_minute) == (weekday, start_minute, end_minute)

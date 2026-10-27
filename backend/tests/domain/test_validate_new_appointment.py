@@ -16,8 +16,9 @@ from app.domain.model import (
     Professional,
     ScheduleContext,
     Service,
+    WorkingHours,
 )
-from app.domain.violations import Ok, ReferenceKind, Rejected, ViolationCode
+from app.domain.violations import Ok, ReferenceKind, Rejected, Violation, ViolationCode
 
 PATIENT = UUID("00000000-0000-0000-0000-0000000000c1")
 P1 = UUID("00000000-0000-0000-0000-000000000001")
@@ -33,7 +34,13 @@ APPT_C = UUID("00000000-0000-0000-0000-0000000000a3")
 APPT_D = UUID("00000000-0000-0000-0000-0000000000a4")
 
 BUENOS_AIRES = ZoneInfo("America/Argentina/Buenos_Aires")
-CTX = ScheduleContext(tz=BUENOS_AIRES)
+FULL_WEEK = tuple(WorkingHours(p, d, 0, 1440) for p in (P1, P2) for d in range(1, 8))
+CTX = ScheduleContext(tz=BUENOS_AIRES, working_hours=FULL_WEEK)
+TUESDAY_BASE = (WorkingHours(P1, 2, 540, 780), WorkingHours(P1, 2, 900, 1140))
+
+
+def _ctx(*slots: WorkingHours) -> ScheduleContext:
+    return ScheduleContext(tz=BUENOS_AIRES, working_hours=slots)
 
 
 def _at(hour: int, minute: int = 0) -> datetime:
@@ -960,3 +967,233 @@ def test_validate_new_appointment_off_grid_start_with_seconds_crossing_midnight_
         (ViolationCode.INVALID_START_TIME, None),
         (ViolationCode.CROSSES_MIDNIGHT, None),
     ]
+
+
+def test_validate_new_appointment_starting_inside_and_ending_after_the_slot_is_outside_working_hours() -> (
+    None
+):
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _summary(result) == [(ViolationCode.OUTSIDE_WORKING_HOURS, None)]
+
+
+def _start_and_end_iso(result: object) -> tuple[str, str]:
+    assert isinstance(result, Ok)
+    return result.appointment.start_at.isoformat(), result.appointment.end_at.isoformat()
+
+
+@pytest.mark.parametrize(
+    ("start_at", "duration_min", "expected_start_iso", "expected_end_iso"),
+    [
+        (_local(20, 10, 0), 30, "2026-10-20T13:00:00+00:00", "2026-10-20T13:30:00+00:00"),
+        (_local(20, 9, 0), 30, "2026-10-20T12:00:00+00:00", "2026-10-20T12:30:00+00:00"),
+        (_local(20, 12, 30), 30, "2026-10-20T15:30:00+00:00", "2026-10-20T16:00:00+00:00"),
+        (_local(20, 18, 30), 30, "2026-10-20T21:30:00+00:00", "2026-10-20T22:00:00+00:00"),
+    ],
+    ids=["completo-dentro", "justo-al-inicio", "justo-al-fin-de-la-manana", "justo-al-fin-de-la-tarde"],
+)
+def test_validate_new_appointment_inside_a_slot_returns_ok(
+    start_at: datetime, duration_min: int, expected_start_iso: str, expected_end_iso: str
+) -> None:
+    result = validate_new_appointment(
+        _request(start_at, duration_min=duration_min), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _start_and_end_iso(result) == (expected_start_iso, expected_end_iso)
+
+
+@pytest.mark.parametrize(
+    ("start_at", "duration_min"),
+    [
+        (_local(20, 8, 30), 60),
+        (_local(20, 13, 0), 120),
+        (_local(20, 14, 0), 30),
+        (_local(20, 12, 30), 180),
+        (_local(25, 10, 0), 30),
+    ],
+    ids=["empieza-antes", "ocupa-el-hueco", "dentro-del-hueco", "une-tramos-con-hueco", "domingo"],
+)
+def test_validate_new_appointment_outside_the_slots_is_rejected(
+    start_at: datetime, duration_min: int
+) -> None:
+    result = validate_new_appointment(
+        _request(start_at, duration_min=duration_min), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _summary(result) == [(ViolationCode.OUTSIDE_WORKING_HOURS, None)]
+
+
+def test_validate_new_appointment_utc_instant_inside_slot_but_outside_in_local_time_is_rejected() -> (
+    None
+):
+    start_at = datetime(2026, 10, 20, 9, 0, tzinfo=timezone.utc)  # 06:00 hora local
+
+    result = validate_new_appointment(
+        _request(start_at, duration_min=30), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _summary(result) == [(ViolationCode.OUTSIDE_WORKING_HOURS, None)]
+
+
+def test_validate_new_appointment_utc_instant_outside_slots_but_inside_in_local_time_returns_ok() -> (
+    None
+):
+    start_at = datetime(2026, 10, 20, 21, 0, tzinfo=timezone.utc)  # 18:00 hora local
+
+    result = validate_new_appointment(
+        _request(start_at, duration_min=30), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _start_and_end_iso(result) == ("2026-10-20T21:00:00+00:00", "2026-10-20T21:30:00+00:00")
+
+
+def test_validate_new_appointment_weekday_is_the_local_one_not_the_utc_one() -> None:
+    wednesday_only = _ctx(WorkingHours(P1, 3, 1200, 1380))
+
+    result = validate_new_appointment(
+        _request(_local(20, 22, 0), duration_min=30), _refs(), [], wednesday_only
+    )
+
+    assert _summary(result) == [(ViolationCode.OUTSIDE_WORKING_HOURS, None)]
+
+
+def test_validate_new_appointment_tuesday_local_evening_that_is_wednesday_in_utc_returns_ok() -> None:
+    tuesday_only = _ctx(WorkingHours(P1, 2, 1200, 1380))
+
+    result = validate_new_appointment(
+        _request(_local(20, 22, 0), duration_min=30), _refs(), [], tuesday_only
+    )
+
+    assert _start_and_end_iso(result) == ("2026-10-21T01:00:00+00:00", "2026-10-21T01:30:00+00:00")
+
+
+def test_validate_new_appointment_ending_at_local_midnight_at_slot_end_returns_ok() -> None:
+    until_midnight = _ctx(WorkingHours(P1, 2, 1200, 1440))
+
+    result = validate_new_appointment(
+        _request(_local(20, 23, 30), duration_min=30), _refs(), [], until_midnight
+    )
+
+    assert _start_and_end_iso(result) == ("2026-10-21T02:30:00+00:00", "2026-10-21T03:00:00+00:00")
+
+
+def test_validate_new_appointment_slot_of_another_professional_does_not_count() -> None:
+    result = validate_new_appointment(
+        _request(_local(20, 10, 0), duration_min=30), _refs(), [], _ctx(WorkingHours(P2, 2, 540, 780))
+    )
+
+    assert _summary(result) == [(ViolationCode.OUTSIDE_WORKING_HOURS, None)]
+
+
+def test_validate_new_appointment_ending_at_local_midnight_after_slot_end_is_rejected() -> None:
+    until_23 = _ctx(WorkingHours(P1, 2, 1200, 1380))
+
+    result = validate_new_appointment(
+        _request(_local(20, 23, 30), duration_min=30), _refs(), [], until_23
+    )
+
+    assert _summary(result) == [(ViolationCode.OUTSIDE_WORKING_HOURS, None)]
+
+
+def test_validate_new_appointment_spanning_two_contiguous_slots_returns_ok() -> None:
+    contiguous = _ctx(WorkingHours(P1, 2, 540, 780), WorkingHours(P1, 2, 780, 1020))
+
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60), _refs(), [], contiguous
+    )
+
+    assert _start_and_end_iso(result) == ("2026-10-20T15:30:00+00:00", "2026-10-20T16:30:00+00:00")
+
+
+def test_validate_new_appointment_slot_nested_in_another_does_not_shorten_the_merged_slot() -> None:
+    nested = _ctx(WorkingHours(P1, 2, 540, 780), WorkingHours(P1, 2, 600, 700))
+
+    result = validate_new_appointment(
+        _request(_local(20, 12, 0), duration_min=30), _refs(), [], nested
+    )
+
+    assert _start_and_end_iso(result) == ("2026-10-20T15:00:00+00:00", "2026-10-20T15:30:00+00:00")
+
+
+def _only_violation_of(result: object) -> Violation:
+    assert isinstance(result, Rejected)
+    assert len(result.violations) == 1
+    return result.violations[0]
+
+
+def test_validate_new_appointment_outside_working_hours_message_lists_the_day_slots() -> None:
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    violation = _only_violation_of(result)
+    assert violation.message == (
+        "El turno de 12:30 a 13:30 (hora local) queda fuera del horario de atención del "
+        "profesional: el martes atiende de 09:00 a 13:00 y de 15:00 a 19:00."
+    )
+    assert violation.conflicting_appointment_id is None
+    assert violation.reference_kind is None
+
+
+def test_validate_new_appointment_outside_working_hours_message_on_a_day_without_slots() -> None:
+    result = validate_new_appointment(
+        _request(_local(25, 10, 0), duration_min=30), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _only_violation_of(result).message == (
+        "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención del "
+        "profesional: no atiende los domingos."
+    )
+
+
+def test_validate_new_appointment_outside_working_hours_message_merges_slots_and_shows_24() -> None:
+    unordered = _ctx(
+        WorkingHours(P1, 2, 1200, 1440), WorkingHours(P1, 2, 780, 1020), WorkingHours(P1, 2, 540, 780)
+    )
+
+    result = validate_new_appointment(
+        _request(_local(20, 17, 30), duration_min=30), _refs(), [], unordered
+    )
+
+    assert _only_violation_of(result).message == (
+        "El turno de 17:30 a 18:00 (hora local) queda fuera del horario de atención del "
+        "profesional: el martes atiende de 09:00 a 17:00 y de 20:00 a 24:00."
+    )
+
+
+def test_validate_new_appointment_outside_working_hours_and_overlapping_reports_horario_first() -> (
+    None
+):
+    existing_b = _existing(APPT_B, P1, S1, _local(20, 12, 30), _local(20, 13, 30))
+
+    result = validate_new_appointment(
+        _request(_local(20, 12, 45), duration_min=30), _refs(), [existing_b], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _summary(result) == [
+        (ViolationCode.OUTSIDE_WORKING_HOURS, None),
+        (ViolationCode.PROFESSIONAL_OVERLAP, APPT_B),
+        (ViolationCode.CHAIR_OVERLAP, APPT_B),
+    ]
+
+
+def test_validate_new_appointment_invalid_duration_on_a_day_without_slots_reports_only_duration() -> (
+    None
+):
+    result = validate_new_appointment(
+        _request(_local(25, 10, 0), duration_min=7), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
+
+
+def test_validate_new_appointment_off_grid_start_on_a_day_without_slots_reports_only_start() -> (
+    None
+):
+    result = validate_new_appointment(
+        _request(_local(25, 10, 3), duration_min=30), _refs(), [], _ctx(*TUESDAY_BASE)
+    )
+
+    assert _summary(result) == [(ViolationCode.INVALID_START_TIME, None)]

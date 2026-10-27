@@ -97,7 +97,7 @@ Sin `__post_init__`: construir `WorkingHours(P1, 0, 800, 700)` no lanza. La vali
 
 ### D6 — Mensaje de `OUTSIDE_WORKING_HOURS` con los tramos del día (explore, decisión 5; formato fino en el propose)
 
-- Con tramos ese día: `"El turno de {inicio} a {fin} (hora local) queda fuera del horario de atención del profesional: el {día} atiende de {a} a {b}[, de {c} a {d}…] y de {y} a {z}."`. Sin tramos: `"… del profesional: el profesional no atiende los {día en plural}."`.
+- Con tramos ese día: `"El turno de {inicio} a {fin} (hora local) queda fuera del horario de atención del profesional: el {día} atiende de {a} a {b}[, de {c} a {d}…] y de {y} a {z}."`. Sin tramos: `"… del profesional: no atiende los {día en plural}."` (la autora sacó la repetición de "el profesional" en el punto de control 3.5, 2026-10-26).
 - `{inicio}` y `{fin}` del turno con `format_local_time` (el fin de las 00:00 sale `"00:00"`).
 - Los tramos son los **unidos** de D3, ordenados por inicio, y sus horas se formatean desde los minutos con `HH:MM`; el minuto 1440 se muestra `"24:00"` (decisión del propose: `"00:00"` como fin de un tramo se leería como un tramo vacío).
 - Días: dos tuplas constantes en `rules/working_hours.py`, una en singular (`"lunes"` … `"sábado"`, `"domingo"`) y otra en plural (`"lunes"` … `"sábados"`, `"domingos"`), indexadas por `isoweekday() - 1`.
@@ -191,3 +191,20 @@ No aplica: no hay datos ni API. Rollback: revertir los cambios de `app/domain`, 
 ## Open Questions
 
 Ninguna que cambie el alcance.
+
+## Desvíos durante el apply
+
+- **Tareas 1.1 a 3.4 (2026-10-26).** Sin desvíos de fondo; el orden y el contenido siguieron `tasks.md`.
+- **Tareas 2.1 y 3.1 (RED).** Los rojos fueron errores de colección (`AttributeError` por los miembros de `ViolationCode` que se nombran en el `parametrize`, e `ImportError` de `WorkingHours`), no casos individuales en rojo. La razón es la pedida (el miembro o el tipo no existe).
+- **Tarea 3.3 (RED por mypy).** Además de mypy, `pytest` también falla (la colección de `test_validate_new_appointment.py` lanza `TypeError` en la línea de `CTX`); se anotó el error de mypy como pedía la tarea.
+- **Tarea 3.4.** El README solo actualizó el ejemplo de §Dominio; la tabla de módulos y el párrafo de los grupos quedan para 8.1. El ejemplo ya construye `WorkingHours` y el contexto con tramos, pero todavía no hay ninguna regla que los use.
+- **Punto de control 3.5 (aprobado por la autora el 2026-10-26, con dos ajustes).** (1) El mensaje de `OUTSIDE_WORKING_HOURS` sin tramos ese día termina en ": no atiende los {día en plural}." en lugar de ": el profesional no atiende…", para no repetir "el profesional"; se actualizaron D6 y la spec (los mensajes de D9 no tenían esa frase). (2) Se saca de `test_model.py` el test que solo comprobaba que `WorkingHours` guarda los valores (casi tautológico); queda el parametrizado de valores inválidos, que documenta D5.
+- **Tareas 4.1 a 9.7 (2026-10-26).** Sin cambios de comportamiento respecto de la spec y el diseño. Desvíos de proceso:
+- **Tareas 4.7 y 4.8 (unidas).** Se implementaron juntas la redacción de los mensajes de D9 y el refactor (docstrings, constantes `Final`, helper `_join_with_and`). El rojo de 4.7 se vio (6 tests en rojo).
+- **Tarea 4.7 (tests extra).** Además de los tests pedidos (las posiciones en los mensajes, sin `conflicting_appointment_id` ni `reference_kind`), se agregaron los mensajes exactos de D9 (una razón, dos razones, rangos y solapamiento) y un caso con tres razones, para cubrir la unión `", "` / `" y "`. No cambian la spec.
+- **Tareas 4.3, 4.5, 4.6, 5.3 a 5.7, 7.1 y 7.2 (pasaron de entrada).** Cada una pasó de entrada o con pocos casos en rojo; se comprobó que puede fallar con mutaciones temporales (quitar el día, el profesional, `<=`/`<`, evaluar en UTC, mover la regla, excluir el tramo inválido de los pares, invertir el orden de los pares), y se restauró el código.
+- **Tarea 5.6 (hallazgo del apply que volvió a la spec).** Quitar el fin 1440 de D4 no hacía fallar ningún escenario de la spec: con el tramo `[1200, 1440)`, un fin de 0 también cabe. Se agregó el test `ending_at_local_midnight_after_slot_end_is_rejected` (tramo `[1200, 1380)`, turno 23:30–00:00 hora local = 02:30–03:00 UTC del 2026-10-21 → `OUTSIDE_WORKING_HOURS`), que sí falla sin el 1440. En la revisión del apply (2026-10-26), la autora decidió que es comportamiento que la spec no cubría: se agregó el escenario "Turno que termina a la medianoche local, después del fin del tramo".
+- **Tarea 5.8 (hallazgo del apply que volvió a la spec).** Se agregó el test `slot_nested_in_another_does_not_shorten_the_merged_slot` (`[600, 700)` dentro de `[540, 780)`; turno 12:00–12:30 hora local = 15:00–15:30 UTC → `Ok`), que falla si la unión de D3 toma el fin del último tramo en lugar del máximo. En la revisión del apply (2026-10-26), la autora decidió que es comportamiento que la spec no cubría: se agregó el escenario "Tramo contenido en otro" y el texto del requisito ahora dice que los tramos que se pisan también se unen, desde el menor inicio hasta el mayor fin.
+- **Tareas 6.1 a 6.4 (un solo GREEN).** Los tres mensajes (tramos del día, día sin tramos, tramos unidos con `24:00`) se escribieron en rojo juntos y se implementaron en un solo paso con `_outside_message`; los días en plural se agregaron en ese paso porque el escenario del domingo los pide. El refactor de 6.4 no necesitó cambios extra.
+- **Tarea 8.1 / 8.2 / 8.3.** `README.md` actualizado (tabla `model` y `rules/`, párrafo de los grupos). KB 05, KB 07 y `CHANGES.md` §[C-05] ya coincidían: no se editaron. La actualización del Purpose de la spec principal queda propuesta para el archive, a decisión de la autora.
+- **Nota de conteo.** El baseline de 3.5 es 186 tests (se quitó un test de `test_model.py`); el total final es 232 (46 nuevos: 21 en `test_working_hours.py`, 25 en `test_validate_new_appointment.py`).

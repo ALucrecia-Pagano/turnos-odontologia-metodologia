@@ -135,6 +135,28 @@ class AppointmentReferences:
 
 
 @dataclass(frozen=True, slots=True)
+class WorkingHours:
+    """Tramo del horario de atencion de un profesional en un dia de la semana (RN-DI-01).
+
+    El tramo es el intervalo semiabierto `[start_minute, end_minute)` en minutos locales
+    desde las 00:00 (KB 04): 540 es las 09:00 y 1440 es las 24:00. No valida nada al
+    construirse: los tramos los carga el usuario y su validez la decide
+    `validate_working_hours`, que devuelve violaciones y no lanza excepciones.
+
+    Attributes:
+        professional_id: Profesional al que pertenece el tramo.
+        weekday: Dia de la semana ISO: 1 = lunes ... 7 = domingo.
+        start_minute: Minuto local de inicio, desde las 00:00.
+        end_minute: Minuto local de fin, desde las 00:00 (1440 = 24:00).
+    """
+
+    professional_id: UUID
+    weekday: int
+    start_minute: int
+    end_minute: int
+
+
+@dataclass(frozen=True, slots=True)
 class ScheduleContext:
     """Contexto de la agenda que recibe el dominio junto con el pedido.
 
@@ -143,10 +165,15 @@ class ScheduleContext:
     aca horarios, bloqueos y `now` sin volver a cambiar la firma.
 
     Attributes:
-        tz: Zona horaria en la que se evaluan la grilla del inicio y la medianoche.
+        tz: Zona horaria en la que se evaluan la grilla del inicio, la medianoche y el
+            horario de atencion.
+        working_hours: Tramos del horario de atencion. Sin valor por defecto: un llamador
+            que no los pase falla en mypy. El dominio elige los del profesional del pedido
+            y del dia de la semana local; el llamador no necesita filtrarlos.
     """
 
     tz: ZoneInfo
+    working_hours: tuple[WorkingHours, ...]
 
 
 @dataclass(frozen=True, slots=True)
