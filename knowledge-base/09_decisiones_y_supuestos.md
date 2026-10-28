@@ -101,10 +101,10 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Cómo validar**: confirmar; extensión prevista: `Service.requiredChairId` o lista de sillones permitidos.
 
 ### SU-05 — Bloqueo no cancela turnos existentes
-**Suposición:** crear un bloqueo sobre turnos ya dados no los cancela; se informan para reprogramar.
+**Estado**: **confirmada por la autora el 2026-10-28** (explore de C-06); ya no es una suposición.
+**Decisión:** crear un bloqueo sobre turnos ya dados no los cancela ni los mueve; el dominio solo lista los turnos activos que pisa, para que recepción los reprograme.
 **Origen**: Q-04; referencia de mercado (Odonthia).
-**Riesgo si es falso**: turnos "huérfanos" en horarios bloqueados.
-**Cómo validar**: confirmar con la autora.
+**Riesgo aceptado**: turnos "huérfanos" en horarios bloqueados hasta que recepción los reprograme; por eso la respuesta de creación los lista.
 
 ### SU-06 — Alcance de la autenticación JWT en el MVP
 **Suposición:** un solo token de acceso con vencimiento corto (`JWT_EXPIRES_MIN`); sin refresh tokens, sin revocación, sin recuperación de contraseña ni alta de usuarios por autoservicio (los usuarios los crea el administrador o el seed). Hash de contraseñas con un algoritmo lento estándar (bcrypt o argon2).

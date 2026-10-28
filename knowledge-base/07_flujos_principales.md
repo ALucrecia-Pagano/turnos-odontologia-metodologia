@@ -39,7 +39,7 @@ Recepción → UI → API ──(contexto)──► PostgreSQL
 }
 ```
 
-**Códigos de violación**: `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_TRANSITION`, `INVALID_WORKING_HOURS`, `OVERLAPPING_WORKING_HOURS` (estos dos últimos, al cargar el horario de atención: RN-DI-02).
+**Códigos de violación**: `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_TRANSITION`, `INVALID_WORKING_HOURS`, `OVERLAPPING_WORKING_HOURS` (estos dos, al cargar el horario de atención: RN-DI-02), `INVALID_BLOCK` (al crear un bloqueo con `inicio >= fin`: RN-DI-03; explore de C-06).
 
 **Casos de error**:
 - Entrada malformada → `400`.

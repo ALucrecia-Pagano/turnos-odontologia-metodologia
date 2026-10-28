@@ -50,7 +50,7 @@ Estados: `reservado`, `confirmado`, `atendido`, `ausente`, `cancelado`. Origen: 
 - **RN-DI-01**: Un horario de atención se define por profesional, día de la semana y tramo `[inicio, fin)` en hora local; puede haber varios tramos por día.
 - **RN-DI-02**: Los tramos de un mismo profesional y día no pueden solaparse entre sí ni tener `inicio >= fin`.
 - **RN-DI-03**: Un bloqueo es un intervalo `[inicio, fin)` por profesional con motivo opcional; `inicio < fin`.
-- **RN-DI-04**: Crear un bloqueo que pisa turnos ya existentes **no** los cancela ni los mueve; los turnos quedan visibles para que recepción los reprograme. **Suposición** (SU-05; Q-04). Referencia de mercado: Odonthia hace lo mismo.
+- **RN-DI-04**: Crear un bloqueo que pisa turnos ya existentes **no** los cancela ni los mueve; los turnos quedan visibles para que recepción los reprograme; el dominio solo lista los turnos activos que pisa. Confirmada por la autora el 2026-10-28 (SU-05; Q-04, explore de C-06). Referencia de mercado: Odonthia hace lo mismo.
 - **RN-DI-05**: Granularidad de agenda de 5 minutos: inicio y duración de los turnos son múltiplos de 5 min. **Suposición** (SU-02; Q-06).
 
 ## Dominio: Pacientes y privacidad (RN-PA)

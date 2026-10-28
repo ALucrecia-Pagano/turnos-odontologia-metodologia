@@ -50,7 +50,8 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 > ⚠️ Preguntas de prioridad **Alta** en `10_preguntas_abiertas.md`, todas con una **Suposición** por defecto. Confirmalas o ajustalas antes del change que las usa:
 > - **Q-06** zona horaria y granularidad (5 min, duración 5–480 min) → C-03 y C-04.
 > - **Q-03** transiciones de estado válidas → C-10.
-> - **Q-04** turnos existentes al crear un bloqueo que los pisa → C-06.
+>
+> **Q-04** (turnos existentes al crear un bloqueo que los pisa) quedó resuelta por la autora el 2026-10-28, en el explore de C-06: no se cancelan ni se mueven, solo se listan (SU-05 confirmada).
 
 ---
 

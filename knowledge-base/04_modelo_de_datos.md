@@ -53,7 +53,7 @@ Un turno referencia **exactamente** un profesional, un sillón, una prestación 
 - `id` UUID PK · `professional_id` FK · `start_at` TIMESTAMPTZ · `end_at` TIMESTAMPTZ · `reason` TEXT NULL (vacaciones, feriado, ausencia).
 - Constraint: `start_at < end_at`.
 - Índice: `(professional_id, start_at, end_at)`.
-- **Suposición:** crear un bloqueo que pisa turnos existentes **no** los cancela (SU-05).
+- Crear un bloqueo que pisa turnos existentes **no** los cancela ni los mueve; el dominio solo los lista (SU-05, confirmada por la autora el 2026-10-28).
 
 ### Patient (datos mínimos, ficticios)
 - `id` UUID PK · `full_name` TEXT NOT NULL · `dni` TEXT NOT NULL UNIQUE · `phone` TEXT NULL · `health_insurance` TEXT NULL (obra social como texto libre).
