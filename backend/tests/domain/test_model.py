@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
+from zoneinfo import ZoneInfo
 
 import pytest
 
@@ -9,6 +10,7 @@ from app.domain.model import (
     AppointmentStatus,
     Block,
     NewAppointmentRequest,
+    ScheduleContext,
     WorkingHours,
 )
 
@@ -20,6 +22,7 @@ S1 = UUID("00000000-0000-0000-0000-0000000000b1")
 SVC = UUID("00000000-0000-0000-0000-0000000000d1")
 
 UTC = timezone.utc
+ZONE = ZoneInfo("America/Argentina/Buenos_Aires")
 BUENOS_AIRES = timezone(timedelta(hours=-3))
 
 
@@ -175,3 +178,36 @@ def test_block_with_start_after_end_is_built_without_raising() -> None:
     )
 
     assert block.start_at > block.end_at
+
+
+def _context(now: datetime) -> ScheduleContext:
+    return ScheduleContext(tz=ZONE, working_hours=(), blocks=(), now=now)
+
+
+@pytest.mark.parametrize(
+    ("now", "expected"),
+    [
+        pytest.param(
+            datetime(2026, 10, 20, 10, 0, tzinfo=BUENOS_AIRES),
+            datetime(2026, 10, 20, 13, 0, tzinfo=UTC),
+            id="buenos-aires",
+        ),
+        pytest.param(
+            datetime(2026, 10, 20, 14, 0, tzinfo=timezone(timedelta(hours=1))),
+            datetime(2026, 10, 20, 13, 0, tzinfo=UTC),
+            id="mas-uno",
+        ),
+    ],
+)
+def test_schedule_context_now_with_zone_is_normalized_to_utc(
+    now: datetime, expected: datetime
+) -> None:
+    context = _context(now)
+
+    assert context.now == expected
+    assert context.now.utcoffset() == timedelta(0)
+
+
+def test_schedule_context_now_without_timezone_raises_value_error() -> None:
+    with pytest.raises(ValueError, match="zona horaria"):
+        _context(datetime(2026, 10, 20, 10, 0))

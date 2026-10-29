@@ -192,8 +192,8 @@ class ScheduleContext:
     """Contexto de la agenda que recibe el dominio junto con el pedido.
 
     La zona se recibe por parametro: el dominio no la lee del entorno ni la fija (SU-01).
-    El borde (API) convierte `APP_TIMEZONE` en `ZoneInfo`. C-07 suma aca `now` sin volver
-    a cambiar la firma.
+    El borde (API) convierte `APP_TIMEZONE` en `ZoneInfo`. El momento actual (`now`) tambien
+    se inyecta: el dominio no lee el reloj (RN-GL-04).
 
     Attributes:
         tz: Zona horaria en la que se evaluan la grilla del inicio, la medianoche y el
@@ -204,11 +204,21 @@ class ScheduleContext:
         blocks: Bloqueos de la agenda. Sin valor por defecto, por la misma razon. El
             dominio elige los del profesional del pedido; el llamador no necesita
             filtrarlos. Se suponen validos (`validate_block`): no se revalidan.
+        now: Instante actual, inyectado por el llamador (RN-GL-04); el dominio nunca lee
+            el reloj. Sin valor por defecto, por la misma razon. Se normaliza a UTC al
+            construir el contexto. Lo usa la regla del pasado (RN-AG-06).
+
+    Raises:
+        ValueError: Si `now` no tiene zona horaria (error de programacion).
     """
 
     tz: ZoneInfo
     working_hours: tuple[WorkingHours, ...]
     blocks: tuple[Block, ...]
+    now: datetime
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "now", _to_utc("now", self.now))
 
 
 @dataclass(frozen=True, slots=True)

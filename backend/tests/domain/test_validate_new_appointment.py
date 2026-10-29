@@ -41,13 +41,14 @@ BL3 = UUID("00000000-0000-0000-0000-0000000000e3")
 BLV = UUID("00000000-0000-0000-0000-0000000000e4")
 
 BUENOS_AIRES = ZoneInfo("America/Argentina/Buenos_Aires")
+EARLY_NOW = datetime(2026, 10, 1, 0, 0, tzinfo=timezone.utc)
 FULL_WEEK = tuple(WorkingHours(p, d, 0, 1440) for p in (P1, P2) for d in range(1, 8))
-CTX = ScheduleContext(tz=BUENOS_AIRES, working_hours=FULL_WEEK, blocks=())
+CTX = ScheduleContext(tz=BUENOS_AIRES, working_hours=FULL_WEEK, blocks=(), now=EARLY_NOW)
 TUESDAY_BASE = (WorkingHours(P1, 2, 540, 780), WorkingHours(P1, 2, 900, 1140))
 
 
 def _ctx(*slots: WorkingHours) -> ScheduleContext:
-    return ScheduleContext(tz=BUENOS_AIRES, working_hours=slots, blocks=())
+    return ScheduleContext(tz=BUENOS_AIRES, working_hours=slots, blocks=(), now=EARLY_NOW)
 
 
 def _at(hour: int, minute: int = 0) -> datetime:
@@ -1227,10 +1228,18 @@ def _bl1(reason: str | None = None) -> Block:
     return _block(BL1, _local(20, 10, 0), _local(20, 12, 0), reason=reason)
 
 
+def _ctx_now(
+    now: datetime, working_hours: tuple[WorkingHours, ...] = FULL_WEEK
+) -> ScheduleContext:
+    return ScheduleContext(tz=BUENOS_AIRES, working_hours=working_hours, blocks=(), now=now)
+
+
 def _ctx_blocks(
     *blocks: Block, working_hours: tuple[WorkingHours, ...] = FULL_WEEK
 ) -> ScheduleContext:
-    return ScheduleContext(tz=BUENOS_AIRES, working_hours=working_hours, blocks=blocks)
+    return ScheduleContext(
+        tz=BUENOS_AIRES, working_hours=working_hours, blocks=blocks, now=EARLY_NOW
+    )
 
 
 def _block_summary(result: object) -> list[tuple[ViolationCode, UUID | None]]:
@@ -1432,3 +1441,182 @@ def test_validate_new_appointment_invalid_block_in_context_is_ignored_without_ra
     )
 
     assert isinstance(result, Ok)
+
+
+def test_validate_new_appointment_start_five_minutes_before_now_reports_in_the_past() -> None:
+    # now 10:00 hora local = 13:00 UTC; inicio 09:55 hora local = 12:55 UTC
+    now = _local(20, 10, 0)
+
+    result = validate_new_appointment(_request(_at(12, 55)), _refs(), [], _ctx_now(now))
+
+    assert _summary(result) == [(ViolationCode.IN_THE_PAST, None)]
+
+
+# --- C-07: la regla del pasado y su lugar en el grupo 1 (design D1) ---
+
+# martes 2026-10-20, 10:00 hora local = 13:00 UTC
+NOW_1000 = datetime(2026, 10, 20, 13, 0, tzinfo=timezone.utc)
+
+
+def _codes(result: object) -> list[ViolationCode]:
+    assert isinstance(result, Rejected)
+    return [v.code for v in result.violations]
+
+
+@pytest.mark.parametrize(
+    ("now", "start_at"),
+    [
+        # now 10:00:30 (13:00:30 UTC); inicio 10:00 (13:00 UTC): mismo minuto
+        (datetime(2026, 10, 20, 13, 0, 30, tzinfo=timezone.utc), _at(13)),
+        # now 13:00:00.000001 UTC; inicio 10:00 (13:00 UTC): un microsegundo despues
+        (datetime(2026, 10, 20, 13, 0, 0, 1, tzinfo=timezone.utc), _at(13)),
+        # now 23:30 hora local = 02:30 UTC del 21; inicio 23:00 = 02:00 UTC del 21
+        (
+            datetime(2026, 10, 21, 2, 30, tzinfo=timezone.utc),
+            datetime(2026, 10, 21, 2, 0, tzinfo=timezone.utc),
+        ),
+    ],
+    ids=["segundos-mismo-minuto", "microsegundo-despues", "mismo-dia-local-otro-dia-utc"],
+)
+def test_validate_new_appointment_start_before_now_is_rejected_as_in_the_past(
+    now: datetime, start_at: datetime
+) -> None:
+    result = validate_new_appointment(_request(start_at), _refs(), [], _ctx_now(now))
+
+    assert _codes(result) == [ViolationCode.IN_THE_PAST]
+
+
+def test_validate_new_appointment_off_grid_start_in_the_past_reports_start_then_past() -> None:
+    # inicio 09:52 hora local = 12:52 UTC, sin duracion explicita
+    result = validate_new_appointment(
+        _request(datetime(2026, 10, 20, 12, 52, tzinfo=timezone.utc)), _refs(), [], _ctx_now(NOW_1000)
+    )
+
+    assert _codes(result) == [ViolationCode.INVALID_START_TIME, ViolationCode.IN_THE_PAST]
+
+
+def test_validate_new_appointment_past_crossing_midnight_reports_midnight_then_past() -> None:
+    # now 23:45 hora local = 02:45 UTC del 21; inicio 23:30 = 02:30 UTC del 21, 60 min
+    now = datetime(2026, 10, 21, 2, 45, tzinfo=timezone.utc)
+    start_at = datetime(2026, 10, 21, 2, 30, tzinfo=timezone.utc)
+
+    result = validate_new_appointment(
+        _request(start_at, duration_min=60), _refs(), [], _ctx_now(now)
+    )
+
+    assert _codes(result) == [ViolationCode.CROSSES_MIDNIGHT, ViolationCode.IN_THE_PAST]
+
+
+def test_validate_new_appointment_invalid_duration_in_the_past_still_reports_past() -> None:
+    # 09:00 hora local = 12:00 UTC, 7 minutos
+    result = validate_new_appointment(
+        _request(_at(12), duration_min=7), _refs(), [], _ctx_now(NOW_1000)
+    )
+
+    assert _codes(result) == [ViolationCode.INVALID_DURATION, ViolationCode.IN_THE_PAST]
+
+
+def test_validate_new_appointment_unknown_service_in_the_past_still_reports_past() -> None:
+    # 09:00 hora local = 12:00 UTC, sin prestacion ni duracion explicita
+    result = validate_new_appointment(
+        _request(_at(12)), _refs(service=None), [], _ctx_now(NOW_1000)
+    )
+
+    assert isinstance(result, Rejected)
+    assert [(v.code, v.reference_kind) for v in result.violations] == [
+        (ViolationCode.UNKNOWN_REFERENCE, ReferenceKind.SERVICE),
+        (ViolationCode.IN_THE_PAST, None),
+    ]
+
+
+def test_validate_new_appointment_past_in_an_occupied_slot_reports_only_past() -> None:
+    # turno reservado de P1 en S1 de 09:00 a 09:30 hora local = 12:00 a 12:30 UTC
+    existing = [_existing(APPT_A, P1, S1, _at(12), _at(12, 30))]
+
+    result = validate_new_appointment(
+        _request(_at(12), duration_min=30), _refs(), existing, _ctx_now(NOW_1000)
+    )
+
+    assert _codes(result) == [ViolationCode.IN_THE_PAST]
+
+
+def test_validate_new_appointment_past_outside_working_hours_reports_only_past() -> None:
+    # TUESDAY_BASE: P1 atiende desde las 09:00; pedido a las 08:00 hora local = 11:00 UTC
+    result = validate_new_appointment(
+        _request(_at(11), duration_min=30), _refs(), [], _ctx_now(NOW_1000, TUESDAY_BASE)
+    )
+
+    assert _codes(result) == [ViolationCode.IN_THE_PAST]
+
+
+@pytest.mark.parametrize(
+    ("now", "start_at", "expected_message"),
+    [
+        # now 10:00 hora local (13:00 UTC); inicio 09:55 (12:55 UTC)
+        (
+            NOW_1000,
+            _at(12, 55),
+            "El inicio del turno (20/10/2026 09:55, hora local) es anterior al momento "
+            "actual (20/10/2026 10:00:00, hora local): no se pueden dar turnos en el pasado.",
+        ),
+        # now 10:00:30 hora local (13:00:30 UTC); inicio 10:00 (13:00 UTC)
+        (
+            datetime(2026, 10, 20, 13, 0, 30, tzinfo=timezone.utc),
+            _at(13),
+            "El inicio del turno (20/10/2026 10:00, hora local) es anterior al momento "
+            "actual (20/10/2026 10:00:30, hora local): no se pueden dar turnos en el pasado.",
+        ),
+        # now 23:30 hora local = 02:30 UTC del 21; inicio 23:00 = 02:00 UTC del 21
+        (
+            datetime(2026, 10, 21, 2, 30, tzinfo=timezone.utc),
+            datetime(2026, 10, 21, 2, 0, tzinfo=timezone.utc),
+            "El inicio del turno (20/10/2026 23:00, hora local) es anterior al momento "
+            "actual (20/10/2026 23:30:00, hora local): no se pueden dar turnos en el pasado.",
+        ),
+    ],
+    ids=["cinco-minutos-antes", "mismo-minuto", "fecha-local-no-utc"],
+)
+def test_validate_new_appointment_in_the_past_message_is_exact_and_has_no_conflict_ids(
+    now: datetime, start_at: datetime, expected_message: str
+) -> None:
+    result = validate_new_appointment(_request(start_at), _refs(), [], _ctx_now(now))
+
+    violation = _only_violation_of(result)
+    assert violation.code == ViolationCode.IN_THE_PAST
+    assert violation.message == expected_message
+    assert violation.conflicting_appointment_id is None
+    assert violation.conflicting_block_id is None
+    assert violation.reference_kind is None
+
+
+@pytest.mark.parametrize(
+    ("now", "start_at", "expected_end"),
+    [
+        # inicio igual al momento actual: 10:00 hora local = 13:00 UTC
+        (NOW_1000, _at(13), _at(13, 30)),
+        # inicio posterior: 10:05 hora local = 13:05 UTC
+        (NOW_1000, _at(13, 5), _at(13, 35)),
+        # now 10:00:30 e inicio 10:05 (paso siguiente de la grilla)
+        (datetime(2026, 10, 20, 13, 0, 30, tzinfo=timezone.utc), _at(13, 5), _at(13, 35)),
+        # now 23:30 hora local (02:30 UTC del 21); inicio 21/10 00:00 hora local = 03:00 UTC
+        (
+            datetime(2026, 10, 21, 2, 30, tzinfo=timezone.utc),
+            datetime(2026, 10, 21, 3, 0, tzinfo=timezone.utc),
+            datetime(2026, 10, 21, 3, 30, tzinfo=timezone.utc),
+        ),
+    ],
+    ids=[
+        "inicio-igual-al-momento-actual",
+        "inicio-posterior",
+        "segundos-paso-siguiente",
+        "antes-de-medianoche-inicio-dia-siguiente",
+    ],
+)
+def test_validate_new_appointment_start_not_before_now_returns_ok(
+    now: datetime, start_at: datetime, expected_end: datetime
+) -> None:
+    result = validate_new_appointment(_request(start_at), _refs(), [], _ctx_now(now))
+
+    assert isinstance(result, Ok)
+    assert result.appointment.start_at == start_at
+    assert result.appointment.end_at == expected_end

@@ -1,7 +1,12 @@
 import importlib.util
 from pathlib import Path
 
-from tests.domain.import_guard import find_forbidden_imports, format_violations
+from tests.domain.import_guard import (
+    find_forbidden_imports,
+    find_global_clock_calls,
+    format_clock_calls,
+    format_violations,
+)
 
 
 def _real_domain_dir() -> Path:
@@ -22,3 +27,13 @@ def test_domain_package_real_directory_has_no_forbidden_imports() -> None:
 
     formatted = format_violations(violations, backend_dir)
     assert violations == [], formatted
+
+
+def test_domain_package_real_directory_has_no_global_clock_calls() -> None:
+    domain_dir = _real_domain_dir()
+    backend_dir = domain_dir.parents[1]
+
+    calls = find_global_clock_calls(domain_dir)
+
+    formatted = format_clock_calls(calls, backend_dir)
+    assert calls == [], formatted

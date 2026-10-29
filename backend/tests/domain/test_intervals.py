@@ -6,6 +6,7 @@ import pytest
 from app.domain.intervals import (
     Interval,
     format_local_date_time,
+    format_local_date_time_with_seconds,
     format_local_time,
     local_day_and_minutes,
     overlaps,
@@ -165,3 +166,23 @@ def test_format_local_date_time_returns_local_day_month_year_and_time(
 def test_format_local_date_time_naive_instant_raises_value_error() -> None:
     with pytest.raises(ValueError):
         format_local_date_time(datetime(2026, 10, 20, 13, 0), BUENOS_AIRES)
+
+
+@pytest.mark.parametrize(
+    ("instant", "expected"),
+    [
+        (datetime(2026, 10, 20, 13, 0, 0, tzinfo=timezone.utc), "20/10/2026 10:00:00"),
+        (datetime(2026, 10, 20, 13, 0, 30, tzinfo=timezone.utc), "20/10/2026 10:00:30"),
+        (datetime(2026, 10, 21, 2, 30, 0, tzinfo=timezone.utc), "20/10/2026 23:30:00"),
+        (datetime(2026, 10, 20, 13, 0, 0, 1, tzinfo=timezone.utc), "20/10/2026 10:00:00"),
+    ],
+)
+def test_format_local_date_time_with_seconds_buenos_aires_shows_date_and_seconds(
+    instant: datetime, expected: str
+) -> None:
+    assert format_local_date_time_with_seconds(instant, BUENOS_AIRES) == expected
+
+
+def test_format_local_date_time_with_seconds_naive_instant_raises_value_error() -> None:
+    with pytest.raises(ValueError):
+        format_local_date_time_with_seconds(datetime(2026, 10, 20, 13, 0, 0), BUENOS_AIRES)

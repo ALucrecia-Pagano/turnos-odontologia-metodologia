@@ -64,6 +64,10 @@ Ningún módulo de `app/domain` SHALL leer el reloj del sistema (RN-GL-04; US-00
 - **THEN** el acceso reportado identifica `rules/past.py`, la línea 4 y la expresión `datetime.now`
 - **AND** el mensaje de la falla es una línea por acceso, con la ruta, la línea y la expresión
 
+#### Scenario: Varios accesos en orden de línea
+- **WHEN** un módulo del dominio contiene `from datetime import datetime`, una función cuyo cuerpo llama a `datetime.now()` en la línea 5 y `datetime.utcnow()` a nivel de módulo en la línea 8 (primer caso), o `datetime.now()` en la línea 3 y `datetime.today()` en la línea 4 (segundo caso)
+- **THEN** la guardia del reloj reporta los accesos ordenados por línea: `datetime.now` (5) y `datetime.utcnow` (8) en el primer caso, aunque el primero esté dentro de una función; `datetime.now` (3) y `datetime.today` (4) en el segundo
+
 #### Scenario: Dominio real sin reloj global
 - **WHEN** se corre la suite de tests sobre el `app/domain` real del repositorio
 - **THEN** la guardia del reloj no reporta ningún acceso y la verificación pasa; si encontrara alguno, la verificación falla y su mensaje nombra el archivo, la línea y la expresión

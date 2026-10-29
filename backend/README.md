@@ -34,15 +34,15 @@ mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 
 | Módulo | Contenido |
 |---|---|
-| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional), `Block` (un bloqueo de la agenda de un profesional, `[inicio, fin)` con motivo opcional) y `ScheduleContext` (la zona horaria, los tramos `working_hours` y los bloqueos `blocks` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
+| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional), `Block` (un bloqueo de la agenda de un profesional, `[inicio, fin)` con motivo opcional) y `ScheduleContext` (la zona horaria, los tramos `working_hours`, los bloqueos `blocks` y el momento actual `now` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
 | `violations` | `ViolationCode`, `ReferenceKind`, `Violation`, `Ok`, `Rejected`, `ValidationResult` |
-| `intervals` | `Interval` semiabierto `[inicio, fin)`, `overlaps` y la hora local: `local_day_and_minutes`, `format_local_time` y `format_local_date_time` |
-| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local), `working_hours` (horario de atención del turno y validez de un conjunto de tramos), `blocks` (turno que pisa un bloqueo, validez de un bloqueo y `appointments_affected_by_block`, los turnos que pisa un bloqueo nuevo sin cancelarlos) y `overlap` (profesional y sillón) |
+| `intervals` | `Interval` semiabierto `[inicio, fin)`, `overlaps` y la hora local: `local_day_and_minutes`, `format_local_time`, `format_local_date_time` y `format_local_date_time_with_seconds` (fecha y hora local siempre con segundos, para el mensaje de `IN_THE_PAST`) |
+| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local), `working_hours` (horario de atención del turno y validez de un conjunto de tramos), `blocks` (turno que pisa un bloqueo, validez de un bloqueo y `appointments_affected_by_block`, los turnos que pisa un bloqueo nuevo sin cancelarlos), `overlap` (profesional y sillón) y `past` (el turno no empieza antes de `now`, comparando instantes sin truncar) |
 | `appointment/` | `validate_new_appointment` |
 
 `validate_new_appointment` evalúa en dos grupos y nunca los mezcla: primero la validez del
-pedido (referencias, duración, inicio en la grilla y medianoche local, todas juntas, en ese
-orden) y, solo si no hay ninguna, los conflictos de agenda (grupo 2: horario de atención,
+pedido (referencias, duración, inicio en la grilla, medianoche local y que el inicio no sea
+anterior a `now`, todas juntas, en ese orden) y, solo si no hay ninguna, los conflictos de agenda (grupo 2: horario de atención,
 bloqueos del profesional y después solapamientos del profesional y del sillón, todos
 juntos). La grilla del inicio, la medianoche y el horario de atención se evalúan en la
 zona de `ScheduleContext`, que el llamador pasa siempre junto con los tramos y los
@@ -89,8 +89,13 @@ references = AppointmentReferences(
 # defecto. El dominio elige los del profesional y del dia local del pedido.
 working_hours = (WorkingHours(UUID(int=3), weekday=2, start_minute=540, end_minute=780),)
 # Los bloqueos (Block) tambien son obligatorios; sin bloqueos se pasa una tupla vacia.
+# El momento actual (now) tambien: lo lee el borde (API) y el dominio lo recibe con zona
+# horaria (un datetime naive es un error de programacion); se normaliza a UTC.
 context = ScheduleContext(
-    tz=ZoneInfo("America/Argentina/Buenos_Aires"), working_hours=working_hours, blocks=()
+    tz=ZoneInfo("America/Argentina/Buenos_Aires"),
+    working_hours=working_hours,
+    blocks=(),
+    now=datetime(2026, 10, 1, 0, 0, tzinfo=timezone.utc),
 )
 
 match validate_new_appointment(request, references, existing_appointments=[], context=context):

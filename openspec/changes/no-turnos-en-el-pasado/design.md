@@ -155,7 +155,7 @@ Ordenados por `(ruta, línea, columna)`. `ast.walk` recorre en anchura, no por l
 ## Risks / Trade-offs
 
 - [`ScheduleContext` con un campo obligatorio nuevo rompe a los llamadores] → Hoy solo lo construyen los tres helpers de los tests y el ejemplo de `backend/README.md`; todavía no hay API (C-22).
-- [Con `now` a 13:00:00.000001 UTC el mensaje dice "10:00" y "10:00:00"] → Los microsegundos no se muestran (como en el resto de los mensajes); un `now` así solo llega por programa, nunca desde el formulario, y el rechazo es correcto.
+- [Con `now` a 13:00:00.000001 UTC el mensaje dice "10:00" y "10:00:00"] → Los microsegundos no se muestran (como en el resto de los mensajes); un `now` así solo llega por programa, nunca desde el formulario, y el rechazo es correcto. **Limitación conocida, aceptada por la autora el 2026-10-29: anotarla en `verify-C-07.md`.**
 - [Un test nuevo que olvide fijar `now` usa `EARLY_NOW` y no ve el pasado] → Los escenarios del pasado usan `_ctx_now` con su `now` explícito.
 - [La guardia no ve `getattr(datetime, "now")` ni reasignaciones] → Límite documentado (D4); la revisión de código y la regla dura cubren el resto.
 - [Falso positivo con un parámetro llamado `datetime`] → Aceptable: sombrear `datetime` también es un defecto; se renombra el parámetro.
@@ -165,9 +165,18 @@ Ordenados por `(ruta, línea, columna)`. `ast.walk` recorre en anchura, no por l
 
 No aplica: no hay datos ni API. Rollback: revertir los cambios de `app/domain`, de los tests de dominio y de la documentación (un solo commit del change, a pedido de la autora).
 
+## Desvíos del apply
+
+Anotados a pedido de la autora en el punto de control 5.3 (2026-10-29):
+
+- **Tarea 4.2 (guardia del reloj) no fue el paso mínimo.** Se implementó de una vez la resolución completa de nombres de D4 (módulo, clases `datetime` y `date`, alias), sin un paso "Fake It". Por eso varios casos de 4.3 pasaron de entrada: solo hubo rojo genuino en `from datetime import *`, en el orden de los accesos y en el formato del mensaje. Para compensar, se comprobó con tres mutaciones temporales que los tests fallan si se rompe la lógica: (1) sin resolver alias, (2) reportar solo llamadas (`ast.Call`) y (3) filtrar solo por el nombre del atributo. La mutación (2) no quedó limpia: se cambió el filtro pero se dejó `ast.unparse` sobre el `Call`, así que fallaron casi todos los tests por el texto de la expresión y no solo el de la referencia sin llamar; igual el caso clave falló como se esperaba (`[] == ['datetime.now']`).
+- **Tarea 3.1: el rojo fue un `TypeError`, no el `ValueError`.** El test del `now` naive falló porque `ScheduleContext` todavía no aceptaba el argumento `now` (`TypeError`), no por el `ValueError` de `_to_utc`. La causa era la correcta (el campo no existía), pero el rojo no mostró el mensaje final; el `ValueError` se vio recién en verde.
+- **Grupo 7 reordenado.** A pedido de la autora, los escenarios de `validate_new_appointment` que rechazan por el pasado (casos 4, 6 y 8), los del orden y el corte del grupo 1 (casos 9 a 14) y los tres de mensaje se escriben en rojo (tarea 7.1) antes de cablear la regla (7.2). Los casos válidos (2, 3, 5 y 7) quedan como triangulación con una mutación, porque ya daban `Ok` antes del cableado.
+- **Escenario nuevo en `domain-dependency-guard`.** Los dos tests del orden de los accesos (D11) no tenían escenario; se agregó "Varios accesos en orden de línea".
+
 ## Decisiones confirmadas por la autora
 
-**Fecha: 2026-10-29.** D1 a D5 en el explore (`docs/evidencias/explore-C-07.md`), incluidos los límites de la guardia de D4. Los nombres de D6 (`rules/past.py`, `check_not_in_the_past`, `IN_THE_PAST`) se propusieron en el explore y la autora no los objetó. D7 a D11 surgieron en el propose y quedan para la revisión de la autora (en la revisión del propose o, a más tardar, en el punto de control de la tarea 5.3).
+**Fecha: 2026-10-29.** D1 a D5 en el explore (`docs/evidencias/explore-C-07.md`), incluidos los límites de la guardia de D4. Los nombres de D6 (`rules/past.py`, `check_not_in_the_past`, `IN_THE_PAST`) se propusieron en el explore y la autora no los objetó. D7 a D11 surgieron en el propose y la autora los aprobó tal como están el 2026-10-29, antes del apply. En el caso 6 el mensaje queda como está ("10:00" contra "10:00:00"): es una **limitación conocida** que el verify tiene que anotar (ver Risks / Trade-offs).
 
 ## Open Questions
 

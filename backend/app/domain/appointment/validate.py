@@ -13,6 +13,7 @@ from app.domain.model import (
 from app.domain.rules.blocks import check_blocks
 from app.domain.rules.duration import check_duration
 from app.domain.rules.overlap import check_chair_overlap, check_professional_overlap
+from app.domain.rules.past import check_not_in_the_past
 from app.domain.rules.references import check_references
 from app.domain.rules.same_day import check_same_local_day
 from app.domain.rules.start_time import check_start_time
@@ -47,22 +48,25 @@ def _request_validity_violations(
     duration: int | None,
     end_at: datetime | None,
 ) -> list[Violation]:
-    """Grupo 1, validez del pedido: referencias, duracion, inicio y medianoche (RN-AG-12).
+    """Grupo 1, validez del pedido: referencias, duracion, inicio, medianoche y pasado (RN-AG-12).
 
-    El orden es referencias -> duracion -> inicio en la grilla -> medianoche. La duracion
+    El orden es referencias -> duracion -> inicio en la grilla -> medianoche -> pasado. La duracion
     efectiva es la explicita o, si no hay, la por defecto de la prestacion (aunque este
     inactiva). Si no hay ninguna de las dos (prestacion inexistente y sin duracion
     explicita) no hay nada que validar: el error util ya es `UNKNOWN_REFERENCE`. El inicio
-    se evalua siempre; la medianoche solo si hay duracion efectiva sin violaciones.
+    y el pasado (`IN_THE_PAST`, RN-AG-06) se evaluan siempre, sin guardas, porque solo usan
+    el inicio y `context.now`; la medianoche solo si hay duracion efectiva sin violaciones.
 
     Args:
         request: Pedido de turno nuevo.
         references: Referencias resueltas por el llamador.
-        context: Contexto de la agenda (zona horaria para la grilla y la medianoche).
+        context: Contexto de la agenda (zona horaria para la grilla, la medianoche y el
+            mensaje del pasado; `now` para el pasado).
         duration: Duracion efectiva en minutos, o `None` si no hay.
         end_at: Fin del turno calculado una sola vez (`None` si no hay duracion).
 
-    C-05 a C-07 suman sus reglas al grupo que corresponda.
+    Returns:
+        Las violaciones de validez, todas juntas y en orden estable.
     """
     violations = check_references(request, references)
     duration_violations: list[Violation] = []
@@ -72,6 +76,7 @@ def _request_validity_violations(
     violations += check_start_time(request.start_at, context.tz)
     if end_at is not None and not duration_violations:
         violations += check_same_local_day(request.start_at, end_at, context.tz)
+    violations += check_not_in_the_past(request.start_at, context.now, context.tz)
     return violations
 
 
@@ -92,8 +97,8 @@ def _agenda_conflict_violations(
 
     El orden es horario -> bloqueo -> profesional -> sillon, todo junto y sin cortar. Los
     tramos salen de `context.working_hours` y se evaluan en `context.tz` (RN-GL-03, DD-07);
-    los bloqueos salen de `context.blocks` y se comparan como instantes (RN-AG-05). C-07
-    suma aca o en el grupo 1 la regla del pasado.
+    los bloqueos salen de `context.blocks` y se comparan como instantes (RN-AG-05). El
+    pasado no se evalua aca: es una propiedad del pedido y vive en el grupo 1.
 
     Args:
         candidate: Turno nuevo, con el pedido ya valido.
@@ -133,7 +138,7 @@ def validate_new_appointment(
     """Valida un turno nuevo y devuelve el turno aceptado o las violaciones.
 
     Evalua en dos grupos. Grupo 1, validez del pedido (referencias, duracion, inicio en la
-    grilla y medianoche local, todas juntas y en ese orden): si hay alguna se devuelve
+    grilla, medianoche local y pasado, todas juntas y en ese orden): si hay alguna se devuelve
     `Rejected` sin evaluar el grupo 2. Grupo 2, conflictos de agenda (horario de atencion
     del profesional, bloqueos del profesional y despues solapamientos por profesional y
     por sillon). Un resultado nunca mezcla violaciones de los dos grupos.
@@ -143,9 +148,11 @@ def validate_new_appointment(
         references: Referencias resueltas por el llamador (entidad o `None`); la
             prestacion aporta la duracion por defecto.
         existing_appointments: Turnos existentes de la agenda.
-        context: Contexto de la agenda (zona horaria, tramos del horario de atencion y
-            bloqueos). Sin valor por defecto: el llamador debe pasarlo (SU-01). La grilla
-            del inicio, la medianoche y el horario de atencion se evaluan en `context.tz`.
+        context: Contexto de la agenda (zona horaria, tramos del horario de atencion,
+            bloqueos y momento actual). Sin valor por defecto: el llamador debe pasarlo
+            (SU-01). La grilla del inicio, la medianoche y el horario de atencion se evaluan
+            en `context.tz`; el pasado compara el inicio con `context.now` (RN-GL-04, el
+            dominio no lee el reloj).
             Los tramos y los bloqueos se suponen validos (`validate_working_hours`,
             `validate_block`): esta funcion no los revalida.
 

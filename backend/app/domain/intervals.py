@@ -100,3 +100,23 @@ def format_local_date_time(instant: datetime, tz: ZoneInfo) -> str:
         ValueError: Si `instant` no tiene zona horaria (error de programacion).
     """
     return _to_local(instant, tz).strftime("%d/%m/%Y %H:%M")
+
+
+def format_local_date_time_with_seconds(instant: datetime, tz: ZoneInfo) -> str:
+    """Devuelve la fecha y la hora local del instante, siempre con segundos.
+
+    Lo usa el mensaje de `IN_THE_PAST` para mostrar el momento actual: con segundos se
+    evita leer "10:00 es anterior a 10:00". La zona se recibe por parametro (SU-01).
+
+    Args:
+        instant: Instante con zona horaria.
+        tz: Zona horaria en la que se muestran la fecha y la hora.
+
+    Returns:
+        `dd/mm/aaaa HH:MM:SS` en la zona recibida (siempre con segundos, aunque sean
+        cero; los microsegundos no se muestran).
+
+    Raises:
+        ValueError: Si `instant` no tiene zona horaria (error de programacion).
+    """
+    return _to_local(instant, tz).strftime("%d/%m/%Y %H:%M:%S")
