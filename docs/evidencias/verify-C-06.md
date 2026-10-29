@@ -30,7 +30,7 @@ OPSX no tiene un comando propio de verify, así que la verificación se hizo a m
 
 ## Los 43 escenarios del delta y su test
 
-En el orden de [la delta spec](../../openspec/changes/bloqueos-de-agenda/specs/appointment-scheduling/spec.md). Los tests de `Alta`, `Todas las violaciones`, `Turno fuera de los bloqueos del profesional` y `Mensaje de un turno bloqueado` están en `backend/tests/domain/test_validate_new_appointment.py` y llevan el prefijo `test_validate_new_appointment_`, que se omite en la tabla; los de `Validez de un bloqueo` y `Turnos afectados por un bloqueo`, en `backend/tests/domain/test_blocks.py`; los de `Instantes del bloqueo`, en `backend/tests/domain/test_model.py`. En los parametrizados, el id del caso va entre corchetes. Los 15 escenarios que ya existían en los requisitos modificados siguen cubiertos por los mismos tests de C-02 a C-05 (no se cambió ninguna llamada ni aserción; solo `CTX` y `_ctx` suman `blocks=()`). Los escenarios de C-02 a C-05 que este change no toca siguen cubiertos por [verify-C-02.md](verify-C-02.md) a [verify-C-05.md](verify-C-05.md).
+En el orden de [la delta spec](../../openspec/changes/archive/2026-10-28-bloqueos-de-agenda/specs/appointment-scheduling/spec.md). Los tests de `Alta`, `Todas las violaciones`, `Turno fuera de los bloqueos del profesional` y `Mensaje de un turno bloqueado` están en `backend/tests/domain/test_validate_new_appointment.py` y llevan el prefijo `test_validate_new_appointment_`, que se omite en la tabla; los de `Validez de un bloqueo` y `Turnos afectados por un bloqueo`, en `backend/tests/domain/test_blocks.py`; los de `Instantes del bloqueo`, en `backend/tests/domain/test_model.py`. En los parametrizados, el id del caso va entre corchetes. Los 15 escenarios que ya existían en los requisitos modificados siguen cubiertos por los mismos tests de C-02 a C-05 (no se cambió ninguna llamada ni aserción; solo `CTX` y `_ctx` suman `blocks=()`). Los escenarios de C-02 a C-05 que este change no toca siguen cubiertos por [verify-C-02.md](verify-C-02.md) a [verify-C-05.md](verify-C-05.md).
 
 Nuevos (28), marcados con **N**; los otros 15 ya existían. Uno de los nuevos ("Mensaje de un bloqueo con motivo vacío o en blanco") es el ajuste de la autora en el punto de control, y dos ("Bloqueo inválido recibido con la agenda" y "Turnos afectados por un bloqueo inválido") son hallazgos del apply que volvieron a la spec.
 
@@ -97,7 +97,7 @@ Tests extra (no son escenarios): en `test_model.py`, `test_block_with_start_afte
 
 ## Desvíos durante el apply
 
-El detalle está en la sección "Desvíos durante el apply" de [design.md](../../openspec/changes/bloqueos-de-agenda/design.md). Los principales:
+El detalle está en la sección "Desvíos durante el apply" de [design.md](../../openspec/changes/archive/2026-10-28-bloqueos-de-agenda/design.md). Los principales:
 
 1. **Punto de control 3.5 (2026-10-28), un ajuste de la autora:** un motivo con solo espacios (`"   "`) cuenta como vacío. Se actualizaron D8 y la spec y se agregó el escenario "Mensaje de un bloqueo con motivo vacío o en blanco"; el caso `"   "` se vio en rojo antes de agregar el `strip`.
 2. **Hallazgo del apply que volvió a la spec (8.3):** D7 dice que un bloqueo con inicio igual o posterior al fin nunca se solapa, pero la spec no lo cubría. Hoy son los escenarios "Bloqueo inválido recibido con la agenda" y "Turnos afectados por un bloqueo inválido"; con `Interval` en vez de la comparación directa, los dos lanzan `ValueError`.

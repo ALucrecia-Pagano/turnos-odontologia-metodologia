@@ -1,14 +1,14 @@
 # appointment-scheduling Specification
 
 ## Purpose
-Reglas del dominio para dar un turno nuevo en la agenda del consultorio. El turno se acepta solo si el pedido es válido y no choca con la agenda. El pedido es válido si el paciente existe, si el profesional, el sillón y la prestación existen y están activos, si la duración es un múltiplo de 5 minutos entre 5 y 480, si el inicio cae en la grilla de 5 minutos y si el turno empieza y termina en el mismo día local. No choca con la agenda si cae completo dentro del horario de atención del profesional para ese día local (sus tramos de ese día de la semana, con los tramos contiguos o que se pisan unidos) y si no se solapa con otro turno activo del mismo profesional ni del mismo sillón. La hora local, que usan la grilla, la medianoche y el horario de atención, se evalúa en la zona horaria que el dominio recibe como parámetro (`America/Argentina/Buenos_Aires` en el consultorio), nunca sobre la hora UTC. Si se rechaza, el resultado explica cada problema: primero los del pedido y, solo si el pedido es válido, los conflictos de agenda (horario de atención y solapamientos).
+Reglas del dominio para dar un turno nuevo en la agenda del consultorio. El turno se acepta solo si el pedido es válido y no choca con la agenda. El pedido es válido si el paciente existe, si el profesional, el sillón y la prestación existen y están activos, si la duración es un múltiplo de 5 minutos entre 5 y 480, si el inicio cae en la grilla de 5 minutos y si el turno empieza y termina en el mismo día local. No choca con la agenda si cae completo dentro del horario de atención del profesional para ese día local (sus tramos de ese día de la semana, con los tramos contiguos o que se pisan unidos), si no pisa ningún bloqueo del profesional (vacaciones, feriados o ausencias, que se comparan como instantes aunque duren varios días) y si no se solapa con otro turno activo del mismo profesional ni del mismo sillón. La hora local, que usan la grilla, la medianoche y el horario de atención, se evalúa en la zona horaria que el dominio recibe como parámetro (`America/Argentina/Buenos_Aires` en el consultorio), nunca sobre la hora UTC. Si se rechaza, el resultado explica cada problema: primero los del pedido y, solo si el pedido es válido, los conflictos de agenda (horario de atención, bloqueos y solapamientos).
 
-Convenciones de los escenarios: todos los instantes son del 2026-10-20 en UTC (por ejemplo, "13:00" es `2026-10-20T13:00:00+00:00`). P1 y P2 son profesionales; S1, S2 y S3, sillones. Salvo que se diga otra cosa, el paciente, los profesionales, los sillones y la prestación del pedido existen y están activos, y los turnos existentes están en estado `reservado`. Turno existente "A" = profesional P1, sillón S1, de 13:00 a 13:30. "Hora local" es `America/Argentina/Buenos_Aires` (UTC-3, sin horario de verano), la zona que recibe el dominio; los escenarios que usan hora local dan también el instante en UTC (por ejemplo, "23:30 hora local del 2026-10-20" es `2026-10-21T02:30:00+00:00`, y "13:00" UTC son las 10:00 hora local). Los tramos del horario de atención se dan en minutos locales desde las 00:00 (`[540, 780)` es de 09:00 a 13:00) con el día de la semana ISO (1 = lunes … 7 = domingo).
+Convenciones de los escenarios: todos los instantes son del 2026-10-20 en UTC (por ejemplo, "13:00" es `2026-10-20T13:00:00+00:00`). P1 y P2 son profesionales; S1, S2 y S3, sillones. Salvo que se diga otra cosa, el paciente, los profesionales, los sillones y la prestación del pedido existen y están activos, y los turnos existentes están en estado `reservado`. Turno existente "A" = profesional P1, sillón S1, de 13:00 a 13:30. "Hora local" es `America/Argentina/Buenos_Aires` (UTC-3, sin horario de verano), la zona que recibe el dominio; los escenarios que usan hora local dan también el instante en UTC (por ejemplo, "23:30 hora local del 2026-10-20" es `2026-10-21T02:30:00+00:00`, y "13:00" UTC son las 10:00 hora local). Los tramos del horario de atención se dan en minutos locales desde las 00:00 (`[540, 780)` es de 09:00 a 13:00) con el día de la semana ISO (1 = lunes … 7 = domingo). Los bloqueos se dan en hora local y en UTC; BL1 es el bloqueo de P1, sin motivo, del martes 2026-10-20 de 10:00 a 12:00 hora local (de 13:00 a 15:00 UTC).
 
 ## Requirements
 
 ### Requirement: Alta de un turno válido
-Si el paciente existe, el profesional, el sillón y la prestación existen y están activos, la duración es válida, el inicio está en la grilla de 5 minutos, el turno empieza y termina en el mismo día local, el turno cae completo dentro del horario de atención del profesional y el profesional y el sillón están libres en el intervalo pedido, el dominio SHALL devolver un resultado `Ok` con el turno nuevo: el id, el paciente, el profesional, el sillón y la prestación que pidió el llamador, inicio y fin en UTC, y estado `reservado` (RN-TU-01). El dominio no genera el id: lo recibe del llamador. En todos los escenarios, salvo que se diga otra cosa, el paciente, los profesionales, los sillones y la prestación del pedido existen y están activos, y cada profesional atiende todos los días de la semana en un tramo de día completo, de 00:00 a 24:00 hora local (`[0, 1440)`).
+Si el paciente existe, el profesional, el sillón y la prestación existen y están activos, la duración es válida, el inicio está en la grilla de 5 minutos, el turno empieza y termina en el mismo día local, el turno cae completo dentro del horario de atención del profesional, no se superpone con ningún bloqueo del profesional y el profesional y el sillón están libres en el intervalo pedido, el dominio SHALL devolver un resultado `Ok` con el turno nuevo: el id, el paciente, el profesional, el sillón y la prestación que pidió el llamador, inicio y fin en UTC, y estado `reservado` (RN-TU-01). El dominio no genera el id: lo recibe del llamador. En todos los escenarios, salvo que se diga otra cosa, el paciente, los profesionales, los sillones y la prestación del pedido existen y están activos, cada profesional atiende todos los días de la semana en un tramo de día completo, de 00:00 a 24:00 hora local (`[0, 1440)`), y no hay bloqueos.
 
 #### Scenario: Turno válido con profesional y sillón libres
 - **GIVEN** una prestación con duración por defecto de 30 minutos y ningún turno existente para P1 ni para S1
@@ -131,7 +131,7 @@ El dominio SHALL decidir por sí mismo qué turnos existentes son relevantes (mi
 - **THEN** el resultado es `Ok`
 
 ### Requirement: Todas las violaciones, en orden estable
-El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido: referencias, duración, inicio en la grilla y turno dentro de un solo día local, informadas todas juntas, en este orden: paciente, profesional, sillón, prestación, duración, inicio y, al final, medianoche (RN-AG-12). Si hay alguna, el dominio SHALL devolverlas sin evaluar los conflictos de agenda: un resultado MUST NOT mezclar violaciones de validez con conflictos de agenda. Si el pedido es válido, el dominio SHALL evaluar los conflictos de agenda y devolverlos todos juntos, no solo el primero (DD-08), en este orden: primero `OUTSIDE_WORKING_HOURS` (como mucho una), después todas las `PROFESSIONAL_OVERLAP` y al final todas las `CHAIR_OVERLAP` (RN-AG-12). Hay una violación de solapamiento por cada turno con el que choca; dentro de cada tipo se ordenan por el inicio del turno con el que chocan. Un mismo turno existente puede producir una violación de cada tipo.
+El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido: referencias, duración, inicio en la grilla y turno dentro de un solo día local, informadas todas juntas, en este orden: paciente, profesional, sillón, prestación, duración, inicio y, al final, medianoche (RN-AG-12). Si hay alguna, el dominio SHALL devolverlas sin evaluar los conflictos de agenda: un resultado MUST NOT mezclar violaciones de validez con conflictos de agenda. Si el pedido es válido, el dominio SHALL evaluar los conflictos de agenda y devolverlos todos juntos, no solo el primero (DD-08), en este orden: primero `OUTSIDE_WORKING_HOURS` (como mucho una), después todas las `BLOCKED_TIME`, después todas las `PROFESSIONAL_OVERLAP` y al final todas las `CHAIR_OVERLAP` (RN-AG-12). Hay una violación de bloqueo por cada bloqueo que pisa el turno y una de solapamiento por cada turno con el que choca; dentro de cada tipo se ordenan por el inicio del bloqueo o del turno con el que chocan. Un mismo turno existente puede producir una violación de cada tipo de solapamiento.
 
 #### Scenario: Varios conflictos de ambos tipos
 - **GIVEN** un turno B de P1 en S2 de 13:30 a 14:00, un turno C de P1 en S3 de 13:00 a 13:30 y un turno D de P2 en S1 de 13:45 a 14:15
@@ -198,6 +198,18 @@ El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido:
 - **GIVEN** el horario base, en el que P1 no tiene tramos el domingo
 - **WHEN** se pide un turno de 30 minutos para P1 el domingo 2026-10-25 a las 10:03 hora local (13:03 UTC)
 - **THEN** el resultado es `Rejected` con una sola violación, `INVALID_START_TIME`, sin `OUTSIDE_WORKING_HOURS`
+
+#### Scenario: Fuera de horario, bloqueado y solapado a la vez
+- **GIVEN** el horario base (P1 atiende el martes `[540, 780)` y `[900, 1140)`)
+- **AND** un bloqueo BL3 de P1 del 2026-10-20 de 12:00 a 14:00 hora local (de 15:00 a 17:00 UTC)
+- **AND** un turno existente E de P1 en S2 de 12:30 a 13:00 hora local (de 15:30 a 16:00 UTC) y un turno existente F de P2 en S1 de 12:45 a 13:15 hora local (de 15:45 a 16:15 UTC)
+- **WHEN** se pide un turno para P1 en S1 de 12:30 a 13:30 hora local (de 15:30 a 16:30 UTC), con duración explícita de 60 minutos
+- **THEN** el resultado es `Rejected` con exactamente cuatro violaciones, en este orden: `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME` con el bloqueo BL3, `PROFESSIONAL_OVERLAP` con el turno E y `CHAIR_OVERLAP` con el turno F
+
+#### Scenario: Duración inválida dentro de un bloqueo
+- **GIVEN** el bloqueo BL1 (P1, de 10:00 a 12:00 hora local, de 13:00 a 15:00 UTC)
+- **WHEN** se pide un turno para P1 a las 10:30 hora local (13:30 UTC) con duración explícita de 0 minutos
+- **THEN** el resultado es `Rejected` con una sola violación, `INVALID_DURATION`, sin `BLOCKED_TIME`
 
 ### Requirement: Validez de la duración
 La duración efectiva SHALL ser mayor que cero, múltiplo de 5 minutos y de 480 minutos como máximo (RN-AG-09, RN-DI-05 en la parte de la duración, SU-02, US-007 CA-1). Si no cumple alguna de esas condiciones, el dominio SHALL rechazar el turno con **una sola** violación `INVALID_DURATION`, sin id de turno en conflicto, aunque rompa más de una condición. Si la prestación no existe y no hay duración explícita, no hay duración efectiva y la duración MUST NOT validarse. Con una duración inválida no existe un intervalo válido, así que los solapamientos MUST NOT evaluarse.
@@ -570,3 +582,151 @@ En los escenarios de este requisito los tramos son de P1, salvo que se diga otra
 - **WHEN** se valida el conjunto
 - **THEN** hay exactamente tres violaciones, en este orden: `INVALID_WORKING_HOURS` del tramo 2, `OVERLAPPING_WORKING_HOURS` de los tramos 1 y 3 y `OVERLAPPING_WORKING_HOURS` de los tramos 1 y 4
 - **AND** no hay violación de los tramos 3 y 4, que no se solapan, ni del tramo 2 con los tramos 1 o 3, aunque su minuto 750 cae dentro de los dos, porque es inválido
+
+### Requirement: Turno fuera de los bloqueos del profesional
+El turno MUST NOT superponerse con ningún bloqueo del profesional del pedido (RN-AG-05; US-004 CA-4 y CA-5). Por cada bloqueo que pisa, el dominio SHALL devolver una violación `BLOCKED_TIME` con el id del bloqueo, sin id de turno ni tipo de referencia. Bloqueo y turno son semiabiertos (DD-07) y se comparan como instantes, aunque el bloqueo dure varios días. El dominio elige los bloqueos del profesional: el resultado MUST NOT depender del filtrado del llamador.
+
+#### Scenario: Turno dentro de un bloqueo
+- **GIVEN** el bloqueo BL1
+- **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Rejected` con exactamente una violación `BLOCKED_TIME` que lleva el id de BL1
+
+#### Scenario: Turno que termina justo cuando empieza el bloqueo
+- **GIVEN** el bloqueo BL1
+- **WHEN** se pide un turno de 09:30 a 10:00 hora local (de 12:30 a 13:00 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`
+
+#### Scenario: Turno que empieza justo cuando termina el bloqueo
+- **GIVEN** el bloqueo BL1
+- **WHEN** se pide un turno de 12:00 a 12:30 hora local (de 15:00 a 15:30 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`
+
+#### Scenario: Turno que pisa el inicio del bloqueo
+- **GIVEN** el bloqueo BL1
+- **WHEN** se pide un turno de 09:45 a 10:15 hora local (de 12:45 a 13:15 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Rejected` con exactamente una violación `BLOCKED_TIME` que lleva el id de BL1
+
+#### Scenario: Turno que pisa el fin del bloqueo
+- **GIVEN** el bloqueo BL1
+- **WHEN** se pide un turno de 11:45 a 12:15 hora local (de 14:45 a 15:15 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Rejected` con exactamente una violación `BLOCKED_TIME` que lleva el id de BL1
+
+#### Scenario: Bloqueo de otro profesional
+- **GIVEN** un bloqueo de P2 del 2026-10-20 de 10:00 a 12:00 hora local (de 13:00 a 15:00 UTC) y ningún bloqueo de P1
+- **WHEN** se pide un turno para P1 de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`
+
+#### Scenario: Turno dentro de un bloqueo de varios días
+- **GIVEN** un bloqueo BLV de P1, con motivo "vacaciones", del lunes 2026-10-19 a las 00:00 hora local (03:00 UTC del 2026-10-19) al lunes 2026-10-26 a las 00:00 hora local (03:00 UTC del 2026-10-26)
+- **WHEN** se pide un turno el martes 2026-10-20 de 10:00 a 10:30 hora local (de 13:00 a 13:30 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Rejected` con exactamente una violación `BLOCKED_TIME` que lleva el id de BLV
+
+#### Scenario: Último turno del domingo local dentro de un bloqueo de varios días
+- **GIVEN** el bloqueo BLV
+- **WHEN** se pide un turno el domingo 2026-10-25 de 23:30 a 23:55 hora local (de 02:30 a 02:55 UTC del lunes 2026-10-26), con duración explícita de 25 minutos
+- **THEN** el resultado es `Rejected` con exactamente una violación `BLOCKED_TIME` que lleva el id de BLV, porque en UTC ya es el 26 pero todavía antes de las 03:00, el fin del bloqueo
+
+#### Scenario: Turno que empieza justo cuando termina un bloqueo de varios días
+- **GIVEN** el bloqueo BLV
+- **WHEN** se pide un turno el lunes 2026-10-26 de 00:00 a 00:30 hora local (de 03:00 a 03:30 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`
+
+#### Scenario: Turno que termina justo cuando empieza un bloqueo de varios días
+- **GIVEN** el bloqueo BLV
+- **WHEN** se pide un turno el domingo 2026-10-18 de 23:30 a 00:00 hora local (de 02:30 a 03:00 UTC del lunes 2026-10-19), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`
+
+#### Scenario: Turno que pisa dos bloqueos
+- **GIVEN** el bloqueo BL1 y un bloqueo BL2 de P1 del 2026-10-20 de 11:00 a 13:00 hora local (de 14:00 a 16:00 UTC)
+- **WHEN** se pide un turno de 11:30 a 12:30 hora local (de 14:30 a 15:30 UTC), con duración explícita de 60 minutos
+- **THEN** el resultado es `Rejected` con exactamente dos violaciones, en este orden: `BLOCKED_TIME` con el id de BL1 y `BLOCKED_TIME` con el id de BL2
+
+#### Scenario: Orden de los bloqueos independiente del orden recibido
+- **GIVEN** los bloqueos BL1 y BL2 del escenario anterior, recibidos en orden inverso (BL2 primero)
+- **WHEN** se pide el mismo turno
+- **THEN** las violaciones se devuelven en el mismo orden: BL1 y después BL2
+
+#### Scenario: Bloqueo inválido recibido con la agenda
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin, que llega por error junto con la agenda
+- **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`, sin excepción: un bloqueo con inicio igual o posterior al fin no se superpone con ningún turno
+
+### Requirement: Mensaje de un turno bloqueado
+El mensaje de `BLOCKED_TIME` MUST decir, en hora local, el inicio y el fin del turno, el id del bloqueo, su inicio y su fin con fecha (`dd/mm/aaaa HH:MM`, porque puede durar varios días) y, si tiene, el motivo: "El turno de {inicio} a {fin} (hora local) se superpone con el bloqueo {id} del profesional, del {inicio del bloqueo} al {fin del bloqueo} (hora local).", seguido, si hay motivo, de la oración aparte " Motivo: {motivo}." Un motivo vacío o con solo espacios cuenta como sin motivo. El texto con nombres queda para C-08.
+
+#### Scenario: Mensaje de un bloqueo sin motivo
+- **GIVEN** el bloqueo BL1, sin motivo
+- **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** el mensaje de la violación `BLOCKED_TIME` es exactamente "El turno de 10:30 a 11:00 (hora local) se superpone con el bloqueo {id de BL1} del profesional, del 20/10/2026 10:00 al 20/10/2026 12:00 (hora local)."
+- **AND** la violación no tiene id de turno en conflicto ni tipo de referencia
+
+#### Scenario: Mensaje de un bloqueo de varios días con motivo
+- **GIVEN** el bloqueo BLV, con motivo "vacaciones"
+- **WHEN** se pide un turno el domingo 2026-10-25 de 23:30 a 23:55 hora local (de 02:30 a 02:55 UTC del 2026-10-26), con duración explícita de 25 minutos
+- **THEN** el mensaje de la violación `BLOCKED_TIME` es exactamente "El turno de 23:30 a 23:55 (hora local) se superpone con el bloqueo {id de BLV} del profesional, del 19/10/2026 00:00 al 26/10/2026 00:00 (hora local). Motivo: vacaciones."
+- **AND** el mensaje no contiene las horas en UTC (`02:30`, `03:00`)
+
+#### Scenario: Mensaje de un bloqueo con motivo vacío o en blanco
+- **GIVEN** el bloqueo BL1 con motivo `""` (primer caso) o `"   "`, solo espacios (segundo caso)
+- **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** en ambos casos el mensaje de la violación `BLOCKED_TIME` es exactamente el mismo que el de un bloqueo sin motivo, terminado en "(hora local).", sin "Motivo:"
+
+### Requirement: Validez de un bloqueo
+El dominio SHALL ofrecer la validación de un bloqueo que carga el usuario (RN-DI-03; US-011 CA-1 y CA-2). Si `inicio >= fin`, SHALL devolver una violación `INVALID_BLOCK` con un mensaje en español que diga que el inicio debe ser anterior al fin, sin id de turno ni de bloqueo en conflicto. Un bloqueo así se puede construir: el rechazo es una violación, no una excepción. No se exige la grilla de 5 minutos ni se prohíbe que dos bloqueos se pisen.
+
+#### Scenario: Bloqueo válido
+- **GIVEN** el bloqueo BL1 (de 10:00 a 12:00 hora local, de 13:00 a 15:00 UTC)
+- **WHEN** se valida el bloqueo
+- **THEN** no hay violaciones
+
+#### Scenario: Bloqueo con inicio igual al fin
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 10:00 a 10:00 hora local (de 13:00 a 13:00 UTC)
+- **WHEN** se valida el bloqueo
+- **THEN** hay exactamente una violación `INVALID_BLOCK`, con un mensaje que contiene "el inicio debe ser anterior al fin"
+
+#### Scenario: Bloqueo con inicio posterior al fin
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC)
+- **WHEN** se valida el bloqueo
+- **THEN** hay exactamente una violación `INVALID_BLOCK`
+
+#### Scenario: Bloqueo de un minuto, fuera de la grilla
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 10:00 a 10:01 hora local (de 13:00 a 13:01 UTC)
+- **WHEN** se valida el bloqueo
+- **THEN** no hay violaciones, porque los bloqueos no tienen grilla
+
+### Requirement: Instantes del bloqueo con zona horaria y normalizados a UTC
+El inicio y el fin de un bloqueo SHALL tener zona horaria y MUST normalizarse a UTC conservando el mismo momento. Un instante sin zona (*naive*) es un error de programación y MUST rechazarse con `ValueError` al construir el bloqueo, no como violación de negocio.
+
+#### Scenario: Bloqueo cargado en hora de Buenos Aires
+- **WHEN** se construye un bloqueo con inicio `2026-10-20T10:00:00-03:00` y fin `2026-10-20T12:00:00-03:00`
+- **THEN** el bloqueo tiene inicio `2026-10-20T13:00:00+00:00` y fin `2026-10-20T15:00:00+00:00`, ambos en UTC
+
+#### Scenario: Bloqueo con un instante sin zona
+- **WHEN** se construye un bloqueo con inicio `2026-10-20T10:00:00` sin zona (primer caso) o con fin sin zona (segundo caso)
+- **THEN** la construcción falla con `ValueError` cuyo mensaje indica que el instante necesita zona horaria
+
+### Requirement: Turnos afectados por un bloqueo
+Dado un bloqueo y una lista de turnos existentes, el dominio SHALL devolver los turnos que pisa: del mismo profesional, en un estado que ocupa agenda (`reservado`, `confirmado`, `atendido`) y que se solapan con el bloqueo (semiabiertos), ordenados por inicio (RN-DI-04, SU-05; US-011 CA-3). Crear el bloqueo MUST NOT cancelar ni mover esos turnos: se devuelven sin cambios, para que recepción los reprograme.
+
+Turnos de los escenarios de este requisito, todos del 2026-10-20: T1 de P1 de 09:30 a 10:00 hora local (de 12:30 a 13:00 UTC), `reservado`; T2 de P1 de 10:30 a 11:00 (de 13:30 a 14:00 UTC), `confirmado`; T3 de P1 de 11:45 a 12:15 (de 14:45 a 15:15 UTC), `reservado`; T4 de P1 de 11:00 a 11:30 (de 14:00 a 14:30 UTC), `cancelado`; T5 de P1 de 10:00 a 10:30 (de 13:00 a 13:30 UTC), `ausente`; T6 de P2 de 10:30 a 11:00 (de 13:30 a 14:00 UTC), `reservado`; T7 de P1 de 12:00 a 12:30 (de 15:00 a 15:30 UTC), `reservado`.
+
+#### Scenario: Bloqueo que pisa turnos existentes
+- **GIVEN** el bloqueo BL1 y los turnos T1 a T7, recibidos en orden inverso (T7 primero)
+- **WHEN** se piden los turnos afectados por BL1
+- **THEN** el resultado es exactamente T2 y T3, en ese orden
+- **AND** no incluye T1 ni T7 (tocan el bloqueo en un borde), T4 (cancelado), T5 (ausente) ni T6 (otro profesional)
+
+#### Scenario: El bloqueo no cambia los turnos que pisa
+- **GIVEN** el bloqueo BL1 y los turnos T1 a T7
+- **WHEN** se piden los turnos afectados por BL1
+- **THEN** T2 sigue en estado `confirmado` y T3 en `reservado`, con el mismo inicio, fin, profesional y sillón que tenían
+
+#### Scenario: Bloqueo que no pisa ningún turno
+- **GIVEN** el bloqueo BL1 y solo los turnos T1, T6 y T7
+- **WHEN** se piden los turnos afectados por BL1
+- **THEN** el resultado está vacío
+
+#### Scenario: Turnos afectados por un bloqueo inválido
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin, y los turnos T1 a T7
+- **WHEN** se piden los turnos afectados por ese bloqueo
+- **THEN** el resultado está vacío, sin excepción

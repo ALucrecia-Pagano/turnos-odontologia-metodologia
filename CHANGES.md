@@ -265,12 +265,14 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/04_modelo_de_datos.md` §WorkingHours
 
 ### [C-06] `bloqueos-de-agenda`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-10-28)
 - **Scope**:
-  - Modelo `Block` (profesional, `[inicio, fin)`, motivo opcional); validación `inicio < fin` (RN-DI-03; US-011 CA-1 y CA-2).
-  - `rules/blocks.py`: turno que se superpone con un bloqueo → `BLOCKED_TIME` con el id del bloqueo; justo antes o justo después es válido (RN-AG-05; US-004 CA-4 y CA-5).
-  - Función de dominio que, dado un bloqueo nuevo, lista los turnos activos que pisa sin cancelarlos ni moverlos (RN-DI-04; US-011 CA-3).
-  - Tests: los casos anteriores más bloqueo de otro profesional (no afecta).
+  - `model.py`: `Block` (id, profesional, `[inicio, fin)` de instantes normalizados a UTC, motivo opcional), sin validar el orden al construirse, y `ScheduleContext.blocks` (obligatorio).
+  - `violations.py`: `BLOCKED_TIME`, `INVALID_BLOCK` y `Violation.conflicting_block_id`.
+  - `rules/blocks.py`: `check_blocks`, una `BLOCKED_TIME` por cada bloqueo del profesional que pisa el turno, con el id del bloqueo, comparando instantes (bloqueos de varios días sin tratamiento especial); justo antes o justo después es válido (RN-AG-05; US-004 CA-4 y CA-5). `validate_block`: `inicio >= fin` → `INVALID_BLOCK` (RN-DI-03; US-011 CA-1 y CA-2). `appointments_affected_by_block`: los turnos activos del profesional que pisa un bloqueo nuevo, sin cancelarlos ni moverlos (RN-DI-04, SU-05 confirmada; US-011 CA-3).
+  - `intervals.py`: `format_local_date_time` (`dd/mm/aaaa HH:MM` en hora local) para el mensaje de `BLOCKED_TIME`.
+  - `appointment/validate.py`: cableado de `check_blocks` en el grupo 2, entre el horario y los solapamientos.
+  - Tests: US-004 CA-4 y CA-5, US-011 CA-1 a CA-3; bloqueo de otro profesional (no afecta), bloqueo de varios días, varios bloqueos, mensajes y bloqueo inválido recibido con la agenda.
 - **Dependencias**: `C-02`
 - **Governance**: MEDIO
 - **Leer antes**:
