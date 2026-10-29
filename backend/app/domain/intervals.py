@@ -81,3 +81,22 @@ def format_local_time(instant: datetime, tz: ZoneInfo) -> str:
     if local.second or local.microsecond:
         return local.strftime("%H:%M:%S")
     return local.strftime("%H:%M")
+
+
+def format_local_date_time(instant: datetime, tz: ZoneInfo) -> str:
+    """Devuelve la fecha y la hora local del instante para usar en mensajes.
+
+    Sirve para intervalos que pueden durar varios dias, como los bloqueos. La zona se
+    recibe por parametro (SU-01).
+
+    Args:
+        instant: Instante con zona horaria.
+        tz: Zona horaria en la que se muestran la fecha y la hora.
+
+    Returns:
+        `dd/mm/aaaa HH:MM` en la zona recibida (los segundos no se muestran).
+
+    Raises:
+        ValueError: Si `instant` no tiene zona horaria (error de programacion).
+    """
+    return _to_local(instant, tz).strftime("%d/%m/%Y %H:%M")

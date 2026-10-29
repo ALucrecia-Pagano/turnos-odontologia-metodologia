@@ -157,23 +157,58 @@ class WorkingHours:
 
 
 @dataclass(frozen=True, slots=True)
+class Block:
+    """Bloqueo de la agenda de un profesional: vacaciones, feriado o ausencia (RN-DI-03).
+
+    Ocupa el intervalo semiabierto `[start_at, end_at)` de instantes, que puede durar
+    varios dias (KB 04). Al construirse solo normaliza los instantes a UTC: el orden
+    `start_at < end_at` lo carga el usuario y lo decide `validate_block`, que devuelve
+    violaciones y no lanza excepciones.
+
+    Attributes:
+        id: Id del bloqueo.
+        professional_id: Profesional bloqueado.
+        start_at: Inicio (con zona horaria; se normaliza a UTC).
+        end_at: Fin (con zona horaria; se normaliza a UTC).
+        reason: Motivo opcional (por ejemplo, "vacaciones").
+
+    Raises:
+        ValueError: Si algun instante no tiene zona horaria (error de programacion).
+    """
+
+    id: UUID
+    professional_id: UUID
+    start_at: datetime
+    end_at: datetime
+    reason: str | None = None
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "start_at", _to_utc("start_at", self.start_at))
+        object.__setattr__(self, "end_at", _to_utc("end_at", self.end_at))
+
+
+@dataclass(frozen=True, slots=True)
 class ScheduleContext:
     """Contexto de la agenda que recibe el dominio junto con el pedido.
 
     La zona se recibe por parametro: el dominio no la lee del entorno ni la fija (SU-01).
-    El borde (API) convierte `APP_TIMEZONE` en `ZoneInfo`. Los proximos changes suman
-    aca horarios, bloqueos y `now` sin volver a cambiar la firma.
+    El borde (API) convierte `APP_TIMEZONE` en `ZoneInfo`. C-07 suma aca `now` sin volver
+    a cambiar la firma.
 
     Attributes:
         tz: Zona horaria en la que se evaluan la grilla del inicio, la medianoche y el
-            horario de atencion.
+            horario de atencion, y en la que se muestran las horas de los mensajes.
         working_hours: Tramos del horario de atencion. Sin valor por defecto: un llamador
             que no los pase falla en mypy. El dominio elige los del profesional del pedido
             y del dia de la semana local; el llamador no necesita filtrarlos.
+        blocks: Bloqueos de la agenda. Sin valor por defecto, por la misma razon. El
+            dominio elige los del profesional del pedido; el llamador no necesita
+            filtrarlos. Se suponen validos (`validate_block`): no se revalidan.
     """
 
     tz: ZoneInfo
     working_hours: tuple[WorkingHours, ...]
+    blocks: tuple[Block, ...]
 
 
 @dataclass(frozen=True, slots=True)

@@ -6,6 +6,7 @@ from app.domain.violations import ReferenceKind, Rejected, Violation, ViolationC
 
 APPT_A = UUID("00000000-0000-0000-0000-0000000000a1")
 APPT_B = UUID("00000000-0000-0000-0000-0000000000a2")
+BL1 = UUID("00000000-0000-0000-0000-0000000000e1")
 
 
 def test_rejected_without_violations_raises_value_error() -> None:
@@ -44,6 +45,8 @@ def test_rejected_keeps_violations_in_given_order(ids: list[UUID]) -> None:
         (ViolationCode.OUTSIDE_WORKING_HOURS, "OUTSIDE_WORKING_HOURS"),
         (ViolationCode.INVALID_WORKING_HOURS, "INVALID_WORKING_HOURS"),
         (ViolationCode.OVERLAPPING_WORKING_HOURS, "OVERLAPPING_WORKING_HOURS"),
+        (ViolationCode.BLOCKED_TIME, "BLOCKED_TIME"),
+        (ViolationCode.INVALID_BLOCK, "INVALID_BLOCK"),
     ],
 )
 def test_violation_code_value_is_stable_api_code(code: ViolationCode, serialized: str) -> None:
@@ -82,6 +85,29 @@ def test_violation_reference_kind_defaults_to_none_and_keeps_given_value(
     violation = Violation(ViolationCode.UNKNOWN_REFERENCE, "no existe", reference_kind=given)
 
     assert violation.reference_kind is expected
+
+
+@pytest.mark.parametrize(
+    ("given", "expected"),
+    [
+        (None, None),
+        (BL1, BL1),
+    ],
+)
+def test_violation_conflicting_block_id_defaults_to_none_and_keeps_given_value(
+    given: UUID | None, expected: UUID | None
+) -> None:
+    violation = Violation(ViolationCode.BLOCKED_TIME, "bloqueado", conflicting_block_id=given)
+
+    assert violation.conflicting_block_id == expected
+
+
+def test_violation_built_as_in_c02_has_no_conflicting_block() -> None:
+    violation = Violation(
+        ViolationCode.PROFESSIONAL_OVERLAP, "conflicto", conflicting_appointment_id=APPT_A
+    )
+
+    assert violation.conflicting_block_id is None
 
 
 def test_violation_built_as_in_c02_has_no_reference_kind() -> None:

@@ -4,9 +4,16 @@ from uuid import UUID
 import pytest
 
 from app.domain.intervals import Interval
-from app.domain.model import Appointment, AppointmentStatus, NewAppointmentRequest, WorkingHours
+from app.domain.model import (
+    Appointment,
+    AppointmentStatus,
+    Block,
+    NewAppointmentRequest,
+    WorkingHours,
+)
 
 APPT_NEW = UUID("00000000-0000-0000-0000-0000000000f1")
+BL1 = UUID("00000000-0000-0000-0000-0000000000e1")
 PATIENT = UUID("00000000-0000-0000-0000-0000000000c1")
 P1 = UUID("00000000-0000-0000-0000-000000000001")
 S1 = UUID("00000000-0000-0000-0000-0000000000b1")
@@ -129,3 +136,42 @@ def test_working_hours_with_invalid_values_is_built_without_raising(
     slot = WorkingHours(P1, weekday, start_minute, end_minute)
 
     assert (slot.weekday, slot.start_minute, slot.end_minute) == (weekday, start_minute, end_minute)
+
+
+def test_block_loaded_in_buenos_aires_time_is_normalized_to_utc() -> None:
+    block = Block(
+        id=BL1,
+        professional_id=P1,
+        start_at=datetime(2026, 10, 20, 10, 0, tzinfo=BUENOS_AIRES),
+        end_at=datetime(2026, 10, 20, 12, 0, tzinfo=BUENOS_AIRES),
+    )
+
+    assert block.start_at.isoformat() == "2026-10-20T13:00:00+00:00"
+    assert block.end_at.isoformat() == "2026-10-20T15:00:00+00:00"
+
+
+@pytest.mark.parametrize(
+    ("start_at", "end_at"),
+    [
+        (datetime(2026, 10, 20, 10, 0), datetime(2026, 10, 20, 12, 0, tzinfo=BUENOS_AIRES)),
+        (datetime(2026, 10, 20, 10, 0, tzinfo=BUENOS_AIRES), datetime(2026, 10, 20, 12, 0)),
+    ],
+    ids=["inicio-naive", "fin-naive"],
+)
+def test_block_instant_without_timezone_raises_value_error(
+    start_at: datetime, end_at: datetime
+) -> None:
+    with pytest.raises(ValueError, match="zona horaria"):
+        Block(id=BL1, professional_id=P1, start_at=start_at, end_at=end_at)
+
+
+def test_block_with_start_after_end_is_built_without_raising() -> None:
+    block = Block(
+        id=BL1,
+        professional_id=P1,
+        start_at=datetime(2026, 10, 20, 12, 0, tzinfo=BUENOS_AIRES),
+        end_at=datetime(2026, 10, 20, 10, 0, tzinfo=BUENOS_AIRES),
+        reason="feriado",
+    )
+
+    assert block.start_at > block.end_at

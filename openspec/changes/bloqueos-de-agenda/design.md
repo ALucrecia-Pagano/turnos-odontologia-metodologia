@@ -126,13 +126,13 @@ Más un helper privado `_overlaps(start_a, end_a, start_b, end_b) -> bool` con l
 
 ### D8 — Mensaje de `BLOCKED_TIME` (explore, decisión 5; formato en el propose)
 
-`"El turno de {inicio} a {fin} (hora local) se superpone con el bloqueo {id} del profesional, del {inicio del bloqueo} al {fin del bloqueo} (hora local)."` + `" Motivo: {motivo}."` si `reason` no es `None` ni vacío. Sin motivo, el mensaje termina en `"(hora local)."` (ajuste de la autora en la revisión del propose, 2026-10-28: el motivo va como oración aparte).
+`"El turno de {inicio} a {fin} (hora local) se superpone con el bloqueo {id} del profesional, del {inicio del bloqueo} al {fin del bloqueo} (hora local)."` + `" Motivo: {motivo}."` si `reason` no es `None` ni vacío ni solo espacios (`reason.strip()` vacío; ajuste de la autora en el punto de control 3.5, 2026-10-28). Sin motivo, el mensaje termina en `"(hora local)."` (ajuste de la autora en la revisión del propose, 2026-10-28: el motivo va como oración aparte).
 
 - `{inicio}` y `{fin}` del turno con `format_local_time`.
 - Los instantes del bloqueo con una función nueva de `intervals.py`, `format_local_date_time(instant, tz) -> str`, que da `dd/mm/aaaa HH:MM` en la zona recibida (con su test en `test_intervals.py`).
 - El id del bloqueo en el mensaje, como los mensajes de solapamiento llevan el id del turno ("Contenido de cada violación").
 
-**Por qué**: el bloqueo puede durar varios días, así que solo la hora sería ambigua; con el año no hay dudas cerca de fin de año. El motivo ("vacaciones", "feriado") es lo que la secretaria necesita para explicar el rechazo. Un `reason` vacío se trata como sin motivo para no dejar `" Motivo: ."`.
+**Por qué**: el bloqueo puede durar varios días, así que solo la hora sería ambigua; con el año no hay dudas cerca de fin de año. El motivo ("vacaciones", "feriado") es lo que la secretaria necesita para explicar el rechazo. Un `reason` vacío o en blanco se trata como sin motivo para no dejar `" Motivo: ."` ni `" Motivo:    ."`. El motivo que sí se muestra va tal como se cargó (sin `strip`), porque la spec no pide recortarlo.
 
 **Alternativas descartadas**: el formato dentro de `rules/blocks.py` (lo va a usar C-08 para otros mensajes y `intervals.py` ya tiene el formateo de hora local); `dd/mm` sin año.
 
@@ -182,3 +182,20 @@ No aplica: no hay datos ni API. Rollback: revertir los cambios de `app/domain`, 
 ## Open Questions
 
 Ninguna que cambie el alcance.
+
+## Desvíos durante el apply
+
+- **Tareas 1.1 a 3.4 (2026-10-28).** Sin desvíos de comportamiento respecto de la spec y el diseño. Desvíos de proceso:
+- **Tarea 2.2 (GREEN en dos pasos).** El RED de 2.1 fue un error de colección por los códigos (`AttributeError`), que tapaba el rojo del campo. Se agregaron primero solo los dos códigos, se vieron en rojo los 3 tests de `conflicting_block_id` (`TypeError`/`AttributeError`) y después se agregó el campo.
+- **Tarea 3.1 (estilo del test).** `test_model.py` ya usa `timezone(timedelta(hours=-3))` como "Buenos Aires" para los instantes `-03:00`; los tests de `Block` siguen esa convención del archivo, que coincide con el literal `2026-10-20T10:00:00-03:00` de la spec. El test de un bloqueo con inicio posterior al fin también pasa un `reason` para cubrir el campo opcional.
+- **Tarea 3.3.** El docstring de `ScheduleContext` ya no anuncia los bloqueos como trabajo futuro: solo queda `now` (C-07).
+- **Punto de control 3.5 (aprobado por la autora el 2026-10-28, con un ajuste).** Un motivo con solo espacios (`"   "`) también cuenta como vacío: se actualizó D8, el requisito "Mensaje de un turno bloqueado" y se agregó el escenario "Mensaje de un bloqueo con motivo vacío o en blanco" (su test va en rojo primero, tarea 6.4).
+- **Tareas 4.1 a 8.4 (2026-10-28).** Sin cambios de comportamiento respecto de la spec y el diseño, salvo el hallazgo de 8.3. Desvíos de proceso:
+- **Tareas 4.3, 5.3 a 5.5, 7.1, 7.2 y 8.3 (pasaron de entrada).** La implementación mínima de cada GREEN ya cubría esos casos. Se comprobó que pueden fallar con mutaciones temporales (`>` en vez de `>=`, grilla de 2 minutos, `<=` en `_overlaps`, sin filtro de profesional o de estado, comparación por fecha UTC, orden invertido, `check_blocks` al final del grupo 2 o en el grupo 1, `Interval` en vez de `_overlaps`) y se restauró el código. El detalle está en cada tarea.
+- **Tarea 5.2.** El GREEN mínimo ya incluye el filtro por profesional, como pedía la tarea; 5.4 lo verifica con una mutación.
+- **Tarea 5.7 (refactor extra).** El filtro y el orden de `check_blocks` pasaron a un helper privado `_overlapping_blocks`; no cambia la firma pública de D7.
+- **Tarea 6.1 (caso extra).** Además de los dos instantes pedidos, `2026-10-21T02:30:00+00:00` → `"20/10/2026 23:30"`: el día local es anterior al de UTC.
+- **Tareas 6.3 y 6.4 (GREEN en tres pasos).** Primero el mensaje sin motivo; después el motivo con `if block.reason`, para ver en rojo el caso `"   "` (`... (hora local). Motivo:    .`); al final, el `strip`. Los casos `""` y `"   "` pasaban en el primer paso porque todavía no se mostraba ningún motivo.
+- **Tarea 6.5.** El mensaje se arma en el helper privado `_blocked_message`. El motivo que se muestra va tal como se cargó (D8).
+- **Tarea 7.1.** Los turnos existentes se pasan como `[F, E]` para que el orden de las violaciones no salga del orden de la lista.
+- **Tarea 8.3 (hallazgo del apply que volvió a la spec).** D7 dice que un bloqueo con `inicio >= fin` nunca se solapa: `check_blocks` lo ignora y `appointments_affected_by_block` devuelve vacío, sin excepción. La spec no lo cubría. Se agregaron los escenarios "Bloqueo inválido recibido con la agenda" (requisito "Turno fuera de los bloqueos del profesional") y "Turnos afectados por un bloqueo inválido" (requisito "Turnos afectados por un bloqueo"), con sus tests. Los dos pasaron de entrada; con `Interval` en vez de `_overlaps` (mutación temporal, restaurada) los dos lanzan `ValueError`.

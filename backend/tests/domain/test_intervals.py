@@ -3,7 +3,13 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from app.domain.intervals import Interval, format_local_time, local_day_and_minutes, overlaps
+from app.domain.intervals import (
+    Interval,
+    format_local_date_time,
+    format_local_time,
+    local_day_and_minutes,
+    overlaps,
+)
 
 BUENOS_AIRES = ZoneInfo("America/Argentina/Buenos_Aires")
 
@@ -130,3 +136,32 @@ def test_format_local_time_with_seconds_or_microseconds_returns_hh_mm_ss(
 def test_format_local_time_naive_instant_raises_value_error() -> None:
     with pytest.raises(ValueError):
         format_local_time(datetime(2026, 10, 20, 13, 0), BUENOS_AIRES)
+
+
+@pytest.mark.parametrize(
+    ("instant", "expected"),
+    [
+        pytest.param(
+            datetime(2026, 10, 20, 13, 0, tzinfo=timezone.utc), "20/10/2026 10:00", id="mismo-dia"
+        ),
+        pytest.param(
+            datetime(2026, 10, 26, 3, 0, tzinfo=timezone.utc),
+            "26/10/2026 00:00",
+            id="medianoche-local",
+        ),
+        pytest.param(
+            datetime(2026, 10, 21, 2, 30, tzinfo=timezone.utc),
+            "20/10/2026 23:30",
+            id="dia-local-anterior-al-utc",
+        ),
+    ],
+)
+def test_format_local_date_time_returns_local_day_month_year_and_time(
+    instant: datetime, expected: str
+) -> None:
+    assert format_local_date_time(instant, BUENOS_AIRES) == expected
+
+
+def test_format_local_date_time_naive_instant_raises_value_error() -> None:
+    with pytest.raises(ValueError):
+        format_local_date_time(datetime(2026, 10, 20, 13, 0), BUENOS_AIRES)

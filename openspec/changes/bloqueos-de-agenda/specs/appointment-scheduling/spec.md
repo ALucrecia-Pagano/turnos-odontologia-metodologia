@@ -164,8 +164,13 @@ El turno MUST NOT superponerse con ningún bloqueo del profesional del pedido (R
 - **WHEN** se pide el mismo turno
 - **THEN** las violaciones se devuelven en el mismo orden: BL1 y después BL2
 
+#### Scenario: Bloqueo inválido recibido con la agenda
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin, que llega por error junto con la agenda
+- **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** el resultado es `Ok`, sin excepción: un bloqueo con inicio igual o posterior al fin no se superpone con ningún turno
+
 ### Requirement: Mensaje de un turno bloqueado
-El mensaje de `BLOCKED_TIME` MUST decir, en hora local, el inicio y el fin del turno, el id del bloqueo, su inicio y su fin con fecha (`dd/mm/aaaa HH:MM`, porque puede durar varios días) y, si tiene, el motivo: "El turno de {inicio} a {fin} (hora local) se superpone con el bloqueo {id} del profesional, del {inicio del bloqueo} al {fin del bloqueo} (hora local).", seguido, si hay motivo, de la oración aparte " Motivo: {motivo}." Un motivo vacío cuenta como sin motivo. El texto con nombres queda para C-08.
+El mensaje de `BLOCKED_TIME` MUST decir, en hora local, el inicio y el fin del turno, el id del bloqueo, su inicio y su fin con fecha (`dd/mm/aaaa HH:MM`, porque puede durar varios días) y, si tiene, el motivo: "El turno de {inicio} a {fin} (hora local) se superpone con el bloqueo {id} del profesional, del {inicio del bloqueo} al {fin del bloqueo} (hora local).", seguido, si hay motivo, de la oración aparte " Motivo: {motivo}." Un motivo vacío o con solo espacios cuenta como sin motivo. El texto con nombres queda para C-08.
 
 #### Scenario: Mensaje de un bloqueo sin motivo
 - **GIVEN** el bloqueo BL1, sin motivo
@@ -178,6 +183,11 @@ El mensaje de `BLOCKED_TIME` MUST decir, en hora local, el inicio y el fin del t
 - **WHEN** se pide un turno el domingo 2026-10-25 de 23:30 a 23:55 hora local (de 02:30 a 02:55 UTC del 2026-10-26), con duración explícita de 25 minutos
 - **THEN** el mensaje de la violación `BLOCKED_TIME` es exactamente "El turno de 23:30 a 23:55 (hora local) se superpone con el bloqueo {id de BLV} del profesional, del 19/10/2026 00:00 al 26/10/2026 00:00 (hora local). Motivo: vacaciones."
 - **AND** el mensaje no contiene las horas en UTC (`02:30`, `03:00`)
+
+#### Scenario: Mensaje de un bloqueo con motivo vacío o en blanco
+- **GIVEN** el bloqueo BL1 con motivo `""` (primer caso) o `"   "`, solo espacios (segundo caso)
+- **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
+- **THEN** en ambos casos el mensaje de la violación `BLOCKED_TIME` es exactamente el mismo que el de un bloqueo sin motivo, terminado en "(hora local).", sin "Motivo:"
 
 ### Requirement: Validez de un bloqueo
 El dominio SHALL ofrecer la validación de un bloqueo que carga el usuario (RN-DI-03; US-011 CA-1 y CA-2). Si `inicio >= fin`, SHALL devolver una violación `INVALID_BLOCK` con un mensaje en español que diga que el inicio debe ser anterior al fin, sin id de turno ni de bloqueo en conflicto. Un bloqueo así se puede construir: el rechazo es una violación, no una excepción. No se exige la grilla de 5 minutos ni se prohíbe que dos bloqueos se pisen.
@@ -233,3 +243,8 @@ Turnos de los escenarios de este requisito, todos del 2026-10-20: T1 de P1 de 09
 - **GIVEN** el bloqueo BL1 y solo los turnos T1, T6 y T7
 - **WHEN** se piden los turnos afectados por BL1
 - **THEN** el resultado está vacío
+
+#### Scenario: Turnos afectados por un bloqueo inválido
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin, y los turnos T1 a T7
+- **WHEN** se piden los turnos afectados por ese bloqueo
+- **THEN** el resultado está vacío, sin excepción

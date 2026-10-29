@@ -10,6 +10,7 @@ from app.domain.model import (
     Appointment,
     AppointmentReferences,
     AppointmentStatus,
+    Block,
     Chair,
     NewAppointmentRequest,
     Patient,
@@ -32,15 +33,21 @@ APPT_A = UUID("00000000-0000-0000-0000-0000000000a1")
 APPT_B = UUID("00000000-0000-0000-0000-0000000000a2")
 APPT_C = UUID("00000000-0000-0000-0000-0000000000a3")
 APPT_D = UUID("00000000-0000-0000-0000-0000000000a4")
+APPT_E = UUID("00000000-0000-0000-0000-0000000000a5")
+APPT_F = UUID("00000000-0000-0000-0000-0000000000a6")
+BL1 = UUID("00000000-0000-0000-0000-0000000000e1")
+BL2 = UUID("00000000-0000-0000-0000-0000000000e2")
+BL3 = UUID("00000000-0000-0000-0000-0000000000e3")
+BLV = UUID("00000000-0000-0000-0000-0000000000e4")
 
 BUENOS_AIRES = ZoneInfo("America/Argentina/Buenos_Aires")
 FULL_WEEK = tuple(WorkingHours(p, d, 0, 1440) for p in (P1, P2) for d in range(1, 8))
-CTX = ScheduleContext(tz=BUENOS_AIRES, working_hours=FULL_WEEK)
+CTX = ScheduleContext(tz=BUENOS_AIRES, working_hours=FULL_WEEK, blocks=())
 TUESDAY_BASE = (WorkingHours(P1, 2, 540, 780), WorkingHours(P1, 2, 900, 1140))
 
 
 def _ctx(*slots: WorkingHours) -> ScheduleContext:
-    return ScheduleContext(tz=BUENOS_AIRES, working_hours=slots)
+    return ScheduleContext(tz=BUENOS_AIRES, working_hours=slots, blocks=())
 
 
 def _at(hour: int, minute: int = 0) -> datetime:
@@ -1197,3 +1204,231 @@ def test_validate_new_appointment_off_grid_start_on_a_day_without_slots_reports_
     )
 
     assert _summary(result) == [(ViolationCode.INVALID_START_TIME, None)]
+
+
+# --- Bloqueos (C-06) ---
+
+
+def _block(
+    id: UUID,
+    start_at: datetime,
+    end_at: datetime,
+    *,
+    professional_id: UUID = P1,
+    reason: str | None = None,
+) -> Block:
+    return Block(
+        id=id, professional_id=professional_id, start_at=start_at, end_at=end_at, reason=reason
+    )
+
+
+def _bl1(reason: str | None = None) -> Block:
+    # P1, martes 2026-10-20 de 10:00 a 12:00 hora local = 13:00 a 15:00 UTC
+    return _block(BL1, _local(20, 10, 0), _local(20, 12, 0), reason=reason)
+
+
+def _ctx_blocks(
+    *blocks: Block, working_hours: tuple[WorkingHours, ...] = FULL_WEEK
+) -> ScheduleContext:
+    return ScheduleContext(tz=BUENOS_AIRES, working_hours=working_hours, blocks=blocks)
+
+
+def _block_summary(result: object) -> list[tuple[ViolationCode, UUID | None]]:
+    assert isinstance(result, Rejected)
+    return [(v.code, v.conflicting_block_id) for v in result.violations]
+
+
+def test_validate_new_appointment_inside_a_block_reports_blocked_time_with_block_id() -> None:
+    # 10:30 a 11:00 hora local = 13:30 a 14:00 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30), _refs(), [], _ctx_blocks(_bl1())
+    )
+
+    assert _block_summary(result) == [(ViolationCode.BLOCKED_TIME, BL1)]
+
+
+@pytest.mark.parametrize(
+    ("start_local", "expected"),
+    [
+        # 09:30 a 10:00 hora local = 12:30 a 13:00 UTC: termina cuando empieza BL1
+        (_local(20, 9, 30), []),
+        # 12:00 a 12:30 hora local = 15:00 a 15:30 UTC: empieza cuando termina BL1
+        (_local(20, 12, 0), []),
+        # 09:45 a 10:15 hora local = 12:45 a 13:15 UTC: pisa el inicio de BL1
+        (_local(20, 9, 45), [(ViolationCode.BLOCKED_TIME, BL1)]),
+        # 11:45 a 12:15 hora local = 14:45 a 15:15 UTC: pisa el fin de BL1
+        (_local(20, 11, 45), [(ViolationCode.BLOCKED_TIME, BL1)]),
+    ],
+    ids=["termina-al-inicio", "empieza-al-fin", "pisa-el-inicio", "pisa-el-fin"],
+)
+def test_validate_new_appointment_block_edges_are_half_open(
+    start_local: datetime, expected: list[tuple[ViolationCode, UUID | None]]
+) -> None:
+    result = validate_new_appointment(
+        _request(start_local, duration_min=30), _refs(), [], _ctx_blocks(_bl1())
+    )
+
+    if expected:
+        assert _block_summary(result) == expected
+    else:
+        assert isinstance(result, Ok)
+
+
+def test_validate_new_appointment_block_of_another_professional_does_not_count() -> None:
+    # Bloqueo de P2 de 10:00 a 12:00 hora local = 13:00 a 15:00 UTC; pedido de P1 de 10:30 a 11:00
+    p2_block = _block(BL1, _local(20, 10, 0), _local(20, 12, 0), professional_id=P2)
+
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30), _refs(), [], _ctx_blocks(p2_block)
+    )
+
+    assert isinstance(result, Ok)
+
+
+def _blv(reason: str | None = "vacaciones") -> Block:
+    # Lunes 2026-10-19 00:00 a lunes 2026-10-26 00:00 hora local = 03:00 UTC del 19 a 03:00 UTC del 26
+    return _block(BLV, _local(19, 0, 0), _local(26, 0, 0), reason=reason)
+
+
+@pytest.mark.parametrize(
+    ("start_utc", "duration_min", "expected"),
+    [
+        # martes 20 de 10:00 a 10:30 hora local
+        (datetime(2026, 10, 20, 13, 0, tzinfo=timezone.utc), 30, [(ViolationCode.BLOCKED_TIME, BLV)]),
+        # domingo 25 de 23:30 a 23:55 hora local: en UTC ya es el 26, pero antes de las 03:00
+        (datetime(2026, 10, 26, 2, 30, tzinfo=timezone.utc), 25, [(ViolationCode.BLOCKED_TIME, BLV)]),
+        # lunes 26 de 00:00 a 00:30 hora local: empieza cuando termina BLV
+        (datetime(2026, 10, 26, 3, 0, tzinfo=timezone.utc), 30, []),
+        # domingo 18 de 23:30 a 00:00 hora local: termina cuando empieza BLV
+        (datetime(2026, 10, 19, 2, 30, tzinfo=timezone.utc), 30, []),
+    ],
+    ids=["martes-dentro", "ultimo-turno-del-domingo-local", "empieza-al-fin", "termina-al-inicio"],
+)
+def test_validate_new_appointment_multi_day_block_compares_instants(
+    start_utc: datetime, duration_min: int, expected: list[tuple[ViolationCode, UUID | None]]
+) -> None:
+    result = validate_new_appointment(
+        _request(start_utc, duration_min=duration_min), _refs(), [], _ctx_blocks(_blv())
+    )
+
+    if expected:
+        assert _block_summary(result) == expected
+    else:
+        assert isinstance(result, Ok)
+
+
+def _bl2() -> Block:
+    # P1, martes 2026-10-20 de 11:00 a 13:00 hora local = 14:00 a 16:00 UTC
+    return _block(BL2, _local(20, 11, 0), _local(20, 13, 0))
+
+
+@pytest.mark.parametrize(
+    "blocks",
+    [(_bl1(), _bl2()), (_bl2(), _bl1())],
+    ids=["en-orden", "invertidos"],
+)
+def test_validate_new_appointment_overlapping_two_blocks_reports_both_in_start_order(
+    blocks: tuple[Block, ...],
+) -> None:
+    # 11:30 a 12:30 hora local = 14:30 a 15:30 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 11, 30), duration_min=60), _refs(), [], _ctx_blocks(*blocks)
+    )
+
+    assert _block_summary(result) == [
+        (ViolationCode.BLOCKED_TIME, BL1),
+        (ViolationCode.BLOCKED_TIME, BL2),
+    ]
+
+
+def test_validate_new_appointment_blocked_time_message_without_reason() -> None:
+    # 10:30 a 11:00 hora local = 13:30 a 14:00 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30), _refs(), [], _ctx_blocks(_bl1())
+    )
+
+    violation = _only_violation_of(result)
+    assert violation.message == (
+        f"El turno de 10:30 a 11:00 (hora local) se superpone con el bloqueo {BL1} del "
+        "profesional, del 20/10/2026 10:00 al 20/10/2026 12:00 (hora local)."
+    )
+    assert violation.conflicting_appointment_id is None
+    assert violation.reference_kind is None
+
+
+def test_validate_new_appointment_blocked_time_message_multi_day_block_with_reason() -> None:
+    # Domingo 25 de 23:30 a 23:55 hora local = 02:30 a 02:55 UTC del 2026-10-26
+    result = validate_new_appointment(
+        _request(_local(25, 23, 30), duration_min=25), _refs(), [], _ctx_blocks(_blv())
+    )
+
+    message = _only_violation_of(result).message
+    assert message == (
+        f"El turno de 23:30 a 23:55 (hora local) se superpone con el bloqueo {BLV} del "
+        "profesional, del 19/10/2026 00:00 al 26/10/2026 00:00 (hora local). Motivo: vacaciones."
+    )
+    assert "02:30" not in message
+    assert "03:00" not in message
+
+
+@pytest.mark.parametrize("reason", ["", "   "], ids=["vacio", "solo-espacios"])
+def test_validate_new_appointment_blocked_time_message_blank_reason_counts_as_none(
+    reason: str,
+) -> None:
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30), _refs(), [], _ctx_blocks(_bl1(reason))
+    )
+
+    assert _only_violation_of(result).message == (
+        f"El turno de 10:30 a 11:00 (hora local) se superpone con el bloqueo {BL1} del "
+        "profesional, del 20/10/2026 10:00 al 20/10/2026 12:00 (hora local)."
+    )
+
+
+def test_validate_new_appointment_outside_hours_blocked_and_overlapping_reports_all_in_order() -> (
+    None
+):
+    # BL3: P1 de 12:00 a 14:00 hora local = 15:00 a 17:00 UTC
+    bl3 = _block(BL3, _local(20, 12, 0), _local(20, 14, 0))
+    # E: P1/S2 de 12:30 a 13:00 hora local = 15:30 a 16:00 UTC
+    existing_e = _existing(APPT_E, P1, S2, _local(20, 12, 30), _local(20, 13, 0))
+    # F: P2/S1 de 12:45 a 13:15 hora local = 15:45 a 16:15 UTC
+    existing_f = _existing(APPT_F, P2, S1, _local(20, 12, 45), _local(20, 13, 15))
+
+    # Pedido P1/S1 de 12:30 a 13:30 hora local = 15:30 a 16:30 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60),
+        _refs(),
+        [existing_f, existing_e],
+        _ctx_blocks(bl3, working_hours=TUESDAY_BASE),
+    )
+
+    assert isinstance(result, Rejected)
+    assert [
+        (v.code, v.conflicting_block_id, v.conflicting_appointment_id) for v in result.violations
+    ] == [
+        (ViolationCode.OUTSIDE_WORKING_HOURS, None, None),
+        (ViolationCode.BLOCKED_TIME, BL3, None),
+        (ViolationCode.PROFESSIONAL_OVERLAP, None, APPT_E),
+        (ViolationCode.CHAIR_OVERLAP, None, APPT_F),
+    ]
+
+
+def test_validate_new_appointment_invalid_duration_inside_a_block_reports_only_duration() -> None:
+    # 10:30 hora local = 13:30 UTC, dentro de BL1, con duración explícita de 0 minutos
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=0), _refs(), [], _ctx_blocks(_bl1())
+    )
+
+    assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
+
+
+def test_validate_new_appointment_invalid_block_in_context_is_ignored_without_raising() -> None:
+    # Bloqueo de P1 de 12:00 a 10:00 hora local (inicio posterior al fin); turno de 10:30 a 11:00
+    invalid = _block(BL1, _local(20, 12, 0), _local(20, 10, 0))
+
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30), _refs(), [], _ctx_blocks(invalid)
+    )
+
+    assert isinstance(result, Ok)

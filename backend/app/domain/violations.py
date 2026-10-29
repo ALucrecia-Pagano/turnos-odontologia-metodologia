@@ -25,6 +25,8 @@ class ViolationCode(Enum):
     OUTSIDE_WORKING_HOURS = "OUTSIDE_WORKING_HOURS"
     INVALID_WORKING_HOURS = "INVALID_WORKING_HOURS"
     OVERLAPPING_WORKING_HOURS = "OVERLAPPING_WORKING_HOURS"
+    BLOCKED_TIME = "BLOCKED_TIME"
+    INVALID_BLOCK = "INVALID_BLOCK"
 
 
 class ReferenceKind(Enum):
@@ -49,12 +51,15 @@ class Violation:
         conflicting_appointment_id: Id del turno en conflicto, si corresponde.
         reference_kind: Tipo de referencia que fallo, solo en las violaciones de
             referencias (`UNKNOWN_REFERENCE` / `INACTIVE_REFERENCE`); `None` en el resto.
+        conflicting_block_id: Id del bloqueo en conflicto, solo en `BLOCKED_TIME`; `None`
+            en el resto. Va al final para no cambiar las construcciones existentes.
     """
 
     code: ViolationCode
     message: str
     conflicting_appointment_id: UUID | None = None
     reference_kind: ReferenceKind | None = None
+    conflicting_block_id: UUID | None = None
 
 
 @dataclass(frozen=True, slots=True)
