@@ -14,7 +14,7 @@
 4. Carga el **contexto** con los repositorios SQLAlchemy: profesional, sillón, prestación, paciente, tramos laborales del profesional, bloqueos del día, turnos activos del profesional y del sillón que puedan solaparse, y `now` (UTC).
 5. Llama a `validate_new_appointment(input, context)` del dominio (Python puro).
 6. Si el resultado es `ok`: inserta el turno en `reservado` y la entrada de historial (`from_status` nulo) en la misma transacción; `COMMIT`; responde `201` con el turno.
-7. Si hay violaciones: `ROLLBACK`; responde `409` (conflicto de agenda: horario de atención y solapamientos) o `422` (validez del pedido) con la lista de violaciones.
+7. Si hay violaciones: `ROLLBACK`; responde `409` (conflicto de agenda: horario de atención y solapamientos) o `422` (validez del pedido, incluido el turno en el pasado, `IN_THE_PAST`: explore de C-07) con la lista de violaciones.
 
 ```
 Recepción → UI → API ──(contexto)──► PostgreSQL
@@ -45,6 +45,7 @@ Recepción → UI → API ──(contexto)──► PostgreSQL
 - Entrada malformada → `400`.
 - Rol sin permiso → `403`; sin JWT, o JWT inválido o vencido → `401`.
 - Referencia inexistente → `422 UNKNOWN_REFERENCE`.
+- Inicio anterior a `now` → `422 IN_THE_PAST` (validez del pedido, no conflicto de agenda; explore de C-07).
 - Carrera entre dos altas simultáneas para el mismo profesional o sillón → la segunda espera el bloqueo de fila, se valida tras el `COMMIT` de la primera y recibe el conflicto.
 
 ## Flujo 2: Reprogramar un turno
