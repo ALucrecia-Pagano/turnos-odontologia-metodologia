@@ -282,11 +282,12 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/04_modelo_de_datos.md` §Block
 
 ### [C-07] `no-turnos-en-el-pasado`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-10-29)
 - **Scope**:
   - Reloj inyectado `now: datetime` (UTC) en el contexto del dominio; ninguna regla llama a `datetime.now()` (RN-GL-04, US-005 CA-4).
   - `rules/past.py`: inicio < `now` → `IN_THE_PAST`; inicio == `now` y > `now` válidos (RN-AG-06; US-005 CA-1 a CA-3).
   - Tests: los tres casos de borde con relojes fijos; un test que verifica (con `ast`) que ningún módulo de `app/domain` llama a `datetime.now`, `datetime.utcnow` ni `time.time`.
+  - Nota (apply de C-07): `time.time` no lo detecta el recorrido de `ast` de la guardia del reloj sino la guardia de imports de C-01, porque `time` no está en la lista de módulos permitidos del dominio. Escenario "Reloj del módulo time" del requisito "Sin reloj global en el dominio" (spec `domain-dependency-guard`).
   - Idea (del explore de C-01): implementar esa detección de reloj global extendiendo el helper `ast` de la guardia de dependencias de C-01 (`tests/domain/import_guard.py`), en vez de un recorrido nuevo; C-01 no la incluye a propósito.
 - **Dependencias**: `C-02`
 - **Governance**: MEDIO
@@ -300,7 +301,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Scope**: diferenciador del MVP (D.3).
   - `violations.py`: todas las violaciones llevan `code`, `message` en español, `conflicting_appointment_id` / `conflicting_block_id` y el intervalo que choca (US-006 CA-1).
   - El mensaje incluye el nombre del profesional o sillón y el rango en hora local (US-006 CA-3), usando las funciones de hora local de C-04.
-  - `validate_new_appointment` compone todas las reglas (C-02, C-03, C-04, C-05, C-06, C-07) y devuelve **todas** las violaciones en el orden de RN-AG-12: referencias, duración, medianoche, pasado, horario, bloqueos, profesional, sillón (US-006 CA-2).
+  - `validate_new_appointment` compone todas las reglas (C-02, C-03, C-04, C-05, C-06, C-07) y devuelve **todas** las violaciones en el orden de RN-AG-12: referencias → duración → inicio en la grilla → medianoche → pasado, y después horario → bloqueo → profesional → sillón (US-006 CA-2).
   - Tests: casos con varias violaciones a la vez, orden estable, texto exacto de cada mensaje.
 - **Dependencias**: `C-03, C-05, C-06, C-07`
 - **Governance**: MEDIO

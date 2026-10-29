@@ -121,7 +121,7 @@ Tests extra (no son escenarios): en `test_violations.py`, `IN_THE_PAST` en la ta
 
 ## Desvíos durante el apply
 
-Los cuatro primeros están en la sección "Desvíos del apply" de [design.md](../../openspec/changes/no-turnos-en-el-pasado/design.md) (anotados en el punto de control 5.3); del 5 en adelante son de los grupos 6 a 8.
+Los cuatro primeros están en la sección "Desvíos del apply" de [design.md](../../openspec/changes/archive/2026-10-29-no-turnos-en-el-pasado/design.md) (anotados en el punto de control 5.3); del 5 en adelante son de los grupos 6 a 8.
 
 1. **Tarea 4.2 (guardia del reloj) no fue el paso mínimo.** Se implementó de una vez la resolución completa de nombres, sin un paso "Fake It"; varios casos de 4.3 pasaron de entrada. Se compensó con tres mutaciones temporales (sin resolver alias, solo `ast.Call`, filtrar solo por el atributo). La mutación de solo `ast.Call` no quedó limpia: fallaron casi todos los tests por el texto de la expresión, aunque el caso clave falló como se esperaba (`[] == ['datetime.now']`).
 2. **Tarea 3.1: el rojo fue un `TypeError`**, no el `ValueError` del `now` naive, porque `ScheduleContext` todavía no aceptaba `now`. La causa era la correcta; el `ValueError` se vio recién en verde.

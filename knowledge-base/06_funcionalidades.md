@@ -92,10 +92,10 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 **Quiero** que el sistema rechace turnos con fecha/hora pasada
 **Para** evitar errores de carga
 
-- [ ] CA-1: inicio < `now` → `IN_THE_PAST`.
-- [ ] CA-2: inicio == `now` → válido.
-- [ ] CA-3: inicio > `now` → válido.
-- [ ] CA-4: el reloj se inyecta; el dominio no llama a `datetime.now()`.
+- [x] CA-1: inicio < `now` → `IN_THE_PAST`.
+- [x] CA-2: inicio == `now` → válido.
+- [x] CA-3: inicio > `now` → válido.
+- [x] CA-4: el reloj se inyecta; el dominio no llama a `datetime.now()`.
 
 **Reglas**: RN-AG-06, RN-GL-04
 

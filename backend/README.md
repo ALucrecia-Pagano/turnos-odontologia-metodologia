@@ -115,3 +115,8 @@ importa algo fuera de la lista permitida (`DOMAIN_ALLOWED_MODULES` en
 `tests/domain/import_guard.py`: biblioteca estándar acotada, `tzdata` y el propio
 `app.domain`). Para ampliar la lista, agregar la entrada a esa constante en el
 change que la necesita, justificándola en su `design.md`.
+
+La guardia del reloj (`tests/domain/test_clock_guard.py`, con `ast`) falla si algún
+módulo de `app/domain` lee el reloj del sistema (`datetime.now`, `utcnow`, `today` de
+`datetime` o `date`, con alias o por el módulo `datetime`): el momento actual se
+inyecta como `now`. Solo detecta nombres estáticos; `time` lo cubre la guardia de imports.

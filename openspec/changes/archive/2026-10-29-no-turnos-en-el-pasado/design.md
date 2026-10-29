@@ -174,6 +174,12 @@ Anotados a pedido de la autora en el punto de control 5.3 (2026-10-29):
 - **Grupo 7 reordenado.** A pedido de la autora, los escenarios de `validate_new_appointment` que rechazan por el pasado (casos 4, 6 y 8), los del orden y el corte del grupo 1 (casos 9 a 14) y los tres de mensaje se escriben en rojo (tarea 7.1) antes de cablear la regla (7.2). Los casos válidos (2, 3, 5 y 7) quedan como triangulación con una mutación, porque ya daban `Ok` antes del cableado.
 - **Escenario nuevo en `domain-dependency-guard`.** Los dos tests del orden de los accesos (D11) no tenían escenario; se agregó "Varios accesos en orden de línea".
 
+Grupos 6 a 8 (resumen; detalle en [docs/evidencias/verify-C-07.md](../../../../docs/evidencias/verify-C-07.md), enlace relativo a la carpeta archivada del change):
+
+- **6.2 y 7.3 sin rojo observado.** Los casos de `test_past.py` (6.2) pasaron de entrada porque 6.1 ya comparaba con `<`, y los casos válidos de `validate_new_appointment` (7.3) ya daban `Ok` antes del cableado. Se cubrieron con mutaciones temporales: `<=` en vez de `<` y `now` truncado al minuto en 6.2, y `<=` en 7.3.
+- **El rojo de 7.1 se vio en `isinstance`, no en el mensaje.** En los casos 4, 6 y 8 y en los tres de mensaje, el test falló en `isinstance(result, Rejected)` porque devolvía `Ok`: la causa era la correcta, pero el texto del mensaje recién se comprobó en verde. Los casos 9 a 14 sí fallaron comparando la lista de códigos.
+- **Mutaciones que rompieron más tests de los previstos.** La regla al principio del grupo 2 hizo fallar los casos 9 a 14 (no solo 13 y 14); pasar `context.tz` como UTC rompió los tres mensajes (no solo el de la fecha local); y `<=` rompió también un test de `test_past.py`. Todas se restauraron y la suite volvió a verde.
+
 ## Decisiones confirmadas por la autora
 
 **Fecha: 2026-10-29.** D1 a D5 en el explore (`docs/evidencias/explore-C-07.md`), incluidos los límites de la guardia de D4. Los nombres de D6 (`rules/past.py`, `check_not_in_the_past`, `IN_THE_PAST`) se propusieron en el explore y la autora no los objetó. D7 a D11 surgieron en el propose y la autora los aprobó tal como están el 2026-10-29, antes del apply. En el caso 6 el mensaje queda como está ("10:00" contra "10:00:00"): es una **limitación conocida** que el verify tiene que anotar (ver Risks / Trade-offs).
