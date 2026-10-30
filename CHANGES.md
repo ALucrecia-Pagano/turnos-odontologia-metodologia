@@ -301,7 +301,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Scope**: diferenciador del MVP (D.3).
   - `violations.py`: todas las violaciones llevan `code`, `message` en español, `conflicting_appointment_id` / `conflicting_block_id` y el intervalo que choca (US-006 CA-1).
   - El mensaje incluye el nombre del profesional o sillón y el rango en hora local (US-006 CA-3), usando las funciones de hora local de C-04.
-  - `validate_new_appointment` compone todas las reglas (C-02, C-03, C-04, C-05, C-06, C-07) y devuelve **todas** las violaciones en el orden de RN-AG-12: referencias → duración → inicio en la grilla → medianoche → pasado, y después horario → bloqueo → profesional → sillón (US-006 CA-2).
+  - `validate_new_appointment` compone todas las reglas (C-02, C-03, C-04, C-05, C-06, C-07) y devuelve **todas** las violaciones en el orden de RN-AG-12: referencias → duración → inicio en la grilla → medianoche → pasado, y después horario → bloqueo → profesional → sillón (US-006 CA-2). "Todas" es dentro del primer grupo que falla: con un pedido inválido no se evalúan los conflictos de agenda (explore de C-08).
   - Tests: casos con varias violaciones a la vez, orden estable, texto exacto de cada mensaje.
 - **Dependencias**: `C-03, C-05, C-06, C-07`
 - **Governance**: MEDIO
