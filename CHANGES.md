@@ -313,7 +313,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/07_flujos_principales.md` §Flujo 1
 
 ### [C-09] `catalogo-y-pacientes-dominio`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-01)
 - **Scope**:
   - Modelos y validaciones puras: `Professional`, `Chair`, `Service` (nombre único, duración válida según RN-AG-09, desactivar no afecta turnos existentes), `Patient` (nombre, DNI, teléfono, obra social como texto; sin campos clínicos).
   - Alta y desactivación de profesionales y sillones (US-021 CA-1 y CA-2); prestaciones con duración (US-020 CA-1 a CA-3); paciente con DNI único y sin campos clínicos (US-022 CA-1 y CA-2).

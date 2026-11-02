@@ -1,6 +1,6 @@
 # Verify de C-09 catalogo-y-pacientes-dominio
 
-OPSX no tiene un comando propio de verify. Verificación manual con el formato de C-08. Artefactos: [design.md](../../openspec/changes/catalogo-y-pacientes-dominio/design.md) y [tasks.md](../../openspec/changes/catalogo-y-pacientes-dominio/tasks.md).
+OPSX no tiene un comando propio de verify. Verificación manual con el formato de C-08. Artefactos: [design.md](../../openspec/changes/archive/2026-11-01-catalogo-y-pacientes-dominio/design.md) y [tasks.md](../../openspec/changes/archive/2026-11-01-catalogo-y-pacientes-dominio/tasks.md).
 
 ## Cómo se verificó
 
