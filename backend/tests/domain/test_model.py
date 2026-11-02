@@ -236,3 +236,43 @@ def test_professional_and_chair_with_empty_or_blank_name_keep_it_unstripped(name
     assert chair.name == name
     assert professional.active is False
     assert chair.active is False
+
+
+def test_service_name_duration_and_default_active() -> None:
+    from app.domain.model import Service
+
+    service = Service(SVC, "Limpieza", 45)
+    assert (service.id, service.name, service.default_duration_min, service.active) == (
+        SVC, "Limpieza", 45, True
+    )
+
+
+def test_patient_has_exactly_five_nonclinical_fields() -> None:
+    from dataclasses import fields
+    from app.domain.model import Patient
+
+    assert [field.name for field in fields(Patient)] == [
+        "id", "full_name", "dni", "phone", "health_insurance"
+    ]
+
+
+def test_patient_optional_fields_default_to_none() -> None:
+    from app.domain.model import Patient
+
+    patient = Patient(PATIENT, "Ana Pérez", "30111222")
+    assert (patient.phone, patient.health_insurance) == (None, None)
+
+
+def test_catalog_models_accept_invalid_business_data_without_raising() -> None:
+    from app.domain.model import Patient, Service
+
+    service = Service(SVC, "", 0)
+    patient = Patient(PATIENT, "", "30-111-222")
+    assert (service.name, service.default_duration_min) == ("", 0)
+    assert (patient.full_name, patient.dni) == ("", "30-111-222")
+
+
+def test_professional_fields_exclude_license_number() -> None:
+    from dataclasses import fields
+
+    assert [field.name for field in fields(Professional)] == ["id", "full_name", "active"]

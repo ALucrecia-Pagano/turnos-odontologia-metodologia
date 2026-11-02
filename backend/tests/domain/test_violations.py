@@ -154,3 +154,19 @@ def test_violation_conflicting_interval_defaults_to_none_and_keeps_given_value(
         violation = Violation(ViolationCode.CHAIR_OVERLAP, "choca", conflicting_interval=given)
 
     assert violation.conflicting_interval == expected
+
+
+def test_catalog_code_empty_name_is_stable() -> None:
+    assert ViolationCode.EMPTY_NAME.value == "EMPTY_NAME"
+
+
+def test_catalog_code_duplicate_name_is_stable() -> None:
+    assert ViolationCode.DUPLICATE_NAME.value == "DUPLICATE_NAME"
+
+
+def test_catalog_code_invalid_dni_is_stable() -> None:
+    assert ViolationCode.INVALID_DNI.value == "INVALID_DNI"
+
+
+def test_catalog_code_duplicate_dni_is_stable() -> None:
+    assert ViolationCode.DUPLICATE_DNI.value == "DUPLICATE_DNI"

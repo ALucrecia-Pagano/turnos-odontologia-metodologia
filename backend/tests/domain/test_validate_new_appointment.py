@@ -90,10 +90,10 @@ def _appt_a() -> Appointment:
 
 def _refs(
     *,
-    patient: Patient | None = Patient(PATIENT),
+    patient: Patient | None = Patient(PATIENT, "Ana Pérez", "30111222"),
     professional: Professional | None = Professional(P1, P1_NAME, active=True),
     chair: Chair | None = Chair(S1, S1_NAME, active=True),
-    service: Service | None = Service(SVC_30, 30),
+    service: Service | None = Service(SVC_30, "Limpieza", 30),
 ) -> AppointmentReferences:
     return AppointmentReferences(
         patient=patient, professional=professional, chair=chair, service=service
@@ -139,7 +139,7 @@ def test_validate_new_appointment_all_references_existing_and_active_returns_ok(
 def test_validate_new_appointment_free_professional_and_chair_returns_ok_with_reserved_appointment() -> (
     None
 ):
-    service = Service(id=SVC_30, default_duration_min=30)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=30)
 
     result = validate_new_appointment(_request(_at(13)), _refs(service=service), [], CTX)
 
@@ -163,7 +163,7 @@ def _ok_end(result: object) -> datetime:
 
 
 def test_validate_new_appointment_explicit_duration_replaces_service_default() -> None:
-    service = Service(id=SVC_30, default_duration_min=45)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=45)
 
     result = validate_new_appointment(_request(_at(13), duration_min=20), _refs(service=service), [], CTX)
 
@@ -181,7 +181,7 @@ def test_validate_new_appointment_explicit_duration_replaces_service_default() -
 def test_validate_new_appointment_effective_duration_sets_end(
     default_min: int, explicit_min: int | None, expected_end: datetime
 ) -> None:
-    service = Service(id=SVC_30, default_duration_min=default_min)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=default_min)
 
     result = validate_new_appointment(
         _request(_at(13), duration_min=explicit_min), _refs(service=service), [], CTX
@@ -191,7 +191,7 @@ def test_validate_new_appointment_effective_duration_sets_end(
 
 
 def test_validate_new_appointment_start_in_buenos_aires_time_returns_utc_appointment() -> None:
-    service = Service(id=SVC_30, default_duration_min=30)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=30)
     start_local = datetime(2026, 10, 20, 10, 0, tzinfo=timezone(timedelta(hours=-3)))
 
     result = validate_new_appointment(_request(start_local), _refs(service=service), [], CTX)
@@ -207,7 +207,7 @@ def _summary(result: object) -> list[tuple[ViolationCode, UUID | None]]:
 
 
 def test_validate_new_appointment_explicit_zero_duration_is_rejected_as_invalid_duration() -> None:
-    service = Service(id=SVC_30, default_duration_min=30)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=30)
 
     result = validate_new_appointment(_request(_at(13), duration_min=0), _refs(service=service), [], CTX)
 
@@ -225,7 +225,7 @@ def test_validate_new_appointment_explicit_zero_duration_is_rejected_as_invalid_
 def test_validate_new_appointment_non_positive_effective_duration_is_rejected(
     default_min: int, explicit_min: int | None
 ) -> None:
-    service = Service(id=SVC_30, default_duration_min=default_min)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=default_min)
 
     result = validate_new_appointment(
         _request(_at(13), duration_min=explicit_min), _refs(service=service), [], CTX
@@ -235,7 +235,7 @@ def test_validate_new_appointment_non_positive_effective_duration_is_rejected(
 
 
 def test_validate_new_appointment_invalid_duration_message_mentions_received_value() -> None:
-    service = Service(id=SVC_30, default_duration_min=30)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=30)
 
     result = validate_new_appointment(
         _request(_at(13), duration_min=-15), _refs(service=service), [], CTX
@@ -249,7 +249,7 @@ def test_validate_new_appointment_invalid_duration_message_mentions_received_val
 
 
 def test_validate_new_appointment_same_professional_overlap_is_rejected_with_conflicting_id() -> None:
-    service = Service(id=SVC_30, default_duration_min=30)
+    service = Service(id=SVC_30, name="Limpieza", default_duration_min=30)
 
     result = validate_new_appointment(
         _request(_at(13, 15), chair_id=S2), _refs(service=service, chair=Chair(S2, OTHER_CHAIR_NAME, active=True)), [_appt_a()], CTX
@@ -270,7 +270,7 @@ def _validate(
         _refs(
             professional=Professional(request.professional_id, P1_NAME, active=True),
             chair=Chair(request.chair_id, S1_NAME, active=True),
-            service=Service(id=SVC_30, default_duration_min=default_min),
+            service=Service(id=SVC_30, name="Limpieza", default_duration_min=default_min),
         ),
         existing, CTX,
     )
@@ -532,12 +532,12 @@ OTHER_ID = UUID("00000000-0000-0000-0000-0000000000e9")
 @pytest.mark.parametrize(
     ("references", "field"),
     [
-        pytest.param(_refs(patient=Patient(OTHER_ID)), "patient", id="paciente"),
+        pytest.param(_refs(patient=Patient(OTHER_ID, "Ana Pérez", "30111222")), "patient", id="paciente"),
         pytest.param(
             _refs(professional=Professional(OTHER_ID, OTHER_PROFESSIONAL_NAME, active=True)), "professional", id="profesional"
         ),
         pytest.param(_refs(chair=Chair(OTHER_ID, OTHER_CHAIR_NAME, active=True)), "chair", id="sillon"),
-        pytest.param(_refs(service=Service(OTHER_ID, 30)), "service", id="prestacion"),
+        pytest.param(_refs(service=Service(OTHER_ID, "Limpieza", 30)), "service", id="prestacion"),
     ],
 )
 def test_validate_new_appointment_reference_with_other_id_raises_value_error_naming_field(
@@ -601,7 +601,7 @@ def test_validate_new_appointment_unknown_service_without_explicit_duration_skip
         ),
         pytest.param(_refs(chair=Chair(S1, S1_NAME, active=False)), ReferenceKind.CHAIR, id="sillon"),
         pytest.param(
-            _refs(service=Service(SVC_30, 30, active=False)), ReferenceKind.SERVICE, id="prestacion"
+            _refs(service=Service(SVC_30, "Limpieza", 30, active=False)), ReferenceKind.SERVICE, id="prestacion"
         ),
     ],
 )
@@ -618,7 +618,7 @@ def test_validate_new_appointment_several_failing_references_are_reported_in_fix
         patient=None,
         professional=Professional(P1, P1_NAME, active=False),
         chair=None,
-        service=Service(SVC_30, 30, active=False),
+        service=Service(SVC_30, "Limpieza", 30, active=False),
     )
 
     result = validate_new_appointment(_request(_at(13), duration_min=30), references, [], CTX)
@@ -698,7 +698,7 @@ def test_validate_new_appointment_valid_duration_boundaries_return_ok(
 ) -> None:
     result = validate_new_appointment(
         _request(start, duration_min=explicit_min),
-        _refs(service=Service(SVC_30, default_min)),
+        _refs(service=Service(SVC_30, "Limpieza", default_min)),
         [], CTX,
     )
 
@@ -708,7 +708,7 @@ def test_validate_new_appointment_valid_duration_boundaries_return_ok(
 
 def test_validate_new_appointment_default_duration_not_multiple_of_five_is_rejected() -> None:
     result = validate_new_appointment(
-        _request(_at(13)), _refs(service=Service(SVC_30, 32)), [], CTX
+        _request(_at(13)), _refs(service=Service(SVC_30, "Limpieza", 32)), [], CTX
     )
 
     assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
@@ -757,7 +757,7 @@ def test_validate_new_appointment_invalid_reference_and_duration_are_reported_to
             id="prestacion-inexistente-con-explicita-invalida",
         ),
         pytest.param(
-            _refs(service=Service(SVC_30, 485, active=False)),
+            _refs(service=Service(SVC_30, "Limpieza", 485, active=False)),
             None,
             [
                 (ViolationCode.INACTIVE_REFERENCE, ReferenceKind.SERVICE),

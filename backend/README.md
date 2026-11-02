@@ -1,7 +1,7 @@
 # Backend — turnos-odontologia
 
-Backend en Python del sistema de agenda de turnos. Por ahora contiene solo la
-fundación: proyecto instalable, `pytest`, `mypy --strict` y el paquete de dominio
+Backend en Python del sistema de agenda de turnos: proyecto instalable, `pytest`,
+`mypy --strict`, validación de agenda y altas/activación de catálogo en el paquete
 `app.domain` (Python puro).
 
 ## Requisitos
@@ -34,7 +34,7 @@ mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 
 | Módulo | Contenido |
 |---|---|
-| `model` | `AppointmentStatus`, `Professional` (con `full_name`) y `Chair` (con `name`), nombres obligatorios que el dominio no valida y que usan los mensajes de conflicto, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional), `Block` (un bloqueo de la agenda de un profesional, `[inicio, fin)` con motivo opcional) y `ScheduleContext` (la zona horaria, los tramos `working_hours`, los bloqueos `blocks` y el momento actual `now` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
+| `model` | `AppointmentStatus`, `Professional` (con `full_name`) y `Chair` (con `name`), nombres que los constructores no validan y que usan los mensajes de conflicto; el alta sí los valida, `Patient` (cinco campos sin clínica), `Service` (nombre y duración), `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional), `Block` (un bloqueo de la agenda de un profesional, `[inicio, fin)` con motivo opcional) y `ScheduleContext` (la zona horaria, los tramos `working_hours`, los bloqueos `blocks` y el momento actual `now` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
 | `violations` | `ViolationCode`, `ReferenceKind`, `Violation` (con `conflicting_interval`, en UTC), `Ok`, `Rejected`, `ValidationResult` |
 | `intervals` | `Interval` semiabierto `[inicio, fin)`, `overlaps` y la hora local: `local_day_and_minutes`, `format_local_time`, `format_local_date_time` y `format_local_date_time_with_seconds` (fecha y hora local siempre con segundos, para el mensaje de `IN_THE_PAST`) |
 | `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local), `working_hours` (horario de atención del turno y validez de un conjunto de tramos), `blocks` (turno que pisa un bloqueo, validez de un bloqueo y `appointments_affected_by_block`, los turnos que pisa un bloqueo nuevo sin cancelarlos), `names` (el nombre del profesional o del sillón como sujeto de un mensaje, con un sustantivo genérico si está vacío), `overlap` (profesional y sillón) y `past` (el turno no empieza antes de `now`, comparando instantes sin truncar) |
@@ -80,10 +80,10 @@ request = NewAppointmentRequest(
 )
 # Quien llama resuelve cada referencia (entidad, o None si no existe).
 references = AppointmentReferences(
-    patient=Patient(id=UUID(int=2)),
+    patient=Patient(id=UUID(int=2), full_name="Ana Pérez", dni="30111222"),
     professional=Professional(id=UUID(int=3), full_name="Dra. Laura Quiroga", active=True),
     chair=Chair(id=UUID(int=4), name="Sillón 1", active=True),
-    service=Service(id=UUID(int=5), default_duration_min=30),
+    service=Service(id=UUID(int=5), name="Limpieza", default_duration_min=30),
 )
 
 # La zona la arma el borde (API) a partir de APP_TIMEZONE; el dominio la recibe.
@@ -123,3 +123,23 @@ La guardia del reloj (`tests/domain/test_clock_guard.py`, con `ast`) falla si al
 módulo de `app/domain` lee el reloj del sistema (`datetime.now`, `utcnow`, `today` de
 `datetime` o `date`, con alias o por el módulo `datetime`): el momento actual se
 inyecta como `now`. Solo detecta nombres estáticos; `time` lo cubre la guardia de imports.
+
+## Catálogo
+
+`catalog.result.Ok.entity` acepta entidades; `violations.Ok.appointment` de agenda conserva su contrato. Ambos comparten `Rejected` y `Violation`.
+
+Las altas reciben candidatas inmutables e ids del llamador. El profesional conserva su nombre original; vacío o blanco produce EMPTY_NAME con mensaje explicativo.
+
+Sillones y prestaciones comparan nombres con espacios colapsados y casefold, conservando tildes. Los duplicados muestran el nombre ingresado con espacios colapsados y mayúsculas originales; también participan existentes inactivos.
+
+Las prestaciones reutilizan check_duration con sujeto «de la prestación». El valor predeterminado «del turno» mantiene idénticos los mensajes de agenda; las razones y sus límites no cambian.
+
+El alta de pacientes copia el DNI quitando puntos y espacios; valida 7 u 8 dígitos y unicidad por dígitos. Los errores muestran el original o el DNI duplicado con puntos de miles. Patient tiene exactamente cinco campos sin clínica; teléfono y obra social son texto libre opcional.
+
+Las altas acumulan violaciones aplicables en orden: EMPTY_NAME, INVALID_DNI, duplicado y duración. Por ejemplo, un paciente sin nombre y con DNI inválido recibe ambos errores; los duplicados dependientes de un campo inválido no se evalúan.
+
+`deactivate` y `reactivate` usan copias con el mismo tipo y campos, cambiando solo active. Son idempotentes por valores y no reciben turnos. No existen códigos de ya activo/inactivo.
+
+Desactivar no altera turnos existentes. Los turnos nuevos conservan el rechazo INACTIVE_REFERENCE con los textos originales; reactivar permite aceptar nuevos turnos y mantiene Ok.appointment de agenda.
+
+`app.demo_data` contiene tuplas de ejemplos exclusivamente ficticios para tests y un futuro seed; no ejecuta I/O ni contiene secretos. Importa entidades del dominio; el dominio nunca lo importa.

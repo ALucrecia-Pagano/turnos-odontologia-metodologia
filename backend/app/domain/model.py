@@ -71,13 +71,21 @@ class Chair:
 
 @dataclass(frozen=True, slots=True)
 class Patient:
-    """Paciente (modelo minimo: las reglas solo piden que exista).
+    """Paciente mínimo sin clínica: nombre/DNI se validan en el alta, no al construir.
 
     Attributes:
         id: Identificador del paciente.
+        full_name: Nombre original sin validar.
+        dni: DNI recibido; el alta lo normaliza.
+        phone: Texto libre opcional.
+        health_insurance: Obra social como texto libre opcional.
     """
 
     id: UUID
+    full_name: str
+    dni: str
+    phone: str | None = None
+    health_insurance: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -86,12 +94,14 @@ class Service:
 
     Attributes:
         id: Identificador de la prestacion.
+        name: Nombre original; la validez y unicidad se evalúan en el alta.
         default_duration_min: Duracion por defecto en minutos. No se valida aca: la
             duracion efectiva se valida en `rules/duration.py`.
         active: `True` si la prestacion esta activa.
     """
 
     id: UUID
+    name: str
     default_duration_min: int
     active: bool = True
 

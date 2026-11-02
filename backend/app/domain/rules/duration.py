@@ -13,7 +13,7 @@ from app.domain.violations import Violation, ViolationCode
 MAX_DURATION_MIN: Final = 480
 
 
-def check_duration(duration_min: int) -> list[Violation]:
+def check_duration(duration_min: int, subject: str = "del turno") -> list[Violation]:
     """Devuelve una violacion `INVALID_DURATION` si la duracion no es valida.
 
     Si se incumple mas de una condicion se informa una sola violacion cuyo mensaje las
@@ -22,6 +22,7 @@ def check_duration(duration_min: int) -> list[Violation]:
 
     Args:
         duration_min: Duracion efectiva en minutos.
+        subject: Sustantivo del mensaje; agenda conserva el valor predeterminado.
 
     Returns:
         Lista vacia si la duracion es valida; si no, una sola violacion sin turno en
@@ -40,7 +41,7 @@ def check_duration(duration_min: int) -> list[Violation]:
         Violation(
             code=ViolationCode.INVALID_DURATION,
             message=(
-                f"La duración del turno no es válida (se recibió {duration_min} minutos): "
+                f"La duración {subject} no es válida (se recibió {duration_min} minutos): "
                 f"{' y '.join(reasons)}."
             ),
         )
