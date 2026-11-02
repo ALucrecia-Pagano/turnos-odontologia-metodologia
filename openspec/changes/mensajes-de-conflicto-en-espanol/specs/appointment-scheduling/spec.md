@@ -191,7 +191,7 @@ El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido:
 - **THEN** el resultado es `Rejected` con una sola violación, `IN_THE_PAST`, sin `OUTSIDE_WORKING_HOURS`
 
 ### Requirement: Contenido de cada violación
-Cada violación SHALL tener un código estable, un mensaje no vacío en español y, en las de solapamiento, el id del turno con el que choca; el mensaje MUST incluir ese id. Las violaciones de referencias SHALL indicar el tipo de referencia que falló (`reference_kind`: `PATIENT`, `PROFESSIONAL`, `CHAIR` o `SERVICE`) y su mensaje MUST incluir el id de esa referencia; las demás violaciones no llevan tipo de referencia. El mensaje de `INVALID_DURATION` MUST mencionar la duración recibida y cada condición incumplida. El mensaje de `INVALID_START_TIME` MUST mencionar la hora de inicio recibida en hora local (`se recibió {hora}, hora local`) y cada condición incumplida, con el inicio como sujeto: si los minutos no son múltiplo de 5, la razón MUST decir "debe caer en un minuto múltiplo de 5"; si el inicio tiene segundos o fracciones de segundo, la razón MUST decir "no puede tener segundos ni fracciones de segundo"; las dos razones se unen con " y ". El mensaje de `CROSSES_MIDNIGHT` MUST mencionar el inicio y el fin del turno en hora local. Las horas de los mensajes SHALL mostrarse con formato `HH:MM`, o `HH:MM:SS` si la hora tiene segundos o microsegundos distintos de cero (los microsegundos no se muestran), salvo el momento actual del mensaje de `IN_THE_PAST`, que se muestra siempre con fecha y segundos (requisito "Mensaje de un turno en el pasado"). Ni `INVALID_START_TIME`, ni `CROSSES_MIDNIGHT` ni `IN_THE_PAST` llevan id de turno en conflicto. El intervalo en conflicto, con inicio y fin en UTC, SHALL estar presente si y solo si la violación lleva id de turno o de bloqueo en conflicto: en `PROFESSIONAL_OVERLAP` y `CHAIR_OVERLAP` es el del turno existente y en `BLOCKED_TIME`, el del bloqueo; ninguna otra violación lleva intervalo, tampoco `OUTSIDE_WORKING_HOURS` (US-006 CA-1). El mensaje de `PROFESSIONAL_OVERLAP` SHALL ser "{nombre del profesional} ya tiene un turno de {inicio} a {fin} (hora local) que se superpone (turno {id})." y el de `CHAIR_OVERLAP`, "{nombre del sillón} está ocupado de {inicio} a {fin} (hora local) por un turno que se superpone (turno {id}).", donde {inicio} y {fin} son los del turno existente, en hora local y con el formato de horas de este requisito (US-006 CA-3). Los nombres de los mensajes de conflicto de agenda son los del profesional y del sillón del pedido, tal como se cargaron, sin artículo y siempre como sujeto de la oración. Si el nombre está vacío o tiene solo espacios, el mensaje MUST usar en su lugar el sustantivo genérico: "El profesional" o "El sillón" al principio de la oración, y "el profesional", en minúscula, después de dos puntos (mensajes de `OUTSIDE_WORKING_HOURS` y `BLOCKED_TIME`). Los mensajes de `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_BLOCK`, `INVALID_WORKING_HOURS` y `OVERLAPPING_WORKING_HOURS` no llevan nombres y no cambian: las violaciones de referencias identifican la entidad por su id aunque tenga nombre. Las violaciones de negocio se devuelven en el resultado y nunca como excepción.
+Cada violación SHALL tener un código estable, un mensaje no vacío en español y, en las de solapamiento, el id del turno con el que choca; el mensaje MUST incluir ese id. Las violaciones de referencias SHALL indicar el tipo de referencia que falló (`reference_kind`: `PATIENT`, `PROFESSIONAL`, `CHAIR` o `SERVICE`) y su mensaje MUST incluir el id de esa referencia; las demás violaciones no llevan tipo de referencia. El mensaje de `INVALID_DURATION` MUST mencionar la duración recibida y cada condición incumplida. El mensaje de `INVALID_START_TIME` MUST mencionar la hora de inicio recibida en hora local (`se recibió {hora}, hora local`) y cada condición incumplida, con el inicio como sujeto: si los minutos no son múltiplo de 5, la razón MUST decir "debe caer en un minuto múltiplo de 5"; si el inicio tiene segundos o fracciones de segundo, la razón MUST decir "no puede tener segundos ni fracciones de segundo"; las dos razones se unen con " y ". El mensaje de `CROSSES_MIDNIGHT` MUST mencionar el inicio y el fin del turno en hora local. Las horas de los mensajes SHALL mostrarse con formato `HH:MM`, o `HH:MM:SS` si la hora tiene segundos o microsegundos distintos de cero (los microsegundos no se muestran), salvo el momento actual del mensaje de `IN_THE_PAST`, que se muestra siempre con fecha y segundos (requisito "Mensaje de un turno en el pasado"). Ni `INVALID_START_TIME`, ni `CROSSES_MIDNIGHT` ni `IN_THE_PAST` llevan id de turno en conflicto. El intervalo en conflicto, con inicio y fin en UTC, SHALL estar presente si y solo si la violación lleva id de turno o de bloqueo en conflicto: en `PROFESSIONAL_OVERLAP` y `CHAIR_OVERLAP` es el del turno existente y en `BLOCKED_TIME`, el del bloqueo; ninguna otra violación lleva intervalo, tampoco `OUTSIDE_WORKING_HOURS` (US-006 CA-1). El mensaje de `PROFESSIONAL_OVERLAP` SHALL ser "{nombre del profesional} ya tiene un turno de {inicio} a {fin} (hora local) que se superpone (turno {id})." y el de `CHAIR_OVERLAP`, "{nombre del sillón} está ocupado de {inicio} a {fin} (hora local) por un turno que se superpone (turno {id}).", donde {inicio} y {fin} son los del turno existente, en hora local y con el formato de horas de este requisito (US-006 CA-3). Los nombres de los mensajes de conflicto de agenda son los del profesional y del sillón del pedido, recortados (sin espacios al principio ni al final), sin artículo y siempre como sujeto de la oración. Si el nombre está vacío o tiene solo espacios, el mensaje MUST usar en su lugar el sustantivo genérico: "El profesional" o "El sillón" al principio de la oración, y "el profesional", en minúscula, después de dos puntos (mensajes de `OUTSIDE_WORKING_HOURS` y `BLOCKED_TIME`). Los mensajes de `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_BLOCK`, `INVALID_WORKING_HOURS` y `OVERLAPPING_WORKING_HOURS` no llevan nombres y no cambian: las violaciones de referencias identifican la entidad por su id aunque tenga nombre. Las violaciones de negocio se devuelven en el resultado y nunca como excepción.
 
 En los escenarios de este requisito P1 se llama "Dra. Laura Quiroga" y S1 "Sillón 1", salvo que se diga otra cosa.
 
@@ -230,11 +230,6 @@ En los escenarios de este requisito P1 se llama "Dra. Laura Quiroga" y S1 "Sill�
 - **WHEN** se pide un turno a las 23:30 hora local del 2026-10-20 (02:30 UTC del 2026-10-21) con duración explícita de 60 minutos
 - **THEN** la violación `CROSSES_MIDNIGHT` tiene un mensaje en español que contiene el inicio `23:30` y el fin `00:30` en hora local, y no el horario en UTC (`02:30`)
 - **AND** la violación no tiene id de turno en conflicto ni tipo de referencia
-
-#### Scenario: Mensaje de solapamiento con un turno existente con segundos
-- **GIVEN** un turno existente G de P1 en S2 de 13:00:30 a 13:30:30 (de 10:00:30 a 10:30:30 hora local)
-- **WHEN** se pide un turno para P1 en S1 de 13:15 a 13:45 (de 10:15 a 10:45 hora local)
-- **THEN** el resultado es `Rejected` con una sola violación, `PROFESSIONAL_OVERLAP`, cuyo mensaje es exactamente "Dra. Laura Quiroga ya tiene un turno de 10:00:30 a 10:30:30 (hora local) que se superpone (turno {id de G})."
 
 #### Scenario: Mensajes de solapamiento con el nombre vacío o en blanco
 - **GIVEN** el turno existente A (P1, S1, de 13:00 a 13:30, de 10:00 a 10:30 hora local)
@@ -466,6 +461,11 @@ El turno MUST NOT superponerse con ningún bloqueo del profesional del pedido (R
 - **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
 - **THEN** el resultado es `Ok`, sin excepción: un bloqueo con inicio igual o posterior al fin no se superpone con ningún turno
 
+#### Scenario: Bloqueo inválido que abarca el turno pedido
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin
+- **WHEN** se pide un turno de 09:00 a 13:00 hora local (de 12:00 a 16:00 UTC), con duración explícita de 240 minutos
+- **THEN** el resultado es `Ok`, sin excepción y sin `BLOCKED_TIME`
+
 #### Scenario: Intervalo del bloqueo con el que choca
 - **GIVEN** el bloqueo BL1 (de 10:00 a 12:00 hora local, de 13:00 a 15:00 UTC)
 - **WHEN** se pide un turno de 10:30 a 11:00 hora local (de 13:30 a 14:00 UTC), con duración explícita de 30 minutos
@@ -526,10 +526,41 @@ El mensaje de `IN_THE_PAST` MUST decir, en hora local, el inicio del turno con f
 - **THEN** el mensaje de la violación `IN_THE_PAST` es exactamente "El inicio del turno (20/10/2026 23:00, hora local) es anterior al momento actual (20/10/2026 23:30:00, hora local): no se pueden dar turnos en el pasado."
 - **AND** el mensaje no contiene la fecha ni las horas en UTC (`21/10/2026`, `02:00`, `02:30`)
 
+### Requirement: Turnos afectados por un bloqueo
+Dado un bloqueo y una lista de turnos existentes, el dominio SHALL devolver los turnos que pisa: del mismo profesional, en un estado que ocupa agenda (`reservado`, `confirmado`, `atendido`) y que se solapan con el bloqueo (semiabiertos), ordenados por inicio (RN-DI-04, SU-05; US-011 CA-3). Crear el bloqueo MUST NOT cancelar ni mover esos turnos: se devuelven sin cambios, para que recepción los reprograme.
+
+Turnos de los escenarios de este requisito, todos del 2026-10-20: T1 de P1 de 09:30 a 10:00 hora local (de 12:30 a 13:00 UTC), `reservado`; T2 de P1 de 10:30 a 11:00 (de 13:30 a 14:00 UTC), `confirmado`; T3 de P1 de 11:45 a 12:15 (de 14:45 a 15:15 UTC), `reservado`; T4 de P1 de 11:00 a 11:30 (de 14:00 a 14:30 UTC), `cancelado`; T5 de P1 de 10:00 a 10:30 (de 13:00 a 13:30 UTC), `ausente`; T6 de P2 de 10:30 a 11:00 (de 13:30 a 14:00 UTC), `reservado`; T7 de P1 de 12:00 a 12:30 (de 15:00 a 15:30 UTC), `reservado`.
+
+#### Scenario: Bloqueo que pisa turnos existentes
+- **GIVEN** el bloqueo BL1 y los turnos T1 a T7, recibidos en orden inverso (T7 primero)
+- **WHEN** se piden los turnos afectados por BL1
+- **THEN** el resultado es exactamente T2 y T3, en ese orden
+- **AND** no incluye T1 ni T7 (tocan el bloqueo en un borde), T4 (cancelado), T5 (ausente) ni T6 (otro profesional)
+
+#### Scenario: El bloqueo no cambia los turnos que pisa
+- **GIVEN** el bloqueo BL1 y los turnos T1 a T7
+- **WHEN** se piden los turnos afectados por BL1
+- **THEN** T2 sigue en estado `confirmado` y T3 en `reservado`, con el mismo inicio, fin, profesional y sillón que tenían
+
+#### Scenario: Bloqueo que no pisa ningún turno
+- **GIVEN** el bloqueo BL1 y solo los turnos T1, T6 y T7
+- **WHEN** se piden los turnos afectados por BL1
+- **THEN** el resultado está vacío
+
+#### Scenario: Turnos afectados por un bloqueo inválido
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin, y los turnos T1 a T7
+- **WHEN** se piden los turnos afectados por ese bloqueo
+- **THEN** el resultado está vacío, sin excepción
+
+#### Scenario: Turno que abarca un bloqueo inválido
+- **GIVEN** un bloqueo de P1 del 2026-10-20 de 12:00 a 10:00 hora local (de 15:00 a 13:00 UTC), con inicio posterior al fin, y un turno reservado de P1 de 09:00 a 13:00 hora local (de 12:00 a 16:00 UTC)
+- **WHEN** se piden los turnos afectados por ese bloqueo
+- **THEN** el resultado está vacío, sin excepción
+
 ## ADDED Requirements
 
 ### Requirement: Nombre del profesional y del sillón
-El profesional SHALL tener un nombre completo y el sillón, un nombre (KB 04), que el llamador informa siempre al construir la entidad: no tienen valor por defecto. El dominio MUST NOT validarlos ni lanzar una excepción al construir la entidad, aunque estén vacíos o tengan solo espacios, y MUST conservarlos tal como se cargaron: la validez del nombre la decide el alta del catálogo. El dominio usa el nombre solo en los mensajes de conflicto de agenda.
+El profesional SHALL tener un nombre completo y el sillón, un nombre (KB 04), que el llamador informa siempre al construir la entidad: no tienen valor por defecto. El dominio MUST NOT validarlos ni lanzar una excepción al construir la entidad, aunque estén vacíos o tengan solo espacios, y MUST conservarlos tal como se cargaron: la validez del nombre la decide el alta del catálogo. El dominio usa el nombre solo en los mensajes de conflicto de agenda, y ahí MUST mostrarlo recortado, sin los espacios del principio ni del final, para que el mensaje no tenga espacios dobles.
 
 #### Scenario: Profesional y sillón con nombre
 - **WHEN** se construyen P1 con el nombre "Dra. Laura Quiroga" y S1 con el nombre "Sillón 1", los dos activos
@@ -538,3 +569,10 @@ El profesional SHALL tener un nombre completo y el sillón, un nombre (KB 04), q
 #### Scenario: Nombre vacío o en blanco al construir
 - **WHEN** se construyen P1 y S1 con el nombre `""` (primer caso) o `"   "`, solo espacios (segundo caso)
 - **THEN** en ambos casos la construcción no falla y cada entidad conserva el nombre tal como se cargó, sin recortarlo
+
+#### Scenario: Nombre con espacios alrededor en el mensaje
+- **GIVEN** P1 con el nombre `"  Dra. Laura Quiroga  "`, con espacios al principio y al final, y el turno existente A (P1, S1, de 13:00 a 13:30, de 10:00 a 10:30 hora local)
+- **WHEN** se pide un turno para P1 en S2 de 13:15 a 13:45 (de 10:15 a 10:45 hora local)
+- **THEN** el resultado es `Rejected` con una sola violación, `PROFESSIONAL_OVERLAP`, cuyo mensaje es exactamente "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno {id de A})."
+- **AND** el mensaje no contiene espacios dobles
+- **AND** P1 conserva el nombre tal como se cargó, con sus espacios

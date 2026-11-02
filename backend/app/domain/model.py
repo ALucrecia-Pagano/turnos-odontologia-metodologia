@@ -41,10 +41,14 @@ class Professional:
 
     Attributes:
         id: Identificador del profesional.
+        full_name: Nombre completo. Obligatorio y sin valor por defecto; no se valida ni se
+            recorta al construir (la validez del nombre es del alta del catalogo). Lo usan los
+            mensajes de los conflictos de agenda, que lo muestran recortado.
         active: `True` si el profesional esta activo.
     """
 
     id: UUID
+    full_name: str
     active: bool
 
 
@@ -54,10 +58,14 @@ class Chair:
 
     Attributes:
         id: Identificador del sillon.
+        name: Nombre del sillon. Obligatorio y sin valor por defecto; no se valida ni se
+            recorta al construir (la validez del nombre es del alta del catalogo). Lo usan los
+            mensajes de los conflictos de agenda, que lo muestran recortado.
         active: `True` si el sillon esta activo.
     """
 
     id: UUID
+    name: str
     active: bool
 
 

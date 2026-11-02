@@ -9,6 +9,7 @@ from enum import Enum
 from typing import TypeAlias
 from uuid import UUID
 
+from app.domain.intervals import Interval
 from app.domain.model import Appointment
 
 
@@ -53,7 +54,13 @@ class Violation:
         reference_kind: Tipo de referencia que fallo, solo en las violaciones de
             referencias (`UNKNOWN_REFERENCE` / `INACTIVE_REFERENCE`); `None` en el resto.
         conflicting_block_id: Id del bloqueo en conflicto, solo en `BLOCKED_TIME`; `None`
-            en el resto. Va al final para no cambiar las construcciones existentes.
+            en el resto.
+        conflicting_interval: Intervalo en UTC del turno o del bloqueo en conflicto, solo
+            en `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP` y `BLOCKED_TIME`; `None` en el resto
+            (tambien en `OUTSIDE_WORKING_HOURS`). Invariante: hay intervalo si y solo si hay
+            `conflicting_appointment_id` o `conflicting_block_id`. En un bloqueo es el
+            intervalo completo, aunque dure varios dias. Los dos ultimos campos van al final
+            para no cambiar las construcciones existentes.
     """
 
     code: ViolationCode
@@ -61,6 +68,7 @@ class Violation:
     conflicting_appointment_id: UUID | None = None
     reference_kind: ReferenceKind | None = None
     conflicting_block_id: UUID | None = None
+    conflicting_interval: Interval | None = None
 
 
 @dataclass(frozen=True, slots=True)

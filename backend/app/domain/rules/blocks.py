@@ -11,11 +11,13 @@ from typing import Final
 from uuid import UUID
 from zoneinfo import ZoneInfo
 
-from app.domain.intervals import format_local_date_time, format_local_time
+from app.domain.intervals import Interval, format_local_date_time, format_local_time
 from app.domain.model import Appointment, Block
+from app.domain.rules.names import subject_name
 from app.domain.rules.overlap import OCCUPYING_STATUSES
 from app.domain.violations import Violation, ViolationCode
 
+_GENERIC_PROFESSIONAL: Final = "el profesional"
 _INVALID_BLOCK_MESSAGE: Final = "El bloqueo no es válido: el inicio debe ser anterior al fin."
 
 
@@ -59,6 +61,7 @@ def _overlapping_blocks(
             block
             for block in blocks
             if block.professional_id == professional_id
+            and block.start_at < block.end_at
             and _overlaps(start_at, end_at, block.start_at, block.end_at)
         ),
         key=lambda block: (block.start_at, str(block.id)),
@@ -71,6 +74,7 @@ def check_blocks(
     end_at: datetime,
     blocks: Sequence[Block],
     tz: ZoneInfo,
+    professional_name: str,
 ) -> list[Violation]:
     """Una violacion `BLOCKED_TIME` por cada bloqueo del profesional que pisa el turno (RN-AG-05).
 
@@ -85,32 +89,42 @@ def check_blocks(
         end_at: Fin del turno (instante con zona horaria).
         blocks: Bloqueos de uno o varios profesionales.
         tz: Zona horaria en la que se muestran las horas del mensaje.
+        professional_name: Nombre como sujeto; vacio o en blanco usa "el profesional"
+            en minuscula despues de dos puntos.
 
     Returns:
-        Violaciones ordenadas por inicio del bloqueo, con `conflicting_block_id`; vacia si
-        el turno no pisa ningun bloqueo.
+        Violaciones ordenadas por inicio del bloqueo, con `conflicting_block_id` y
+        `conflicting_interval` (el del bloqueo en UTC, completo aunque dure varios dias, sin
+        recortar al turno); vacia si el turno no pisa ningun bloqueo.
     """
     return [
         Violation(
             code=ViolationCode.BLOCKED_TIME,
-            message=_blocked_message(start_at, end_at, block, tz),
+            message=_blocked_message(start_at, end_at, block, tz, professional_name),
             conflicting_block_id=block.id,
+            conflicting_interval=Interval(block.start_at, block.end_at),
         )
         for block in _overlapping_blocks(professional_id, start_at, end_at, blocks)
     ]
 
 
-def _blocked_message(start_at: datetime, end_at: datetime, block: Block, tz: ZoneInfo) -> str:
+def _blocked_message(
+    start_at: datetime, end_at: datetime, block: Block, tz: ZoneInfo, professional_name: str
+) -> str:
     """Arma el mensaje de `BLOCKED_TIME`: el turno y el bloqueo en hora local.
 
+    El nombre recortado va como sujeto despues de dos puntos, o "el profesional" si
+    esta vacio o en blanco. El id del bloqueo va al final, entre parentesis.
     El bloqueo va con fecha porque puede durar varios dias. El motivo va como oracion
     aparte solo si tiene algo mas que espacios; se muestra tal como se cargo.
     """
+    subject = subject_name(professional_name, _GENERIC_PROFESSIONAL)
     message = (
         f"El turno de {format_local_time(start_at, tz)} a {format_local_time(end_at, tz)} "
-        f"(hora local) se superpone con el bloqueo {block.id} del profesional, del "
+        "(hora local) se superpone con un bloqueo de agenda: "
+        f"{subject} tiene la agenda bloqueada del "
         f"{format_local_date_time(block.start_at, tz)} al "
-        f"{format_local_date_time(block.end_at, tz)} (hora local)."
+        f"{format_local_date_time(block.end_at, tz)} (hora local) (bloqueo {block.id})."
     )
     if block.reason is not None and block.reason.strip():
         message += f" Motivo: {block.reason}."
@@ -140,6 +154,7 @@ def appointments_affected_by_block(
             appointment
             for appointment in appointments
             if appointment.professional_id == block.professional_id
+            and block.start_at < block.end_at
             and appointment.status in OCCUPYING_STATUSES
             and _overlaps(appointment.start_at, appointment.end_at, block.start_at, block.end_at)
         ),

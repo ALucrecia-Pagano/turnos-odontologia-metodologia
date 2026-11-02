@@ -6,6 +6,7 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from app.domain.appointment import validate_new_appointment
+from app.domain.intervals import Interval
 from app.domain.model import (
     Appointment,
     AppointmentReferences,
@@ -35,6 +36,10 @@ APPT_C = UUID("00000000-0000-0000-0000-0000000000a3")
 APPT_D = UUID("00000000-0000-0000-0000-0000000000a4")
 APPT_E = UUID("00000000-0000-0000-0000-0000000000a5")
 APPT_F = UUID("00000000-0000-0000-0000-0000000000a6")
+P1_NAME = "Dra. Laura Quiroga"
+S1_NAME = "Sillón 1"
+OTHER_PROFESSIONAL_NAME = "Dr. Martín Sosa"
+OTHER_CHAIR_NAME = "Sillón 2"
 BL1 = UUID("00000000-0000-0000-0000-0000000000e1")
 BL2 = UUID("00000000-0000-0000-0000-0000000000e2")
 BL3 = UUID("00000000-0000-0000-0000-0000000000e3")
@@ -86,8 +91,8 @@ def _appt_a() -> Appointment:
 def _refs(
     *,
     patient: Patient | None = Patient(PATIENT),
-    professional: Professional | None = Professional(P1, active=True),
-    chair: Chair | None = Chair(S1, active=True),
+    professional: Professional | None = Professional(P1, P1_NAME, active=True),
+    chair: Chair | None = Chair(S1, S1_NAME, active=True),
     service: Service | None = Service(SVC_30, 30),
 ) -> AppointmentReferences:
     return AppointmentReferences(
@@ -247,7 +252,7 @@ def test_validate_new_appointment_same_professional_overlap_is_rejected_with_con
     service = Service(id=SVC_30, default_duration_min=30)
 
     result = validate_new_appointment(
-        _request(_at(13, 15), chair_id=S2), _refs(service=service, chair=Chair(S2, active=True)), [_appt_a()], CTX
+        _request(_at(13, 15), chair_id=S2), _refs(service=service, chair=Chair(S2, OTHER_CHAIR_NAME, active=True)), [_appt_a()], CTX
     )
 
     assert _summary(result) == [(ViolationCode.PROFESSIONAL_OVERLAP, APPT_A)]
@@ -263,8 +268,8 @@ def _validate(
     return validate_new_appointment(
         request,
         _refs(
-            professional=Professional(request.professional_id, active=True),
-            chair=Chair(request.chair_id, active=True),
+            professional=Professional(request.professional_id, P1_NAME, active=True),
+            chair=Chair(request.chair_id, S1_NAME, active=True),
             service=Service(id=SVC_30, default_duration_min=default_min),
         ),
         existing, CTX,
@@ -465,15 +470,43 @@ def test_validate_new_appointment_same_start_conflicts_are_ordered_by_id() -> No
     assert _summary(backward) == expected
 
 
-def test_validate_new_appointment_overlap_messages_name_resource_and_conflicting_id() -> None:
+def test_validate_new_appointment_overlap_messages_name_resource_and_local_range_of_existing() -> None:
     result = _validate(_request(_at(13, 15), duration_min=30), [_appt_a()])
 
     assert isinstance(result, Rejected)
     professional_violation, chair_violation = result.violations
-    assert str(APPT_A) in professional_violation.message
-    assert "profesional" in professional_violation.message
-    assert str(APPT_A) in chair_violation.message
-    assert "sillón" in chair_violation.message
+    assert professional_violation.message == (
+        f"Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone "
+        f"(turno {APPT_A})."
+    )
+    assert chair_violation.message == (
+        f"Sillón 1 está ocupado de 10:00 a 10:30 (hora local) por un turno que se superpone "
+        f"(turno {APPT_A})."
+    )
+    for message in (professional_violation.message, chair_violation.message):
+        assert "13:00" not in message
+        assert "13:30" not in message
+        assert "10:15" not in message
+
+
+def test_validate_new_appointment_overlap_messages_use_the_range_of_each_existing_appointment() -> None:
+    appointment_e = _existing(APPT_E, P1, S2, _local(20, 12, 30), _local(20, 13, 0))
+    appointment_f = _existing(APPT_F, P2, S1, _local(20, 12, 45), _local(20, 13, 15))
+
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60),
+        _refs(),
+        [appointment_e, appointment_f],
+        CTX,
+    )
+
+    assert isinstance(result, Rejected)
+    assert [v.message for v in result.violations] == [
+        f"Dra. Laura Quiroga ya tiene un turno de 12:30 a 13:00 (hora local) que se superpone "
+        f"(turno {APPT_E}).",
+        f"Sillón 1 está ocupado de 12:45 a 13:15 (hora local) por un turno que se superpone "
+        f"(turno {APPT_F}).",
+    ]
 
 
 def test_validate_new_appointment_existing_appointment_in_other_timezone_still_conflicts() -> None:
@@ -501,9 +534,9 @@ OTHER_ID = UUID("00000000-0000-0000-0000-0000000000e9")
     [
         pytest.param(_refs(patient=Patient(OTHER_ID)), "patient", id="paciente"),
         pytest.param(
-            _refs(professional=Professional(OTHER_ID, active=True)), "professional", id="profesional"
+            _refs(professional=Professional(OTHER_ID, OTHER_PROFESSIONAL_NAME, active=True)), "professional", id="profesional"
         ),
-        pytest.param(_refs(chair=Chair(OTHER_ID, active=True)), "chair", id="sillon"),
+        pytest.param(_refs(chair=Chair(OTHER_ID, OTHER_CHAIR_NAME, active=True)), "chair", id="sillon"),
         pytest.param(_refs(service=Service(OTHER_ID, 30)), "service", id="prestacion"),
     ],
 )
@@ -562,11 +595,11 @@ def test_validate_new_appointment_unknown_service_without_explicit_duration_skip
     ("references", "kind"),
     [
         pytest.param(
-            _refs(professional=Professional(P1, active=False)),
+            _refs(professional=Professional(P1, P1_NAME, active=False)),
             ReferenceKind.PROFESSIONAL,
             id="profesional",
         ),
-        pytest.param(_refs(chair=Chair(S1, active=False)), ReferenceKind.CHAIR, id="sillon"),
+        pytest.param(_refs(chair=Chair(S1, S1_NAME, active=False)), ReferenceKind.CHAIR, id="sillon"),
         pytest.param(
             _refs(service=Service(SVC_30, 30, active=False)), ReferenceKind.SERVICE, id="prestacion"
         ),
@@ -583,7 +616,7 @@ def test_validate_new_appointment_inactive_reference_reports_matching_kind(
 def test_validate_new_appointment_several_failing_references_are_reported_in_fixed_order() -> None:
     references = _refs(
         patient=None,
-        professional=Professional(P1, active=False),
+        professional=Professional(P1, P1_NAME, active=False),
         chair=None,
         service=Service(SVC_30, 30, active=False),
     )
@@ -600,7 +633,7 @@ def test_validate_new_appointment_several_failing_references_are_reported_in_fix
 
 def test_validate_new_appointment_reference_violation_in_busy_slot_reports_no_overlap() -> None:
     result = validate_new_appointment(
-        _request(_at(13)), _refs(chair=Chair(S1, active=False)), [_appt_a()], CTX
+        _request(_at(13)), _refs(chair=Chair(S1, S1_NAME, active=False)), [_appt_a()], CTX
     )
 
     assert _kinds(result) == [(ViolationCode.INACTIVE_REFERENCE, ReferenceKind.CHAIR)]
@@ -617,7 +650,7 @@ def test_validate_new_appointment_reference_violation_in_busy_slot_reports_no_ov
             id="sillon-inexistente",
         ),
         pytest.param(
-            _refs(professional=Professional(P1, active=False)),
+            _refs(professional=Professional(P1, P1_NAME, active=False)),
             ViolationCode.INACTIVE_REFERENCE,
             ReferenceKind.PROFESSIONAL,
             P1,
@@ -1138,11 +1171,13 @@ def test_validate_new_appointment_outside_working_hours_message_lists_the_day_sl
 
     violation = _only_violation_of(result)
     assert violation.message == (
-        "El turno de 12:30 a 13:30 (hora local) queda fuera del horario de atención del "
-        "profesional: el martes atiende de 09:00 a 13:00 y de 15:00 a 19:00."
+        "El turno de 12:30 a 13:30 (hora local) queda fuera del horario de atención: "
+        "Dra. Laura Quiroga atiende el martes de 09:00 a 13:00 y de 15:00 a 19:00."
     )
     assert violation.conflicting_appointment_id is None
     assert violation.reference_kind is None
+    assert violation.conflicting_block_id is None
+    assert violation.conflicting_interval is None
 
 
 def test_validate_new_appointment_outside_working_hours_message_on_a_day_without_slots() -> None:
@@ -1151,8 +1186,8 @@ def test_validate_new_appointment_outside_working_hours_message_on_a_day_without
     )
 
     assert _only_violation_of(result).message == (
-        "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención del "
-        "profesional: no atiende los domingos."
+        "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención: "
+        "Dra. Laura Quiroga no atiende los domingos."
     )
 
 
@@ -1166,8 +1201,8 @@ def test_validate_new_appointment_outside_working_hours_message_merges_slots_and
     )
 
     assert _only_violation_of(result).message == (
-        "El turno de 17:30 a 18:00 (hora local) queda fuera del horario de atención del "
-        "profesional: el martes atiende de 09:00 a 17:00 y de 20:00 a 24:00."
+        "El turno de 17:30 a 18:00 (hora local) queda fuera del horario de atención: "
+        "Dra. Laura Quiroga atiende el martes de 09:00 a 17:00 y de 20:00 a 24:00."
     )
 
 
@@ -1358,8 +1393,9 @@ def test_validate_new_appointment_blocked_time_message_without_reason() -> None:
 
     violation = _only_violation_of(result)
     assert violation.message == (
-        f"El turno de 10:30 a 11:00 (hora local) se superpone con el bloqueo {BL1} del "
-        "profesional, del 20/10/2026 10:00 al 20/10/2026 12:00 (hora local)."
+        "El turno de 10:30 a 11:00 (hora local) se superpone con un bloqueo de agenda: "
+        "Dra. Laura Quiroga tiene la agenda bloqueada del 20/10/2026 10:00 al "
+        f"20/10/2026 12:00 (hora local) (bloqueo {BL1})."
     )
     assert violation.conflicting_appointment_id is None
     assert violation.reference_kind is None
@@ -1373,8 +1409,9 @@ def test_validate_new_appointment_blocked_time_message_multi_day_block_with_reas
 
     message = _only_violation_of(result).message
     assert message == (
-        f"El turno de 23:30 a 23:55 (hora local) se superpone con el bloqueo {BLV} del "
-        "profesional, del 19/10/2026 00:00 al 26/10/2026 00:00 (hora local). Motivo: vacaciones."
+        "El turno de 23:30 a 23:55 (hora local) se superpone con un bloqueo de agenda: "
+        "Dra. Laura Quiroga tiene la agenda bloqueada del 19/10/2026 00:00 al "
+        f"26/10/2026 00:00 (hora local) (bloqueo {BLV}). Motivo: vacaciones."
     )
     assert "02:30" not in message
     assert "03:00" not in message
@@ -1389,8 +1426,9 @@ def test_validate_new_appointment_blocked_time_message_blank_reason_counts_as_no
     )
 
     assert _only_violation_of(result).message == (
-        f"El turno de 10:30 a 11:00 (hora local) se superpone con el bloqueo {BL1} del "
-        "profesional, del 20/10/2026 10:00 al 20/10/2026 12:00 (hora local)."
+        "El turno de 10:30 a 11:00 (hora local) se superpone con un bloqueo de agenda: "
+        "Dra. Laura Quiroga tiene la agenda bloqueada del 20/10/2026 10:00 al "
+        f"20/10/2026 12:00 (hora local) (bloqueo {BL1})."
     )
 
 
@@ -1441,6 +1479,18 @@ def test_validate_new_appointment_invalid_block_in_context_is_ignored_without_ra
     )
 
     assert isinstance(result, Ok)
+
+
+def test_validate_new_appointment_invalid_block_enclosed_by_requested_interval_is_ignored() -> None:
+    # Bloqueo 12:00 a 10:00 local = 15:00 a 13:00 UTC; pedido 09:00 a 13:00 local.
+    invalid = _block(BL1, _local(20, 12, 0), _local(20, 10, 0))
+
+    result = validate_new_appointment(
+        _request(_local(20, 9, 0), duration_min=240), _refs(), [], _ctx_blocks(invalid)
+    )
+
+    assert isinstance(result, Ok)
+    assert (result.appointment.start_at, result.appointment.end_at) == (_at(12), _at(16))
 
 
 def test_validate_new_appointment_start_five_minutes_before_now_reports_in_the_past() -> None:
@@ -1620,3 +1670,453 @@ def test_validate_new_appointment_start_not_before_now_returns_ok(
     assert isinstance(result, Ok)
     assert result.appointment.start_at == start_at
     assert result.appointment.end_at == expected_end
+
+
+# --- Intervalo en conflicto ---
+
+
+def _utc(day: int, hour: int, minute: int = 0) -> datetime:
+    return datetime(2026, 10, day, hour, minute, tzinfo=timezone.utc)
+
+
+def _conflicts(
+    result: object,
+) -> list[tuple[ViolationCode, UUID | None, UUID | None, Interval | None]]:
+    assert isinstance(result, Rejected)
+    return [
+        (
+            v.code,
+            v.conflicting_appointment_id,
+            v.conflicting_block_id,
+            v.conflicting_interval,
+        )
+        for v in result.violations
+    ]
+
+
+@pytest.mark.parametrize(
+    ("existing_end", "expected"),
+    [
+        pytest.param(
+            _at(13, 30),
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T13:30:00+00:00"),
+            ),
+            id="turno-de-30-minutos",
+        ),
+        pytest.param(
+            _at(14),
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T14:00:00+00:00"),
+            ),
+            id="turno-de-60-minutos",
+        ),
+    ],
+)
+def test_validate_new_appointment_professional_overlap_carries_existing_appointment_interval(
+    existing_end: datetime, expected: Interval
+) -> None:
+    existing = [_existing(APPT_A, P1, S1, _at(13), existing_end)]
+
+    result = _validate(_request(_at(13, 15), chair_id=S2, duration_min=30), existing)
+
+    assert _conflicts(result) == [(ViolationCode.PROFESSIONAL_OVERLAP, APPT_A, None, expected)]
+
+
+def test_validate_new_appointment_chair_overlap_carries_existing_appointment_interval() -> None:
+    result = _validate(_request(_at(13, 15), professional_id=P2, duration_min=30), [_appt_a()])
+
+    assert _conflicts(result) == [
+        (
+            ViolationCode.CHAIR_OVERLAP,
+            APPT_A,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T13:30:00+00:00"),
+            ),
+        )
+    ]
+
+
+def test_validate_new_appointment_each_overlap_violation_carries_its_own_interval() -> None:
+    result = _validate(_request(_at(13), duration_min=60), [_b(), _c(), _d()])
+
+    assert _conflicts(result) == [
+        (
+            ViolationCode.PROFESSIONAL_OVERLAP,
+            APPT_C,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T13:30:00+00:00"),
+            ),
+        ),
+        (
+            ViolationCode.PROFESSIONAL_OVERLAP,
+            APPT_B,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:30:00+00:00"),
+                datetime.fromisoformat("2026-10-20T14:00:00+00:00"),
+            ),
+        ),
+        (
+            ViolationCode.CHAIR_OVERLAP,
+            APPT_D,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:45:00+00:00"),
+                datetime.fromisoformat("2026-10-20T14:15:00+00:00"),
+            ),
+        ),
+    ]
+
+
+def test_validate_new_appointment_existing_loaded_in_buenos_aires_time_reports_interval_in_utc() -> None:
+    existing = [
+        _existing(
+            APPT_A,
+            P1,
+            S1,
+            datetime.fromisoformat("2026-10-20T10:00:00-03:00"),
+            datetime.fromisoformat("2026-10-20T10:30:00-03:00"),
+        )
+    ]
+
+    result = _validate(_request(_at(13, 15), chair_id=S2, duration_min=30), existing)
+
+    assert _conflicts(result) == [
+        (
+            ViolationCode.PROFESSIONAL_OVERLAP,
+            APPT_A,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T13:30:00+00:00"),
+            ),
+        )
+    ]
+    assert isinstance(result, Rejected)
+    interval = result.violations[0].conflicting_interval
+    assert interval is not None
+    assert interval.start.utcoffset() == timedelta(0)
+    assert interval.end.utcoffset() == timedelta(0)
+
+
+def test_validate_new_appointment_blocked_time_carries_the_block_interval() -> None:
+    # 10:30 a 11:00 hora local = 13:30 a 14:00 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30), _refs(), [], _ctx_blocks(_bl1())
+    )
+
+    assert _conflicts(result) == [
+        (
+            ViolationCode.BLOCKED_TIME,
+            None,
+            BL1,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T15:00:00+00:00"),
+            ),
+        )
+    ]
+
+
+def test_validate_new_appointment_multi_day_block_carries_its_full_interval() -> None:
+    # martes 20 de 10:00 a 10:30 hora local = 13:00 a 13:30 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 10, 0), duration_min=30), _refs(), [], _ctx_blocks(_blv())
+    )
+
+    assert _conflicts(result) == [
+        (
+            ViolationCode.BLOCKED_TIME,
+            None,
+            BLV,
+            Interval(
+                datetime.fromisoformat("2026-10-19T03:00:00+00:00"),
+                datetime.fromisoformat("2026-10-26T03:00:00+00:00"),
+            ),
+        )
+    ]
+
+
+def test_validate_new_appointment_two_blocks_each_carry_their_own_interval() -> None:
+    # 11:30 a 12:30 hora local = 14:30 a 15:30 UTC
+    result = validate_new_appointment(
+        _request(_local(20, 11, 30), duration_min=60), _refs(), [], _ctx_blocks(_bl2(), _bl1())
+    )
+
+    assert _conflicts(result) == [
+        (
+            ViolationCode.BLOCKED_TIME,
+            None,
+            BL1,
+            Interval(
+                datetime.fromisoformat("2026-10-20T13:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T15:00:00+00:00"),
+            ),
+        ),
+        (
+            ViolationCode.BLOCKED_TIME,
+            None,
+            BL2,
+            Interval(
+                datetime.fromisoformat("2026-10-20T14:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T16:00:00+00:00"),
+            ),
+        ),
+    ]
+
+
+@pytest.mark.parametrize(
+    ("request_", "refs", "context", "expected_code"),
+    [
+        pytest.param(
+            _request(_local(20, 12, 30), duration_min=60),
+            _refs(),
+            _ctx(*TUESDAY_BASE),
+            ViolationCode.OUTSIDE_WORKING_HOURS,
+            id="fuera-de-horario",
+        ),
+        pytest.param(
+            _request(_at(13), duration_min=7),
+            _refs(),
+            CTX,
+            ViolationCode.INVALID_DURATION,
+            id="duracion-invalida",
+        ),
+        pytest.param(
+            _request(_local(20, 10, 3), duration_min=30),
+            _refs(),
+            CTX,
+            ViolationCode.INVALID_START_TIME,
+            id="inicio-fuera-de-grilla",
+        ),
+        pytest.param(
+            _request(_local(20, 23, 30), duration_min=60),
+            _refs(),
+            CTX,
+            ViolationCode.CROSSES_MIDNIGHT,
+            id="cruza-medianoche",
+        ),
+        pytest.param(
+            _request(_local(20, 9, 55), duration_min=30),
+            _refs(),
+            _ctx_now(NOW_1000),
+            ViolationCode.IN_THE_PAST,
+            id="en-el-pasado",
+        ),
+        pytest.param(
+            _request(_at(13), chair_id=S2, duration_min=30),
+            _refs(chair=None),
+            CTX,
+            ViolationCode.UNKNOWN_REFERENCE,
+            id="referencia-inexistente",
+        ),
+        pytest.param(
+            _request(_at(13), duration_min=30),
+            _refs(professional=Professional(P1, P1_NAME, active=False)),
+            CTX,
+            ViolationCode.INACTIVE_REFERENCE,
+            id="referencia-inactiva",
+        ),
+    ],
+)
+def test_validate_new_appointment_violation_without_conflict_carries_no_interval_or_ids(
+    request_: NewAppointmentRequest,
+    refs: AppointmentReferences,
+    context: ScheduleContext,
+    expected_code: ViolationCode,
+) -> None:
+    result = validate_new_appointment(request_, refs, [], context)
+
+    assert _conflicts(result) == [(expected_code, None, None, None)]
+
+
+def test_validate_new_appointment_interval_is_present_if_and_only_if_there_is_a_conflicting_id() -> None:
+    # TUESDAY_BASE; BL3 12:00-14:00 local = 15:00-17:00 UTC; E y F; pedido 12:30-13:30 local
+    bl3 = _block(BL3, _local(20, 12, 0), _local(20, 14, 0))
+    existing = [
+        _existing(APPT_E, P1, S2, _utc(20, 15, 30), _utc(20, 16)),
+        _existing(APPT_F, P2, S1, _utc(20, 15, 45), _utc(20, 16, 15)),
+    ]
+
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60),
+        _refs(),
+        existing,
+        _ctx_blocks(bl3, working_hours=TUESDAY_BASE),
+    )
+
+    assert _conflicts(result) == [
+        (ViolationCode.OUTSIDE_WORKING_HOURS, None, None, None),
+        (
+            ViolationCode.BLOCKED_TIME,
+            None,
+            BL3,
+            Interval(
+                datetime.fromisoformat("2026-10-20T15:00:00+00:00"),
+                datetime.fromisoformat("2026-10-20T17:00:00+00:00"),
+            ),
+        ),
+        (
+            ViolationCode.PROFESSIONAL_OVERLAP,
+            APPT_E,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T15:30:00+00:00"),
+                datetime.fromisoformat("2026-10-20T16:00:00+00:00"),
+            ),
+        ),
+        (
+            ViolationCode.CHAIR_OVERLAP,
+            APPT_F,
+            None,
+            Interval(
+                datetime.fromisoformat("2026-10-20T15:45:00+00:00"),
+                datetime.fromisoformat("2026-10-20T16:15:00+00:00"),
+            ),
+        ),
+    ]
+    assert isinstance(result, Rejected)
+    for violation in result.violations:
+        has_conflict = (
+            violation.conflicting_appointment_id is not None
+            or violation.conflicting_block_id is not None
+        )
+        assert (violation.conflicting_interval is not None) == has_conflict
+
+
+def test_validate_new_appointment_overlap_message_trims_name_without_changing_entity() -> None:
+    professional = Professional(P1, "  Dra. Laura Quiroga  ", active=True)
+    references = _refs(professional=professional, chair=Chair(S2, OTHER_CHAIR_NAME, active=True))
+
+    result = validate_new_appointment(
+        _request(_at(13, 15), chair_id=S2, duration_min=30), references, [_appt_a()], CTX
+    )
+
+    assert isinstance(result, Rejected)
+    assert [v.message for v in result.violations] == [
+        f"Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone "
+        f"(turno {APPT_A})."
+    ]
+    assert "  " not in result.violations[0].message
+    assert references.professional is not None
+    assert references.professional.full_name == "  Dra. Laura Quiroga  "
+
+
+@pytest.mark.parametrize("name", [pytest.param("", id="vacio"), pytest.param("   ", id="en-blanco")])
+def test_validate_new_appointment_overlap_messages_with_empty_or_blank_names(name: str) -> None:
+    references = _refs(
+        professional=Professional(P1, name, active=True), chair=Chair(S1, name, active=True)
+    )
+
+    result = validate_new_appointment(
+        _request(_at(13, 15), duration_min=30), references, [_appt_a()], CTX
+    )
+
+    assert isinstance(result, Rejected)
+    assert [v.message for v in result.violations] == [
+        f"El profesional ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone "
+        f"(turno {APPT_A}).",
+        f"El sillón está ocupado de 10:00 a 10:30 (hora local) por un turno que se superpone "
+        f"(turno {APPT_A}).",
+    ]
+
+
+@pytest.mark.parametrize("name", [pytest.param("", id="vacio"), pytest.param("   ", id="en-blanco")])
+@pytest.mark.parametrize(
+    ("day", "hour", "duration", "expected"),
+    [
+        pytest.param(
+            20, 12, 60,
+            "El turno de 12:30 a 13:30 (hora local) queda fuera del horario de atención: "
+            "el profesional atiende el martes de 09:00 a 13:00 y de 15:00 a 19:00.",
+            id="con-tramos",
+        ),
+        pytest.param(
+            25, 10, 30,
+            "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención: "
+            "el profesional no atiende los domingos.",
+            id="sin-tramos",
+        ),
+    ],
+)
+def test_validate_new_appointment_outside_hours_message_with_empty_or_blank_name(
+    name: str, day: int, hour: int, duration: int, expected: str
+) -> None:
+    start = _local(day, hour, 30 if day == 20 else 0)
+    result = validate_new_appointment(
+        _request(start, duration_min=duration),
+        _refs(professional=Professional(P1, name, active=True)), [], _ctx(*TUESDAY_BASE),
+    )
+
+    assert _only_violation_of(result).message == expected
+
+
+@pytest.mark.parametrize("name", [pytest.param("", id="vacio"), pytest.param("   ", id="en-blanco")])
+def test_validate_new_appointment_block_message_with_empty_or_blank_name(name: str) -> None:
+    result = validate_new_appointment(
+        _request(_local(20, 10, 30), duration_min=30),
+        _refs(professional=Professional(P1, name, active=True)), [], _ctx_blocks(_bl1()),
+    )
+
+    assert _only_violation_of(result).message == (
+        "El turno de 10:30 a 11:00 (hora local) se superpone con un bloqueo de agenda: "
+        "el profesional tiene la agenda bloqueada del 20/10/2026 10:00 al "
+        f"20/10/2026 12:00 (hora local) (bloqueo {BL1})."
+    )
+
+
+def test_validate_new_appointment_all_agenda_conflicts_have_complete_messages_in_order() -> None:
+    bl3 = _block(BL3, _local(20, 12, 0), _local(20, 14, 0))
+    existing = [
+        _existing(APPT_E, P1, S2, _local(20, 12, 30), _local(20, 13, 0)),
+        _existing(APPT_F, P2, S1, _local(20, 12, 45), _local(20, 13, 15)),
+    ]
+
+    result = validate_new_appointment(
+        _request(_local(20, 12, 30), duration_min=60), _refs(), existing,
+        _ctx_blocks(bl3, working_hours=TUESDAY_BASE),
+    )
+
+    assert isinstance(result, Rejected)
+    assert [v.message for v in result.violations] == [
+        "El turno de 12:30 a 13:30 (hora local) queda fuera del horario de atención: "
+        "Dra. Laura Quiroga atiende el martes de 09:00 a 13:00 y de 15:00 a 19:00.",
+        "El turno de 12:30 a 13:30 (hora local) se superpone con un bloqueo de agenda: "
+        "Dra. Laura Quiroga tiene la agenda bloqueada del 20/10/2026 12:00 al "
+        f"20/10/2026 14:00 (hora local) (bloqueo {BL3}).",
+        "Dra. Laura Quiroga ya tiene un turno de 12:30 a 13:00 (hora local) que se superpone "
+        f"(turno {APPT_E}).",
+        "Sillón 1 está ocupado de 12:45 a 13:15 (hora local) por un turno que se superpone "
+        f"(turno {APPT_F}).",
+    ]
+
+
+@pytest.mark.parametrize(
+    ("references", "expected"),
+    [
+        pytest.param(
+            _refs(professional=Professional(P1, P1_NAME, active=False)),
+            f"El profesional indicado está inactivo (id {P1}).", id="profesional",
+        ),
+        pytest.param(
+            _refs(chair=Chair(S1, S1_NAME, active=False)),
+            f"El sillón indicado está inactivo (id {S1}).", id="sillon",
+        ),
+    ],
+)
+def test_validate_new_appointment_inactive_reference_with_name_keeps_original_message(
+    references: AppointmentReferences, expected: str
+) -> None:
+    result = validate_new_appointment(_request(_at(13)), references, [], CTX)
+
+    message = _only_violation_of(result).message
+    assert message == expected
+    assert "Dra. Laura Quiroga" not in message
+    assert "Sillón 1" not in message

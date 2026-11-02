@@ -1,7 +1,9 @@
+from datetime import datetime, timezone
 from uuid import UUID
 
 import pytest
 
+from app.domain.intervals import Interval
 from app.domain.violations import ReferenceKind, Rejected, Violation, ViolationCode
 
 APPT_A = UUID("00000000-0000-0000-0000-0000000000a1")
@@ -115,3 +117,40 @@ def test_violation_built_as_in_c02_has_no_reference_kind() -> None:
     violation = Violation(ViolationCode.INVALID_DURATION, "duracion invalida")
 
     assert violation.reference_kind is None
+
+
+def _at(hour: int, minute: int = 0) -> datetime:
+    return datetime(2026, 10, 20, hour, minute, tzinfo=timezone.utc)
+
+
+@pytest.mark.parametrize(
+    ("given", "expected"),
+    [
+        pytest.param(None, None, id="por-defecto-none"),
+        pytest.param(
+            Interval(_at(13), _at(13, 30)),
+            Interval(_at(13), _at(13, 30)),
+            id="conserva-el-intervalo",
+        ),
+        pytest.param(
+            Interval(
+                datetime(2026, 10, 19, 3, 0, tzinfo=timezone.utc),
+                datetime(2026, 10, 26, 3, 0, tzinfo=timezone.utc),
+            ),
+            Interval(
+                datetime(2026, 10, 19, 3, 0, tzinfo=timezone.utc),
+                datetime(2026, 10, 26, 3, 0, tzinfo=timezone.utc),
+            ),
+            id="conserva-varios-dias-sin-recortar",
+        ),
+    ],
+)
+def test_violation_conflicting_interval_defaults_to_none_and_keeps_given_value(
+    given: Interval | None, expected: Interval | None
+) -> None:
+    if given is None:
+        violation = Violation(ViolationCode.CHAIR_OVERLAP, "choca")
+    else:
+        violation = Violation(ViolationCode.CHAIR_OVERLAP, "choca", conflicting_interval=given)
+
+    assert violation.conflicting_interval == expected

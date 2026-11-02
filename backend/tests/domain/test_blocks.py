@@ -152,3 +152,13 @@ def test_appointments_affected_by_invalid_block_returns_empty_without_raising() 
     invalid = _block(_local(12), _local(10))
 
     assert appointments_affected_by_block(invalid, list(APPOINTMENTS.values())) == []
+
+
+def test_appointments_affected_by_invalid_block_enclosed_by_appointment_returns_empty() -> None:
+    # 12:00-10:00 local = 15:00-13:00 UTC; turno 09:00-13:00 = 12:00-16:00 UTC.
+    invalid = _block(_local(12), _local(10))
+    appointment = _appointment(T1, _local(9), _local(13), AppointmentStatus.RESERVED)
+
+    affected = appointments_affected_by_block(invalid, [appointment])
+
+    assert affected == []

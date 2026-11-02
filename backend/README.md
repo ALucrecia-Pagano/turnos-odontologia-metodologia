@@ -34,10 +34,10 @@ mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 
 | Módulo | Contenido |
 |---|---|
-| `model` | `AppointmentStatus`, `Professional`, `Chair`, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional), `Block` (un bloqueo de la agenda de un profesional, `[inicio, fin)` con motivo opcional) y `ScheduleContext` (la zona horaria, los tramos `working_hours`, los bloqueos `blocks` y el momento actual `now` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
-| `violations` | `ViolationCode`, `ReferenceKind`, `Violation`, `Ok`, `Rejected`, `ValidationResult` |
+| `model` | `AppointmentStatus`, `Professional` (con `full_name`) y `Chair` (con `name`), nombres obligatorios que el dominio no valida y que usan los mensajes de conflicto, `Patient`, `Service`, `Appointment`, `NewAppointmentRequest`, `AppointmentReferences`, `WorkingHours` (un tramo del horario de atención de un profesional), `Block` (un bloqueo de la agenda de un profesional, `[inicio, fin)` con motivo opcional) y `ScheduleContext` (la zona horaria, los tramos `working_hours`, los bloqueos `blocks` y el momento actual `now` que recibe el dominio); los instantes llevan zona y se normalizan a UTC |
+| `violations` | `ViolationCode`, `ReferenceKind`, `Violation` (con `conflicting_interval`, en UTC), `Ok`, `Rejected`, `ValidationResult` |
 | `intervals` | `Interval` semiabierto `[inicio, fin)`, `overlaps` y la hora local: `local_day_and_minutes`, `format_local_time`, `format_local_date_time` y `format_local_date_time_with_seconds` (fecha y hora local siempre con segundos, para el mensaje de `IN_THE_PAST`) |
-| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local), `working_hours` (horario de atención del turno y validez de un conjunto de tramos), `blocks` (turno que pisa un bloqueo, validez de un bloqueo y `appointments_affected_by_block`, los turnos que pisa un bloqueo nuevo sin cancelarlos), `overlap` (profesional y sillón) y `past` (el turno no empieza antes de `now`, comparando instantes sin truncar) |
+| `rules/` | `grid` (`GRID_STEP_MIN`, la granularidad de 5 min compartida), `duration` (positiva, múltiplo de 5 y máximo 480 min), `references` (existentes y activas), `start_time` (inicio en la grilla, en hora local), `same_day` (un solo día local), `working_hours` (horario de atención del turno y validez de un conjunto de tramos), `blocks` (turno que pisa un bloqueo, validez de un bloqueo y `appointments_affected_by_block`, los turnos que pisa un bloqueo nuevo sin cancelarlos), `names` (el nombre del profesional o del sillón como sujeto de un mensaje, con un sustantivo genérico si está vacío), `overlap` (profesional y sillón) y `past` (el turno no empieza antes de `now`, comparando instantes sin truncar) |
 | `appointment/` | `validate_new_appointment` |
 
 `validate_new_appointment` evalúa en dos grupos y nunca los mezcla: primero la validez del
@@ -47,7 +47,10 @@ bloqueos del profesional y después solapamientos del profesional y del sillón,
 juntos). La grilla del inicio, la medianoche y el horario de atención se evalúan en la
 zona de `ScheduleContext`, que el llamador pasa siempre junto con los tramos y los
 bloqueos (sin valor por defecto). Los bloqueos se comparan como instantes, aunque duren
-varios días.
+varios días. Los mensajes de conflicto identifican al profesional o al sillón por su
+nombre recortado (o un sustituto genérico) y muestran el rango en hora local. Las
+violaciones de solapamiento y bloqueo incluyen `conflicting_interval` en UTC, el
+intervalo completo del turno existente o del bloqueo; las demás no llevan intervalo.
 
 ```python
 from datetime import datetime, timezone
@@ -78,8 +81,8 @@ request = NewAppointmentRequest(
 # Quien llama resuelve cada referencia (entidad, o None si no existe).
 references = AppointmentReferences(
     patient=Patient(id=UUID(int=2)),
-    professional=Professional(id=UUID(int=3), active=True),
-    chair=Chair(id=UUID(int=4), active=True),
+    professional=Professional(id=UUID(int=3), full_name="Dra. Laura Quiroga", active=True),
+    chair=Chair(id=UUID(int=4), name="Sillón 1", active=True),
     service=Service(id=UUID(int=5), default_duration_min=30),
 )
 

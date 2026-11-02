@@ -9,7 +9,9 @@ from app.domain.model import (
     Appointment,
     AppointmentStatus,
     Block,
+    Chair,
     NewAppointmentRequest,
+    Professional,
     ScheduleContext,
     WorkingHours,
 )
@@ -211,3 +213,26 @@ def test_schedule_context_now_with_zone_is_normalized_to_utc(
 def test_schedule_context_now_without_timezone_raises_value_error() -> None:
     with pytest.raises(ValueError, match="zona horaria"):
         _context(datetime(2026, 10, 20, 10, 0))
+
+
+P1_NAME = "Dra. Laura Quiroga"
+S1_NAME = "Sillón 1"
+
+
+def test_professional_and_chair_with_name_keep_name_id_and_active() -> None:
+    professional = Professional(P1, full_name=P1_NAME, active=True)
+    chair = Chair(S1, name=S1_NAME, active=True)
+
+    assert (professional.id, professional.full_name, professional.active) == (P1, P1_NAME, True)
+    assert (chair.id, chair.name, chair.active) == (S1, S1_NAME, True)
+
+
+@pytest.mark.parametrize("name", [pytest.param("", id="vacio"), pytest.param("   ", id="en-blanco")])
+def test_professional_and_chair_with_empty_or_blank_name_keep_it_unstripped(name: str) -> None:
+    professional = Professional(P1, full_name=name, active=False)
+    chair = Chair(S1, name=name, active=False)
+
+    assert professional.full_name == name
+    assert chair.name == name
+    assert professional.active is False
+    assert chair.active is False

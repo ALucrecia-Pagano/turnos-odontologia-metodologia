@@ -13,9 +13,11 @@ from zoneinfo import ZoneInfo
 
 from app.domain.intervals import format_local_time, local_day_and_minutes
 from app.domain.model import WorkingHours
+from app.domain.rules.names import subject_name
 from app.domain.violations import Violation, ViolationCode
 
 _MINUTES_PER_DAY: Final = 1440
+_GENERIC_PROFESSIONAL: Final = "el profesional"
 _WEEKDAY_NAMES: Final = (
     "lunes",
     "martes",
@@ -151,18 +153,24 @@ def _outside_message(
     weekday: int,
     merged: Sequence[tuple[int, int]],
     tz: ZoneInfo,
+    professional_name: str,
 ) -> str:
-    """Arma el mensaje de `OUTSIDE_WORKING_HOURS` con los tramos unidos del dia."""
+    """Arma el mensaje con el nombre como sujeto y los tramos unidos del dia.
+
+    El nombre se muestra recortado; vacio o en blanco usa "el profesional" en
+    minuscula, porque va despues de dos puntos.
+    """
+    subject = subject_name(professional_name, _GENERIC_PROFESSIONAL)
     prefix = (
         f"El turno de {format_local_time(start_at, tz)} a {format_local_time(end_at, tz)} "
-        "(hora local) queda fuera del horario de atención del profesional: "
+        f"(hora local) queda fuera del horario de atención: {subject} "
     )
     if not merged:
         return f"{prefix}no atiende los {_WEEKDAY_NAMES_PLURAL[weekday - 1]}."
     ranges = _join_with_and(
         [f"de {_format_minute(start)} a {_format_minute(end)}" for start, end in merged]
     )
-    return f"{prefix}el {_WEEKDAY_NAMES[weekday - 1]} atiende {ranges}."
+    return f"{prefix}atiende el {_WEEKDAY_NAMES[weekday - 1]} {ranges}."
 
 
 def check_working_hours(
@@ -171,6 +179,7 @@ def check_working_hours(
     end_at: datetime,
     working_hours: Sequence[WorkingHours],
     tz: ZoneInfo,
+    professional_name: str,
 ) -> list[Violation]:
     """Devuelve `OUTSIDE_WORKING_HOURS` si el turno no cae dentro del horario (RN-AG-04).
 
@@ -185,6 +194,8 @@ def check_working_hours(
         end_at: Fin del turno (instante con zona horaria).
         working_hours: Tramos de uno o varios profesionales.
         tz: Zona horaria en la que se evalua el horario.
+        professional_name: Nombre como sujeto; vacio o en blanco usa "el profesional"
+            en minuscula despues de dos puntos.
 
     Returns:
         Lista vacia si el turno cae completo en un tramo; si no, una sola violacion sin
@@ -207,6 +218,6 @@ def check_working_hours(
     return [
         Violation(
             code=ViolationCode.OUTSIDE_WORKING_HOURS,
-            message=_outside_message(start_at, end_at, weekday, merged, tz),
+            message=_outside_message(start_at, end_at, weekday, merged, tz, professional_name),
         )
     ]

@@ -91,7 +91,11 @@ def _effective_duration(
 
 
 def _agenda_conflict_violations(
-    candidate: Appointment, existing_appointments: Sequence[Appointment], context: ScheduleContext
+    candidate: Appointment,
+    existing_appointments: Sequence[Appointment],
+    context: ScheduleContext,
+    professional_name: str,
+    chair_name: str,
 ) -> list[Violation]:
     """Grupo 2, conflictos de agenda: horario, bloqueos, profesional y sillon (RN-AG-12).
 
@@ -105,6 +109,8 @@ def _agenda_conflict_violations(
         existing_appointments: Turnos existentes de la agenda.
         context: Contexto de la agenda (zona horaria, tramos del horario de atencion y
             bloqueos).
+        professional_name: Nombre del profesional resuelto en references.
+        chair_name: Nombre del sillon resuelto en references.
 
     Returns:
         Las violaciones de conflicto, todas juntas y en orden estable.
@@ -116,6 +122,7 @@ def _agenda_conflict_violations(
             candidate.end_at,
             context.working_hours,
             context.tz,
+            professional_name,
         )
         + check_blocks(
             candidate.professional_id,
@@ -123,9 +130,12 @@ def _agenda_conflict_violations(
             candidate.end_at,
             context.blocks,
             context.tz,
+            professional_name,
         )
-        + check_professional_overlap(candidate, existing_appointments)
-        + check_chair_overlap(candidate, existing_appointments)
+        + check_professional_overlap(
+            candidate, existing_appointments, context.tz, professional_name
+        )
+        + check_chair_overlap(candidate, existing_appointments, context.tz, chair_name)
     )
 
 
@@ -146,7 +156,8 @@ def validate_new_appointment(
     Args:
         request: Pedido de turno nuevo.
         references: Referencias resueltas por el llamador (entidad o `None`); la
-            prestacion aporta la duracion por defecto.
+            prestacion aporta la duracion por defecto; el profesional y el sillon aportan
+            los nombres para los mensajes de los conflictos de agenda.
         existing_appointments: Turnos existentes de la agenda.
         context: Contexto de la agenda (zona horaria, tramos del horario de atencion,
             bloqueos y momento actual). Sin valor por defecto: el llamador debe pasarlo
@@ -168,9 +179,15 @@ def validate_new_appointment(
     validity_violations = _request_validity_violations(
         request, references, context, duration, end_at
     )
-    # Sin duracion efectiva siempre hay UNKNOWN_REFERENCE (prestacion), asi que
-    # `validity_violations` no esta vacia; la condicion `end_at is None` solo acota el tipo.
-    if validity_violations or end_at is None:
+    # Sin duracion efectiva siempre hay UNKNOWN_REFERENCE (prestacion), y una referencia `None`
+    # tambien (profesional o sillon), asi que `validity_violations` no esta vacia; las
+    # condiciones `is None` solo acotan el tipo.
+    if (
+        validity_violations
+        or end_at is None
+        or references.professional is None
+        or references.chair is None
+    ):
         return Rejected(tuple(validity_violations))
     candidate = Appointment(
         id=request.id,
@@ -182,7 +199,13 @@ def validate_new_appointment(
         end_at=end_at,
         status=AppointmentStatus.RESERVED,
     )
-    conflict_violations = _agenda_conflict_violations(candidate, existing_appointments, context)
+    conflict_violations = _agenda_conflict_violations(
+        candidate,
+        existing_appointments,
+        context,
+        references.professional.full_name,
+        references.chair.name,
+    )
     if conflict_violations:
         return Rejected(tuple(conflict_violations))
     return Ok(candidate)
