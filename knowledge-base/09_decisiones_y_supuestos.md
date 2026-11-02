@@ -142,6 +142,12 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Riesgo si es falso**: la cátedra puede esperar al menos un uso real de Redis en la entrega.
 **Cómo validar**: confirmar con la cátedra. Si se pide un uso concreto, el candidato más chico es avisar de forma diferida los turnos afectados por un bloqueo (RN-DI-04), sin integraciones externas.
 
+### SU-12 — Normalización de nombres y DNI del catálogo (C-09)
+**Suposición:** para comparar nombres se recortan los espacios de los bordes, se colapsan los espacios internos a uno y se aplica `casefold`; las tildes cuentan (`Extracción` y `Extraccion` son diferentes), sin `unicodedata`. Solo los nombres de sillón y prestación son únicos. Para el DNI se quitan puntos y espacios: deben quedar 7 u 8 dígitos, sin guiones; se guarda y compara solo esa secuencia de dígitos. Un nombre vacío no se compara por duplicados; tampoco un DNI inválido. El DNI de los mensajes de duplicado lleva puntos de miles.
+**Origen**: decisiones D4 y D6 del explore de C-09 realizado por Copilot, cerradas por la autora y documentadas el 2026-11-01 en `docs/evidencias/explore-C-09.md`.
+**Riesgo si es falso**: aceptar duplicados o rechazar nombres/DNI que la autora considera distintos o válidos.
+**Cómo validar**: confirmado por la autora para C-09; escenarios automatizados de mayúsculas/espacios/tildes y DNI con/sin puntos, longitudes e inválidos.
+
 ## Decisiones reemplazadas (trazabilidad)
 
 Se conservan tal como estaban antes del cambio de stack. **No aplican**: rige la versión vigente indicada en cada una.

@@ -32,6 +32,7 @@ Un turno referencia **exactamente** un profesional, un sillón, una prestación 
 
 ### Professional
 - `id` UUID PK · `full_name` TEXT NOT NULL · `license_number` TEXT NULL (matrícula ficticia) · `active` BOOLEAN DEFAULT true.
+- En C-09, `license_number` no entra al modelo del dominio: queda para persistencia en C-15. El dominio conserva `Professional(id, full_name, active)`.
 - Relaciones: 1─* `WorkingHours`, `Block`, `Appointment`.
 - Constraint: `full_name` no vacío.
 
