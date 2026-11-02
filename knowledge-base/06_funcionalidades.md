@@ -106,9 +106,9 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 **Quiero** saber qué turno o bloqueo causa el rechazo
 **Para** resolverlo rápido (diferenciador del MVP)
 
-- [ ] CA-1: cada violación trae `code`, `message` en español y, si aplica, `conflictingAppointmentId` / `conflictingBlockId` con el intervalo que choca.
-- [ ] CA-2: si hay varias violaciones, se devuelven todas en el orden de RN-AG-12. "Todas" es dentro del primer grupo que falla: con un pedido inválido no se evalúan los conflictos de agenda (explore de C-08).
-- [ ] CA-3: el mensaje incluye el nombre del profesional/sillón y el rango horario en hora local.
+- [x] CA-1: cada violación trae `code`, `message` en español y, si aplica, `conflictingAppointmentId` / `conflictingBlockId` con el intervalo que choca.
+- [x] CA-2: si hay varias violaciones, se devuelven todas en el orden de RN-AG-12. "Todas" es dentro del primer grupo que falla: con un pedido inválido no se evalúan los conflictos de agenda (explore de C-08).
+- [x] CA-3: el mensaje incluye el nombre del profesional/sillón y el rango horario en hora local.
 
 **Reglas**: RN-AG-12
 

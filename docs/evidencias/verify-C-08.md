@@ -9,6 +9,7 @@ OPSX no tiene un comando propio de verify. La verificación se hizo a mano, sigu
 - Skills del proyecto: `tdd`, `python-testing-patterns`, `python-pro`; flujo `source-command-opsx-apply`.
 - Desde `backend/`: `.venv/Scripts/python.exe -m pytest -v` y `.venv/Scripts/python.exe -m mypy --strict app tests`.
 - Desde la raíz: `openspec validate mensajes-de-conflicto-en-espanol --strict`.
+- Artefactos archivados: [design.md](../../openspec/changes/archive/2026-11-01-mensajes-de-conflicto-en-espanol/design.md) y [tasks.md](../../openspec/changes/archive/2026-11-01-mensajes-de-conflicto-en-espanol/tasks.md).
 - Salidas completas finales: [pytest-C-08.txt](pytest-C-08.txt) y [mypy-C-08.txt](mypy-C-08.txt).
 - No se instalaron paquetes ni se usó la red. Se ejecutaron el intérprete y el CLI ya instalados fuera del sandbox por sus restricciones de acceso.
 

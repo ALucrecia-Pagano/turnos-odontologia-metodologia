@@ -266,6 +266,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 
 ### [C-06] `bloqueos-de-agenda`
 - **Estado**: `[x]` completado (archivado el 2026-10-28)
+- **Nota**: Defecto latente corregido en C-08: los bloqueos con inicio >= fin no se filtraban en _overlapping_blocks ni en appointments_affected_by_block (ver verify-C-08.md).
 - **Scope**:
   - `model.py`: `Block` (id, profesional, `[inicio, fin)` de instantes normalizados a UTC, motivo opcional), sin validar el orden al construirse, y `ScheduleContext.blocks` (obligatorio).
   - `violations.py`: `BLOCKED_TIME`, `INVALID_BLOCK` y `Violation.conflicting_block_id`.
@@ -297,7 +298,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/08_arquitectura_propuesta.md` §Patrones aplicados (Inyección de reloj)
 
 ### [C-08] `mensajes-de-conflicto-en-espanol`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-01)
 - **Scope**: diferenciador del MVP (D.3).
   - `violations.py`: todas las violaciones llevan `code`, `message` en español, `conflicting_appointment_id` / `conflicting_block_id` y el intervalo que choca (US-006 CA-1).
   - El mensaje incluye el nombre del profesional o sillón y el rango en hora local (US-006 CA-3), usando las funciones de hora local de C-04.
