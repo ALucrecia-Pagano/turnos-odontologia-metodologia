@@ -1,5 +1,8 @@
 from collections.abc import Iterator
+from pathlib import Path
 
+from alembic import command
+from alembic.config import Config
 import psycopg
 import pytest
 from psycopg import sql
@@ -8,6 +11,15 @@ from sqlalchemy.engine import URL, make_url
 
 from app.config import Settings, load_settings
 from app.db.session import create_database_engine
+
+
+BACKEND_ROOT = Path(__file__).resolve().parents[2]
+
+
+def migration_config(database_url: str) -> Config:
+    config = Config(str(BACKEND_ROOT / "alembic.ini"))
+    config.attributes["database_url"] = database_url
+    return config
 
 
 @pytest.fixture(scope="session")
@@ -33,6 +45,13 @@ def test_database_url(integration_settings: Settings) -> Iterator[URL]:
                     + sql.Identifier(test_database).as_string(connection)
                 )
     yield source_url.set(database=test_database)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def migrated_test_database(test_database_url: URL) -> Iterator[None]:
+    config = migration_config(test_database_url.render_as_string(hide_password=False))
+    command.upgrade(config, "head")
+    yield
 
 
 @pytest.fixture

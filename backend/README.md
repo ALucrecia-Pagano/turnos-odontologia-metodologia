@@ -28,6 +28,32 @@ pytest    # corre los tests de tests/
 mypy      # chequeo estricto de app y tests (Python 3.12 como objetivo)
 ```
 
+## Migraciones
+
+Con PostgreSQL y Redis iniciados desde la raíz:
+
+```powershell
+docker compose up -d
+```
+
+Desde `backend/`, Alembic obtiene `DATABASE_URL` de la configuración de la
+aplicación y no de `alembic.ini`:
+
+```powershell
+.\.venv\Scripts\python -m alembic upgrade head
+.\.venv\Scripts\python -m alembic current
+.\.venv\Scripts\python -m alembic downgrade base
+.\.venv\Scripts\python -m alembic upgrade head
+pytest
+pytest -m integration
+```
+
+Al finalizar el trabajo local se puede detener Compose sin eliminar volúmenes:
+
+```powershell
+docker compose down
+```
+
 ## Dominio
 
 `app/domain` es Python puro: sin I/O, sin reloj global y sin generar ids (se inyectan).

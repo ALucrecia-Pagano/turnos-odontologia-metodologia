@@ -125,6 +125,19 @@ final del change cubrirá los escenarios del delta y el aislamiento.
   fixtures derivan y comprueban `<POSTGRES_DB>_test`; no se agrega una URL de
   test al `.env`.
 
+## Desvíos del apply
+
+- El primer test del ciclo de migración usó la conexión transaccional de
+  C-13 para inspeccionar el esquema después de ejecutar Alembic en otra
+  conexión. PostgreSQL conservó el snapshot de esa transacción y el test vio
+  `alembic_version` aunque el downgrade había terminado correctamente. Se
+  corrigió el test para abrir conexiones nuevas después de cada operación;
+  la fixture reversible de C-13 no se modificó.
+- `downgrade base` conserva la tabla técnica `alembic_version` vacía, como
+  comportamiento normal de Alembic. La verificación de ausencia se limita a
+  tablas de negocio, tal como exige la spec; la restauración posterior en
+  `head` se comprueba explícitamente.
+
 ## Migration Plan
 
 1. Instalar la dependencia declarada y crear la configuración/base declarativa.
