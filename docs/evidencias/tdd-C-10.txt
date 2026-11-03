@@ -1,0 +1,3402 @@
+Baseline (antes de editar, 2026-11-02)
+backend/: .venv/Scripts/python.exe -m pytest
+483 passed in 2.59s
+backend/: .venv/Scripts/python.exe -m mypy --strict app tests
+Success: no issues found in 45 source files
+Primer intento bloqueado por sandbox al acceder al intérprete Python313 externo.
+Mismos comandos ejecutados con permiso escalado; sin modificar entorno.
+Contratos: agenda violations.Ok.appointment, catálogo catalog.result.Ok.entity.
+Guardia/imports/reloj y OCCUPYING_STATUSES se conservan.
+
+2.1 RED Actor (exit=1)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 26 items / 25 deselected / 1 selected
+
+tests\domain\test_model.py F                                             [100%]
+
+================================== FAILURES ===================================
+______ test_actor_odontologist_preserves_distinct_user_and_professional _______
+
+    def test_actor_odontologist_preserves_distinct_user_and_professional() -> None:
+>       from app.domain.model import Actor, Role
+E       ImportError: cannot import name 'Actor' from 'app.domain.model' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\domain\model.py)
+
+tests\domain\test_model.py:282: ImportError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_model.py::test_actor_odontologist_preserves_distinct_user_and_professional
+====================== 1 failed, 25 deselected in 0.18s =======================
+
+2.1 GREEN Actor (exit=0)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 26 items / 25 deselected / 1 selected
+
+tests\domain\test_model.py .                                             [100%]
+
+====================== 1 passed, 25 deselected in 0.08s =======================
+
+2.1 TRIANGULATE inicialmente verde (exit=0)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 30 items / 25 deselected / 5 selected
+
+tests\domain\test_model.py .....                                         [100%]
+
+====================== 5 passed, 25 deselected in 0.10s =======================
+
+2.1 mutacion default (exit=1)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 30 items / 28 deselected / 2 selected
+
+tests\domain\test_model.py FF                                            [100%]
+
+================================== FAILURES ===================================
+____________ test_actor_management_without_professional[RECEPCION] ____________
+
+role_name = 'RECEPCION'
+
+    @pytest.mark.parametrize("role_name", ["RECEPCION", "ADMINISTRADOR"])
+    def test_actor_management_without_professional(role_name: str) -> None:
+        from app.domain.model import Actor, Role
+    
+        user = UUID("00000000-0000-0000-0000-0000000000a2")
+        actor = Actor(user, Role[role_name])
+>       assert (actor.user_id, actor.role, actor.professional_id) == (user, Role[role_name], None)
+E       AssertionError: assert (UUID('000000...00000000001')) == (UUID('000000...pcion'>, None)
+E         
+E         At index 2 diff: UUID('00000000-0000-0000-0000-000000000001') != None
+E         Use -v to get more diff
+
+tests\domain\test_model.py:296: AssertionError
+__________ test_actor_management_without_professional[ADMINISTRADOR] __________
+
+role_name = 'ADMINISTRADOR'
+
+    @pytest.mark.parametrize("role_name", ["RECEPCION", "ADMINISTRADOR"])
+    def test_actor_management_without_professional(role_name: str) -> None:
+        from app.domain.model import Actor, Role
+    
+        user = UUID("00000000-0000-0000-0000-0000000000a2")
+        actor = Actor(user, Role[role_name])
+>       assert (actor.user_id, actor.role, actor.professional_id) == (user, Role[role_name], None)
+E       AssertionError: assert (UUID('000000...00000000001')) == (UUID('000000...rador'>, None)
+E         
+E         At index 2 diff: UUID('00000000-0000-0000-0000-000000000001') != None
+E         Use -v to get more diff
+
+tests\domain\test_model.py:296: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_model.py::test_actor_management_without_professional[RECEPCION]
+FAILED tests/domain/test_model.py::test_actor_management_without_professional[ADMINISTRADOR]
+====================== 2 failed, 28 deselected in 0.18s =======================
+
+2.1 restaurada (exit=0)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 30 items / 25 deselected / 5 selected
+
+tests\domain\test_model.py .....                                         [100%]
+
+====================== 5 passed, 25 deselected in 0.09s =======================
+
+2.2 RED (exit=1)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 31 items / 30 deselected / 1 selected
+
+tests\domain\test_model.py F                                             [100%]
+
+================================== FAILURES ===================================
+_____________ test_actor_odontologist_missing_professional_raises _____________
+
+    def test_actor_odontologist_missing_professional_raises() -> None:
+        from app.domain.model import Actor, Role
+    
+>       with pytest.raises(ValueError, match="professional_id"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests\domain\test_model.py:312: Failed
+=========================== short test summary info ===========================
+FAILED tests/domain/test_model.py::test_actor_odontologist_missing_professional_raises
+====================== 1 failed, 30 deselected in 0.21s =======================
+
+2.2 GREEN (exit=0)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 31 items
+
+tests\domain\test_model.py ...............................               [100%]
+
+============================= 31 passed in 0.16s ==============================
+
+2.2 triangulacion/refactor (exit=0)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 32 items
+
+tests\domain\test_model.py ................................              [100%]
+
+============================= 32 passed in 0.15s ==============================
+Success: no issues found in 45 source files
+
+3.1 RED (exit=1)
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 1 item
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+_______________________ test_reserved_can_be_confirmed ________________________
+
+    def test_reserved_can_be_confirmed() -> None:
+>       from app.domain.appointment.transitions import can_transition
+E       ModuleNotFoundError: No module named 'app.domain.appointment.transitions'
+
+tests\domain\test_transitions.py:9: ModuleNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_reserved_can_be_confirmed - Mod...
+============================== 1 failed in 0.14s ==============================
+
+=== 3.1 GREEN; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 1 item
+
+tests\domain\test_transitions.py .                                       [100%]
+
+============================== 1 passed in 0.06s ==============================
+
+
+=== 3.1 RED test_reserved_can_be_attended; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items / 1 deselected / 1 selected
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+________________________ test_reserved_can_be_attended ________________________
+
+    def test_reserved_can_be_attended() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.RESERVED, S.ATTENDED) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x0000015E3A8832E0>(<AppointmentStatus.RESERVED: 'reservado'>, <AppointmentStatus.ATTENDED: 'atendido'>)
+E        +    where <AppointmentStatus.RESERVED: 'reservado'> = S.RESERVED
+E        +    and   <AppointmentStatus.ATTENDED: 'atendido'> = S.ATTENDED
+
+tests\domain\test_transitions.py:17: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_reserved_can_be_attended - Asse...
+======================= 1 failed, 1 deselected in 0.16s =======================
+
+
+=== 3.1 GREEN test_reserved_can_be_attended; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\domain\test_transitions.py ..                                      [100%]
+
+============================== 2 passed in 0.07s ==============================
+
+
+=== 3.1 RED test_reserved_can_be_no_show; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 3 items / 2 deselected / 1 selected
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+________________________ test_reserved_can_be_no_show _________________________
+
+    def test_reserved_can_be_no_show() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.RESERVED, S.NO_SHOW) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x0000014459C33380>(<AppointmentStatus.RESERVED: 'reservado'>, <AppointmentStatus.NO_SHOW: 'ausente'>)
+E        +    where <AppointmentStatus.RESERVED: 'reservado'> = S.RESERVED
+E        +    and   <AppointmentStatus.NO_SHOW: 'ausente'> = S.NO_SHOW
+
+tests\domain\test_transitions.py:23: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_reserved_can_be_no_show - Asser...
+======================= 1 failed, 2 deselected in 0.14s =======================
+
+
+=== 3.1 GREEN test_reserved_can_be_no_show; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 3 items
+
+tests\domain\test_transitions.py ...                                     [100%]
+
+============================== 3 passed in 0.08s ==============================
+
+
+=== 3.1 RED test_reserved_can_be_cancelled; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 4 items / 3 deselected / 1 selected
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+_______________________ test_reserved_can_be_cancelled ________________________
+
+    def test_reserved_can_be_cancelled() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.RESERVED, S.CANCELLED) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x000002122921F4C0>(<AppointmentStatus.RESERVED: 'reservado'>, <AppointmentStatus.CANCELLED: 'cancelado'>)
+E        +    where <AppointmentStatus.RESERVED: 'reservado'> = S.RESERVED
+E        +    and   <AppointmentStatus.CANCELLED: 'cancelado'> = S.CANCELLED
+
+tests\domain\test_transitions.py:29: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_reserved_can_be_cancelled - Ass...
+======================= 1 failed, 3 deselected in 0.13s =======================
+
+
+=== 3.1 GREEN test_reserved_can_be_cancelled; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 4 items
+
+tests\domain\test_transitions.py ....                                    [100%]
+
+============================== 4 passed in 0.09s ==============================
+
+
+=== 3.1 RED test_confirmed_can_be_attended; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 5 items / 4 deselected / 1 selected
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+_______________________ test_confirmed_can_be_attended ________________________
+
+    def test_confirmed_can_be_attended() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.CONFIRMED, S.ATTENDED) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x000002DD349E7560>(<AppointmentStatus.CONFIRMED: 'confirmado'>, <AppointmentStatus.ATTENDED: 'atendido'>)
+E        +    where <AppointmentStatus.CONFIRMED: 'confirmado'> = S.CONFIRMED
+E        +    and   <AppointmentStatus.ATTENDED: 'atendido'> = S.ATTENDED
+
+tests\domain\test_transitions.py:35: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_confirmed_can_be_attended - Ass...
+======================= 1 failed, 4 deselected in 0.13s =======================
+
+
+=== 3.1 GREEN test_confirmed_can_be_attended; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 5 items
+
+tests\domain\test_transitions.py .....                                   [100%]
+
+============================== 5 passed in 0.09s ==============================
+
+
+=== 3.1 RED test_confirmed_can_be_no_show; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 6 items / 5 deselected / 1 selected
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+________________________ test_confirmed_can_be_no_show ________________________
+
+    def test_confirmed_can_be_no_show() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.CONFIRMED, S.NO_SHOW) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x0000029994E8F7E0>(<AppointmentStatus.CONFIRMED: 'confirmado'>, <AppointmentStatus.NO_SHOW: 'ausente'>)
+E        +    where <AppointmentStatus.CONFIRMED: 'confirmado'> = S.CONFIRMED
+E        +    and   <AppointmentStatus.NO_SHOW: 'ausente'> = S.NO_SHOW
+
+tests\domain\test_transitions.py:41: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_confirmed_can_be_no_show - Asse...
+======================= 1 failed, 5 deselected in 0.15s =======================
+
+
+=== 3.1 GREEN test_confirmed_can_be_no_show; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 6 items
+
+tests\domain\test_transitions.py ......                                  [100%]
+
+============================== 6 passed in 0.08s ==============================
+
+
+=== 3.1 RED test_confirmed_can_be_cancelled; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items / 6 deselected / 1 selected
+
+tests\domain\test_transitions.py F                                       [100%]
+
+================================== FAILURES ===================================
+_______________________ test_confirmed_can_be_cancelled _______________________
+
+    def test_confirmed_can_be_cancelled() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.CONFIRMED, S.CANCELLED) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x0000021BD8773880>(<AppointmentStatus.CONFIRMED: 'confirmado'>, <AppointmentStatus.CANCELLED: 'cancelado'>)
+E        +    where <AppointmentStatus.CONFIRMED: 'confirmado'> = S.CONFIRMED
+E        +    and   <AppointmentStatus.CANCELLED: 'cancelado'> = S.CANCELLED
+
+tests\domain\test_transitions.py:47: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_confirmed_can_be_cancelled - As...
+======================= 1 failed, 6 deselected in 0.16s =======================
+
+
+=== 3.1 GREEN test_confirmed_can_be_cancelled; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items
+
+tests\domain\test_transitions.py .......                                 [100%]
+
+============================== 7 passed in 0.08s ==============================
+
+
+=== 3.1 rejection initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 8 items
+
+tests\domain\test_transitions.py ........                                [100%]
+
+============================== 8 passed in 0.10s ==============================
+
+
+=== 3.1 REFACTOR Mapping; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 8 items
+
+tests\domain\test_transitions.py ........                                [100%]
+
+============================== 8 passed in 0.09s ==============================
+
+
+=== 3.2 25 pares inicialmente verdes; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 33 items
+
+tests\domain\test_transitions.py .................................       [100%]
+
+============================= 33 passed in 0.10s ==============================
+
+
+=== 3.2 arista permitida MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 33 items
+
+tests\domain\test_transitions.py .....F...................F.......       [100%]
+
+================================== FAILURES ===================================
+_ test_all_25_pairs_independent_oracle[AppointmentStatus.CONFIRMED-AppointmentStatus.RESERVED] _
+
+origin = <AppointmentStatus.RESERVED: 'reservado'>
+target = <AppointmentStatus.CONFIRMED: 'confirmado'>
+
+    @pytest.mark.parametrize("origin", list(S))
+    @pytest.mark.parametrize("target", list(S))
+    def test_all_25_pairs_independent_oracle(origin: S, target: S) -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+        # Propiedades de RN-TU-02: no se importa ni reconstruye la tabla productiva.
+        if origin is target or target is S.RESERVED:
+            expected = False
+        elif origin is S.RESERVED:
+            expected = True
+        elif origin is S.CONFIRMED:
+            expected = target not in (S.RESERVED, S.CONFIRMED)
+        else:
+            expected = False
+>       assert can_transition(origin, target) is expected
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x000001A94B1B76A0>(<AppointmentStatus.RESERVED: 'reservado'>, <AppointmentStatus.CONFIRMED: 'confirmado'>)
+
+tests\domain\test_transitions.py:22: AssertionError
+_______________________ test_reserved_can_be_confirmed ________________________
+
+    def test_reserved_can_be_confirmed() -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+>       assert can_transition(S.RESERVED, S.CONFIRMED) is True
+E       AssertionError: assert False is True
+E        +  where False = <function can_transition at 0x000001A94B1B76A0>(<AppointmentStatus.RESERVED: 'reservado'>, <AppointmentStatus.CONFIRMED: 'confirmado'>)
+E        +    where <AppointmentStatus.RESERVED: 'reservado'> = S.RESERVED
+E        +    and   <AppointmentStatus.CONFIRMED: 'confirmado'> = S.CONFIRMED
+
+tests\domain\test_transitions.py:28: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_all_25_pairs_independent_oracle[AppointmentStatus.CONFIRMED-AppointmentStatus.RESERVED]
+FAILED tests/domain/test_transitions.py::test_reserved_can_be_confirmed - Ass...
+======================== 2 failed, 31 passed in 0.17s =========================
+
+
+=== 3.2 arista permitida RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 33 items
+
+tests\domain\test_transitions.py .................................       [100%]
+
+============================= 33 passed in 0.10s ==============================
+
+
+=== 3.2 arista prohibida MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 33 items
+
+tests\domain\test_transitions.py .......F.........................       [100%]
+
+================================== FAILURES ===================================
+_ test_all_25_pairs_independent_oracle[AppointmentStatus.CONFIRMED-AppointmentStatus.ATTENDED] _
+
+origin = <AppointmentStatus.ATTENDED: 'atendido'>
+target = <AppointmentStatus.CONFIRMED: 'confirmado'>
+
+    @pytest.mark.parametrize("origin", list(S))
+    @pytest.mark.parametrize("target", list(S))
+    def test_all_25_pairs_independent_oracle(origin: S, target: S) -> None:
+        from app.domain.appointment.transitions import can_transition
+    
+        # Propiedades de RN-TU-02: no se importa ni reconstruye la tabla productiva.
+        if origin is target or target is S.RESERVED:
+            expected = False
+        elif origin is S.RESERVED:
+            expected = True
+        elif origin is S.CONFIRMED:
+            expected = target not in (S.RESERVED, S.CONFIRMED)
+        else:
+            expected = False
+>       assert can_transition(origin, target) is expected
+E       AssertionError: assert True is False
+E        +  where True = <function can_transition at 0x000001BC1A5776A0>(<AppointmentStatus.ATTENDED: 'atendido'>, <AppointmentStatus.CONFIRMED: 'confirmado'>)
+
+tests\domain\test_transitions.py:22: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_transitions.py::test_all_25_pairs_independent_oracle[AppointmentStatus.CONFIRMED-AppointmentStatus.ATTENDED]
+======================== 1 failed, 32 passed in 0.18s =========================
+
+
+=== 3.2 arista prohibida RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 33 items
+
+tests\domain\test_transitions.py .................................       [100%]
+
+============================= 33 passed in 0.10s ==============================
+
+
+3.3 static negative control
+usage: mypy [-h] [-v] [-V] [more options; see below]
+            [-m MODULE] [-p PACKAGE] [-c PROGRAM_TEXT] [files ...]
+mypy: error: May only specify one of: module/package, files, or command.
+
+3.3 static negative control corrected config
+<string>:3: error: Unsupported target for indexed assignment ("Mapping[AppointmentStatus, frozenset[AppointmentStatus]]")  [index]
+<string>:4: error: "frozenset[AppointmentStatus]" has no attribute "add"  [attr-defined]
+Found 2 errors in 1 file (checked 1 source file)
+NUL: No [mypy] section in config file
+
+=== 3.3 guardias y politica; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 35 items
+
+tests\domain\test_transitions.py .................................       [ 94%]
+tests\domain\test_domain_dependencies.py ..                              [100%]
+
+============================= 35 passed in 0.20s ==============================
+
+
+=== 3.3 mypy; exit=0 ===
+Success: no issues found in 47 source files
+
+
+=== 2.2 None inicialmente verde MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 32 items / 30 deselected / 2 selected
+
+tests\domain\test_model.py FF                                            [100%]
+
+================================== FAILURES ===================================
+_____________ test_actor_odontologist_missing_professional_raises _____________
+
+    def test_actor_odontologist_missing_professional_raises() -> None:
+        from app.domain.model import Actor, Role
+    
+>       with pytest.raises(ValueError, match="professional_id"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests\domain\test_model.py:312: Failed
+______________ test_actor_odontologist_none_professional_raises _______________
+
+    def test_actor_odontologist_none_professional_raises() -> None:
+        from app.domain.model import Actor, Role
+    
+>       with pytest.raises(ValueError, match="professional_id"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests\domain\test_model.py:319: Failed
+=========================== short test summary info ===========================
+FAILED tests/domain/test_model.py::test_actor_odontologist_missing_professional_raises
+FAILED tests/domain/test_model.py::test_actor_odontologist_none_professional_raises
+====================== 2 failed, 30 deselected in 0.16s =======================
+
+
+=== 2.2 None inicialmente verde RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 32 items / 30 deselected / 2 selected
+
+tests\domain\test_model.py ..                                            [100%]
+
+====================== 2 passed, 30 deselected in 0.12s =======================
+
+
+=== 4.1 RED cancel; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 1 item
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+__________________ test_cancel_reserved_returns_agenda_copy ___________________
+
+    def test_cancel_reserved_returns_agenda_copy() -> None:
+>       from app.domain.appointment.transitions import cancel_appointment
+E       ImportError: cannot import name 'cancel_appointment' from 'app.domain.appointment.transitions' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\domain\appointment\transitions.py)
+
+tests\domain\test_lifecycle.py:48: ImportError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_cancel_reserved_returns_agenda_copy
+============================== 1 failed in 0.16s ==============================
+
+
+=== 4.1 GREEN cancel; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 1 item
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+============================== 1 passed in 0.12s ==============================
+
+
+=== 4.1 triangulacion inicialmente verde; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+============================== 2 passed in 0.08s ==============================
+
+
+=== 4.1 copia MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+__________________ test_cancel_reserved_returns_agenda_copy ___________________
+
+    def test_cancel_reserved_returns_agenda_copy() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment()
+        result = cancel_appointment(original, RECEPTION, NOW, NAME, TZ)
+        assert isinstance(result, Ok)
+>       assert_copy(original, result, S.CANCELLED)
+
+tests\domain\test_lifecycle.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+original = Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...atetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)
+result = Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>))
+target = <AppointmentStatus.CANCELLED: 'cancelado'>
+
+    def assert_copy(original: Appointment, result: Ok, target: S) -> None:
+>       assert result.appointment == Appointment(
+            original.id, original.patient_id, original.professional_id, original.chair_id,
+            original.service_id, original.start_at, original.end_at, target,
+        )
+E       AssertionError: assert Appointment(i... 'reservado'>) == Appointment(i... 'cancelado'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.RESERVED: 'reservado'> != <AppointmentStatus.CANCELLED: 'cancelado'>
+
+tests\domain\test_lifecycle.py:40: AssertionError
+__________________ test_cancel_confirmed_admin_returns_copy ___________________
+
+    def test_cancel_confirmed_admin_returns_copy() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment(S.CONFIRMED)
+        result = cancel_appointment(original, ADMIN, START - timedelta(seconds=1), NAME, TZ)
+        assert isinstance(result, Ok)
+>       assert_copy(original, result, S.CANCELLED)
+
+tests\domain\test_lifecycle.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+original = Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>)
+result = Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>))
+target = <AppointmentStatus.CANCELLED: 'cancelado'>
+
+    def assert_copy(original: Appointment, result: Ok, target: S) -> None:
+>       assert result.appointment == Appointment(
+            original.id, original.patient_id, original.professional_id, original.chair_id,
+            original.service_id, original.start_at, original.end_at, target,
+        )
+E       AssertionError: assert Appointment(i... 'reservado'>) == Appointment(i... 'cancelado'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.RESERVED: 'reservado'> != <AppointmentStatus.CANCELLED: 'cancelado'>
+
+tests\domain\test_lifecycle.py:40: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_cancel_reserved_returns_agenda_copy
+FAILED tests/domain/test_lifecycle.py::test_cancel_confirmed_admin_returns_copy
+============================== 2 failed in 0.15s ==============================
+
+
+=== 4.1 copia RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+============================== 2 passed in 0.09s ==============================
+
+
+=== 4.2 RED terminal; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 3 items / 2 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+_________________ test_cancel_attended_rejected_exact_message _________________
+
+    def test_cancel_attended_rejected_exact_message() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment(S.ATTENDED)
+        result = cancel_appointment(original, RECEPTION, NOW, NAME, TZ)
+>       assert isinstance(result, Rejected)
+E       AssertionError: assert False
+E        +  where False = isinstance(Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CANCELLED: 'cancelado'>)), Rejected)
+
+tests\domain\test_lifecycle.py:72: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_cancel_attended_rejected_exact_message
+======================= 1 failed, 2 deselected in 0.21s =======================
+
+
+=== 4.2 GREEN terminal; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 3 items
+
+tests\domain\test_lifecycle.py ...                                       [100%]
+
+============================== 3 passed in 0.12s ==============================
+
+
+=== 4.2 NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 4 items
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+============================== 4 passed in 0.15s ==============================
+
+
+=== 4.2 CANCELLED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 5 items
+
+tests\domain\test_lifecycle.py .....                                     [100%]
+
+============================== 5 passed in 0.13s ==============================
+
+
+=== 4.2 terminal sensitivity MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 5 items / 3 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+_______________ test_cancel_terminal_no_show_preserves_original _______________
+
+    def test_cancel_terminal_no_show_preserves_original() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment(S.NO_SHOW)
+        result = cancel_appointment(original, RECEPTION, NOW, NAME, TZ)
+>       assert isinstance(result, Rejected)
+E       AssertionError: assert False
+E        +  where False = isinstance(Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CANCELLED: 'cancelado'>)), Rejected)
+
+tests\domain\test_lifecycle.py:85: AssertionError
+______________ test_cancel_terminal_cancelled_preserves_original ______________
+
+    def test_cancel_terminal_cancelled_preserves_original() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment(S.CANCELLED)
+        result = cancel_appointment(original, RECEPTION, NOW, NAME, TZ)
+>       assert isinstance(result, Rejected)
+E       AssertionError: assert False
+E        +  where False = isinstance(Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CANCELLED: 'cancelado'>)), Rejected)
+
+tests\domain\test_lifecycle.py:95: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_cancel_terminal_no_show_preserves_original
+FAILED tests/domain/test_lifecycle.py::test_cancel_terminal_cancelled_preserves_original
+======================= 2 failed, 3 deselected in 0.22s =======================
+
+
+=== 4.2 terminal sensitivity RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 5 items / 3 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+======================= 2 passed, 3 deselected in 0.12s =======================
+
+
+=== 4.3 RESERVED regression initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 6 items
+
+tests\domain\test_lifecycle.py ......                                    [100%]
+
+============================== 6 passed in 0.15s ==============================
+
+
+=== 4.3 CONFIRMED regression initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items
+
+tests\domain\test_lifecycle.py .......                                   [100%]
+
+============================== 7 passed in 0.12s ==============================
+
+
+=== 4.3 no anticipation MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items / 5 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+__________________ test_cancel_reserved_after_13_15_allowed ___________________
+
+    def test_cancel_reserved_after_13_15_allowed() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment(S.RESERVED)
+        result = cancel_appointment(original, RECEPTION, datetime(2026, 10, 20, 13, 15, tzinfo=UTC), NAME, TZ)
+>       assert isinstance(result, Ok)
+E       assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...lado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:105: AssertionError
+__________________ test_cancel_confirmed_after_14_0_allowed ___________________
+
+    def test_cancel_confirmed_after_14_0_allowed() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+        original = appointment(S.CONFIRMED)
+        result = cancel_appointment(original, RECEPTION, datetime(2026, 10, 20, 14, 0, tzinfo=UTC), NAME, TZ)
+>       assert isinstance(result, Ok)
+E       assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...lado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:115: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_cancel_reserved_after_13_15_allowed
+FAILED tests/domain/test_lifecycle.py::test_cancel_confirmed_after_14_0_allowed
+======================= 2 failed, 5 deselected in 0.17s =======================
+
+
+=== 4.3 no anticipation RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items / 5 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+======================= 2 passed, 5 deselected in 0.08s =======================
+
+
+=== 4.3 REFACTOR regresiones; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 268 items
+
+tests\domain\test_lifecycle.py .......                                   [  2%]
+tests\domain\test_catalog.py ........................................... [ 18%]
+....................................                                     [ 32%]
+tests\domain\test_validate_new_appointment.py .......................... [ 41%]
+........................................................................ [ 68%]
+........................................................................ [ 95%]
+............                                                             [100%]
+
+============================= 268 passed in 0.44s =============================
+
+
+=== 4.3 mypy; exit=0 ===
+Success: no issues found in 48 source files
+
+
+=== 5.1 RED change; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 8 items / 7 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+_______________ test_change_reserved_to_confirmed_returns_copy ________________
+
+    def test_change_reserved_to_confirmed_returns_copy() -> None:
+>       from app.domain.appointment.transitions import change_status
+E       ImportError: cannot import name 'change_status' from 'app.domain.appointment.transitions' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\domain\appointment\transitions.py)
+
+tests\domain\test_lifecycle.py:48: ImportError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_reserved_to_confirmed_returns_copy
+======================= 1 failed, 7 deselected in 0.22s =======================
+
+
+=== 5.1 GREEN change; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 8 items
+
+tests\domain\test_lifecycle.py ........                                  [100%]
+
+============================== 8 passed in 0.11s ==============================
+
+
+=== 5.1 RESERVED ATTENDED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 9 items
+
+tests\domain\test_lifecycle.py .........                                 [100%]
+
+============================== 9 passed in 0.15s ==============================
+
+
+=== 5.1 RESERVED NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 10 items
+
+tests\domain\test_lifecycle.py ..........                                [100%]
+
+============================= 10 passed in 0.17s ==============================
+
+
+=== 5.1 CONFIRMED ATTENDED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 11 items
+
+tests\domain\test_lifecycle.py ...........                               [100%]
+
+============================= 11 passed in 0.21s ==============================
+
+
+=== 5.1 CONFIRMED NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 12 items
+
+tests\domain\test_lifecycle.py ............                              [100%]
+
+============================= 12 passed in 0.16s ==============================
+
+
+=== 5.1 copied status sensitivity MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 12 items / 8 deselected / 4 selected
+
+tests\domain\test_lifecycle.py FFFF                                      [100%]
+
+================================== FAILURES ===================================
+__________________ test_change_reserved_to_attended_at_start __________________
+
+    def test_change_reserved_to_attended_at_start() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment(S.RESERVED)
+        result = change_status(original, S.ATTENDED, RECEPTION, START, NAME, TZ)
+        assert isinstance(result, Ok)
+>       assert_copy(original, result, S.ATTENDED)
+
+tests\domain\test_lifecycle.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+original = Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...atetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)
+result = Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...time.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>))
+target = <AppointmentStatus.ATTENDED: 'atendido'>
+
+    def assert_copy(original: Appointment, result: Ok, target: S) -> None:
+>       assert result.appointment == Appointment(
+            original.id, original.patient_id, original.professional_id, original.chair_id,
+            original.service_id, original.start_at, original.end_at, target,
+        )
+E       AssertionError: assert Appointment(i...'confirmado'>) == Appointment(i...: 'atendido'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.CONFIRMED: 'confirmado'> != <AppointmentStatus.ATTENDED: 'atendido'>
+
+tests\domain\test_lifecycle.py:40: AssertionError
+__________________ test_change_reserved_to_no_show_at_start ___________________
+
+    def test_change_reserved_to_no_show_at_start() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment(S.RESERVED)
+        result = change_status(original, S.NO_SHOW, RECEPTION, START, NAME, TZ)
+        assert isinstance(result, Ok)
+>       assert_copy(original, result, S.NO_SHOW)
+
+tests\domain\test_lifecycle.py:146: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+original = Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...atetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)
+result = Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...time.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>))
+target = <AppointmentStatus.NO_SHOW: 'ausente'>
+
+    def assert_copy(original: Appointment, result: Ok, target: S) -> None:
+>       assert result.appointment == Appointment(
+            original.id, original.patient_id, original.professional_id, original.chair_id,
+            original.service_id, original.start_at, original.end_at, target,
+        )
+E       AssertionError: assert Appointment(i...'confirmado'>) == Appointment(i...W: 'ausente'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.CONFIRMED: 'confirmado'> != <AppointmentStatus.NO_SHOW: 'ausente'>
+
+tests\domain\test_lifecycle.py:40: AssertionError
+_________________ test_change_confirmed_to_attended_at_start __________________
+
+    def test_change_confirmed_to_attended_at_start() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment(S.CONFIRMED)
+        result = change_status(original, S.ATTENDED, RECEPTION, START, NAME, TZ)
+        assert isinstance(result, Ok)
+>       assert_copy(original, result, S.ATTENDED)
+
+tests\domain\test_lifecycle.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+original = Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>)
+result = Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...time.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>))
+target = <AppointmentStatus.ATTENDED: 'atendido'>
+
+    def assert_copy(original: Appointment, result: Ok, target: S) -> None:
+>       assert result.appointment == Appointment(
+            original.id, original.patient_id, original.professional_id, original.chair_id,
+            original.service_id, original.start_at, original.end_at, target,
+        )
+E       AssertionError: assert Appointment(i...'confirmado'>) == Appointment(i...: 'atendido'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.CONFIRMED: 'confirmado'> != <AppointmentStatus.ATTENDED: 'atendido'>
+
+tests\domain\test_lifecycle.py:40: AssertionError
+__________________ test_change_confirmed_to_no_show_at_start __________________
+
+    def test_change_confirmed_to_no_show_at_start() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment(S.CONFIRMED)
+        result = change_status(original, S.NO_SHOW, RECEPTION, START, NAME, TZ)
+        assert isinstance(result, Ok)
+>       assert_copy(original, result, S.NO_SHOW)
+
+tests\domain\test_lifecycle.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+original = Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>)
+result = Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...time.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>))
+target = <AppointmentStatus.NO_SHOW: 'ausente'>
+
+    def assert_copy(original: Appointment, result: Ok, target: S) -> None:
+>       assert result.appointment == Appointment(
+            original.id, original.patient_id, original.professional_id, original.chair_id,
+            original.service_id, original.start_at, original.end_at, target,
+        )
+E       AssertionError: assert Appointment(i...'confirmado'>) == Appointment(i...W: 'ausente'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.CONFIRMED: 'confirmado'> != <AppointmentStatus.NO_SHOW: 'ausente'>
+
+tests\domain\test_lifecycle.py:40: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_reserved_to_attended_at_start
+FAILED tests/domain/test_lifecycle.py::test_change_reserved_to_no_show_at_start
+FAILED tests/domain/test_lifecycle.py::test_change_confirmed_to_attended_at_start
+FAILED tests/domain/test_lifecycle.py::test_change_confirmed_to_no_show_at_start
+======================= 4 failed, 8 deselected in 0.18s =======================
+
+
+=== 5.1 copied status sensitivity RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 12 items / 8 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+======================= 4 passed, 8 deselected in 0.09s =======================
+
+
+=== 5.2 RED cancelled contract; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 13 items / 12 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+_______________ test_change_cancelled_requires_cancel_operation _______________
+
+    def test_change_cancelled_requires_cancel_operation() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+>       with pytest.raises(ValueError, match="cancel_appointment"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests\domain\test_lifecycle.py:173: Failed
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_cancelled_requires_cancel_operation
+====================== 1 failed, 12 deselected in 0.20s =======================
+
+
+=== 5.2 GREEN cancelled contract; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 13 items
+
+tests\domain\test_lifecycle.py .............                             [100%]
+
+============================= 13 passed in 0.10s ==============================
+
+
+=== 5.2 foreign cancelled initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 14 items / 13 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 13 deselected in 0.20s =======================
+
+
+=== 5.2 RED reserved; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 15 items / 14 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+_________________ test_change_confirmed_to_reserved_rejected __________________
+
+    def test_change_confirmed_to_reserved_rejected() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment(S.CONFIRMED)
+        result = change_status(original, S.RESERVED, RECEPTION, NOW, NAME, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "confirmado" al estado "reservado".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...rvado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:189: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_confirmed_to_reserved_rejected
+====================== 1 failed, 14 deselected in 0.24s =======================
+
+
+=== 5.2 GREEN reserved; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 15 items
+
+tests\domain\test_lifecycle.py ...............                           [100%]
+
+============================= 15 passed in 0.15s ==============================
+
+
+=== 5.2 diagonal initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 16 items
+
+tests\domain\test_lifecycle.py ................                          [100%]
+
+============================= 16 passed in 0.16s ==============================
+
+
+=== 5.2 reserved rejection MUTATION; exit=4 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 0 items
+
+============================ no tests ran in 0.00s ============================
+ERROR: file or directory not found: or
+
+
+
+=== 5.2 reserved rejection RESTORED; exit=4 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 0 items
+
+============================ no tests ran in 0.00s ============================
+ERROR: file or directory not found: or
+
+
+
+=== 5.2 reserved rejection corrected selection MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 16 items / 14 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+_________________ test_change_confirmed_to_reserved_rejected __________________
+
+    def test_change_confirmed_to_reserved_rejected() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment(S.CONFIRMED)
+        result = change_status(original, S.RESERVED, RECEPTION, NOW, NAME, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "confirmado" al estado "reservado".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...rvado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:189: AssertionError
+___________________ test_change_reserved_diagonal_rejected ____________________
+
+    def test_change_reserved_diagonal_rejected() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment()
+>       assert change_status(original, S.RESERVED, RECEPTION, NOW, NAME, TZ) == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "reservado" al estado "reservado".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)) = <function change_status at 0x0000028FF821EAC0>(Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...atetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>), <AppointmentStatus.RESERVED: 'reservado'>, Actor(user_id=UUID('00000000-0000-0000-0000-0000000000a2'), role=<Role.RECEPCION: 'recepcion'>, professional_id=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc), 'Dra. Laura Quiroga', zoneinfo.ZoneInfo(key='America/Argentina/Buenos_Aires'))
+E        +    where <AppointmentStatus.RESERVED: 'reservado'> = S.RESERVED
+E        +  and   Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...rvado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:197: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_confirmed_to_reserved_rejected
+FAILED tests/domain/test_lifecycle.py::test_change_reserved_diagonal_rejected
+====================== 2 failed, 14 deselected in 0.24s =======================
+
+
+=== 5.2 reserved rejection corrected selection RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 16 items / 14 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 14 deselected in 0.13s =======================
+
+
+=== 5.3 RED naive cancel; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 17 items / 16 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+________________________ test_cancel_naive_now_raises _________________________
+
+    def test_cancel_naive_now_raises() -> None:
+        from app.domain.appointment.transitions import cancel_appointment
+    
+>       with pytest.raises(ValueError, match="now.*zona"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests\domain\test_lifecycle.py:204: Failed
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_cancel_naive_now_raises - Failed:...
+====================== 1 failed, 16 deselected in 0.33s =======================
+
+
+=== 5.3 GREEN naive cancel; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 17 items
+
+tests\domain\test_lifecycle.py .................                         [100%]
+
+============================= 17 passed in 0.23s ==============================
+
+
+=== 5.3 RED naive change; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 18 items / 17 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+________________________ test_change_naive_now_raises _________________________
+
+    def test_change_naive_now_raises() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+>       with pytest.raises(ValueError, match="now.*zona"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests\domain\test_lifecycle.py:211: Failed
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_naive_now_raises - Failed:...
+====================== 1 failed, 17 deselected in 0.20s =======================
+
+
+=== 5.3 GREEN naive change; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 18 items
+
+tests\domain\test_lifecycle.py ..................                        [100%]
+
+============================= 18 passed in 0.12s ==============================
+
+
+=== 5.3 equivalent zone initially green 10; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 19 items
+
+tests\domain\test_lifecycle.py ...................                       [100%]
+
+============================= 19 passed in 0.13s ==============================
+
+
+=== 5.3 equivalent zone initially green 14; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 20 items
+
+tests\domain\test_lifecycle.py ....................                      [100%]
+
+============================= 20 passed in 0.13s ==============================
+
+
+=== 5.3 exports REFACTOR; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 53 items
+
+tests\domain\test_lifecycle.py ....................                      [ 37%]
+tests\domain\test_transitions.py .................................       [100%]
+
+============================= 53 passed in 0.14s ==============================
+
+
+=== 5.3 mypy; exit=0 ===
+Success: no issues found in 48 source files
+
+
+=== 6.1 RED foreign permission; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 21 items / 20 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+_________________ test_dentist_foreign_change_forbidden_exact _________________
+
+    def test_dentist_foreign_change_forbidden_exact() -> None:
+        from app.domain.appointment import change_status
+    
+        original = replace(appointment(), id=T2, professional_id=P2)
+        result = change_status(original, S.CONFIRMED, DENTIST, START, NAME, TZ)
+>       assert result == Rejected((Violation(V.FORBIDDEN_OPERATION,
+                                             ^^^^^^^^^^^^^^^^^^^^^
+            'No tiene permiso para cambiar el estado del turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local): un odontólogo solo puede cambiar el estado de sus propios turnos.'),))
+E       AttributeError: type object 'ViolationCode' has no attribute 'FORBIDDEN_OPERATION'
+
+tests\domain\test_lifecycle.py:238: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_dentist_foreign_change_forbidden_exact
+====================== 1 failed, 20 deselected in 0.23s =======================
+
+
+=== 6.1 GREEN foreign permission; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 21 items
+
+tests\domain\test_lifecycle.py .....................                     [100%]
+
+============================= 21 passed in 0.15s ==============================
+
+
+=== 6.1 own CONFIRMED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 22 items / 20 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 20 deselected in 0.18s =======================
+
+
+=== 6.1 own ATTENDED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 23 items / 20 deselected / 3 selected
+
+tests\domain\test_lifecycle.py ...                                       [100%]
+
+====================== 3 passed, 20 deselected in 0.17s =======================
+
+
+=== 6.1 own NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 24 items / 20 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 20 deselected in 0.17s =======================
+
+
+=== 6.1 foreign attended initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 25 items / 20 deselected / 5 selected
+
+tests\domain\test_lifecycle.py .....                                     [100%]
+
+====================== 5 passed, 20 deselected in 0.17s =======================
+
+
+=== 6.1 ownership MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 25 items / 22 deselected / 3 selected
+
+tests\domain\test_lifecycle.py FFF                                       [100%]
+
+================================== FAILURES ===================================
+____________ test_dentist_own_confirmed_uses_professional_not_user ____________
+
+    def test_dentist_own_confirmed_uses_professional_not_user() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(S.RESERVED), S.CONFIRMED, DENTIST, START, NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:247: AssertionError
+____________ test_dentist_own_attended_uses_professional_not_user _____________
+
+    def test_dentist_own_attended_uses_professional_not_user() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(S.RESERVED), S.ATTENDED, DENTIST, START, NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:256: AssertionError
+_____________ test_dentist_own_no_show_uses_professional_not_user _____________
+
+    def test_dentist_own_no_show_uses_professional_not_user() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(S.CONFIRMED), S.NO_SHOW, DENTIST, START, NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:265: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_dentist_own_confirmed_uses_professional_not_user
+FAILED tests/domain/test_lifecycle.py::test_dentist_own_attended_uses_professional_not_user
+FAILED tests/domain/test_lifecycle.py::test_dentist_own_no_show_uses_professional_not_user
+====================== 3 failed, 22 deselected in 0.24s =======================
+
+
+=== 6.1 ownership RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 25 items / 22 deselected / 3 selected
+
+tests\domain\test_lifecycle.py ...                                       [100%]
+
+====================== 3 passed, 22 deselected in 0.15s =======================
+
+
+=== 6.2 RED dentist cancel; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 26 items / 25 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+________________ test_dentist_cannot_cancel_own_exact_message _________________
+
+    def test_dentist_cannot_cancel_own_exact_message() -> None:
+        from app.domain.appointment import cancel_appointment
+    
+        original = appointment()
+        result = cancel_appointment(original, DENTIST, NOW, NAME, TZ)
+>       assert result == Rejected((Violation(V.FORBIDDEN_OPERATION,
+            'No tiene permiso para cancelar el turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local): solo recepción y administración pueden cancelar turnos.'),))
+E       AssertionError: assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CANCELLED: 'cancelado'>)) == Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene permiso para cancelar el...turnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:285: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_dentist_cannot_cancel_own_exact_message
+====================== 1 failed, 25 deselected in 0.26s =======================
+
+
+=== 6.2 GREEN dentist cancel; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 26 items
+
+tests\domain\test_lifecycle.py ..........................                [100%]
+
+============================= 26 passed in 0.13s ==============================
+
+
+=== 6.2 foreign cancellation initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 27 items / 25 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 25 deselected in 0.17s =======================
+
+
+=== 6.2 management RECEPCION T1 confirm initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 28 items / 27 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 27 deselected in 0.18s =======================
+
+
+=== 6.2 management RECEPCION T1 cancel initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 29 items / 27 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 27 deselected in 0.20s =======================
+
+
+=== 6.2 management RECEPCION T2 confirm initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 30 items / 27 deselected / 3 selected
+
+tests\domain\test_lifecycle.py ...                                       [100%]
+
+====================== 3 passed, 27 deselected in 0.21s =======================
+
+
+=== 6.2 management RECEPCION T2 cancel initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 31 items / 27 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 27 deselected in 0.25s =======================
+
+
+=== 6.2 management ADMINISTRADOR T1 confirm initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 32 items / 27 deselected / 5 selected
+
+tests\domain\test_lifecycle.py .....                                     [100%]
+
+====================== 5 passed, 27 deselected in 0.23s =======================
+
+
+=== 6.2 management ADMINISTRADOR T1 cancel initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 33 items / 27 deselected / 6 selected
+
+tests\domain\test_lifecycle.py ......                                    [100%]
+
+====================== 6 passed, 27 deselected in 0.17s =======================
+
+
+=== 6.2 management ADMINISTRADOR T2 confirm initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 34 items / 27 deselected / 7 selected
+
+tests\domain\test_lifecycle.py .......                                   [100%]
+
+====================== 7 passed, 27 deselected in 0.14s =======================
+
+
+=== 6.2 management ADMINISTRADOR T2 cancel initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 35 items / 27 deselected / 8 selected
+
+tests\domain\test_lifecycle.py ........                                  [100%]
+
+====================== 8 passed, 27 deselected in 0.19s =======================
+
+
+=== 6.2 cancel permission MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 35 items / 33 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+________________ test_dentist_cannot_cancel_own_exact_message _________________
+
+    def test_dentist_cannot_cancel_own_exact_message() -> None:
+        from app.domain.appointment import cancel_appointment
+    
+        original = appointment()
+        result = cancel_appointment(original, DENTIST, NOW, NAME, TZ)
+>       assert result == Rejected((Violation(V.FORBIDDEN_OPERATION,
+            'No tiene permiso para cancelar el turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local): solo recepción y administración pueden cancelar turnos.'),))
+E       AssertionError: assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...etime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CANCELLED: 'cancelado'>)) == Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene perm...urnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene permiso para cancelar el...turnos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:285: AssertionError
+________________ test_dentist_cannot_cancel_foreign_confirmed _________________
+
+    def test_dentist_cannot_cancel_foreign_confirmed() -> None:
+        from app.domain.appointment import cancel_appointment
+    
+        original = replace(appointment(S.CONFIRMED), id=T2, professional_id=P2, start_at=START + timedelta(hours=1), end_at=END + timedelta(hours=1))
+        result = cancel_appointment(original, DENTIST, NOW, "Dra. Inés Molina", TZ)
+>       assert isinstance(result, Rejected)
+E       AssertionError: assert False
+E        +  where False = isinstance(Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f2'), patient_id=UUID('00000000-0000-0000-0000-0...etime.datetime(2026, 10, 20, 14, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CANCELLED: 'cancelado'>)), Rejected)
+
+tests\domain\test_lifecycle.py:295: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_dentist_cannot_cancel_own_exact_message
+FAILED tests/domain/test_lifecycle.py::test_dentist_cannot_cancel_foreign_confirmed
+====================== 2 failed, 33 deselected in 0.20s =======================
+
+
+=== 6.2 cancel permission RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 35 items / 33 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 33 deselected in 0.09s =======================
+
+
+=== 6.3 permission REFACTOR review; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 37 items
+
+tests\domain\test_lifecycle.py ...................................       [ 94%]
+tests\domain\test_domain_dependencies.py ..                              [100%]
+
+============================= 37 passed in 0.18s ==============================
+
+
+=== 6.3 mypy; exit=1 ===
+tests\domain\test_lifecycle.py:304: error: Non-overlapping equality check (left operand type: "Literal['T1']", right operand type: "Literal['T2']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:307: error: Non-overlapping equality check (left operand type: "Literal['confirm']", right operand type: "Literal['cancel']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:322: error: Non-overlapping equality check (left operand type: "Literal['T1']", right operand type: "Literal['T2']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:343: error: Non-overlapping equality check (left operand type: "Literal['confirm']", right operand type: "Literal['cancel']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:376: error: Non-overlapping equality check (left operand type: "Literal['T1']", right operand type: "Literal['T2']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:378: error: Non-overlapping identity check (left operand type: "Literal[Role.ADMINISTRADOR]", right operand type: "Literal[Role.RECEPCION]")  [comparison-overlap]
+tests\domain\test_lifecycle.py:379: error: Non-overlapping equality check (left operand type: "Literal['confirm']", right operand type: "Literal['cancel']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:394: error: Non-overlapping equality check (left operand type: "Literal['T1']", right operand type: "Literal['T2']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:396: error: Non-overlapping identity check (left operand type: "Literal[Role.ADMINISTRADOR]", right operand type: "Literal[Role.RECEPCION]")  [comparison-overlap]
+tests\domain\test_lifecycle.py:414: error: Non-overlapping identity check (left operand type: "Literal[Role.ADMINISTRADOR]", right operand type: "Literal[Role.RECEPCION]")  [comparison-overlap]
+tests\domain\test_lifecycle.py:415: error: Non-overlapping equality check (left operand type: "Literal['confirm']", right operand type: "Literal['cancel']")  [comparison-overlap]
+tests\domain\test_lifecycle.py:432: error: Non-overlapping identity check (left operand type: "Literal[Role.ADMINISTRADOR]", right operand type: "Literal[Role.RECEPCION]")  [comparison-overlap]
+Found 12 errors in 1 file (checked 48 source files)
+
+
+=== 7.1 RED early; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 36 items / 35 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+__________________ test_attended_before_start_exact_message ___________________
+
+    def test_attended_before_start_exact_message() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+>       assert result == Rejected((Violation(V.STATUS_CHANGE_TOO_EARLY,
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+            'El turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local) todavía no empezó: no se puede marcar como "atendido" antes del inicio (momento actual: 20/10/2026 09:00:00, hora local).'),))
+E       AttributeError: type object 'ViolationCode' has no attribute 'STATUS_CHANGE_TOO_EARLY'
+
+tests\domain\test_lifecycle.py:43: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_attended_before_start_exact_message
+====================== 1 failed, 35 deselected in 0.29s =======================
+
+
+=== 7.1 GREEN early; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 36 items
+
+tests\domain\test_lifecycle.py ....................................      [100%]
+
+============================= 36 passed in 0.16s ==============================
+
+
+=== 6.3 REFACTOR solo ramas constantes, todos tests preservados; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 38 items
+
+tests\domain\test_lifecycle.py ....................................      [ 94%]
+tests\domain\test_domain_dependencies.py ..                              [100%]
+
+============================= 38 passed in 0.33s ==============================
+
+
+=== 6.3 mypy corregido; exit=0 ===
+Success: no issues found in 48 source files
+
+
+=== 7.1 no show initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 37 items / 35 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 35 deselected in 0.25s =======================
+
+
+=== 7.1 test_time_attended_equal initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 38 items / 37 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 37 deselected in 0.24s =======================
+
+
+=== 7.1 test_time_attended_micro_before initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 39 items / 38 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 38 deselected in 0.26s =======================
+
+
+=== 7.1 test_time_attended_micro_after initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 40 items / 39 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 39 deselected in 0.20s =======================
+
+
+=== 7.1 test_time_attended_during initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 41 items / 40 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 40 deselected in 0.20s =======================
+
+
+=== 7.1 test_time_attended_seconds_before initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 42 items / 41 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 41 deselected in 0.14s =======================
+
+
+=== 7.1 test_time_no_show_equal initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 43 items / 42 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 42 deselected in 0.17s =======================
+
+
+=== 7.1 test_time_no_show_micro_before initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 44 items / 43 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 43 deselected in 0.13s =======================
+
+
+=== 7.1 test_time_no_show_micro_after initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 45 items / 44 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 44 deselected in 0.20s =======================
+
+
+=== 7.1 test_time_no_show_during initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 46 items / 45 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 45 deselected in 0.14s =======================
+
+
+=== 7.1 test_time_no_show_seconds_before initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 47 items / 46 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 46 deselected in 0.16s =======================
+
+
+=== 7.1 confirm before initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 48 items / 47 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 47 deselected in 0.19s =======================
+
+
+=== 7.1 confirm after initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 49 items / 47 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 47 deselected in 0.15s =======================
+
+
+=== 7.1 exact equality MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 49 items / 47 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+__________________________ test_time_attended_equal ___________________________
+
+    def test_time_attended_equal() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.ATTENDED, RECEPTION, START, NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El tu...ocal).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:420: AssertionError
+___________________________ test_time_no_show_equal ___________________________
+
+    def test_time_no_show_equal() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.NO_SHOW, RECEPTION, START, NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El tu...ocal).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:460: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_time_attended_equal - AssertionEr...
+FAILED tests/domain/test_lifecycle.py::test_time_no_show_equal - AssertionErr...
+====================== 2 failed, 47 deselected in 0.22s =======================
+
+
+=== 7.1 exact equality RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 49 items / 47 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 47 deselected in 0.10s =======================
+
+
+=== 7.1 compare start not end MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 49 items / 45 deselected / 4 selected
+
+tests\domain\test_lifecycle.py FFFF                                      [100%]
+
+================================== FAILURES ===================================
+_______________________ test_time_attended_micro_after ________________________
+
+    def test_time_attended_micro_after() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.ATTENDED, RECEPTION, datetime(2026, 10, 20, 13, 0, 0, 1, tzinfo=UTC), NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El tu...ocal).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:436: AssertionError
+__________________________ test_time_attended_during __________________________
+
+    def test_time_attended_during() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.ATTENDED, RECEPTION, datetime(2026, 10, 20, 13, 15, tzinfo=UTC), NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El tu...ocal).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:444: AssertionError
+________________________ test_time_no_show_micro_after ________________________
+
+    def test_time_no_show_micro_after() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.NO_SHOW, RECEPTION, datetime(2026, 10, 20, 13, 0, 0, 1, tzinfo=UTC), NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El tu...ocal).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:476: AssertionError
+__________________________ test_time_no_show_during ___________________________
+
+    def test_time_no_show_during() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(), S.NO_SHOW, RECEPTION, datetime(2026, 10, 20, 13, 15, tzinfo=UTC), NAME, TZ)
+>       assert isinstance(result, Ok)
+E       AssertionError: assert False
+E        +  where False = isinstance(Rejected(violations=(Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El tu...ocal).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)), Ok)
+
+tests\domain\test_lifecycle.py:484: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_time_attended_micro_after - Asser...
+FAILED tests/domain/test_lifecycle.py::test_time_attended_during - AssertionE...
+FAILED tests/domain/test_lifecycle.py::test_time_no_show_micro_after - Assert...
+FAILED tests/domain/test_lifecycle.py::test_time_no_show_during - AssertionEr...
+====================== 4 failed, 45 deselected in 0.22s =======================
+
+
+=== 7.1 compare start not end RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 49 items / 45 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 45 deselected in 0.10s =======================
+
+
+=== 7.2 RED accumulation; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 50 items / 49 deselected / 1 selected
+
+tests\domain\test_lifecycle.py F                                         [100%]
+
+================================== FAILURES ===================================
+_________ test_authorized_invalid_transition_and_early_attended_order _________
+
+    def test_authorized_invalid_transition_and_early_attended_order() -> None:
+        from app.domain.appointment import change_status
+    
+        original = appointment(S.CANCELLED)
+        result = change_status(original, S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+        assert isinstance(result, Rejected)
+>       assert [v.code for v in result.violations] == [V.INVALID_TRANSITION, V.STATUS_CHANGE_TOO_EARLY]
+E       AssertionError: assert [<ViolationCo..._TRANSITION'>] == [<ViolationCo...E_TOO_EARLY'>]
+E         
+E         Right contains one more item: <ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>
+E         Use -v to get more diff
+
+tests\domain\test_lifecycle.py:518: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_authorized_invalid_transition_and_early_attended_order
+====================== 1 failed, 49 deselected in 0.29s =======================
+
+
+=== 7.2 GREEN accumulation; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 50 items
+
+tests\domain\test_lifecycle.py ......................................... [ 82%]
+.........                                                                [100%]
+
+============================= 50 passed in 0.18s ==============================
+
+
+=== 7.2 no show initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 51 items / 49 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 49 deselected in 0.25s =======================
+
+
+=== 7.2 time fulfilled NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 52 items / 51 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 51 deselected in 0.23s =======================
+
+
+=== 7.2 time fulfilled CONFIRMED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 53 items / 51 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 51 deselected in 0.19s =======================
+
+
+=== 7.2 accumulation order MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 53 items / 51 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+_________ test_authorized_invalid_transition_and_early_attended_order _________
+
+    def test_authorized_invalid_transition_and_early_attended_order() -> None:
+        from app.domain.appointment import change_status
+    
+        original = appointment(S.CANCELLED)
+        result = change_status(original, S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+        assert isinstance(result, Rejected)
+>       assert [v.code for v in result.violations] == [V.INVALID_TRANSITION, V.STATUS_CHANGE_TOO_EARLY]
+E       AssertionError: assert [<ViolationCo..._TRANSITION'>] == [<ViolationCo...E_TOO_EARLY'>]
+E         
+E         At index 0 diff: <ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'> != <ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>
+E         Use -v to get more diff
+
+tests\domain\test_lifecycle.py:518: AssertionError
+_________ test_authorized_invalid_transition_and_early_no_show_order __________
+
+    def test_authorized_invalid_transition_and_early_no_show_order() -> None:
+        from app.domain.appointment import change_status
+    
+        result = change_status(appointment(S.CANCELLED), S.NO_SHOW, RECEPTION, NOW, NAME, TZ)
+        assert isinstance(result, Rejected)
+>       assert [v.code for v in result.violations] == [V.INVALID_TRANSITION, V.STATUS_CHANGE_TOO_EARLY]
+E       AssertionError: assert [<ViolationCo..._TRANSITION'>] == [<ViolationCo...E_TOO_EARLY'>]
+E         
+E         At index 0 diff: <ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'> != <ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>
+E         Use -v to get more diff
+
+tests\domain\test_lifecycle.py:527: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_authorized_invalid_transition_and_early_attended_order
+FAILED tests/domain/test_lifecycle.py::test_authorized_invalid_transition_and_early_no_show_order
+====================== 2 failed, 51 deselected in 0.20s =======================
+
+
+=== 7.2 accumulation order RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 53 items / 51 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 51 deselected in 0.10s =======================
+
+
+=== 7.3 ATTENDED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 54 items / 53 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 53 deselected in 0.25s =======================
+
+
+=== 7.3 NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 55 items / 53 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 53 deselected in 0.24s =======================
+
+
+=== 7.3 own terminal initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 56 items / 55 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 55 deselected in 0.26s =======================
+
+
+=== 7.3 permission cut MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 56 items / 54 deselected / 2 selected
+
+tests\domain\test_lifecycle.py FF                                        [100%]
+
+================================== FAILURES ===================================
+______________ test_permission_hides_invalid_and_early_attended _______________
+
+    def test_permission_hides_invalid_and_early_attended() -> None:
+        from app.domain.appointment import change_status
+    
+        original = replace(appointment(S.CANCELLED), id=T2, professional_id=P2, start_at=START + timedelta(hours=1), end_at=END + timedelta(hours=1))
+        result = change_status(original, S.ATTENDED, DENTIST, NOW, "Dra. Inés Molina", TZ)
+        assert isinstance(result, Rejected)
+>       assert [v.code for v in result.violations] == [V.FORBIDDEN_OPERATION]
+E       AssertionError: assert [<ViolationCo...E_TOO_EARLY'>] == [<ViolationCo...N_OPERATION'>]
+E         
+E         At index 0 diff: <ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'> != <ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>
+E         Left contains one more item: <ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>
+E         Use -v to get more diff
+
+tests\domain\test_lifecycle.py:552: AssertionError
+_______________ test_permission_hides_invalid_and_early_no_show _______________
+
+    def test_permission_hides_invalid_and_early_no_show() -> None:
+        from app.domain.appointment import change_status
+    
+        original = replace(appointment(S.CANCELLED), id=T2, professional_id=P2, start_at=START + timedelta(hours=1), end_at=END + timedelta(hours=1))
+        result = change_status(original, S.NO_SHOW, DENTIST, NOW, "Dra. Inés Molina", TZ)
+        assert isinstance(result, Rejected)
+>       assert [v.code for v in result.violations] == [V.FORBIDDEN_OPERATION]
+E       AssertionError: assert [<ViolationCo...E_TOO_EARLY'>] == [<ViolationCo...N_OPERATION'>]
+E         
+E         At index 0 diff: <ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'> != <ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>
+E         Left contains one more item: <ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>
+E         Use -v to get more diff
+
+tests\domain\test_lifecycle.py:562: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_permission_hides_invalid_and_early_attended
+FAILED tests/domain/test_lifecycle.py::test_permission_hides_invalid_and_early_no_show
+====================== 2 failed, 54 deselected in 0.29s =======================
+
+
+=== 7.3 permission cut RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 56 items / 54 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 54 deselected in 0.15s =======================
+
+
+=== 7.3 REFACTOR review guards permission transition time; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 58 items
+
+tests\domain\test_lifecycle.py ......................................... [ 70%]
+...............                                                          [ 96%]
+tests\domain\test_domain_dependencies.py ..                              [100%]
+
+============================= 58 passed in 0.30s ==============================
+
+
+=== 7.3 mypy; exit=0 ===
+Success: no issues found in 48 source files
+
+
+=== 8.1 trim initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 57 items / 56 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 56 deselected in 0.26s =======================
+
+
+=== 8.1 empty initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 58 items / 56 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 56 deselected in 0.29s =======================
+
+
+=== 8.1 blank initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 59 items / 56 deselected / 3 selected
+
+tests\domain\test_lifecycle.py ...                                       [100%]
+
+====================== 3 passed, 56 deselected in 0.30s =======================
+
+
+=== 8.1 internal initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 60 items / 56 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 56 deselected in 0.29s =======================
+
+
+=== 8.1 name trimming MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 60 items / 56 deselected / 4 selected
+
+tests\domain\test_lifecycle.py FFF.                                      [100%]
+
+================================== FAILURES ===================================
+_______________________ test_transition_name_trim_exact _______________________
+
+    def test_transition_name_trim_exact() -> None:
+        from app.domain.appointment import cancel_appointment
+    
+        name = '  Dra. Laura Quiroga  '
+        result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, name, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, 'El turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local) no puede pasar del estado "atendido" al estado "cancelado".'),))
+E       assert Rejected(viol...erval=None),)) == Rejected(viol...erval=None),))
+E         
+E         Differing attributes:
+E         ['violations']
+E         
+E         Drill down into differing attribute violations:
+E           violations: (Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de   Dra. Laura Quiroga   del 20/10/2026 de 10:00 a 10:30 (hora local) no puede pasar del estado "atendido" al estado "cancelado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),) != (Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests\domain\test_lifecycle.py:581: AssertionError
+______________________ test_transition_name_empty_exact _______________________
+
+    def test_transition_name_empty_exact() -> None:
+        from app.domain.appointment import cancel_appointment
+    
+        name = ''
+        result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, name, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, 'El turno de el profesional del 20/10/2026 de 10:00 a 10:30 (hora local) no puede pasar del estado "atendido" al estado "cancelado".'),))
+E       assert Rejected(viol...erval=None),)) == Rejected(viol...erval=None),))
+E         
+E         Differing attributes:
+E         ['violations']
+E         
+E         Drill down into differing attribute violations:
+E           violations: (Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de  del 20/10/2026 de 10:00 a 10:30 (hora local) no puede pasar del estado "atendido" al estado "cancelado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),) != (Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de el profesional del 20/10/2026 de 10:00 a 10:30 (hora local) no puede ...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests\domain\test_lifecycle.py:590: AssertionError
+______________________ test_transition_name_blank_exact _______________________
+
+    def test_transition_name_blank_exact() -> None:
+        from app.domain.appointment import cancel_appointment
+    
+        name = '   '
+        result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, name, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, 'El turno de el profesional del 20/10/2026 de 10:00 a 10:30 (hora local) no puede pasar del estado "atendido" al estado "cancelado".'),))
+E       assert Rejected(viol...erval=None),)) == Rejected(viol...erval=None),))
+E         
+E         Differing attributes:
+E         ['violations']
+E         
+E         Drill down into differing attribute violations:
+E           violations: (Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de     del 20/10/2026 de 10:00 a 10:30 (hora local) no puede pasar del estado "atendido" al estado "cancelado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),) != (Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de el profesional del 20/10/2026 de 10:00 a 10:30 (hora local) no pue...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests\domain\test_lifecycle.py:599: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_transition_name_trim_exact - asse...
+FAILED tests/domain/test_lifecycle.py::test_transition_name_empty_exact - ass...
+FAILED tests/domain/test_lifecycle.py::test_transition_name_blank_exact - ass...
+================= 3 failed, 1 passed, 56 deselected in 0.21s ==================
+
+
+=== 8.1 name trimming RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 60 items / 56 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 56 deselected in 0.09s =======================
+
+
+=== 8.1 five normative texts; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 61 items / 55 deselected / 6 selected
+
+tests\domain\test_lifecycle.py ......                                    [100%]
+
+====================== 6 passed, 55 deselected in 0.30s =======================
+
+
+=== 8.2 local day initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 62 items / 61 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 61 deselected in 0.17s =======================
+
+
+=== 8.2 seconds initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 63 items / 62 deselected / 1 selected
+
+tests\domain\test_lifecycle.py .                                         [100%]
+
+====================== 1 passed, 62 deselected in 0.24s =======================
+
+
+=== 8.2 metadata and format initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 68 items / 63 deselected / 5 selected
+
+tests\domain\test_lifecycle.py .....                                     [100%]
+
+====================== 5 passed, 63 deselected in 0.30s =======================
+
+
+=== 8.2 metadata MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 68 items / 64 deselected / 4 selected
+
+tests\domain\test_lifecycle.py FFFF                                      [100%]
+
+================================== FAILURES ===================================
+__________ test_violation_metadata_never_claims_conflict[transition] __________
+
+kind = 'transition'
+
+    @pytest.mark.parametrize("kind", ["transition", "early", "foreign", "cancel"])
+    def test_violation_metadata_never_claims_conflict(kind: str) -> None:
+        from app.domain.appointment import cancel_appointment, change_status
+    
+        if kind == "transition":
+            result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, NAME, TZ)
+            expected = V.INVALID_TRANSITION
+        elif kind == "early":
+            result = change_status(appointment(), S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+            expected = V.STATUS_CHANGE_TOO_EARLY
+        elif kind == "foreign":
+            result = change_status(appointment(), S.CONFIRMED, Actor(U1, Role.ODONTOLOGO, P2), NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        else:
+            result = cancel_appointment(appointment(), DENTIST, NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        assert isinstance(result, Rejected)
+        assert len(result.violations) == 1
+        violation = result.violations[0]
+        assert violation.code is expected
+        assert violation.reference_kind is None
+>       assert violation.conflicting_appointment_id is None
+E       AssertionError: assert UUID('00000000-0000-0000-0000-0000000000f1') is None
+E        +  where UUID('00000000-0000-0000-0000-0000000000f1') = Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del 2...UID('00000000-0000-0000-0000-0000000000f1'), reference_kind=None, conflicting_block_id=None, conflicting_interval=None).conflicting_appointment_id
+
+tests\domain\test_lifecycle.py:659: AssertionError
+____________ test_violation_metadata_never_claims_conflict[early] _____________
+
+kind = 'early'
+
+    @pytest.mark.parametrize("kind", ["transition", "early", "foreign", "cancel"])
+    def test_violation_metadata_never_claims_conflict(kind: str) -> None:
+        from app.domain.appointment import cancel_appointment, change_status
+    
+        if kind == "transition":
+            result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, NAME, TZ)
+            expected = V.INVALID_TRANSITION
+        elif kind == "early":
+            result = change_status(appointment(), S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+            expected = V.STATUS_CHANGE_TOO_EARLY
+        elif kind == "foreign":
+            result = change_status(appointment(), S.CONFIRMED, Actor(U1, Role.ODONTOLOGO, P2), NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        else:
+            result = cancel_appointment(appointment(), DENTIST, NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        assert isinstance(result, Rejected)
+        assert len(result.violations) == 1
+        violation = result.violations[0]
+        assert violation.code is expected
+        assert violation.reference_kind is None
+>       assert violation.conflicting_appointment_id is None
+E       AssertionError: assert UUID('00000000-0000-0000-0000-0000000000f1') is None
+E        +  where UUID('00000000-0000-0000-0000-0000000000f1') = Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El turno de Dra. Laura Qui...UID('00000000-0000-0000-0000-0000000000f1'), reference_kind=None, conflicting_block_id=None, conflicting_interval=None).conflicting_appointment_id
+
+tests\domain\test_lifecycle.py:659: AssertionError
+___________ test_violation_metadata_never_claims_conflict[foreign] ____________
+
+kind = 'foreign'
+
+    @pytest.mark.parametrize("kind", ["transition", "early", "foreign", "cancel"])
+    def test_violation_metadata_never_claims_conflict(kind: str) -> None:
+        from app.domain.appointment import cancel_appointment, change_status
+    
+        if kind == "transition":
+            result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, NAME, TZ)
+            expected = V.INVALID_TRANSITION
+        elif kind == "early":
+            result = change_status(appointment(), S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+            expected = V.STATUS_CHANGE_TOO_EARLY
+        elif kind == "foreign":
+            result = change_status(appointment(), S.CONFIRMED, Actor(U1, Role.ODONTOLOGO, P2), NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        else:
+            result = cancel_appointment(appointment(), DENTIST, NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        assert isinstance(result, Rejected)
+        assert len(result.violations) == 1
+        violation = result.violations[0]
+        assert violation.code is expected
+        assert violation.reference_kind is None
+>       assert violation.conflicting_appointment_id is None
+E       AssertionError: assert UUID('00000000-0000-0000-0000-0000000000f1') is None
+E        +  where UUID('00000000-0000-0000-0000-0000000000f1') = Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene permiso para cambiar el e...UID('00000000-0000-0000-0000-0000000000f1'), reference_kind=None, conflicting_block_id=None, conflicting_interval=None).conflicting_appointment_id
+
+tests\domain\test_lifecycle.py:659: AssertionError
+____________ test_violation_metadata_never_claims_conflict[cancel] ____________
+
+kind = 'cancel'
+
+    @pytest.mark.parametrize("kind", ["transition", "early", "foreign", "cancel"])
+    def test_violation_metadata_never_claims_conflict(kind: str) -> None:
+        from app.domain.appointment import cancel_appointment, change_status
+    
+        if kind == "transition":
+            result = cancel_appointment(appointment(S.ATTENDED), RECEPTION, NOW, NAME, TZ)
+            expected = V.INVALID_TRANSITION
+        elif kind == "early":
+            result = change_status(appointment(), S.ATTENDED, RECEPTION, NOW, NAME, TZ)
+            expected = V.STATUS_CHANGE_TOO_EARLY
+        elif kind == "foreign":
+            result = change_status(appointment(), S.CONFIRMED, Actor(U1, Role.ODONTOLOGO, P2), NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        else:
+            result = cancel_appointment(appointment(), DENTIST, NOW, NAME, TZ)
+            expected = V.FORBIDDEN_OPERATION
+        assert isinstance(result, Rejected)
+        assert len(result.violations) == 1
+        violation = result.violations[0]
+        assert violation.code is expected
+        assert violation.reference_kind is None
+>       assert violation.conflicting_appointment_id is None
+E       AssertionError: assert UUID('00000000-0000-0000-0000-0000000000f1') is None
+E        +  where UUID('00000000-0000-0000-0000-0000000000f1') = Violation(code=<ViolationCode.FORBIDDEN_OPERATION: 'FORBIDDEN_OPERATION'>, message='No tiene permiso para cancelar el ...UID('00000000-0000-0000-0000-0000000000f1'), reference_kind=None, conflicting_block_id=None, conflicting_interval=None).conflicting_appointment_id
+
+tests\domain\test_lifecycle.py:659: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_violation_metadata_never_claims_conflict[transition]
+FAILED tests/domain/test_lifecycle.py::test_violation_metadata_never_claims_conflict[early]
+FAILED tests/domain/test_lifecycle.py::test_violation_metadata_never_claims_conflict[foreign]
+FAILED tests/domain/test_lifecycle.py::test_violation_metadata_never_claims_conflict[cancel]
+====================== 4 failed, 64 deselected in 0.34s =======================
+
+
+=== 8.2 metadata RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 68 items / 64 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 64 deselected in 0.11s =======================
+
+
+=== 8.2 now seconds MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 68 items / 66 deselected / 2 selected
+
+tests\domain\test_lifecycle.py F.                                        [100%]
+
+================================== FAILURES ===================================
+___________________ test_early_message_now_retains_seconds ____________________
+
+    def test_early_message_now_retains_seconds() -> None:
+        from app.domain.appointment import change_status
+    
+        now = datetime(2026, 10, 20, 12, 59, 30, tzinfo=UTC)
+        result = change_status(appointment(), S.ATTENDED, RECEPTION, now, NAME, TZ)
+>       assert result == Rejected((Violation(V.STATUS_CHANGE_TOO_EARLY,
+            'El turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local) todavía no empezó: no se puede marcar como "atendido" antes del inicio (momento actual: 20/10/2026 09:59:30, hora local).'),))
+E       assert Rejected(viol...erval=None),)) == Rejected(viol...erval=None),))
+E         
+E         Differing attributes:
+E         ['violations']
+E         
+E         Drill down into differing attribute violations:
+E           violations: (Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EARLY'>, message='El turno de Dra. Laura Quiroga del 20/10/2026 de 10:00 a 10:30 (hora local) todavía no empezó: no se puede marcar como "atendido" antes del inicio (momento actual: 20/10/2026 09:59, hora local).', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),) != (Violation(code=<ViolationCode.STATUS_CHANGE_TOO_EARLY: 'STATUS_CHANGE_TOO_EA...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests\domain\test_lifecycle.py:634: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_early_message_now_retains_seconds
+================= 1 failed, 1 passed, 66 deselected in 0.18s ==================
+
+
+=== 8.2 now seconds RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 68 items / 66 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 66 deselected in 0.10s =======================
+
+
+=== 8.2 REFACTOR helper review; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 68 items
+
+tests\domain\test_lifecycle.py ......................................... [ 60%]
+...........................                                              [100%]
+
+============================= 68 passed in 0.14s ==============================
+
+
+=== 8.2 mypy; exit=0 ===
+Success: no issues found in 48 source files
+
+
+=== 9.1 composition initially green regression; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 1 item
+
+tests\domain\test_lifecycle_agenda.py .                                  [100%]
+
+============================== 1 passed in 0.11s ==============================
+
+
+=== 9.1 confirmed composition initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\domain\test_lifecycle_agenda.py ..                                 [100%]
+
+============================== 2 passed in 0.11s ==============================
+
+
+=== 9.1 before RESERVED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 3 items
+
+tests\domain\test_lifecycle_agenda.py ...                                [100%]
+
+============================== 3 passed in 0.12s ==============================
+
+
+=== 9.1 before CONFIRMED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 4 items
+
+tests\domain\test_lifecycle_agenda.py ....                               [100%]
+
+============================== 4 passed in 0.11s ==============================
+
+
+=== 9.1 returned cancellation wiring MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 4 items / 2 deselected / 2 selected
+
+tests\domain\test_lifecycle_agenda.py FF                                 [100%]
+
+================================== FAILURES ===================================
+________________ test_cancel_reserved_releases_both_resources _________________
+
+    def test_cancel_reserved_releases_both_resources() -> None:
+        appointment = original(S.RESERVED)
+        cancelled = cancel_appointment(appointment, RECEPTION, NOW, "Dra. Laura Quiroga", TZ)
+        assert isinstance(cancelled, Ok)
+>       assert cancelled.appointment == replace(appointment, status=S.CANCELLED)
+E       AssertionError: assert Appointment(i... 'reservado'>) == Appointment(i... 'cancelado'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.RESERVED: 'reservado'> != <AppointmentStatus.CANCELLED: 'cancelado'>
+
+tests\domain\test_lifecycle_agenda.py:51: AssertionError
+________________ test_cancel_confirmed_releases_both_resources ________________
+
+    def test_cancel_confirmed_releases_both_resources() -> None:
+        appointment = original(S.CONFIRMED)
+        cancelled = cancel_appointment(appointment, RECEPTION, NOW, "Dra. Laura Quiroga", TZ)
+        assert isinstance(cancelled, Ok)
+>       assert cancelled.appointment == replace(appointment, status=S.CANCELLED)
+E       AssertionError: assert Appointment(i...'confirmado'>) == Appointment(i... 'cancelado'>)
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing attributes:
+E         ['status']
+E         
+E         Drill down into differing attribute status:
+E           status: <AppointmentStatus.CONFIRMED: 'confirmado'> != <AppointmentStatus.CANCELLED: 'cancelado'>
+
+tests\domain\test_lifecycle_agenda.py:61: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle_agenda.py::test_cancel_reserved_releases_both_resources
+FAILED tests/domain/test_lifecycle_agenda.py::test_cancel_confirmed_releases_both_resources
+======================= 2 failed, 2 deselected in 0.15s =======================
+
+
+=== 9.1 returned cancellation wiring RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 4 items / 2 deselected / 2 selected
+
+tests\domain\test_lifecycle_agenda.py ..                                 [100%]
+
+======================= 2 passed, 2 deselected in 0.08s =======================
+
+
+=== 9.2 ATTENDED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 5 items
+
+tests\domain\test_lifecycle_agenda.py .....                              [100%]
+
+============================== 5 passed in 0.10s ==============================
+
+
+=== 9.2 NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 6 items
+
+tests\domain\test_lifecycle_agenda.py ......                             [100%]
+
+============================== 6 passed in 0.12s ==============================
+
+
+=== 9.2 payload compatibility initially green; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items
+
+tests\domain\test_lifecycle_agenda.py ......F                            [100%]
+
+================================== FAILURES ===================================
+_____________ test_new_booking_and_catalog_keep_separate_payloads _____________
+
+    def test_new_booking_and_catalog_keep_separate_payloads() -> None:
+        from app.domain.catalog.create import create_professional
+        from app.domain.catalog.result import Ok as CatalogOk
+    
+        result = validate_new_appointment(request(), references(), (), context())
+        assert result == Ok(Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED))
+        professional = Professional(P1, "Dra. Laura Quiroga", True)
+>       catalog = create_professional(P1, "Dra. Laura Quiroga")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: create_professional() takes 1 positional argument but 2 were given
+
+tests\domain\test_lifecycle_agenda.py:97: TypeError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle_agenda.py::test_new_booking_and_catalog_keep_separate_payloads
+========================= 1 failed, 6 passed in 0.18s =========================
+
+
+=== 9.2 compatible payload corrected invocation; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 7 items
+
+tests\domain\test_lifecycle_agenda.py .......                            [100%]
+
+============================== 7 passed in 0.13s ==============================
+
+
+=== 10 review diagonal CONFIRMED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 69 items / 67 deselected / 2 selected
+
+tests\domain\test_lifecycle.py ..                                        [100%]
+
+====================== 2 passed, 67 deselected in 0.25s =======================
+
+
+=== 10 review diagonal ATTENDED initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 70 items / 67 deselected / 3 selected
+
+tests\domain\test_lifecycle.py ...                                       [100%]
+
+====================== 3 passed, 67 deselected in 0.27s =======================
+
+
+=== 10 review diagonal NO_SHOW initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 71 items / 67 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 67 deselected in 0.31s =======================
+
+
+=== 10 review diagonal sensitivity MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 71 items / 67 deselected / 4 selected
+
+tests\domain\test_lifecycle.py FFFF                                      [100%]
+
+================================== FAILURES ===================================
+___________________ test_change_reserved_diagonal_rejected ____________________
+
+    def test_change_reserved_diagonal_rejected() -> None:
+        from app.domain.appointment.transitions import change_status
+    
+        original = appointment()
+>       assert change_status(original, S.RESERVED, RECEPTION, NOW, NAME, TZ) == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "reservado" al estado "reservado".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...tetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>)) = <function change_status at 0x0000014552145940>(Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0000000000c1'), ...atetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.RESERVED: 'reservado'>), <AppointmentStatus.RESERVED: 'reservado'>, Actor(user_id=UUID('00000000-0000-0000-0000-0000000000a2'), role=<Role.RECEPCION: 'recepcion'>, professional_id=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc), 'Dra. Laura Quiroga', zoneinfo.ZoneInfo(key='America/Argentina/Buenos_Aires'))
+E        +    where <AppointmentStatus.RESERVED: 'reservado'> = S.RESERVED
+E        +  and   Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...vado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...rvado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:205: AssertionError
+_______________________ test_diagonal_confirmed_invalid _______________________
+
+    def test_diagonal_confirmed_invalid() -> None:
+        from app.domain.appointment import change_status
+    
+        original = appointment(S.CONFIRMED)
+        result = change_status(original, S.CONFIRMED, RECEPTION, END, NAME, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "' + S.CONFIRMED.value + '" al estado "' + S.CONFIRMED.value + '".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...time.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.CONFIRMED: 'confirmado'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...mado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...mado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...rmado".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:678: AssertionError
+_______________________ test_diagonal_attended_invalid ________________________
+
+    def test_diagonal_attended_invalid() -> None:
+        from app.domain.appointment import change_status
+    
+        original = appointment(S.ATTENDED)
+        result = change_status(original, S.ATTENDED, RECEPTION, END, NAME, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "' + S.ATTENDED.value + '" al estado "' + S.ATTENDED.value + '".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...atetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.ATTENDED: 'atendido'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...dido".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...dido".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...ndido".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:687: AssertionError
+________________________ test_diagonal_no_show_invalid ________________________
+
+    def test_diagonal_no_show_invalid() -> None:
+        from app.domain.appointment import change_status
+    
+        original = appointment(S.NO_SHOW)
+        result = change_status(original, S.NO_SHOW, RECEPTION, END, NAME, TZ)
+>       assert result == Rejected((Violation(V.INVALID_TRANSITION, PREFIX + ' no puede pasar del estado "' + S.NO_SHOW.value + '" al estado "' + S.NO_SHOW.value + '".'),))
+E       assert Ok(appointment=Appointment(id=UUID('00000000-0000-0000-0000-0000000000f1'), patient_id=UUID('00000000-0000-0000-0000-0...=datetime.datetime(2026, 10, 20, 13, 30, tzinfo=datetime.timezone.utc), status=<AppointmentStatus.NO_SHOW: 'ausente'>)) == Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...ente".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+E        +  where Rejected(violations=(Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra...ente".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_TRANSITION: 'INVALID_TRANSITION'>, message='El turno de Dra. Laura Quiroga del ...sente".', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
+
+tests\domain\test_lifecycle.py:696: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/domain/test_lifecycle.py::test_change_reserved_diagonal_rejected
+FAILED tests/domain/test_lifecycle.py::test_diagonal_confirmed_invalid - asse...
+FAILED tests/domain/test_lifecycle.py::test_diagonal_attended_invalid - asser...
+FAILED tests/domain/test_lifecycle.py::test_diagonal_no_show_invalid - assert...
+====================== 4 failed, 67 deselected in 0.24s =======================
+
+
+=== 10 review diagonal sensitivity RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 71 items / 67 deselected / 4 selected
+
+tests\domain\test_lifecycle.py ....                                      [100%]
+
+====================== 4 passed, 67 deselected in 0.13s =======================
+
+
+=== 2.1 frozen sensitivity MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 32 items / 30 deselected / 2 selected
+
+tests\domain\test_model.py FF                                            [100%]
+
+================================== FAILURES ===================================
+_____________________ test_actor_fields_are_frozen[role] ______________________
+
+field = 'role'
+
+    @pytest.mark.parametrize("field", ["role", "professional_id"])
+    def test_actor_fields_are_frozen(field: str) -> None:
+        from dataclasses import FrozenInstanceError
+        from app.domain.model import Actor, Role
+    
+        actor = Actor(UUID("00000000-0000-0000-0000-0000000000a1"), Role.ODONTOLOGO, P1)
+>       with pytest.raises(FrozenInstanceError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'dataclasses.FrozenInstanceError'>
+
+tests\domain\test_model.py:305: Failed
+________________ test_actor_fields_are_frozen[professional_id] ________________
+
+field = 'professional_id'
+
+    @pytest.mark.parametrize("field", ["role", "professional_id"])
+    def test_actor_fields_are_frozen(field: str) -> None:
+        from dataclasses import FrozenInstanceError
+        from app.domain.model import Actor, Role
+    
+        actor = Actor(UUID("00000000-0000-0000-0000-0000000000a1"), Role.ODONTOLOGO, P1)
+>       with pytest.raises(FrozenInstanceError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'dataclasses.FrozenInstanceError'>
+
+tests\domain\test_model.py:305: Failed
+=========================== short test summary info ===========================
+FAILED tests/domain/test_model.py::test_actor_fields_are_frozen[role] - Faile...
+FAILED tests/domain/test_model.py::test_actor_fields_are_frozen[professional_id]
+====================== 2 failed, 30 deselected in 0.17s =======================
+
+
+=== 2.1 frozen sensitivity RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 32 items / 30 deselected / 2 selected
+
+tests\domain\test_model.py ..                                            [100%]
+
+====================== 2 passed, 30 deselected in 0.09s =======================
+
+
+=== 10 static proof automated initially green; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\test_transition_types.py ..                                        [100%]
+
+============================== 2 passed in 1.22s ==============================
+
+
+=== 10.1 legibilidad REFACTOR; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 113 items
+
+tests\domain\test_lifecycle.py ......................................... [ 36%]
+..............................                                           [ 62%]
+tests\domain\test_lifecycle_agenda.py .......                            [ 69%]
+tests\domain\test_transitions.py .................................       [ 98%]
+tests\test_transition_types.py ..                                        [100%]
+
+============================= 113 passed in 1.83s =============================
+
+
+=== 10.1 mypy refactor; exit=0 ===
+Success: no issues found in 50 source files
+
+
+=== 10 static map sensitivity MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items / 1 deselected / 1 selected
+
+tests\test_transition_types.py F                                         [100%]
+
+================================== FAILURES ===================================
+___ test_transition_policy_rejects_mutation_statically[mapping-assignment] ____
+
+expression = '_TRANSITIONS[S.RESERVED] = frozenset()'
+diagnostic = 'Unsupported target for indexed assignment'
+tmp_path = WindowsPath('C:/Users/hp/AppData/Local/Temp/pytest-of-hp/pytest-406/test_transition_policy_rejects0')
+
+    @pytest.mark.parametrize(
+        ("expression", "diagnostic"),
+        [
+            ('_TRANSITIONS[S.RESERVED] = frozenset()', 'Unsupported target for indexed assignment'),
+            ('_TRANSITIONS[S.CONFIRMED].add(S.RESERVED)', 'has no attribute "add"'),
+        ],
+        ids=["mapping-assignment", "frozenset-mutation"],
+    )
+    def test_transition_policy_rejects_mutation_statically(
+        expression: str, diagnostic: str, tmp_path: Path,
+    ) -> None:
+        config = tmp_path / "mypy.ini"
+        config.write_text("[mypy]\nstrict = True\n", encoding="utf-8")
+        code = (
+            "from app.domain.appointment.transitions import _TRANSITIONS\n"
+            "from app.domain.model import AppointmentStatus as S\n" + expression + "\n"
+        )
+        result = subprocess.run(
+            [sys.executable, "-m", "mypy", "--config-file", str(config), "-c", code],
+            cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True,
+            encoding="utf-8", check=False,
+        )
+>       assert result.returncode == 1, result.stdout + result.stderr
+E       AssertionError: Success: no issues found in 1 source file
+E         
+E       assert 0 == 1
+E        +  where 0 = CompletedProcess(args=['C:\\Users\\hp\\METODOLOGIA_TPS\\turnos-odontologia\\backend\\.venv\\Scripts\\python.exe', '-m'...ANSITIONS[S.RESERVED] = frozenset()\n'], returncode=0, stdout='Success: no issues found in 1 source file\n', stderr='').returncode
+
+tests\test_transition_types.py:32: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_transition_types.py::test_transition_policy_rejects_mutation_statically[mapping-assignment]
+======================= 1 failed, 1 deselected in 0.96s =======================
+
+
+=== 10 static map sensitivity RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items / 1 deselected / 1 selected
+
+tests\test_transition_types.py .                                         [100%]
+
+======================= 1 passed, 1 deselected in 0.66s =======================
+
+
+=== 10 static destinations sensitivity MUTATION; exit=1 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items / 1 deselected / 1 selected
+
+tests\test_transition_types.py F                                         [100%]
+
+================================== FAILURES ===================================
+___ test_transition_policy_rejects_mutation_statically[frozenset-mutation] ____
+
+expression = '_TRANSITIONS[S.CONFIRMED].add(S.RESERVED)'
+diagnostic = 'has no attribute "add"'
+tmp_path = WindowsPath('C:/Users/hp/AppData/Local/Temp/pytest-of-hp/pytest-408/test_transition_policy_rejects0')
+
+    @pytest.mark.parametrize(
+        ("expression", "diagnostic"),
+        [
+            ('_TRANSITIONS[S.RESERVED] = frozenset()', 'Unsupported target for indexed assignment'),
+            ('_TRANSITIONS[S.CONFIRMED].add(S.RESERVED)', 'has no attribute "add"'),
+        ],
+        ids=["mapping-assignment", "frozenset-mutation"],
+    )
+    def test_transition_policy_rejects_mutation_statically(
+        expression: str, diagnostic: str, tmp_path: Path,
+    ) -> None:
+        config = tmp_path / "mypy.ini"
+        config.write_text("[mypy]\nstrict = True\n", encoding="utf-8")
+        code = (
+            "from app.domain.appointment.transitions import _TRANSITIONS\n"
+            "from app.domain.model import AppointmentStatus as S\n" + expression + "\n"
+        )
+        result = subprocess.run(
+            [sys.executable, "-m", "mypy", "--config-file", str(config), "-c", code],
+            cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True,
+            encoding="utf-8", check=False,
+        )
+>       assert result.returncode == 1, result.stdout + result.stderr
+E       AssertionError: Success: no issues found in 1 source file
+E         
+E       assert 0 == 1
+E        +  where 0 = CompletedProcess(args=['C:\\Users\\hp\\METODOLOGIA_TPS\\turnos-odontologia\\backend\\.venv\\Scripts\\python.exe', '-m'...ITIONS[S.CONFIRMED].add(S.RESERVED)\n'], returncode=0, stdout='Success: no issues found in 1 source file\n', stderr='').returncode
+
+tests\test_transition_types.py:32: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_transition_types.py::test_transition_policy_rejects_mutation_statically[frozenset-mutation]
+======================= 1 failed, 1 deselected in 0.78s =======================
+
+
+=== 10 static destinations RESTORED; exit=0 ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collected 2 items
+
+tests\test_transition_types.py ..                                        [100%]
+
+============================== 2 passed in 1.03s ==============================
+
