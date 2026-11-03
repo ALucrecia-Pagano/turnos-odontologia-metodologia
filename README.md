@@ -41,8 +41,11 @@ Fijado por la cátedra:
   y DNI, activación inmutable y datos ficticios reutilizables) y C-10
   (transiciones de estado con tabla única, cancelación sin anticipación mínima,
   atendido y ausente desde el inicio con reloj inyectado, permisos por rol y
-  propiedad y copias inmutables; sin historial ni reprogramación).
-- **Planificado:** la API REST, la base de datos y el frontend. El plan completo
+  propiedad y copias inmutables; sin historial ni reprogramación) y C-13
+  (Docker Compose con PostgreSQL, Redis, configuración segura, sesión SQLAlchemy
+  síncrona en UTC y tests de integración aislados).
+- **Planificado:** la API REST, las migraciones, la persistencia de entidades y
+  el frontend. El plan completo
   está en [CHANGES.md](CHANGES.md).
 
 ## Requisitos
@@ -66,6 +69,32 @@ python -m venv .venv
 .venv/Scripts/python -m pytest
 .venv/Scripts/python -m mypy
 ```
+
+### Base de datos local
+
+Desde la raíz, copiá `.env.example` a `.env` y completalo con valores
+ficticios:
+
+```bash
+cp .env.example .env
+docker compose up -d
+docker compose ps
+```
+
+Desde `backend/`, ejecutá los tests de integración:
+
+```bash
+.venv/Scripts/python -m pytest -m integration
+```
+
+Al terminar, desde la raíz:
+
+```bash
+docker compose down
+```
+
+Si hay un PostgreSQL instalado en Windows, detenelo antes de levantar el
+compose: los dos usan el puerto 5432.
 
 ### PowerShell
 
@@ -112,6 +141,7 @@ cómo funciona la guardia de dependencias), leé
 | Change archivado de C-08 | [openspec/changes/archive/2026-11-01-mensajes-de-conflicto-en-espanol/](openspec/changes/archive/2026-11-01-mensajes-de-conflicto-en-espanol/) |
 | Change archivado de C-09 | [openspec/changes/archive/2026-11-01-catalogo-y-pacientes-dominio/](openspec/changes/archive/2026-11-01-catalogo-y-pacientes-dominio/) |
 | Change archivado de C-10 | [openspec/changes/archive/2026-11-02-transiciones-de-estado-del-turno/](openspec/changes/archive/2026-11-02-transiciones-de-estado-del-turno/) |
+| Change archivado de C-13 | [openspec/changes/archive/2026-11-02-docker-compose-y-postgres/](openspec/changes/archive/2026-11-02-docker-compose-y-postgres/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -123,6 +153,7 @@ cómo funciona la guardia de dependencias), leé
 | Evidencias de C-08 (explore, verify y salidas de pytest y mypy) | [explore-C-08.md](docs/evidencias/explore-C-08.md), [verify-C-08.md](docs/evidencias/verify-C-08.md), [pytest-C-08.txt](docs/evidencias/pytest-C-08.txt) y [mypy-C-08.txt](docs/evidencias/mypy-C-08.txt) |
 | Evidencias de C-09 (explore, verify y salidas de pytest y mypy) | [explore-C-09.md](docs/evidencias/explore-C-09.md), [verify-C-09.md](docs/evidencias/verify-C-09.md), [pytest-C-09.txt](docs/evidencias/pytest-C-09.txt) y [mypy-C-09.txt](docs/evidencias/mypy-C-09.txt) |
 | Evidencias de C-10 (explore, verify y salidas de pytest, mypy y TDD) | [explore-C-10.md](docs/evidencias/explore-C-10.md), [verify-C-10.md](docs/evidencias/verify-C-10.md), [pytest-C-10.txt](docs/evidencias/pytest-C-10.txt), [mypy-C-10.txt](docs/evidencias/mypy-C-10.txt) y [tdd-C-10.txt](docs/evidencias/tdd-C-10.txt) |
+| Evidencias de C-13 (explore, pytest, integración, mypy y verify) | [explore-C-13.md](docs/evidencias/explore-C-13.md), [pytest-C-13.txt](docs/evidencias/pytest-C-13.txt), [pytest-integration-C-13.txt](docs/evidencias/pytest-integration-C-13.txt), [mypy-C-13.txt](docs/evidencias/mypy-C-13.txt) y [verify-C-13.md](docs/evidencias/verify-C-13.md) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

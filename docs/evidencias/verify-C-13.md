@@ -16,6 +16,9 @@
 - Búsqueda de secretos: sin contraseñas, tokens ni URLs con credenciales en
   archivos versionados; `.env` permanece ignorado.
 
+Los artefactos archivados son [design.md](../../openspec/changes/archive/2026-11-02-docker-compose-y-postgres/design.md)
+y [tasks.md](../../openspec/changes/archive/2026-11-02-docker-compose-y-postgres/tasks.md).
+
 Las salidas completas de pytest están en
 [pytest-C-13.txt](pytest-C-13.txt), la salida de mypy en
 [mypy-C-13.txt](mypy-C-13.txt) y la salida de integración aislada también se
@@ -60,8 +63,7 @@ verificar errores por variables ausentes.
 
 Otros desvíos corregidos durante el apply fueron la resolución inicial del
 `.env` dentro de `backend/` y la conversión de la URL `postgresql+psycopg`
-para la conexión administrativa directa con psycopg. Están detallados en
-[design.md](../../openspec/changes/docker-compose-y-postgres/design.md).
+para la conexión administrativa directa con psycopg. Están detallados en [design.md](../../openspec/changes/archive/2026-11-02-docker-compose-y-postgres/design.md).
 
 ## Verificación manual ejecutada
 

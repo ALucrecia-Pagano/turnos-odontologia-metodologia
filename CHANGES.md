@@ -384,7 +384,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 > Corre en paralelo con las FASES 2 y 3 desde que existe C-01. Los tests de esta fase son de integración contra un PostgreSQL real (servicio de Compose) y llevan una marca de pytest (`integration`) para que los tests de dominio sigan corriendo sin Docker. Las migraciones de Alembic se encadenan por `down_revision` en el orden en que se archivan los changes: si dos changes paralelos agregan migraciones, el segundo en archivarse ajusta su `down_revision`.
 
 ### [C-13] `docker-compose-y-postgres`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-02)
 - **Scope**:
   - `docker-compose.yml` con los servicios `postgres` (`postgres:16`, volumen nombrado, healthcheck `pg_isready`) y `redis` (`redis:7`, healthcheck `redis-cli ping`, sin uso funcional en el MVP: DD-10, SU-11). Los servicios `backend` y `frontend` los agregan C-18 y C-25.
   - Usuario, contraseña y base de PostgreSQL leídos de `.env`; ningún secreto en `docker-compose.yml`. `.env.example` con **todos** los nombres de variables de 08 §Variables de entorno, sin valores.
@@ -396,6 +396,8 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Governance**: MEDIO (manejo de secretos por `.env`; revisar que ningún valor sensible quede versionado)
 - **Leer antes**:
   - `knowledge-base/08_arquitectura_propuesta.md` §Docker Compose, §Variables de entorno, §Seguridad
+ - **Nota**: Si hay un PostgreSQL instalado en Windows, detenerlo antes de
+  levantar el compose (ver `verify-C-13.md`)
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-03, §DD-05, §DD-10, §SU-11
   - `knowledge-base/02_descripcion_general.md` §Stack tecnológico, §Zona horaria
 
