@@ -29,6 +29,27 @@ class AppointmentStatus(Enum):
     CANCELLED = "cancelado"
 
 
+class Role(Enum):
+    """Rol autenticado por el borde; el dominio solo aplica permisos."""
+
+    ODONTOLOGO = "odontologo"
+    RECEPCION = "recepcion"
+    ADMINISTRADOR = "administrador"
+
+
+@dataclass(frozen=True, slots=True)
+class Actor:
+    """Identidad del usuario y vínculo profesional explícito, recibidos del borde."""
+
+    user_id: UUID
+    role: Role
+    professional_id: UUID | None = None
+
+    def __post_init__(self) -> None:
+        if self.role is Role.ODONTOLOGO and self.professional_id is None:
+            raise ValueError("El actor odontólogo necesita professional_id")
+
+
 def _to_utc(field_name: str, value: datetime) -> datetime:
     if value.tzinfo is None or value.utcoffset() is None:
         raise ValueError(f"{field_name} necesita zona horaria (datetime naive)")

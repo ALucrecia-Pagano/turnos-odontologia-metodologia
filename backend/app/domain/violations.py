@@ -33,6 +33,9 @@ class ViolationCode(Enum):
     INVALID_DNI = "INVALID_DNI"
     DUPLICATE_NAME = "DUPLICATE_NAME"
     EMPTY_NAME = "EMPTY_NAME"
+    INVALID_TRANSITION = "INVALID_TRANSITION"
+    FORBIDDEN_OPERATION = "FORBIDDEN_OPERATION"
+    STATUS_CHANGE_TOO_EARLY = "STATUS_CHANGE_TOO_EARLY"
 
 
 class ReferenceKind(Enum):
@@ -80,7 +83,7 @@ class Ok:
     """Turno aceptado.
 
     Attributes:
-        appointment: El turno nuevo, en estado `reservado`.
+        appointment: Turno aceptado por alta o transición, con su estado resultante.
     """
 
     appointment: Appointment

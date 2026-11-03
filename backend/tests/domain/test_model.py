@@ -276,3 +276,45 @@ def test_professional_fields_exclude_license_number() -> None:
     from dataclasses import fields
 
     assert [field.name for field in fields(Professional)] == ["id", "full_name", "active"]
+
+
+def test_actor_odontologist_preserves_distinct_user_and_professional() -> None:
+    from app.domain.model import Actor, Role
+
+    user = UUID("00000000-0000-0000-0000-0000000000a1")
+    actor = Actor(user, Role.ODONTOLOGO, P1)
+    assert (actor.user_id, actor.role.value, actor.professional_id) == (user, "odontologo", P1)
+    assert actor.user_id != actor.professional_id
+
+
+@pytest.mark.parametrize("role_name", ["RECEPCION", "ADMINISTRADOR"])
+def test_actor_management_without_professional(role_name: str) -> None:
+    from app.domain.model import Actor, Role
+
+    user = UUID("00000000-0000-0000-0000-0000000000a2")
+    actor = Actor(user, Role[role_name])
+    assert (actor.user_id, actor.role, actor.professional_id) == (user, Role[role_name], None)
+
+
+@pytest.mark.parametrize("field", ["role", "professional_id"])
+def test_actor_fields_are_frozen(field: str) -> None:
+    from dataclasses import FrozenInstanceError
+    from app.domain.model import Actor, Role
+
+    actor = Actor(UUID("00000000-0000-0000-0000-0000000000a1"), Role.ODONTOLOGO, P1)
+    with pytest.raises(FrozenInstanceError):
+        setattr(actor, field, None)
+
+
+def test_actor_odontologist_missing_professional_raises() -> None:
+    from app.domain.model import Actor, Role
+
+    with pytest.raises(ValueError, match="professional_id"):
+        Actor(UUID("00000000-0000-0000-0000-0000000000a1"), Role.ODONTOLOGO)
+
+
+def test_actor_odontologist_none_professional_raises() -> None:
+    from app.domain.model import Actor, Role
+
+    with pytest.raises(ValueError, match="professional_id"):
+        Actor(UUID("00000000-0000-0000-0000-0000000000a1"), Role.ODONTOLOGO, None)
