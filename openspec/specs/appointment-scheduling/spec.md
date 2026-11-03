@@ -1,6 +1,8 @@
 # appointment-scheduling Specification
 
 ## Purpose
+El verbo del mensaje del pasado depende de la operación: "dar" en el alta y "reprogramar" al reprogramar.
+
 Reglas del dominio para dar un turno nuevo en la agenda del consultorio. El turno se acepta solo si el pedido es válido y no choca con la agenda. El pedido es válido si el paciente existe, si el profesional, el sillón y la prestación existen y están activos, si la duración es un múltiplo de 5 minutos entre 5 y 480, si el inicio cae en la grilla de 5 minutos, si el turno empieza y termina en el mismo día local y si el inicio no es anterior al momento actual (`now`), que el dominio recibe inyectado con el contexto de la agenda y nunca lee del reloj del sistema; un turno en el pasado se rechaza como regla de validez, antes que los conflictos de agenda. No choca con la agenda si cae completo dentro del horario de atención del profesional para ese día local (sus tramos de ese día de la semana, con los tramos contiguos o que se pisan unidos), si no pisa ningún bloqueo del profesional (vacaciones, feriados o ausencias, que se comparan como instantes aunque duren varios días) y si no se solapa con otro turno activo del mismo profesional ni del mismo sillón. La hora local, que usan la grilla, la medianoche y el horario de atención, se evalúa en la zona horaria que el dominio recibe como parámetro (`America/Argentina/Buenos_Aires` en el consultorio), nunca sobre la hora UTC. Si se rechaza, el resultado explica cada problema: primero los del pedido y, solo si el pedido es válido, los conflictos de agenda (horario de atención, bloqueos y solapamientos). Los mensajes de conflicto nombran al profesional o al sillón e indican el rango en hora local; las violaciones de solapamiento y de bloqueo llevan el intervalo en conflicto en UTC. "Todas" las violaciones significa todas las del primer grupo que falla: si falla la validez del pedido, no se evalúan los conflictos de agenda.
 
 Convenciones de los escenarios: todos los instantes son del 2026-10-20 en UTC (por ejemplo, "13:00" es `2026-10-20T13:00:00+00:00`); salvo que se diga otra cosa, `now` es el 2026-10-01 a las 00:00 UTC, anterior a todos los turnos pedidos. P1 y P2 son profesionales; S1, S2 y S3, sillones. Salvo que se diga otra cosa, el paciente, los profesionales, los sillones y la prestación del pedido existen y están activos, y los turnos existentes están en estado `reservado`. Turno existente "A" = profesional P1, sillón S1, de 13:00 a 13:30. "Hora local" es `America/Argentina/Buenos_Aires` (UTC-3, sin horario de verano), la zona que recibe el dominio; los escenarios que usan hora local dan también el instante en UTC (por ejemplo, "23:30 hora local del 2026-10-20" es `2026-10-21T02:30:00+00:00`, y "13:00" UTC son las 10:00 hora local). Los tramos del horario de atención se dan en minutos locales desde las 00:00 (`[540, 780)` es de 09:00 a 13:00) con el día de la semana ISO (1 = lunes … 7 = domingo). Los bloqueos se dan en hora local y en UTC; BL1 es el bloqueo de P1, sin motivo, del martes 2026-10-20 de 10:00 a 12:00 hora local (de 13:00 a 15:00 UTC).
@@ -907,7 +909,7 @@ El inicio del turno MUST NOT ser anterior al momento actual (`now`) que recibe e
 - **THEN** el resultado es `Rejected` con exactamente una violación `IN_THE_PAST`
 
 ### Requirement: Mensaje de un turno en el pasado
-El mensaje de `IN_THE_PAST` MUST decir, en hora local, el inicio del turno con fecha (`dd/mm/aaaa HH:MM`) y el momento actual con fecha y segundos (`dd/mm/aaaa HH:MM:SS`, sin microsegundos): "El inicio del turno ({inicio}, hora local) es anterior al momento actual ({now}, hora local): no se pueden dar turnos en el pasado." La fecha es la del día local, no la de UTC. El mensaje no menciona al profesional ni al sillón.
+El mensaje de `IN_THE_PAST` MUST decir, en hora local, el inicio del turno con fecha (`dd/mm/aaaa HH:MM`) y el momento actual con fecha y segundos (`dd/mm/aaaa HH:MM:SS`, sin microsegundos): "El inicio del turno ({inicio}, hora local) es anterior al momento actual ({now}, hora local): no se pueden {operación} en el pasado." La fecha es la del día local, no la de UTC. El mensaje no menciona al profesional ni al sillón. La operación (verbo del mensaje) SHALL recibirse como parámetro de `validate_new_appointment`, con valor por defecto "dar turnos", que la pasa a la regla del pasado (`check_not_in_the_past`): el alta no la pasa y conserva "dar turnos"; reprogramar le pasa "reprogramar turnos". El alta conserva exactamente el texto vigente "no se pueden dar turnos en el pasado"; reprogramar usa "no se pueden reprogramar turnos en el pasado". El valor por defecto "dar turnos" mantiene el alta y sus tests existentes idénticos.
 
 #### Scenario: Mensaje de un turno en el pasado
 - **GIVEN** que `now` es el martes 2026-10-20 a las 10:00 hora local (13:00 UTC)
@@ -925,6 +927,16 @@ El mensaje de `IN_THE_PAST` MUST decir, en hora local, el inicio del turno con f
 - **WHEN** se pide un turno el martes 2026-10-20 a las 23:00 hora local (02:00 UTC del 2026-10-21), sin duración explícita
 - **THEN** el mensaje de la violación `IN_THE_PAST` es exactamente "El inicio del turno (20/10/2026 23:00, hora local) es anterior al momento actual (20/10/2026 23:30:00, hora local): no se pueden dar turnos en el pasado."
 - **AND** el mensaje no contiene la fecha ni las horas en UTC (`21/10/2026`, `02:00`, `02:30`)
+
+#### Scenario: Mensaje al reprogramar un turno al pasado
+- **GIVEN** que `now` es el martes 2026-10-20 a las 10:00 hora local (13:00 UTC)
+- **WHEN** se reprograma un turno a las 09:00 hora local (12:00 UTC)
+- **THEN** el mensaje de la violación `IN_THE_PAST` es exactamente "El inicio del turno (20/10/2026 09:00, hora local) es anterior al momento actual (20/10/2026 10:00:00, hora local): no se pueden reprogramar turnos en el pasado."
+
+#### Scenario: Mensaje al reprogramar con el momento actual en el mismo minuto que el inicio
+- **GIVEN** que `now` es el martes 2026-10-20 a las 10:00:30 hora local (13:00:30 UTC)
+- **WHEN** se reprograma un turno a las 10:00 hora local (13:00 UTC)
+- **THEN** el mensaje de la violación `IN_THE_PAST` es exactamente "El inicio del turno (20/10/2026 10:00, hora local) es anterior al momento actual (20/10/2026 10:00:30, hora local): no se pueden reprogramar turnos en el pasado."
 
 ### Requirement: Momento actual inyectado en el contexto
 El dominio SHALL recibir el momento actual (`now`) con el contexto de la agenda, junto con la zona, los tramos y los bloqueos, y MUST NOT leer el reloj del sistema (RN-GL-04; US-005 CA-4). `now` SHALL tener zona horaria y MUST normalizarse a UTC conservando el mismo momento. Un `now` sin zona (*naive*) es un error de programación del llamador y MUST rechazarse con `ValueError` al construir el contexto, no como violación de negocio.

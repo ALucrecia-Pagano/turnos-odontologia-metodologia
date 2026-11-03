@@ -350,7 +350,8 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/07_flujos_principales.md` §Flujo 3
 
 ### [C-11] `reprogramar-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-03)
+- **Nota**: Lo empezó Kiro y lo terminó Copilot (ver verify-C-11.md)
 - **Scope**:
   - `appointment/reschedule`: cambiar inicio, profesional, sillón y/o duración; revalida **todas** las reglas de `validate_new_appointment` excluyendo al propio turno (RN-TU-03, US-031 CA-1).
   - No se puede reprogramar al pasado (CA-2); solo desde `reservado` o `confirmado` (CA-3); el turno vuelve a `reservado` (CA-4).

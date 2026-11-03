@@ -2,6 +2,7 @@
 
 ## Resultado
 
+- Artefactos archivados: [design.md](../../openspec/changes/archive/2026-11-03-reprogramar-turno/design.md) y [tasks.md](../../openspec/changes/archive/2026-11-03-reprogramar-turno/tasks.md).
 - Apply iniciado por Kiro, interrumpido por límite de uso, y retomado por Copilot.
 - Baseline real: `619 passed, 8 deselected`; `mypy --strict`: Success en 62 archivos.
 - Resultado final: `645 passed, 8 deselected`; `mypy --strict`: Success en 62 archivos.

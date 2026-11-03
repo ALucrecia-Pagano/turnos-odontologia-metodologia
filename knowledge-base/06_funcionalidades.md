@@ -165,7 +165,7 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-031 — Reprogramar turno
 **Como** secretaria, **quiero** mover un turno a otro horario, profesional o sillón, **para** reorganizar la agenda.
-- [ ] CA-1: se revalidan todas las RN-AG excluyendo al propio turno. CA-2: no se puede reprogramar al pasado. CA-3: solo en `reservado`/`confirmado`. CA-4: el turno vuelve a `reservado`. CA-5: se registra en el historial.
+- [x] CA-1: se revalidan todas las RN-AG excluyendo al propio turno (dominio listo en C-11). [x] CA-2: no se puede reprogramar al pasado (dominio listo en C-11). [x] CA-3: solo en `reservado`/`confirmado` (dominio listo en C-11). [x] CA-4: el turno vuelve a `reservado` (dominio listo en C-11). [ ] CA-5: se registra en el historial.
 
 **Reglas**: RN-TU-03, RN-AG-06
 
