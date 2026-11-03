@@ -1,5 +1,7 @@
 # Verify de C-10 transiciones-de-estado-del-turno
 
+Artefactos archivados: [design.md](../../openspec/changes/archive/2026-11-02-transiciones-de-estado-del-turno/design.md) y [tasks.md](../../openspec/changes/archive/2026-11-02-transiciones-de-estado-del-turno/tasks.md).
+
 ## Cómo se verificó
 
 - Fecha: 2026-11-02. Codex implementó sobre propose aprobado y commiteado por la autora; gobernanza MEDIO sin checkpoint.

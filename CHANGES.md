@@ -331,7 +331,8 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 ## FASE 3 — Dominio: ciclo de vida del turno
 
 ### [C-10] `transiciones-de-estado-del-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-02)
+- **Nota**: El odontólogo no cancela turnos: se resolvió a favor del RBAC de KB 03 (ver design.md de C-10).
 - **Scope**:
   - `appointment/transitions.py`: tabla de RN-TU-02 en un solo lugar; terminales `atendido`, `ausente`, `cancelado`.
   - `cancel_appointment` (US-030 CA-1 y CA-2: libera profesional y sillón; desde estado terminal → `INVALID_TRANSITION`) y `change_status` a confirmado, atendido o ausente (US-032).

@@ -159,7 +159,9 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-030 — Cancelar turno
 **Como** secretaria, **quiero** cancelar un turno, **para** mantener la agenda al día.
-- [ ] CA-1: `reservado`/`confirmado` → `cancelado` libera profesional y sillón. CA-2: desde estado terminal → `INVALID_TRANSITION`. CA-3: queda entrada de historial.
+- [x] CA-1: `reservado`/`confirmado` → `cancelado` libera profesional y sillón (dominio listo en C-10).
+- [x] CA-2: desde estado terminal → `INVALID_TRANSITION` (dominio listo en C-10).
+- [ ] CA-3: queda entrada de historial.
 
 ### US-031 — Reprogramar turno
 **Como** secretaria, **quiero** mover un turno a otro horario, profesional o sillón, **para** reorganizar la agenda.
@@ -169,7 +171,9 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-032 — Cambiar estado
 **Como** recepción u odontólogo, **quiero** marcar un turno como confirmado, atendido o ausente, **para** reflejar lo ocurrido.
-- [ ] CA-1: solo transiciones de la tabla RN-TU-02. CA-2: `atendido`/`ausente` solo con `now >= inicio`. CA-3: odontólogo solo modifica turnos propios.
+- [x] CA-1: solo transiciones de la tabla RN-TU-02 (dominio listo en C-10).
+- [x] CA-2: `atendido`/`ausente` solo con `now >= inicio` (dominio listo en C-10).
+- [x] CA-3: odontólogo solo modifica turnos propios (dominio listo en C-10).
 
 **Reglas**: RN-TU-02, RN-TU-05, RN-AC-01
 

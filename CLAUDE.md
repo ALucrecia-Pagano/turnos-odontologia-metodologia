@@ -49,9 +49,10 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 
 > ⚠️ Preguntas de prioridad **Alta** en `10_preguntas_abiertas.md`, todas con una **Suposición** por defecto. Confirmalas o ajustalas antes del change que las usa:
 > - **Q-06** zona horaria y granularidad (5 min, duración 5–480 min) → C-03 y C-04.
-> - **Q-03** transiciones de estado válidas → C-10.
 >
 > **Q-04** (turnos existentes al crear un bloqueo que los pisa) quedó resuelta por la autora el 2026-10-28, en el explore de C-06: no se cancelan ni se mueven, solo se listan (SU-05 confirmada).
+>
+> **Q-03** (transiciones de estado válidas) quedó resuelta por la autora el 2026-11-02, en el explore de C-10: tabla de RN-TU-02 y terminales atendido, ausente y cancelado (SU-03 confirmada). También se cerraron Q-01 y Q-02 (SU-08 confirmada).
 
 ---
 

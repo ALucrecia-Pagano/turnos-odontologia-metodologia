@@ -35,11 +35,11 @@ Ninguna bloquea C-02 (dominio puro de crear turno; C-01 es su prerrequisito téc
 | ID | Prioridad | Pregunta | Default propuesto en el MVP | Bloquea | Decisor |
 |----|-----------|----------|-----------------------------|---------|---------|
 | Q-06 | Alta | ¿Zona horaria y granularidad de horario? | **Suposición:** `America/Argentina/Buenos_Aires`; 5 min; duración 5–480 min (SU-01, SU-02) | C-04 (la zona horaria) y C-03 (granularidad de 5 min, Q-13) | Autora |
-| Q-03 | Alta | ¿Qué transiciones de estado son válidas (reprogramar atendido, reactivar cancelado)? | **Suposición:** tabla de RN-TU-02; terminales atendido/ausente/cancelado (SU-03) | C-10 (transiciones de estado) | Autora |
+| Q-03 | Cerrada | ¿Qué transiciones de estado son válidas (reprogramar atendido, reactivar cancelado)? | **Resuelta por la autora (2026-11-02, explore de C-10):** tabla de RN-TU-02; terminales atendido, ausente y cancelado; la transición al mismo estado es inválida (SU-03 confirmada) | — | Autora |
 | Q-04 | Cerrada | ¿Qué pasa con los turnos existentes al crear un bloqueo que los pisa? | **Resuelta por la autora (2026-10-28, explore de C-06):** no se cancelan ni se mueven; el dominio solo lista los turnos activos que pisa, para reprogramar (SU-05 confirmada) | — | Autora |
 | Q-05 | Media | ¿Algunas prestaciones exigen un sillón específico? | **Suposición:** no; cualquier prestación en cualquier sillón (SU-04) | C-09 (catálogo) | Autora |
-| Q-01 | Media | ¿Anticipación mínima para cancelar (p. ej. 24 h)? | **Suposición:** sin mínimo (SU-08) | C-10 | Autora |
-| Q-02 | Media | ¿Se puede marcar "ausente" antes de la hora de inicio? | **Suposición:** no; solo con `now >= inicio` (SU-08) | C-10 | Autora |
+| Q-01 | Cerrada | ¿Anticipación mínima para cancelar (p. ej. 24 h)? | **Resuelta por la autora (2026-11-02, explore de C-10):** sin anticipación mínima para cancelar (SU-08 confirmada) | — | Autora |
+| Q-02 | Cerrada | ¿Se puede marcar "ausente" antes de la hora de inicio? | **Resuelta por la autora (2026-11-02, explore de C-10):** atendido y ausente solo con now >= inicio (SU-08 confirmada) | — | Autora |
 | Q-07 | Cerrada | ¿Stack de implementación? | **Resuelta por la cátedra (2026-10-08):** backend Python + FastAPI + JWT + SQLAlchemy + PostgreSQL + Redis, Docker Compose; frontend React + TypeScript + Vite (DD-01). Reemplaza la respuesta anterior (TypeScript full-stack, DD-01 v1) | — | Cátedra |
 | Q-08 | Media | ¿Qué estados ocupan agenda (¿`ausente` libera el hueco?) | **Suposición:** reservado/confirmado/atendido ocupan (SU-07) | C-02 (la regla de solapamiento depende de esto) | Autora |
 | Q-09 | Cerrada | ¿Hace falta autenticación real en la entrega? | **Resuelta por la cátedra (2026-10-08):** sí, con JWT y los tres roles (DD-11). Queda abierto solo su alcance: sin refresh tokens ni revocación (**Suposición**, SU-06) | C-19 (autenticación JWT) y C-26 (login en la web) | Cátedra |
