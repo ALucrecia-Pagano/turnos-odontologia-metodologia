@@ -47,6 +47,7 @@ def _request_validity_violations(
     context: ScheduleContext,
     duration: int | None,
     end_at: datetime | None,
+    operation: str,
 ) -> list[Violation]:
     """Grupo 1, validez del pedido: referencias, duracion, inicio, medianoche y pasado (RN-AG-12).
 
@@ -56,6 +57,8 @@ def _request_validity_violations(
     explicita) no hay nada que validar: el error util ya es `UNKNOWN_REFERENCE`. El inicio
     y el pasado (`IN_THE_PAST`, RN-AG-06) se evaluan siempre, sin guardas, porque solo usan
     el inicio y `context.now`; la medianoche solo si hay duracion efectiva sin violaciones.
+    `operation` es el verbo del mensaje de `IN_THE_PAST` (el alta pasa "dar turnos" por
+    defecto; reprogramar pasa "reprogramar turnos") y llega hasta `check_not_in_the_past`.
 
     Args:
         request: Pedido de turno nuevo.
@@ -64,6 +67,8 @@ def _request_validity_violations(
             mensaje del pasado; `now` para el pasado).
         duration: Duracion efectiva en minutos, o `None` si no hay.
         end_at: Fin del turno calculado una sola vez (`None` si no hay duracion).
+        operation: Verbo del mensaje de `IN_THE_PAST` ("dar turnos" para el alta,
+            "reprogramar turnos" para reprogramar).
 
     Returns:
         Las violaciones de validez, todas juntas y en orden estable.
@@ -76,7 +81,9 @@ def _request_validity_violations(
     violations += check_start_time(request.start_at, context.tz)
     if end_at is not None and not duration_violations:
         violations += check_same_local_day(request.start_at, end_at, context.tz)
-    violations += check_not_in_the_past(request.start_at, context.now, context.tz)
+    violations += check_not_in_the_past(
+        request.start_at, context.now, context.tz, operation=operation
+    )
     return violations
 
 
@@ -144,6 +151,8 @@ def validate_new_appointment(
     references: AppointmentReferences,
     existing_appointments: Sequence[Appointment],
     context: ScheduleContext,
+    *,
+    operation: str = "dar turnos",
 ) -> ValidationResult:
     """Valida un turno nuevo y devuelve el turno aceptado o las violaciones.
 
@@ -166,6 +175,10 @@ def validate_new_appointment(
             dominio no lee el reloj).
             Los tramos y los bloqueos se suponen validos (`validate_working_hours`,
             `validate_block`): esta funcion no los revalida.
+        operation: Verbo del mensaje de `IN_THE_PAST` (keyword-only). El alta no lo pasa y
+            conserva "dar turnos"; reprogramar pasa "reprogramar turnos". Se reenvia a
+            `check_not_in_the_past`. El valor por defecto mantiene el alta y sus tests
+            existentes sin cambios.
 
     Returns:
         `Ok` con el turno en estado `reservado`, o `Rejected` con las violaciones.
@@ -177,7 +190,7 @@ def validate_new_appointment(
     duration = _effective_duration(request, references)
     end_at = None if duration is None else request.start_at + timedelta(minutes=duration)
     validity_violations = _request_validity_violations(
-        request, references, context, duration, end_at
+        request, references, context, duration, end_at, operation
     )
     # Sin duracion efectiva siempre hay UNKNOWN_REFERENCE (prestacion), y una referencia `None`
     # tambien (profesional o sillon), asi que `validity_violations` no esta vacia; las

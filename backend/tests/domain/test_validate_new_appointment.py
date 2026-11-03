@@ -714,6 +714,37 @@ def test_validate_new_appointment_default_duration_not_multiple_of_five_is_rejec
     assert _summary(result) == [(ViolationCode.INVALID_DURATION, None)]
 
 
+def test_validate_new_appointment_operation_reprogramar_changes_past_verb() -> None:
+    past_ctx = ScheduleContext(
+        tz=BUENOS_AIRES, working_hours=FULL_WEEK, blocks=(), now=_at(13)
+    )
+
+    result = validate_new_appointment(
+        _request(_at(12, 55)), _refs(), [], past_ctx, operation="reprogramar turnos"
+    )
+
+    assert isinstance(result, Rejected)
+    assert [v.code for v in result.violations] == [ViolationCode.IN_THE_PAST]
+    assert result.violations[0].message == (
+        "El inicio del turno (20/10/2026 09:55, hora local) es anterior al momento actual "
+        "(20/10/2026 10:00:00, hora local): no se pueden reprogramar turnos en el pasado."
+    )
+
+
+def test_validate_new_appointment_alta_default_past_verb_still_says_dar_turnos() -> None:
+    past_ctx = ScheduleContext(
+        tz=BUENOS_AIRES, working_hours=FULL_WEEK, blocks=(), now=_at(13)
+    )
+
+    result = validate_new_appointment(_request(_at(12, 55)), _refs(), [], past_ctx)
+
+    assert isinstance(result, Rejected)
+    assert result.violations[0].message == (
+        "El inicio del turno (20/10/2026 09:55, hora local) es anterior al momento actual "
+        "(20/10/2026 10:00:00, hora local): no se pueden dar turnos en el pasado."
+    )
+
+
 
 def test_validate_new_appointment_duration_breaking_two_conditions_gives_one_violation() -> None:
     result = validate_new_appointment(_request(_at(13), duration_min=487), _refs(), [], CTX)

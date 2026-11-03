@@ -157,6 +157,37 @@ class NewAppointmentRequest:
 
 
 @dataclass(frozen=True, slots=True)
+class RescheduleRequest:
+    """Pedido de reprogramacion de un turno existente (RN-TU-03, US-031).
+
+    Solo el inicio es obligatorio. El profesional, el sillon y la duracion son
+    opcionales: `None` significa "conservar el valor actual del turno". El
+    paciente y la prestacion no se cambian en una reprogramacion (se toman del
+    turno original), asi que no aparecen aca.
+
+    Attributes:
+        start_at: Nuevo inicio del turno (con zona horaria; se normaliza a UTC).
+        professional_id: Profesional del nuevo destino, o `None` para conservar
+            el profesional actual del turno.
+        chair_id: Sillon del nuevo destino, o `None` para conservar el sillon
+            actual del turno.
+        duration_min: Nueva duracion explicita en minutos, o `None` para
+            conservar la duracion real actual del turno (fin menos inicio).
+
+    Raises:
+        ValueError: Si `start_at` no tiene zona horaria.
+    """
+
+    start_at: datetime
+    professional_id: UUID | None = None
+    chair_id: UUID | None = None
+    duration_min: int | None = None
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "start_at", _to_utc("start_at", self.start_at))
+
+
+@dataclass(frozen=True, slots=True)
 class AppointmentReferences:
     """Referencias del pedido que resolvio el llamador: la entidad o `None` si no existe.
 

@@ -318,3 +318,46 @@ def test_actor_odontologist_none_professional_raises() -> None:
 
     with pytest.raises(ValueError, match="professional_id"):
         Actor(UUID("00000000-0000-0000-0000-0000000000a1"), Role.ODONTOLOGO, None)
+
+
+def test_reschedule_request_keeps_start_and_defaults_none() -> None:
+    from app.domain.model import RescheduleRequest
+
+    request = RescheduleRequest(start_at=datetime(2026, 10, 20, 13, 0, tzinfo=UTC))
+    assert request.start_at == datetime(2026, 10, 20, 13, 0, tzinfo=UTC)
+    assert request.professional_id is None
+    assert request.chair_id is None
+    assert request.duration_min is None
+
+
+def test_reschedule_request_start_in_buenos_aires_is_normalized_to_utc() -> None:
+    from app.domain.model import RescheduleRequest
+
+    request = RescheduleRequest(start_at=datetime(2026, 10, 20, 10, 0, tzinfo=BUENOS_AIRES))
+
+    assert request.start_at == datetime(2026, 10, 20, 13, 0, tzinfo=UTC)
+    assert request.start_at.utcoffset() == timedelta(0)
+
+
+def test_reschedule_request_naive_start_raises_value_error() -> None:
+    from app.domain.model import RescheduleRequest
+
+    with pytest.raises(ValueError, match="zona horaria"):
+        RescheduleRequest(start_at=datetime(2026, 10, 20, 10, 0))
+
+
+def test_reschedule_request_keeps_explicit_optionals() -> None:
+    from app.domain.model import RescheduleRequest
+
+    other_prof = UUID("00000000-0000-0000-0000-000000000002")
+    other_chair = UUID("00000000-0000-0000-0000-0000000000b2")
+    request = RescheduleRequest(
+        start_at=datetime(2026, 10, 20, 13, 0, tzinfo=UTC),
+        professional_id=other_prof,
+        chair_id=other_chair,
+        duration_min=60,
+    )
+
+    assert request.professional_id == other_prof
+    assert request.chair_id == other_chair
+    assert request.duration_min == 60

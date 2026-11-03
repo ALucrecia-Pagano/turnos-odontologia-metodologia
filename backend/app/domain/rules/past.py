@@ -11,15 +11,19 @@ from app.domain.intervals import format_local_date_time, format_local_date_time_
 from app.domain.violations import Violation, ViolationCode
 
 
-def _in_the_past_message(start_at: datetime, now: datetime, tz: ZoneInfo) -> str:
+def _in_the_past_message(
+    start_at: datetime, now: datetime, tz: ZoneInfo, operation: str
+) -> str:
     return (
         f"El inicio del turno ({format_local_date_time(start_at, tz)}, hora local) es "
         f"anterior al momento actual ({format_local_date_time_with_seconds(now, tz)}, "
-        "hora local): no se pueden dar turnos en el pasado."
+        f"hora local): no se pueden {operation} en el pasado."
     )
 
 
-def check_not_in_the_past(start_at: datetime, now: datetime, tz: ZoneInfo) -> list[Violation]:
+def check_not_in_the_past(
+    start_at: datetime, now: datetime, tz: ZoneInfo, *, operation: str = "dar turnos"
+) -> list[Violation]:
     """Devuelve una violacion `IN_THE_PAST` si el inicio es anterior al momento actual.
 
     La comparacion es estricta entre instantes, sin truncar `now` ni dar tolerancia
@@ -31,6 +35,9 @@ def check_not_in_the_past(start_at: datetime, now: datetime, tz: ZoneInfo) -> li
         now: Momento actual inyectado (instante con zona horaria).
         tz: Zona horaria para mostrar las horas del mensaje; no interviene en la
             comparacion.
+        operation: Verbo del mensaje (por defecto "dar turnos", el del alta).
+            Reprogramar pasa "reprogramar turnos"; el default mantiene el texto del
+            alta y sus tests existentes.
 
     Returns:
         Lista vacia si el inicio no es anterior a `now`; si no, una sola violacion sin
@@ -41,7 +48,7 @@ def check_not_in_the_past(start_at: datetime, now: datetime, tz: ZoneInfo) -> li
         return [
             Violation(
                 code=ViolationCode.IN_THE_PAST,
-                message=_in_the_past_message(start_at, now, tz),
+                message=_in_the_past_message(start_at, now, tz, operation),
             )
         ]
     return []

@@ -77,3 +77,9 @@ Apply futuro: baseline real de suite/mypy, luego ciclos verticales por comportam
 ## Open Questions
 
 Ninguna que afecte D1–D9: cerradas por la autora. Las confirmaciones adicionales (revalidar referencias incluida paciente/prestación, `UNKNOWN_REFERENCE` para profesional/sillón nuevo inexistente, prestación no se cambia, llamador pasa agenda completa y el dominio excluye por id) quedan registradas en este documento y en la spec delta.
+
+## Desvíos del apply
+
+- El apply fue iniciado por Kiro y se interrumpió por límite de uso. Copilot lo retomó desde los archivos sin commitear, verificó la línea de base y completó la implementación y las pruebas restantes.
+- La línea de base observada fue `619 passed, 8 deselected` (no `610 passed`); no había fallos preexistentes.
+- Para completar la trazabilidad se agregaron pruebas de dominio en `backend/tests/domain/test_reschedule.py` y las evidencias solicitadas en `docs/evidencias/`. No se modificaron las especificaciones principales ni la allowlist de guardias.
