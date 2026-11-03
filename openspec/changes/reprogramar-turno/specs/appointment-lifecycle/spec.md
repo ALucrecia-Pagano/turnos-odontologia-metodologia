@@ -1,9 +1,7 @@
 ## ADDED Requirements
 
-Convenciones: datos ficticios. T1 pertenece a P1, Dra. Laura Quiroga, en S1 Sillón 1, martes 20/10/2026 de 10:00 a 10:30 hora local (13:00–13:30 UTC), estado `reservado` salvo que se indique. T2 pertenece a P2, Dra. Inés Molina, en S2, de 11:00 a 11:30 hora local (14:00–14:30 UTC). Actor Laura: user_id U1 distinto de P1, rol ODONTOLOGO y professional_id P1. Recepción U2 y administración U3 tienen professional_id None. La prestación de T1 tiene `default_duration_min` 45, salvo que se indique otra; la duración efectiva de T1 es 30 minutos. El reprograma por defecto mueve T1 a las 11:00 hora local (14:00 UTC) y queda de 11:00 a 11:30 hora local (14:00–14:30 UTC), conservando P1/S1 y duración 30. now habitual 20/10/2026 09:00 hora local (12:00 UTC). Zona inyectada America/Argentina/Buenos_Aires. El llamador pasa la agenda completa, incluido el turno a reprogramar; el dominio lo excluye por id. Donde se revalida, paciente y referencias existen y están activos, horario de día completo y sin bloqueos ni otros turnos salvo que se indique.
-
 ### Requirement: Operación de reprogramar un turno
-El dominio SHALL ofrecer `reschedule_appointment` que revalida todas las reglas RN-AG del turno nuevo llamando a `validate_new_appointment` con el turno propio excluido por id de los existentes. El turno aceptado SHALL conservar su id y volver a `reservado` (la confirmación previa deja de valer). El inicio del nuevo slot SHALL ser obligatorio; el profesional, el sillón y la duración son opcionales (`None` conserva el valor actual del turno). El paciente y la prestación MUST NOT cambiar: se toman del turno original. La duración efectiva al omitirla SHALL ser la duración real actual del turno (fin menos inicio), no el default de la prestación. SHALL devolver `ValidationResult` con el `Ok.appointment` vigente.
+El dominio SHALL ofrecer `reschedule_appointment`, que revalida el turno nuevo con `validate_new_appointment` y devuelve `ValidationResult`. El turno aceptado SHALL conservar su id y volver a `reservado`. El inicio es obligatorio; profesional, sillón y duración son opcionales (`None` conserva el valor actual). El paciente y la prestación MUST NOT cambiar. Sin duración, SHALL usarse la duración real del turno (fin menos inicio), no la de la prestación.
 
 #### Scenario: Reprogramar válido conserva id y vuelve a reservado
 - **GIVEN** T1 reservado y recepción U2, now 09:00 local
@@ -80,7 +78,7 @@ El odontólogo MUST NOT reprogramar ningún turno, ni propio ni ajeno; el intent
 - **THEN** ambos resultados son `Ok` con el turno en `reservado` y ningún permiso depende de `professional_id`
 
 ### Requirement: Orden de evaluación de reprogramar
-Tras verificar los errores de contrato, el dominio SHALL evaluar el permiso primero y cortar si falla, devolviendo exclusivamente `FORBIDDEN_OPERATION`. Si el actor está autorizado, SHALL evaluar el estado y cortar si el turno es terminal, devolviendo exclusivamente `INVALID_TRANSITION`. Si el estado es válido, SHALL revalidar el turno nuevo y devolver sus violaciones en el orden RN-AG-12 (validez del pedido y, si esta pasa, conflictos de agenda). Un resultado MUST NOT mezclar el permiso o el estado con las violaciones del turno nuevo.
+Tras los errores de contrato, el dominio SHALL evaluar permiso, estado y turno nuevo, en ese orden, con cortocircuito. Un actor no autorizado devuelve solo `FORBIDDEN_OPERATION`; un estado terminal, solo `INVALID_TRANSITION`; en otro caso devuelve las violaciones del turno nuevo en el orden RN-AG-12.
 
 #### Scenario: El permiso corta y oculta el resto
 - **GIVEN** Laura U1/P1, T1 propio atendido y now 10:30 local (posterior al inicio)
@@ -93,7 +91,7 @@ Tras verificar los errores de contrato, el dominio SHALL evaluar el permiso prim
 - **THEN** el resultado contiene solo `INVALID_TRANSITION`, sin `PROFESSIONAL_OVERLAP`
 
 ### Requirement: Reprogramar revalida todas las reglas del turno nuevo
-Al reprogramar, el dominio SHALL revalidar todas las RN-AG del turno nuevo, incluida la actividad del paciente y de la prestación del turno original (aunque no cambien). Un profesional o sillón nuevo inexistente SHALL dar `UNKNOWN_REFERENCE`; inactivo, `INACTIVE_REFERENCE`. El slot destino en el pasado SHALL dar `IN_THE_PAST` con el verbo de reprogramar. Los conflictos de agenda (`OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`) y las de validez (`INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`) se reutilizan con sus textos vigentes del alta.
+Al reprogramar, el dominio SHALL revalidar todas las RN-AG del turno nuevo, incluida la actividad del paciente y de la prestación aunque no cambien. Un profesional o sillón inexistente SHALL dar `UNKNOWN_REFERENCE`, e inactivo, `INACTIVE_REFERENCE`. El pasado SHALL dar `IN_THE_PAST` con el verbo de reprogramar. Las demás violaciones reutilizan los códigos y textos vigentes del alta.
 
 #### Scenario: Choca con otro turno del mismo profesional
 - **GIVEN** T1 reservado de 10:00 a 10:30 hora local, un turno T3 de P1 en S2 de 11:00 a 11:30 hora local (14:00–14:30 UTC), recepción U2 y now 09:00 local

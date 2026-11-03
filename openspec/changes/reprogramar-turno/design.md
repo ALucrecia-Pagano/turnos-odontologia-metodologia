@@ -83,3 +83,11 @@ Ninguna que afecte D1–D9: cerradas por la autora. Las confirmaciones adicional
 - El apply fue iniciado por Kiro y se interrumpió por límite de uso. Copilot lo retomó desde los archivos sin commitear, verificó la línea de base y completó la implementación y las pruebas restantes.
 - La línea de base observada fue `619 passed, 8 deselected` (no `610 passed`); no había fallos preexistentes.
 - Para completar la trazabilidad se agregaron pruebas de dominio en `backend/tests/domain/test_reschedule.py` y las evidencias solicitadas en `docs/evidencias/`. No se modificaron las especificaciones principales ni la allowlist de guardias.
+
+## Reestructuración de la spec antes del archive
+
+## Convenciones de los escenarios
+
+Convenciones: datos ficticios. T1 pertenece a P1, Dra. Laura Quiroga, en S1 Sillón 1, martes 20/10/2026 de 10:00 a 10:30 hora local (13:00–13:30 UTC), estado `reservado` salvo que se indique. T2 pertenece a P2, Dra. Inés Molina, en S2, de 11:00 a 11:30 hora local (14:00–14:30 UTC). Actor Laura: user_id U1 distinto de P1, rol ODONTOLOGO y professional_id P1. Recepción U2 y administración U3 tienen professional_id None. La prestación de T1 tiene `default_duration_min` 45, salvo que se indique otra; la duración efectiva de T1 es 30 minutos. El reprograma por defecto mueve T1 a las 11:00 hora local (14:00 UTC) y queda de 11:00 a 11:30 hora local (14:00–14:30 UTC), conservando P1/S1 y duración 30. now habitual 20/10/2026 09:00 hora local (12:00 UTC). Zona inyectada America/Argentina/Buenos_Aires. El llamador pasa la agenda completa, incluido el turno a reprogramar; el dominio lo excluye por id. Donde se revalida, paciente y referencias existen y están activos, horario de día completo y sin bloqueos ni otros turnos salvo que se indique.
+
+Las convenciones se mantienen en `design.md` para que el archive las agregue a la spec principal. Los tres requisitos advertidos se acortaron sin dividirlos ni alterar sus escenarios.
