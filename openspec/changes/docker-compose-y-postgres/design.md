@@ -157,3 +157,26 @@ docker compose down
 
 No usar `docker compose down -v` para esta verificación.
 
+Si se cambian las credenciales de .env después de crear el volumen,
+PostgreSQL no las toma: hay que recrear el volumen con docker compose down -v
+(borra los datos locales).
+
+Si hay un PostgreSQL instalado en Windows, detenerlo antes de levantar el
+compose: los dos usan el puerto 5432.
+
+## Desvíos del apply
+
+- La primera ejecución de integración no encontró `.env` porque la
+  configuración buscaba el archivo dentro de `backend/`; se corrigió para
+  resolver el `.env` de la raíz.
+- La primera conexión administrativa intentó usar directamente una URL con
+  driver `postgresql+psycopg`; se corrigió para usar el driver `postgresql`
+  al conectar con psycopg.
+- La integración inicialmente falló con autenticación. El diagnóstico
+  inicial equivocado fue que el volumen `turnos_pgdata` conservaba
+  credenciales anteriores; la autora recreó el volumen sin resolver el
+  problema. El síntoma persistió porque otro PostgreSQL instalado en Windows
+  también escuchaba en el puerto 5432. Se detectó por el idioma castellano y
+  la codificación de Windows del mensaje, diferente del PostgreSQL del
+  contenedor. La solución fue detener el servicio local de Windows y dejar el
+  puerto 5432 exclusivamente para Docker.

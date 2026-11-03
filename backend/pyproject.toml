@@ -7,7 +7,12 @@ name = "turnos-odontologia-backend"
 version = "0.1.0"
 description = "Backend de la agenda de turnos para consultorios odontologicos"
 requires-python = ">=3.12"
-dependencies = ["tzdata>=2024.1"]
+dependencies = [
+    "tzdata>=2024.1",
+    "sqlalchemy>=2,<3",
+    "psycopg[binary]>=3,<4",
+    "pydantic-settings>=2,<3",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "mypy>=1.10"]
@@ -18,6 +23,8 @@ packages = ["app"]
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
+markers = ["integration: tests that require the PostgreSQL and Redis services"]
+addopts = '-m "not integration"'
 
 [tool.mypy]
 python_version = "3.12"
