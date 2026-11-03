@@ -89,6 +89,7 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Cómo validar**: revisar el catálogo real de prestaciones; la granularidad es una constante configurable.
 
 ### SU-03 — Transiciones de estado
+**Estado**: **confirmada por la autora el 2026-11-02** (explore de C-10); ya no es una suposición.
 **Suposición:** tabla de RN-TU-02 (terminales: atendido, ausente, cancelado; reprogramar devuelve a `reservado`).
 **Origen**: inferido de D.3 ("transiciones válidas explícitas") y Q-03.
 **Riesgo si es falso**: se bloquean correcciones legítimas (p. ej. reactivar un cancelado).
@@ -120,6 +121,7 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Cómo validar**: confirmar; es un solo conjunto de constantes en el dominio.
 
 ### SU-08 — Sin anticipación mínima de cancelación y `ausente` solo desde el inicio
+**Estado**: **confirmada por la autora el 2026-11-02** (explore de C-10); ya no es una suposición.
 **Suposición:** se puede cancelar en cualquier momento; `atendido`/`ausente` solo si `now >= inicio`.
 **Origen**: Q-01 y Q-02.
 **Riesgo si es falso**: reglas de negocio reales más estrictas.
