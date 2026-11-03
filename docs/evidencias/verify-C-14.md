@@ -60,3 +60,8 @@ alembic current
 
 La salida completa está en [alembic-C-14.txt](alembic-C-14.txt). El estado
 final fue `20261103_01_baseline (head)`.
+
+Los artefactos archivados son
+[design.md](../../openspec/changes/archive/2026-11-03-migraciones-alembic/design.md)
+y
+[tasks.md](../../openspec/changes/archive/2026-11-03-migraciones-alembic/tasks.md).

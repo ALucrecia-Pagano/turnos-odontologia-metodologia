@@ -402,7 +402,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/02_descripcion_general.md` §Stack tecnológico, §Zona horaria
 
 ### [C-14] `migraciones-alembic`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-03)
 - **Scope**:
   - `backend/alembic.ini` y `backend/alembic/env.py` que leen `DATABASE_URL` de la configuración (no del `.ini`) y usan el `metadata` de la base declarativa.
   - `backend/app/db/base.py`: base declarativa de SQLAlchemy con convención de nombres para constraints e índices.
