@@ -21,13 +21,15 @@ from app.domain.model import (
     Appointment,
     AppointmentReferences,
     AppointmentStatus,
+    AppointmentStatusChange,
     NewAppointmentRequest,
+    RescheduleDetail,
     RescheduleRequest,
     Role,
     ScheduleContext,
 )
 from app.domain.rules.names import subject_name
-from app.domain.violations import Rejected, ValidationResult, Violation, ViolationCode
+from app.domain.violations import Ok, Rejected, ValidationResult, Violation, ViolationCode
 
 _RESCHEDULABLE: frozenset[AppointmentStatus] = frozenset(
     {AppointmentStatus.RESERVED, AppointmentStatus.CONFIRMED}
@@ -75,16 +77,36 @@ def reschedule_appointment(
     if appointment.status not in _RESCHEDULABLE:
         return Rejected((_invalid_transition(appointment, professional_name, context),))
     others = [other for other in existing_appointments if other.id != appointment.id]
-    return validate_new_appointment(
-        _build_request(appointment, request),
+    result = validate_new_appointment(
+        _build_request(appointment, request, actor),
         references,
         others,
         context,
         operation=_REPROGRAMAR_OPERATION,
     )
+    if isinstance(result, Rejected):
+        return result
+    status_change = AppointmentStatusChange(
+        appointment_id=appointment.id,
+        from_status=appointment.status,
+        to_status=AppointmentStatus.RESERVED,
+        changed_by=actor.user_id,
+        changed_at=context.now,
+        reschedule=RescheduleDetail(
+            previous_interval=appointment.interval,
+            new_interval=result.appointment.interval,
+            previous_professional_id=appointment.professional_id,
+            new_professional_id=result.appointment.professional_id,
+            previous_chair_id=appointment.chair_id,
+            new_chair_id=result.appointment.chair_id,
+        ),
+    )
+    return Ok(appointment=result.appointment, status_change=status_change)
 
 
-def _build_request(appointment: Appointment, request: RescheduleRequest) -> NewAppointmentRequest:
+def _build_request(
+    appointment: Appointment, request: RescheduleRequest, actor: Actor
+) -> NewAppointmentRequest:
     """Construye el pedido equivalente al alta, conservando lo que no se cambia.
 
     El id, el paciente y la prestacion salen del turno original; el profesional, el
@@ -108,6 +130,7 @@ def _build_request(appointment: Appointment, request: RescheduleRequest) -> NewA
         service_id=appointment.service_id,
         start_at=request.start_at,
         duration_min=duration,
+        changed_by=actor.user_id,
     )
 
 

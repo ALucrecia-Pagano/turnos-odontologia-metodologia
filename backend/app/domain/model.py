@@ -10,7 +10,7 @@ el valor. Un instante sin zona es un error de programacion del llamador y se rec
 con `ValueError`, no con una violacion de negocio.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from uuid import UUID
@@ -139,6 +139,7 @@ class NewAppointmentRequest:
         service_id: Prestacion pedida.
         start_at: Inicio del turno (con zona horaria; se normaliza a UTC).
         duration_min: Duracion explicita en minutos, o `None` para usar la de la prestacion.
+        changed_by: Id del usuario (`Actor.user_id`) que solicita el alta del turno.
 
     Raises:
         ValueError: Si `start_at` no tiene zona horaria.
@@ -151,6 +152,7 @@ class NewAppointmentRequest:
     service_id: UUID
     start_at: datetime
     duration_min: int | None = None
+    changed_by: UUID = field(kw_only=True)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "start_at", _to_utc("start_at", self.start_at))
@@ -328,3 +330,53 @@ class Appointment:
     def interval(self) -> Interval:
         """Intervalo semiabierto `[start_at, end_at)` que ocupa el turno."""
         return Interval(self.start_at, self.end_at)
+
+
+@dataclass(frozen=True, slots=True)
+class RescheduleDetail:
+    """Detalle tipado de una reprogramacion registrada en el historial (US-031 CA-5, US-033).
+
+    Attributes:
+        previous_interval: Intervalo en UTC del turno antes de reprogramar.
+        new_interval: Intervalo en UTC del turno reprogramado.
+        previous_professional_id: Profesional anterior.
+        new_professional_id: Profesional nuevo.
+        previous_chair_id: Sillon anterior.
+        new_chair_id: Sillon nuevo.
+    """
+
+    previous_interval: Interval
+    new_interval: Interval
+    previous_professional_id: UUID
+    new_professional_id: UUID
+    previous_chair_id: UUID
+    new_chair_id: UUID
+
+
+@dataclass(frozen=True, slots=True)
+class AppointmentStatusChange:
+    """Entrada inmutable del historial funcional de transiciones de estado (RN-TU-06, US-033).
+
+    Attributes:
+        appointment_id: Id del turno al que pertenece la transicion.
+        from_status: Estado previo del turno, o `None` unicamente en el alta inicial.
+        to_status: Nuevo estado del turno tras la operacion.
+        changed_by: Id del usuario (`Actor.user_id`) que realizo la operacion.
+        changed_at: Instante del cambio (con zona horaria; se normaliza a UTC).
+        reschedule: Detalle de reprogramacion cuando la entrada proviene de
+            `reschedule_appointment`, o `None` en el alta, cambio de estado y cancelacion.
+    """
+
+    appointment_id: UUID
+    from_status: AppointmentStatus | None
+    to_status: AppointmentStatus
+    changed_by: UUID
+    changed_at: datetime
+    reschedule: RescheduleDetail | None = None
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "changed_at", _to_utc("changed_at", self.changed_at))
+        if self.from_status == self.to_status and self.reschedule is None:
+            raise ValueError(
+                "AppointmentStatusChange con el mismo from_status y to_status requiere reschedule"
+            )

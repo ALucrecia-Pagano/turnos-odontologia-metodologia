@@ -10,7 +10,7 @@ from typing import TypeAlias
 from uuid import UUID
 
 from app.domain.intervals import Interval
-from app.domain.model import Appointment
+from app.domain.model import Appointment, AppointmentStatusChange
 
 
 class ViolationCode(Enum):
@@ -84,9 +84,11 @@ class Ok:
 
     Attributes:
         appointment: Turno aceptado por alta o transición, con su estado resultante.
+        status_change: Entrada inmutable de historial generada por la operación aceptada.
     """
 
     appointment: Appointment
+    status_change: AppointmentStatusChange
 
 
 @dataclass(frozen=True, slots=True)

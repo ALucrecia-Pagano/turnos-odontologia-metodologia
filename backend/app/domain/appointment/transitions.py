@@ -10,7 +10,7 @@ from app.domain.intervals import (
     format_local_date_time_with_seconds,
     format_local_time,
 )
-from app.domain.model import Actor, Appointment, AppointmentStatus, Role
+from app.domain.model import Actor, Appointment, AppointmentStatus, AppointmentStatusChange, Role
 from app.domain.rules.names import subject_name
 from app.domain.violations import Ok, Rejected, ValidationResult, Violation, ViolationCode
 
@@ -55,7 +55,15 @@ def cancel_appointment(
         return Rejected((
             _invalid_transition(appointment, AppointmentStatus.CANCELLED, professional_name, tz),
         ))
-    return Ok(replace(appointment, status=AppointmentStatus.CANCELLED))
+    status_change = AppointmentStatusChange(
+        appointment_id=appointment.id,
+        from_status=appointment.status,
+        to_status=AppointmentStatus.CANCELLED,
+        changed_by=actor.user_id,
+        changed_at=now,
+        reschedule=None,
+    )
+    return Ok(replace(appointment, status=AppointmentStatus.CANCELLED), status_change)
 
 
 def change_status(
@@ -89,7 +97,15 @@ def change_status(
         violations.append(_too_early(appointment, target, now, professional_name, tz))
     if violations:
         return Rejected(tuple(violations))
-    return Ok(replace(appointment, status=target))
+    status_change = AppointmentStatusChange(
+        appointment_id=appointment.id,
+        from_status=appointment.status,
+        to_status=target,
+        changed_by=actor.user_id,
+        changed_at=now,
+        reschedule=None,
+    )
+    return Ok(replace(appointment, status=target), status_change)
 
 
 def _too_early(

@@ -36,7 +36,16 @@ def context() -> ScheduleContext:
 
 
 def request() -> NewAppointmentRequest:
-    return NewAppointmentRequest(T1, PA1, P1, S1, SV1, datetime(2026, 10, 20, 13, tzinfo=UTC), 30)
+    return NewAppointmentRequest(
+        T1,
+        PA1,
+        P1,
+        S1,
+        SV1,
+        datetime(2026, 10, 20, 13, tzinfo=UTC),
+        30,
+        changed_by=UUID("00000000-0000-0000-0000-0000000000a2"),
+    )
 
 
 def test_deactivate_professional_preserves_existing_appointment() -> None:

@@ -7,6 +7,7 @@ from app.domain.model import (
     Appointment,
     AppointmentReferences,
     AppointmentStatus,
+    AppointmentStatusChange,
     NewAppointmentRequest,
     ScheduleContext,
 )
@@ -221,4 +222,12 @@ def validate_new_appointment(
     )
     if conflict_violations:
         return Rejected(tuple(conflict_violations))
-    return Ok(candidate)
+    status_change = AppointmentStatusChange(
+        appointment_id=candidate.id,
+        from_status=None,
+        to_status=AppointmentStatus.RESERVED,
+        changed_by=request.changed_by,
+        changed_at=context.now,
+        reschedule=None,
+    )
+    return Ok(appointment=candidate, status_change=status_change)

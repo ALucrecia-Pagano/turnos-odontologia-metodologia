@@ -6,15 +6,18 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+from app.domain.intervals import Interval
 from app.domain.model import (
     Actor,
     Appointment,
     AppointmentReferences,
     AppointmentStatus as S,
+    AppointmentStatusChange,
     Block,
     Chair,
     Patient,
     Professional,
+    RescheduleDetail,
     RescheduleRequest,
     Role,
     ScheduleContext,
@@ -127,7 +130,22 @@ def test_reschedule_valid_keeps_id_and_returns_reserved() -> None:
     result = reschedule_appointment(original, _reschedule(), _refs(), [], RECEPTION, P1_NAME, _ctx())
 
     assert result == Ok(
-        Appointment(T1, PATIENT, P1, S1, SVC, RESTART, REEND, S.RESERVED)
+        Appointment(T1, PATIENT, P1, S1, SVC, RESTART, REEND, S.RESERVED),
+        AppointmentStatusChange(
+            appointment_id=T1,
+            from_status=S.RESERVED,
+            to_status=S.RESERVED,
+            changed_by=U2,
+            changed_at=NOW,
+            reschedule=RescheduleDetail(
+                previous_interval=Interval(T1_START, T1_END),
+                new_interval=Interval(RESTART, REEND),
+                previous_professional_id=P1,
+                new_professional_id=P1,
+                previous_chair_id=S1,
+                new_chair_id=S1,
+            ),
+        ),
     )
     assert original == _appointment()
 

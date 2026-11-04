@@ -11,6 +11,7 @@ from app.domain.model import (
     Appointment,
     AppointmentReferences,
     AppointmentStatus,
+    AppointmentStatusChange,
     Block,
     Chair,
     NewAppointmentRequest,
@@ -107,6 +108,7 @@ def _request(
     professional_id: UUID = P1,
     chair_id: UUID = S1,
     duration_min: int | None = None,
+    changed_by: UUID = UUID("00000000-0000-0000-0000-0000000000a2"),
 ) -> NewAppointmentRequest:
     return NewAppointmentRequest(
         id=id,
@@ -116,6 +118,7 @@ def _request(
         service_id=SVC_30,
         start_at=start_at,
         duration_min=duration_min,
+        changed_by=changed_by,
     )
 
 
@@ -132,7 +135,14 @@ def test_validate_new_appointment_all_references_existing_and_active_returns_ok(
             start_at=_at(13),
             end_at=_at(13, 30),
             status=AppointmentStatus.RESERVED,
-        )
+        ),
+        AppointmentStatusChange(
+            appointment_id=T_NEW,
+            from_status=None,
+            to_status=AppointmentStatus.RESERVED,
+            changed_by=UUID("00000000-0000-0000-0000-0000000000a2"),
+            changed_at=EARLY_NOW,
+        ),
     )
 
 
@@ -153,7 +163,14 @@ def test_validate_new_appointment_free_professional_and_chair_returns_ok_with_re
             start_at=_at(13),
             end_at=_at(13, 30),
             status=AppointmentStatus.RESERVED,
-        )
+        ),
+        AppointmentStatusChange(
+            appointment_id=T_NEW,
+            from_status=None,
+            to_status=AppointmentStatus.RESERVED,
+            changed_by=UUID("00000000-0000-0000-0000-0000000000a2"),
+            changed_at=EARLY_NOW,
+        ),
     )
 
 
@@ -847,7 +864,14 @@ def test_validate_new_appointment_start_on_grid_returns_ok() -> None:
             start_at=datetime.fromisoformat("2026-10-20T13:05:00+00:00"),
             end_at=datetime.fromisoformat("2026-10-20T13:35:00+00:00"),
             status=AppointmentStatus.RESERVED,
-        )
+        ),
+        AppointmentStatusChange(
+            appointment_id=T_NEW,
+            from_status=None,
+            to_status=AppointmentStatus.RESERVED,
+            changed_by=UUID("00000000-0000-0000-0000-0000000000a2"),
+            changed_at=EARLY_NOW,
+        ),
     )
 
 

@@ -9,7 +9,7 @@ import pytest
 
 from app.domain.appointment import cancel_appointment, validate_new_appointment
 from app.domain.model import (
-    Actor, Appointment, AppointmentReferences, AppointmentStatus as S, Chair,
+    Actor, Appointment, AppointmentReferences, AppointmentStatus as S, AppointmentStatusChange, Chair,
     NewAppointmentRequest, Patient, Professional, Role, ScheduleContext, Service, WorkingHours,
 )
 from app.domain.violations import Ok, Rejected, ViolationCode as V
@@ -41,7 +41,7 @@ def context() -> ScheduleContext:
 
 
 def request() -> NewAppointmentRequest:
-    return NewAppointmentRequest(T2, PA1, P1, S1, SV1, START, 30)
+    return NewAppointmentRequest(T2, PA1, P1, S1, SV1, START, 30, changed_by=RECEPTION.user_id)
 
 
 def test_cancel_reserved_releases_both_resources() -> None:
@@ -50,7 +50,10 @@ def test_cancel_reserved_releases_both_resources() -> None:
     assert isinstance(cancelled, Ok)
     assert cancelled.appointment == replace(appointment, status=S.CANCELLED)
     result = validate_new_appointment(request(), references(), (cancelled.appointment,), context())
-    assert result == Ok(Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED))
+    assert result == Ok(
+        Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED),
+        AppointmentStatusChange(T2, None, S.RESERVED, RECEPTION.user_id, NOW),
+    )
     assert appointment == original(S.RESERVED)
 
 
@@ -60,7 +63,10 @@ def test_cancel_confirmed_releases_both_resources() -> None:
     assert isinstance(cancelled, Ok)
     assert cancelled.appointment == replace(appointment, status=S.CANCELLED)
     result = validate_new_appointment(request(), references(), (cancelled.appointment,), context())
-    assert result == Ok(Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED))
+    assert result == Ok(
+        Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED),
+        AppointmentStatusChange(T2, None, S.RESERVED, RECEPTION.user_id, NOW),
+    )
     assert appointment == original(S.CONFIRMED)
 
 
@@ -84,7 +90,10 @@ def test_occupancy_regression_attended() -> None:
 
 def test_occupancy_regression_no_show() -> None:
     result = validate_new_appointment(request(), references(), (original(S.NO_SHOW),), context())
-    assert result == Ok(Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED))
+    assert result == Ok(
+        Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED),
+        AppointmentStatusChange(T2, None, S.RESERVED, RECEPTION.user_id, NOW),
+    )
 
 
 def test_new_booking_and_catalog_keep_separate_payloads() -> None:
@@ -92,7 +101,10 @@ def test_new_booking_and_catalog_keep_separate_payloads() -> None:
     from app.domain.catalog.result import Ok as CatalogOk
 
     result = validate_new_appointment(request(), references(), (), context())
-    assert result == Ok(Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED))
+    assert result == Ok(
+        Appointment(T2, PA1, P1, S1, SV1, START, END, S.RESERVED),
+        AppointmentStatusChange(T2, None, S.RESERVED, RECEPTION.user_id, NOW),
+    )
     professional = Professional(P1, "Dra. Laura Quiroga", True)
     catalog = create_professional(professional)
     assert catalog == CatalogOk(professional)

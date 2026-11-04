@@ -170,3 +170,52 @@ def test_catalog_code_invalid_dni_is_stable() -> None:
 
 def test_catalog_code_duplicate_dni_is_stable() -> None:
     assert ViolationCode.DUPLICATE_DNI.value == "DUPLICATE_DNI"
+
+
+
+def test_ok_carries_appointment_and_status_change() -> None:
+    from app.domain.model import Appointment, AppointmentStatus, AppointmentStatusChange
+    from app.domain.violations import Ok
+
+    appt = Appointment(
+        id=APPT_A,
+        patient_id=UUID("00000000-0000-0000-0000-0000000000c1"),
+        professional_id=UUID("00000000-0000-0000-0000-000000000001"),
+        chair_id=UUID("00000000-0000-0000-0000-0000000000b1"),
+        service_id=UUID("00000000-0000-0000-0000-0000000000d1"),
+        start_at=_at(13),
+        end_at=_at(13, 30),
+        status=AppointmentStatus.RESERVED,
+    )
+    entry = AppointmentStatusChange(
+        appointment_id=APPT_A,
+        from_status=None,
+        to_status=AppointmentStatus.RESERVED,
+        changed_by=UUID("00000000-0000-0000-0000-0000000000a2"),
+        changed_at=_at(12),
+    )
+
+    ok = Ok(appointment=appt, status_change=entry)
+
+    assert ok.appointment == appt
+    assert ok.status_change == entry
+
+
+def test_ok_without_status_change_raises_type_error() -> None:
+    import app.domain.violations as violations_mod
+    from app.domain.model import Appointment, AppointmentStatus
+
+    appt = Appointment(
+        id=APPT_A,
+        patient_id=UUID("00000000-0000-0000-0000-0000000000c1"),
+        professional_id=UUID("00000000-0000-0000-0000-000000000001"),
+        chair_id=UUID("00000000-0000-0000-0000-0000000000b1"),
+        service_id=UUID("00000000-0000-0000-0000-0000000000d1"),
+        start_at=_at(13),
+        end_at=_at(13, 30),
+        status=AppointmentStatus.RESERVED,
+    )
+    ok_cls = getattr(violations_mod, "Ok")
+
+    with pytest.raises(TypeError, match="status_change"):
+        ok_cls(appt)

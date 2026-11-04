@@ -36,6 +36,7 @@ def _request(start_at: datetime) -> NewAppointmentRequest:
         chair_id=S1,
         service_id=SVC,
         start_at=start_at,
+        changed_by=UUID("00000000-0000-0000-0000-0000000000a2"),
     )
 
 
@@ -361,3 +362,38 @@ def test_reschedule_request_keeps_explicit_optionals() -> None:
     assert request.professional_id == other_prof
     assert request.chair_id == other_chair
     assert request.duration_min == 60
+
+
+
+def test_new_appointment_request_keeps_changed_by_and_positional_duration() -> None:
+    actor_id = UUID("00000000-0000-0000-0000-0000000000a2")
+    request = NewAppointmentRequest(
+        APPT_NEW,
+        PATIENT,
+        P1,
+        S1,
+        SVC,
+        datetime(2026, 10, 20, 13, 0, tzinfo=UTC),
+        30,
+        changed_by=actor_id,
+    )
+
+    assert request.duration_min == 30
+    assert request.changed_by == actor_id
+
+
+def test_new_appointment_request_without_changed_by_raises_type_error() -> None:
+    import app.domain.model as model_mod
+
+    req_cls = getattr(model_mod, "NewAppointmentRequest")
+
+    with pytest.raises(TypeError, match="changed_by"):
+        req_cls(
+            APPT_NEW,
+            PATIENT,
+            P1,
+            S1,
+            SVC,
+            datetime(2026, 10, 20, 13, 0, tzinfo=UTC),
+            30,
+        )
