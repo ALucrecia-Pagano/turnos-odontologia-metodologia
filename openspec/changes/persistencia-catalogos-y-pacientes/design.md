@@ -154,3 +154,19 @@ alembic upgrade head
 ```
 
 No se ejecutará `docker compose down -v`.
+
+## Desvíos del apply
+
+- La primera ejecución RED de metadata/contratos falló con `ImportError` de
+  `app.db.models` y `ModuleNotFoundError` de `app.repositories`, como se
+  esperaba antes de crear esas capas.
+- La primera migración GREEN encontró que el identificador de C-15 supera el
+  `VARCHAR(32)` heredado de `alembic_version`. La migración amplía esa columna
+  a `VARCHAR(64)` antes de escribir la revisión; el downgrade conserva el
+  ancho ampliado para poder actualizar la versión a la baseline sin truncar.
+- La primera corrida de integración expuso que el downgrade intentaba reducir
+  `alembic_version` antes de que Alembic escribiera la revisión anterior. Se
+  eliminó ese paso del downgrade y se verificó nuevamente el ciclo completo.
+- La evidencia se regeneró con el lanzador `cmd` porque la redirección nativa
+  de PowerShell producía archivos UTF-16 con caracteres nulos. No se cambió la
+  política de ejecución del sistema.

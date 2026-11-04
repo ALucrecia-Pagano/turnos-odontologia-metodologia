@@ -92,7 +92,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261103_01_baseline"
+            == "20261103_02_catalogos_y_pacientes"
         )
 
     command.downgrade(config, "base")
@@ -105,7 +105,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261103_01_baseline"
+            == "20261103_02_catalogos_y_pacientes"
         )
 
 

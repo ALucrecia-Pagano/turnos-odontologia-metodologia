@@ -6,10 +6,16 @@ from app.domain.model import Chair, Patient, Professional, Service
 def test_demo_data_fictional_entities_are_available() -> None:
     from app import demo_data
 
-    assert demo_data.PROFESSIONALS == (Professional(UUID("00000000-0000-0000-0000-000000000001"), "Dra. Laura Quiroga", True),)
-    assert demo_data.CHAIRS == (Chair(UUID("00000000-0000-0000-0000-0000000000b1"), "Sillón 1", True),)
-    assert demo_data.SERVICES == (Service(UUID("00000000-0000-0000-0000-0000000000d1"), "Limpieza", 45),)
-    assert demo_data.PATIENTS == (Patient(UUID("00000000-0000-0000-0000-0000000000c1"), "Ana Pérez", "30111222"),)
+    assert len(demo_data.PROFESSIONALS) == 3
+    assert len(demo_data.CHAIRS) == 3
+    assert len(demo_data.SERVICES) == 5
+    assert len(demo_data.PATIENTS) == 5
+    assert demo_data.PROFESSIONALS[0] == Professional(
+        UUID("00000000-0000-0000-0000-000000000001"), "Dra. Laura Quiroga", True
+    )
+    assert demo_data.PATIENTS[0] == Patient(
+        UUID("00000000-0000-0000-0000-0000000000c1"), "Ana Pérez", "30111222"
+    )
 
 
 def test_demo_professional_accepted_by_public_create() -> None:

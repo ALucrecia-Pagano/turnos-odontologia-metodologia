@@ -48,6 +48,15 @@ pytest
 pytest -m integration
 ```
 
+Para cargar los catálogos y pacientes ficticios de forma idempotente:
+
+```powershell
+.\.venv\Scripts\python -m app.db.seed
+```
+
+El comando se ejecuta manualmente después de migrar la base y solo usa los
+datos ficticios definidos en `app.demo_data`.
+
 Al finalizar el trabajo local se puede detener Compose sin eliminar volúmenes:
 
 ```powershell
