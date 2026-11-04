@@ -170,3 +170,11 @@ No se ejecutará `docker compose down -v`.
 - La evidencia se regeneró con el lanzador `cmd` porque la redirección nativa
   de PowerShell producía archivos UTF-16 con caracteres nulos. No se cambió la
   política de ejecución del sistema.
+- En el ajuste posterior se agregaron cinco tests de integración para cubrir
+  explícitamente los escenarios 8, 9, 12, 13 y 16. Las mutaciones temporales
+  fueron: CHECK de DNI permisivo, omitir el rechazo previo de pacientes,
+  insertar siempre en el seed, no traducir la constraint de nombre y traducir
+  cualquier `IntegrityError` de pacientes. Cada mutación produjo un fallo
+  observable y fue restaurada antes de la verificación final. Para el segundo
+  caso del escenario 16 se usa clave primaria duplicada, porque el dominio
+  rechaza todo DNI inválido antes de que el repositorio llegue a la base.
