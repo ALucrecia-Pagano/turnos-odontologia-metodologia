@@ -1,7 +1,7 @@
 # appointment-scheduling Specification
 
 ## Purpose
-El verbo del mensaje del pasado depende de la operación: "dar" en el alta y "reprogramar" al reprogramar.
+El verbo del mensaje del pasado depende de la operación: "dar" en el alta y "reprogramar" al reprogramar. Cada operación aceptada (alta, cambio de estado, cancelación, reprogramación) devuelve una entrada inmutable de historial (`AppointmentStatusChange`, con `RescheduleDetail` al reprogramar); los rechazos no generan entrada; la persistencia del historial se decide en C-17.
 
 Reglas del dominio para dar un turno nuevo en la agenda del consultorio. El turno se acepta solo si el pedido es válido y no choca con la agenda. El pedido es válido si el paciente existe, si el profesional, el sillón y la prestación existen y están activos, si la duración es un múltiplo de 5 minutos entre 5 y 480, si el inicio cae en la grilla de 5 minutos, si el turno empieza y termina en el mismo día local y si el inicio no es anterior al momento actual (`now`), que el dominio recibe inyectado con el contexto de la agenda y nunca lee del reloj del sistema; un turno en el pasado se rechaza como regla de validez, antes que los conflictos de agenda. No choca con la agenda si cae completo dentro del horario de atención del profesional para ese día local (sus tramos de ese día de la semana, con los tramos contiguos o que se pisan unidos), si no pisa ningún bloqueo del profesional (vacaciones, feriados o ausencias, que se comparan como instantes aunque duren varios días) y si no se solapa con otro turno activo del mismo profesional ni del mismo sillón. La hora local, que usan la grilla, la medianoche y el horario de atención, se evalúa en la zona horaria que el dominio recibe como parámetro (`America/Argentina/Buenos_Aires` en el consultorio), nunca sobre la hora UTC. Si se rechaza, el resultado explica cada problema: primero los del pedido y, solo si el pedido es válido, los conflictos de agenda (horario de atención, bloqueos y solapamientos). Los mensajes de conflicto nombran al profesional o al sillón e indican el rango en hora local; las violaciones de solapamiento y de bloqueo llevan el intervalo en conflicto en UTC. "Todas" las violaciones significa todas las del primer grupo que falla: si falla la validez del pedido, no se evalúan los conflictos de agenda.
 
@@ -970,3 +970,17 @@ El profesional SHALL tener un nombre completo y el sillón, un nombre (KB 04), q
 - **THEN** el resultado es `Rejected` con una sola violación, `PROFESSIONAL_OVERLAP`, cuyo mensaje es exactamente "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno {id de A})."
 - **AND** el mensaje no contiene espacios dobles
 - **AND** P1 conserva el nombre tal como se cargó, con sus espacios
+
+### Requirement: Entrada de historial en el alta del turno
+`NewAppointmentRequest` SHALL exigir `changed_by` (`UUID` *keyword-only* del actor). Cuando `validate_new_appointment` acepta el turno, SHALL devolver `Ok(appointment, status_change)` con `appointment_id` igual al `id` del turno, `from_status` en `None`, `to_status` en `reservado`, `changed_by` igual a `request.changed_by`, `changed_at` igual a `context.now` en UTC y `reschedule` en `None` (RN-TU-01, RN-TU-06). Si devuelve `Rejected`, MUST NOT generar entrada de historial.
+
+#### Scenario: Entrada de historial al crear un turno válido
+- **GIVEN** un contexto válido con `now` en el lunes 20/10/2026 a las 09:00 hora local (`2026-10-20T12:00:00Z`), P1 ("Dra. Laura Quiroga") y S1 ("Sillón 1") libres
+- **WHEN** recepción `U2` solicita con `validate_new_appointment` el turno `T1` para el martes 20/10/2026 de 10:00 a 10:30 hora local (`2026-10-20T13:00:00Z` a `2026-10-20T13:30:00Z`) pasando `changed_by=U2`
+- **THEN** el resultado es `Ok(appointment, status_change)` donde `appointment.id` es `T1` y `appointment.status` es `reservado`
+- **AND** `status_change` tiene `appointment_id=T1`, `from_status=None`, `to_status=reservado`, `changed_by=U2`, `changed_at=2026-10-20T12:00:00Z` (09:00 hora local) y `reschedule=None`
+
+#### Scenario: Rechazo en el alta no genera entrada de historial
+- **GIVEN** el turno existente `T1` de P1 el martes 20/10/2026 de 10:00 a 10:30 hora local (`2026-10-20T13:00:00Z` a `2026-10-20T13:30:00Z`) y `now` a las 09:00 hora local (`2026-10-20T12:00:00Z`)
+- **WHEN** recepción `U2` solicita otro turno en el mismo intervalo para P1 con `changed_by=U2`
+- **THEN** el resultado es `Rejected` con `PROFESSIONAL_OVERLAP` y no devuelve `Ok` ni entrada `AppointmentStatusChange` alguna

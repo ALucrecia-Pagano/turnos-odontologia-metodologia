@@ -365,10 +365,10 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/07_flujos_principales.md` §Flujo 2
 
 ### [C-12] `historial-de-transiciones`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-04)
 - **Scope**: historial de transiciones del turno, aceptado dentro del MVP en el ciclo de vida (D.3 imprescindible 8).
   - Modelo `AppointmentStatusChange` (dataclass inmutable) con `from_status` (nulo al crear), `to_status`, `changed_by`, `changed_at` (+ detalle de reprogramación); sin operación de edición ni borrado en el dominio (RN-TU-06, US-033 CA-2).
-  - `validate_new_appointment`, `cancel_appointment`, `change_status` y `reschedule` devuelven, además del turno, la entrada de historial correspondiente (RN-TU-01, US-030 CA-3, US-031 CA-5, US-033 CA-1).
+  - `validate_new_appointment`, `cancel_appointment`, `change_status` y `reschedule_appointment` devuelven, además del turno, la entrada de historial correspondiente (RN-TU-01, US-030 CA-3, US-031 CA-5, US-033 CA-1).
   - Tests: una entrada por cada tipo de transición, `from` nulo al crear, intento de mutar una entrada rechazado (`FrozenInstanceError`), `changed_by` y `changed_at` (reloj inyectado) presentes.
 - **Dependencias**: `C-10, C-11`
 - **Governance**: ALTO (trazabilidad inmutable; no es un registro de auditoría de seguridad sino el historial funcional del turno con datos ficticios, por eso no se sube a CRITICO. Describir el diseño y esperar revisión antes de escribir código)

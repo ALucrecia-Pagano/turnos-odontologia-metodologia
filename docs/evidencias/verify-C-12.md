@@ -2,7 +2,7 @@
 
 ## Resultado
 
-- Artefactos del change: [proposal.md](../../openspec/changes/historial-de-transiciones/proposal.md), [design.md](../../openspec/changes/historial-de-transiciones/design.md), [specs/appointment-lifecycle/spec.md](../../openspec/changes/historial-de-transiciones/specs/appointment-lifecycle/spec.md), [specs/appointment-scheduling/spec.md](../../openspec/changes/historial-de-transiciones/specs/appointment-scheduling/spec.md) y [tasks.md](../../openspec/changes/historial-de-transiciones/tasks.md).
+- Artefactos archivados: [proposal.md](../../openspec/changes/archive/2026-11-04-historial-de-transiciones/proposal.md), [design.md](../../openspec/changes/archive/2026-11-04-historial-de-transiciones/design.md), [specs/appointment-lifecycle/spec.md](../../openspec/changes/archive/2026-11-04-historial-de-transiciones/specs/appointment-lifecycle/spec.md), [specs/appointment-scheduling/spec.md](../../openspec/changes/archive/2026-11-04-historial-de-transiciones/specs/appointment-scheduling/spec.md) y [tasks.md](../../openspec/changes/archive/2026-11-04-historial-de-transiciones/tasks.md).
 - Baseline real antes de tocar código: `648 passed, 19 deselected in 13.00s`; `mypy --strict app tests`: `Success: no issues found in 71 source files`.
 - Resultado final: `668 passed, 19 deselected in 6.60s` ([pytest-C-12.txt](pytest-C-12.txt)); `mypy --strict app tests`: `Success: no issues found in 72 source files` ([mypy-C-12.txt](mypy-C-12.txt)).
 - `openspec validate historial-de-transiciones --strict`: `Change 'historial-de-transiciones' is valid`.

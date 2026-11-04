@@ -161,11 +161,11 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 **Como** secretaria, **quiero** cancelar un turno, **para** mantener la agenda al día.
 - [x] CA-1: `reservado`/`confirmado` → `cancelado` libera profesional y sillón (dominio listo en C-10).
 - [x] CA-2: desde estado terminal → `INVALID_TRANSITION` (dominio listo en C-10).
-- [ ] CA-3: queda entrada de historial.
+- [ ] CA-3: queda entrada de historial (dominio listo en C-12).
 
 ### US-031 — Reprogramar turno
 **Como** secretaria, **quiero** mover un turno a otro horario, profesional o sillón, **para** reorganizar la agenda.
-- [x] CA-1: se revalidan todas las RN-AG excluyendo al propio turno (dominio listo en C-11). [x] CA-2: no se puede reprogramar al pasado (dominio listo en C-11). [x] CA-3: solo en `reservado`/`confirmado` (dominio listo en C-11). [x] CA-4: el turno vuelve a `reservado` (dominio listo en C-11). [ ] CA-5: se registra en el historial.
+- [x] CA-1: se revalidan todas las RN-AG excluyendo al propio turno (dominio listo en C-11). [x] CA-2: no se puede reprogramar al pasado (dominio listo en C-11). [x] CA-3: solo en `reservado`/`confirmado` (dominio listo en C-11). [x] CA-4: el turno vuelve a `reservado` (dominio listo en C-11). [ ] CA-5: se registra en el historial (dominio listo en C-12).
 
 **Reglas**: RN-TU-03, RN-AG-06
 
@@ -179,7 +179,7 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-033 — Historial de cambios
 **Como** administrador, **quiero** ver quién cambió qué y cuándo, **para** tener trazabilidad.
-- [ ] CA-1: cada transición/reprogramación genera una entrada con `from`, `to`, `changed_by`, `changed_at`. CA-2: el historial no se edita ni se borra.
+- [ ] CA-1: cada transición/reprogramación genera una entrada con `from`, `to`, `changed_by`, `changed_at` (dominio listo en C-12). CA-2: el historial no se edita ni se borra (dominio listo en C-12).
 
 **Reglas**: RN-TU-06
 
