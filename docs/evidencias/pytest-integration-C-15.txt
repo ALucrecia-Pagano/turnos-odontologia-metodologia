@@ -1,0 +1,11 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+testpaths: tests
+collected 661 items / 648 deselected / 13 selected
+
+tests\integration\test_catalog_persistence.py .....                      [ 38%]
+tests\integration\test_database_infrastructure.py ........               [100%]
+
+===================== 13 passed, 648 deselected in 6.38s ======================

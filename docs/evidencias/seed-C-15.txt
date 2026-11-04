@@ -1,0 +1,10 @@
+=== seed 1 ===
+professional: 3
+chair: 3
+service: 5
+patient: 5
+=== seed 2 ===
+professional: 3
+chair: 3
+service: 5
+patient: 5
