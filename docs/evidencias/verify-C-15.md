@@ -54,7 +54,9 @@ primer downgrade se intentó reducirla demasiado pronto y PostgreSQL rechazó
 el truncamiento; se retiró esa reducción y el ciclo final pasó.
 
 Los detalles de estos desvíos están también en la sección
-[Desvíos del apply](../../openspec/changes/persistencia-catalogos-y-pacientes/design.md#desvíos-del-apply).
+[Desvíos del apply](../../openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/design.md#desvíos-del-apply).
+Las tareas del change están en
+[tasks.md](../../openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/tasks.md).
 
 Para este ajuste se agregaron cinco tests de integración: el CHECK parametrizado
 para `12AB567` y `123456`, el rechazo previo de altas inválidas, el seed

@@ -417,7 +417,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-03, §SU-10
 
 ### [C-15] `persistencia-catalogos-y-pacientes`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-04)
 - **Scope**:
   - Modelos SQLAlchemy `Professional`, `Chair`, `Service`, `Patient` (ids `UUID`, `boolean` para `active`, DNI único) y su migración de Alembic.
   - Repositorios de catálogos y pacientes que devuelven tipos del dominio (C-09), nunca modelos de SQLAlchemy; solo consultas con parámetros ligados.

@@ -45,10 +45,12 @@ Fijado por la cátedra:
   turnos en el dominio, con revalidación completa, auto-exclusión, permisos y
   retorno a reservado), C-13
   (Docker Compose con PostgreSQL, Redis, configuración segura, sesión SQLAlchemy
-  síncrona en UTC y tests de integración aislados) y C-14 (migraciones Alembic
+  síncrona en UTC y tests de integración aislados), C-14 (migraciones Alembic
   con línea de base, configuración segura, metadata con convención estable y
-  ciclo reversible probado).
-- **Planificado:** la API REST, la persistencia de entidades y el frontend. El
+  ciclo reversible probado) y C-15 (persistencia de catálogos y pacientes,
+  repositorios tipados, índices normalizados, CHECK de DNI y seed idempotente).
+- **Planificado:** la API REST y el frontend. La persistencia de entidades ya
+  está implementada en C-15. El
   plan completo
   está en [CHANGES.md](CHANGES.md).
 
@@ -91,6 +93,7 @@ Desde `backend/`, ejecutá los tests de integración:
 .venv/Scripts/python -m pytest -m integration
 .venv/Scripts/python -m alembic upgrade head
 .venv/Scripts/python -m alembic current
+python -m app.db.seed
 ```
 
 Al terminar, desde la raíz:
@@ -150,6 +153,7 @@ cómo funciona la guardia de dependencias), leé
 | Change archivado de C-11 | [openspec/changes/archive/2026-11-03-reprogramar-turno/](openspec/changes/archive/2026-11-03-reprogramar-turno/) |
 | Change archivado de C-13 | [openspec/changes/archive/2026-11-02-docker-compose-y-postgres/](openspec/changes/archive/2026-11-02-docker-compose-y-postgres/) |
 | Change archivado de C-14 | [openspec/changes/archive/2026-11-03-migraciones-alembic/](openspec/changes/archive/2026-11-03-migraciones-alembic/) |
+| Change archivado de C-15 | [openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/](openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -164,6 +168,7 @@ cómo funciona la guardia de dependencias), leé
 | Evidencias de C-11 (explore, pytest, mypy, OpenSpec y verify) | [explore-C-11.md](docs/evidencias/explore-C-11.md), [pytest-C-11.txt](docs/evidencias/pytest-C-11.txt), [mypy-C-11.txt](docs/evidencias/mypy-C-11.txt), [openspec-C-11.txt](docs/evidencias/openspec-C-11.txt) y [verify-C-11.md](docs/evidencias/verify-C-11.md) |
 | Evidencias de C-13 (explore, pytest, integración, mypy y verify) | [explore-C-13.md](docs/evidencias/explore-C-13.md), [pytest-C-13.txt](docs/evidencias/pytest-C-13.txt), [pytest-integration-C-13.txt](docs/evidencias/pytest-integration-C-13.txt), [mypy-C-13.txt](docs/evidencias/mypy-C-13.txt) y [verify-C-13.md](docs/evidencias/verify-C-13.md) |
 | Evidencias de C-14 (explore, pytest, integración, mypy, alembic y verify) | [explore-C-14.md](docs/evidencias/explore-C-14.md), [pytest-C-14.txt](docs/evidencias/pytest-C-14.txt), [pytest-integration-C-14.txt](docs/evidencias/pytest-integration-C-14.txt), [mypy-C-14.txt](docs/evidencias/mypy-C-14.txt), [alembic-C-14.txt](docs/evidencias/alembic-C-14.txt) y [verify-C-14.md](docs/evidencias/verify-C-14.md) |
+| Evidencias de C-15 (explore, pytest, integración, mypy, alembic, seed y verify) | [explore-C-15.md](docs/evidencias/explore-C-15.md), [pytest-C-15.txt](docs/evidencias/pytest-C-15.txt), [pytest-integration-C-15.txt](docs/evidencias/pytest-integration-C-15.txt), [mypy-C-15.txt](docs/evidencias/mypy-C-15.txt), [alembic-C-15.txt](docs/evidencias/alembic-C-15.txt), [seed-C-15.txt](docs/evidencias/seed-C-15.txt) y [verify-C-15.md](docs/evidencias/verify-C-15.md) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no
