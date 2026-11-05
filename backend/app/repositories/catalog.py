@@ -11,17 +11,11 @@ from app.domain.catalog.result import CatalogResult, Ok
 from app.domain.model import Chair, Professional, Service
 from app.domain.violations import Rejected, Violation, ViolationCode
 from app.db.models import ChairModel, ProfessionalModel, ServiceModel
+from app.repositories._integrity import constraint_name
 
 
 def _normalized_name(name: str) -> str:
     return " ".join(name.split()).casefold()
-
-
-def _constraint_name(error: IntegrityError) -> str | None:
-    original = error.orig
-    diagnostic = getattr(original, "diag", None)
-    name = getattr(diagnostic, "constraint_name", None)
-    return name if isinstance(name, str) else None
 
 
 def _duplicate_name(name: str, subject: str) -> Rejected:
@@ -97,7 +91,7 @@ class ChairRepository:
                 self._session.add(row)
                 self._session.flush()
         except IntegrityError as error:
-            if _constraint_name(error) == "ux_chair_name_normalized":
+            if constraint_name(error) == "ux_chair_name_normalized":
                 return _duplicate_name(result.entity.name, "un sillón")
             raise
         return Ok(result.entity)
@@ -147,7 +141,7 @@ class ServiceRepository:
                 self._session.add(row)
                 self._session.flush()
         except IntegrityError as error:
-            if _constraint_name(error) == "ux_service_name_normalized":
+            if constraint_name(error) == "ux_service_name_normalized":
                 return _duplicate_name(result.entity.name, "una prestación")
             raise
         return Ok(result.entity)

@@ -95,6 +95,41 @@ def test_migration_cycle_restores_test_database_to_head(
             == "20261104_03_horarios_y_bloqueos"
         )
 
+    command.downgrade(config, "base")
+    with test_engine.connect() as connection:
+        table_names = inspect(connection).get_table_names()
+        assert {
+            "professional",
+            "chair",
+            "service",
+            "patient",
+            "working_hours",
+            "block",
+        }.isdisjoint(table_names)
+
+    command.upgrade(config, "head")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261104_03_horarios_y_bloqueos"
+        )
+
+
+def test_availability_migration_downgrade_minus_one_cycle(
+    test_engine: Engine,
+    test_database_url: URL,
+) -> None:
+    config = migration_config(test_database_url.render_as_string(hide_password=False))
+
+    command.upgrade(config, "head")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261104_03_horarios_y_bloqueos"
+        )
+
     command.downgrade(config, "-1")
     with test_engine.connect() as connection:
         table_names = inspect(connection).get_table_names()

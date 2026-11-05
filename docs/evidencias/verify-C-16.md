@@ -3,9 +3,9 @@
 ## Resultado
 
 - Tareas completadas: 16/16.
-- Suite por defecto: **671 passed, 38 deselected**.
-- Integración: **38 passed, 671 deselected**.
-- Mypy estricto: **Success: no issues found in 75 source files**.
+- Suite por defecto: **671 passed, 39 deselected**.
+- Integración: **39 passed, 671 deselected**.
+- Mypy estricto: **Success: no issues found in 76 source files**.
 - Alembic: ciclo `upgrade head`, `current`, `downgrade -1`, `current`,
   `upgrade head` y `current` final en
   `20261104_03_horarios_y_bloqueos (head)`.
@@ -42,7 +42,7 @@ Las salidas completas están en
 | 16 | Borrar un bloqueo inexistente devuelve None | `backend/tests/integration/test_availability_persistence.py::test_delete_missing_block_returns_none` |
 | 17 | Listado de turnos afectados con lector fake sin modificar turnos | `backend/tests/integration/test_availability_persistence.py::test_list_affected_appointments_uses_reader_without_mutation` |
 | 18 | Primera y segunda ejecución idempotente del seed con horarios | `backend/tests/integration/test_availability_persistence.py::test_seed_working_hours_is_idempotent_and_preserves_existing` |
-| 19 | Ciclo upgrade y downgrade reversible de la migración | `backend/tests/integration/test_database_infrastructure.py::test_migration_cycle_restores_test_database_to_head` |
+| 19 | Ciclo upgrade y downgrade reversible de la migración | `backend/tests/integration/test_database_infrastructure.py::test_availability_migration_downgrade_minus_one_cycle` |
 
 ## Verificación por mutación
 
@@ -52,7 +52,7 @@ test indicado y se restauró antes de continuar.
 | Escenario | Test | Mutación aplicada | Salida del fallo | Restaurado |
 |---|---|---|---|---|
 | 1. Ida y vuelta de tramos horarios semanales | `backend/tests/integration/test_availability_persistence.py::test_working_hours_round_trip_and_order` | Ordenar `weekday` descendente en `list_by_professional` | `At index 0 diff: ... weekday=3 ... != ... weekday=1` | sí |
-| 2. Ida y vuelta de bloqueos en UTC con y sin motivo | `backend/tests/integration/test_availability_persistence.py::test_blocks_round_trip_in_utc_with_and_without_reason` | Quitar la zona horaria en `_as_aware_datetime` | `ValueError: start_at necesita zona horaria (datetime naive)` | sí |
+| 2. Ida y vuelta de bloqueos en UTC con y sin motivo | `backend/tests/integration/test_availability_persistence.py::test_blocks_round_trip_in_utc_with_and_without_reason` | Forzar `reason=None` en `_to_domain` de `BlockRepository` | `AssertionError: ... reason: None != 'Congreso'` | sí |
 | 3. Reemplazo de tramos de un profesional sin afectar a otro | `backend/tests/integration/test_availability_persistence.py::test_working_hours_replacement_isolated` | Borrar horarios de un UUID distinto | `Left contains one more item: WorkingHours(... weekday=4 ...)` | sí |
 | 4. Reemplazo por lista vacía deja al profesional sin horario | `backend/tests/integration/test_availability_persistence.py::test_working_hours_replacement_empty_removes_schedule` | Borrar horarios de un UUID distinto | `Left contains one more item: WorkingHours(... weekday=1 ...)` | sí |
 | 5. Rechazo de tramos solapados conserva el horario previo | `backend/tests/integration/test_availability_persistence.py::test_overlapping_working_hours_rejection_preserves_previous` | Omitir `validate_working_hours` | `AssertionError: ... isinstance(Ok(...), Rejected)` | sí |
@@ -69,7 +69,7 @@ test indicado y se restauró antes de continuar.
 | 16. Borrar un bloqueo inexistente devuelve None | `backend/tests/integration/test_availability_persistence.py::test_delete_missing_block_returns_none` | Devolver `False` para una fila inexistente | `AssertionError` en `assert repository.delete(...) is None` | sí |
 | 17. Listado de turnos afectados sin modificar turnos | `backend/tests/integration/test_availability_persistence.py::test_list_affected_appointments_uses_reader_without_mutation` | Omitir `appointments_affected_by_block` | `Left contains one more item: Appointment(... CANCELLED)` | sí |
 | 18. Primera y segunda ejecución idempotente del seed | `backend/tests/integration/test_availability_persistence.py::test_seed_working_hours_is_idempotent_and_preserves_existing` | Omitir la condición de horarios existentes | `assert first_inserted == 15; assert 25 == 15` | sí |
-| 19. Ciclo upgrade y downgrade reversible | `backend/tests/integration/test_database_infrastructure.py::test_migration_cycle_restores_test_database_to_head` | Quitar `drop_table("block")` del downgrade | `DROP TABLE not_block; ... test_migration_cycle... FAILED` | sí |
+| 19. Ciclo upgrade y downgrade reversible | `backend/tests/integration/test_database_infrastructure.py::test_availability_migration_downgrade_minus_one_cycle` | Quitar `drop_table("block")` del downgrade | `DROP TABLE not_block; ... test_availability_migration_downgrade_minus_one_cycle... FAILED` | sí |
 
 El escenario 3 reforzó el test con una aserción explícita del listado final de
 tramos de P1; antes la mutación de borrado selectivo no fallaba porque solo se

@@ -26,19 +26,25 @@ _ARTICLE_AND_NOUN: dict[ReferenceKind, tuple[str, str, str]] = {
 }
 
 
+def unknown_reference_violation(
+    kind: ReferenceKind, reference_id: UUID
+) -> Violation:
+    """Construye la violación UNKNOWN_REFERENCE para la referencia indicada (RN-AG-11)."""
+    noun, indicated, _ = _ARTICLE_AND_NOUN[kind]
+    return Violation(
+        code=ViolationCode.UNKNOWN_REFERENCE,
+        message=f"{noun} {indicated} no existe (id {reference_id}).",
+        reference_kind=kind,
+    )
+
+
 def _check_reference(
     kind: ReferenceKind, reference_id: UUID, entity: Patient | Professional | Chair | Service | None
 ) -> list[Violation]:
     """Violaciones de una sola referencia: inexistente (`None`) o inactiva."""
     noun, indicated, inactive = _ARTICLE_AND_NOUN[kind]
     if entity is None:
-        return [
-            Violation(
-                code=ViolationCode.UNKNOWN_REFERENCE,
-                message=f"{noun} {indicated} no existe (id {reference_id}).",
-                reference_kind=kind,
-            )
-        ]
+        return [unknown_reference_violation(kind, reference_id)]
     if isinstance(entity, (Professional, Chair, Service)) and not entity.active:
         return [
             Violation(

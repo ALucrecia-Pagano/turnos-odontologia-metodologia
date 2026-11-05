@@ -10,12 +10,7 @@ from app.domain.catalog.create import create_patient
 from app.domain.catalog.result import CatalogResult, Ok
 from app.domain.model import Patient
 from app.domain.violations import Rejected, Violation, ViolationCode
-
-
-def _constraint_name(error: IntegrityError) -> str | None:
-    diagnostic = getattr(error.orig, "diag", None)
-    name = getattr(diagnostic, "constraint_name", None)
-    return name if isinstance(name, str) else None
+from app.repositories._integrity import constraint_name
 
 
 class PatientRepository:
@@ -39,7 +34,7 @@ class PatientRepository:
                 self._session.add(row)
                 self._session.flush()
         except IntegrityError as error:
-            if _constraint_name(error) == "ux_patient_dni":
+            if constraint_name(error) == "ux_patient_dni":
                 digits = entity.dni
                 shown = f"{digits[:-6]}.{digits[-6:-3]}.{digits[-3:]}"
                 return Rejected(

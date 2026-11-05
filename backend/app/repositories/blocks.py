@@ -1,5 +1,4 @@
 from collections.abc import Sequence
-from datetime import datetime
 from uuid import UUID
 
 from sqlalchemy import select
@@ -10,24 +9,16 @@ from app.db.models import BlockModel
 from app.domain.catalog.result import CatalogResult, Ok
 from app.domain.model import Appointment, Block
 from app.domain.rules.blocks import appointments_affected_by_block, validate_block
-from app.domain.violations import ReferenceKind, Rejected, Violation, ViolationCode
+from app.domain.rules.references import unknown_reference_violation
+from app.domain.violations import ReferenceKind, Rejected
+from app.repositories._integrity import constraint_name
 from app.repositories.contracts import AppointmentReader
-
-
-def _constraint_name(error: IntegrityError) -> str | None:
-    diagnostic = getattr(error.orig, "diag", None)
-    name = getattr(diagnostic, "constraint_name", None)
-    return name if isinstance(name, str) else None
 
 
 def _unknown_reference(professional_id: UUID) -> Rejected:
     return Rejected(
         (
-            Violation(
-                code=ViolationCode.UNKNOWN_REFERENCE,
-                message=f"El profesional indicado no existe (id {professional_id}).",
-                reference_kind=ReferenceKind.PROFESSIONAL,
-            ),
+            unknown_reference_violation(ReferenceKind.PROFESSIONAL, professional_id),
         )
     )
 
@@ -54,7 +45,7 @@ class BlockRepository:
                 )
                 self._session.flush()
         except IntegrityError as error:
-            if _constraint_name(error) == "fk_block_professional_id_professional":
+            if constraint_name(error) == "fk_block_professional_id_professional":
                 return _unknown_reference(candidate.professional_id)
             raise
         return Ok(candidate)
@@ -103,11 +94,7 @@ class BlockRepository:
         return Block(
             row.id,
             row.professional_id,
-            _as_aware_datetime(row.start_at),
-            _as_aware_datetime(row.end_at),
+            row.start_at,
+            row.end_at,
             row.reason,
         )
-
-
-def _as_aware_datetime(value: datetime) -> datetime:
-    return value

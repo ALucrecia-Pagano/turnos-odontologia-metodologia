@@ -8,24 +8,16 @@ from sqlalchemy.orm import Session
 from app.db.models import ProfessionalModel, WorkingHoursModel
 from app.domain.catalog.result import CatalogResult, Ok
 from app.domain.model import WorkingHours
+from app.domain.rules.references import unknown_reference_violation
 from app.domain.rules.working_hours import validate_working_hours
-from app.domain.violations import ReferenceKind, Rejected, Violation, ViolationCode
-
-
-def _constraint_name(error: IntegrityError) -> str | None:
-    diagnostic = getattr(error.orig, "diag", None)
-    name = getattr(diagnostic, "constraint_name", None)
-    return name if isinstance(name, str) else None
+from app.domain.violations import ReferenceKind, Rejected
+from app.repositories._integrity import constraint_name
 
 
 def _unknown_reference(professional_id: UUID) -> Rejected:
     return Rejected(
         (
-            Violation(
-                code=ViolationCode.UNKNOWN_REFERENCE,
-                message=f"El profesional indicado no existe (id {professional_id}).",
-                reference_kind=ReferenceKind.PROFESSIONAL,
-            ),
+            unknown_reference_violation(ReferenceKind.PROFESSIONAL, professional_id),
         )
     )
 
@@ -64,7 +56,7 @@ class WorkingHoursRepository:
                     )
                 self._session.flush()
         except IntegrityError as error:
-            if _constraint_name(error) == "fk_working_hours_professional_id_professional":
+            if constraint_name(error) == "fk_working_hours_professional_id_professional":
                 return _unknown_reference(professional_id)
             raise
         ordered = tuple(sorted(candidate_slots, key=lambda slot: (slot.weekday, slot.start_minute)))

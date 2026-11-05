@@ -227,5 +227,8 @@ git diff --check
   porque solo verificaba al profesional P2. Se reforzó con la aserción del
   listado final de P1; al repetir la mutación, el test falló. Las 19
   mutaciones finales fallaron y todas fueron restauradas.
-- No se modificó el dominio fuera del `TypeVar` de `result.py`; no se usó
-  `type: ignore`, ni mocks, `patch` o `monkeypatch`.
+- No se modificó el dominio fuera del `TypeVar` de `result.py` y la extracción de `unknown_reference_violation` en `references.py`; no se usó `type: ignore`, ni mocks, `patch` o `monkeypatch`.
+- Correcciones posteriores de la autora:
+  1. Separación de tests de migración en `test_database_infrastructure.py`: `test_migration_cycle_restores_test_database_to_head` recuperó la cobertura de `downgrade "base"` (verificando que no queda ninguna tabla de la aplicación: `professional`, `chair`, `service`, `patient`, `working_hours` ni `block`), y se agregó `test_availability_migration_downgrade_minus_one_cycle` como test específico para el ciclo reversible de un paso (`downgrade "-1"`).
+  2. Eliminación de código muerto en `BlockRepository`: se removió `_as_aware_datetime` usando `row.start_at` y `row.end_at` directamente; se repitió la mutación del escenario 2 forzando `reason=None` en `_to_domain`, registrando el fallo en `AssertionError` y restaurando.
+  3. Fuente única para violaciones y nombres de constraint: se extrajo `unknown_reference_violation(kind, reference_id)` en `backend/app/domain/rules/references.py` (usada por `_check_reference`, `blocks.py` y `working_hours.py`), y se centralizó `constraint_name` en `backend/app/repositories/_integrity.py` eliminando las cuatro copias locales en `catalog.py`, `patients.py`, `blocks.py` y `working_hours.py`.
