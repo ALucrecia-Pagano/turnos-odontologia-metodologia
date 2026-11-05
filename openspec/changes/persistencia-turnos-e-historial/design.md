@@ -109,20 +109,24 @@ Para serializar concurrentes sin deadlocks (DD-03), el servicio adquiere bloqueo
 ### D5 — Capa de servicios transaccionales en `backend/app/services/appointments.py`
 
 Se crea el módulo de servicios `backend/app/services/appointments.py` con las siguientes funciones:
-- `book_appointment(session, request, references, schedule_context, now, tz, auto_commit=True) -> Ok | Rejected`
-- `change_appointment_status(session, appointment_id, target_status, actor, now, professional_name, tz, auto_commit=True) -> Ok | Rejected | None`
-- `cancel_appointment(session, appointment_id, actor, now, professional_name, tz, auto_commit=True) -> Ok | Rejected | None`
-- `reschedule_appointment(session, appointment_id, request, actor, schedule_context, now, tz, auto_commit=True) -> Ok | Rejected | None`
+- `book_appointment(session, request, now, tz, auto_commit=True) -> Ok | Rejected`
+- `change_appointment_status(session, appointment_id, target_status, actor, now, tz, auto_commit=True) -> Ok | Rejected | None`
+- `cancel_appointment(session, appointment_id, actor, now, tz, auto_commit=True) -> Ok | Rejected | None`
+- `reschedule_appointment(session, appointment_id, request, actor, now, tz, auto_commit=True) -> Ok | Rejected | None`
 
-Cada función:
-1. Abre una única transacción (`with session.begin_nested():` o bloque transaccional).
+El servicio carga adentro, **estrictamente DESPUÉS de los bloqueos**: las referencias (`PatientRepository`, `ProfessionalRepository`, `ChairRepository`, `ServiceRepository` de C-15), los horarios y bloqueos (`WorkingHoursRepository`, `BlockRepository` de C-16), los turnos activos en rango (`AppointmentRepository` / `SqlAppointmentReader`) y el nombre del profesional para los mensajes enriquecidos. Si el contexto se cargara antes del bloqueo, la serialización pesimista no protegería la consistencia.
+
+Manejo transaccional:
+1. El servicio **NO** usa `with session.begin()` ni `session.begin_nested()` como transacción principal. Usa la transacción que la sesión inicia sola (o la existente entregada por el caller, como la API de C-18 que entrega una sesión por request con transacción ya iniciada).
 2. Adquiere los locks según D4 y D11.
-3. Carga referencias, horarios, bloqueos y turnos activos de la base.
+3. Carga referencias, horarios, bloqueos, turnos activos y nombre de profesional de la base dentro de los bloqueos.
 4. Invoca la función pura de dominio (`validate_new_appointment`, `change_status`, `cancel_appointment` o `reschedule_appointment`).
-5. Si el dominio devuelve `Ok`: persiste/actualiza `AppointmentModel`, persiste `AppointmentStatusChangeModel`, hace commit de la transacción (si `auto_commit=True`) y devuelve `Ok`.
-6. Si el dominio devuelve `Rejected`: revierte la transacción (`rollback`) y devuelve `Rejected` sin escribir nada en disco.
-7. Los repositorios son componentes de acceso a datos y **nunca hacen commit**. La API REST de C-22 y C-23 consumirá directamente estos servicios.
-8. **Prueba de falla de historial sin mocks**: El test crea dentro de la base de test una función y un trigger temporales `BEFORE INSERT ON appointment_status_change` que lanzan una excepción cuando `NEW.appointment_id = '00000000-0000-0000-0000-000000000a02'`; ejecuta `book_appointment` para `a02`; comprueba que el servicio propaga la excepción y que no queda ninguna fila en `appointment` ni en `appointment_status_change` para `a02`; y en un bloque `finally` elimina el trigger y la función. Queda estrictamente prohibido usar `unittest.mock`, `patch` o `monkeypatch`.
+5. Si el dominio devuelve `Ok`: persiste/actualiza `AppointmentModel`, persiste `AppointmentStatusChangeModel`, ejecuta `session.commit()` (si `auto_commit=True`) y devuelve `Ok`.
+6. Si el dominio devuelve `Rejected`: revierte la transacción (`session.rollback()`) y devuelve `Rejected` sin escribir nada en disco.
+7. Si ocurre una excepción inesperada durante la operación (por ejemplo error de base de datos o fallo simulado), el servicio ejecuta `session.rollback()` y luego propaga la excepción.
+8. `auto_commit=False` existe exclusivamente para que los tests de concurrencia retengan el bloqueo; en ese caso, quien llama hace el commit manual.
+9. Los repositorios son componentes de acceso a datos y **nunca hacen commit**. La API REST de C-22 y C-23 consumirá directamente estos servicios.
+10. **Prueba de falla de historial sin mocks**: El test crea dentro de la base de test una función y un trigger temporales `BEFORE INSERT ON appointment_status_change` que lanzan una excepción cuando `NEW.appointment_id = '00000000-0000-0000-0000-000000000a02'`; ejecuta `book_appointment` para `a02`; comprueba que el servicio propaga la excepción y que no queda ninguna fila en `appointment` ni en `appointment_status_change` para `a02`; y en un bloque `finally` elimina el trigger y la función. Queda estrictamente prohibido usar `unittest.mock`, `patch` o `monkeypatch`.
 
 ### D6 — Historial append-only: repositorio sin mutaciones y trigger PostgreSQL
 
@@ -207,3 +211,10 @@ mypy --strict app tests
 openspec validate persistencia-turnos-e-historial --strict
 git diff --check
 ```
+
+## Desvíos del apply
+
+1. **Ajuste de firmas y ciclo de transacción en servicios (D5)**:
+   - Se removieron los parámetros `references`, `schedule_context` y `professional_name` de las firmas públicas de `book_appointment`, `change_appointment_status`, `cancel_appointment` y `reschedule_appointment`.
+   - Motivo: La carga de referencias, horarios, bloqueos, turnos en rango y nombre de profesional debe ocurrir estrictamente **adentro** de la función y **después** de adquirir los bloqueos pesimistas (`SELECT ... FOR UPDATE`); si se inyectaran previamente desde afuera, el contexto no estaría protegido por los bloqueos y se generarían condiciones de carrera.
+   - En cuanto a transacciones, el servicio no utiliza bloques `with session.begin()` ni `begin_nested()` como transacción principal, sino la transacción implícita/activa de la sesión entregada por el invocador (compatible con la sesión por request de FastAPI en C-18), finalizando con `session.commit()` si la operación es exitosa y `auto_commit=True`, o con `session.rollback()` si es rechazada o si ocurre un error inesperado (propagando el error a continuación). `auto_commit=False` se preserva para tests de concurrencia que retienen locks.

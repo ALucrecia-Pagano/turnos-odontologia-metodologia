@@ -33,3 +33,24 @@ def test_availability_repository_contracts_use_domain_types() -> None:
     assert affected["return"] == tuple[Appointment, ...]
     reader = get_type_hints(AppointmentReader.list_for_professional_in_range)
     assert reader["return"] == Sequence[Appointment]
+
+
+def test_appointment_repository_contracts_use_domain_types() -> None:
+    from app.domain.model import Appointment, AppointmentStatusChange
+    from app.repositories.contracts import (
+        AppointmentReader,
+        AppointmentRepository,
+        AppointmentStatusChangeRepository,
+    )
+
+    get_hints = get_type_hints(AppointmentRepository.get_by_id)
+    assert get_hints["return"] == Appointment | None
+
+    prof_hints = get_type_hints(AppointmentRepository.list_for_professional_in_range)
+    assert prof_hints["return"] == Sequence[Appointment]
+
+    chair_hints = get_type_hints(AppointmentRepository.list_for_chair_in_range)
+    assert chair_hints["return"] == Sequence[Appointment]
+
+    history_hints = get_type_hints(AppointmentStatusChangeRepository.list_by_appointment_id)
+    assert history_hints["return"] == Sequence[AppointmentStatusChange]

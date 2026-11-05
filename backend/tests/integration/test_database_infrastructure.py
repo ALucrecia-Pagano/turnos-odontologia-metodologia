@@ -92,7 +92,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261104_03_horarios_y_bloqueos"
+            == "20261105_04_turnos_e_historial"
         )
 
     command.downgrade(config, "base")
@@ -105,6 +105,8 @@ def test_migration_cycle_restores_test_database_to_head(
             "patient",
             "working_hours",
             "block",
+            "appointment",
+            "appointment_status_change",
         }.isdisjoint(table_names)
 
     command.upgrade(config, "head")
@@ -112,7 +114,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261104_03_horarios_y_bloqueos"
+            == "20261105_04_turnos_e_historial"
         )
 
 
@@ -122,7 +124,7 @@ def test_availability_migration_downgrade_minus_one_cycle(
 ) -> None:
     config = migration_config(test_database_url.render_as_string(hide_password=False))
 
-    command.upgrade(config, "head")
+    command.downgrade(config, "20261104_03_horarios_y_bloqueos")
     with test_engine.connect() as connection:
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
@@ -133,7 +135,7 @@ def test_availability_migration_downgrade_minus_one_cycle(
     command.downgrade(config, "-1")
     with test_engine.connect() as connection:
         table_names = inspect(connection).get_table_names()
-        assert {"working_hours", "block"}.isdisjoint(table_names)
+        assert {"working_hours", "block", "appointment", "appointment_status_change"}.isdisjoint(table_names)
         assert {"professional", "chair", "service", "patient"}.issubset(table_names)
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
@@ -142,12 +144,66 @@ def test_availability_migration_downgrade_minus_one_cycle(
         )
 
     command.upgrade(config, "head")
+
+
+def test_appointment_migration_downgrade_minus_one_cycle(
+    test_engine: Engine,
+    test_database_url: URL,
+) -> None:
+    config = migration_config(test_database_url.render_as_string(hide_password=False))
+
+    command.upgrade(config, "head")
     with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261105_04_turnos_e_historial"
+        )
+        table_names = inspect(connection).get_table_names()
+        assert {"appointment", "appointment_status_change"}.issubset(table_names)
+        trigger_count = connection.execute(
+            text(
+                "SELECT count(DISTINCT trigger_name) FROM information_schema.triggers "
+                "WHERE event_object_table = 'appointment_status_change' "
+                "AND trigger_name = 'tr_appointment_status_change_append_only'"
+            )
+        ).scalar_one()
+        assert trigger_count == 1
+
+    command.downgrade(config, "-1")
+    with test_engine.connect() as connection:
+        table_names = inspect(connection).get_table_names()
+        assert {"appointment", "appointment_status_change"}.isdisjoint(table_names)
+        assert {
+            "professional",
+            "chair",
+            "service",
+            "patient",
+            "working_hours",
+            "block",
+        }.issubset(table_names)
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
             == "20261104_03_horarios_y_bloqueos"
         )
+        trigger_count = connection.execute(
+            text(
+                "SELECT count(DISTINCT trigger_name) FROM information_schema.triggers "
+                "WHERE event_object_table = 'appointment_status_change' "
+                "AND trigger_name = 'tr_appointment_status_change_append_only'"
+            )
+        ).scalar_one()
+        assert trigger_count == 0
+
+    command.upgrade(config, "head")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261105_04_turnos_e_historial"
+        )
+
 
 
 def test_autogenerate_finds_no_differences_after_migration(

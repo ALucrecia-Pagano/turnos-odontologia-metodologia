@@ -117,3 +117,120 @@ class BlockModel(Base):
     start_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     end_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     reason: Mapped[str | None] = mapped_column(String(255), nullable=True)
+
+
+class AppointmentModel(Base):
+    __tablename__ = "appointment"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('reservado', 'confirmado', 'atendido', 'ausente', 'cancelado')",
+            name="status",
+        ),
+        CheckConstraint("start_at < end_at", name="interval_order"),
+        Index("ix_appointment_professional_id_start_at", "professional_id", "start_at"),
+        Index("ix_appointment_chair_id_start_at", "chair_id", "start_at"),
+        Index("ix_appointment_status_start_at", "status", "start_at"),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True)
+    patient_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("patient.id", ondelete="RESTRICT"),
+        nullable=False,
+    )
+    professional_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("professional.id", ondelete="RESTRICT"),
+        nullable=False,
+    )
+    chair_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("chair.id", ondelete="RESTRICT"),
+        nullable=False,
+    )
+    service_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("service.id", ondelete="RESTRICT"),
+        nullable=False,
+    )
+    start_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    end_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class AppointmentStatusChangeModel(Base):
+    __tablename__ = "appointment_status_change"
+    __table_args__ = (
+        CheckConstraint(
+            "from_status IS NULL OR from_status IN ('reservado', 'confirmado', 'atendido', 'ausente', 'cancelado')",
+            name="from_status",
+        ),
+        CheckConstraint(
+            "to_status IN ('reservado', 'confirmado', 'atendido', 'ausente', 'cancelado')",
+            name="to_status",
+        ),
+        CheckConstraint(
+            "(reschedule_previous_start_at IS NULL AND reschedule_previous_end_at IS NULL AND "
+            "reschedule_new_start_at IS NULL AND reschedule_new_end_at IS NULL AND "
+            "reschedule_previous_professional_id IS NULL AND reschedule_new_professional_id IS NULL AND "
+            "reschedule_previous_chair_id IS NULL AND reschedule_new_chair_id IS NULL) "
+            "OR "
+            "(reschedule_previous_start_at IS NOT NULL AND reschedule_previous_end_at IS NOT NULL AND "
+            "reschedule_new_start_at IS NOT NULL AND reschedule_new_end_at IS NOT NULL AND "
+            "reschedule_previous_professional_id IS NOT NULL AND reschedule_new_professional_id IS NOT NULL AND "
+            "reschedule_previous_chair_id IS NOT NULL AND reschedule_new_chair_id IS NOT NULL)",
+            name="reschedule_all_or_none",
+        ),
+        Index(
+            "ix_appointment_status_change_appointment_id_changed_at",
+            "appointment_id",
+            "changed_at",
+        ),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True)
+    appointment_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("appointment.id", ondelete="RESTRICT"),
+        nullable=False,
+    )
+    from_status: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    to_status: Mapped[str] = mapped_column(String(20), nullable=False)
+    changed_by: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), nullable=False)
+    changed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    note: Mapped[str | None] = mapped_column(String(500), nullable=True)
+
+    reschedule_previous_start_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    reschedule_previous_end_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    reschedule_new_start_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    reschedule_new_end_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    reschedule_previous_professional_id: Mapped[UUID | None] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("professional.id", ondelete="RESTRICT"),
+        nullable=True,
+    )
+    reschedule_new_professional_id: Mapped[UUID | None] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("professional.id", ondelete="RESTRICT"),
+        nullable=True,
+    )
+    reschedule_previous_chair_id: Mapped[UUID | None] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("chair.id", ondelete="RESTRICT"),
+        nullable=True,
+    )
+    reschedule_new_chair_id: Mapped[UUID | None] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("chair.id", ondelete="RESTRICT"),
+        nullable=True,
+    )

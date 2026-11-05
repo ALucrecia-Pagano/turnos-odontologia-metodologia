@@ -6,6 +6,7 @@ from uuid import UUID
 from app.domain.catalog.result import CatalogResult
 from app.domain.model import (
     Appointment,
+    AppointmentStatusChange,
     Block,
     Chair,
     Patient,
@@ -69,3 +70,25 @@ class BlockRepository(Protocol):
     def list_by_professional(self, professional_id: UUID) -> tuple[Block, ...]: ...
     def list(self) -> tuple[Block, ...]: ...
     def list_affected_appointments(self, block: Block) -> tuple[Appointment, ...]: ...
+
+
+class AppointmentRepository(Protocol):
+    def get_by_id(self, identifier: UUID) -> Appointment | None: ...
+    def list_for_professional_in_range(
+        self,
+        professional_id: UUID,
+        start_at: datetime,
+        end_at: datetime,
+    ) -> Sequence[Appointment]: ...
+    def list_for_chair_in_range(
+        self,
+        chair_id: UUID,
+        start_at: datetime,
+        end_at: datetime,
+    ) -> Sequence[Appointment]: ...
+
+
+class AppointmentStatusChangeRepository(Protocol):
+    def list_by_appointment_id(
+        self, appointment_id: UUID
+    ) -> Sequence[AppointmentStatusChange]: ...
