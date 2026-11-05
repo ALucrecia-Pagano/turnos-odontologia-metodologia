@@ -129,13 +129,13 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-010 — Cargar horario de atención
 **Como** odontólogo / administrador, **quiero** definir mis tramos por día de la semana, **para** que solo se den turnos cuando atiendo.
-- [ ] CA-1: varios tramos por día permitidos. CA-2: tramos solapados o `inicio >= fin` se rechazan. CA-3: cambiar horario no altera turnos ya dados (se informa cuáles quedan fuera).
+- [ ] CA-1: varios tramos por día permitidos (persistencia lista en C-16). CA-2: tramos solapados o `inicio >= fin` se rechazan (persistencia lista en C-16). CA-3: cambiar horario no altera turnos ya dados (se informa cuáles quedan fuera; persistencia lista en C-16).
 
 **Reglas**: RN-DI-01, RN-DI-02
 
 ### US-011 — Gestionar bloqueos
 **Como** odontólogo, **quiero** cargar bloqueos (vacaciones, feriados, ausencias), **para** que no me asignen turnos en esos períodos.
-- [ ] CA-1: bloqueo válido se guarda. CA-2: `inicio >= fin` se rechaza. CA-3: bloqueo que pisa turnos existentes se guarda y **no** cancela esos turnos; la respuesta lista los turnos afectados. CA-4: eliminar un bloqueo libera el horario.
+- [ ] CA-1: bloqueo válido se guarda (persistencia lista en C-16). CA-2: `inicio >= fin` se rechaza (persistencia lista en C-16). CA-3: bloqueo que pisa turnos existentes se guarda y **no** cancela esos turnos; la respuesta lista los turnos afectados (persistencia lista en C-16). CA-4: eliminar un bloqueo libera el horario (persistencia lista en C-16).
 
 **Reglas**: RN-DI-03, RN-DI-04
 

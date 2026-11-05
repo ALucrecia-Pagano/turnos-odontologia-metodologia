@@ -13,6 +13,11 @@
   `0` bloqueos sembrados, y la segunda insertó `0` tramos.
 - OpenSpec estricto: `Change ... is valid`.
 
+Los artefactos del change están archivados en
+[design.md](../../openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/design.md)
+y
+[tasks.md](../../openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/tasks.md).
+
 Las salidas completas están en
 [pytest-C-16.txt](pytest-C-16.txt),
 [pytest-integration-C-16.txt](pytest-integration-C-16.txt),

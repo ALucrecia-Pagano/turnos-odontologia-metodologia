@@ -431,7 +431,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/05_reglas_de_negocio.md` §RN-PA-01, §RN-PA-02
 
 ### [C-16] `persistencia-horarios-y-bloqueos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-05)
 - **Scope**:
   - Modelos y migración de `working_hours` (minutos locales desde las 00:00) y `block` (`start_at`, `end_at` en `timestamptz`).
   - Repositorios de horarios y bloqueos; el guardado pasa por la validación de dominio de C-05 y C-06 (tramos válidos, `inicio < fin`).
