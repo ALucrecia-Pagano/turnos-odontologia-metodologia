@@ -1,0 +1,43 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+testpaths: tests
+collected 732 items / 59 deselected / 673 selected
+
+tests\domain\test_blocks.py ..........                                   [  1%]
+tests\domain\test_catalog.py ........................................... [  7%]
+.....................................                                    [ 13%]
+tests\domain\test_catalog_agenda.py .......                              [ 14%]
+tests\domain\test_catalog_dependencies.py ...                            [ 14%]
+tests\domain\test_clock_guard.py .....................                   [ 17%]
+tests\domain\test_domain_dependencies.py ..                              [ 18%]
+tests\domain\test_duration.py .....                                      [ 19%]
+tests\domain\test_import_guard.py ................................       [ 23%]
+tests\domain\test_intervals.py ......................................    [ 29%]
+tests\domain\test_lifecycle.py ......................................... [ 35%]
+..............................                                           [ 39%]
+tests\domain\test_lifecycle_agenda.py .......                            [ 41%]
+tests\domain\test_model.py ......................................        [ 46%]
+tests\domain\test_names.py ........                                      [ 47%]
+tests\domain\test_past.py .........                                      [ 49%]
+tests\domain\test_reschedule.py .............................            [ 53%]
+tests\domain\test_smoke.py ..                                            [ 53%]
+tests\domain\test_status_history.py ................                     [ 56%]
+tests\domain\test_transitions.py .................................       [ 61%]
+tests\domain\test_validate_new_appointment.py .......................... [ 64%]
+........................................................................ [ 75%]
+........................................................................ [ 86%]
+..............                                                           [ 88%]
+tests\domain\test_violations.py ....................................     [ 93%]
+tests\domain\test_working_hours.py .....................                 [ 96%]
+tests\test_alembic_configuration.py .                                    [ 97%]
+tests\test_compose.py ..                                                 [ 97%]
+tests\test_config.py ....                                                [ 97%]
+tests\test_demo_data.py .....                                            [ 98%]
+tests\test_persistence_metadata.py ....                                  [ 99%]
+tests\test_repository_contracts.py ...                                   [ 99%]
+tests\test_transition_types.py ..                                        [100%]
+
+===================== 673 passed, 59 deselected in 6.99s ======================
+
