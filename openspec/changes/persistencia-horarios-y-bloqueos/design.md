@@ -211,3 +211,21 @@ Desde la raíz:
 openspec validate persistencia-horarios-y-bloqueos --strict
 git diff --check
 ```
+
+## Desvíos del apply
+
+- La primera ejecución de las nuevas pruebas unitarias quedó en RED por las
+  ausencias esperadas de `WORKING_HOURS`, los protocolos y los modelos de
+  disponibilidad; luego pasó en GREEN con la implementación mínima.
+- Se realizó una ronda posterior de mutación sobre los 19 escenarios. Cada
+  mutación se aplicó solo en producción, se ejecutó únicamente el test
+  correspondiente y se restauró antes de continuar. Las mutaciones cubrieron
+  orden y UTC, reemplazo y rollback, validaciones, CHECK y FK, propagación de
+  errores, profesionales inactivos, eliminación, filtrado de turnos, seed y
+  migración reversible.
+- La mutación de reemplazo aislado no falló en la primera versión del test
+  porque solo verificaba al profesional P2. Se reforzó con la aserción del
+  listado final de P1; al repetir la mutación, el test falló. Las 19
+  mutaciones finales fallaron y todas fueron restauradas.
+- No se modificó el dominio fuera del `TypeVar` de `result.py`; no se usó
+  `type: ignore`, ni mocks, `patch` o `monkeypatch`.

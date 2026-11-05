@@ -1,9 +1,18 @@
 from collections.abc import Sequence
+from datetime import datetime
 from typing import Protocol
 from uuid import UUID
 
 from app.domain.catalog.result import CatalogResult
-from app.domain.model import Chair, Patient, Professional, Service
+from app.domain.model import (
+    Appointment,
+    Block,
+    Chair,
+    Patient,
+    Professional,
+    Service,
+    WorkingHours,
+)
 
 
 class ProfessionalRepository(Protocol):
@@ -34,3 +43,29 @@ class PatientRepository(Protocol):
     def create(self, candidate: Patient) -> CatalogResult[Patient]: ...
     def get_by_id(self, identifier: UUID) -> Patient | None: ...
     def list(self) -> Sequence[Patient]: ...
+
+
+class AppointmentReader(Protocol):
+    def list_for_professional_in_range(
+        self,
+        professional_id: UUID,
+        start_at: datetime,
+        end_at: datetime,
+    ) -> Sequence[Appointment]: ...
+
+
+class WorkingHoursRepository(Protocol):
+    def replace_for_professional(
+        self, professional_id: UUID, slots: Sequence[WorkingHours]
+    ) -> CatalogResult[tuple[WorkingHours, ...]]: ...
+    def list_by_professional(self, professional_id: UUID) -> tuple[WorkingHours, ...]: ...
+    def list(self) -> tuple[WorkingHours, ...]: ...
+
+
+class BlockRepository(Protocol):
+    def create(self, candidate: Block) -> CatalogResult[Block]: ...
+    def delete(self, identifier: UUID) -> Block | None: ...
+    def get_by_id(self, identifier: UUID) -> Block | None: ...
+    def list_by_professional(self, professional_id: UUID) -> tuple[Block, ...]: ...
+    def list(self) -> tuple[Block, ...]: ...
+    def list_affected_appointments(self, block: Block) -> tuple[Appointment, ...]: ...

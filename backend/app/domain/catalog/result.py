@@ -3,10 +3,18 @@
 from dataclasses import dataclass
 from typing import Generic, TypeAlias, TypeVar
 
-from app.domain.model import Chair, Patient, Professional, Service
+from app.domain.model import Block, Chair, Patient, Professional, Service, WorkingHours
 from app.domain.violations import Rejected
 
-T = TypeVar("T", Professional, Chair, Service, Patient)
+T = TypeVar(
+    "T",
+    Professional,
+    Chair,
+    Service,
+    Patient,
+    Block,
+    tuple[WorkingHours, ...],
+)
 
 
 @dataclass(frozen=True, slots=True)

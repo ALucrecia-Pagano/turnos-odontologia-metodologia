@@ -7,7 +7,7 @@ from sqlalchemy.engine import URL
 from sqlalchemy.orm import Session
 
 from app.config import load_settings
-from app.db.models import ChairModel, PatientModel
+from app.db.models import BlockModel, ChairModel, PatientModel, WorkingHoursModel
 from app.db.seed import seed_database
 from app.domain.catalog.result import Ok
 from app.domain.model import Chair, Patient, Professional, Service
@@ -103,36 +103,44 @@ def test_migration_has_catalog_tables_and_is_reversible(
 
 
 def test_seed_is_idempotent_and_preserves_fixed_counts(connection: Connection) -> None:
-    from app.db.seed import _seed_catalogs, _seed_patients
+    from app.db.seed import _seed_catalogs, _seed_patients, _seed_working_hours
     from app.repositories.catalog import ChairRepository, ProfessionalRepository, ServiceRepository
     from app.repositories.patients import PatientRepository
+    from app.repositories.working_hours import WorkingHoursRepository
 
     connection.execute(text("DELETE FROM patient"))
     connection.execute(text("DELETE FROM service"))
     connection.execute(text("DELETE FROM chair"))
+    connection.execute(text("DELETE FROM block"))
+    connection.execute(text("DELETE FROM working_hours"))
     connection.execute(text("DELETE FROM professional"))
     session = Session(bind=connection)
     _seed_catalogs(session)
     _seed_patients(session)
+    _seed_working_hours(session)
     first = {
         "professional": len(ProfessionalRepository(session).list()),
         "chair": len(ChairRepository(session).list()),
         "service": len(ServiceRepository(session).list()),
         "patient": len(PatientRepository(session).list()),
+        "working_hours": len(WorkingHoursRepository(session).list()),
     }
     _seed_catalogs(session)
     _seed_patients(session)
+    _seed_working_hours(session)
     second = {
         "professional": len(ProfessionalRepository(session).list()),
         "chair": len(ChairRepository(session).list()),
         "service": len(ServiceRepository(session).list()),
         "patient": len(PatientRepository(session).list()),
+        "working_hours": len(WorkingHoursRepository(session).list()),
     }
     assert first == {
         "professional": 3,
         "chair": 3,
         "service": 5,
         "patient": 5,
+        "working_hours": 25,
     }
     assert second == first
 
@@ -219,6 +227,7 @@ def test_seed_database_is_idempotent_on_test_database(
         "chair": 3,
         "service": 5,
         "patient": 5,
+        "working_hours": 25,
     }
     assert first == expected
     assert second == expected
@@ -227,6 +236,8 @@ def test_seed_database_is_idempotent_on_test_database(
         cleanup_connection.execute(text("DELETE FROM patient"))
         cleanup_connection.execute(text("DELETE FROM service"))
         cleanup_connection.execute(text("DELETE FROM chair"))
+        cleanup_connection.execute(text("DELETE FROM block"))
+        cleanup_connection.execute(text("DELETE FROM working_hours"))
         cleanup_connection.execute(text("DELETE FROM professional"))
 
 

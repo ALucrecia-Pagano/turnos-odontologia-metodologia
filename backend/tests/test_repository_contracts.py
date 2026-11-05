@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import get_args, get_type_hints
 
 
@@ -14,3 +15,21 @@ def test_repository_contracts_use_domain_types() -> None:
     assert get_args(get_args(get_type_hints(ChairRepository.create)["return"])[0])[0] is Chair
     assert get_args(get_args(get_type_hints(ServiceRepository.create)["return"])[0])[0] is Service
     assert get_args(get_args(get_type_hints(PatientRepository.create)["return"])[0])[0] is Patient
+
+
+def test_availability_repository_contracts_use_domain_types() -> None:
+    from app.domain.model import Appointment, Block, WorkingHours
+    from app.repositories.contracts import (
+        AppointmentReader,
+        BlockRepository,
+        WorkingHoursRepository,
+    )
+
+    working_replace = get_type_hints(WorkingHoursRepository.replace_for_professional)
+    assert get_args(get_args(working_replace["return"])[0])[0] == tuple[WorkingHours, ...]
+    block_create = get_type_hints(BlockRepository.create)
+    assert get_args(get_args(block_create["return"])[0])[0] is Block
+    affected = get_type_hints(BlockRepository.list_affected_appointments)
+    assert affected["return"] == tuple[Appointment, ...]
+    reader = get_type_hints(AppointmentReader.list_for_professional_in_range)
+    assert reader["return"] == Sequence[Appointment]

@@ -5,7 +5,7 @@ No accede a persistencia ni ejecuta un seed. El dominio no importa este módulo.
 
 from uuid import UUID
 
-from app.domain.model import Chair, Patient, Professional, Service
+from app.domain.model import Chair, Patient, Professional, Service, WorkingHours
 
 PROFESSIONALS: tuple[Professional, ...] = (
     Professional(UUID("00000000-0000-0000-0000-000000000001"), "Dra. Laura Quiroga", True),
@@ -30,4 +30,16 @@ PATIENTS: tuple[Patient, ...] = (
     Patient(UUID("00000000-0000-0000-0000-0000000000c3"), "Carla Medina", "27123456"),
     Patient(UUID("00000000-0000-0000-0000-0000000000c4"), "Diego Ríos", "33456789"),
     Patient(UUID("00000000-0000-0000-0000-0000000000c5"), "Eva Molina", "38987654"),
+)
+
+WORKING_HOURS: tuple[WorkingHours, ...] = tuple(
+    WorkingHours(professional_id, weekday, start_minute, end_minute)
+    for professional_id, morning_only in (
+        (PROFESSIONALS[0].id, False),
+        (PROFESSIONALS[1].id, True),
+        (PROFESSIONALS[2].id, False),
+    )
+    for weekday in range(1, 6)
+    for start_minute, end_minute in ((540, 780),)
+    + (() if morning_only else ((900, 1140),))
 )

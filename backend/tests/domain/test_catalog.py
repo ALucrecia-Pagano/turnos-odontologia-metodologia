@@ -617,3 +617,24 @@ def test_reactivate_service_is_idempotent() -> None:
     original = Service(SV1, "Limpieza", 45, True)
     assert reactivate(original) == Service(SV1, "Limpieza", 45, True)
     assert original == Service(SV1, "Limpieza", 45, True)
+
+
+def test_demo_working_hours_are_valid_and_have_expected_distribution() -> None:
+    from app.demo_data import WORKING_HOURS
+    from app.domain.model import WorkingHours
+    from app.domain.rules.working_hours import validate_working_hours
+
+    assert len(WORKING_HOURS) == 25
+    assert validate_working_hours(WORKING_HOURS) == []
+    assert sum(slot.professional_id == P1 for slot in WORKING_HOURS) == 10
+    assert sum(
+        slot.professional_id == P2
+        and slot.start_minute == 540
+        and slot.end_minute == 780
+        for slot in WORKING_HOURS
+    ) == 5
+    assert sum(
+        slot.professional_id == UUID("00000000-0000-0000-0000-000000000003")
+        for slot in WORKING_HOURS
+    ) == 10
+    assert all(isinstance(slot, WorkingHours) for slot in WORKING_HOURS)

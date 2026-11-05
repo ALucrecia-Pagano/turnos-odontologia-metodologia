@@ -5,10 +5,11 @@ from sqlalchemy.orm import Session
 from app.config import Settings, load_settings
 from app.db.models import ProfessionalModel
 from app.db.session import create_session_factory
-from app.demo_data import CHAIRS, PATIENTS, PROFESSIONALS, SERVICES
+from app.demo_data import CHAIRS, PATIENTS, PROFESSIONALS, SERVICES, WORKING_HOURS
 from app.domain.catalog.result import Ok
 from app.repositories.catalog import ChairRepository, ProfessionalRepository, ServiceRepository
 from app.repositories.patients import PatientRepository
+from app.repositories.working_hours import WorkingHoursRepository
 
 
 _LICENSE_NUMBERS: Mapping[str, str] = {
@@ -25,11 +26,13 @@ def seed_database(settings: Settings | None = None) -> dict[str, int]:
         with session.begin():
             _seed_catalogs(session)
             _seed_patients(session)
+            _seed_working_hours(session)
             counts = {
                 "professional": len(ProfessionalRepository(session).list()),
                 "chair": len(ChairRepository(session).list()),
                 "service": len(ServiceRepository(session).list()),
                 "patient": len(PatientRepository(session).list()),
+                "working_hours": len(WorkingHoursRepository(session).list()),
             }
     return counts
 
@@ -68,6 +71,22 @@ def _seed_patients(session: Session) -> None:
             patient_result = repository.create(patient)
             if not isinstance(patient_result, Ok):
                 raise RuntimeError("Los datos ficticios contienen un paciente inválido.")
+
+
+def _seed_working_hours(session: Session) -> int:
+    repository = WorkingHoursRepository(session)
+    inserted = 0
+    for professional in PROFESSIONALS:
+        if repository.list_by_professional(professional.id):
+            continue
+        slots = tuple(
+            slot for slot in WORKING_HOURS if slot.professional_id == professional.id
+        )
+        result = repository.replace_for_professional(professional.id, slots)
+        if not isinstance(result, Ok):
+            raise RuntimeError("Los datos ficticios contienen un horario inválido.")
+        inserted += len(slots)
+    return inserted
 
 
 def main() -> None:
