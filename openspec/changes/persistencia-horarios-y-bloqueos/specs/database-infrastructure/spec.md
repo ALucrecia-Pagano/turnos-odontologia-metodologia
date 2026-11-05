@@ -31,10 +31,15 @@ El repositorio de horarios SHALL reemplazar en una sola transacción todos los t
 ### Requirement: Rechazo previo de horarios y bloqueos inválidos sin persistir cambios
 Antes de escribir en la base, el repositorio de horarios SHALL validar el conjunto con `validate_working_hours` y el de bloqueos SHALL validar con `validate_block`. Si hay violaciones, SHALL devolver `Rejected` con esas violaciones sin insertar filas nuevas ni modificar ni borrar los datos existentes.
 
-#### Scenario: Rechazo de tramos inválidos o solapados conserva el horario previo
+#### Scenario: Rechazo de tramos solapados conserva el horario previo
 - **GIVEN** el profesional `00000000-0000-0000-0000-000000000001` con un tramo persistido el lunes (`weekday=1`, `540` a `780`)
-- **WHEN** se intenta reemplazar su horario por dos tramos solapados el martes (`weekday=2`, de `540` a `780` y de `720` a `960`) o por un tramo inválido (`weekday=8`, de `600` a `540`)
-- **THEN** el repositorio devuelve `Rejected` con `OVERLAPPING_WORKING_HOURS` o `INVALID_WORKING_HOURS` respectivamente y el profesional conserva en la base su tramo del lunes (`540` a `780`)
+- **WHEN** se intenta reemplazar su horario por dos tramos solapados el martes (`weekday=2`, de `540` a `780` y de `720` a `960`)
+- **THEN** el repositorio devuelve `Rejected` con `OVERLAPPING_WORKING_HOURS` y el profesional conserva en la base su tramo del lunes (`540` a `780`)
+
+#### Scenario: Rechazo de tramo inválido conserva el horario previo
+- **GIVEN** el profesional `00000000-0000-0000-0000-000000000001` con un tramo persistido el lunes (`weekday=1`, `540` a `780`)
+- **WHEN** se intenta reemplazar su horario por un tramo inválido (`weekday=8`, de `600` a `540`)
+- **THEN** el repositorio devuelve `Rejected` con `INVALID_WORKING_HOURS` y el profesional conserva en la base su tramo del lunes (`540` a `780`)
 
 #### Scenario: Rechazo de bloqueo con inicio mayor o igual al fin
 - **GIVEN** el profesional `00000000-0000-0000-0000-000000000001` persistido
@@ -44,10 +49,20 @@ Antes de escribir en la base, el repositorio de horarios SHALL validar el conjun
 ### Requirement: Restricciones CHECK y de integridad en working_hours y block
 Las tablas `working_hours` y `block` SHALL declarar restricciones `CHECK` nombradas para el rango de `weekday` (`1..7`), el rango y orden de minutos (`0 <= start_minute < end_minute <= 1440`) y el orden temporal del bloqueo (`start_at < end_at`). Cualquier `IntegrityError` ajeno a la FK del profesional SHALL propagarse.
 
-#### Scenario: CHECK de base rechaza inserción directa inválida en working_hours y block
+#### Scenario: CHECK de base rechaza weekday inválido en working_hours
 - **GIVEN** el profesional `00000000-0000-0000-0000-000000000001` persistido
-- **WHEN** se ejecuta un `INSERT` directo en `working_hours` con `weekday=0` o con `start_minute=780` y `end_minute=540`, o en `block` con `start_at=2026-11-12T16:00:00Z` y `end_at=2026-11-12T15:00:00Z`
-- **THEN** PostgreSQL rechaza cada inserción con `IntegrityError` identificando `ck_working_hours_weekday_range`, `ck_working_hours_minute_range` o `ck_block_interval_order`, sin guardar filas inválidas
+- **WHEN** se ejecuta un `INSERT` directo en `working_hours` con `weekday=0`
+- **THEN** PostgreSQL rechaza la inserción con `IntegrityError` identificando `ck_working_hours_weekday_range`, sin guardar una fila inválida
+
+#### Scenario: CHECK de base rechaza minutos inválidos en working_hours
+- **GIVEN** el profesional `00000000-0000-0000-0000-000000000001` persistido
+- **WHEN** se ejecuta un `INSERT` directo en `working_hours` con `start_minute=780` y `end_minute=540`
+- **THEN** PostgreSQL rechaza la inserción con `IntegrityError` identificando `ck_working_hours_minute_range`, sin guardar una fila inválida
+
+#### Scenario: CHECK de base rechaza intervalo inválido en block
+- **GIVEN** el profesional `00000000-0000-0000-0000-000000000001` persistido
+- **WHEN** se ejecuta un `INSERT` directo en `block` con `start_at=2026-11-12T16:00:00Z` y `end_at=2026-11-12T15:00:00Z`
+- **THEN** PostgreSQL rechaza la inserción con `IntegrityError` identificando `ck_block_interval_order`, sin guardar una fila inválida
 
 #### Scenario: Error de integridad no relacionado se propaga
 - **GIVEN** el bloqueo `00000000-0000-0000-0000-000000000b04` ya persistido para el profesional `00000000-0000-0000-0000-000000000001`
@@ -57,9 +72,13 @@ Las tablas `working_hours` y `block` SHALL declarar restricciones `CHECK` nombra
 ### Requirement: Referencia al profesional en horarios y bloqueos
 Guardar horarios o un bloqueo para un `professional_id` inexistente SHALL traducir la violación de clave foránea de la base a `Rejected` con `UNKNOWN_REFERENCE` y `ReferenceKind.PROFESSIONAL`. Un profesional existente con `active=False` SHALL poder guardar y conservar horarios de atención y bloqueos.
 
-#### Scenario: Profesional inexistente devuelve UNKNOWN_REFERENCE
-- **WHEN** se intenta reemplazar horarios o crear el bloqueo `00000000-0000-0000-0000-000000000b05` para el profesional inexistente `00000000-0000-0000-0000-000000000999`
-- **THEN** la violación de la clave foránea `fk_working_hours_professional_id_professional` o `fk_block_professional_id_professional` se traduce a `Rejected` con código `UNKNOWN_REFERENCE`, `reference_kind=ReferenceKind.PROFESSIONAL` y mensaje `"El profesional indicado no existe."`
+#### Scenario: Profesional inexistente al reemplazar horarios devuelve UNKNOWN_REFERENCE
+- **WHEN** se intenta reemplazar los horarios del profesional inexistente `00000000-0000-0000-0000-000000000999` por el tramo del lunes (`weekday=1`, `540` a `780`)
+- **THEN** la violación de la clave foránea `fk_working_hours_professional_id_professional` se traduce a `Rejected` con código `UNKNOWN_REFERENCE`, `reference_kind=ReferenceKind.PROFESSIONAL` y mensaje `"El profesional indicado no existe (id 00000000-0000-0000-0000-000000000999)."`
+
+#### Scenario: Profesional inexistente al crear un bloqueo devuelve UNKNOWN_REFERENCE
+- **WHEN** se intenta crear el bloqueo `00000000-0000-0000-0000-000000000b05` para el profesional inexistente `00000000-0000-0000-0000-000000000999`
+- **THEN** la violación de la clave foránea `fk_block_professional_id_professional` se traduce a `Rejected` con código `UNKNOWN_REFERENCE`, `reference_kind=ReferenceKind.PROFESSIONAL` y mensaje `"El profesional indicado no existe (id 00000000-0000-0000-0000-000000000999)."`
 
 #### Scenario: Profesional inactivo puede guardar horarios y bloqueos
 - **GIVEN** el profesional `00000000-0000-0000-0000-000000000003` persistido con `active=False`
@@ -86,14 +105,16 @@ Guardar horarios o un bloqueo para un `professional_id` inexistente SHALL traduc
 - **WHEN** se consulta `list_affected_appointments` para el bloqueo `00000000-0000-0000-0000-000000000b08` de `2026-11-16T13:00:00Z` a `2026-11-16T15:00:00Z`
 - **THEN** devuelve exactamente la tupla ordenada con los turnos `00000000-0000-0000-0000-000000000a01` y `00000000-0000-0000-0000-000000000a02`, excluyendo el `cancelado`, y conserva intactos los estados e intervalos de todos los turnos
 
-### Requirement: Seed idempotente de horarios de atención y migración reversible
-El seed manual SHALL cargar 25 tramos ficticios de `WorkingHours` de lunes a viernes para los tres profesionales (con el segundo profesional solo de mañana), sin sembrar bloqueos y sin pisar horarios ya existentes. La migración `20261104_03_horarios_y_bloqueos` SHALL ser reversible y mantener el autogenerate sin diferencias.
+### Requirement: Seed idempotente de horarios de atención
+El seed SHALL cargar 25 tramos ficticios de `WorkingHours` de lunes a viernes para los tres profesionales, sin sembrar bloqueos. Si un profesional ya tiene al menos un tramo, no SHALL insertar ni modificar nada para ese profesional; la segunda ejecución SHALL insertar 0 tramos.
 
 #### Scenario: Primera y segunda ejecución idempotente del seed con horarios
 - **WHEN** se ejecuta dos veces consecutivas `seed_database` sobre la base migrada
-- **THEN** tras ambas ejecuciones existen `25` tramos en `working_hours` (`10` para `00000000-0000-0000-0000-000000000001`, `5` de `540` a `780` para `00000000-0000-0000-0000-000000000002` y `10` para `00000000-0000-0000-0000-000000000003`) y `0` filas sembradas en `block`, sin duplicar ni alterar horarios previos
+- **THEN** tras ambas ejecuciones existen `25` tramos en `working_hours` (`10` para `00000000-0000-0000-0000-000000000001`, `5` de `540` a `780` para `00000000-0000-0000-0000-000000000002` y `10` para `00000000-0000-0000-0000-000000000003`), `0` filas sembradas en `block`, y la segunda ejecución inserta `0` tramos sin modificar horarios existentes
 
-#### Scenario: Ciclo upgrade y downgrade de la migración de horarios y bloqueos
-- **WHEN** se ejecuta `upgrade head`, `downgrade base` y nuevamente `upgrade head` sobre `<POSTGRES_DB>_test`
-- **THEN** las tablas `working_hours` y `block` se crean y se eliminan según corresponda, la base termina en `20261104_03_horarios_y_bloqueos` y la comparación de metadata no reporta diferencias
+### Requirement: Migración reversible de horarios y bloqueos
+La migración `20261104_03_horarios_y_bloqueos` SHALL ser reversible y el autogenerate SHALL no reportar diferencias después de recrear las tablas.
 
+#### Scenario: Ciclo upgrade y downgrade reversible de la migración
+- **WHEN** se ejecuta `upgrade head`, después `downgrade -1` y después `upgrade head` sobre `<POSTGRES_DB>_test`
+- **THEN** después del `downgrade -1` no existen `working_hours` ni `block`, siguen existiendo `professional`, `chair`, `service` y `patient`, y la base está en `20261103_02_catalogos_y_pacientes`; después del upgrade final, la base está en `20261104_03_horarios_y_bloqueos` y la comparación de metadata no reporta diferencias

@@ -108,12 +108,16 @@ Ningún otro código de C-09 ni de C-15 cambia.
        (
            Violation(
                code=ViolationCode.UNKNOWN_REFERENCE,
-               message="El profesional indicado no existe.",
+               message=(
+                   "El profesional indicado no existe "
+                   f"(id {professional_id})."
+               ),
                reference_kind=ReferenceKind.PROFESSIONAL,
            ),
        )
    )
    ```
+   El repositorio produce exactamente ese texto, con el mismo formato que `references.py`, y el test compara el mensaje completo.
    En `replace_for_professional(professional_id, ())` con lista vacía —donde un `DELETE` + `0 INSERT` no dispararía la FK por sí solo—, el repositorio verifica la existencia de la fila en `professional` (o rechaza con ese mismo `UNKNOWN_REFERENCE` si no existe) para mantener el mismo contrato incluso cuando `slots` es vacío.
 3. Cualquier otro `IntegrityError` (por ejemplo, `pk_block` duplicado o una violación de `CHECK`) se propaga sin `catch` amplio.
 
@@ -136,7 +140,7 @@ En `backend/app/repositories/contracts.py`:
   def list_affected_appointments(self, block: Block) -> tuple[Appointment, ...]: ...
   ```
   **sin** parámetro `appointments`.
-- La implementación SQL de `BlockRepository` recibe `appointment_reader: AppointmentReader | None = None` en `__init__(self, session: Session, appointment_reader: AppointmentReader | None = None)` (con un lector vacío por defecto cuando solo se usan operaciones CRUD de bloqueos, o recibiendo el `AppointmentReader` explícito cuando se consulta `list_affected_appointments`). Al invocar `list_affected_appointments(block)`, si `block.start_at >= block.end_at` devuelve `()`; en caso contrario pide candidatos a `appointment_reader.list_for_professional_in_range(block.professional_id, block.start_at, block.end_at)` y filtra y ordena con `appointments_affected_by_block(block, candidates)` del dominio.
+- La implementación SQL de `BlockRepository` recibe obligatoriamente `appointment_reader: AppointmentReader` en `__init__(self, session: Session, appointment_reader: AppointmentReader)`, sin lector vacío implícito. Un lector vacío por defecto haría que `list_affected_appointments` respondiera silenciosamente `"sin turnos afectados"` si alguien olvida pasarlo. Al invocar `list_affected_appointments(block)`, si `block.start_at >= block.end_at` devuelve `()`; en caso contrario pide candidatos a `appointment_reader.list_for_professional_in_range(block.professional_id, block.start_at, block.end_at)` y filtra y ordena con `appointments_affected_by_block(block, candidates)` del dominio. Los tests que solo hacen CRUD de bloqueos pasan explícitamente un fake cuyo lector devuelve `()`.
 - En C-16 los tests usan un fake escrito a mano en `tests/` (una clase que implementa `AppointmentReader` y devuelve una tupla fija de `Appointment`, sin `unittest.mock` ni `monkeypatch`). La implementación SQL de `AppointmentReader` pertenece a C-17 y la firma de `list_affected_appointments(block: Block) -> tuple[Appointment, ...]` no cambiará.
 
 ### D7 — Datos ficticios en `demo_data.py` y extensión del seed idempotente en `seed.py`
@@ -147,7 +151,7 @@ En `backend/app/demo_data.py` se agrega `WORKING_HOURS: tuple[WorkingHours, ...]
 - `00000000-0000-0000-0000-000000000002` (Dr. Martín Sosa): solo mañanas `540..780` (`09:00–13:00`) de lunes a viernes (5 tramos, cumpliendo la variación para pruebas de KB 04).
 - `00000000-0000-0000-0000-000000000003` (Dra. Paula Benítez): `540..780` (`09:00–13:00`) y `900..1140` (`15:00–19:00`) de lunes a viernes (10 tramos).
 
-No se siembran bloqueos. En `backend/app/db/seed.py`, `_seed_working_hours(session)` verifica para cada profesional de `PROFESSIONALS` si `working_hours_repository.list_by_professional(professional.id)` está vacío; solo en ese caso inserta sus tramos de `WORKING_HOURS` mediante `replace_for_professional`. Si ya tiene horarios persistidos, no los actualiza ni borra. `seed_database` incluye `"working_hours": len(WorkingHoursRepository(session).list())` en el diccionario de conteos devuelto.
+No se siembran bloqueos. En `backend/app/db/seed.py`, `_seed_working_hours(session)` verifica para cada profesional de `PROFESSIONALS` si `working_hours_repository.list_by_professional(professional.id)` está vacío; solo en ese caso inserta sus tramos de `WORKING_HOURS` mediante `replace_for_professional`. Si un profesional ya tiene al menos un tramo en `working_hours`, el seed no le inserta ni le modifica nada; la segunda ejecución inserta `0` tramos. `seed_database` incluye `"working_hours": len(WorkingHoursRepository(session).list())` en el diccionario de conteos devuelto.
 
 ### D8 — Revisión de Alembic
 
@@ -207,4 +211,3 @@ Desde la raíz:
 openspec validate persistencia-horarios-y-bloqueos --strict
 git diff --check
 ```
-
