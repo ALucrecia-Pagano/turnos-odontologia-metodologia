@@ -109,19 +109,20 @@ Para serializar concurrentes sin deadlocks (DD-03), el servicio adquiere bloqueo
 ### D5 — Capa de servicios transaccionales en `backend/app/services/appointments.py`
 
 Se crea el módulo de servicios `backend/app/services/appointments.py` con las siguientes funciones:
-- `book_appointment(session, request, references, schedule_context, now, tz) -> Ok | Rejected`
-- `change_appointment_status(session, appointment_id, target_status, actor, now, professional_name, tz) -> Ok | Rejected | None`
-- `cancel_appointment(session, appointment_id, actor, now, professional_name, tz) -> Ok | Rejected | None`
-- `reschedule_appointment(session, appointment_id, request, actor, schedule_context, now, tz) -> Ok | Rejected | None`
+- `book_appointment(session, request, references, schedule_context, now, tz, auto_commit=True) -> Ok | Rejected`
+- `change_appointment_status(session, appointment_id, target_status, actor, now, professional_name, tz, auto_commit=True) -> Ok | Rejected | None`
+- `cancel_appointment(session, appointment_id, actor, now, professional_name, tz, auto_commit=True) -> Ok | Rejected | None`
+- `reschedule_appointment(session, appointment_id, request, actor, schedule_context, now, tz, auto_commit=True) -> Ok | Rejected | None`
 
 Cada función:
 1. Abre una única transacción (`with session.begin_nested():` o bloque transaccional).
 2. Adquiere los locks según D4 y D11.
 3. Carga referencias, horarios, bloqueos y turnos activos de la base.
 4. Invoca la función pura de dominio (`validate_new_appointment`, `change_status`, `cancel_appointment` o `reschedule_appointment`).
-5. Si el dominio devuelve `Ok`: persiste/actualiza `AppointmentModel`, persiste `AppointmentStatusChangeModel`, hace commit de la transacción y devuelve `Ok`.
+5. Si el dominio devuelve `Ok`: persiste/actualiza `AppointmentModel`, persiste `AppointmentStatusChangeModel`, hace commit de la transacción (si `auto_commit=True`) y devuelve `Ok`.
 6. Si el dominio devuelve `Rejected`: revierte la transacción (`rollback`) y devuelve `Rejected` sin escribir nada en disco.
 7. Los repositorios son componentes de acceso a datos y **nunca hacen commit**. La API REST de C-22 y C-23 consumirá directamente estos servicios.
+8. **Prueba de falla de historial sin mocks**: El test crea dentro de la base de test una función y un trigger temporales `BEFORE INSERT ON appointment_status_change` que lanzan una excepción cuando `NEW.appointment_id = '00000000-0000-0000-0000-000000000a02'`; ejecuta `book_appointment` para `a02`; comprueba que el servicio propaga la excepción y que no queda ninguna fila en `appointment` ni en `appointment_status_change` para `a02`; y en un bloque `finally` elimina el trigger y la función. Queda estrictamente prohibido usar `unittest.mock`, `patch` o `monkeypatch`.
 
 ### D6 — Historial append-only: repositorio sin mutaciones y trigger PostgreSQL
 
@@ -157,12 +158,12 @@ Ejecuta una consulta SQL con `WHERE professional_id = :prof_id AND start_at < :e
 
 ### D9 — Prueba de concurrencia real sin `time.sleep`, con sondeo en `pg_locks` y `lock_timeout`
 
-Para probar la serialización concurrente sin mocks, sin monkeypatch y de forma robusta y rápida:
+Para probar la serialización concurrente sin mocks, sin monkeypatch y de forma determinista y rápida:
 1. En las sesiones del test de integración se ejecuta `SET lock_timeout = '5s'` para evitar que ningún test quede colgado si ocurriera una falla imprevista.
-2. Dos hilos ejecutan transacciones contra `<POSTGRES_DB>_test` usando conexiones separadas.
-3. El Hilo A toma el lock `FOR UPDATE` sobre profesional/sillón.
-4. Para confirmar que el Hilo B está efectivamente esperando detrás del lock de A antes de que A confirme, el test realiza un sondeo acotado (bucle `poll` de hasta 2 segundos con intervalos de 20 ms) consultando la vista del sistema `pg_locks` / `pg_stat_activity` verificando que la transacción de B se encuentra en estado de espera por lock (`wait_event_type = 'Lock'`).
-5. Se confirma que no se usa `time.sleep` ciego ni arbitrario. Una vez verificado el lock en PostgreSQL, Hilo A confirma su commit; Hilo B se desbloquea, lee el turno recién confirmado y el dominio lo rechaza con `PROFESSIONAL_OVERLAP` o `CHAIR_OVERLAP`.
+2. Dos hilos ejecutan transacciones contra `<POSTGRES_DB>_test` usando conexiones separadas (conexión A y conexión B).
+3. **Control del bloqueo sin sleep**: La conexión A ejecuta la operación pasando `auto_commit=False` al servicio (o iniciando una transacción explícita sobre la sesión), de modo que toma el lock `FOR UPDATE` sobre profesional, sillón o turno y realiza el flush, pero retiene la transacción y el bloqueo abiertos.
+4. Para confirmar que la conexión B está efectivamente bloqueada esperando por el lock de A antes de que A confirme, el test realiza un sondeo acotado (bucle `poll` de hasta 2 segundos con intervalos de 20 ms) consultando la vista del sistema `pg_locks` / `pg_stat_activity` verificando que la transacción de B se encuentra en espera de bloqueo (`wait_event_type = 'Lock'`).
+5. Una vez comprobado en PostgreSQL que B está en espera, el test ejecuta `session_a.commit()`, liberando el lock para que B se desbloquee sin recurrir a `time.sleep` ciego. B procede, relee el estado actualizado de la base y el dominio lo rechaza con `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP` o `INVALID_TRANSITION`.
 
 ### D10 — Revisión de Alembic y seed de desarrollo
 
@@ -172,7 +173,7 @@ Para probar la serialización concurrente sin mocks, sin monkeypatch y de forma 
 ### D11 — Relectura bloqueada de turno en transiciones concurrentes
 
 En `change_appointment_status`, `cancel_appointment` y `reschedule_appointment`, el servicio ejecuta primero `SELECT id, status FROM appointment WHERE id = :id FOR UPDATE` y reconstruye el estado actual del turno **dentro del bloqueo** antes de llamar al dominio:
-- **Motivo**: Si dos recepcionistas intentan confirmar y cancelar el mismo turno a la vez, ambas leerían previamente `reservado`. Al serializarse por el lock de fila, la primera cambia el turno a `confirmado`; la segunda relee el turno (ahora en `confirmado`), llama al dominio con ese estado y el dominio rechaza la cancelación inválida con `INVALID_TRANSITION`, dejando exactamente una sola entrada en el historial en lugar de dos transiciones divergentes desde el mismo estado.
+- **Motivo**: Si dos recepcionistas intentan confirmar y cancelar el mismo turno a la vez, ambas leerían previamente `reservado`. Al serializarse por el lock de fila, la primera cambia el turno a `cancelado`; la segunda relee el turno (ahora en `cancelado`), llama al dominio con ese estado y el dominio rechaza la confirmación con `INVALID_TRANSITION`, dejando exactamente una sola entrada en el historial en lugar de dos transiciones divergentes desde el mismo estado.
 - Si el turno no existe en la base, el servicio devuelve `None` inmediatamente sin lanzar excepciones.
 
 ### D12 — Aislamiento de metadatos de persistencia (`created_at` y `updated_at`)
@@ -206,4 +207,3 @@ mypy --strict app tests
 openspec validate persistencia-turnos-e-historial --strict
 git diff --check
 ```
-
