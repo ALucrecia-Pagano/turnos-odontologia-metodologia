@@ -467,7 +467,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Estado**: `[ ]` pendiente
 - **Scope**:
   - `backend/app/main.py` (FastAPI) con prefijo `/api`, CORS solo para `CORS_ORIGIN`, `GET /api/health` (incluye chequeo de la BD).
-  - Manejo de errores uniforme: violaciones del dominio → `409` (conflicto de agenda) o `422` (regla de validez) con `{ "violations": [...] }`; entrada malformada → `400` (se reemplaza el `422` por defecto de FastAPI para errores de validación de Pydantic).
+  - Manejo de errores uniforme: violaciones del dominio → `409` (conflicto de agenda) o `422` (regla de validez) o `403` (operación prohibida) con `{ "violations": [...] }`; entrada malformada → `400` (se reemplaza el `422` por defecto de FastAPI para errores de validación de Pydantic).
   - Dependencia de sesión de BD por request (`Depends`).
   - `backend/Dockerfile` y servicio `backend` en `docker-compose.yml`: espera a `postgres` y `redis` sanos, corre `alembic upgrade head` y levanta la app en el puerto `API_PORT`.
   - Tests con `TestClient`: salud, `400` por cuerpo malformado, mapeo de una violación de prueba a `409` y a `422`, CORS.
@@ -543,7 +543,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Estado**: `[ ]` pendiente
 - **Scope**:
   - `POST /api/appointments/:id/cancel`, `POST /api/appointments/:id/reschedule`, `POST /api/appointments/:id/status` (confirmado, atendido, ausente) y `GET /api/appointments/:id/history`.
-  - Transaccional con historial (turno + entrada en una sola transacción); `INVALID_TRANSITION` → `409`; odontólogo solo sobre sus turnos y con historial propio de solo lectura (RN-AC-01).
+  - Transaccional con historial (turno + entrada en una sola transacción); `INVALID_TRANSITION` → `422`; odontólogo solo sobre sus turnos y con historial propio de solo lectura (RN-AC-01).
   - El historial se expone solo en lectura: no hay endpoints de edición ni borrado.
   - Tests de integración: cada transición válida e inválida, reprogramar con choque, reprogramar al pasado, `403` por rol y por propiedad, historial ordenado con `from`, `to`, `changed_by`, `changed_at`.
 - **Dependencias**: `C-11, C-12, C-22`
