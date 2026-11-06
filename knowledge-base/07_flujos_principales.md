@@ -31,15 +31,19 @@ Recepción → UI → API ──(contexto)──► PostgreSQL
   "violations": [
     { "code": "PROFESSIONAL_OVERLAP",
       "message": "La Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (turno a1b2).",
-      "conflictingAppointmentId": "a1b2" },
+      "conflictingAppointmentId": "a1b2",
+      "conflictingInterval": { "startAt": "2026-10-20T13:00:00Z", "endAt": "2026-10-20T13:30:00Z" } },
     { "code": "CHAIR_OVERLAP",
       "message": "El Sillón 2 está ocupado de 10:00 a 10:30 (turno c3d4).",
-      "conflictingAppointmentId": "c3d4" }
+      "conflictingAppointmentId": "c3d4",
+      "conflictingInterval": { "startAt": "2026-10-20T13:00:00Z", "endAt": "2026-10-20T13:30:00Z" } }
   ]
 }
 ```
 
-**Códigos de violación**: `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_TRANSITION`, `INVALID_WORKING_HOURS`, `OVERLAPPING_WORKING_HOURS` (estos dos, al cargar el horario de atención: RN-DI-02), `INVALID_BLOCK` (al crear un bloqueo con `inicio >= fin`: RN-DI-03; explore de C-06).
+Campos posibles según el tipo de rechazo (camelCase, los `null` se omiten): `code`, `message`, `conflictingAppointmentId`, `conflictingBlockId`, `conflictingInterval` (`startAt`, `endAt`), `referenceKind`.
+
+**Códigos de violación**: `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `INVALID_TRANSITION`, `INVALID_WORKING_HOURS`, `OVERLAPPING_WORKING_HOURS` (estos dos, al cargar el horario de atención: RN-DI-02), `INVALID_BLOCK` (al crear un bloqueo con `inicio >= fin`: RN-DI-03; explore de C-06), `DUPLICATE_DNI`, `INVALID_DNI`, `DUPLICATE_NAME`, `EMPTY_NAME`, `FORBIDDEN_OPERATION`, `STATUS_CHANGE_TOO_EARLY`.
 
 **Casos de error**:
 - Entrada malformada → `400`.

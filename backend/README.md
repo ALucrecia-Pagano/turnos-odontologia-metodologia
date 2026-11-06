@@ -63,6 +63,18 @@ Al finalizar el trabajo local se puede detener Compose sin eliminar volúmenes:
 docker compose down
 ```
 
+## API y Contenedores
+
+Para levantar la API en un contenedor junto con PostgreSQL y Redis (construye la imagen, corre `alembic upgrade head` y levanta uvicorn en `API_PORT`):
+
+```powershell
+docker compose up --build -d backend
+```
+
+Documentación interactiva disponible en `http://localhost:<API_PORT>/api/docs` (Swagger UI) y verificación de salud en `http://localhost:<API_PORT>/api/health`.
+
+> **Aviso sobre POSTGRES_PASSWORD**: la variable `DATABASE_URL` del servicio backend se interpola en Compose como `postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}`. Si `POSTGRES_PASSWORD` contiene caracteres reservados para URLs (como `@`, `:`, `/`, `?` o `#`), la URL resultante quedará malformada a menos que se use una contraseña sin caracteres especiales o se codifique para URL.
+
 ## Dominio
 
 `app/domain` es Python puro: sin I/O, sin reloj global y sin generar ids (se inyectan).

@@ -1,4 +1,3 @@
-from collections.abc import Iterator
 from typing import Protocol
 
 from sqlalchemy import Engine, event
@@ -22,7 +21,11 @@ class _DbApiConnection(Protocol):
 
 
 def create_database_engine(settings: Settings) -> Engine:
-    engine = create_engine(settings.database_url, pool_pre_ping=True)
+    engine = create_engine(
+        settings.database_url,
+        pool_pre_ping=True,
+        connect_args={"connect_timeout": 3},
+    )
 
     @event.listens_for(engine, "connect")
     def set_utc_timezone(
@@ -55,9 +58,3 @@ def database_url_for_test(settings: Settings) -> URL:
         port=5432,
         database=f"{settings.postgres_db}_test",
     )
-
-
-def get_session(settings: Settings) -> Iterator[Session]:
-    session_factory = create_session_factory(settings)
-    with session_factory() as session:
-        yield session
