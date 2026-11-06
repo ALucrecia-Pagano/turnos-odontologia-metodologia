@@ -1,0 +1,52 @@
+﻿NAME                            IMAGE                        COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+turnos-odontologia-backend-1    turnos-odontologia-backend   "sh -c 'alembic upgr…"   backend    13 seconds ago   Up 12 seconds (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+turnos-odontologia-postgres-1   postgres:16                  "docker-entrypoint.s…"   postgres   2 days ago       Up 15 hours (healthy)     0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+turnos-odontologia-redis-1      redis:7                      "docker-entrypoint.s…"   redis      2 days ago       Up 15 hours (healthy)     0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+
+=== GET /api/health ===
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 03:13:54 GMT
+server: uvicorn
+content-length: 31
+content-type: application/json
+vary: Origin
+
+{"status":"ok","database":"ok"}
+
+=== GET /api/docs ===
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 03:13:54 GMT
+server: uvicorn
+content-length: 1010
+content-type: text/html; charset=utf-8
+vary: Origin
+
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css">
+    <link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+    <title>FastAPI - Swagger UI</title>
+    </head>
+    <body>
+    <div id="swagger-ui">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <!-- `SwaggerUIBundle` is now available on the page -->
+    <script>
+    const ui = SwaggerUIBundle({
+        url: '/api/openapi.json',
+    "dom_id": "#swagger-ui",
+
+=== BACKEND LOGS ===
+backend-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+backend-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+backend-1  | INFO:     Started server process [1]
+backend-1  | INFO:     Waiting for application startup.
+backend-1  | INFO:     Application startup complete.
+backend-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+backend-1  | INFO:     127.0.0.1:37904 - "GET /api/health HTTP/1.1" 200 OK
+backend-1  | INFO:     172.18.0.1:51254 - "GET /api/health HTTP/1.1" 200 OK
+backend-1  | INFO:     172.18.0.1:51266 - "GET /api/docs HTTP/1.1" 200 OK
