@@ -201,7 +201,7 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-050 — Sesión con rol (JWT)
 **Como** usuario del consultorio, **quiero** iniciar sesión y operar con mi rol, **para** que la API aplique mis permisos.
-- [ ] CA-1: la API aplica la matriz RBAC de 03 según el rol. CA-2: sin rol → `401`; rol sin permiso → `403`.
+- [ ] CA-1: la API aplica la matriz RBAC de 03 según el rol (autenticación lista en C-19). CA-2: sin rol → `401`; rol sin permiso → `403` (autenticación lista en C-19).
 - *El rol sale del JWT (DD-11), que reemplaza al rol simulado por decisión de la cátedra (2026-10-08). Los criterios de aceptación no cambian: "sin rol" = sin JWT válido.*
 
 ## Épica 7: Backlog posterior al MVP (no implementar)

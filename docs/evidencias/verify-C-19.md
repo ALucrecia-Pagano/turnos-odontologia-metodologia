@@ -12,12 +12,12 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 43/43 en `tasks.md`. La 11.7 la confirmó la autora a mano.
+- Tareas: 43/43 en [tasks.md](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/tasks.md). La 11.7 la confirmó la autora a mano.
 - Suite por defecto: [pytest-C-19.txt](pytest-C-19.txt).
 - Integración: [pytest-integration-C-19.txt](pytest-integration-C-19.txt).
 - `mypy --strict app tests`: [mypy-C-19.txt](mypy-C-19.txt).
 - Mutaciones de D20: [mutaciones-C-19.txt](mutaciones-C-19.txt), con el SHA-256 de `backend/app` y `backend/alembic` antes y después.
-- Matriz contra `design.md`: [matriz-C-19.txt](matriz-C-19.txt).
+- Matriz contra [design.md](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/design.md): [matriz-C-19.txt](matriz-C-19.txt).
 - Trazabilidad: [trazabilidad-C-19.txt](trazabilidad-C-19.txt).
 - Alembic: [alembic-C-19.txt](alembic-C-19.txt). Seed: [seed-C-19.txt](seed-C-19.txt), solo conteos.
 - Docker: [docker-C-19.txt](docker-C-19.txt). E2E: [e2e-C-19.txt](e2e-C-19.txt).
@@ -26,6 +26,14 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - `.env` local: [env-C-19.txt](env-C-19.txt). Cumple D4, y `SEED_USER_PASSWORD` tiene al menos 8 caracteres.
 - Precondición de C-18: [precondicion-C-19.txt](precondicion-C-19.txt).
 - Instalación de dependencias: [pip-C-19.txt](pip-C-19.txt).
+
+## Artefactos archivados
+
+- [proposal.md](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/tasks.md)
+- [spec.md (authentication-and-rbac)](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/specs/authentication-and-rbac/spec.md)
+- [spec.md (database-infrastructure)](../../openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/specs/database-infrastructure/spec.md)
 
 ## Versiones instaladas
 

@@ -480,9 +480,9 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-02
 
 ### [C-19] `autenticacion-jwt-y-roles`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-06)
 - **Scope**: reemplaza al rol simulado (DD-11). Se mantienen los tres roles y la matriz RBAC de 03.
-  - Modelo y migración de `app_user` (`username` único, `display_name`, `password_hash`, `role` con `CHECK`, `professional_id` FK nulo y único, obligatorio solo para `odontologo`, `active`)
+  - Modelo y migración de `app_user` (`username` único, `display_name`, `password_hash`, `role` con `CHECK`, `professional_id` FK nulo y único, obligatorio solo para `odontologo`, `active`).
   - Hash de contraseñas con un algoritmo lento estándar (Argon2id, SU-06); nunca texto plano.
   - `POST /api/auth/login` → token de acceso firmado con `JWT_SECRET` (`JWT_ALGORITHM`, vencimiento `JWT_EXPIRES_MIN`; claims `sub`, `role`, `exp`); `GET /api/auth/me`. Sin refresh tokens ni revocación (SU-06). Desactivar el usuario o cambiarle el rol corta el acceso en el siguiente request.
   - Dependencias `get_current_user` (Bearer, firma y vencimiento → `401`) y `require_permission(recurso, acción)` con la matriz de 03 como tabla (→ `403`) (US-050 CA-1 y CA-2).

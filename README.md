@@ -58,8 +58,12 @@ Fijado por la cátedra:
   C-18 (API base con FastAPI: `GET /api/health` con chequeo de la base, errores
   uniformes `409`, `422`, `403` y `400`, CORS limitado a `CORS_ORIGIN`, sesión
   por request sin `commit` implícito, Swagger en `/api/docs` y servicio
-  `backend` en el Compose).
-- **Planificado:** la autenticación JWT, los endpoints de negocio de la API REST
+  `backend` en el Compose),
+  C-19 (autenticación con JWT y Argon2id: `POST /api/auth/login`,
+  `GET /api/auth/me`, mismo `401` ante credenciales inválidas, usuario releído en
+  cada request, matriz RBAC como tabla de datos con rechazo por defecto y un
+  usuario ficticio por rol en el seed).
+- **Planificado:** los endpoints de negocio de la API REST
   y el frontend. La persistencia de entidades ya
   está implementada en C-15. El
   plan completo
@@ -156,6 +160,19 @@ Para ver los detalles del backend (módulos del dominio, un ejemplo de uso y
 cómo funciona la guardia de dependencias), leé
 [backend/README.md](backend/README.md).
 
+## Usuarios de prueba
+
+El seed (`python -m app.db.seed`, desde `backend/`) crea un usuario ficticio por rol:
+
+| Usuario | Rol |
+|---------|-----|
+| `administrador` | Administrador |
+| `recepcion` | Recepción |
+| `odontologo` | Odontólogo, vinculado al primer profesional |
+
+La contraseña de los tres es el valor de `SEED_USER_PASSWORD` en tu `.env`, que no
+está en el repositorio.
+
 ## Dónde está cada entregable
 
 | Entregable | Ubicación |
@@ -184,6 +201,7 @@ cómo funciona la guardia de dependencias), leé
 | Change archivado de C-16 | [openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/](openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/) |
 | Change archivado de C-17 | [openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/](openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/) |
 | Change archivado de C-18 | [openspec/changes/archive/2026-11-06-api-base-fastapi/](openspec/changes/archive/2026-11-06-api-base-fastapi/) |
+| Change archivado de C-19 | [openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/](openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -203,6 +221,7 @@ cómo funciona la guardia de dependencias), leé
 | Evidencias de C-16 (explore, pytest, integración, mypy, alembic, seed y verify) | [explore-C-16.md](docs/evidencias/explore-C-16.md), [pytest-C-16.txt](docs/evidencias/pytest-C-16.txt), [pytest-integration-C-16.txt](docs/evidencias/pytest-integration-C-16.txt), [mypy-C-16.txt](docs/evidencias/mypy-C-16.txt), [alembic-C-16.txt](docs/evidencias/alembic-C-16.txt), [seed-C-16.txt](docs/evidencias/seed-C-16.txt) y [verify-C-16.md](docs/evidencias/verify-C-16.md) |
 | Evidencias de C-17 (explore, pytest, integración, mypy, alembic, mutaciones y verify) | [explore-C-17.md](docs/evidencias/explore-C-17.md), [pytest-C-17.txt](docs/evidencias/pytest-C-17.txt), [pytest-integration-C-17.txt](docs/evidencias/pytest-integration-C-17.txt), [mypy-C-17.txt](docs/evidencias/mypy-C-17.txt), [alembic-C-17.txt](docs/evidencias/alembic-C-17.txt), [mutaciones-C-17.py](docs/evidencias/mutaciones-C-17.py), [mutaciones-C-17.txt](docs/evidencias/mutaciones-C-17.txt) y [verify-C-17.md](docs/evidencias/verify-C-17.md) |
 | Evidencias de C-18 (explore, pytest, mypy, docker, mutaciones y verify) | [explore-C-18.md](docs/evidencias/explore-C-18.md), [pytest-C-18.txt](docs/evidencias/pytest-C-18.txt), [mypy-C-18.txt](docs/evidencias/mypy-C-18.txt), [docker-C-18.txt](docs/evidencias/docker-C-18.txt), [mutaciones-C-18.py](docs/evidencias/mutaciones-C-18.py), [mutaciones-C-18.txt](docs/evidencias/mutaciones-C-18.txt) y [verify-C-18.md](docs/evidencias/verify-C-18.md) |
+| Evidencias de C-19 (explore, verify, pytest, integración, mypy, alembic, seed, docker, e2e, mutaciones, matriz, trazabilidad, secretos, validate y RED) | [explore-C-19.md](docs/evidencias/explore-C-19.md), [verify-C-19.md](docs/evidencias/verify-C-19.md), [pytest-C-19.txt](docs/evidencias/pytest-C-19.txt), [pytest-integration-C-19.txt](docs/evidencias/pytest-integration-C-19.txt), [mypy-C-19.txt](docs/evidencias/mypy-C-19.txt), [alembic-C-19.txt](docs/evidencias/alembic-C-19.txt), [seed-C-19.txt](docs/evidencias/seed-C-19.txt), [docker-C-19.txt](docs/evidencias/docker-C-19.txt), [e2e-C-19.txt](docs/evidencias/e2e-C-19.txt), [mutaciones-C-19.txt](docs/evidencias/mutaciones-C-19.txt), [matriz-C-19.txt](docs/evidencias/matriz-C-19.txt), [trazabilidad-C-19.txt](docs/evidencias/trazabilidad-C-19.txt), [secretos-C-19.txt](docs/evidencias/secretos-C-19.txt), [validate-C-19.txt](docs/evidencias/validate-C-19.txt), [red-C-19/](docs/evidencias/red-C-19/) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no
