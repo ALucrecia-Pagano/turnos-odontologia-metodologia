@@ -617,8 +617,13 @@ def test_book_appointment_acquires_resource_locks_ordered_by_uuid(
     from sqlalchemy import event
     from zoneinfo import ZoneInfo
     from app.db.models import WorkingHoursModel
-    from app.domain.model import NewAppointmentRequest
-    from app.services.appointments import book_appointment
+    from app.domain.model import Actor, NewAppointmentRequest, RescheduleRequest, Role
+    from app.domain.violations import Ok
+    from app.services.appointments import book_appointment, reschedule_appointment
+
+    p2 = UUID("00000000-0000-0000-0000-000000000002")
+    c2 = UUID("00000000-0000-0000-0000-0000000000b2")
+    moved_id = UUID("00000000-0000-0000-0000-000000000a04")
 
     with test_engine.begin() as conn:
         _setup_references(conn)
@@ -632,8 +637,31 @@ def test_book_appointment_acquires_resource_locks_ordered_by_uuid(
                     end_minute=780,
                 )
             )
+        conn.execute(insert(ProfessionalModel).values(id=p2, full_name="Dr. Dos", active=True))
+        conn.execute(
+            insert(ChairModel).values(
+                id=c2, name="Sillón 2", name_normalized="sillon 2", active=True
+            )
+        )
+        # Turno en los recursos de UUID mayor: al moverlo a P1 y C1, el orden de
+        # llegada (p2, P1) difiere del orden por UUID (P1, p2).
+        conn.execute(
+            insert(AppointmentModel).values(
+                id=moved_id,
+                patient_id=PAT1,
+                professional_id=p2,
+                chair_id=c2,
+                service_id=S1,
+                start_at=datetime(2026, 11, 9, 15, 0, tzinfo=timezone.utc),
+                end_at=datetime(2026, 11, 9, 15, 30, tzinfo=timezone.utc),
+                status="reservado",
+                created_at=datetime(2026, 11, 5, 12, 0, tzinfo=timezone.utc),
+                updated_at=datetime(2026, 11, 5, 12, 0, tzinfo=timezone.utc),
+            )
+        )
 
     executed_queries: list[str] = []
+    locked_rows: list[tuple[str, list[object]]] = []
 
     def before_cursor_execute(
         conn: Connection,
@@ -645,6 +673,8 @@ def test_book_appointment_acquires_resource_locks_ordered_by_uuid(
     ) -> None:
         if "FOR UPDATE" in statement:
             executed_queries.append(statement)
+            if isinstance(parameters, dict):
+                locked_rows.append((statement, list(parameters.values())))
 
     event.listen(test_engine, "before_cursor_execute", before_cursor_execute)
     try:
@@ -668,6 +698,28 @@ def test_book_appointment_acquires_resource_locks_ordered_by_uuid(
         assert "professional" in executed_queries[0]
         # Segunda query FOR UPDATE debe ser sobre chair
         assert "chair" in executed_queries[1]
+
+        # Con varios recursos, cada tipo se bloquea en orden ascendente de UUID.
+        locked_rows.clear()
+        actor = Actor(user_id=USER1, role=Role.RECEPCION)
+        move = RescheduleRequest(
+            start_at=datetime(2026, 11, 9, 14, 0, tzinfo=timezone.utc),
+            professional_id=P1,
+            chair_id=C1,
+            duration_min=30,
+        )
+        with Session(bind=test_engine) as session:
+            moved = reschedule_appointment(
+                session, moved_id, move, actor, now, tz, auto_commit=True
+            )
+        assert isinstance(moved, Ok)
+
+        professional_locks = [
+            ids for statement, ids in locked_rows if "FROM professional" in statement
+        ]
+        chair_locks = [ids for statement, ids in locked_rows if "FROM chair" in statement]
+        assert professional_locks == [[P1], [p2]]
+        assert chair_locks == [[C1], [c2]]
     finally:
         event.remove(test_engine, "before_cursor_execute", before_cursor_execute)
 

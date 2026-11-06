@@ -1,17 +1,24 @@
+base de destino: turnos_test
+$ alembic upgrade head
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+$ alembic current
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 20261105_05_historial_sin_truncate (head)
+$ alembic downgrade -1
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
+$ alembic current
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 20261105_04_turnos_e_historial
+$ alembic upgrade head
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+$ alembic current
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 20261105_05_historial_sin_truncate (head)

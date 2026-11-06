@@ -1,0 +1,65 @@
+Corrida 1 de 5
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collecting ... collected 3 items
+
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_professional_serialized PASSED [ 33%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_chair_serialized PASSED [ 66%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_transition_same_appointment_serialized PASSED [100%]
+
+============================== 3 passed in 1.71s ==============================
+Corrida 2 de 5
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collecting ... collected 3 items
+
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_professional_serialized PASSED [ 33%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_chair_serialized PASSED [ 66%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_transition_same_appointment_serialized PASSED [100%]
+
+============================== 3 passed in 1.62s ==============================
+Corrida 3 de 5
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collecting ... collected 3 items
+
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_professional_serialized PASSED [ 33%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_chair_serialized PASSED [ 66%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_transition_same_appointment_serialized PASSED [100%]
+
+============================== 3 passed in 1.65s ==============================
+Corrida 4 de 5
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collecting ... collected 3 items
+
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_professional_serialized PASSED [ 33%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_chair_serialized PASSED [ 66%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_transition_same_appointment_serialized PASSED [100%]
+
+============================== 3 passed in 1.61s ==============================
+Corrida 5 de 5
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+collecting ... collected 3 items
+
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_professional_serialized PASSED [ 33%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_chair_serialized PASSED [ 66%]
+tests/integration/test_appointment_concurrency.py::test_concurrent_transition_same_appointment_serialized PASSED [100%]
+
+============================== 3 passed in 1.71s ==============================

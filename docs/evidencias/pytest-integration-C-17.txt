@@ -11,4 +11,4 @@ tests\integration\test_availability_persistence.py ...................   [ 63%]
 tests\integration\test_catalog_persistence.py ...........                [ 81%]
 tests\integration\test_database_infrastructure.py ...........            [100%]
 
-===================== 61 passed, 673 deselected in 11.57s =====================
+===================== 61 passed, 673 deselected in 15.53s =====================

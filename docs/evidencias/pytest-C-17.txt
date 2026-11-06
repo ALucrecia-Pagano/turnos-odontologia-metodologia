@@ -39,4 +39,4 @@ tests\test_persistence_metadata.py ....                                  [ 99%]
 tests\test_repository_contracts.py ...                                   [ 99%]
 tests\test_transition_types.py ..                                        [100%]
 
-===================== 673 passed, 61 deselected in 6.97s ======================
+===================== 673 passed, 61 deselected in 7.42s ======================
