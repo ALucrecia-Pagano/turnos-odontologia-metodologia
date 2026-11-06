@@ -143,15 +143,15 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-020 — Administrar prestaciones con duración
 **Como** administrador, **quiero** crear y editar prestaciones con duración por defecto, **para** que cada turno ocupe el tiempo correcto.
-- [x] CA-1: duración válida (RN-AG-09). [x] CA-2: nombre único. [x] CA-3: desactivar una prestación no afecta turnos existentes (dominio listo en C-09; persistencia lista en C-15).
+- [x] CA-1: duración válida (RN-AG-09). [x] CA-2: nombre único. [x] CA-3: desactivar una prestación no afecta turnos existentes (dominio listo en C-09; persistencia lista en C-15) (API lista en C-20).
 
 ### US-021 — Administrar profesionales y sillones
 **Como** administrador, **quiero** dar de alta y desactivar profesionales y sillones, **para** reflejar la realidad del consultorio.
-- [x] CA-1: alta con nombre válido. [x] CA-2: desactivar impide nuevos turnos pero conserva el historial (dominio listo en C-09; persistencia lista en C-15).
+- [x] CA-1: alta con nombre válido. [x] CA-2: desactivar impide nuevos turnos pero conserva el historial (dominio listo en C-09; persistencia lista en C-15) (API lista en C-20).
 
 ### US-022 — Pacientes con datos mínimos
 **Como** recepción, **quiero** registrar paciente con nombre, DNI, teléfono y obra social (texto), **para** asociarlo a turnos.
-- [x] CA-1: DNI único. [x] CA-2: no existen campos clínicos. CA-3: seeds y tests usan solo datos ficticios (dominio listo en C-09; persistencia lista en C-15).
+- [x] CA-1: DNI único. [x] CA-2: no existen campos clínicos. CA-3: seeds y tests usan solo datos ficticios (dominio listo en C-09; persistencia lista en C-15) (API lista en C-20).
 
 **Reglas**: RN-PA-01, RN-PA-02
 

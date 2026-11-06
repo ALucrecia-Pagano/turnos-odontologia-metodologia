@@ -9,7 +9,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 15/15 en [tasks.md](../../openspec/changes/api-catalogos-y-pacientes/tasks.md).
+- Tareas: 15/15 en [tasks.md](../../openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/tasks.md).
 - Suite por defecto: [pytest-C-20.txt](pytest-C-20.txt) (850 passed, 360 deselected).
 - Integración: [pytest-integration-C-20.txt](pytest-integration-C-20.txt) (360 passed, 850 deselected).
 - `mypy --strict app tests`: [mypy-C-20.txt](mypy-C-20.txt) (Success: 148 source files).
@@ -20,10 +20,10 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 
 ## Artefactos
 
-- [proposal.md](../../openspec/changes/api-catalogos-y-pacientes/proposal.md)
-- [design.md](../../openspec/changes/api-catalogos-y-pacientes/design.md)
-- [tasks.md](../../openspec/changes/api-catalogos-y-pacientes/tasks.md)
-- [spec.md (catalog-and-patients)](../../openspec/changes/api-catalogos-y-pacientes/specs/catalog-and-patients/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/tasks.md)
+- [spec.md (catalog-and-patients)](../../openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/specs/catalog-and-patients/spec.md)
 
 ## Línea de base
 

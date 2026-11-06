@@ -498,7 +498,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/08_arquitectura_propuesta.md` §Seguridad, §Variables de entorno
 
 ### [C-20] `api-catalogos-y-pacientes`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-06)
 - **Scope**:
   - Endpoints `/api/professionals`, `/api/chairs`, `/api/services`, `/api/patients` (alta, edición, desactivación, listado) respetando la matriz RBAC (administrador CRUD, recepción alta/edición de pacientes, odontólogo lectura) con el usuario del JWT.
   - Casos de uso en `usecases/` que llaman al dominio (C-09) y a los repositorios (C-15); esquemas Pydantic en el borde.
