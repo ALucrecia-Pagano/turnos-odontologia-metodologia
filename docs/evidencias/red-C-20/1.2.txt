@@ -1,0 +1,22 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 0 items / 1 error
+
+=================================== ERRORS ====================================
+____________ ERROR collecting tests/domain/test_catalog_update.py _____________
+ImportError while importing test module 'C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\domain\test_catalog_update.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\domain\test_catalog_update.py:4: in <module>
+    from app.domain.catalog.update import (
+E   ImportError: cannot import name 'update_patient' from 'app.domain.catalog.update' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\domain\catalog\update.py)
+=========================== short test summary info ===========================
+ERROR tests/domain/test_catalog_update.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+============================== 1 error in 0.27s ===============================

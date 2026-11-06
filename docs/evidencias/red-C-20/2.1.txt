@@ -1,0 +1,63 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 13 items / 11 deselected / 2 selected
+
+tests\integration\test_catalog_persistence.py FF                         [100%]
+
+================================== FAILURES ===================================
+___________ test_professional_repository_update_and_license_number ____________
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000002D151148550>
+
+    def test_professional_repository_update_and_license_number(
+        connection: Connection,
+    ) -> None:
+        from app.repositories.catalog import ProfessionalRepository
+    
+        session = Session(bind=connection)
+        repo = ProfessionalRepository(session)
+        prof_id = UUID(int=600101)
+>       res = repo.create(
+            Professional(prof_id, "Dra. Con Matricula", True),
+            license_number="MN-12345",
+        )
+E       TypeError: ProfessionalRepository.create() got an unexpected keyword argument 'license_number'
+
+tests\integration\test_catalog_persistence.py:307: TypeError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+_________________ test_chair_repository_update_and_exclusion __________________
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000002D1511596E0>
+
+    def test_chair_repository_update_and_exclusion(connection: Connection) -> None:
+        from app.repositories.catalog import ChairRepository
+    
+        session = Session(bind=connection)
+        repo = ChairRepository(session)
+        c1 = UUID(int=600201)
+        c2 = UUID(int=600202)
+        assert repo.create(Chair(c1, "Sillón Alfa", True)).__class__ is Ok
+        assert repo.create(Chair(c2, "Sillón Beta", True)).__class__ is Ok
+    
+>       assert repo.update(Chair(c1, "Sillón Alfa", True)) == Ok(
+               ^^^^^^^^^^^
+            Chair(c1, "Sillón Alfa", True)
+        )
+E       AttributeError: 'ChairRepository' object has no attribute 'update'
+
+tests\integration\test_catalog_persistence.py:343: AttributeError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_catalog_persistence.py::test_professional_repository_update_and_license_number
+FAILED tests/integration/test_catalog_persistence.py::test_chair_repository_update_and_exclusion
+================= 2 failed, 11 deselected, 1 warning in 0.56s =================
