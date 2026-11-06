@@ -51,7 +51,10 @@ Fijado por la cátedra:
   ciclo reversible probado) y C-15 (persistencia de catálogos y pacientes,
   repositorios tipados, índices normalizados, CHECK de DNI y seed idempotente),
   C-16 (persistencia de horarios de atención y bloqueos, repositorios tipados,
-  validación previa, reemplazo transaccional, turnos afectados y seed idempotente).
+  validación previa, reemplazo transaccional, turnos afectados y seed idempotente),
+  C-17 (persistencia de turnos e historial con servicios transaccionales, bloqueo
+  de filas en orden fijo, historial de solo inserción protegido por triggers y
+  lector SQL de turnos).
 - **Planificado:** la API REST y el frontend. La persistencia de entidades ya
   está implementada en C-15. El
   plan completo
@@ -98,6 +101,8 @@ Desde `backend/`, ejecutá los tests de integración:
 .venv/Scripts/python -m alembic current
 python -m app.db.seed
 ```
+
+Las migraciones llegan hasta `20261105_05_historial_sin_truncate`.
 
 Al terminar, desde la raíz:
 
@@ -159,6 +164,7 @@ cómo funciona la guardia de dependencias), leé
 | Change archivado de C-14 | [openspec/changes/archive/2026-11-03-migraciones-alembic/](openspec/changes/archive/2026-11-03-migraciones-alembic/) |
 | Change archivado de C-15 | [openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/](openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/) |
 | Change archivado de C-16 | [openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/](openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/) |
+| Change archivado de C-17 | [openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/](openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -176,6 +182,7 @@ cómo funciona la guardia de dependencias), leé
 | Evidencias de C-14 (explore, pytest, integración, mypy, alembic y verify) | [explore-C-14.md](docs/evidencias/explore-C-14.md), [pytest-C-14.txt](docs/evidencias/pytest-C-14.txt), [pytest-integration-C-14.txt](docs/evidencias/pytest-integration-C-14.txt), [mypy-C-14.txt](docs/evidencias/mypy-C-14.txt), [alembic-C-14.txt](docs/evidencias/alembic-C-14.txt) y [verify-C-14.md](docs/evidencias/verify-C-14.md) |
 | Evidencias de C-15 (explore, pytest, integración, mypy, alembic, seed y verify) | [explore-C-15.md](docs/evidencias/explore-C-15.md), [pytest-C-15.txt](docs/evidencias/pytest-C-15.txt), [pytest-integration-C-15.txt](docs/evidencias/pytest-integration-C-15.txt), [mypy-C-15.txt](docs/evidencias/mypy-C-15.txt), [alembic-C-15.txt](docs/evidencias/alembic-C-15.txt), [seed-C-15.txt](docs/evidencias/seed-C-15.txt) y [verify-C-15.md](docs/evidencias/verify-C-15.md) |
 | Evidencias de C-16 (explore, pytest, integración, mypy, alembic, seed y verify) | [explore-C-16.md](docs/evidencias/explore-C-16.md), [pytest-C-16.txt](docs/evidencias/pytest-C-16.txt), [pytest-integration-C-16.txt](docs/evidencias/pytest-integration-C-16.txt), [mypy-C-16.txt](docs/evidencias/mypy-C-16.txt), [alembic-C-16.txt](docs/evidencias/alembic-C-16.txt), [seed-C-16.txt](docs/evidencias/seed-C-16.txt) y [verify-C-16.md](docs/evidencias/verify-C-16.md) |
+| Evidencias de C-17 (explore, pytest, integración, mypy, alembic, mutaciones y verify) | [explore-C-17.md](docs/evidencias/explore-C-17.md), [pytest-C-17.txt](docs/evidencias/pytest-C-17.txt), [pytest-integration-C-17.txt](docs/evidencias/pytest-integration-C-17.txt), [mypy-C-17.txt](docs/evidencias/mypy-C-17.txt), [alembic-C-17.txt](docs/evidencias/alembic-C-17.txt), [mutaciones-C-17.py](docs/evidencias/mutaciones-C-17.py), [mutaciones-C-17.txt](docs/evidencias/mutaciones-C-17.txt) y [verify-C-17.md](docs/evidencias/verify-C-17.md) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

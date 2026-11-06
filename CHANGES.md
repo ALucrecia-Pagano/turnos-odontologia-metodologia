@@ -445,7 +445,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/06_funcionalidades.md` §US-010, §US-011
 
 ### [C-17] `persistencia-turnos-e-historial`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-05)
 - **Scope**:
   - Modelos y migración de `appointment` (`start_at`, `end_at`, `created_at`, `updated_at` en `timestamptz`; `CHECK` de estado) y `appointment_status_change` (historial solo de inserción).
   - Repositorio de turnos: carga de contexto (turnos activos del profesional y del sillón en el rango), inserción, actualización de estado y reprogramación; historial en la misma transacción (RN-GL-02).

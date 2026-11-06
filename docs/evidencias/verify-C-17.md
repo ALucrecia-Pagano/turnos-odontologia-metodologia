@@ -12,10 +12,10 @@
 - Higiene git: `git diff --check` limpio (código de salida 0).
 
 Los artefactos del change están ubicados en:
-- [proposal.md](../../openspec/changes/persistencia-turnos-e-historial/proposal.md)
-- [design.md](../../openspec/changes/persistencia-turnos-e-historial/design.md)
-- [tasks.md](../../openspec/changes/persistencia-turnos-e-historial/tasks.md)
-- [spec.md](../../openspec/changes/persistencia-turnos-e-historial/specs/database-infrastructure/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/tasks.md)
+- [spec.md](../../openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/specs/database-infrastructure/spec.md)
 
 Las salidas completas están en:
 - [pytest-C-17.txt](pytest-C-17.txt)
