@@ -5,7 +5,7 @@ platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
 plugins: anyio-4.16.0
-collected 61 items
+collected 64 items
 
 tests\test_api_dependencies.py .                                         [  1%]
 tests\api\test_app.py ...                                                [  6%]
@@ -26,18 +26,15 @@ tests\test_compose.py .........                                          [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 61 passed, 1 warning in 4.31s ========================
-
+======================== 61 passed, 1 warning in 4.39s ========================
 ================================================================================
-MUTACION 01/42
+MUTACION 01/45
 test: tests/test_api_dependencies.py::test_api_dependencies_are_declared
 archivo: backend/pyproject.toml
 --- texto original ---
     "fastapi>=0.118,<1",
-
 --- texto mutado ---
     #"fastapi>=0.118,<1",
-
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -55,18 +52,17 @@ _____________________ test_api_dependencies_are_declared ______________________
     def test_api_dependencies_are_declared() -> None:
         pyproject_path = Path(__file__).parents[1] / "pyproject.toml"
         data = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
-    
+
         dependencies = data["project"]["dependencies"]
         dev_dependencies = data["project"]["optional-dependencies"]["dev"]
-    
+
 >       assert "fastapi>=0.118,<1" in dependencies
 E       AssertionError: assert 'fastapi>=0.118,<1' in ['tzdata>=2024.1', 'sqlalchemy>=2,<3', 'alembic>=1.13,<2', 'psycopg[binary]>=3,<4', 'pydantic-settings>=2,<3', 'uvicorn>=0.30,<1', ...]
 
 tests\test_api_dependencies.py:13: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_api_dependencies.py::test_api_dependencies_are_declared - A...
-============================== 1 failed in 0.12s ==============================
-
+============================== 1 failed in 0.11s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'fastapi>=0.118,<1' in ['tzdata>=2024.1', 'sqlalchemy>=2,<3', 'alembic>=1.13,<2', 'psycopg[binary]>=3,<4', 'pydantic-settings>=2,<3', 'uvicorn>=0.30,<1', ...]
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -79,11 +75,10 @@ collected 1 item
 
 tests\test_api_dependencies.py .                                         [100%]
 
-============================== 1 passed in 0.09s ==============================
-
+============================== 1 passed in 0.10s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 02/42
+MUTACION 02/45
 test: tests/api/test_app.py::test_create_app_accepts_literal_settings
 archivo: backend/app/main.py
 --- texto original ---
@@ -111,14 +106,13 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
         assert isinstance(app, FastAPI)
 >       assert app.state.settings == api_settings
 E       AssertionError: assert None == Settings(app_env='test', api_port=8000, postgres_user='test_user', postgres_password='test_password', postgres_db='tes...mezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
-E        +  where None = <starlette.datastructures.State object at 0x00000248A47CFCB0>.settings
-E        +    where <starlette.datastructures.State object at 0x00000248A47CFCB0> = <fastapi.applications.FastAPI object at 0x00000248A47CFB60>.state
+E        +  where None = <starlette.datastructures.State object at 0x000001EB3E6F7CB0>.settings
+E        +    where <starlette.datastructures.State object at 0x000001EB3E6F7CB0> = <fastapi.applications.FastAPI object at 0x000001EB3E6F7B60>.state
 
 tests\api\test_app.py:10: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_app.py::test_create_app_accepts_literal_settings - Asse...
-============================== 1 failed in 1.31s ==============================
-
+============================== 1 failed in 1.14s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert None == Settings(app_env='test', api_port=8000, postgres_user='test_user', postgres_password='test_password', postgres_db='tes...mezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -131,11 +125,10 @@ collected 1 item
 
 tests\api\test_app.py .                                                  [100%]
 
-============================== 1 passed in 0.88s ==============================
-
+============================== 1 passed in 0.91s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 03/42
+MUTACION 03/45
 test: tests/api/test_app.py::test_create_app_keeps_one_session_factory
 archivo: backend/app/main.py
 --- texto original ---
@@ -164,14 +157,13 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
 >       assert callable(app.state.session_factory)
 E       assert False
 E        +  where False = callable(None)
-E        +    where None = <starlette.datastructures.State object at 0x0000022E2271FCB0>.session_factory
-E        +      where <starlette.datastructures.State object at 0x0000022E2271FCB0> = <fastapi.applications.FastAPI object at 0x0000022E2271FB60>.state
+E        +    where None = <starlette.datastructures.State object at 0x00000277AECB3CB0>.session_factory
+E        +      where <starlette.datastructures.State object at 0x00000277AECB3CB0> = <fastapi.applications.FastAPI object at 0x00000277AECB3B60>.state
 
 tests\api\test_app.py:16: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_app.py::test_create_app_keeps_one_session_factory - ass...
-============================== 1 failed in 1.15s ==============================
-
+============================== 1 failed in 1.20s ==============================
 resultado: FALLO
 primera linea del fallo: assert False
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -185,10 +177,9 @@ collected 1 item
 tests\api\test_app.py .                                                  [100%]
 
 ============================== 1 passed in 1.01s ==============================
-
 restaurado: test en verde
 ================================================================================
-MUTACION 04/42
+MUTACION 04/45
 test: tests/api/test_app.py::test_get_session_helper_is_removed
 archivo: backend/app/db/session.py
 --- texto original ---
@@ -219,8 +210,7 @@ E        +  where True = hasattr(session_module, 'get_session')
 tests\api\test_app.py:20: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_app.py::test_get_session_helper_is_removed - AssertionE...
-============================== 1 failed in 0.91s ==============================
-
+============================== 1 failed in 0.96s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert not True
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -233,19 +223,16 @@ collected 1 item
 
 tests\api\test_app.py .                                                  [100%]
 
-============================== 1 passed in 0.64s ==============================
-
+============================== 1 passed in 0.89s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 05/42
+MUTACION 05/45
 test: tests/api/test_error_mapping.py::test_all_violation_codes_are_classified
 archivo: backend/app/api/errors.py
 --- texto original ---
     ViolationCode.PROFESSIONAL_OVERLAP: 409,
-
 --- texto mutado ---
     # ViolationCode.PROFESSIONAL_OVERLAP: 409,
-
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -263,7 +250,7 @@ ___________________ test_all_violation_codes_are_classified ___________________
     def test_all_violation_codes_are_classified() -> None:
 >       assert unclassified_codes(VIOLATION_STATUS_MAP) == set()
 E       AssertionError: assert {<ViolationCo...NAL_OVERLAP'>} == set()
-E         
+E
 E         Extra items in the left set:
 E         <ViolationCode.PROFESSIONAL_OVERLAP: 'PROFESSIONAL_OVERLAP'>
 E         Use -v to get more diff
@@ -271,8 +258,7 @@ E         Use -v to get more diff
 tests\api\test_error_mapping.py:8: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_error_mapping.py::test_all_violation_codes_are_classified
-============================== 1 failed in 0.52s ==============================
-
+============================== 1 failed in 0.47s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert {<ViolationCo...NAL_OVERLAP'>} == set()
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -285,11 +271,10 @@ collected 1 item
 
 tests\api\test_error_mapping.py .                                        [100%]
 
-============================== 1 passed in 0.35s ==============================
-
+============================== 1 passed in 0.36s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 06/42
+MUTACION 06/45
 test: tests/api/test_error_mapping.py::test_unclassified_code_is_detected
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -318,7 +303,7 @@ _____________________ test_unclassified_code_is_detected ______________________
         }
 >       assert unclassified_codes(partial_map) == {ViolationCode.CHAIR_OVERLAP}
 E       AssertionError: assert set() == {<ViolationCo...AIR_OVERLAP'>}
-E         
+E
 E         Extra items in the right set:
 E         <ViolationCode.CHAIR_OVERLAP: 'CHAIR_OVERLAP'>
 E         Use -v to get more diff
@@ -326,8 +311,7 @@ E         Use -v to get more diff
 tests\api\test_error_mapping.py:17: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_error_mapping.py::test_unclassified_code_is_detected - ...
-============================== 1 failed in 0.50s ==============================
-
+============================== 1 failed in 0.48s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert set() == {<ViolationCo...AIR_OVERLAP'>}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -340,11 +324,10 @@ collected 1 item
 
 tests\api\test_error_mapping.py .                                        [100%]
 
-============================== 1 passed in 0.33s ==============================
-
+============================== 1 passed in 0.36s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 07/42
+MUTACION 07/45
 test: tests/api/test_error_mapping.py::test_mixed_codes_use_precedence
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -374,17 +357,16 @@ tests\api\test_error_mapping.py F                                        [100%]
 _______________________ test_mixed_codes_use_precedence _______________________
 
     def test_mixed_codes_use_precedence() -> None:
-        v1 = Violation(code=ViolationCode.EMPTY_NAME, message="Nombre vacío")
+        v1 = Violation(code=ViolationCode.EMPTY_NAME, message="Nombre vacÃ­o")
         v2 = Violation(code=ViolationCode.DUPLICATE_DNI, message="DNI duplicado")
 >       assert status_for([v1, v2]) == 422
 E       AssertionError: assert 409 == 422
-E        +  where 409 = status_for([Violation(code=<ViolationCode.EMPTY_NAME: 'EMPTY_NAME'>, message='Nombre vacío', conflicting_appointment_id=None, ref...uplicado', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None)])
+E        +  where 409 = status_for([Violation(code=<ViolationCode.EMPTY_NAME: 'EMPTY_NAME'>, message='Nombre vacÃ­o', conflicting_appointment_id=None, ref...uplicado', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None)])
 
 tests\api\test_error_mapping.py:23: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_error_mapping.py::test_mixed_codes_use_precedence - Ass...
-============================== 1 failed in 0.53s ==============================
-
+============================== 1 failed in 0.49s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 409 == 422
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -397,11 +379,10 @@ collected 1 item
 
 tests\api\test_error_mapping.py .                                        [100%]
 
-============================== 1 passed in 0.34s ==============================
-
+============================== 1 passed in 0.32s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 08/42
+MUTACION 08/45
 test: tests/api/test_error_mapping.py::test_kb_07_lists_all_violation_codes
 archivo: knowledge-base/07_flujos_principales.md
 --- texto original ---
@@ -427,16 +408,15 @@ ____________________ test_kb_07_lists_all_violation_codes _____________________
         content = kb_path.read_text(encoding="utf-8")
         for code in ViolationCode:
 >           assert code.value in content
-E           AssertionError: assert 'DUPLICATE_DNI' in '# Flujos Principales\n\n## Flujo 1: Dar un turno\n\n> Flujo completo del MVP. C-02 implementa solo el núcleo de domin...`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.\n'
+E           AssertionError: assert 'DUPLICATE_DNI' in '# Flujos Principales\n\n## Flujo 1: Dar un turno\n\n> Flujo completo del MVP. C-02 implementa solo el nÃºcleo de domin...`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.\n'
 E            +  where 'DUPLICATE_DNI' = <ViolationCode.DUPLICATE_DNI: 'DUPLICATE_DNI'>.value
 
 tests\api\test_error_mapping.py:38: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/api/test_error_mapping.py::test_kb_07_lists_all_violation_codes
-============================== 1 failed in 0.45s ==============================
-
+============================== 1 failed in 0.38s ==============================
 resultado: FALLO
-primera linea del fallo: AssertionError: assert 'DUPLICATE_DNI' in '# Flujos Principales\n\n## Flujo 1: Dar un turno\n\n> Flujo completo del MVP. C-02 implementa solo el núcleo de domin...`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.\n'
+primera linea del fallo: AssertionError: assert 'DUPLICATE_DNI' in '# Flujos Principales\n\n## Flujo 1: Dar un turno\n\n> Flujo completo del MVP. C-02 implementa solo el nÃºcleo de domin...`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.\n'
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -447,19 +427,16 @@ collected 1 item
 
 tests\api\test_error_mapping.py .                                        [100%]
 
-============================== 1 passed in 0.24s ==============================
-
+============================== 1 passed in 0.31s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 09/42
+MUTACION 09/45
 test: tests/api/test_domain_rejection.py::test_violation_code_maps_to_status
 archivo: backend/app/api/errors.py
 --- texto original ---
     ViolationCode.PROFESSIONAL_OVERLAP: 409,
-
 --- texto mutado ---
     ViolationCode.PROFESSIONAL_OVERLAP: 422,
-
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -510,16 +487,16 @@ expected_status = 409
     ) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.get("/test-rejection")
         def trigger_rejection() -> None:
             raise DomainRejectedError(
                 Rejected(violations=(Violation(code=code, message=f"Mensaje para {code.value}"),))
             )
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/test-rejection")
 >       assert response.status_code == expected_status
 E       assert 422 == 409
@@ -534,8 +511,7 @@ tests\api\test_domain_rejection.py:54: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_domain_rejection.py::test_violation_code_maps_to_status[ViolationCode.PROFESSIONAL_OVERLAP-409]
-=================== 1 failed, 19 passed, 1 warning in 1.27s ===================
-
+=================== 1 failed, 19 passed, 1 warning in 1.23s ===================
 resultado: FALLO
 primera linea del fallo: assert 422 == 409
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -554,11 +530,10 @@ tests\api\test_domain_rejection.py ....................                  [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 20 passed, 1 warning in 1.11s ========================
-
+======================== 20 passed, 1 warning in 1.35s ========================
 restaurado: test en verde
 ================================================================================
-MUTACION 10/42
+MUTACION 10/45
 test: tests/api/test_domain_rejection.py::test_mixed_rejection_keeps_all_violations_in_order
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -584,23 +559,23 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_mixed_rejection_keeps_all_violations_in_order(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
-        v1 = Violation(code=ViolationCode.EMPTY_NAME, message="Nombre vacío")
+
+        v1 = Violation(code=ViolationCode.EMPTY_NAME, message="Nombre vacÃ­o")
         v2 = Violation(code=ViolationCode.DUPLICATE_DNI, message="DNI duplicado")
-    
+
         @router.get("/test-mixed")
         def trigger_mixed() -> None:
             raise DomainRejectedError(Rejected(violations=(v1, v2)))
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/test-mixed")
         assert response.status_code == 422
         codes = [item["code"] for item in response.json()["violations"]]
 >       assert codes == ["EMPTY_NAME", "DUPLICATE_DNI"]
 E       AssertionError: assert ['DUPLICATE_D... 'EMPTY_NAME'] == ['EMPTY_NAME'...UPLICATE_DNI']
-E         
+E
 E         At index 0 diff: 'DUPLICATE_DNI' != 'EMPTY_NAME'
 E         Use -v to get more diff
 
@@ -613,8 +588,7 @@ tests\api\test_domain_rejection.py:75: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_domain_rejection.py::test_mixed_rejection_keeps_all_violations_in_order
-======================== 1 failed, 1 warning in 1.12s =========================
-
+======================== 1 failed, 1 warning in 1.08s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert ['DUPLICATE_D... 'EMPTY_NAME'] == ['EMPTY_NAME'...UPLICATE_DNI']
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -633,11 +607,10 @@ tests\api\test_domain_rejection.py .                                     [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 1.03s =========================
-
+======================== 1 passed, 1 warning in 0.89s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 11/42
+MUTACION 11/45
 test: tests/api/test_violation_body.py::test_overlap_body
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -663,7 +636,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_overlap_body(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         v = Violation(
             code=ViolationCode.PROFESSIONAL_OVERLAP,
             message="La Dra. Laura Quiroga ya tiene un turno",
@@ -673,21 +646,21 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
                 end=datetime(2026, 10, 20, 13, 30, tzinfo=timezone.utc),
             ),
         )
-    
+
         @router.get("/overlap")
         def overlap_route() -> None:
             raise DomainRejectedError(Rejected(violations=(v,)))
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/overlap")
         assert response.status_code == 409
         data = response.json()
         item = data["violations"][0]
 >       assert set(item.keys()) == {"code", "message", "conflictingAppointmentId", "conflictingInterval"}
 E       AssertionError: assert {'code', 'con...l', 'message'} == {'code', 'con...l', 'message'}
-E         
+E
 E         Extra items in the left set:
 E         'conflictingAppId'
 E         Extra items in the right set:
@@ -703,8 +676,7 @@ tests\api\test_violation_body.py:39: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_violation_body.py::test_overlap_body - AssertionError: ...
-======================== 1 failed, 1 warning in 1.17s =========================
-
+======================== 1 failed, 1 warning in 1.10s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert {'code', 'con...l', 'message'} == {'code', 'con...l', 'message'}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -723,11 +695,10 @@ tests\api\test_violation_body.py .                                       [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.99s =========================
-
+======================== 1 passed, 1 warning in 1.01s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 12/42
+MUTACION 12/45
 test: tests/api/test_violation_body.py::test_blocked_time_body
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -753,7 +724,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_blocked_time_body(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         v = Violation(
             code=ViolationCode.BLOCKED_TIME,
             message="Horario bloqueado por mantenimiento",
@@ -763,21 +734,21 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
                 end=datetime(2026, 10, 20, 15, 0, tzinfo=timezone.utc),
             ),
         )
-    
+
         @router.get("/blocked")
         def blocked_route() -> None:
             raise DomainRejectedError(Rejected(violations=(v,)))
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/blocked")
         assert response.status_code == 409
         data = response.json()
         item = data["violations"][0]
 >       assert set(item.keys()) == {"code", "message", "conflictingBlockId", "conflictingInterval"}
 E       AssertionError: assert {'code', 'con...l', 'message'} == {'code', 'con...l', 'message'}
-E         
+E
 E         Extra items in the left set:
 E         'conflictingBlkId'
 E         Extra items in the right set:
@@ -793,8 +764,7 @@ tests\api\test_violation_body.py:72: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_violation_body.py::test_blocked_time_body - AssertionEr...
-======================== 1 failed, 1 warning in 1.13s =========================
-
+======================== 1 failed, 1 warning in 1.15s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert {'code', 'con...l', 'message'} == {'code', 'con...l', 'message'}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -813,11 +783,10 @@ tests\api\test_violation_body.py .                                       [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.94s =========================
-
+======================== 1 passed, 1 warning in 1.26s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 13/42
+MUTACION 13/45
 test: tests/api/test_violation_body.py::test_reference_body
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -843,27 +812,27 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_reference_body(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         v = Violation(
             code=ViolationCode.UNKNOWN_REFERENCE,
             message="Profesional desconocido",
             reference_kind=ReferenceKind.PROFESSIONAL,
         )
-    
+
         @router.get("/ref")
         def ref_route() -> None:
             raise DomainRejectedError(Rejected(violations=(v,)))
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/ref")
         assert response.status_code == 422
         data = response.json()
         item = data["violations"][0]
 >       assert set(item.keys()) == {"code", "message", "referenceKind"}
 E       AssertionError: assert {'code', 'message', 'refKind'} == {'code', 'mes...eferenceKind'}
-E         
+E
 E         Extra items in the left set:
 E         'refKind'
 E         Extra items in the right set:
@@ -879,8 +848,7 @@ tests\api\test_violation_body.py:101: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_violation_body.py::test_reference_body - AssertionError...
-======================== 1 failed, 1 warning in 1.10s =========================
-
+======================== 1 failed, 1 warning in 1.05s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert {'code', 'message', 'refKind'} == {'code', 'mes...eferenceKind'}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -899,11 +867,10 @@ tests\api\test_violation_body.py .                                       [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.96s =========================
-
+======================== 1 passed, 1 warning in 0.93s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 14/42
+MUTACION 14/45
 test: tests/api/test_violation_body.py::test_violation_without_extras_body
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -929,31 +896,31 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_violation_without_extras_body(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         v = Violation(
             code=ViolationCode.EMPTY_NAME,
-            message="El nombre no puede estar vacío",
+            message="El nombre no puede estar vacÃ­o",
         )
-    
+
         @router.get("/simple")
         def simple_route() -> None:
             raise DomainRejectedError(Rejected(violations=(v,)))
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/simple")
         assert response.status_code == 422
         data = response.json()
         item = data["violations"][0]
 >       assert set(item.keys()) == {"code", "message"}
 E       AssertionError: assert {'code', 'con...eferenceKind'} == {'code', 'message'}
-E         
+E
 E         Extra items in the left set:
-E         'conflictingBlockId'
-E         'conflictingAppointmentId'
 E         'referenceKind'
 E         'conflictingInterval'
+E         'conflictingBlockId'
+E         'conflictingAppointmentId'
 E         Use -v to get more diff
 
 tests\api\test_violation_body.py:125: AssertionError
@@ -965,8 +932,7 @@ tests\api\test_violation_body.py:125: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_violation_body.py::test_violation_without_extras_body
-======================== 1 failed, 1 warning in 1.13s =========================
-
+======================== 1 failed, 1 warning in 1.10s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert {'code', 'con...eferenceKind'} == {'code', 'message'}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -985,11 +951,10 @@ tests\api\test_violation_body.py .                                       [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 1.15s =========================
-
+======================== 1 passed, 1 warning in 0.93s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 15/42
+MUTACION 15/45
 test: tests/api/test_malformed_request.py::test_invalid_json_returns_400
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -1015,14 +980,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_invalid_json_returns_400(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/sample")
         def sample_endpoint(body: SampleBody) -> dict[str, str]:
             return {"ok": body.start_at}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.post(
             "/sample",
             content="esto no es json{",
@@ -1033,11 +998,11 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
         assert "errors" in data
         assert data["errors"][0]["field"] is None
         assert data["errors"][0]["type"] == "json_invalid"
->       assert data["errors"][0]["message"] == "El cuerpo no es JSON válido."
-E       AssertionError: assert 'JSON inválido.' == 'El cuerpo no es JSON válido.'
-E         
-E         - El cuerpo no es JSON válido.
-E         + JSON inválido.
+>       assert data["errors"][0]["message"] == "El cuerpo no es JSON vÃ¡lido."
+E       AssertionError: assert 'JSON invÃ¡lido.' == 'El cuerpo no es JSON vÃ¡lido.'
+E
+E         - El cuerpo no es JSON vÃ¡lido.
+E         + JSON invÃ¡lido.
 
 tests\api\test_malformed_request.py:40: AssertionError
 ============================== warnings summary ===============================
@@ -1048,10 +1013,9 @@ tests\api\test_malformed_request.py:40: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_malformed_request.py::test_invalid_json_returns_400 - A...
-======================== 1 failed, 1 warning in 1.08s =========================
-
+======================== 1 failed, 1 warning in 1.07s =========================
 resultado: FALLO
-primera linea del fallo: AssertionError: assert 'JSON inválido.' == 'El cuerpo no es JSON válido.'
+primera linea del fallo: AssertionError: assert 'JSON invÃ¡lido.' == 'El cuerpo no es JSON vÃ¡lido.'
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -1068,11 +1032,10 @@ tests\api\test_malformed_request.py .                                    [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.97s =========================
-
+======================== 1 passed, 1 warning in 0.94s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 16/42
+MUTACION 16/45
 test: tests/api/test_malformed_request.py::test_missing_field_returns_400
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -1098,14 +1061,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_missing_field_returns_400(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/sample")
         def sample_endpoint(body: SampleBody) -> dict[str, str]:
             return {"ok": body.start_at}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.post("/sample", json={})
         assert response.status_code == 400
         data = response.json()
@@ -1114,7 +1077,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
         assert data["errors"][0]["type"] == "missing"
 >       assert data["errors"][0]["message"] == "Falta este dato."
 E       AssertionError: assert 'Falta dato.' == 'Falta este dato.'
-E         
+E
 E         - Falta este dato.
 E         ?       -----
 E         + Falta dato.
@@ -1128,8 +1091,7 @@ tests\api\test_malformed_request.py:60: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_malformed_request.py::test_missing_field_returns_400 - ...
-======================== 1 failed, 1 warning in 1.27s =========================
-
+======================== 1 failed, 1 warning in 1.26s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'Falta dato.' == 'Falta este dato.'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1148,11 +1110,10 @@ tests\api\test_malformed_request.py .                                    [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.91s =========================
-
+======================== 1 passed, 1 warning in 0.95s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 17/42
+MUTACION 17/45
 test: tests/api/test_malformed_request.py::test_sent_value_is_not_returned
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -1178,21 +1139,21 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_sent_value_is_not_returned(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/count")
         def count_endpoint(body: CountBody) -> dict[str, int]:
             return {"ok": body.count}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.post("/count", json={"count": "valor-marcado-c18"})
         assert response.status_code == 400
 >       assert "valor-marcado-c18" not in response.text
-E       assert 'valor-marcado-c18' not in '{"errors":[...nválido."}]}'
-E         
+E       assert 'valor-marcado-c18' not in '{"errors":[...nvÃ¡lido."}]}'
+E
 E         'valor-marcado-c18' is contained here:
-E           {"errors":[{"leaked":"valor-marcado-c18"},{"field":"count","type":"int_parsing","message":"Dato inválido."}]}
+E           {"errors":[{"leaked":"valor-marcado-c18"},{"field":"count","type":"int_parsing","message":"Dato invÃ¡lido."}]}
 E         ?                       +++++++++++++++++
 
 tests\api\test_malformed_request.py:76: AssertionError
@@ -1204,10 +1165,9 @@ tests\api\test_malformed_request.py:76: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_malformed_request.py::test_sent_value_is_not_returned
-======================== 1 failed, 1 warning in 1.15s =========================
-
+======================== 1 failed, 1 warning in 1.16s =========================
 resultado: FALLO
-primera linea del fallo: assert 'valor-marcado-c18' not in '{"errors":[...nválido."}]}'
+primera linea del fallo: assert 'valor-marcado-c18' not in '{"errors":[...nvÃ¡lido."}]}'
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -1224,11 +1184,10 @@ tests\api\test_malformed_request.py .                                    [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 1.05s =========================
-
+======================== 1 passed, 1 warning in 1.03s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 18/42
+MUTACION 18/45
 test: tests/api/test_malformed_request.py::test_invalid_query_param_returns_400
 archivo: backend/app/api/errors.py
 --- texto original ---
@@ -1254,16 +1213,16 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_invalid_query_param_returns_400(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.get("/query-test")
         def query_endpoint(
             professional_id: UUID = Query(alias="professionalId"),
         ) -> dict[str, str]:
             return {"ok": str(professional_id)}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.get("/query-test?professionalId=no-es-uuid")
 >       assert response.status_code == 400
 E       assert 422 == 400
@@ -1278,8 +1237,7 @@ tests\api\test_malformed_request.py:93: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_malformed_request.py::test_invalid_query_param_returns_400
-======================== 1 failed, 1 warning in 1.29s =========================
-
+======================== 1 failed, 1 warning in 1.34s =========================
 resultado: FALLO
 primera linea del fallo: assert 422 == 400
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1298,11 +1256,10 @@ tests\api\test_malformed_request.py .                                    [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.89s =========================
-
+======================== 1 passed, 1 warning in 0.97s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 19/42
+MUTACION 19/45
 test: tests/integration/test_api_session.py::test_committed_write_persists
 archivo: backend/app/api/deps.py
 --- texto original ---
@@ -1342,20 +1299,20 @@ session_test_table = None
         )
         app = create_app(test_settings)
         router = APIRouter()
-    
+
         @router.post("/commit-write")
         def commit_write(session: Session = Depends(get_db_session)) -> dict[str, str]:
             session.execute(text("INSERT INTO test_session_row (id, name) VALUES (1, 'persisted')"))
             session.commit()
             return {"status": "ok"}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
 >       response = client.post("/commit-write")
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-tests\integration\test_api_session.py:56: 
+tests\integration\test_api_session.py:56:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv\Lib\site-packages\httpx\_client.py:1144: in post
     return self.request(
@@ -1479,8 +1436,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_session.py::test_committed_write_persists
-======================== 1 failed, 1 warning in 1.14s =========================
-
+======================== 1 failed, 1 warning in 1.15s =========================
 resultado: FALLO
 primera linea del fallo: AttributeError: 'NoneType' object has no attribute 'execute'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1499,11 +1455,10 @@ tests\integration\test_api_session.py .                                  [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
-
+======================== 1 passed, 1 warning in 0.67s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 20/42
+MUTACION 20/45
 test: tests/integration/test_api_session.py::test_uncommitted_write_does_not_persist
 archivo: backend/app/api/deps.py
 --- texto original ---
@@ -1544,18 +1499,18 @@ session_test_table = None
         )
         app = create_app(test_settings)
         router = APIRouter()
-    
+
         @router.post("/uncommitted-write")
         def uncommitted_write(session: Session = Depends(get_db_session)) -> dict[str, str]:
             session.execute(text("INSERT INTO test_session_row (id, name) VALUES (2, 'uncommitted')"))
             return {"status": "ok"}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.post("/uncommitted-write")
         assert response.status_code == 200
-    
+
         with test_engine.connect() as conn:
             row = conn.execute(text("SELECT name FROM test_session_row WHERE id = 2")).fetchone()
 >           assert row is None
@@ -1573,8 +1528,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_session.py::test_uncommitted_write_does_not_persist
-======================== 1 failed, 1 warning in 0.77s =========================
-
+======================== 1 failed, 1 warning in 0.74s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert ('uncommitted',) is None
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1593,11 +1547,10 @@ tests\integration\test_api_session.py .                                  [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.57s =========================
-
+======================== 1 passed, 1 warning in 0.61s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 21/42
+MUTACION 21/45
 test: tests/integration/test_api_session.py::test_exception_rolls_back_write
 archivo: backend/app/api/deps.py
 --- texto original ---
@@ -1635,20 +1588,20 @@ session_test_table = None
         )
         app = create_app(test_settings)
         router = APIRouter()
-    
+
         @router.post("/exception-write")
         def exception_write(session: Session = Depends(get_db_session)) -> None:
             session.execute(text("INSERT INTO test_session_row (id, name) VALUES (3, 'exception')"))
             raise DomainRejectedError(
-                Rejected(violations=(Violation(code=ViolationCode.EMPTY_NAME, message="Nombre vacío"),))
+                Rejected(violations=(Violation(code=ViolationCode.EMPTY_NAME, message="Nombre vacÃ­o"),))
             )
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         response = client.post("/exception-write")
         assert response.status_code == 422
-    
+
         with test_engine.connect() as conn:
             row = conn.execute(text("SELECT name FROM test_session_row WHERE id = 3")).fetchone()
 >           assert row is None
@@ -1666,8 +1619,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_session.py::test_exception_rolls_back_write
-======================== 1 failed, 1 warning in 0.77s =========================
-
+======================== 1 failed, 1 warning in 0.80s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert ('exception',) is None
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1686,11 +1638,10 @@ tests\integration\test_api_session.py .                                  [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.51s =========================
-
+======================== 1 passed, 1 warning in 0.73s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 22/42
+MUTACION 22/45
 test: tests/api/test_health.py::test_health_returns_503_with_closed_port
 archivo: backend/app/api/health.py
 --- texto original ---
@@ -1722,7 +1673,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
         )
         app = create_app(dead_settings)
         client = TestClient(app)
-    
+
         response = client.get("/api/health")
 >       assert response.status_code == 503
 E       assert 500 == 503
@@ -1737,8 +1688,7 @@ tests\api\test_health.py:27: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_health.py::test_health_returns_503_with_closed_port - a...
-======================== 1 failed, 1 warning in 4.14s =========================
-
+======================== 1 failed, 1 warning in 4.09s =========================
 resultado: FALLO
 primera linea del fallo: assert 500 == 503
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1758,10 +1708,9 @@ tests\api\test_health.py .                                               [100%]
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 ======================== 1 passed, 1 warning in 3.90s =========================
-
 restaurado: test en verde
 ================================================================================
-MUTACION 23/42
+MUTACION 23/45
 test: tests/integration/test_api_health.py::test_health_returns_200_with_database
 archivo: backend/app/api/health.py
 --- texto original ---
@@ -1795,12 +1744,12 @@ test_database_url = postgresql+psycopg://turnos:***@localhost:5432/turnos_test
         )
         app = create_app(test_settings)
         client = TestClient(app)
-    
+
         response = client.get("/api/health")
         assert response.status_code == 200
 >       assert response.json() == {"status": "ok", "database": "ok"}
 E       AssertionError: assert {'database': ...status': 'ok'} == {'database': ...status': 'ok'}
-E         
+E
 E         Omitting 1 identical items, use -vv to show
 E         Differing items:
 E         {'database': 'down'} != {'database': 'ok'}
@@ -1818,8 +1767,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_health.py::test_health_returns_200_with_database
-======================== 1 failed, 1 warning in 0.78s =========================
-
+======================== 1 failed, 1 warning in 0.75s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert {'database': ...status': 'ok'} == {'database': ...status': 'ok'}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1838,11 +1786,10 @@ tests\integration\test_api_health.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.45s =========================
-
+======================== 1 passed, 1 warning in 0.53s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 24/42
+MUTACION 24/45
 test: tests/api/test_cors.py::test_preflight_allowed_from_cors_origin
 archivo: backend/app/main.py
 --- texto original ---
@@ -1868,7 +1815,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_preflight_allowed_from_cors_origin(api_settings: Settings) -> None:
         app = create_app(api_settings)
         client = TestClient(app)
-    
+
         response = client.options(
             "/api/health",
             headers={
@@ -1891,8 +1838,7 @@ tests\api\test_cors.py:20: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_cors.py::test_preflight_allowed_from_cors_origin - Asse...
-======================== 1 failed, 1 warning in 1.08s =========================
-
+======================== 1 failed, 1 warning in 1.23s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'access-control-allow-credentials' not in Headers({'vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Request-Privat...ss-control-allow-origin': 'http://localhost:5173', 'content-length': '2', 'content-type': 'text/plain; charset=utf-8'})
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1911,11 +1857,10 @@ tests\api\test_cors.py .                                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.93s =========================
-
+======================== 1 passed, 1 warning in 1.08s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 25/42
+MUTACION 25/45
 test: tests/api/test_cors.py::test_simple_response_allowed_from_cors_origin
 archivo: backend/app/main.py
 --- texto original ---
@@ -1941,7 +1886,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_simple_response_allowed_from_cors_origin(api_settings: Settings) -> None:
         app = create_app(api_settings)
         client = TestClient(app)
-    
+
         response = client.get(
             "/api/health",
             headers={"Origin": "http://localhost:5173"},
@@ -1961,8 +1906,7 @@ tests\api\test_cors.py:31: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_cors.py::test_simple_response_allowed_from_cors_origin
-======================== 1 failed, 1 warning in 1.08s =========================
-
+======================== 1 failed, 1 warning in 1.11s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert None == 'http://localhost:5173'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1981,11 +1925,10 @@ tests\api\test_cors.py .                                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.89s =========================
-
+======================== 1 passed, 1 warning in 0.90s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 26/42
+MUTACION 26/45
 test: tests/api/test_cors.py::test_preflight_rejected_from_other_origin
 archivo: backend/app/main.py
 --- texto original ---
@@ -2011,7 +1954,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_preflight_rejected_from_other_origin(api_settings: Settings) -> None:
         app = create_app(api_settings)
         client = TestClient(app)
-    
+
         response = client.options(
             "/api/health",
             headers={
@@ -2033,8 +1976,7 @@ tests\api\test_cors.py:46: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_cors.py::test_preflight_rejected_from_other_origin - As...
-======================== 1 failed, 1 warning in 1.05s =========================
-
+======================== 1 failed, 1 warning in 1.04s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'access-control-allow-origin' not in Headers({'vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Request-Privat...e, Authorization, Content-Language, Content-Type', 'content-length': '2', 'content-type': 'text/plain; charset=utf-8'})
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2053,11 +1995,10 @@ tests\api\test_cors.py .                                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.85s =========================
-
+======================== 1 passed, 1 warning in 0.93s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 27/42
+MUTACION 27/45
 test: tests/api/test_openapi.py::test_swagger_served_at_api_docs
 archivo: backend/app/main.py
 --- texto original ---
@@ -2083,7 +2024,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_swagger_served_at_api_docs(api_settings: Settings) -> None:
         app = create_app(api_settings)
         client = TestClient(app)
-    
+
         response = client.get("/api/docs")
 >       assert response.status_code == 200
 E       assert 404 == 200
@@ -2098,8 +2039,7 @@ tests\api\test_openapi.py:22: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_swagger_served_at_api_docs - assert 40...
-======================== 1 failed, 1 warning in 0.98s =========================
-
+======================== 1 failed, 1 warning in 1.05s =========================
 resultado: FALLO
 primera linea del fallo: assert 404 == 200
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2118,11 +2058,10 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.84s =========================
-
+======================== 1 passed, 1 warning in 1.02s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 28/42
+MUTACION 28/45
 test: tests/api/test_openapi.py::test_automatic_422_is_removed
 archivo: backend/app/api/openapi.py
 --- texto original ---
@@ -2148,14 +2087,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_automatic_422_is_removed(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/dummy")
         def dummy_route(payload: DummyInput) -> dict[str, str]:
             return {"name": payload.name}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         schema = client.get("/api/openapi.json").json()
         op = schema["paths"]["/dummy"]["post"]
 >       assert "422" not in op["responses"]
@@ -2170,8 +2109,7 @@ tests\api\test_openapi.py:39: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_automatic_422_is_removed - AssertionEr...
-======================== 1 failed, 1 warning in 1.06s =========================
-
+======================== 1 failed, 1 warning in 1.12s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert '422' not in {'200': {'content': {'application/json': {'schema': {'additionalProperties': {'type': 'string'}, 'title': 'Response Du...plication/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}, 'description': 'Validation Error'}}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2190,11 +2128,10 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.88s =========================
-
+======================== 1 passed, 1 warning in 0.98s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 29/42
+MUTACION 29/45
 test: tests/api/test_openapi.py::test_400_documented_on_route_with_input
 archivo: backend/app/api/openapi.py
 --- texto original ---
@@ -2220,14 +2157,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_400_documented_on_route_with_input(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/dummy")
         def dummy_route(payload: DummyInput) -> dict[str, str]:
             return {"name": payload.name}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         schema = client.get("/api/openapi.json").json()
         op = schema["paths"]["/dummy"]["post"]
 >       assert "400" in op["responses"]
@@ -2242,8 +2179,7 @@ tests\api\test_openapi.py:58: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_400_documented_on_route_with_input - A...
-======================== 1 failed, 1 warning in 1.01s =========================
-
+======================== 1 failed, 1 warning in 1.21s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert '400' in {'200': {'content': {'application/json': {'schema': {'additionalProperties': {'type': 'string'}, 'title': 'Response Dummy Route Dummy Post', 'type': 'object'}}}, 'description': 'Successful Response'}}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2262,11 +2198,10 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.99s =========================
-
+======================== 1 passed, 1 warning in 1.07s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 30/42
+MUTACION 30/45
 test: tests/api/test_openapi.py::test_409_documented_on_rejecting_route
 archivo: backend/app/api/openapi.py
 --- texto original ---
@@ -2293,14 +2228,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_409_documented_on_rejecting_route(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/dummy", responses=violation_responses(409))
         def dummy_route(payload: DummyInput) -> dict[str, str]:
             return {"name": payload.name}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         schema = client.get("/api/openapi.json").json()
         op = schema["paths"]["/dummy"]["post"]
 >       assert "409" in op["responses"]
@@ -2315,8 +2250,7 @@ tests\api\test_openapi.py:74: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_409_documented_on_rejecting_route - As...
-======================== 1 failed, 1 warning in 0.97s =========================
-
+======================== 1 failed, 1 warning in 1.05s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert '409' in {'200': {'content': {'application/json': {'schema': {'additionalProperties': {'type': 'string'}, 'title': 'Response Du...on/json': {'schema': {'$ref': '#/components/schemas/MalformedRequestResponse'}}}, 'description': 'Entrada malformada'}}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2335,11 +2269,10 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.95s =========================
-
+======================== 1 passed, 1 warning in 0.91s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 31/42
+MUTACION 31/45
 test: tests/api/test_openapi.py::test_422_documented_on_rejecting_route
 archivo: backend/app/api/openapi.py
 --- texto original ---
@@ -2366,14 +2299,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_422_documented_on_rejecting_route(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/dummy", responses=violation_responses(422))
         def dummy_route(payload: DummyInput) -> dict[str, str]:
             return {"name": payload.name}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         schema = client.get("/api/openapi.json").json()
         op = schema["paths"]["/dummy"]["post"]
 >       assert "422" in op["responses"]
@@ -2388,8 +2321,7 @@ tests\api\test_openapi.py:90: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_422_documented_on_rejecting_route - As...
-======================== 1 failed, 1 warning in 1.16s =========================
-
+======================== 1 failed, 1 warning in 1.07s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert '422' in {'200': {'content': {'application/json': {'schema': {'additionalProperties': {'type': 'string'}, 'title': 'Response Du...on/json': {'schema': {'$ref': '#/components/schemas/MalformedRequestResponse'}}}, 'description': 'Entrada malformada'}}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2408,19 +2340,16 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.95s =========================
-
+======================== 1 passed, 1 warning in 0.84s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 32/42
+MUTACION 32/45
 test: tests/api/test_openapi.py::test_schema_lists_all_violation_codes
 archivo: backend/app/api/schemas.py
 --- texto original ---
     code: ViolationCode
-
 --- texto mutado ---
     code: str
-
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -2440,14 +2369,14 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_schema_lists_all_violation_codes(api_settings: Settings) -> None:
         app = create_app(api_settings)
         router = APIRouter()
-    
+
         @router.post("/dummy", responses=violation_responses(409))
         def dummy_route(payload: DummyInput) -> dict[str, str]:
             return {"name": payload.name}
-    
+
         app.include_router(router)
         client = TestClient(app)
-    
+
         schema = client.get("/api/openapi.json").json()
         components: dict[str, Any] = schema["components"]["schemas"]
         violation_code_enum = components.get("ViolationCode", {}).get("enum")
@@ -2465,8 +2394,7 @@ tests\api\test_openapi.py:108: KeyError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_schema_lists_all_violation_codes - Key...
-======================== 1 failed, 1 warning in 1.03s =========================
-
+======================== 1 failed, 1 warning in 1.13s =========================
 resultado: FALLO
 primera linea del fallo: KeyError: 'enum'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2485,11 +2413,10 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.99s =========================
-
+======================== 1 passed, 1 warning in 0.98s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 33/42
+MUTACION 33/45
 test: tests/api/test_openapi.py::test_health_documents_200_and_503
 archivo: backend/app/api/health.py
 --- texto original ---
@@ -2515,7 +2442,7 @@ api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user'
     def test_health_documents_200_and_503(api_settings: Settings) -> None:
         app = create_app(api_settings)
         client = TestClient(app)
-    
+
         schema = client.get("/api/openapi.json").json()
         health_op = schema["paths"]["/api/health"]["get"]
         assert "200" in health_op["responses"]
@@ -2531,8 +2458,7 @@ tests\api\test_openapi.py:120: AssertionError
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_openapi.py::test_health_documents_200_and_503 - Asserti...
-======================== 1 failed, 1 warning in 1.07s =========================
-
+======================== 1 failed, 1 warning in 1.12s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert '503' in {'200': {'content': {'application/json': {'example': {'database': 'ok', 'status': 'ok'}, 'schema': {'$ref': '#/compone...vailable'}, 'schema': {'$ref': '#/components/schemas/HealthResponse'}}}, 'description': 'Base de datos no disponible'}}
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2551,19 +2477,16 @@ tests\api\test_openapi.py .                                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 1.03s =========================
-
+======================== 1 passed, 1 warning in 0.92s =========================
 restaurado: test en verde
 ================================================================================
-MUTACION 34/42
+MUTACION 34/45
 test: tests/test_compose.py::test_compose_defines_services_without_literal_secrets
 archivo: docker-compose.yml
 --- texto original ---
   backend:
-
 --- texto mutado ---
   api_svc:
-
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -2580,17 +2503,16 @@ ____________ test_compose_defines_services_without_literal_secrets ____________
 
     def test_compose_defines_services_without_literal_secrets() -> None:
         content = _compose_text()
-    
+
         assert "postgres:" in content
         assert "redis:" in content
 >       assert "backend:" in content
 E       assert 'backend:' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 
-tests\test_compose.py:15: AssertionError
+tests\test_compose.py:70: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_compose_defines_services_without_literal_secrets
-============================== 1 failed in 0.13s ==============================
-
+============================== 1 failed in 0.18s ==============================
 resultado: FALLO
 primera linea del fallo: assert 'backend:' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2603,11 +2525,10 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.08s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 35/42
+MUTACION 35/45
 test: tests/test_compose.py::test_backend_database_url_uses_postgres_service
 archivo: docker-compose.yml
 --- texto original ---
@@ -2634,11 +2555,10 @@ _______________ test_backend_database_url_uses_postgres_service _______________
 >       assert expected in content
 E       assert 'DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 
-tests\test_compose.py:38: AssertionError
+tests\test_compose.py:132: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_backend_database_url_uses_postgres_service
-============================== 1 failed in 0.09s ==============================
-
+============================== 1 failed in 0.12s ==============================
 resultado: FALLO
 primera linea del fallo: assert 'DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2651,11 +2571,10 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.07s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 36/42
+MUTACION 36/45
 test: tests/test_compose.py::test_backend_waits_for_healthy_postgres
 archivo: docker-compose.yml
 --- texto original ---
@@ -2684,11 +2603,10 @@ ___________________ test_backend_waits_for_healthy_postgres ___________________
 >       assert "postgres:\n        condition: service_healthy" in backend_section
 E       assert 'postgres:\n        condition: service_healthy' in 'backend:\n    build: ./backend\n    env_file: .env\n    environment:\n      DATABASE_URL: postgresql+psycopg://${POST...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 
-tests\test_compose.py:44: AssertionError
+tests\test_compose.py:138: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_backend_waits_for_healthy_postgres - asser...
-============================== 1 failed in 0.08s ==============================
-
+============================== 1 failed in 0.14s ==============================
 resultado: FALLO
 primera linea del fallo: assert 'postgres:\n        condition: service_healthy' in 'backend:\n    build: ./backend\n    env_file: .env\n    environment:\n      DATABASE_URL: postgresql+psycopg://${POST...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2701,11 +2619,10 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.07s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 37/42
+MUTACION 37/45
 test: tests/test_compose.py::test_backend_waits_for_healthy_redis
 archivo: docker-compose.yml
 --- texto original ---
@@ -2734,11 +2651,10 @@ ____________________ test_backend_waits_for_healthy_redis _____________________
 >       assert "redis:\n        condition: service_healthy" in backend_section
 E       assert 'redis:\n        condition: service_healthy' in 'backend:\n    build: ./backend\n    env_file: .env\n    environment:\n      DATABASE_URL: postgresql+psycopg://${POST...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 
-tests\test_compose.py:50: AssertionError
+tests\test_compose.py:144: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_backend_waits_for_healthy_redis - assert '...
-============================== 1 failed in 0.09s ==============================
-
+============================== 1 failed in 0.19s ==============================
 resultado: FALLO
 primera linea del fallo: assert 'redis:\n        condition: service_healthy' in 'backend:\n    build: ./backend\n    env_file: .env\n    environment:\n      DATABASE_URL: postgresql+psycopg://${POST...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2751,11 +2667,10 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.06s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 38/42
+MUTACION 38/45
 test: tests/test_compose.py::test_backend_healthcheck_uses_api_health
 archivo: docker-compose.yml
 --- texto original ---
@@ -2777,17 +2692,23 @@ tests\test_compose.py F                                                  [100%]
 __________________ test_backend_healthcheck_uses_api_health ___________________
 
     def test_backend_healthcheck_uses_api_health() -> None:
-        content = _compose_text()
->       assert "/api/health" in content
-E       assert '/api/health' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
+        backend = _as_mapping(_services(_compose_text())["backend"])
+        healthcheck = _as_mapping(backend["healthcheck"])
+        command = healthcheck["test"]
+        assert isinstance(command, list)
+>       assert re.search(r"/api/health\b", " ".join(str(part) for part in command))
+E       assert None
+E        +  where None = <function search at 0x00000259D43DEFC0>('/api/health\\b', "CMD python -c import os, urllib.request; urllib.request.urlopen('http://localhost:' + os.environ['API_PORT'] + '/health', timeout=2)")
+E        +    where <function search at 0x00000259D43DEFC0> = re.search
+E        +    and   "CMD python -c import os, urllib.request; urllib.request.urlopen('http://localhost:' + os.environ['API_PORT'] + '/health', timeout=2)" = <built-in method join of str object at 0x00007FFB080863B0>(<generator object test_backend_healthcheck_uses_api_health.<locals>.<genexpr> at 0x00000259D780B100>)
+E        +      where <built-in method join of str object at 0x00007FFB080863B0> = ' '.join
 
-tests\test_compose.py:55: AssertionError
+tests\test_compose.py:152: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_backend_healthcheck_uses_api_health - asse...
-============================== 1 failed in 0.08s ==============================
-
+============================== 1 failed in 0.15s ==============================
 resultado: FALLO
-primera linea del fallo: assert '/api/health' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'
+primera linea del fallo: assert None
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -2798,11 +2719,10 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.07s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 39/42
+MUTACION 39/45
 test: tests/test_compose.py::test_dockerfile_runs_as_non_root
 archivo: backend/Dockerfile
 --- texto original ---
@@ -2828,11 +2748,10 @@ ______________________ test_dockerfile_runs_as_non_root _______________________
 >       assert "USER appuser" in dockerfile
 E       assert 'USER appuser' in 'FROM python:3.13-slim\nENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1\nWORKDIR /app\nCOPY pyproject.toml ./\nCOPY a... "-c", "alembic upgrade head && exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]\n\n'
 
-tests\test_compose.py:73: AssertionError
+tests\test_compose.py:168: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_dockerfile_runs_as_non_root - assert 'USER...
-============================== 1 failed in 0.09s ==============================
-
+============================== 1 failed in 0.13s ==============================
 resultado: FALLO
 primera linea del fallo: assert 'USER appuser' in 'FROM python:3.13-slim\nENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1\nWORKDIR /app\nCOPY pyproject.toml ./\nCOPY a... "-c", "alembic upgrade head && exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]\n\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2845,15 +2764,14 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.07s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 40/42
+MUTACION 40/45
 test: tests/test_compose.py::test_dockerfile_migrates_before_uvicorn
 archivo: backend/Dockerfile
 --- texto original ---
-alembic upgrade head && 
+alembic upgrade head &&
 --- texto mutado ---
 
 --- fin de textos ---
@@ -2872,16 +2790,19 @@ ___________________ test_dockerfile_migrates_before_uvicorn ___________________
 
     def test_dockerfile_migrates_before_uvicorn() -> None:
         dockerfile = (_backend_dir() / "Dockerfile").read_text(encoding="utf-8")
->       assert "alembic upgrade head" in dockerfile
-E       assert 'alembic upgrade head' in 'FROM python:3.13-slim\nENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1\nWORKDIR /app\nCOPY pyproject.toml ./\nCOPY a...USER appuser\nCMD ["sh", "-c", "exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]\n\n'
+        commands = [line for line in dockerfile.splitlines() if line.startswith("CMD")]
+        assert len(commands) == 1
+>       assert re.search(r"alembic upgrade head && (exec )?uvicorn", commands[0])
+E       assert None
+E        +  where None = <function search at 0x000002A0118DEFC0>('alembic upgrade head && (exec )?uvicorn', 'CMD ["sh", "-c", "exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]')
+E        +    where <function search at 0x000002A0118DEFC0> = re.search
 
-tests\test_compose.py:64: AssertionError
+tests\test_compose.py:163: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_dockerfile_migrates_before_uvicorn - asser...
-============================== 1 failed in 0.08s ==============================
-
+============================== 1 failed in 0.15s ==============================
 resultado: FALLO
-primera linea del fallo: assert 'alembic upgrade head' in 'FROM python:3.13-slim\nENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1\nWORKDIR /app\nCOPY pyproject.toml ./\nCOPY a...USER appuser\nCMD ["sh", "-c", "exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]\n\n'
+primera linea del fallo: assert None
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -2892,19 +2813,179 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.04s ==============================
-
+============================== 1 passed in 0.06s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 41/42
+MUTACION 41/45
+test: tests/test_compose.py::test_dockerfile_migrates_before_uvicorn
+archivo: backend/Dockerfile
+--- texto original ---
+alembic upgrade head && exec
+--- texto mutado ---
+alembic upgrade head ; exec
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_compose.py F                                                  [100%]
+
+================================== FAILURES ===================================
+___________________ test_dockerfile_migrates_before_uvicorn ___________________
+
+    def test_dockerfile_migrates_before_uvicorn() -> None:
+        dockerfile = (_backend_dir() / "Dockerfile").read_text(encoding="utf-8")
+        commands = [line for line in dockerfile.splitlines() if line.startswith("CMD")]
+        assert len(commands) == 1
+>       assert re.search(r"alembic upgrade head && (exec )?uvicorn", commands[0])
+E       assert None
+E        +  where None = <function search at 0x000002547439EFC0>('alembic upgrade head && (exec )?uvicorn', 'CMD ["sh", "-c", "alembic upgrade head ; exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]')
+E        +    where <function search at 0x000002547439EFC0> = re.search
+
+tests\test_compose.py:163: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compose.py::test_dockerfile_migrates_before_uvicorn - asser...
+============================== 1 failed in 0.15s ==============================
+resultado: FALLO
+primera linea del fallo: assert None
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_compose.py .                                                  [100%]
+
+============================== 1 passed in 0.08s ==============================
+restaurado: test en verde
+================================================================================
+MUTACION 42/45
+test: tests/test_compose.py::test_backend_healthcheck_uses_api_health
+archivo: docker-compose.yml
+--- texto original ---
+'/api/health', timeout=2)"]
+--- texto mutado ---
+'/health', timeout=2)"]  # /api/health
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_compose.py F                                                  [100%]
+
+================================== FAILURES ===================================
+__________________ test_backend_healthcheck_uses_api_health ___________________
+
+    def test_backend_healthcheck_uses_api_health() -> None:
+        backend = _as_mapping(_services(_compose_text())["backend"])
+        healthcheck = _as_mapping(backend["healthcheck"])
+        command = healthcheck["test"]
+        assert isinstance(command, list)
+>       assert re.search(r"/api/health\b", " ".join(str(part) for part in command))
+E       assert None
+E        +  where None = <function search at 0x000001F831BAEFC0>('/api/health\\b', "CMD python -c import os, urllib.request; urllib.request.urlopen('http://localhost:' + os.environ['API_PORT'] + '/health', timeout=2)")
+E        +    where <function search at 0x000001F831BAEFC0> = re.search
+E        +    and   "CMD python -c import os, urllib.request; urllib.request.urlopen('http://localhost:' + os.environ['API_PORT'] + '/health', timeout=2)" = <built-in method join of str object at 0x00007FFB080863B0>(<generator object test_backend_healthcheck_uses_api_health.<locals>.<genexpr> at 0x000001F83501B100>)
+E        +      where <built-in method join of str object at 0x00007FFB080863B0> = ' '.join
+
+tests\test_compose.py:152: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compose.py::test_backend_healthcheck_uses_api_health - asse...
+============================== 1 failed in 0.12s ==============================
+resultado: FALLO
+primera linea del fallo: assert None
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_compose.py .                                                  [100%]
+
+============================== 1 passed in 0.08s ==============================
+restaurado: test en verde
+================================================================================
+MUTACION 43/45
+test: tests/test_compose.py::test_compose_defines_services_without_literal_secrets
+archivo: docker-compose.yml
+--- texto original ---
+      REDIS_URL: redis://redis:6379/0
+--- texto mutado ---
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: clave-ficticia-literal
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_compose.py F                                                  [100%]
+
+================================== FAILURES ===================================
+____________ test_compose_defines_services_without_literal_secrets ____________
+
+    def test_compose_defines_services_without_literal_secrets() -> None:
+        content = _compose_text()
+
+        assert "postgres:" in content
+        assert "redis:" in content
+        assert "backend:" in content
+        assert "postgres:16" in content
+        assert "redis:7" in content
+        assert '"5432:5432"' in content
+        assert '"6379:6379"' in content
+        assert "turnos_pgdata:" in content
+        assert "pg_isready" in content
+        assert "redis-cli" in content
+        assert "frontend:" not in content
+        assert "turnos_local_dev" not in content
+>       assert _literal_secrets(content) == []
+E       AssertionError: assert ['backend.JWT_SECRET'] == []
+E
+E         Left contains one more item: 'backend.JWT_SECRET'
+E         Use -v to get more diff
+
+tests\test_compose.py:80: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compose.py::test_compose_defines_services_without_literal_secrets
+============================== 1 failed in 0.18s ==============================
+resultado: FALLO
+primera linea del fallo: AssertionError: assert ['backend.JWT_SECRET'] == []
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_compose.py .                                                  [100%]
+
+============================== 1 passed in 0.09s ==============================
+restaurado: test en verde
+================================================================================
+MUTACION 44/45
 test: tests/test_compose.py::test_dockerignore_excludes_local_artifacts
 archivo: backend/.dockerignore
 --- texto original ---
 .venv
-
 --- texto mutado ---
 .local_venv
-
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -2924,11 +3005,10 @@ _________________ test_dockerignore_excludes_local_artifacts __________________
 >       assert ".venv" in dockerignore
 E       AssertionError: assert '.venv' in '.local_venv\ntests\n__pycache__\n.mypy_cache\n.pytest_cache\n\n'
 
-tests\test_compose.py:79: AssertionError
+tests\test_compose.py:174: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_dockerignore_excludes_local_artifacts - As...
-============================== 1 failed in 0.09s ==============================
-
+============================== 1 failed in 0.12s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert '.venv' in '.local_venv\ntests\n__pycache__\n.mypy_cache\n.pytest_cache\n\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -2941,11 +3021,10 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.05s ==============================
-
+============================== 1 passed in 0.08s ==============================
 restaurado: test en verde
 ================================================================================
-MUTACION 42/42
+MUTACION 45/45
 test: tests/test_compose.py::test_readme_warns_about_reserved_password_characters
 archivo: backend/README.md
 --- texto original ---
@@ -2970,17 +3049,16 @@ ____________ test_readme_warns_about_reserved_password_characters _____________
         readme = (_backend_dir() / "README.md").read_text(encoding="utf-8")
         assert "POSTGRES_PASSWORD" in readme
 >       assert "caracteres reservados" in readme.lower()
-E       AssertionError: assert 'caracteres reservados' in '# backend — turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n'
-E        +  where '# backend — turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n' = <built-in method lower of str object at 0x0000028D7E20FD20>()
-E        +    where <built-in method lower of str object at 0x0000028D7E20FD20> = '# Backend — turnos-odontologia\n\nBackend en Python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta I/O ni contiene secretos. Importa entidades del dominio; el dominio nunca lo importa.\n'.lower
+E       AssertionError: assert 'caracteres reservados' in '# backend â€” turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n'
+E        +  where '# backend â€” turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n' = <built-in method lower of str object at 0x000002550723BFF0>()
+E        +    where <built-in method lower of str object at 0x000002550723BFF0> = '# Backend â€” turnos-odontologia\n\nBackend en Python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta I/O ni contiene secretos. Importa entidades del dominio; el dominio nunca lo importa.\n'.lower
 
-tests\test_compose.py:89: AssertionError
+tests\test_compose.py:184: AssertionError
 =========================== short test summary info ===========================
 FAILED tests/test_compose.py::test_readme_warns_about_reserved_password_characters
-============================== 1 failed in 0.10s ==============================
-
+============================== 1 failed in 0.15s ==============================
 resultado: FALLO
-primera linea del fallo: AssertionError: assert 'caracteres reservados' in '# backend — turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n'
+primera linea del fallo: AssertionError: assert 'caracteres reservados' in '# backend â€” turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n'
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -2991,10 +3069,9 @@ collected 1 item
 
 tests\test_compose.py .                                                  [100%]
 
-============================== 1 passed in 0.06s ==============================
-
+============================== 1 passed in 0.07s ==============================
 restaurado: test en verde
 ================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 42
+mutaciones que hicieron fallar su test: 45
 mutaciones que NO lo hicieron fallar: 0

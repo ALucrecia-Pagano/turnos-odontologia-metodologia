@@ -1,10 +1,10 @@
-﻿============================= test session starts =============================
+============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.16.0
-collected 795 items / 65 deselected / 730 selected
+collected 809 items / 65 deselected / 744 selected
 
 tests\api\test_app.py ...                                                [  0%]
 tests\api\test_cors.py ...                                               [  0%]
@@ -18,31 +18,31 @@ tests\domain\test_blocks.py ..........                                   [  7%]
 tests\domain\test_catalog.py ........................................... [ 13%]
 .....................................                                    [ 18%]
 tests\domain\test_catalog_agenda.py .......                              [ 19%]
-tests\domain\test_catalog_dependencies.py ...                            [ 20%]
-tests\domain\test_clock_guard.py .....................                   [ 23%]
-tests\domain\test_domain_dependencies.py ..                              [ 23%]
+tests\domain\test_catalog_dependencies.py ...                            [ 19%]
+tests\domain\test_clock_guard.py .....................                   [ 22%]
+tests\domain\test_domain_dependencies.py ..                              [ 22%]
 tests\domain\test_duration.py .....                                      [ 23%]
-tests\domain\test_import_guard.py ................................       [ 28%]
-tests\domain\test_intervals.py ......................................    [ 33%]
-tests\domain\test_lifecycle.py ......................................... [ 39%]
-..............................                                           [ 43%]
-tests\domain\test_lifecycle_agenda.py .......                            [ 44%]
-tests\domain\test_model.py ......................................        [ 49%]
-tests\domain\test_names.py ........                                      [ 50%]
-tests\domain\test_past.py .........                                      [ 51%]
-tests\domain\test_reschedule.py .............................            [ 55%]
-tests\domain\test_smoke.py ..                                            [ 56%]
-tests\domain\test_status_history.py ................                     [ 58%]
-tests\domain\test_transitions.py .................................       [ 62%]
-tests\domain\test_validate_new_appointment.py .......................... [ 66%]
-........................................................................ [ 76%]
-........................................................................ [ 86%]
-..............                                                           [ 87%]
-tests\domain\test_violations.py ....................................     [ 92%]
-tests\domain\test_working_hours.py .....................                 [ 95%]
-tests\test_alembic_configuration.py .                                    [ 95%]
-tests\test_api_dependencies.py ..                                        [ 96%]
-tests\test_compose.py ..........                                         [ 97%]
+tests\domain\test_import_guard.py ................................       [ 27%]
+tests\domain\test_intervals.py ......................................    [ 32%]
+tests\domain\test_lifecycle.py ......................................... [ 38%]
+..............................                                           [ 42%]
+tests\domain\test_lifecycle_agenda.py .......                            [ 43%]
+tests\domain\test_model.py ......................................        [ 48%]
+tests\domain\test_names.py ........                                      [ 49%]
+tests\domain\test_past.py .........                                      [ 50%]
+tests\domain\test_reschedule.py .............................            [ 54%]
+tests\domain\test_smoke.py ..                                            [ 54%]
+tests\domain\test_status_history.py ................                     [ 57%]
+tests\domain\test_transitions.py .................................       [ 61%]
+tests\domain\test_validate_new_appointment.py .......................... [ 65%]
+........................................................................ [ 74%]
+........................................................................ [ 84%]
+..............                                                           [ 86%]
+tests\domain\test_violations.py ....................................     [ 91%]
+tests\domain\test_working_hours.py .....................                 [ 93%]
+tests\test_alembic_configuration.py .                                    [ 94%]
+tests\test_api_dependencies.py ..                                        [ 94%]
+tests\test_compose.py ........................                           [ 97%]
 tests\test_config.py ....                                                [ 98%]
 tests\test_demo_data.py .....                                            [ 98%]
 tests\test_persistence_metadata.py ....                                  [ 99%]
@@ -55,14 +55,14 @@ tests\test_transition_types.py ..                                        [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================ 730 passed, 65 deselected, 1 warning in 7.50s ================
+================ 744 passed, 65 deselected, 1 warning in 6.81s ================
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.16.0
-collected 795 items / 730 deselected / 65 selected
+collected 809 items / 744 deselected / 65 selected
 
 tests\integration\test_api_health.py .                                   [  1%]
 tests\integration\test_api_session.py ...                                [  6%]
@@ -78,4 +78,4 @@ tests\integration\test_database_infrastructure.py ...........            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================ 65 passed, 730 deselected, 1 warning in 8.59s ================
+================ 65 passed, 744 deselected, 1 warning in 8.74s ================

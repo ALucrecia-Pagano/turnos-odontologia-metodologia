@@ -3,20 +3,20 @@
 ## Resultado
 
 - Tareas completadas: 21/21.
-- Suite por defecto: 730 passed, 65 deselected en 7.50s (referencia: [pytest-C-18.txt](pytest-C-18.txt)).
-- Integración: 65 passed, 730 deselected en 8.59s (referencia: [pytest-C-18.txt](pytest-C-18.txt)).
+- Suite por defecto: 744 passed, 65 deselected en 6.81s (referencia: [pytest-C-18.txt](pytest-C-18.txt)).
+- Integración: 65 passed, 744 deselected en 8.74s (referencia: [pytest-C-18.txt](pytest-C-18.txt)).
 - Mypy estricto: `Success: no issues found in 100 source files` (referencia: [mypy-C-18.txt](mypy-C-18.txt)).
-- Verificación por mutación: 42/42 mutaciones matadas, 0 sobrevivientes (referencia: [mutaciones-C-18.txt](mutaciones-C-18.txt)).
+- Verificación por mutación: 45/45 mutaciones matadas, 0 sobrevivientes (referencia: [mutaciones-C-18.txt](mutaciones-C-18.txt)).
 - Verificación manual en Docker: Contenedor `backend` construido y levantado con `docker compose up --build -d backend`. Estado `healthy`. `alembic upgrade head` ejecutado antes de `uvicorn`. `curl http://localhost:8000/api/health` -> HTTP 200 `{"status":"ok","database":"ok"}`. `curl http://localhost:8000/api/docs` -> HTTP 200 Swagger UI (referencia: [docker-C-18.txt](docker-C-18.txt)).
 - OpenSpec estricto: `Change 'api-base-fastapi' is valid` (`openspec validate api-base-fastapi --strict`).
 - Higiene git: `git diff --check` limpio (código de salida 0).
 
 Los artefactos del change están ubicados en:
-- [proposal.md](../../openspec/changes/api-base-fastapi/proposal.md)
-- [design.md](../../openspec/changes/api-base-fastapi/design.md)
-- [tasks.md](../../openspec/changes/api-base-fastapi/tasks.md)
-- [spec.md (api-foundation)](../../openspec/changes/api-base-fastapi/specs/api-foundation/spec.md)
-- [spec.md (database-infrastructure)](../../openspec/changes/api-base-fastapi/specs/database-infrastructure/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-06-api-base-fastapi/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-06-api-base-fastapi/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-06-api-base-fastapi/tasks.md)
+- [spec.md (api-foundation)](../../openspec/changes/archive/2026-11-06-api-base-fastapi/specs/api-foundation/spec.md)
+- [spec.md (database-infrastructure)](../../openspec/changes/archive/2026-11-06-api-base-fastapi/specs/database-infrastructure/spec.md)
 
 Las salidas completas están en:
 - [pytest-C-18.txt](pytest-C-18.txt)
@@ -81,13 +81,40 @@ Todos los nombres corresponden a funciones reales existentes comprobadas mediant
 | 47 | Una escritura sin confirmar no persiste | `test_uncommitted_write_does_not_persist` | `tests/integration/test_api_session.py` |
 | 48 | Una excepción revierte la escritura | `test_exception_rolls_back_write` | `tests/integration/test_api_session.py` |
 | 49 | Compose sin secretos | `test_compose_defines_services_without_literal_secrets` | `tests/test_compose.py` |
-| 50 | La URL de la base usa el servicio postgres | `test_backend_database_url_uses_postgres_service` | `tests/test_compose.py` |
-| 51 | El backend espera a postgres sano | `test_backend_waits_for_healthy_postgres` | `tests/test_compose.py` |
-| 52 | El backend espera a redis sano | `test_backend_waits_for_healthy_redis` | `tests/test_compose.py` |
-| 53 | El healthcheck del backend usa /api/health | `test_backend_healthcheck_uses_api_health` | `tests/test_compose.py` |
-| 54 | El contenedor corre como usuario sin privilegios | `test_dockerfile_runs_as_non_root` | `tests/test_compose.py` |
-| 55 | El contenedor ejecuta las migraciones antes de levantar uvicorn | `test_dockerfile_migrates_before_uvicorn` | `tests/test_compose.py` |
-| 56 | Dockerignore excluye artefactos locales | `test_dockerignore_excludes_local_artifacts` | `tests/test_compose.py` |
+| 50 | Backend conecta a la base por el nombre del servicio | `test_backend_database_url_uses_postgres_service` | `tests/test_compose.py` |
+| 51 | Backend espera a postgres sano | `test_backend_waits_for_healthy_postgres` | `tests/test_compose.py` |
+| 52 | Backend espera a redis sano | `test_backend_waits_for_healthy_redis` | `tests/test_compose.py` |
+| 53 | Backend migra antes de levantar la app | `test_dockerfile_migrates_before_uvicorn` | `tests/test_compose.py` |
+| 54 | Healthcheck del backend contra la API | `test_backend_healthcheck_uses_api_health` | `tests/test_compose.py` |
+
+## Tests adicionales sin escenario en la spec
+
+Estos tests no corresponden a ningún escenario de la spec: verifican D12 del [design](../../openspec/changes/archive/2026-11-06-api-base-fastapi/design.md).
+
+| Qué verifica | Test automático (nombre real en código) | Archivo |
+|---|---|---|
+| El contenedor corre como usuario sin privilegios | `test_dockerfile_runs_as_non_root` | `tests/test_compose.py` |
+| `.dockerignore` excluye artefactos locales | `test_dockerignore_excludes_local_artifacts` | `tests/test_compose.py` |
+
+## Refuerzo de tres tests de Compose
+
+Tres tests pasaban aunque su escenario no se cumpliera. Para cada uno se aplicó la mutación con el test viejo, se reforzó el test, se volvió a aplicar la misma mutación y se restauró. Las tres mutaciones quedaron en [mutaciones-C-18.py](mutaciones-C-18.py).
+
+| Escenario | Mutación | Test viejo | Test nuevo | Restaurado |
+|---|---|---|---|---|
+| Backend migra antes de levantar la app | `backend/Dockerfile`: `&&` por `;` | Pasa (hueco) | Falla: `assert None` | Pasa |
+| Healthcheck del backend contra la API | `docker-compose.yml`: `'/health'` en el healthcheck y `# /api/health` como comentario | Pasa (hueco) | Falla: `assert None` | Pasa |
+| Compose sin secretos | `docker-compose.yml`: `JWT_SECRET: clave-ficticia-literal` en `backend` | Pasa (hueco) | Falla: `assert ['backend.JWT_SECRET'] == []` | Pasa |
+
+Qué exige ahora cada test:
+
+- `test_dockerfile_migrates_before_uvicorn`: la línea `CMD` tiene `alembic upgrade head && ` seguido de `uvicorn`, con `exec` opcional.
+- `test_backend_healthcheck_uses_api_health`: `/api/health` aparece en el healthcheck del servicio `backend` del Compose parseado con PyYAML.
+- `test_compose_defines_services_without_literal_secrets`: `POSTGRES_PASSWORD`, `JWT_SECRET`, `SEED_USER_PASSWORD` y las credenciales de `DATABASE_URL` solo aceptan referencias `${...}`, en el `environment` de cualquier servicio.
+
+`test_literal_secret_is_detected` (9 casos) y `test_env_reference_is_accepted` (5 casos) prueban esa detección con textos literales: valores literales, cadena vacía, `${VAR:-valor}`, forma de lista y credenciales literales en la URL.
+
+Límites conocidos: la detección de secretos mira solo `environment`, no `build.args` ni `command`; el puerto `API_PORT` del backend sigue sin test.
 
 ---
 
@@ -105,16 +132,16 @@ Se regenera con `python ../docs/evidencias/mutaciones-C-18.py` desde `backend/`.
 | `test_all_violation_codes_are_classified` | `backend/app/api/errors.py` | `- ViolationCode.PROFESSIONAL_OVERLAP: 409,`<br>`+ # ViolationCode.PROFESSIONAL_OVERLAP: 409,` | `AssertionError: assert {<ViolationCo...NAL_OVERLAP'>} == set()` |
 | `test_unclassified_code_is_detected` | `backend/app/api/errors.py` | `- return set(ViolationCode) - set(mapping.keys())`<br>`+ return set()` | `AssertionError: assert set() == {<ViolationCo...AIR_OVERLAP'>}` |
 | `test_mixed_codes_use_precedence` | `backend/app/api/errors.py` | `- if 403 in statuses:`<br>`- return 403`<br>`+ if 409 in statuses:`<br>`+ return 409`<br>`- return 409`<br>`+ return 403` | `AssertionError: assert 409 == 422` |
-| `test_kb_07_lists_all_violation_codes` | `knowledge-base/07_flujos_principales.md` | `- DUPLICATE_DNI`<br>`+ DNI_CLONADO` | `` AssertionError: assert 'DUPLICATE_DNI' in '# Flujos Principales\n\n## Flujo 1: Dar un turno\n\n> Flujo completo del MVP. C-02 implementa solo el núcleo de domin...`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.\n' `` |
+| `test_kb_07_lists_all_violation_codes` | `knowledge-base/07_flujos_principales.md` | `- DUPLICATE_DNI`<br>`+ DNI_CLONADO` | `` AssertionError: assert 'DUPLICATE_DNI' in '# Flujos Principales\n\n## Flujo 1: Dar un turno\n\n> Flujo completo del MVP. C-02 implementa solo el nÃºcleo de domin...`@pytest.mark.parametrize`) y reloj fijo inyectado (`now` como `datetime` UTC literal), sin base de datos ni Docker.\n' `` |
 | `test_violation_code_maps_to_status` | `backend/app/api/errors.py` | `- ViolationCode.PROFESSIONAL_OVERLAP: 409,`<br>`+ ViolationCode.PROFESSIONAL_OVERLAP: 422,` | `assert 422 == 409` |
 | `test_mixed_rejection_keeps_all_violations_in_order` | `backend/app/api/errors.py` | `- "violations": [serialize_violation(v) for v in exc.rejected.violations]`<br>`+ "violations": [serialize_violation(v) for v in reversed(exc.rejected.violations)]` | `AssertionError: assert ['DUPLICATE_D... 'EMPTY_NAME'] == ['EMPTY_NAME'...UPLICATE_DNI']` |
 | `test_overlap_body` | `backend/app/api/schemas.py` | `- serialization_alias="conflictingAppointmentId"`<br>`+ serialization_alias="conflictingAppId"` | `AssertionError: assert {'code', 'con...l', 'message'} == {'code', 'con...l', 'message'}` |
 | `test_blocked_time_body` | `backend/app/api/schemas.py` | `- serialization_alias="conflictingBlockId"`<br>`+ serialization_alias="conflictingBlkId"` | `AssertionError: assert {'code', 'con...l', 'message'} == {'code', 'con...l', 'message'}` |
 | `test_reference_body` | `backend/app/api/schemas.py` | `- serialization_alias="referenceKind"`<br>`+ serialization_alias="refKind"` | `AssertionError: assert {'code', 'message', 'refKind'} == {'code', 'mes...eferenceKind'}` |
 | `test_violation_without_extras_body` | `backend/app/api/schemas.py` | `- exclude_none=True`<br>`+ exclude_none=False` | `AssertionError: assert {'code', 'con...eferenceKind'} == {'code', 'message'}` |
-| `test_invalid_json_returns_400` | `backend/app/api/errors.py` | `- "json_invalid": "El cuerpo no es JSON válido.",`<br>`+ "json_invalid": "JSON inválido.",` | `AssertionError: assert 'JSON inválido.' == 'El cuerpo no es JSON válido.'` |
+| `test_invalid_json_returns_400` | `backend/app/api/errors.py` | `- "json_invalid": "El cuerpo no es JSON válido.",`<br>`+ "json_invalid": "JSON inválido.",` | `AssertionError: assert 'JSON invÃ¡lido.' == 'El cuerpo no es JSON vÃ¡lido.'` |
 | `test_missing_field_returns_400` | `backend/app/api/errors.py` | `- "missing": "Falta este dato.",`<br>`+ "missing": "Falta dato.",` | `AssertionError: assert 'Falta dato.' == 'Falta este dato.'` |
-| `test_sent_value_is_not_returned` | `backend/app/api/errors.py` | `- error_items.append(`<br>`+ error_items.append({"leaked": str(err.get("input"))}); error_items.append(` | `assert 'valor-marcado-c18' not in '{"errors":[...nválido."}]}'` |
+| `test_sent_value_is_not_returned` | `backend/app/api/errors.py` | `- error_items.append(`<br>`+ error_items.append({"leaked": str(err.get("input"))}); error_items.append(` | `assert 'valor-marcado-c18' not in '{"errors":[...nvÃ¡lido."}]}'` |
 | `test_invalid_query_param_returns_400` | `backend/app/api/errors.py` | `- return JSONResponse(status_code=400, content={"errors": error_items})`<br>`+ return JSONResponse(status_code=422, content={"errors": error_items})` | `assert 422 == 400` |
 | `test_committed_write_persists` | `backend/app/api/deps.py` | `- yield session`<br>`+ yield None` | `AttributeError: 'NoneType' object has no attribute 'execute'` |
 | `test_uncommitted_write_does_not_persist` | `backend/app/api/deps.py` | `+ session.commit()` | `AssertionError: assert ('uncommitted',) is None` |
@@ -135,11 +162,14 @@ Se regenera con `python ../docs/evidencias/mutaciones-C-18.py` desde `backend/`.
 | `test_backend_database_url_uses_postgres_service` | `docker-compose.yml` | `- @postgres:5432`<br>`+ @localhost:5432` | `assert 'DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'` |
 | `test_backend_waits_for_healthy_postgres` | `docker-compose.yml` | `- condition: service_healthy`<br>`+ condition: service_started` | `assert 'postgres:\n        condition: service_healthy' in 'backend:\n    build: ./backend\n    env_file: .env\n    environment:\n      DATABASE_URL: postgresql+psycopg://${POST...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'` |
 | `test_backend_waits_for_healthy_redis` | `docker-compose.yml` | `- condition: service_healthy`<br>`+ condition: service_started` | `assert 'redis:\n        condition: service_healthy' in 'backend:\n    build: ./backend\n    env_file: .env\n    environment:\n      DATABASE_URL: postgresql+psycopg://${POST...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'` |
-| `test_backend_healthcheck_uses_api_health` | `docker-compose.yml` | `- '/api/health'`<br>`+ '/health'` | `assert '/api/health' in 'services:\n  postgres:\n    image: postgres:16\n    ports:\n      - "5432:5432"\n    environment:\n      POSTGRES_USE...)"]\n      interval: 10s\n      timeout: 3s\n      retries: 5\n      start_period: 15s\n\nvolumes:\n  turnos_pgdata:\n'` |
+| `test_backend_healthcheck_uses_api_health` | `docker-compose.yml` | `- '/api/health'`<br>`+ '/health'` | `assert None` |
 | `test_dockerfile_runs_as_non_root` | `backend/Dockerfile` | `- USER appuser`<br>`+ USER root` | `assert 'USER appuser' in 'FROM python:3.13-slim\nENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1\nWORKDIR /app\nCOPY pyproject.toml ./\nCOPY a... "-c", "alembic upgrade head && exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]\n\n'` |
-| `test_dockerfile_migrates_before_uvicorn` | `backend/Dockerfile` | `- alembic upgrade head &&` | `assert 'alembic upgrade head' in 'FROM python:3.13-slim\nENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1\nWORKDIR /app\nCOPY pyproject.toml ./\nCOPY a...USER appuser\nCMD ["sh", "-c", "exec uvicorn --factory app.main:create_app --host 0.0.0.0 --port \\"$API_PORT\\""]\n\n'` |
+| `test_dockerfile_migrates_before_uvicorn` | `backend/Dockerfile` | `- alembic upgrade head &&` | `assert None` |
+| `test_dockerfile_migrates_before_uvicorn` | `backend/Dockerfile` | `- alembic upgrade head && exec`<br>`+ alembic upgrade head ; exec` | `assert None` |
+| `test_backend_healthcheck_uses_api_health` | `docker-compose.yml` | `- '/api/health', timeout=2)"]`<br>`+ '/health', timeout=2)"]  # /api/health` | `assert None` |
+| `test_compose_defines_services_without_literal_secrets` | `docker-compose.yml` | `+ JWT_SECRET: clave-ficticia-literal` | `AssertionError: assert ['backend.JWT_SECRET'] == []` |
 | `test_dockerignore_excludes_local_artifacts` | `backend/.dockerignore` | `- .venv`<br>`+ .local_venv` | `AssertionError: assert '.venv' in '.local_venv\ntests\n__pycache__\n.mypy_cache\n.pytest_cache\n\n'` |
-| `test_readme_warns_about_reserved_password_characters` | `backend/README.md` | `- caracteres reservados`<br>`+ caracteres permitidos` | `` AssertionError: assert 'caracteres reservados' in '# backend — turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n' `` |
+| `test_readme_warns_about_reserved_password_characters` | `backend/README.md` | `- caracteres reservados`<br>`+ caracteres permitidos` | `` AssertionError: assert 'caracteres reservados' in '# backend â€” turnos-odontologia\n\nbackend en python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta i/o ni contiene secretos. importa entidades del dominio; el dominio nunca lo importa.\n' `` |
 <!-- mutaciones:fin -->
 
 ---
@@ -150,4 +180,6 @@ Se regenera con `python ../docs/evidencias/mutaciones-C-18.py` desde `backend/`.
 - `uvicorn`: 0.54.0
 - `httpx`: 0.28.1
 - `python-dotenv`: 1.2.4
+- `pyyaml`: 6.0.3 (solo `dev`)
+- `types-PyYAML`: 6.0.12.20261103 (solo `dev`)
 

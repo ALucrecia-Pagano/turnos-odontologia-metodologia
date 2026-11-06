@@ -12,6 +12,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TextIO
@@ -25,6 +26,8 @@ TABLE_START = "<!-- mutaciones:inicio -->"
 TABLE_END = "<!-- mutaciones:fin -->"
 SEPARATOR = "=" * 80
 TIMEOUT_SECONDS = 60
+WRITE_ATTEMPTS = 10
+WRITE_RETRY_SECONDS = 1.0
 
 VENV_PYTHON = BACKEND / ".venv" / "Scripts" / "python.exe"
 PYTHON = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
@@ -353,6 +356,27 @@ MUTATIONS: tuple[Mutation, ...] = (
     ),
     Mutation(
         TEST_COMPOSE,
+        "test_dockerfile_migrates_before_uvicorn",
+        DOCKERFILE,
+        "alembic upgrade head && exec",
+        "alembic upgrade head ; exec",
+    ),
+    Mutation(
+        TEST_COMPOSE,
+        "test_backend_healthcheck_uses_api_health",
+        COMPOSE,
+        "'/api/health', timeout=2)\"]",
+        "'/health', timeout=2)\"]  # /api/health",
+    ),
+    Mutation(
+        TEST_COMPOSE,
+        "test_compose_defines_services_without_literal_secrets",
+        COMPOSE,
+        "      REDIS_URL: redis://redis:6379/0\n",
+        "      REDIS_URL: redis://redis:6379/0\n      JWT_SECRET: clave-ficticia-literal\n",
+    ),
+    Mutation(
+        TEST_COMPOSE,
         "test_dockerignore_excludes_local_artifacts",
         DOCKERIGNORE,
         ".venv\n",
@@ -377,7 +401,8 @@ class Report:
         self.stream = stream
 
     def write(self, text: str) -> None:
-        self.stream.write(f"{text}\n")
+        lines = (line.rstrip() for line in text.splitlines())
+        self.stream.write("\n".join(lines) + "\n")
         self.stream.flush()
 
 
@@ -391,6 +416,18 @@ def run_pytest(node_ids: list[str]) -> subprocess.CompletedProcess[str]:
         timeout=TIMEOUT_SECONDS,
         check=False,
     )
+
+
+def write_with_retry(path: Path, data: bytes) -> None:
+    # En Windows otro proceso puede tener el archivo abierto por un instante.
+    for attempt in range(WRITE_ATTEMPTS):
+        try:
+            path.write_bytes(data)
+            return
+        except OSError:
+            if attempt == WRITE_ATTEMPTS - 1:
+                raise
+            time.sleep(WRITE_RETRY_SECONDS)
 
 
 def read_source(mutation: Mutation) -> str:
@@ -447,14 +484,15 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     original_stat = path.stat()
 
     try:
-        path.write_bytes(
+        write_with_retry(
+            path,
             read_source(mutation)
             .replace(mutation.original, mutation.mutated, 1)
-            .encode("utf-8")
+            .encode("utf-8"),
         )
         mutated_run = run_pytest([mutation.node_id])
     finally:
-        path.write_bytes(original_bytes)
+        write_with_retry(path, original_bytes)
         os.utime(path, ns=(original_stat.st_atime_ns, original_stat.st_mtime_ns))
 
     report.write(f"--- pytest con la mutacion (codigo de salida {mutated_run.returncode}) ---")
