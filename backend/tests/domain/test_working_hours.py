@@ -1,9 +1,14 @@
+from datetime import datetime, timezone
 from uuid import UUID
+from zoneinfo import ZoneInfo
 
 import pytest
 
-from app.domain.model import WorkingHours
-from app.domain.rules.working_hours import validate_working_hours
+from app.domain.model import Appointment, AppointmentStatus, WorkingHours
+from app.domain.rules.working_hours import (
+    appointments_outside_working_hours,
+    validate_working_hours,
+)
 from app.domain.violations import ViolationCode
 
 P1 = UUID("00000000-0000-0000-0000-000000000001")
@@ -158,3 +163,115 @@ def test_validate_working_hours_slot_breaking_three_conditions_joins_reasons_wit
         "El tramo 1 no es válido: el día de la semana debe estar entre 1 (lunes) y 7 (domingo), "
         "el inicio y el fin deben estar entre 00:00 y 24:00 y el inicio debe ser anterior al fin."
     ]
+
+
+_CHAIR = UUID("00000000-0000-0000-0000-0000000000b1")
+_PATIENT = UUID("00000000-0000-0000-0000-0000000000c1")
+_SERVICE = UUID("00000000-0000-0000-0000-0000000000d1")
+_TZ = ZoneInfo("America/Argentina/Buenos_Aires")
+_NOW = datetime(2026, 11, 6, 12, 0, tzinfo=timezone.utc)
+
+
+def _apt(
+    appointment_id: UUID,
+    start_at: datetime,
+    end_at: datetime,
+    status: AppointmentStatus = AppointmentStatus.RESERVED,
+    professional_id: UUID = P1,
+) -> Appointment:
+    return Appointment(
+        id=appointment_id,
+        patient_id=_PATIENT,
+        professional_id=professional_id,
+        chair_id=_CHAIR,
+        service_id=_SERVICE,
+        start_at=start_at,
+        end_at=end_at,
+        status=status,
+    )
+
+
+def test_appointments_outside_working_hours_lists_future_occupying_appointment_outside_new_hours() -> None:
+    t1 = _apt(
+        UUID("00000000-0000-0000-0000-000000000071"),
+        datetime(2026, 12, 7, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 13, 30, tzinfo=timezone.utc),
+        AppointmentStatus.RESERVED,
+    )
+    new_hours = [WorkingHours(professional_id=P1, weekday=1, start_minute=900, end_minute=1140)]
+
+    result = appointments_outside_working_hours(P1, [t1], new_hours, _TZ, _NOW)
+
+    assert result == [t1]
+    assert t1.status == AppointmentStatus.RESERVED
+
+
+def test_appointments_outside_working_hours_ignores_appointment_inside_new_hours() -> None:
+    t1 = _apt(
+        UUID("00000000-0000-0000-0000-000000000071"),
+        datetime(2026, 12, 7, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 13, 30, tzinfo=timezone.utc),
+    )
+    new_hours = [WorkingHours(professional_id=P1, weekday=1, start_minute=540, end_minute=780)]
+
+    result = appointments_outside_working_hours(P1, [t1], new_hours, _TZ, _NOW)
+
+    assert result == []
+
+
+def test_appointments_outside_working_hours_ignores_cancelled_appointment() -> None:
+    t2 = _apt(
+        UUID("00000000-0000-0000-0000-000000000072"),
+        datetime(2026, 12, 7, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 13, 30, tzinfo=timezone.utc),
+        status=AppointmentStatus.CANCELLED,
+    )
+    new_hours = [WorkingHours(professional_id=P1, weekday=1, start_minute=900, end_minute=1140)]
+
+    result = appointments_outside_working_hours(P1, [t2], new_hours, _TZ, _NOW)
+
+    assert result == []
+
+
+def test_appointments_outside_working_hours_ignores_past_appointment() -> None:
+    t3 = _apt(
+        UUID("00000000-0000-0000-0000-000000000073"),
+        datetime(2026, 11, 2, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 11, 2, 13, 30, tzinfo=timezone.utc),
+    )
+    new_hours = [WorkingHours(professional_id=P1, weekday=1, start_minute=900, end_minute=1140)]
+
+    result = appointments_outside_working_hours(P1, [t3], new_hours, _TZ, _NOW)
+
+    assert result == []
+
+
+def test_appointments_outside_working_hours_ignores_other_professional_appointments() -> None:
+    t4 = _apt(
+        UUID("00000000-0000-0000-0000-000000000074"),
+        datetime(2026, 12, 7, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 13, 30, tzinfo=timezone.utc),
+        professional_id=P2,
+    )
+
+    result = appointments_outside_working_hours(P1, [t4], [], _TZ, _NOW)
+
+    assert result == []
+
+
+def test_appointments_outside_working_hours_returns_appointments_ordered_by_start_and_id() -> None:
+    t5 = _apt(
+        UUID("00000000-0000-0000-0000-000000000075"),
+        datetime(2026, 12, 14, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 14, 13, 30, tzinfo=timezone.utc),
+    )
+    t6 = _apt(
+        UUID("00000000-0000-0000-0000-000000000076"),
+        datetime(2026, 12, 7, 13, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 13, 30, tzinfo=timezone.utc),
+    )
+    new_hours = [WorkingHours(professional_id=P1, weekday=1, start_minute=900, end_minute=1140)]
+
+    result = appointments_outside_working_hours(P1, [t5, t6], new_hours, _TZ, _NOW)
+
+    assert result == [t6, t5]

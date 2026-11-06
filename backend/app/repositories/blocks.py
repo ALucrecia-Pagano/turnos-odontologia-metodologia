@@ -1,4 +1,5 @@
 from collections.abc import Sequence
+from datetime import datetime
 from uuid import UUID
 
 from sqlalchemy import select
@@ -69,6 +70,21 @@ class BlockRepository:
             .where(BlockModel.professional_id == professional_id)
             .order_by(BlockModel.start_at, BlockModel.id)
         ).all()
+        return tuple(self._to_domain(row) for row in rows)
+
+    def list_by_professional_in_range(
+        self,
+        professional_id: UUID,
+        start_at: datetime | None = None,
+        end_at: datetime | None = None,
+    ) -> tuple[Block, ...]:
+        stmt = select(BlockModel).where(BlockModel.professional_id == professional_id)
+        if start_at is not None:
+            stmt = stmt.where(BlockModel.end_at > start_at)
+        if end_at is not None:
+            stmt = stmt.where(BlockModel.start_at < end_at)
+        stmt = stmt.order_by(BlockModel.start_at, BlockModel.id)
+        rows = self._session.scalars(stmt).all()
         return tuple(self._to_domain(row) for row in rows)
 
     def list(self) -> tuple[Block, ...]:

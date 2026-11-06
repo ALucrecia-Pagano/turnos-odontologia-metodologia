@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Any
+import re
+from typing import Any, Final
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.domain.intervals import Interval
 from app.domain.violations import ReferenceKind, Violation, ViolationCode
@@ -149,4 +150,114 @@ def serialize_violation(v: Violation) -> dict[str, Any]:
         reference_kind=v.reference_kind,
     )
     return item.model_dump(by_alias=True, exclude_none=True, mode="json")
+
+
+_START_TIME_REGEX: Final = re.compile(r"^(?:[01]\d|2[0-3]):[0-5]\d$")
+_END_TIME_REGEX: Final = re.compile(r"^(?:(?:[01]\d|2[0-3]):[0-5]\d|24:00)$")
+
+
+class WorkingHoursSlotInput(BaseModel):
+    weekday: int
+    start: str
+    end: str
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @field_validator("weekday")
+    @classmethod
+    def validate_weekday(cls, v: int) -> int:
+        if not (1 <= v <= 7):
+            raise ValueError("El día de la semana debe estar entre 1 y 7.")
+        return v
+
+    @field_validator("start")
+    @classmethod
+    def validate_start(cls, v: str) -> str:
+        if not _START_TIME_REGEX.match(v):
+            raise ValueError("start debe tener formato HH:MM válido (00:00 a 23:59).")
+        return v
+
+    @field_validator("end")
+    @classmethod
+    def validate_end(cls, v: str) -> str:
+        if not _END_TIME_REGEX.match(v):
+            raise ValueError("end debe tener formato HH:MM válido (00:00 a 24:00).")
+        return v
+
+
+class WorkingHoursSlotResponse(BaseModel):
+    weekday: int
+    start: str
+    end: str
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class AffectedAppointmentResponse(BaseModel):
+    id: UUID
+    patient_id: UUID = Field(serialization_alias="patientId")
+    patient_name: str = Field(serialization_alias="patientName")
+    chair_id: UUID = Field(serialization_alias="chairId")
+    start_at: str = Field(serialization_alias="startAt")
+    end_at: str = Field(serialization_alias="endAt")
+    status: str
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class WorkingHoursResponse(BaseModel):
+    working_hours: list[WorkingHoursSlotResponse] = Field(serialization_alias="workingHours")
+    appointments_outside_hours: list[AffectedAppointmentResponse] = Field(
+        serialization_alias="appointmentsOutsideHours"
+    )
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class BlockInput(BaseModel):
+    start_at: datetime = Field(alias="startAt")
+    end_at: datetime = Field(alias="endAt")
+    reason: str | None = None
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @field_validator("start_at", "end_at")
+    @classmethod
+    def validate_tz(cls, v: datetime) -> datetime:
+        if v.tzinfo is None:
+            raise ValueError("La fecha y hora debe incluir zona horaria.")
+        return v
+
+
+class BlockResponse(BaseModel):
+    id: UUID
+    professional_id: UUID = Field(serialization_alias="professionalId")
+    start_at: str = Field(serialization_alias="startAt")
+    end_at: str = Field(serialization_alias="endAt")
+    reason: str | None = None
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class BlockCreateResponse(BaseModel):
+    block: BlockResponse
+    affected_appointments: list[AffectedAppointmentResponse] = Field(
+        serialization_alias="affectedAppointments"
+    )
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class BlocksQuery(BaseModel):
+    from_time: datetime | None = Field(default=None, alias="from")
+    to_time: datetime | None = Field(default=None, alias="to")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @field_validator("from_time", "to_time")
+    @classmethod
+    def validate_tz(cls, v: datetime | None) -> datetime | None:
+        if v is not None and v.tzinfo is None:
+            raise ValueError("La fecha y hora debe incluir zona horaria.")
+        return v
 

@@ -457,3 +457,76 @@ def test_seed_working_hours_is_idempotent_and_preserves_existing(
     assert repository.list_by_professional(P1) == original
     assert len(repository.list()) == 25
     assert connection.execute(text("SELECT count(*) FROM block")).scalar_one() == 0
+
+
+def test_block_repository_list_by_professional_in_range(connection: Connection) -> None:
+    session = _session_with_professional(connection, P1)
+    if session.get(ProfessionalModel, P2) is None:
+        ProfessionalRepository(session).create(Professional(P2, "Segundo Profesional", True))
+    repo = BlockRepository(session, EmptyAppointmentReader())
+
+    b1 = Block(
+        UUID("00000000-0000-0000-0000-000000000b11"),
+        P1,
+        datetime(2026, 12, 7, 12, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 16, tzinfo=timezone.utc),
+        "Congreso A",
+    )
+    b2 = Block(
+        UUID("00000000-0000-0000-0000-000000000b12"),
+        P1,
+        datetime(2026, 12, 21, 12, tzinfo=timezone.utc),
+        datetime(2026, 12, 21, 16, tzinfo=timezone.utc),
+        "Congreso B",
+    )
+    b_other = Block(
+        UUID("00000000-0000-0000-0000-000000000b13"),
+        P2,
+        datetime(2026, 12, 7, 12, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 16, tzinfo=timezone.utc),
+    )
+    assert isinstance(repo.create(b1), Ok)
+    assert isinstance(repo.create(b2), Ok)
+    assert isinstance(repo.create(b_other), Ok)
+
+    # 1. Ambos filtros: solapa solo b1
+    res = repo.list_by_professional_in_range(
+        P1,
+        datetime(2026, 12, 7, 0, tzinfo=timezone.utc),
+        datetime(2026, 12, 14, 0, tzinfo=timezone.utc),
+    )
+    assert res == (b1,)
+
+    # 2. Toque de bordes semiabiertos: [16:00, 18:00) no solapa con [12:00, 16:00)
+    res_border_after = repo.list_by_professional_in_range(
+        P1,
+        datetime(2026, 12, 7, 16, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 18, tzinfo=timezone.utc),
+    )
+    assert res_border_after == ()
+
+    # [10:00, 12:00) no solapa con [12:00, 16:00)
+    res_border_before = repo.list_by_professional_in_range(
+        P1,
+        datetime(2026, 12, 7, 10, tzinfo=timezone.utc),
+        datetime(2026, 12, 7, 12, tzinfo=timezone.utc),
+    )
+    assert res_border_before == ()
+
+    # 3. Solo start_at (to abierto): solapa b2
+    res_only_from = repo.list_by_professional_in_range(
+        P1,
+        start_at=datetime(2026, 12, 14, 0, tzinfo=timezone.utc),
+    )
+    assert res_only_from == (b2,)
+
+    # 4. Solo end_at (from abierto): solapa b1
+    res_only_to = repo.list_by_professional_in_range(
+        P1,
+        end_at=datetime(2026, 12, 14, 0, tzinfo=timezone.utc),
+    )
+    assert res_only_to == (b1,)
+
+    # 5. Sin filtros: devuelve ambos ordenados por start_at
+    res_all = repo.list_by_professional_in_range(P1)
+    assert res_all == (b1, b2)

@@ -12,8 +12,9 @@ from uuid import UUID
 from zoneinfo import ZoneInfo
 
 from app.domain.intervals import format_local_time, local_day_and_minutes
-from app.domain.model import WorkingHours
+from app.domain.model import Appointment, WorkingHours
 from app.domain.rules.names import subject_name
+from app.domain.rules.overlap import OCCUPYING_STATUSES
 from app.domain.violations import Violation, ViolationCode
 
 _MINUTES_PER_DAY: Final = 1440
@@ -221,3 +222,46 @@ def check_working_hours(
             message=_outside_message(start_at, end_at, weekday, merged, tz, professional_name),
         )
     ]
+
+
+def appointments_outside_working_hours(
+    professional_id: UUID,
+    appointments: Sequence[Appointment],
+    working_hours: Sequence[WorkingHours],
+    tz: ZoneInfo,
+    now: datetime,
+) -> list[Appointment]:
+    """Devuelve los turnos futuros del profesional que quedan fuera del horario indicado.
+
+    Solo cuentan los turnos en un estado que ocupa agenda (OCCUPYING_STATUSES) y con
+    inicio mayor o igual a now (RN-AG-04, RN-AG-08, D5). Reutiliza check_working_hours,
+    no modifica los turnos y los devuelve ordenados por (start_at, str(id)).
+
+    Args:
+        professional_id: Profesional cuyos turnos se evalúan.
+        appointments: Turnos existentes, sin filtrar.
+        working_hours: Tramos nuevos del horario de atención.
+        tz: Zona horaria en la que se evalúa el horario.
+        now: Instante actual recibido por parámetro.
+
+    Returns:
+        Turnos que quedan fuera del horario, ordenados por inicio y por id.
+    """
+    outside: list[Appointment] = []
+    for appointment in appointments:
+        if (
+            appointment.professional_id == professional_id
+            and appointment.status in OCCUPYING_STATUSES
+            and appointment.start_at >= now
+        ):
+            violations = check_working_hours(
+                professional_id=appointment.professional_id,
+                start_at=appointment.start_at,
+                end_at=appointment.end_at,
+                working_hours=working_hours,
+                tz=tz,
+                professional_name="",
+            )
+            if any(v.code == ViolationCode.OUTSIDE_WORKING_HOURS for v in violations):
+                outside.append(appointment)
+    return sorted(outside, key=lambda a: (a.start_at, str(a.id)))

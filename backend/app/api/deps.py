@@ -1,6 +1,7 @@
 from collections.abc import Iterator
 from dataclasses import dataclass
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -72,6 +73,8 @@ class Permission:
 
     actor: Actor
     scope: Scope
+    resource: Resource | None = None
+    action: Action | None = None
 
 
 class RequirePermission:
@@ -96,8 +99,43 @@ class RequirePermission:
                     )
                 )
             )
-        return Permission(user.to_actor(), scope)
+        return Permission(user.to_actor(), scope, self.resource, self.action)
 
 
 def require_permission(resource: Resource, action: Action) -> RequirePermission:
     return RequirePermission(resource, action)
+
+
+def ensure_own_professional(
+    permission: Permission,
+    professional_id: UUID,
+    resource: Resource | None = None,
+    action: Action | None = None,
+) -> None:
+    """Valida que un actor con Scope.OWN solo opere sobre su propio profesional (D3).
+
+    Si permission.scope es Scope.OWN y professional_id no coincide con el del Actor,
+    lanza 403 FORBIDDEN_OPERATION con el mensaje de PERMISSION_MESSAGES de esa celda.
+    Si permission.scope es Scope.ALL (recepción, administrador), pasa siempre.
+    """
+    if permission.scope is Scope.OWN:
+        if permission.actor.professional_id != professional_id:
+            res = resource or permission.resource
+            act = action or permission.action
+            message = (
+                PERMISSION_MESSAGES.get((res, act))
+                if res and act
+                else None
+            )
+            if message is None:
+                message = "No tiene permiso para realizar esta operación sobre otro profesional."
+            raise DomainRejectedError(
+                Rejected(
+                    (
+                        Violation(
+                            code=ViolationCode.FORBIDDEN_OPERATION,
+                            message=message,
+                        ),
+                    )
+                )
+            )
