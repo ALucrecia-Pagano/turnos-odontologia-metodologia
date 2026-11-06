@@ -16,29 +16,16 @@ from app.db.models import (
     ServiceModel,
 )
 from app.repositories._integrity import constraint_name
+from tests.integration.conftest import clean_database_tables
 
 pytestmark = pytest.mark.integration
 
 
 @pytest.fixture(autouse=True)
 def clean_appointment_tables(test_engine: Engine) -> Iterator[None]:
-    with test_engine.begin() as conn:
-        conn.execute(
-            text(
-                "TRUNCATE TABLE appointment_status_change, appointment, block, working_hours CASCADE"
-            )
-        )
+    clean_database_tables(test_engine)
     yield
-    with test_engine.begin() as conn:
-        conn.execute(
-            text(
-                "TRUNCATE TABLE appointment_status_change, appointment, block, working_hours CASCADE"
-            )
-        )
-        conn.execute(text("DELETE FROM patient"))
-        conn.execute(text("DELETE FROM service"))
-        conn.execute(text("DELETE FROM chair"))
-        conn.execute(text("DELETE FROM professional"))
+    clean_database_tables(test_engine)
 
 
 P1 = UUID("00000000-0000-0000-0000-000000000001")
@@ -240,6 +227,16 @@ def test_appointment_status_change_trigger_rejects_direct_delete(
     assert "appointment_status_change is append-only" in str(raised.value)
 
 
+def test_appointment_status_change_trigger_rejects_truncate(
+    test_engine: Engine,
+) -> None:
+    with pytest.raises(Exception) as raised:
+        with test_engine.begin() as conn:
+            conn.execute(text("TRUNCATE TABLE appointment_status_change"))
+
+    assert "appointment_status_change is append-only" in str(raised.value)
+
+
 def test_sql_appointment_reader_filters_and_orders_in_range(
     connection: Connection,
 ) -> None:
@@ -409,7 +406,6 @@ def test_book_appointment_success_persists_appointment_and_initial_history(
     from app.services.appointments import book_appointment
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         if conn.scalars(select(WorkingHoursModel).where(WorkingHoursModel.professional_id == P1)).first() is None:
             conn.execute(
@@ -473,7 +469,6 @@ def test_book_appointment_rejected_overlap_does_not_persist(
     from app.services.appointments import book_appointment
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         if conn.scalars(select(WorkingHoursModel).where(WorkingHoursModel.professional_id == P1)).first() is None:
             conn.execute(
@@ -542,7 +537,6 @@ def test_book_appointment_atomic_rollback_on_history_failure(
     from app.services.appointments import book_appointment
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         if conn.scalars(select(WorkingHoursModel).where(WorkingHoursModel.professional_id == P1)).first() is None:
             conn.execute(
@@ -627,7 +621,6 @@ def test_book_appointment_acquires_resource_locks_ordered_by_uuid(
     from app.services.appointments import book_appointment
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         if conn.scalars(select(WorkingHoursModel).where(WorkingHoursModel.professional_id == P1)).first() is None:
             conn.execute(
@@ -688,7 +681,6 @@ def test_change_appointment_status_confirmed_updates_status_and_history(
     from app.services.appointments import change_appointment_status
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         app_id = UUID("00000000-0000-0000-0000-000000000a01")
         created_time = datetime(2026, 11, 5, 12, 0, tzinfo=timezone.utc)
@@ -764,7 +756,6 @@ def test_cancel_appointment_updates_status_and_history(
     from app.services.appointments import cancel_appointment
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         app_id = UUID("00000000-0000-0000-0000-000000000a01")
         created_time = datetime(2026, 11, 5, 12, 0, tzinfo=timezone.utc)
@@ -866,7 +857,6 @@ def test_reschedule_appointment_success_persists_eight_detail_columns(
     c2 = UUID("00000000-0000-0000-0000-0000000000b2")
 
     with test_engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         _setup_references(conn)
         session = Session(bind=conn)
         if session.get(ProfessionalModel, p2) is None:

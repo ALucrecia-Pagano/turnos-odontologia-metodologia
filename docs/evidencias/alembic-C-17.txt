@@ -1,19 +1,17 @@
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-20261105_04_turnos_e_historial (head)
+20261105_05_historial_sin_truncate (head)
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
+INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-20261104_03_horarios_y_bloqueos
+20261105_04_turnos_e_historial
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-20261105_04_turnos_e_historial (head)
-
+20261105_05_historial_sin_truncate (head)

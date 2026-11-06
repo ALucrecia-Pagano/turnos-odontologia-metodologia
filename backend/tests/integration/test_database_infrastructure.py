@@ -92,7 +92,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261105_04_turnos_e_historial"
+            == "20261105_05_historial_sin_truncate"
         )
 
     command.downgrade(config, "base")
@@ -114,7 +114,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261105_04_turnos_e_historial"
+            == "20261105_05_historial_sin_truncate"
         )
 
 
@@ -152,7 +152,8 @@ def test_appointment_migration_downgrade_minus_one_cycle(
 ) -> None:
     config = migration_config(test_database_url.render_as_string(hide_password=False))
 
-    command.upgrade(config, "head")
+    command.downgrade(config, "20261104_03_horarios_y_bloqueos")
+    command.upgrade(config, "20261105_04_turnos_e_historial")
     with test_engine.connect() as connection:
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
@@ -163,9 +164,9 @@ def test_appointment_migration_downgrade_minus_one_cycle(
         assert {"appointment", "appointment_status_change"}.issubset(table_names)
         trigger_count = connection.execute(
             text(
-                "SELECT count(DISTINCT trigger_name) FROM information_schema.triggers "
-                "WHERE event_object_table = 'appointment_status_change' "
-                "AND trigger_name = 'tr_appointment_status_change_append_only'"
+                "SELECT count(DISTINCT tgname) FROM pg_trigger "
+                "WHERE tgrelid = 'appointment_status_change'::regclass "
+                "AND tgname = 'tr_appointment_status_change_append_only'"
             )
         ).scalar_one()
         assert trigger_count == 1
@@ -187,21 +188,62 @@ def test_appointment_migration_downgrade_minus_one_cycle(
             .scalar_one()
             == "20261104_03_horarios_y_bloqueos"
         )
-        trigger_count = connection.execute(
-            text(
-                "SELECT count(DISTINCT trigger_name) FROM information_schema.triggers "
-                "WHERE event_object_table = 'appointment_status_change' "
-                "AND trigger_name = 'tr_appointment_status_change_append_only'"
-            )
-        ).scalar_one()
-        assert trigger_count == 0
 
     command.upgrade(config, "head")
     with test_engine.connect() as connection:
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
+            == "20261105_05_historial_sin_truncate"
+        )
+
+
+def test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle(
+    test_engine: Engine,
+    test_database_url: URL,
+) -> None:
+    config = migration_config(test_database_url.render_as_string(hide_password=False))
+
+    command.upgrade(config, "head")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261105_05_historial_sin_truncate"
+        )
+        triggers = connection.execute(
+            text(
+                "SELECT tgname FROM pg_trigger "
+                "WHERE tgrelid = 'appointment_status_change'::regclass "
+                "AND NOT tgisinternal"
+            )
+        ).scalars().all()
+        assert "tr_appointment_status_change_no_truncate" in triggers
+        assert "tr_appointment_status_change_append_only" in triggers
+
+    command.downgrade(config, "-1")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
             == "20261105_04_turnos_e_historial"
+        )
+        triggers = connection.execute(
+            text(
+                "SELECT tgname FROM pg_trigger "
+                "WHERE tgrelid = 'appointment_status_change'::regclass "
+                "AND NOT tgisinternal"
+            )
+        ).scalars().all()
+        assert "tr_appointment_status_change_no_truncate" not in triggers
+        assert "tr_appointment_status_change_append_only" in triggers
+
+    command.upgrade(config, "head")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261105_05_historial_sin_truncate"
         )
 
 

@@ -73,6 +73,10 @@ La tabla `appointment_status_change` SHALL estar protegida por un trigger de bas
 - **WHEN** se ejecuta una sentencia `DELETE` directa sobre esa fila
 - **THEN** el trigger de PostgreSQL aborta la operación con excepción que indica que la tabla es solo de inserción
 
+#### Scenario: Trigger de base rechaza TRUNCATE en historial
+- **WHEN** se ejecuta una sentencia `TRUNCATE` sobre `appointment_status_change`
+- **THEN** el trigger de PostgreSQL aborta la operación con excepción que indica que la tabla es solo de inserción
+
 ### Requirement: Lector SQL de turnos en rango para disponibilidad
 El repositorio SHALL proveer la implementación SQL del protocolo `AppointmentReader` devolviendo exclusivamente los turnos del profesional cuyo intervalo semiabierto se solapa con el rango consultado, con instantes en UTC y ordenados por inicio e id.
 

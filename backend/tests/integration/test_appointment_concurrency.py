@@ -21,29 +21,16 @@ from app.db.models import (
 from app.domain.model import AppointmentStatus, NewAppointmentRequest
 from app.domain.violations import Ok, Rejected, ViolationCode
 from app.services.appointments import book_appointment
+from tests.integration.conftest import clean_database_tables
 
 pytestmark = pytest.mark.integration
 
 
 @pytest.fixture(autouse=True)
 def clean_appointment_tables(test_engine: Engine) -> Iterator[None]:
-    with test_engine.begin() as conn:
-        conn.execute(
-            text(
-                "TRUNCATE TABLE appointment_status_change, appointment, block, working_hours CASCADE"
-            )
-        )
+    clean_database_tables(test_engine)
     yield
-    with test_engine.begin() as conn:
-        conn.execute(
-            text(
-                "TRUNCATE TABLE appointment_status_change, appointment, block, working_hours CASCADE"
-            )
-        )
-        conn.execute(text("DELETE FROM patient"))
-        conn.execute(text("DELETE FROM service"))
-        conn.execute(text("DELETE FROM chair"))
-        conn.execute(text("DELETE FROM professional"))
+    clean_database_tables(test_engine)
 
 P1 = UUID("00000000-0000-0000-0000-000000000001")
 P2 = UUID("00000000-0000-0000-0000-000000000002")
@@ -57,7 +44,6 @@ USER1 = UUID("00000000-0000-0000-0000-000000000099")
 
 def _setup_resources(engine: Engine) -> None:
     with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE appointment_status_change, appointment CASCADE"))
         session = Session(bind=conn)
         if session.get(ProfessionalModel, P1) is None:
             session.add(ProfessionalModel(id=P1, full_name="Dra. Uno", active=True))

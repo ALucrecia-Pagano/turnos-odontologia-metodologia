@@ -85,3 +85,30 @@ def connection(test_engine: Engine) -> Iterator[Connection]:
 def test_table(connection: Connection) -> Iterator[None]:
     connection.execute(text("CREATE TABLE IF NOT EXISTS c13_test (value integer)"))
     yield
+
+
+def clean_database_tables(engine: Engine) -> None:
+    """Limpia las tablas de la base de prueba respetando el trigger append-only.
+
+    La tabla appointment_status_change cuenta con triggers de base de datos que
+    impiden UPDATE, DELETE y TRUNCATE para garantizar la inmutabilidad fisica
+    del historial funcional. Para que las pruebas de integracion que realizan commit
+    directo sobre test_engine puedan restablecer el estado entre casos de prueba
+    sin alterar el esquema ni requerir reinicio del contenedor, este helper
+    deshabilita temporalmente los triggers de usuario durante el vaciado y los
+    reactiva de forma incondicional dentro de un bloque finally.
+    """
+    with engine.begin() as conn:
+        try:
+            conn.execute(text("ALTER TABLE appointment_status_change DISABLE TRIGGER USER"))
+            conn.execute(
+                text(
+                    "TRUNCATE TABLE appointment_status_change, appointment, block, working_hours CASCADE"
+                )
+            )
+            conn.execute(text("DELETE FROM patient"))
+            conn.execute(text("DELETE FROM service"))
+            conn.execute(text("DELETE FROM chair"))
+            conn.execute(text("DELETE FROM professional"))
+        finally:
+            conn.execute(text("ALTER TABLE appointment_status_change ENABLE TRIGGER USER"))

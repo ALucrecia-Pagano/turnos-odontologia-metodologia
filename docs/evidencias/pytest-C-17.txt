@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
 testpaths: tests
-collected 732 items / 59 deselected / 673 selected
+collected 734 items / 61 deselected / 673 selected
 
 tests\domain\test_blocks.py ..........                                   [  1%]
 tests\domain\test_catalog.py ........................................... [  7%]
@@ -39,5 +39,4 @@ tests\test_persistence_metadata.py ....                                  [ 99%]
 tests\test_repository_contracts.py ...                                   [ 99%]
 tests\test_transition_types.py ..                                        [100%]
 
-===================== 673 passed, 59 deselected in 6.99s ======================
-
+===================== 673 passed, 61 deselected in 6.97s ======================
