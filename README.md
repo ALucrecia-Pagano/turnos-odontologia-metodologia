@@ -54,8 +54,13 @@ Fijado por la cátedra:
   validación previa, reemplazo transaccional, turnos afectados y seed idempotente),
   C-17 (persistencia de turnos e historial con servicios transaccionales, bloqueo
   de filas en orden fijo, historial de solo inserción protegido por triggers y
-  lector SQL de turnos).
-- **Planificado:** la API REST y el frontend. La persistencia de entidades ya
+  lector SQL de turnos),
+  C-18 (API base con FastAPI: `GET /api/health` con chequeo de la base, errores
+  uniformes `409`, `422`, `403` y `400`, CORS limitado a `CORS_ORIGIN`, sesión
+  por request sin `commit` implícito, Swagger en `/api/docs` y servicio
+  `backend` en el Compose).
+- **Planificado:** la autenticación JWT, los endpoints de negocio de la API REST
+  y el frontend. La persistencia de entidades ya
   está implementada en C-15. El
   plan completo
   está en [CHANGES.md](CHANGES.md).
@@ -89,7 +94,7 @@ ficticios:
 
 ```bash
 cp .env.example .env
-docker compose up -d
+docker compose up -d postgres redis
 docker compose ps
 ```
 
@@ -112,6 +117,19 @@ docker compose down
 
 Si hay un PostgreSQL instalado en Windows, detenelo antes de levantar el
 compose: los dos usan el puerto 5432.
+
+### Levantar la API
+
+Con `.env` completo, desde la raíz:
+
+```bash
+docker compose up --build
+```
+
+`<API_PORT>` es el valor definido en `.env`:
+
+- Swagger: `http://localhost:<API_PORT>/api/docs`
+- Salud: `GET http://localhost:<API_PORT>/api/health`
 
 ### PowerShell
 
@@ -165,6 +183,7 @@ cómo funciona la guardia de dependencias), leé
 | Change archivado de C-15 | [openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/](openspec/changes/archive/2026-11-04-persistencia-catalogos-y-pacientes/) |
 | Change archivado de C-16 | [openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/](openspec/changes/archive/2026-11-05-persistencia-horarios-y-bloqueos/) |
 | Change archivado de C-17 | [openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/](openspec/changes/archive/2026-11-05-persistencia-turnos-e-historial/) |
+| Change archivado de C-18 | [openspec/changes/archive/2026-11-06-api-base-fastapi/](openspec/changes/archive/2026-11-06-api-base-fastapi/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -183,6 +202,7 @@ cómo funciona la guardia de dependencias), leé
 | Evidencias de C-15 (explore, pytest, integración, mypy, alembic, seed y verify) | [explore-C-15.md](docs/evidencias/explore-C-15.md), [pytest-C-15.txt](docs/evidencias/pytest-C-15.txt), [pytest-integration-C-15.txt](docs/evidencias/pytest-integration-C-15.txt), [mypy-C-15.txt](docs/evidencias/mypy-C-15.txt), [alembic-C-15.txt](docs/evidencias/alembic-C-15.txt), [seed-C-15.txt](docs/evidencias/seed-C-15.txt) y [verify-C-15.md](docs/evidencias/verify-C-15.md) |
 | Evidencias de C-16 (explore, pytest, integración, mypy, alembic, seed y verify) | [explore-C-16.md](docs/evidencias/explore-C-16.md), [pytest-C-16.txt](docs/evidencias/pytest-C-16.txt), [pytest-integration-C-16.txt](docs/evidencias/pytest-integration-C-16.txt), [mypy-C-16.txt](docs/evidencias/mypy-C-16.txt), [alembic-C-16.txt](docs/evidencias/alembic-C-16.txt), [seed-C-16.txt](docs/evidencias/seed-C-16.txt) y [verify-C-16.md](docs/evidencias/verify-C-16.md) |
 | Evidencias de C-17 (explore, pytest, integración, mypy, alembic, mutaciones y verify) | [explore-C-17.md](docs/evidencias/explore-C-17.md), [pytest-C-17.txt](docs/evidencias/pytest-C-17.txt), [pytest-integration-C-17.txt](docs/evidencias/pytest-integration-C-17.txt), [mypy-C-17.txt](docs/evidencias/mypy-C-17.txt), [alembic-C-17.txt](docs/evidencias/alembic-C-17.txt), [mutaciones-C-17.py](docs/evidencias/mutaciones-C-17.py), [mutaciones-C-17.txt](docs/evidencias/mutaciones-C-17.txt) y [verify-C-17.md](docs/evidencias/verify-C-17.md) |
+| Evidencias de C-18 (explore, pytest, mypy, docker, mutaciones y verify) | [explore-C-18.md](docs/evidencias/explore-C-18.md), [pytest-C-18.txt](docs/evidencias/pytest-C-18.txt), [mypy-C-18.txt](docs/evidencias/mypy-C-18.txt), [docker-C-18.txt](docs/evidencias/docker-C-18.txt), [mutaciones-C-18.py](docs/evidencias/mutaciones-C-18.py), [mutaciones-C-18.txt](docs/evidencias/mutaciones-C-18.txt) y [verify-C-18.md](docs/evidencias/verify-C-18.md) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

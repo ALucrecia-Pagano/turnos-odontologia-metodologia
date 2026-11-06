@@ -24,6 +24,8 @@ transaccionales en `backend/app/services/appointments.py`, bloqueo de filas en
 orden fijo (turno, profesionales por id y sillones por id), historial de solo
 inserción protegido por triggers contra `UPDATE`, `DELETE` y `TRUNCATE`, y la
 implementación SQL de `AppointmentReader`.
+También incluye el servicio `backend` en el Compose, que espera a `postgres` y
+`redis` sanos y corre `alembic upgrade head` antes de levantar uvicorn.
 
 ## Requirements
 
@@ -64,17 +66,48 @@ por `.gitignore`.
 
 ### Requirement: Compose reproducible
 
-El Compose raíz SHALL definir solo `postgres:16` y `redis:7`, publicar
-5432:5432 y 6379:6379, usar el volumen `turnos_pgdata` para PostgreSQL y
+El Compose raíz SHALL definir `postgres:16`, `redis:7` y el servicio `backend`, publicar
+5432:5432 y 6379:6379 y el puerto `API_PORT` del backend, usar el volumen `turnos_pgdata` para PostgreSQL y
 declarar los healthchecks acordados. Los servicios SHALL leer las credenciales
-y la base desde `.env`, sin secretos literales.
+y la base desde `.env`, sin secretos literales. El backend SHALL arrancar con las dependencias sanas y el esquema migrado.
 
 #### Scenario: Compose sin secretos
 
 - **GIVEN** `docker-compose.yml`
 - **WHEN** se inspecciona el YAML
-- **THEN** aparecen los dos servicios, sus healthchecks, puertos y volumen
-- **AND** no aparecen contraseñas, tokens ni URLs con credenciales
+- **THEN** aparecen los servicios `postgres`, `redis` y `backend`, sus healthchecks, puertos y volumen
+- **AND** no aparecen contraseñas, tokens ni URLs con credenciales literales
+
+#### Scenario: Backend conecta a la base por el nombre del servicio
+
+- **GIVEN** `docker-compose.yml`
+- **WHEN** se inspecciona el servicio `backend`
+- **THEN** `DATABASE_URL` se arma con `${POSTGRES_USER}`, `${POSTGRES_PASSWORD}` y `${POSTGRES_DB}` sobre el host `postgres`
+
+#### Scenario: Backend espera a postgres sano
+
+- **GIVEN** `docker-compose.yml`
+- **WHEN** se inspecciona el servicio `backend`
+- **THEN** `depends_on` exige `service_healthy` para `postgres`
+
+#### Scenario: Backend espera a redis sano
+
+- **GIVEN** `docker-compose.yml`
+- **WHEN** se inspecciona el servicio `backend`
+- **THEN** `depends_on` exige `service_healthy` para `redis`
+
+#### Scenario: Backend migra antes de levantar la app
+
+- **GIVEN** `backend/Dockerfile`
+- **WHEN** se inspecciona el comando de arranque
+- **THEN** corre `alembic upgrade head` antes de uvicorn
+- **AND** uvicorn solo arranca si la migración terminó bien
+
+#### Scenario: Healthcheck del backend contra la API
+
+- **GIVEN** `docker-compose.yml`
+- **WHEN** se inspecciona el servicio `backend`
+- **THEN** su healthcheck consulta `/api/health`
 
 ### Requirement: Sesión SQLAlchemy síncrona en UTC
 

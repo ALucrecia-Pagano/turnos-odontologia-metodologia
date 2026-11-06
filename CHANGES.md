@@ -464,7 +464,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 ## FASE 5 — API REST (FastAPI) y autenticación JWT
 
 ### [C-18] `api-base-fastapi`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-06)
 - **Scope**:
   - `backend/app/main.py` (FastAPI) con prefijo `/api`, CORS solo para `CORS_ORIGIN`, `GET /api/health` (incluye chequeo de la BD).
   - Manejo de errores uniforme: violaciones del dominio → `409` (conflicto de agenda) o `422` (regla de validez) o `403` (operación prohibida) con `{ "violations": [...] }`; entrada malformada → `400` (se reemplaza el `422` por defecto de FastAPI para errores de validación de Pydantic).
