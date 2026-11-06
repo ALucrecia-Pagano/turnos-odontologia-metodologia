@@ -57,6 +57,23 @@ class DomainRejectedError(Exception):
         super().__init__(f"Domain rejected with {len(rejected.violations)} violation(s)")
 
 
+class NotFoundError(Exception):
+    def __init__(self, message: str) -> None:
+        self.message = message
+        super().__init__(message)
+
+
+def not_found_error_handler(request: Request, exc: Exception) -> JSONResponse:
+    if not isinstance(exc, NotFoundError):
+        raise exc
+    return JSONResponse(
+        status_code=404,
+        content={"code": "NOT_FOUND", "message": exc.message},
+    )
+
+
+
+
 def domain_rejected_handler(request: Request, exc: Exception) -> JSONResponse:
     if not isinstance(exc, DomainRejectedError):
         raise exc

@@ -6,6 +6,7 @@ from fastapi.openapi.utils import get_openapi
 from app.api.schemas import (
     AuthErrorResponse,
     MalformedRequestResponse,
+    NotFoundErrorResponse,
     ViolationResponseSchema,
 )
 
@@ -95,6 +96,23 @@ def login_responses() -> dict[int | str, dict[str, Any]]:
                     "example": {
                         "code": "INVALID_CREDENTIALS",
                         "message": "Usuario o contraseña incorrectos.",
+                    }
+                }
+            },
+        }
+    }
+
+
+def not_found_responses(resource_name: str) -> dict[int | str, dict[str, Any]]:
+    return {
+        404: {
+            "model": NotFoundErrorResponse,
+            "description": f"{resource_name} no encontrado",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "code": "NOT_FOUND",
+                        "message": f"{resource_name} no encontrado.",
                     }
                 }
             },

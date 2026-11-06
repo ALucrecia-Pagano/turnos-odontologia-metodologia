@@ -12,15 +12,30 @@ from app.api.deps import protected_router
 from app.api.errors import (
     AuthenticationError,
     DomainRejectedError,
+    NotFoundError,
     authentication_error_handler,
     domain_rejected_handler,
+    not_found_error_handler,
     request_validation_handler,
 )
+from app.api.chairs import router as chairs_router
 from app.api.health import router as health_router
 from app.api.openapi import setup_openapi
+from app.api.patients import router as patients_router
+from app.api.professionals import router as professionals_router
+from app.api.services import router as services_router
 from app.auth.passwords import dummy_password_hash
 from app.config import Settings, load_settings
 from app.db.session import create_database_engine
+
+protected_router.include_router(professionals_router)
+protected_router.include_router(chairs_router)
+protected_router.include_router(services_router)
+protected_router.include_router(patients_router)
+
+
+
+
 
 
 @asynccontextmanager
@@ -60,6 +75,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app.add_exception_handler(AuthenticationError, authentication_error_handler)
     app.add_exception_handler(DomainRejectedError, domain_rejected_handler)
+    app.add_exception_handler(NotFoundError, not_found_error_handler)
     app.add_exception_handler(RequestValidationError, request_validation_handler)
 
     api_router = APIRouter(prefix="/api")

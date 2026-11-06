@@ -61,6 +61,77 @@ class HealthResponse(BaseModel):
     database: str
 
 
+class NotFoundErrorResponse(BaseModel):
+    code: str = "NOT_FOUND"
+    message: str
+
+
+class ProfessionalInput(BaseModel):
+    full_name: str = Field(alias="fullName")
+    license_number: str | None = Field(default=None, alias="licenseNumber")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+
+class ChairInput(BaseModel):
+    name: str
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+
+class ServiceInput(BaseModel):
+    name: str
+    default_duration_min: int = Field(alias="defaultDurationMin")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+
+class PatientInput(BaseModel):
+    full_name: str = Field(alias="fullName")
+    dni: str
+    phone: str | None = None
+    health_insurance: str | None = Field(default=None, alias="healthInsurance")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+
+class ProfessionalResponse(BaseModel):
+    id: UUID
+    full_name: str = Field(serialization_alias="fullName")
+    active: bool
+    license_number: str | None = Field(default=None, serialization_alias="licenseNumber")
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class ChairResponse(BaseModel):
+    id: UUID
+    name: str
+    active: bool
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class ServiceResponse(BaseModel):
+    id: UUID
+    name: str
+    default_duration_min: int = Field(serialization_alias="defaultDurationMin")
+    active: bool
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class PatientResponse(BaseModel):
+    id: UUID
+    full_name: str = Field(serialization_alias="fullName")
+    dni: str
+    phone: str | None = None
+    health_insurance: str | None = Field(default=None, serialization_alias="healthInsurance")
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+
 def serialize_violation(v: Violation) -> dict[str, Any]:
     interval_schema: IntervalSchema | None = None
     if v.conflicting_interval is not None:

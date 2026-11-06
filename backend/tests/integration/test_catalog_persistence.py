@@ -294,3 +294,140 @@ def test_patient_unrelated_primary_key_error_is_propagated(
 
     diagnostic = getattr(raised.value.orig, "diag", None)
     assert getattr(diagnostic, "constraint_name", None) == "pk_patient"
+
+
+def test_professional_repository_update_and_license_number(
+    connection: Connection,
+) -> None:
+    from app.repositories.catalog import ProfessionalRepository
+
+    session = Session(bind=connection)
+    repo = ProfessionalRepository(session)
+    prof_id = UUID(int=600101)
+    res = repo.create(
+        Professional(prof_id, "Dra. Con Matricula", True),
+        license_number="MN-12345",
+    )
+    assert res.__class__ is Ok
+    record = repo.get_with_license(prof_id)
+    assert record is not None
+    assert record.entity == Professional(prof_id, "Dra. Con Matricula", True)
+    assert record.license_number == "MN-12345"
+
+    updated = repo.update(
+        Professional(prof_id, "Dra. Con Matricula", True),
+        license_number="MP-99999",
+    )
+    assert updated == Ok(Professional(prof_id, "Dra. Con Matricula", True))
+    record2 = repo.get_with_license(prof_id)
+    assert record2 is not None
+    assert record2.license_number == "MP-99999"
+
+    assert repo.update(Professional(UUID(int=999999), "Inexistente", True)) is None
+
+    bad_res = repo.update(Professional(prof_id, "", True))
+    assert isinstance(bad_res, Rejected)
+    assert bad_res.violations[0].code is ViolationCode.EMPTY_NAME
+
+
+def test_chair_repository_update_and_exclusion(connection: Connection) -> None:
+    from app.repositories.catalog import ChairRepository
+
+    session = Session(bind=connection)
+    repo = ChairRepository(session)
+    c1 = UUID(int=600201)
+    c2 = UUID(int=600202)
+    assert repo.create(Chair(c1, "Sillón Alfa", True)).__class__ is Ok
+    assert repo.create(Chair(c2, "Sillón Beta", True)).__class__ is Ok
+
+    assert repo.update(Chair(c1, "Sillón Alfa", True)) == Ok(
+        Chair(c1, "Sillón Alfa", True)
+    )
+
+    assert repo.update(Chair(c1, "Sillón Gamma", True)) == Ok(
+        Chair(c1, "Sillón Gamma", True)
+    )
+
+    dup = repo.update(Chair(c2, "Sillón Gamma", True))
+    assert isinstance(dup, Rejected)
+    assert dup.violations[0].code is ViolationCode.DUPLICATE_NAME
+
+    assert repo.update(Chair(UUID(int=999998), "Fantasma", True)) is None
+
+
+def test_service_repository_update_and_active_filter(connection: Connection) -> None:
+    from app.repositories.catalog import ServiceRepository
+
+    session = Session(bind=connection)
+    repo = ServiceRepository(session)
+    s1 = UUID(int=600301)
+    s2 = UUID(int=600302)
+    assert repo.create(Service(s1, "Extracción Simple", 30, True)).__class__ is Ok
+    assert repo.create(Service(s2, "Limpieza Dental", 45, True)).__class__ is Ok
+
+    # conserving own name
+    assert repo.update(Service(s1, "Extracción Simple", 40, True)) == Ok(
+        Service(s1, "Extracción Simple", 40, True)
+    )
+
+    # duplicate name of s2
+    dup = repo.update(Service(s1, "Limpieza Dental", 40, True))
+    assert isinstance(dup, Rejected)
+    assert dup.violations[0].code is ViolationCode.DUPLICATE_NAME
+
+    # invalid duration
+    bad_dur = repo.update(Service(s1, "Extracción Simple", 0, True))
+    assert isinstance(bad_dur, Rejected)
+    assert bad_dur.violations[0].code is ViolationCode.INVALID_DURATION
+
+    # non-existent
+    assert repo.update(Service(UUID(int=999997), "Fantasma", 30, True)) is None
+
+    # test deactivate and active filter
+    repo.deactivate(s2)
+    all_services = repo.list()
+    active_services = repo.list(active=True)
+    inactive_services = repo.list(active=False)
+
+    assert any(s.id == s2 for s in all_services)
+    assert all(s.id != s2 for s in active_services)
+    assert any(s.id == s2 for s in inactive_services)
+
+
+def test_patient_repository_update_and_search(connection: Connection) -> None:
+    from app.repositories.patients import PatientRepository
+
+    session = Session(bind=connection)
+    repo = PatientRepository(session)
+    p1 = UUID(int=600401)
+    p2 = UUID(int=600402)
+    assert repo.create(Patient(p1, "Ana Pérez", "30111222", "11223344", "OSDE")).__class__ is Ok
+    assert repo.create(Patient(p2, "Carlos Gómez", "30222333", "22334455", "Swiss")).__class__ is Ok
+
+    # update conserving own DNI
+    assert repo.update(Patient(p1, "Ana Pérez Modificada", "30111222", "99887766", "Particular")) == Ok(
+        Patient(p1, "Ana Pérez Modificada", "30111222", "99887766", "Particular")
+    )
+
+    # update with duplicate DNI of p2
+    dup = repo.update(Patient(p1, "Ana Pérez Modificada", "30222333", "99887766", "Particular"))
+    assert isinstance(dup, Rejected)
+    assert dup.violations[0].code is ViolationCode.DUPLICATE_DNI
+
+    # non-existent
+    assert repo.update(Patient(UUID(int=999996), "Inexistente", "30999888")) is None
+
+    # search with exact tilde
+    found_tilde = repo.list(query="pérez")
+    assert any(p.id == p1 for p in found_tilde)
+
+    # search without tilde does NOT match
+    not_found_tilde = repo.list(query="perez")
+    assert all(p.id != p1 for p in not_found_tilde)
+
+    # search by DNI prefix
+    found_dni = repo.list(query="3011")
+    assert any(p.id == p1 for p in found_dni)
+    assert all(p.id != p2 for p in found_dni)
+
+
