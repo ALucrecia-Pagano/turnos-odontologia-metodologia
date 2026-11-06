@@ -1,0 +1,39 @@
+Tarea 8.1: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/db/seed.py
+--- original
+        if repository.get_by_id(user.id) is None:
+            repository.create(user, hash_password(password))
+
+--- mutado
+        if repository.get_by_id(user.id) is None:
+            repository.create(user, hash_password(password))
+        else:
+            from sqlalchemy import update
+            from app.db.models import UserModel
+            session.execute(update(UserModel).where(UserModel.id == user.id).values(password_hash=hash_password(password)))
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\integration\test_seed_users.py:140: AssertionError: assert {'administrad...Ycrx8IQERJU0'} == {'administrad...LuNJy+6pKj+g'}
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_seed_users.py::test_seed_does_not_change_existing_password
+1 failed, 1 warning in 1.54s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 1.23s
+

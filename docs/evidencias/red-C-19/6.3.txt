@@ -1,0 +1,35 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 3 items / 1 deselected / 2 selected
+
+tests\test_auth_docs.py FF                                               [100%]
+
+================================== FAILURES ===================================
+____________________ test_kb_09_registers_author_decisions ____________________
+
+    def test_kb_09_registers_author_decisions() -> None:
+        content = read_kb("09_decisiones_y_supuestos.md")
+    
+        # D5: el usuario se confirma contra la base en cada request.
+>       assert "en cada request" in content
+E       AssertionError: assert 'en cada request' in '# Decisiones y Supuestos\n\n## Decisiones documentadas\n\n### DD-01 — Stack fijado por la cátedra (2026-10-08)\n**Dec...iones del stack de la cátedra).**\n**Suposición:** Node.js 20 LTS o superior; Fastify 4, React 18, Vite 5, Vitest 1.\n'
+
+tests\test_auth_docs.py:25: AssertionError
+_______________________ test_kb_10_keeps_su_06_pending ________________________
+
+    def test_kb_10_keeps_su_06_pending() -> None:
+        content = read_kb("10_preguntas_abiertas.md")
+    
+        pending = [line for line in content.splitlines() if "SU-06" in line and "cátedra" in line]
+>       assert any("pendiente de confirmar" in line for line in pending)
+E       assert False
+E        +  where False = any(<generator object test_kb_10_keeps_su_06_pending.<locals>.<genexpr> at 0x000001BF5C54B030>)
+
+tests\test_auth_docs.py:37: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_docs.py::test_kb_09_registers_author_decisions - Asser...
+FAILED tests/test_auth_docs.py::test_kb_10_keeps_su_06_pending - assert False
+======================= 2 failed, 1 deselected in 0.18s =======================

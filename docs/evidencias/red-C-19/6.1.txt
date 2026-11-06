@@ -1,0 +1,240 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 16 items / 4 deselected / 12 selected
+
+tests\integration\test_auth_current_user.py FFFFFFFFFF.F                 [100%]
+
+================================== FAILURES ===================================
+________________________ test_valid_token_is_accepted _________________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D135444AD0>
+auth_settings = Settings(app_env='development', api_port=8000, postgres_user='turnos', postgres_password='***', postgres_...mezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
+
+    def test_valid_token_is_accepted(auth_client: TestClient, auth_settings: Settings) -> None:
+        user = AuthenticatedUser(
+            id=RECEPTION_ID,
+            username="recepcion",
+            display_name="Usuario Ficticio recepcion",
+            role=Role.RECEPCION,
+            professional_id=None,
+        )
+        # Armado igual que un token vencido, pero con el now actual (D14).
+        token = create_access_token(user, auth_settings, datetime.now(UTC))
+    
+        response = auth_client.get(ME, headers={"Authorization": f"Bearer {token}"})
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:56: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+_______________ test_unknown_user_with_valid_token_is_rejected ________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D135448550>
+auth_settings = Settings(app_env='development', api_port=8000, postgres_user='turnos', postgres_password='***', postgres_...mezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
+
+    def test_unknown_user_with_valid_token_is_rejected(
+        auth_client: TestClient, auth_settings: Settings
+    ) -> None:
+        user = AuthenticatedUser(
+            id=UUID("00000000-0000-0000-0000-00000000dead"),
+            username="nadie",
+            display_name="Nadie",
+            role=Role.RECEPCION,
+            professional_id=None,
+        )
+        token = create_access_token(user, auth_settings, datetime.now(UTC))
+    
+        response = auth_client.get(ME, headers={"Authorization": f"Bearer {token}"})
+    
+>       assert response.status_code == 401
+E       assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:73: AssertionError
+_____________ test_deactivated_user_with_valid_token_is_rejected ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D13544B9D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_deactivated_user_with_valid_token_is_rejected(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = login_headers(auth_client, "recepcion")
+        execute(test_engine, "UPDATE app_user SET active = false WHERE id = :id", id=RECEPTION_ID)
+    
+        response = auth_client.get(ME, headers=headers)
+    
+>       assert response.status_code == 401
+E       assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:85: AssertionError
+_____________ test_role_changed_user_with_valid_token_is_rejected _____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D135502520>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_role_changed_user_with_valid_token_is_rejected(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = login_headers(auth_client, "recepcion")
+        execute(
+            test_engine,
+            "UPDATE app_user SET role = 'administrador' WHERE id = :id",
+            id=RECEPTION_ID,
+        )
+    
+        response = auth_client.get(ME, headers=headers)
+    
+>       assert response.status_code == 401
+E       assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:101: AssertionError
+________________ test_new_login_after_role_change_has_new_role ________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D1355DCE90>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_new_login_after_role_change_has_new_role(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        execute(
+            test_engine,
+            "UPDATE app_user SET role = 'administrador' WHERE id = :id",
+            id=RECEPTION_ID,
+        )
+    
+        response = auth_client.get(ME, headers=login_headers(auth_client, "recepcion"))
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:116: AssertionError
+_____________ test_reactivated_user_with_valid_token_is_accepted ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D1355CD5B0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reactivated_user_with_valid_token_is_accepted(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = login_headers(auth_client, "recepcion")
+        execute(test_engine, "UPDATE app_user SET active = false WHERE id = :id", id=RECEPTION_ID)
+>       assert auth_client.get(ME, headers=headers).status_code == 401
+E       AssertionError: assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = get('/api/auth/me', headers={'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzkzOTg4MTM4fQ.PTe8wOpq3XzeXw-PulYIw0sxwJqhxNfwJdnRK0VJLII'})
+E        +      where get = <starlette.testclient.TestClient object at 0x000001D1355CD5B0>.get
+
+tests\integration\test_auth_current_user.py:125: AssertionError
+____________ test_professional_change_with_valid_token_is_accepted ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D135932AD0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_professional_change_with_valid_token_is_accepted(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = login_headers(auth_client, "odontologo")
+        execute(
+            test_engine,
+            "UPDATE app_user SET professional_id = :professional_id WHERE id = :id",
+            professional_id=OTHER_PROFESSIONAL_ID,
+            id=DOCTOR_ID,
+        )
+    
+        response = auth_client.get(ME, headers=headers)
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:146: AssertionError
+_____________________________ test_me_for_doctor ______________________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D1359858C0>
+
+    def test_me_for_doctor(auth_client: TestClient) -> None:
+        response = auth_client.get(ME, headers=login_headers(auth_client, "odontologo"))
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:153: AssertionError
+____________________________ test_me_for_reception ____________________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D135938B50>
+
+    def test_me_for_reception(auth_client: TestClient) -> None:
+        response = auth_client.get(ME, headers=login_headers(auth_client, "recepcion"))
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:166: AssertionError
+______________________________ test_me_for_admin ______________________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D13593A550>
+
+    def test_me_for_admin(auth_client: TestClient) -> None:
+        response = auth_client.get(ME, headers=login_headers(auth_client, "administrador"))
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:176: AssertionError
+_____________________ test_me_with_inactive_professional ______________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001D1359D0500>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_me_with_inactive_professional(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = login_headers(auth_client, "odontologo")
+        execute(
+            test_engine,
+            "UPDATE professional SET active = false WHERE id = :id",
+            id=PROFESSIONAL_ID,
+        )
+    
+        response = auth_client.get(ME, headers=headers)
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_auth_current_user.py:209: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_current_user.py::test_valid_token_is_accepted
+FAILED tests/integration/test_auth_current_user.py::test_unknown_user_with_valid_token_is_rejected
+FAILED tests/integration/test_auth_current_user.py::test_deactivated_user_with_valid_token_is_rejected
+FAILED tests/integration/test_auth_current_user.py::test_role_changed_user_with_valid_token_is_rejected
+FAILED tests/integration/test_auth_current_user.py::test_new_login_after_role_change_has_new_role
+FAILED tests/integration/test_auth_current_user.py::test_reactivated_user_with_valid_token_is_accepted
+FAILED tests/integration/test_auth_current_user.py::test_professional_change_with_valid_token_is_accepted
+FAILED tests/integration/test_auth_current_user.py::test_me_for_doctor - asse...
+FAILED tests/integration/test_auth_current_user.py::test_me_for_reception - a...
+FAILED tests/integration/test_auth_current_user.py::test_me_for_admin - asser...
+FAILED tests/integration/test_auth_current_user.py::test_me_with_inactive_professional
+============ 11 failed, 1 passed, 4 deselected, 1 warning in 1.78s ============
+
+[Nota de la tarea 11.9: el valor de postgres_password se reemplazo por *** con un script. El repr de Settings lo mostraba al fallar un test; corregido con Field(repr=False).]

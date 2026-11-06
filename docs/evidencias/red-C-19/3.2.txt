@@ -1,0 +1,28 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 9 items / 7 deselected / 2 selected
+
+tests\auth\test_passwords.py FF                                          [100%]
+
+================================== FAILURES ===================================
+______________________ test_missing_user_uses_dummy_hash ______________________
+
+    def test_missing_user_uses_dummy_hash() -> None:
+>       from app.auth.passwords import candidate_password_hash, dummy_password_hash
+E       ImportError: cannot import name 'candidate_password_hash' from 'app.auth.passwords' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\auth\passwords.py)
+
+tests\auth\test_passwords.py:55: ImportError
+__________________ test_existing_credentials_use_stored_hash __________________
+
+    def test_existing_credentials_use_stored_hash() -> None:
+>       from app.auth.passwords import candidate_password_hash
+E       ImportError: cannot import name 'candidate_password_hash' from 'app.auth.passwords' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\auth\passwords.py)
+
+tests\auth\test_passwords.py:64: ImportError
+=========================== short test summary info ===========================
+FAILED tests/auth/test_passwords.py::test_missing_user_uses_dummy_hash - Impo...
+FAILED tests/auth/test_passwords.py::test_existing_credentials_use_stored_hash
+======================= 2 failed, 7 deselected in 0.32s =======================

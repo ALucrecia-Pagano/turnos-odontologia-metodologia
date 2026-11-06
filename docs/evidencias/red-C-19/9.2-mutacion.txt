@@ -1,0 +1,235 @@
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/api/auth.py
+--- original
+    access_token: str = Field(serialization_alias="accessToken")
+
+--- mutado
+    access_token: str = Field(serialization_alias="accessToken")
+    password_hash: str = ""
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\integration\test_auth_no_leaks.py:31: AssertionError: assert not ['password_hash']
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_no_leaks.py::test_login_response_has_no_secrets
+1 failed, 1 warning in 0.37s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 0.35s
+
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/api/auth.py
+--- original
+    display_name: str = Field(serialization_alias="displayName")
+
+--- mutado
+    display_name: str = Field(serialization_alias="displayName")
+    password_hash: str = ""
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\integration\test_auth_no_leaks.py:31: AssertionError: assert not ['password_hash']
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_no_leaks.py::test_me_response_has_no_secrets
+1 failed, 1 warning in 0.36s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 0.35s
+
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/api/auth.py
+--- original
+    display_name: str = Field(serialization_alias="displayName")
+
+--- mutado
+    display_name: str = Field(serialization_alias="displayName")
+    password_hash: str = ""
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\api\test_login_input.py:83: AssertionError: CurrentUserResponse
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_login_input.py::test_response_schemas_have_no_hash - As...
+1 failed, 1 warning in 1.31s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 1.29s
+
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/auth/login.py
+--- original
+    password_ok = verify_password(candidate_password_hash(credentials), password)
+
+--- mutado
+    password_ok = verify_password(candidate_password_hash(credentials), password)
+    __import__("logging").getLogger("app").debug("intento con %s", password)
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\integration\test_auth_no_leaks.py:81: AssertionError: assert 'contraseña-...a-incorrecta' not in 'INFO     sq...7 ROLLBACK\n'
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_no_leaks.py::test_failed_login_logs_no_secrets
+1 failed, 1 warning in 0.34s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 0.30s
+
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/api/errors.py
+--- original
+        error_items.append(
+
+--- mutado
+        error_items.append({"leaked": str(err.get("input"))})
+        error_items.append(
+
+--- fin
+--- pytest con la mutacion, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 1.25s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 1.24s
+
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/api/errors.py
+--- original
+    return JSONResponse(status_code=400, content={"errors": error_items})
+
+--- mutado
+    return JSONResponse(status_code=422, content={"errors": error_items})
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\api\test_login_input.py:116: assert 422 == 400
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_login_input.py::test_malformed_json_on_protected_route_without_token
+1 failed, 1 warning in 1.25s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 1.19s
+
+
+=== La mutacion anterior de test_malformed_login_does_not_return_password no hizo fallar el test: err['input'] solo trae el username. Se repite con exc.body, el cuerpo completo. ===
+Tarea 9.2: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/api/errors.py
+--- original
+        error_items.append(
+
+--- mutado
+        error_items.append({"leaked": str(exc.body)})
+        error_items.append(
+
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F                                                                        [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\api\test_login_input.py:67: assert 'contraseña-marcada' not in '{"errors":[...nválido."}]}'
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_login_input.py::test_malformed_login_does_not_return_password
+1 failed, 1 warning in 2.19s
+
+--- pytest tras restaurar, codigo de salida 0
+.                                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 1.35s
+

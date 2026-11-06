@@ -1,0 +1,48 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 5 items
+
+tests\test_persistence_metadata.py F...F                                 [100%]
+
+================================== FAILURES ===================================
+__________ test_catalog_models_register_expected_tables_and_columns ___________
+
+    def test_catalog_models_register_expected_tables_and_columns() -> None:
+        from app.db.base import Base
+        from app.db import models
+    
+>       assert set(Base.metadata.tables) == {
+            "professional",
+            "chair",
+            "service",
+            "patient",
+            "working_hours",
+            "block",
+            "appointment",
+            "appointment_status_change",
+            "app_user",
+        }
+E       AssertionError: assert {'appointment...ssional', ...} == {'app_user', ...patient', ...}
+E         
+E         Extra items in the right set:
+E         'app_user'
+E         Use -v to get more diff
+
+tests\test_persistence_metadata.py:10: AssertionError
+_________ test_user_model_registers_expected_columns_and_constraints __________
+
+    def test_user_model_registers_expected_columns_and_constraints() -> None:
+        from app.db import models
+    
+>       user = cast(Table, models.UserModel.__table__)
+                           ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'app.db.models' has no attribute 'UserModel'
+
+tests\test_persistence_metadata.py:188: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/test_persistence_metadata.py::test_catalog_models_register_expected_tables_and_columns
+FAILED tests/test_persistence_metadata.py::test_user_model_registers_expected_columns_and_constraints
+========================= 2 failed, 3 passed in 1.16s =========================

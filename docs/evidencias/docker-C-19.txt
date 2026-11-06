@@ -1,0 +1,194 @@
+$ docker compose up --build -d backend
+ Image turnos-odontologia-backend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 597B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 408B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.13-slim
+#3 DONE 2.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 91B 0.0s done
+#4 DONE 0.0s
+
+#5 [1/8] FROM docker.io/library/python:3.13-slim@sha256:09a17cad02668ae61ece136b4fd36ac3849e14f670ebedb637ea3e15580525bc
+#5 resolve docker.io/library/python:3.13-slim@sha256:09a17cad02668ae61ece136b4fd36ac3849e14f670ebedb637ea3e15580525bc 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 296.23kB 0.1s done
+#6 DONE 0.1s
+
+#7 [2/8] WORKDIR /app
+#7 CACHED
+
+#8 [3/8] COPY pyproject.toml ./
+#8 CACHED
+
+#9 [4/8] COPY app ./app
+#9 DONE 0.1s
+
+#10 [5/8] RUN pip install --no-cache-dir .
+#10 3.772 Processing ./.
+#10 3.777   Installing build dependencies: started
+#10 7.866   Installing build dependencies: finished with status 'done'
+#10 7.868   Getting requirements to build wheel: started
+#10 8.380   Getting requirements to build wheel: finished with status 'done'
+#10 8.383   Preparing metadata (pyproject.toml): started
+#10 9.129   Preparing metadata (pyproject.toml): finished with status 'done'
+#10 9.271 Collecting alembic<2,>=1.13 (from turnos-odontologia-backend==0.1.0)
+#10 9.390   Downloading alembic-1.20.1-py3-none-any.whl.metadata (7.3 kB)
+#10 9.446 Collecting argon2-cffi<26,>=23.1 (from turnos-odontologia-backend==0.1.0)
+#10 9.473   Downloading argon2_cffi-25.1.0-py3-none-any.whl.metadata (4.1 kB)
+#10 9.578 Collecting fastapi<1,>=0.118 (from turnos-odontologia-backend==0.1.0)
+#10 9.604   Downloading fastapi-0.162.0-py3-none-any.whl.metadata (26 kB)
+#10 9.667 Collecting psycopg<4,>=3 (from psycopg[binary]<4,>=3->turnos-odontologia-backend==0.1.0)
+#10 9.694   Downloading psycopg-3.3.8-py3-none-any.whl.metadata (4.4 kB)
+#10 9.740 Collecting pydantic-settings<3,>=2 (from turnos-odontologia-backend==0.1.0)
+#10 9.768   Downloading pydantic_settings-2.16.2-py3-none-any.whl.metadata (4.0 kB)
+#10 9.812 Collecting pyjwt<3,>=2.10 (from turnos-odontologia-backend==0.1.0)
+#10 9.839   Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)
+#10 9.879 Collecting python-dotenv<2,>=1 (from turnos-odontologia-backend==0.1.0)
+#10 9.908   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#10 10.59 Collecting sqlalchemy<3,>=2 (from turnos-odontologia-backend==0.1.0)
+#10 10.62   Downloading sqlalchemy-2.1.8-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.7 kB)
+#10 10.66 Collecting tzdata>=2024.1 (from turnos-odontologia-backend==0.1.0)
+#10 10.69   Downloading tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+#10 10.74 Collecting uvicorn<1,>=0.30 (from turnos-odontologia-backend==0.1.0)
+#10 10.77   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#10 10.82 Collecting Mako (from alembic<2,>=1.13->turnos-odontologia-backend==0.1.0)
+#10 10.84   Downloading mako-1.4.3-py3-none-any.whl.metadata (2.9 kB)
+#10 10.88 Collecting typing-extensions>=4.12 (from alembic<2,>=1.13->turnos-odontologia-backend==0.1.0)
+#10 10.92   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#10 10.96 Collecting argon2-cffi-bindings (from argon2-cffi<26,>=23.1->turnos-odontologia-backend==0.1.0)
+#10 10.99   Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (7.5 kB)
+#10 11.05 Collecting starlette>=0.46.0 (from fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 11.07   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+#10 11.28 Collecting pydantic>=2.9.0 (from fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 11.31   Downloading pydantic-2.14.3-py3-none-any.whl.metadata (141 kB)
+#10 11.39 Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 11.42   Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+#10 11.45 Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 11.48   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#10 11.53 Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 11.56   Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+#10 11.88 Collecting psycopg-binary==3.3.8 (from psycopg[binary]<4,>=3->turnos-odontologia-backend==0.1.0)
+#10 11.90   Downloading psycopg_binary-3.3.8-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+#10 11.96 Collecting click>=7.0 (from uvicorn<1,>=0.30->turnos-odontologia-backend==0.1.0)
+#10 11.99   Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+#10 12.02 Collecting h11>=0.8 (from uvicorn<1,>=0.30->turnos-odontologia-backend==0.1.0)
+#10 12.05   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#10 12.09 Collecting annotated-types>=0.6.0 (from pydantic>=2.9.0->fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 12.12   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#10 13.49 Collecting pydantic-core==2.50.4 (from pydantic>=2.9.0->fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 13.52   Downloading pydantic_core-2.50.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+#10 13.57 Collecting anyio<5,>=4.0.0 (from starlette>=0.46.0->fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 13.59   Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+#10 13.63 Collecting idna>=2.8 (from anyio<5,>=4.0.0->starlette>=0.46.0->fastapi<1,>=0.118->turnos-odontologia-backend==0.1.0)
+#10 13.66   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#10 13.91 Collecting cffi>=1.0.1 (from argon2-cffi-bindings->argon2-cffi<26,>=23.1->turnos-odontologia-backend==0.1.0)
+#10 13.94   Downloading cffi-2.1.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#10 13.97 Collecting pycparser (from cffi>=1.0.1->argon2-cffi-bindings->argon2-cffi<26,>=23.1->turnos-odontologia-backend==0.1.0)
+#10 14.00   Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+#10 14.12 Collecting MarkupSafe>=2.0 (from Mako->alembic<2,>=1.13->turnos-odontologia-backend==0.1.0)
+#10 14.15   Downloading markupsafe-3.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#10 14.19 Downloading alembic-1.20.1-py3-none-any.whl (270 kB)
+#10 14.30 Downloading argon2_cffi-25.1.0-py3-none-any.whl (14 kB)
+#10 14.33 Downloading fastapi-0.162.0-py3-none-any.whl (148 kB)
+#10 14.40 Downloading psycopg-3.3.8-py3-none-any.whl (216 kB)
+#10 14.49 Downloading psycopg_binary-3.3.8-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.2 MB)
+#10 16.09    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 3.3 MB/s  0:00:01
+#10 16.12 Downloading pydantic_settings-2.16.2-py3-none-any.whl (81 kB)
+#10 16.17 Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
+#10 16.20 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#10 16.23 Downloading sqlalchemy-2.1.8-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.7 MB)
+#10 17.64    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 3.3 MB/s  0:00:01
+#10 17.67 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#10 17.71 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#10 17.74 Downloading click-8.5.1-py3-none-any.whl (126 kB)
+#10 17.80 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#10 17.83 Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+#10 17.87 Downloading pydantic-2.14.3-py3-none-any.whl (494 kB)
+#10 18.03 Downloading pydantic_core-2.50.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+#10 18.62    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 3.9 MB/s  0:00:00
+#10 18.64 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#10 18.67 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+#10 18.72 Downloading anyio-4.16.0-py3-none-any.whl (134 kB)
+#10 18.77 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#10 18.82 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#10 18.86 Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+#10 18.89 Downloading tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+#10 19.00 Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (26 kB)
+#10 19.04 Downloading cffi-2.1.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+#10 19.11 Downloading mako-1.4.3-py3-none-any.whl (80 kB)
+#10 19.16 Downloading markupsafe-3.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (23 kB)
+#10 19.19 Downloading pycparser-3.12-py3-none-any.whl (62 kB)
+#10 19.32 Building wheels for collected packages: turnos-odontologia-backend
+#10 19.33   Building wheel for turnos-odontologia-backend (pyproject.toml): started
+#10 19.55   Building wheel for turnos-odontologia-backend (pyproject.toml): finished with status 'done'
+#10 19.55   Created wheel for turnos-odontologia-backend: filename=turnos_odontologia_backend-0.1.0-py3-none-any.whl size=64034 sha256=6b7f0bd02e967a43816b65547fa72bbd65a56acf114af6e76e41defa083dc30a
+#10 19.56   Stored in directory: /tmp/pip-ephem-wheel-cache-weme80nh/wheels/19/62/e5/caf0138816cbbc0c92b8fb19626cf9ac282f22194a65231821
+#10 19.56 Successfully built turnos-odontologia-backend
+#10 19.71 Installing collected packages: tzdata, typing-extensions, python-dotenv, pyjwt, pycparser, psycopg-binary, psycopg, MarkupSafe, idna, h11, click, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, pydantic-core, opentelemetry-api, Mako, cffi, anyio, starlette, pydantic, argon2-cffi-bindings, alembic, pydantic-settings, fastapi, argon2-cffi, turnos-odontologia-backend
+#10 25.18 
+#10 25.19 Successfully installed Mako-1.4.3 MarkupSafe-3.0.4 alembic-1.20.1 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.16.0 argon2-cffi-25.1.0 argon2-cffi-bindings-26.1.0 cffi-2.1.1 click-8.5.1 fastapi-0.162.0 h11-0.16.0 idna-3.20 opentelemetry-api-1.45.2 psycopg-3.3.8 psycopg-binary-3.3.8 pycparser-3.12 pydantic-2.14.3 pydantic-core-2.50.4 pydantic-settings-2.16.2 pyjwt-2.15.1 python-dotenv-1.2.4 sqlalchemy-2.1.8 starlette-1.10.0 turnos-odontologia-backend-0.1.0 typing-extensions-4.16.0 typing-inspection-0.4.5 tzdata-2026.6 uvicorn-0.54.0
+#10 25.19 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#10 25.19 
+#10 25.19 [notice] A new release of pip is available: 26.2.2 -> 26.3
+#10 25.19 [notice] To update, run: pip install --upgrade pip
+#10 DONE 25.8s
+
+#11 [6/8] COPY alembic.ini ./
+#11 DONE 0.1s
+
+#12 [7/8] COPY alembic ./alembic
+#12 DONE 0.1s
+
+#13 [8/8] RUN useradd --create-home appuser
+#13 DONE 0.4s
+
+#14 exporting to image
+#14 exporting layers
+#14 exporting layers 4.0s done
+#14 exporting manifest sha256:f63ddf463f8cd2ee0f94d7b966d8ee4b70f316775ecf1e2a57fc16617bfe3a86 0.0s done
+#14 exporting config sha256:537e703305326e579f8f2732c6d4cb6f2139ee78b6d4b0ca55183877eaaf8296 0.0s done
+#14 exporting attestation manifest sha256:18719148fb4c6ba120af92a60708edcb3a3b9e5138a36361391d9a89bce7a298 0.0s done
+#14 exporting manifest list sha256:52bef8c63165bf70704368b4723e47134df756b5cd682c510345f8cc259dce36 0.0s done
+#14 naming to docker.io/library/turnos-odontologia-backend:latest done
+#14 unpacking to docker.io/library/turnos-odontologia-backend:latest
+#14 unpacking to docker.io/library/turnos-odontologia-backend:latest 1.4s done
+#14 DONE 5.5s
+
+#15 resolving provenance for metadata file
+#15 DONE 0.0s
+ Image turnos-odontologia-backend Built 
+ Container turnos-odontologia-redis-1 Running 
+ Container turnos-odontologia-postgres-1 Running 
+ Container turnos-odontologia-backend-1 Recreate 
+ Container turnos-odontologia-backend-1 Recreated 
+ Container turnos-odontologia-redis-1 Waiting 
+ Container turnos-odontologia-postgres-1 Waiting 
+ Container turnos-odontologia-postgres-1 Healthy 
+ Container turnos-odontologia-redis-1 Healthy 
+ Container turnos-odontologia-backend-1 Starting 
+ Container turnos-odontologia-backend-1 Started 
+exit=0
+$ docker compose ps
+NAME                            IMAGE                        COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+turnos-odontologia-backend-1    turnos-odontologia-backend   "sh -c 'alembic upgr…"   backend    10 seconds ago   Up 7 seconds (healthy)    0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+turnos-odontologia-postgres-1   postgres:16                  "docker-entrypoint.s…"   postgres   2 days ago       Up 56 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+turnos-odontologia-redis-1      redis:7                      "docker-entrypoint.s…"   redis      2 days ago       Up 56 minutes (healthy)   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+exit=0
+$ docker compose logs backend
+backend-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+backend-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+backend-1  | INFO:     Started server process [1]
+backend-1  | INFO:     Waiting for application startup.
+backend-1  | INFO:     Application startup complete.
+backend-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+backend-1  | INFO:     127.0.0.1:58922 - "GET /api/health HTTP/1.1" 200 OK
+exit=0

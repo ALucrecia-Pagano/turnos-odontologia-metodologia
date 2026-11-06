@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_auth_docs.py F                                                [100%]
+
+================================== FAILURES ===================================
+__________________ test_kb_03_documents_doctor_reading_scope __________________
+
+    def test_kb_03_documents_doctor_reading_scope() -> None:
+        content = read_kb("03_actores_y_roles.md")
+    
+        agenda_row = next(
+            line for line in content.splitlines() if line.startswith("| Turnos (leer agenda)")
+        )
+>       assert "R (todos, solo lectura" in agenda_row.split("|")[2]
+E       AssertionError: assert 'R (todos, solo lectura' in ' R (propios; **Suposición:** puede ver la agenda completa en solo lectura) '
+
+tests\test_auth_docs.py:46: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_docs.py::test_kb_03_documents_doctor_reading_scope - A...
+============================== 1 failed in 0.13s ==============================

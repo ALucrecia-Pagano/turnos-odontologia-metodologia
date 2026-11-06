@@ -1,0 +1,5 @@
+Salida generada por docs/evidencias/matriz-C-19.py. No editar a mano.
+filas en design.md: 34
+celdas: 102 (61 permitidas, 41 denegadas)
+diferencias contra tests/auth/rbac_matrix.py: 0
+codigo de salida: 0

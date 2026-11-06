@@ -1,0 +1,60 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 3 items
+
+tests\api\test_login_input.py FFF                                        [100%]
+
+================================== FAILURES ===================================
+______________________ test_missing_password_returns_400 ______________________
+
+client = <starlette.testclient.TestClient object at 0x000001D4192552B0>
+
+    def test_missing_password_returns_400(client: TestClient) -> None:
+        response = client.post(LOGIN, json={"username": "recepcion"})
+    
+>       assert response.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\api\test_login_input.py:36: AssertionError
+_____________________ test_too_long_password_returns_400 ______________________
+
+client = <starlette.testclient.TestClient object at 0x000001D4192C4410>
+
+    def test_too_long_password_returns_400(client: TestClient) -> None:
+        response = client.post(LOGIN, json={"username": "recepcion", "password": "x" * 129})
+    
+>       assert response.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\api\test_login_input.py:43: AssertionError
+________________________ test_extra_field_returns_400 _________________________
+
+client = <starlette.testclient.TestClient object at 0x000001D4192C7D90>
+
+    def test_extra_field_returns_400(client: TestClient) -> None:
+        response = client.post(
+            LOGIN,
+            json={"username": "recepcion", "password": "clave-ficticia", "role": "administrador"},
+        )
+    
+>       assert response.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\api\test_login_input.py:53: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_login_input.py::test_missing_password_returns_400 - ass...
+FAILED tests/api/test_login_input.py::test_too_long_password_returns_400 - as...
+FAILED tests/api/test_login_input.py::test_extra_field_returns_400 - assert 4...
+======================== 3 failed, 1 warning in 1.77s =========================

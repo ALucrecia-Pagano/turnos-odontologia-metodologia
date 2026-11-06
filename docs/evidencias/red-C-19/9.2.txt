@@ -1,0 +1,87 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 10 items
+
+tests\integration\test_auth_no_leaks.py ..F.                             [ 40%]
+tests\api\test_login_input.py ......                                     [100%]
+
+================================== FAILURES ===================================
+____________________ test_successful_login_logs_no_secrets ____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000015953F2B4D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+caplog = <_pytest.logging.LogCaptureFixture object at 0x0000015953AC5400>
+
+    def test_successful_login_logs_no_secrets(
+        auth_client: TestClient, test_engine: Engine, caplog: pytest.LogCaptureFixture
+    ) -> None:
+        password_hash = stored_hash(test_engine)
+        caplog.set_level(logging.DEBUG)
+        caplog.set_level(logging.DEBUG, logger="sqlalchemy.engine")
+    
+        response = auth_client.post(LOGIN, json={"username": "recepcion", "password": PASSWORD})
+    
+        assert response.status_code == 200
+        assert PASSWORD not in caplog.text
+>       assert password_hash not in caplog.text
+E       AssertionError: assert '$argon2id$v...hXTJQ$fWZMpQ' not in 'INFO     sq...7 ROLLBACK\n'
+E         
+E         '$argon2id$v=19$m=8...$0qO+xZhXTJQ$fWZMpQ' is contained here:
+E           epcion', '$argon2id$v=19$m=8,t=1,p=1$0qO+xZhXTJQ$fWZMpQ', 'recepcion', None, True)
+E           INFO     sqlalchemy.engine.Engine:base.py:2697 ROLLBACK
+
+tests\integration\test_auth_no_leaks.py:66: AssertionError
+---------------------------- Captured stderr call -----------------------------
+INFO  [sqlalchemy.engine.Engine] select pg_catalog.version()
+INFO  [sqlalchemy.engine.Engine] [raw sql] [SQL parameters hidden due to hide_parameters=True]
+DEBUG [sqlalchemy.engine.Engine] Col ('version',)
+DEBUG [sqlalchemy.engine.Engine] Row ('PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit',)
+INFO  [sqlalchemy.engine.Engine] select current_schema()
+INFO  [sqlalchemy.engine.Engine] [raw sql] [SQL parameters hidden due to hide_parameters=True]
+DEBUG [sqlalchemy.engine.Engine] Col ('current_schema',)
+DEBUG [sqlalchemy.engine.Engine] Row ('public',)
+INFO  [sqlalchemy.engine.Engine] show standard_conforming_strings
+INFO  [sqlalchemy.engine.Engine] [raw sql] [SQL parameters hidden due to hide_parameters=True]
+DEBUG [sqlalchemy.engine.Engine] Col ('standard_conforming_strings',)
+DEBUG [sqlalchemy.engine.Engine] Row ('on',)
+INFO  [sqlalchemy.engine.Engine] BEGIN (implicit)
+INFO  [sqlalchemy.engine.Engine] SELECT app_user.id, app_user.username, app_user.display_name, app_user.password_hash, app_user.role, app_user.professional_id, app_user.active 
+FROM app_user 
+WHERE app_user.username = %(username_1)s::VARCHAR
+INFO  [sqlalchemy.engine.Engine] [generated in 0.00018s] [SQL parameters hidden due to hide_parameters=True]
+DEBUG [sqlalchemy.engine.Engine] Col ('id', 'username', 'display_name', 'password_hash', 'role', 'professional_id', 'active')
+DEBUG [sqlalchemy.engine.Engine] Row (UUID('00000000-0000-0000-0000-0000000000e2'), 'recepcion', 'Usuario Ficticio recepcion', '$argon2id$v=19$m=8,t=1,p=1$0qO+xZhXTJQ$fWZMpQ', 'recepcion', None, True)
+INFO  [sqlalchemy.engine.Engine] ROLLBACK
+------------------------------ Captured log call ------------------------------
+INFO     sqlalchemy.engine.Engine:base.py:1837 select pg_catalog.version()
+INFO     sqlalchemy.engine.Engine:base.py:1837 [raw sql] [SQL parameters hidden due to hide_parameters=True]
+DEBUG    sqlalchemy.engine.Engine:cursor.py:1663 Col ('version',)
+DEBUG    sqlalchemy.engine.Engine:result.py:1144 Row ('PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit',)
+INFO     sqlalchemy.engine.Engine:base.py:1837 select current_schema()
+INFO     sqlalchemy.engine.Engine:base.py:1837 [raw sql] [SQL parameters hidden due to hide_parameters=True]
+DEBUG    sqlalchemy.engine.Engine:cursor.py:1663 Col ('current_schema',)
+DEBUG    sqlalchemy.engine.Engine:result.py:1144 Row ('public',)
+INFO     sqlalchemy.engine.Engine:base.py:1837 show standard_conforming_strings
+INFO     sqlalchemy.engine.Engine:base.py:1837 [raw sql] [SQL parameters hidden due to hide_parameters=True]
+DEBUG    sqlalchemy.engine.Engine:cursor.py:1663 Col ('standard_conforming_strings',)
+DEBUG    sqlalchemy.engine.Engine:result.py:1144 Row ('on',)
+INFO     sqlalchemy.engine.Engine:base.py:2694 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1837 SELECT app_user.id, app_user.username, app_user.display_name, app_user.password_hash, app_user.role, app_user.professional_id, app_user.active 
+FROM app_user 
+WHERE app_user.username = %(username_1)s::VARCHAR
+INFO     sqlalchemy.engine.Engine:base.py:1837 [generated in 0.00018s] [SQL parameters hidden due to hide_parameters=True]
+DEBUG    sqlalchemy.engine.Engine:cursor.py:1663 Col ('id', 'username', 'display_name', 'password_hash', 'role', 'professional_id', 'active')
+DEBUG    sqlalchemy.engine.Engine:loading.py:231 Row (UUID('00000000-0000-0000-0000-0000000000e2'), 'recepcion', 'Usuario Ficticio recepcion', '$argon2id$v=19$m=8,t=1,p=1$0qO+xZhXTJQ$fWZMpQ', 'recepcion', None, True)
+INFO     sqlalchemy.engine.Engine:base.py:2697 ROLLBACK
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_no_leaks.py::test_successful_login_logs_no_secrets
+=================== 1 failed, 9 passed, 1 warning in 1.36s ====================

@@ -1,0 +1,35 @@
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+--- mutacion fila 21 de D20: downgrade no borra el trigger de TRUNCATE
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_database_infrastructure.py F                      [100%]
+
+================================== FAILURES ===================================
+__ test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle ___
+tests\integration\test_database_infrastructure.py:261: in test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle
+    assert "tr_appointment_status_change_no_truncate" not in triggers
+E   AssertionError: assert 'tr_appointment_status_change_no_truncate' not in ['tr_appointment_status_change_append_only', 'tr_appointment_status_change_no_truncate']
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+---------------------------- Captured stderr call -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
+=========================== short test summary info ===========================
+FAILED tests/integration/test_database_infrastructure.py::test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle
+============================== 1 failed in 0.75s ==============================
+
+codigo de salida: 1
+restaurado: migracion original y base de test en head

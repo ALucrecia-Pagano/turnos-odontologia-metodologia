@@ -1,0 +1,16 @@
+=== 10.1: con una celda cambiada en la copia literal (fila 1, odontologo: todos) ===
+Salida generada por docs/evidencias/matriz-C-19.py. No editar a mano.
+filas en design.md: 34
+celdas: 102 (61 permitidas, 41 denegadas)
+diferencias contra tests/auth/rbac_matrix.py: 1
+fila 1, odontologo: design.md='—' copia='todos'
+codigo de salida: 1
+codigo de salida del proceso: 1
+
+=== 10.1: con la copia restaurada ===
+Salida generada por docs/evidencias/matriz-C-19.py. No editar a mano.
+filas en design.md: 34
+celdas: 102 (61 permitidas, 41 denegadas)
+diferencias contra tests/auth/rbac_matrix.py: 0
+codigo de salida: 0
+codigo de salida del proceso: 0

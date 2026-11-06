@@ -1,0 +1,31 @@
+--- ciclo explicito sobre la base de test
+$ alembic downgrade 20261105_05_historial_sin_truncate
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
+exit=0
+$ alembic current
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+20261105_05_historial_sin_truncate
+exit=0
+$ alembic upgrade 20261106_06_usuarios
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
+exit=0
+$ alembic current
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+20261106_06_usuarios (head)
+exit=0
+--- migracion de la base local, necesaria para el seed
+$ alembic upgrade head
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+exit=0
+$ alembic current
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+20261106_06_usuarios (head)
+exit=0

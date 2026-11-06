@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_config.py F                                                   [100%]
+
+================================== FAILURES ===================================
+_________________ test_settings_repr_hides_database_password __________________
+
+    def test_settings_repr_hides_database_password() -> None:
+        values = _complete_settings()
+        values["postgres_password"] = "MARCA-DE-POSTGRES"
+        values["database_url"] = "postgresql+psycopg://turnos:MARCA-DE-POSTGRES@localhost:5432/turnos"
+    
+        settings = Settings.model_validate(values)
+    
+>       assert "MARCA-DE-POSTGRES" not in repr(settings)
+E       assert 'MARCA-DE-POSTGRES' not in "Settings(ap...t:8000/api')"
+E         
+E         'MARCA-DE-POSTGRES' is contained here:
+E         ?           -------------------------------------------------------------------
+E           password='MARCA-DE-POSTGRES', postgres_db='turnos', database_url='postgresql+psycopg://turnos:MARCA-DE-POSTGRES@localhost:5432/turnos', redis_url='redis://localhost:6379/0', jwt_secret=SecretStr('**********'), jwt_algorithm='HS256', jwt_expires_min=60, seed_user_password=SecretStr('**********'), app_timezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
+E         ?                            ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+tests\test_config.py:152: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_config.py::test_settings_repr_hides_database_password - ass...
+============================== 1 failed in 0.53s ==============================

@@ -1,0 +1,89 @@
+$ openspec list --json
+{
+  "changes": [
+    {
+      "name": "autenticacion-jwt-y-roles",
+      "completedTasks": 0,
+      "totalTasks": 43,
+      "lastModified": "2026-11-06T02:39:07.917Z",
+      "status": "in-progress"
+    }
+  ],
+  "root": {
+    "path": "C:\\Users\\hp\\METODOLOGIA_TPS\\turnos-odontologia",
+    "source": "nearest"
+  }
+}
+
+$ openspec show api-foundation --type spec --json --no-scenarios
+{
+  "id": "api-foundation",
+  "title": "api-foundation",
+  "overview": "Base HTTP de la API REST: una factory `create_app` arma la aplicación con todas\nlas rutas bajo el prefijo `/api`. `GET /api/health` comprueba la base con una\nconsulta real y responde `200` o `503`. Una tabla total, sin valor por defecto,\nasigna a cada `ViolationCode` el status `409`, `422` o `403`; con códigos\nmixtos rige la precedencia `403`, luego `422`, luego `409`. Los rechazos del\ndominio responden con el cuerpo `{ \"violations\": [...] }` en camelCase y la\nentrada malformada responde `400`, sin devolver los valores enviados. CORS queda\nlimitado al origen de `CORS_ORIGIN`. Cada request recibe su propia sesión de\nbase, sin `commit` implícito. Swagger se sirve en `/api/docs`.",
+  "requirementCount": 11,
+  "requirements": [
+    {
+      "name": "Salud del servicio con chequeo de la base",
+      "text": "`GET /api/health` SHALL comprobar la base con una consulta real. SHALL responder `200` con `{ \"status\": \"ok\", \"database\": \"ok\" }` si la base responde, y `503` con `{ \"status\": \"unavailable\", \"database\": \"unavailable\" }` si no responde, sin exponer el texto del error.",
+      "scenarios": []
+    },
+    {
+      "name": "Entrada malformada responde 400",
+      "text": "Una entrada que no cumple el esquema de la ruta SHALL responder `400` con `{ \"errors\": [{ \"field\", \"type\", \"message\" }] }`, con `message` en español. La respuesta MUST NOT incluir los valores enviados. El `422` queda reservado a las reglas de validez del dominio.",
+      "scenarios": []
+    },
+    {
+      "name": "Violaciones de conflicto responden 409",
+      "text": "Un rechazo cuyas violaciones sean todas de conflicto SHALL responder `409` con `{ \"violations\": [...] }`. Son de conflicto `PROFESSIONAL_OVERLAP`, `CHAIR_OVERLAP`, `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME`, `DUPLICATE_DNI` y `DUPLICATE_NAME`.",
+      "scenarios": []
+    },
+    {
+      "name": "Violaciones de validez responden 422",
+      "text": "Un rechazo con una violación de validez SHALL responder `422`. Son de validez `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `INVALID_WORKING_HOURS`, `OVERLAPPING_WORKING_HOURS`, `INVALID_BLOCK`, `INVALID_DNI`, `EMPTY_NAME`, `STATUS_CHANGE_TOO_EARLY` e `INVALID_TRANSITION`.",
+      "scenarios": []
+    },
+    {
+      "name": "Operación prohibida responde 403",
+      "text": "Un rechazo con `FORBIDDEN_OPERATION` SHALL responder `403` con `{ \"violations\": [...] }`, conservando el mensaje en español del dominio.",
+      "scenarios": []
+    },
+    {
+      "name": "Precedencia de status con códigos mixtos",
+      "text": "Un rechazo con códigos de distinto status SHALL responder según la precedencia `403`, luego `422`, luego `409`. El cuerpo SHALL contener todas las violaciones, en el orden que devolvió el dominio.",
+      "scenarios": []
+    },
+    {
+      "name": "Clasificación total de los códigos de violación",
+      "text": "Todo `ViolationCode` SHALL tener un status HTTP asignado explícitamente, sin valor por defecto. La suite SHALL fallar si un código queda sin clasificar.",
+      "scenarios": []
+    },
+    {
+      "name": "Forma de cada violación en la respuesta",
+      "text": "Cada violación SHALL serializarse en camelCase con `code` y `message` siempre presentes. `conflictingAppointmentId`, `conflictingBlockId`, `conflictingInterval` y `referenceKind` SHALL aparecer solo cuando tienen valor; los vacíos se omiten, no se envían como `null`.",
+      "scenarios": []
+    },
+    {
+      "name": "CORS limitado al origen configurado",
+      "text": "La API SHALL permitir solo el origen de `CORS_ORIGIN`, sin credenciales, con los métodos `GET`, `POST`, `PUT`, `PATCH` y `DELETE` y los headers `Authorization` y `Content-Type`.",
+      "scenarios": []
+    },
+    {
+      "name": "Documentación OpenAPI con las respuestas de error",
+      "text": "Swagger SHALL servirse en `/api/docs` y el esquema en `/api/openapi.json`. El esquema MUST NOT incluir el `422` automático de FastAPI. Toda ruta con entrada SHALL documentar el `400`, y las rutas que rechazan SHALL documentar sus status con el esquema de violaciones.",
+      "scenarios": []
+    },
+    {
+      "name": "Sesión de base por request sin confirmación implícita",
+      "text": "Cada request SHALL recibir su propia sesión, que se revierte ante una excepción y se cierra al terminar. La sesión MUST NOT confirmar por su cuenta: una escritura persiste solo si quien es dueño de ella la confirma de forma explícita.",
+      "scenarios": []
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "format": "openspec"
+  },
+  "root": {
+    "path": "C:\\Users\\hp\\METODOLOGIA_TPS\\turnos-odontologia",
+    "source": "nearest"
+  }
+}

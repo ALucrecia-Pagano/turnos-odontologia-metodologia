@@ -1,0 +1,22 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_auth_docs.py F                                                [100%]
+
+================================== FAILURES ===================================
+________________________ test_kb_04_documents_app_user ________________________
+
+    def test_kb_04_documents_app_user() -> None:
+        content = read_kb("04_modelo_de_datos.md")
+    
+>       assert "app_user" in content
+E       AssertionError: assert 'app_user' in '# Modelo de Datos\n\nConvenciones: base **PostgreSQL**, mapeada con **SQLAlchemy 2.x** (modelos en `backend/app/db/`,... vive en un script (`backend/app/db/seed.py`) y **nunca** incluye datos reales ni contraseñas escritas en el código.\n'
+
+tests\test_auth_docs.py:15: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_docs.py::test_kb_04_documents_app_user - AssertionErro...
+============================== 1 failed in 0.19s ==============================

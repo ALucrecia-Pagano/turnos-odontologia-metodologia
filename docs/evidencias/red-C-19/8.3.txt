@@ -1,0 +1,34 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 6 items / 4 deselected / 2 selected
+
+tests\test_auth_docs.py FF                                               [100%]
+
+================================== FAILURES ===================================
+____________________ test_readme_documents_seed_and_secret ____________________
+
+    def test_readme_documents_seed_and_secret() -> None:
+        content = (REPO_ROOT / "backend" / "README.md").read_text(encoding="utf-8")
+    
+        for username in ("administrador", "recepcion", "odontologo"):
+>           assert f"`{username}`" in content
+E           AssertionError: assert '`administrador`' in '# Backend — turnos-odontologia\n\nBackend en Python del sistema de agenda de turnos: proyecto instalable, `pytest`,\n...s y un futuro seed; no ejecuta I/O ni contiene secretos. Importa entidades del dominio; el dominio nunca lo importa.\n'
+
+tests\test_auth_docs.py:54: AssertionError
+_________________ test_kb_08_documents_optional_seed_password _________________
+
+    def test_kb_08_documents_optional_seed_password() -> None:
+        content = read_kb("08_arquitectura_propuesta.md")
+    
+        row = next(line for line in content.splitlines() if line.startswith("| `SEED_USER_PASSWORD`"))
+>       assert "Opcional para la API" in row
+E       AssertionError: assert 'Opcional para la API' in '| `SEED_USER_PASSWORD` | Contraseña de los usuarios ficticios del seed (solo desarrollo) | — | **S** |'
+
+tests\test_auth_docs.py:65: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_docs.py::test_readme_documents_seed_and_secret - Asser...
+FAILED tests/test_auth_docs.py::test_kb_08_documents_optional_seed_password
+======================= 2 failed, 4 deselected in 0.17s =======================

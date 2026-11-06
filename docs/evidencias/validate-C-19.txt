@@ -1,0 +1,30 @@
+$ openspec validate autenticacion-jwt-y-roles --strict
+Change 'autenticacion-jwt-y-roles' is valid
+exit=0
+$ git diff --check
+warning: in the working copy of 'backend/app/api/deps.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/errors.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/openapi.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/config.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/db/models.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/db/seed.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/db/session.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/demo_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/pyproject.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/api/conftest.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/integration/conftest.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/integration/test_catalog_persistence.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/integration/test_database_infrastructure.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_api_dependencies.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_config.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_demo_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_persistence_metadata.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'knowledge-base/03_actores_y_roles.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'knowledge-base/04_modelo_de_datos.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'knowledge-base/08_arquitectura_propuesta.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'knowledge-base/09_decisiones_y_supuestos.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'knowledge-base/10_preguntas_abiertas.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/autenticacion-jwt-y-roles/tasks.md', LF will be replaced by CRLF the next time Git touches it
+exit=0

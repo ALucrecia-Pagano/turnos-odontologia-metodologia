@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\test_api_dependencies.py F                                         [100%]
+
+================================== FAILURES ===================================
+_____________________ test_auth_dependencies_are_declared _____________________
+
+    def test_auth_dependencies_are_declared() -> None:
+        pyproject_path = Path(__file__).parents[1] / "pyproject.toml"
+        data = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
+    
+        dependencies = data["project"]["dependencies"]
+    
+>       assert "PyJWT>=2.10,<3" in dependencies
+E       AssertionError: assert 'PyJWT>=2.10,<3' in ['tzdata>=2024.1', 'sqlalchemy>=2,<3', 'alembic>=1.13,<2', 'psycopg[binary]>=3,<4', 'pydantic-settings>=2,<3', 'fastapi>=0.118,<1', ...]
+
+tests\test_api_dependencies.py:31: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_api_dependencies.py::test_auth_dependencies_are_declared - ...
+============================== 1 failed in 0.26s ==============================

@@ -1,0 +1,76 @@
+Tarea 7.3: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/auth/permissions.py
+--- original
+(Resource.APPOINTMENT, Action.RESCHEDULE): {_R: _ALL, _A: _ALL},
+--- mutado
+(Resource.APPOINTMENT, Action.RESCHEDULE): {_D: _ALL, _R: _ALL, _A: _ALL},
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F..                                                                      [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\auth\test_rbac_domain_parity.py:101: AssertionError: assert True is (<Role.ODONTOLOGO: 'odontologo'> not in {<Role.ODONTOLOGO: 'odontologo'>: <Scope.ALL: 'all'>, <Role.RECEPCION: 'recepcion'>: <Scope.ALL: 'all'>, <Role.ADMINISTRADOR: 'administrador'>: <Scope.ALL: 'all'>})
+=========================== short test summary info ===========================
+FAILED tests/auth/test_rbac_domain_parity.py::test_parity_reschedule[odontologo]
+1 failed, 2 passed in 0.10s
+
+--- pytest tras restaurar, codigo de salida 0
+...                                                                      [100%]
+3 passed in 0.10s
+
+Tarea 7.3: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/auth/permissions.py
+--- original
+(Resource.APPOINTMENT, Action.CANCEL): {_R: _ALL, _A: _ALL},
+--- mutado
+(Resource.APPOINTMENT, Action.CANCEL): {_D: _ALL, _R: _ALL, _A: _ALL},
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F..                                                                      [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\auth\test_rbac_domain_parity.py:110: AssertionError: assert True is (<Role.ODONTOLOGO: 'odontologo'> not in {<Role.ODONTOLOGO: 'odontologo'>: <Scope.ALL: 'all'>, <Role.RECEPCION: 'recepcion'>: <Scope.ALL: 'all'>, <Role.ADMINISTRADOR: 'administrador'>: <Scope.ALL: 'all'>})
+=========================== short test summary info ===========================
+FAILED tests/auth/test_rbac_domain_parity.py::test_parity_cancel[odontologo]
+1 failed, 2 passed in 0.09s
+
+--- pytest tras restaurar, codigo de salida 0
+...                                                                      [100%]
+3 passed in 0.07s
+
+Tarea 7.3: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/auth/permissions.py
+--- original
+(Resource.APPOINTMENT, Action.CHANGE_STATUS): {_D: _OWN, _R: _ALL, _A: _ALL},
+--- mutado
+(Resource.APPOINTMENT, Action.CHANGE_STATUS): {_R: _ALL, _A: _ALL},
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F..                                                                      [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\auth\test_rbac_domain_parity.py:121: AssertionError: assert <Role.ODONTOLOGO: 'odontologo'> in {<Role.RECEPCION: 'recepcion'>: <Scope.ALL: 'all'>, <Role.ADMINISTRADOR: 'administrador'>: <Scope.ALL: 'all'>}
+=========================== short test summary info ===========================
+FAILED tests/auth/test_rbac_domain_parity.py::test_parity_change_status_own[odontologo]
+1 failed, 2 passed in 0.09s
+
+--- pytest tras restaurar, codigo de salida 0
+...                                                                      [100%]
+3 passed in 0.09s
+
+Tarea 7.3: mutacion obligatoria de los tests que pasaron de entrada
+archivo: app/auth/permissions.py
+--- original
+(Resource.APPOINTMENT, Action.CHANGE_STATUS): {_D: _OWN, _R: _ALL, _A: _ALL},
+--- mutado
+(Resource.APPOINTMENT, Action.CHANGE_STATUS): {_D: _ALL, _R: _ALL, _A: _ALL},
+--- fin
+--- pytest con la mutacion, codigo de salida 1
+F..                                                                      [100%]
+================================== FAILURES ===================================
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\auth\test_rbac_domain_parity.py:133: AssertionError: assert True is (<Scope.ALL: 'all'> is <Scope.OWN: 'own'>)
+=========================== short test summary info ===========================
+FAILED tests/auth/test_rbac_domain_parity.py::test_parity_change_status_foreign[odontologo]
+1 failed, 2 passed in 0.08s
+
+--- pytest tras restaurar, codigo de salida 0
+...                                                                      [100%]
+3 passed in 0.08s
+

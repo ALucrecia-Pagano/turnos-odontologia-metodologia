@@ -1,0 +1,8 @@
+POST /auth/login administrador: status 200
+GET /auth/me administrador: status 200, rol administrador
+POST /auth/login recepcion: status 200
+GET /auth/me recepcion: status 200, rol recepcion
+POST /auth/login odontologo: status 200
+GET /auth/me odontologo: status 200, rol odontologo
+POST /auth/login recepcion con contrasena incorrecta: status 401
+fallos: 0

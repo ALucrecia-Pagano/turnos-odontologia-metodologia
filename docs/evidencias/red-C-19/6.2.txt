@@ -1,0 +1,99 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 16 items / 12 deselected / 4 selected
+
+tests\integration\test_auth_current_user.py FFFF                         [100%]
+
+================================== FAILURES ===================================
+____________________________ test_actor_for_doctor ____________________________
+
+auth_app = <fastapi.applications.FastAPI object at 0x0000029DFBEEF0E0>
+auth_client = <starlette.testclient.TestClient object at 0x0000029DFBF7CC20>
+
+    def test_actor_for_doctor(auth_app: FastAPI, auth_client: TestClient) -> None:
+>       mount_actor_route(auth_app)
+
+tests\integration\test_auth_current_user.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+app = <fastapi.applications.FastAPI object at 0x0000029DFBEEF0E0>
+
+    def mount_actor_route(app: FastAPI) -> None:
+>       from app.api.deps import get_current_actor
+E       ImportError: cannot import name 'get_current_actor' from 'app.api.deps' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\api\deps.py)
+
+tests\integration\test_auth_current_user.py:213: ImportError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+__________________________ test_actor_for_reception ___________________________
+
+auth_app = <fastapi.applications.FastAPI object at 0x0000029DFBF73890>
+auth_client = <starlette.testclient.TestClient object at 0x0000029D8002C190>
+
+    def test_actor_for_reception(auth_app: FastAPI, auth_client: TestClient) -> None:
+>       mount_actor_route(auth_app)
+
+tests\integration\test_auth_current_user.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+app = <fastapi.applications.FastAPI object at 0x0000029DFBF73890>
+
+    def mount_actor_route(app: FastAPI) -> None:
+>       from app.api.deps import get_current_actor
+E       ImportError: cannot import name 'get_current_actor' from 'app.api.deps' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\api\deps.py)
+
+tests\integration\test_auth_current_user.py:213: ImportError
+____________________________ test_actor_for_admin _____________________________
+
+auth_app = <fastapi.applications.FastAPI object at 0x0000029D8002DA90>
+auth_client = <starlette.testclient.TestClient object at 0x0000029D8002E350>
+
+    def test_actor_for_admin(auth_app: FastAPI, auth_client: TestClient) -> None:
+>       mount_actor_route(auth_app)
+
+tests\integration\test_auth_current_user.py:260: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+app = <fastapi.applications.FastAPI object at 0x0000029D8002DA90>
+
+    def mount_actor_route(app: FastAPI) -> None:
+>       from app.api.deps import get_current_actor
+E       ImportError: cannot import name 'get_current_actor' from 'app.api.deps' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\api\deps.py)
+
+tests\integration\test_auth_current_user.py:213: ImportError
+__________________ test_client_header_does_not_change_actor ___________________
+
+auth_app = <fastapi.applications.FastAPI object at 0x0000029D8002F750>
+auth_client = <starlette.testclient.TestClient object at 0x0000029DFBF90770>
+
+    def test_client_header_does_not_change_actor(
+        auth_app: FastAPI, auth_client: TestClient
+    ) -> None:
+>       mount_actor_route(auth_app)
+
+tests\integration\test_auth_current_user.py:276: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+app = <fastapi.applications.FastAPI object at 0x0000029D8002F750>
+
+    def mount_actor_route(app: FastAPI) -> None:
+>       from app.api.deps import get_current_actor
+E       ImportError: cannot import name 'get_current_actor' from 'app.api.deps' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\api\deps.py)
+
+tests\integration\test_auth_current_user.py:213: ImportError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_current_user.py::test_actor_for_doctor - I...
+FAILED tests/integration/test_auth_current_user.py::test_actor_for_reception
+FAILED tests/integration/test_auth_current_user.py::test_actor_for_admin - Im...
+FAILED tests/integration/test_auth_current_user.py::test_client_header_does_not_change_actor
+================= 4 failed, 12 deselected, 1 warning in 0.74s =================

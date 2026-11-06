@@ -1,0 +1,33 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 0 items / 2 errors
+
+=================================== ERRORS ====================================
+__________________ ERROR collecting tests/auth/test_model.py __________________
+ImportError while importing test module 'C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\auth\test_model.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\auth\test_model.py:3: in <module>
+    from app.auth.model import AuthenticatedUser, UserCredentials
+E   ModuleNotFoundError: No module named 'app.auth.model'
+_________ ERROR collecting tests/integration/test_user_repository.py __________
+ImportError while importing test module 'C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\integration\test_user_repository.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\test_user_repository.py:9: in <module>
+    from app.auth.model import AuthenticatedUser, StoredUser
+E   ModuleNotFoundError: No module named 'app.auth.model'
+=========================== short test summary info ===========================
+ERROR tests/auth/test_model.py
+ERROR tests/integration/test_user_repository.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.52s ==============================

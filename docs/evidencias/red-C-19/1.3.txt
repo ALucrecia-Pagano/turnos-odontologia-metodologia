@@ -1,0 +1,120 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 12 items
+
+tests\test_config.py ....FFFFFFFF                                        [100%]
+
+================================== FAILURES ===================================
+_____________________ test_short_secret_error_hides_value _____________________
+
+    def test_short_secret_error_hides_value() -> None:
+        values = _complete_settings()
+        values["jwt_secret"] = SECRET_MARK.ljust(31, "x")
+    
+>       with pytest.raises(ValidationError, match="JWT_SECRET") as error:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+
+tests\test_config.py:86: Failed
+_____________________ test_secret_of_32_characters_loads ______________________
+
+    def test_secret_of_32_characters_loads() -> None:
+        values = _complete_settings()
+        values["jwt_secret"] = "x" * 32
+    
+        settings = Settings.model_validate(values)
+    
+>       assert settings.jwt_secret.get_secret_value() == "x" * 32
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'get_secret_value'
+
+tests\test_config.py:98: AttributeError
+______________________ test_empty_secret_names_variable _______________________
+
+    def test_empty_secret_names_variable() -> None:
+        values = _complete_settings()
+        values["jwt_secret"] = ""
+    
+>       with pytest.raises(ValidationError, match="JWT_SECRET"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+
+tests\test_config.py:105: Failed
+_______________________ test_algorithm_none_is_rejected _______________________
+
+    def test_algorithm_none_is_rejected() -> None:
+        values = _complete_settings()
+        values["jwt_algorithm"] = "none"
+    
+>       with pytest.raises(ValidationError, match="jwt_algorithm"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+
+tests\test_config.py:113: Failed
+____________________ test_asymmetric_algorithm_is_rejected ____________________
+
+    def test_asymmetric_algorithm_is_rejected() -> None:
+        values = _complete_settings()
+        values["jwt_algorithm"] = "RS256"
+    
+>       with pytest.raises(ValidationError, match="jwt_algorithm"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+
+tests\test_config.py:121: Failed
+______________________ test_zero_expiration_is_rejected _______________________
+
+    def test_zero_expiration_is_rejected() -> None:
+        values = _complete_settings()
+        values["jwt_expires_min"] = "0"
+    
+>       with pytest.raises(ValidationError, match="jwt_expires_min"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+
+tests\test_config.py:129: Failed
+______________________ test_settings_repr_hides_secrets _______________________
+
+    def test_settings_repr_hides_secrets() -> None:
+        values = _complete_settings()
+        values["jwt_secret"] = SECRET_MARK.ljust(32, "x")
+        values["seed_user_password"] = "MARCA-DE-SEMILLA"
+    
+        settings = Settings.model_validate(values)
+    
+>       assert SECRET_MARK not in repr(settings)
+E       assert 'MARCA-RECONOCIBLE' not in "Settings(ap...t:8000/api')"
+E         
+E         'MARCA-RECONOCIBLE' is contained here:
+E         ?           ^^^^^^^^^^^^^^^^^
+E           t_secret='MARCA-RECONOCIBLExxxxxxxxxxxxxxx', jwt_algorithm='HS256', jwt_expires_min=60, seed_user_password='MARCA-DE-SEMILLA', app_timezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
+E         ?           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_config.py:140: AssertionError
+__________________ test_missing_seed_password_loads_as_none ___________________
+
+    def test_missing_seed_password_loads_as_none() -> None:
+        values = _complete_settings()
+        values.pop("seed_user_password")
+    
+>       settings = Settings.model_validate(values)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for Settings
+E       seed_user_password
+E         Field required [type=missing, input_value={'app_env': 'development'...p://localhost:8000/api'}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.14/v/missing
+
+tests\test_config.py:149: ValidationError
+=========================== short test summary info ===========================
+FAILED tests/test_config.py::test_short_secret_error_hides_value - Failed: DI...
+FAILED tests/test_config.py::test_secret_of_32_characters_loads - AttributeEr...
+FAILED tests/test_config.py::test_empty_secret_names_variable - Failed: DID N...
+FAILED tests/test_config.py::test_algorithm_none_is_rejected - Failed: DID NO...
+FAILED tests/test_config.py::test_asymmetric_algorithm_is_rejected - Failed: ...
+FAILED tests/test_config.py::test_zero_expiration_is_rejected - Failed: DID N...
+FAILED tests/test_config.py::test_settings_repr_hides_secrets - assert 'MARCA...
+FAILED tests/test_config.py::test_missing_seed_password_loads_as_none - pydan...
+========================= 8 failed, 4 passed in 0.71s =========================
