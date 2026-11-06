@@ -1,3 +1,4 @@
+import logging
 from typing import Protocol
 
 from sqlalchemy import Engine, event
@@ -5,6 +6,16 @@ from sqlalchemy.engine import URL, create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.config import Settings
+
+
+class _HideRowValues(logging.Filter):
+    """En DEBUG, SQLAlchemy registra cada fila leída; `hide_parameters` no lo cubre."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.msg != "Row %r"
+
+
+logging.getLogger("sqlalchemy.engine.Engine").addFilter(_HideRowValues())
 
 
 class _Cursor(Protocol):
@@ -24,6 +35,7 @@ def create_database_engine(settings: Settings) -> Engine:
     engine = create_engine(
         settings.database_url,
         pool_pre_ping=True,
+        hide_parameters=True,
         connect_args={"connect_timeout": 3},
     )
 

@@ -126,7 +126,7 @@ Todas se leen de `.env` (no versionado). `.env.example` lista los nombres **sin 
 | `JWT_SECRET` | Clave de firma de los JWT | — | **S** |
 | `JWT_ALGORITHM` | Algoritmo de firma | `HS256` | N |
 | `JWT_EXPIRES_MIN` | Vigencia del token de acceso, en minutos | `60` | N |
-| `SEED_USER_PASSWORD` | Contraseña de los usuarios ficticios del seed (solo desarrollo) | — | **S** |
+| `SEED_USER_PASSWORD` | Contraseña de los usuarios ficticios del seed (solo desarrollo). Opcional para la API; la exige el seed, con al menos 8 caracteres | — | **S** |
 | `APP_TIMEZONE` | Zona horaria de las reglas de horario | `America/Argentina/Buenos_Aires` | N |
 | `CORS_ORIGIN` | Origen permitido para el frontend | `http://localhost:5173` | N |
 | `VITE_API_URL` | URL base de la API para el frontend | `http://localhost:8000/api` | N |

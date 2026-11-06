@@ -3,7 +3,11 @@ from typing import Any
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 
-from app.api.schemas import MalformedRequestResponse, ViolationResponseSchema
+from app.api.schemas import (
+    AuthErrorResponse,
+    MalformedRequestResponse,
+    ViolationResponseSchema,
+)
 
 
 def violation_responses(*status_codes: int) -> dict[int | str, dict[str, Any]]:
@@ -67,6 +71,37 @@ def violation_responses(*status_codes: int) -> dict[int | str, dict[str, Any]]:
     return responses
 
 
+def permission_responses() -> dict[int | str, dict[str, Any]]:
+    responses = violation_responses(403)
+    responses[403]["description"] = "El rol no tiene permiso para esta operación"
+    responses[403]["content"]["application/json"]["example"] = {
+        "violations": [
+            {
+                "code": "FORBIDDEN_OPERATION",
+                "message": "No tiene permiso para dar turnos.",
+            }
+        ]
+    }
+    return responses
+
+
+def login_responses() -> dict[int | str, dict[str, Any]]:
+    return {
+        401: {
+            "model": AuthErrorResponse,
+            "description": "Credenciales inválidas",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "code": "INVALID_CREDENTIALS",
+                        "message": "Usuario o contraseña incorrectos.",
+                    }
+                }
+            },
+        }
+    }
+
+
 def setup_openapi(app: FastAPI) -> None:
     def custom_openapi() -> dict[str, Any]:
         if app.openapi_schema:
@@ -93,6 +128,14 @@ def setup_openapi(app: FastAPI) -> None:
                 del malformed_schema["$defs"]
             schemas["MalformedRequestResponse"] = malformed_schema
 
+        if "AuthErrorResponse" not in schemas:
+            auth_error_schema = AuthErrorResponse.model_json_schema(
+                ref_template="#/components/schemas/{model}"
+            )
+            for def_name, def_val in auth_error_schema.pop("$defs", {}).items():
+                schemas[def_name] = def_val
+            schemas["AuthErrorResponse"] = auth_error_schema
+
         paths: dict[str, Any] = openapi_schema.get("paths", {})
         for path_item in paths.values():
             if not isinstance(path_item, dict):
@@ -112,6 +155,22 @@ def setup_openapi(app: FastAPI) -> None:
                                 "schema": {
                                     "$ref": "#/components/schemas/MalformedRequestResponse"
                                 }
+                            }
+                        },
+                    }
+
+                if operation.get("security") and "401" not in responses:
+                    responses["401"] = {
+                        "description": "Token ausente, vencido o inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthErrorResponse"
+                                },
+                                "example": {
+                                    "code": "INVALID_TOKEN",
+                                    "message": "La sesión venció o no es válida. Inicie sesión de nuevo.",
+                                },
                             }
                         },
                     }

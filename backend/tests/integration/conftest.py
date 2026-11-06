@@ -3,6 +3,8 @@ from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 import psycopg
 import pytest
 from psycopg import sql
@@ -11,6 +13,8 @@ from sqlalchemy.engine import URL, make_url
 
 from app.config import Settings, load_settings
 from app.db.session import create_database_engine
+from app.main import create_app
+from tests.integration.auth_support import create_auth_users, remove_auth_users
 
 
 BACKEND_ROOT = Path(__file__).resolve().parents[2]
@@ -87,6 +91,36 @@ def test_table(connection: Connection) -> Iterator[None]:
     yield
 
 
+@pytest.fixture
+def auth_settings(integration_settings: Settings, test_database_url: URL) -> Settings:
+    return integration_settings.model_copy(
+        update={"database_url": test_database_url.render_as_string(hide_password=False)}
+    )
+
+
+@pytest.fixture
+def auth_users(test_engine: Engine) -> Iterator[None]:
+    create_auth_users(test_engine)
+    try:
+        yield
+    finally:
+        remove_auth_users(test_engine)
+
+
+@pytest.fixture
+def auth_app(auth_settings: Settings, auth_users: None) -> Iterator[FastAPI]:
+    app = create_app(auth_settings)
+    try:
+        yield app
+    finally:
+        app.state.engine.dispose()
+
+
+@pytest.fixture
+def auth_client(auth_app: FastAPI) -> TestClient:
+    return TestClient(auth_app)
+
+
 def clean_database_tables(engine: Engine) -> None:
     """Limpia las tablas de la base de prueba respetando el trigger append-only.
 
@@ -106,6 +140,7 @@ def clean_database_tables(engine: Engine) -> None:
                     "TRUNCATE TABLE appointment_status_change, appointment, block, working_hours CASCADE"
                 )
             )
+            conn.execute(text("DELETE FROM app_user"))
             conn.execute(text("DELETE FROM patient"))
             conn.execute(text("DELETE FROM service"))
             conn.execute(text("DELETE FROM chair"))

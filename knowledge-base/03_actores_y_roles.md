@@ -19,7 +19,7 @@ Leyenda: C crear · R leer · U actualizar · D borrar · `—` sin acceso · `p
 | Recurso | Odontólogo | Recepción | Administrador |
 |---------|------------|-----------|---------------|
 | Turnos (dar) | — (**Suposición:** no da turnos) | C | C |
-| Turnos (leer agenda) | R (propios; **Suposición:** puede ver la agenda completa en solo lectura) | R (todos) | R (todos) |
+| Turnos (leer agenda) | R (todos, solo lectura; decisión de la autora en C-19) | R (todos) | R (todos) |
 | Turnos (reprogramar / cancelar) | — | U (todos) | U (todos) |
 | Turnos (cambiar estado: confirmado, atendido, ausente) | U (propios) | U (todos) | U (todos) |
 | Historial de turno | R (propios) | R (todos) | R (todos) |
@@ -32,6 +32,10 @@ Leyenda: C crear · R leer · U actualizar · D borrar · `—` sin acceso · `p
 | Usuarios y roles | — | — | CRUD |
 
 **Suposición:** el Odontólogo no da turnos nuevos en el MVP (el discovery asigna ese verbo a recepción); si se requiere, se habilita sin cambiar el dominio. Ver [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
+
+**Decisión de la autora (C-19):** el odontólogo lee la agenda completa, pero los horarios y los bloqueos por recurso solo sobre los propios. La agenda igual incluye horarios y bloqueos ajenos (C-24), así que sus motivos quedan visibles por esa vía; se acepta.
+
+**Sin ABM de usuarios en el MVP:** ningún change entrega `/api/users`. Los usuarios salen del seed; desactivar o cambiar el rol se hace por SQL. La fila de usuarios queda en la matriz para el backlog.
 
 ### Autenticación en el MVP
 

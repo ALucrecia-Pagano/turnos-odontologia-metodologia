@@ -7,13 +7,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.api.auth import router as auth_router
+from app.api.deps import protected_router
 from app.api.errors import (
+    AuthenticationError,
     DomainRejectedError,
+    authentication_error_handler,
     domain_rejected_handler,
     request_validation_handler,
 )
 from app.api.health import router as health_router
 from app.api.openapi import setup_openapi
+from app.auth.passwords import dummy_password_hash
 from app.config import Settings, load_settings
 from app.db.session import create_database_engine
 
@@ -39,6 +44,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         docs_url="/api/docs",
         openapi_url="/api/openapi.json",
         redoc_url=None,
+        swagger_ui_parameters={"persistAuthorization": True},
     )
     app.state.settings = resolved_settings
     app.state.engine = engine
@@ -52,13 +58,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_headers=["Authorization", "Content-Type"],
     )
 
+    app.add_exception_handler(AuthenticationError, authentication_error_handler)
     app.add_exception_handler(DomainRejectedError, domain_rejected_handler)
     app.add_exception_handler(RequestValidationError, request_validation_handler)
 
     api_router = APIRouter(prefix="/api")
     api_router.include_router(health_router)
+    api_router.include_router(auth_router)
+    api_router.include_router(protected_router)
     app.include_router(api_router)
 
     setup_openapi(app)
+
+    dummy_password_hash()
 
     return app

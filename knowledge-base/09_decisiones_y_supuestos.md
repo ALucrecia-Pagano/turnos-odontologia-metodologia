@@ -108,10 +108,15 @@ Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman 
 **Riesgo aceptado**: turnos "huérfanos" en horarios bloqueados hasta que recepción los reprograme; por eso la respuesta de creación los lista.
 
 ### SU-06 — Alcance de la autenticación JWT en el MVP
-**Suposición:** un solo token de acceso con vencimiento corto (`JWT_EXPIRES_MIN`); sin refresh tokens, sin revocación, sin recuperación de contraseña ni alta de usuarios por autoservicio (los usuarios los crea el administrador o el seed). Hash de contraseñas con un algoritmo lento estándar (bcrypt o argon2).
+**Suposición:** un solo token de acceso con vencimiento corto (`JWT_EXPIRES_MIN`); sin refresh tokens, sin revocación, sin recuperación de contraseña ni alta de usuarios por autoservicio (en el MVP los usuarios salen del seed). Hash de contraseñas con Argon2id y parámetros fijos en código.
 **Origen**: DD-11 (JWT exigido por la cátedra) + plazo acotado.
 **Riesgo si es falso**: la cátedra puede esperar cierre de sesión con revocación o refresh tokens.
 **Cómo validar**: confirmar con la cátedra al llegar a C-19. Es dominio de gobernanza CRITICAL.
+**Estado (2026-11-06, C-19)**: la autora decidió seguir con esta suposición; queda **pendiente de confirmar con la cátedra**.
+**Aclaraciones de la autora (C-19)**:
+- El usuario se lee y se confirma contra la base **en cada request**: un usuario inexistente, inactivo o con un rol distinto del token recibe `401` en el request siguiente al cambio. Cerrar sesión en el cliente descarta el token, que sigue valiendo hasta `exp`.
+- Sin ABM de usuarios en el MVP: ningún change entrega `/api/users`. Desactivar o cambiar el rol se hace por SQL, y las filas de usuarios de la matriz RBAC quedan para el backlog.
+- Un odontólogo con su **profesional desactivado** sigue entrando en el MVP: `active` del usuario y `active` del profesional son independientes, y el dominio igual rechaza turnos nuevos para ese profesional con `INACTIVE_REFERENCE`.
 **Reemplaza a**: SU-06 v1 — "Sin autenticación real en el MVP: el rol se simula con sesión de desarrollo; sin contraseñas ni JWT". **Reemplazada por la decisión de la cátedra (2026-10-08)**; ver DD-11.
 
 ### SU-07 — Qué estados ocupan agenda

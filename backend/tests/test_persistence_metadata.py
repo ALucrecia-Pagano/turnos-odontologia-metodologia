@@ -16,6 +16,7 @@ def test_catalog_models_register_expected_tables_and_columns() -> None:
         "block",
         "appointment",
         "appointment_status_change",
+        "app_user",
     }
     assert models.ProfessionalModel.__table__.c.id.type.__class__.__name__ == "Uuid"
     patient_table = cast(Table, models.PatientModel.__table__)
@@ -179,3 +180,48 @@ def test_appointment_models_register_expected_columns_constraints_and_indexes() 
     } >= {
         "ix_appointment_status_change_appointment_id_changed_at",
     }
+
+
+def test_user_model_registers_expected_columns_and_constraints() -> None:
+    from app.db import models
+
+    user = cast(Table, models.UserModel.__table__)
+
+    assert user.name == "app_user"
+    assert list(user.c.keys()) == [
+        "id",
+        "username",
+        "display_name",
+        "password_hash",
+        "role",
+        "professional_id",
+        "active",
+    ]
+    assert user.c.id.type.__class__.__name__ == "Uuid"
+    for column, length in (
+        ("username", 150),
+        ("display_name", 255),
+        ("password_hash", 255),
+        ("role", 20),
+    ):
+        column_type = user.c[column].type
+        assert isinstance(column_type, String)
+        assert column_type.length == length
+        assert user.c[column].nullable is False
+    assert user.c.professional_id.type.__class__.__name__ == "Uuid"
+    assert user.c.professional_id.nullable is True
+    assert user.c.active.nullable is False
+    assert user.c.active.server_default is not None
+
+    foreign_key = next(iter(user.c.professional_id.foreign_keys))
+    assert foreign_key.column.table.name == "professional"
+    assert foreign_key.ondelete == "RESTRICT"
+
+    assert {constraint.name for constraint in user.constraints} >= {
+        "ck_app_user_role",
+        "ck_app_user_username_format",
+        "ck_app_user_professional_by_role",
+        "fk_app_user_professional_id_professional",
+    }
+    unique_indexes = {index.name for index in user.indexes if index.unique}
+    assert unique_indexes == {"ux_app_user_username", "ux_app_user_professional_id"}

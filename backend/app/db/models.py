@@ -11,6 +11,7 @@ from sqlalchemy import (
     String,
     UniqueConstraint,
     Uuid,
+    true,
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -233,4 +234,39 @@ class AppointmentStatusChangeModel(Base):
         Uuid(as_uuid=True),
         ForeignKey("chair.id", ondelete="RESTRICT"),
         nullable=True,
+    )
+
+
+class UserModel(Base):
+    __tablename__ = "app_user"
+    __table_args__ = (
+        CheckConstraint(
+            "role IN ('odontologo', 'recepcion', 'administrador')",
+            name="role",
+        ),
+        CheckConstraint(
+            "username ~ '^[a-z0-9._-]{3,150}$'",
+            name="username_format",
+        ),
+        CheckConstraint(
+            "(role = 'odontologo' AND professional_id IS NOT NULL) "
+            "OR (role <> 'odontologo' AND professional_id IS NULL)",
+            name="professional_by_role",
+        ),
+        Index("ux_app_user_username", "username", unique=True),
+        Index("ux_app_user_professional_id", "professional_id", unique=True),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True)
+    username: Mapped[str] = mapped_column(String(150), nullable=False)
+    display_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    role: Mapped[str] = mapped_column(String(20), nullable=False)
+    professional_id: Mapped[UUID | None] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("professional.id", ondelete="RESTRICT"),
+        nullable=True,
+    )
+    active: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=true()
     )

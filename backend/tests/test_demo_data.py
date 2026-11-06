@@ -60,3 +60,26 @@ def test_demo_patient_accepted_by_public_create() -> None:
     candidate = before[0]
     assert create_patient(candidate, ()) == Ok(candidate)
     assert demo_data.PATIENTS == before
+
+
+def test_demo_users_are_fictional_one_per_role() -> None:
+    from app import demo_data
+    from app.domain.model import Role
+
+    assert [(user.username, user.role, user.professional_id) for user in demo_data.USERS] == [
+        ("administrador", Role.ADMINISTRADOR, None),
+        ("recepcion", Role.RECEPCION, None),
+        ("odontologo", Role.ODONTOLOGO, demo_data.PROFESSIONALS[0].id),
+    ]
+    assert [user.id for user in demo_data.USERS] == [
+        UUID("00000000-0000-0000-0000-0000000000e1"),
+        UUID("00000000-0000-0000-0000-0000000000e2"),
+        UUID("00000000-0000-0000-0000-0000000000e3"),
+    ]
+    assert [user.display_name for user in demo_data.USERS] == [
+        "Administración Demo",
+        "Recepción Demo",
+        "Dra. Laura Quiroga",
+    ]
+    assert not hasattr(demo_data.USERS[0], "password")
+    assert not hasattr(demo_data.USERS[0], "password_hash")

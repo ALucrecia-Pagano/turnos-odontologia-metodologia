@@ -4,6 +4,8 @@ import pytest
 from alembic import command
 from alembic.migration import MigrationContext
 from alembic.autogenerate import compare_metadata
+from alembic.config import Config
+from alembic.script import ScriptDirectory
 from sqlalchemy import (
     CheckConstraint,
     Column,
@@ -26,6 +28,10 @@ from tests.integration.conftest import migration_config
 
 
 pytestmark = pytest.mark.integration
+
+
+def current_head(config: Config) -> str | None:
+    return ScriptDirectory.from_config(config).get_current_head()
 
 
 def test_database_connection_and_select_one(connection: Connection) -> None:
@@ -92,7 +98,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261105_05_historial_sin_truncate"
+            == current_head(config)
         )
 
     command.downgrade(config, "base")
@@ -107,6 +113,7 @@ def test_migration_cycle_restores_test_database_to_head(
             "block",
             "appointment",
             "appointment_status_change",
+            "app_user",
         }.isdisjoint(table_names)
 
     command.upgrade(config, "head")
@@ -114,7 +121,7 @@ def test_migration_cycle_restores_test_database_to_head(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261105_05_historial_sin_truncate"
+            == current_head(config)
         )
 
 
@@ -194,7 +201,7 @@ def test_appointment_migration_downgrade_minus_one_cycle(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
-            == "20261105_05_historial_sin_truncate"
+            == current_head(config)
         )
 
 
@@ -205,6 +212,23 @@ def test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle(
     config = migration_config(test_database_url.render_as_string(hide_password=False))
 
     command.upgrade(config, "head")
+    with test_engine.connect() as connection:
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == current_head(config)
+        )
+        triggers = connection.execute(
+            text(
+                "SELECT tgname FROM pg_trigger "
+                "WHERE tgrelid = 'appointment_status_change'::regclass "
+                "AND NOT tgisinternal"
+            )
+        ).scalars().all()
+        assert "tr_appointment_status_change_no_truncate" in triggers
+        assert "tr_appointment_status_change_append_only" in triggers
+
+    command.downgrade(config, "20261105_05_historial_sin_truncate")
     with test_engine.connect() as connection:
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
@@ -221,7 +245,7 @@ def test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle(
         assert "tr_appointment_status_change_no_truncate" in triggers
         assert "tr_appointment_status_change_append_only" in triggers
 
-    command.downgrade(config, "-1")
+    command.downgrade(config, "20261105_04_turnos_e_historial")
     with test_engine.connect() as connection:
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
@@ -243,9 +267,58 @@ def test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle(
         assert (
             connection.execute(text("SELECT version_num FROM alembic_version"))
             .scalar_one()
+            == current_head(config)
+        )
+
+
+
+def test_user_migration_explicit_downgrade_cycle(
+    test_engine: Engine,
+    test_database_url: URL,
+) -> None:
+    config = migration_config(test_database_url.render_as_string(hide_password=False))
+
+    command.upgrade(config, "20261106_06_usuarios")
+    command.downgrade(config, "20261105_05_historial_sin_truncate")
+    with test_engine.connect() as connection:
+        table_names = inspect(connection).get_table_names()
+        assert "app_user" not in table_names
+        assert {"professional", "appointment", "appointment_status_change"}.issubset(
+            table_names
+        )
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
             == "20261105_05_historial_sin_truncate"
         )
 
+    # Solo deja la base como la encontro: el ciclo verificado usa revisiones explicitas.
+    command.upgrade(config, "head")
+
+
+def test_user_migration_explicit_upgrade(
+    test_engine: Engine,
+    test_database_url: URL,
+) -> None:
+    config = migration_config(test_database_url.render_as_string(hide_password=False))
+
+    command.downgrade(config, "20261105_05_historial_sin_truncate")
+    command.upgrade(config, "20261106_06_usuarios")
+    with test_engine.connect() as connection:
+        assert "app_user" in inspect(connection).get_table_names()
+        assert (
+            connection.execute(text("SELECT version_num FROM alembic_version"))
+            .scalar_one()
+            == "20261106_06_usuarios"
+        )
+
+    # Solo deja la base como la encontro: el ciclo verificado usa revisiones explicitas.
+    command.upgrade(config, "head")
+
+
+def test_metadata_has_no_differences_with_users(connection: Connection) -> None:
+    assert "app_user" in inspect(connection).get_table_names()
+    assert compare_metadata(MigrationContext.configure(connection), Base.metadata) == []
 
 
 def test_autogenerate_finds_no_differences_after_migration(

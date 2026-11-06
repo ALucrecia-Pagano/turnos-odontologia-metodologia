@@ -5,7 +5,8 @@ No accede a persistencia ni ejecuta un seed. El dominio no importa este módulo.
 
 from uuid import UUID
 
-from app.domain.model import Chair, Patient, Professional, Service, WorkingHours
+from app.auth.model import AuthenticatedUser
+from app.domain.model import Chair, Patient, Professional, Role, Service, WorkingHours
 
 PROFESSIONALS: tuple[Professional, ...] = (
     Professional(UUID("00000000-0000-0000-0000-000000000001"), "Dra. Laura Quiroga", True),
@@ -30,6 +31,31 @@ PATIENTS: tuple[Patient, ...] = (
     Patient(UUID("00000000-0000-0000-0000-0000000000c3"), "Carla Medina", "27123456"),
     Patient(UUID("00000000-0000-0000-0000-0000000000c4"), "Diego Ríos", "33456789"),
     Patient(UUID("00000000-0000-0000-0000-0000000000c5"), "Eva Molina", "38987654"),
+)
+
+# Sin contraseña: el seed la toma de SEED_USER_PASSWORD.
+USERS: tuple[AuthenticatedUser, ...] = (
+    AuthenticatedUser(
+        UUID("00000000-0000-0000-0000-0000000000e1"),
+        "administrador",
+        "Administración Demo",
+        Role.ADMINISTRADOR,
+        None,
+    ),
+    AuthenticatedUser(
+        UUID("00000000-0000-0000-0000-0000000000e2"),
+        "recepcion",
+        "Recepción Demo",
+        Role.RECEPCION,
+        None,
+    ),
+    AuthenticatedUser(
+        UUID("00000000-0000-0000-0000-0000000000e3"),
+        "odontologo",
+        "Dra. Laura Quiroga",
+        Role.ODONTOLOGO,
+        PROFESSIONALS[0].id,
+    ),
 )
 
 WORKING_HOURS: tuple[WorkingHours, ...] = tuple(

@@ -23,7 +23,7 @@ Service      1───* Appointment
 Patient      1───* Appointment
 Appointment  1───* AppointmentStatusChange
 User         0..1─1 Professional        (un usuario Odontólogo apunta a su profesional)
-User         1───* AppointmentStatusChange (changed_by)
+User         1───* AppointmentStatusChange (changed_by, relación lógica sin FK)
 ```
 
 Un turno referencia **exactamente** un profesional, un sillón, una prestación y un paciente.
@@ -75,9 +75,12 @@ Un turno referencia **exactamente** un profesional, un sillón, una prestación 
 - Solo inserción (append-only). Índice: `(appointment_id, changed_at)`.
 - También registra reprogramaciones (`note` con el intervalo anterior).
 
-### User (acceso con JWT)
-- `id` UUID PK · `username` TEXT NOT NULL UNIQUE · `display_name` TEXT · `password_hash` TEXT NOT NULL · `role` TEXT CHECK IN (`odontologo`,`recepcion`,`administrador`) · `professional_id` FK NULL (solo para `odontologo`) · `active` BOOLEAN DEFAULT true.
-- La contraseña se guarda **solo como hash** (bcrypt o argon2, SU-06); nunca en texto plano ni en el repo. El JWT no se persiste (DD-11).
+### User (acceso con JWT, tabla `app_user`)
+- La tabla se llama `app_user` porque `user` es palabra reservada de PostgreSQL.
+- `id` UUID PK · `username` VARCHAR(150) NOT NULL UNIQUE (`ux_app_user_username`; formato `^[a-z0-9._-]{3,150}$`, `ck_app_user_username_format`) · `display_name` VARCHAR(255) NOT NULL · `password_hash` VARCHAR(255) NOT NULL · `role` VARCHAR(20) NOT NULL CHECK IN (`odontologo`,`recepcion`,`administrador`) (`ck_app_user_role`) · `professional_id` FK NULL `ON DELETE RESTRICT`, único (`ux_app_user_professional_id`) · `active` BOOLEAN NOT NULL DEFAULT true.
+- `ck_app_user_professional_by_role`: el `odontologo` tiene `professional_id` y los demás roles no. Cada profesional tiene como máximo un usuario.
+- La contraseña se guarda **solo como hash** Argon2id (SU-06); nunca en texto plano ni en el repo. El JWT no se persiste (DD-11).
+- `changed_by` de `AppointmentStatusChange` es una **relación lógica** con `app_user.id`, sin FK: siempre viene de un usuario autenticado y los usuarios nunca se borran físicamente, se desactivan.
 
 ## Seed data inicial (todo ficticio)
 

@@ -5,7 +5,7 @@ from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from app.api.schemas import serialize_violation
+from app.api.schemas import AuthErrorCode, AuthErrorResponse, serialize_violation
 from app.domain.violations import Rejected, Violation, ViolationCode
 
 VIOLATION_STATUS_MAP: Mapping[ViolationCode, int] = {
@@ -65,6 +65,29 @@ def domain_rejected_handler(request: Request, exc: Exception) -> JSONResponse:
         "violations": [serialize_violation(v) for v in exc.rejected.violations]
     }
     return JSONResponse(status_code=status_code, content=content)
+
+
+AUTH_ERROR_MESSAGES: Mapping[AuthErrorCode, str] = {
+    AuthErrorCode.INVALID_CREDENTIALS: "Usuario o contraseña incorrectos.",
+    AuthErrorCode.INVALID_TOKEN: "La sesión venció o no es válida. Inicie sesión de nuevo.",
+}
+
+
+class AuthenticationError(Exception):
+    def __init__(self, code: AuthErrorCode) -> None:
+        self.code = code
+        super().__init__(code.value)
+
+
+def authentication_error_handler(request: Request, exc: Exception) -> JSONResponse:
+    if not isinstance(exc, AuthenticationError):
+        raise exc
+    body = AuthErrorResponse(code=exc.code, message=AUTH_ERROR_MESSAGES[exc.code])
+    return JSONResponse(
+        status_code=401,
+        content=body.model_dump(mode="json"),
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
 
 MALFORMED_MESSAGES: Mapping[str, str] = {

@@ -57,6 +57,20 @@ Para cargar los catálogos y pacientes ficticios de forma idempotente:
 El comando se ejecuta manualmente después de migrar la base y solo usa los
 datos ficticios definidos en `app.demo_data`.
 
+El seed también crea un usuario ficticio por rol: `administrador`, `recepcion` y
+`odontologo` (vinculado al primer profesional). Su contraseña sale de
+`SEED_USER_PASSWORD`, que el seed exige con al menos 8 caracteres; si falta, o con
+`APP_ENV=production`, termina con error sin escribir nada. Solo inserta los usuarios
+que faltan: cambiar la variable no cambia a los usuarios existentes. Para que tome
+una contraseña nueva hay que borrar antes esas filas de `app_user`.
+
+`JWT_SECRET` debe tener al menos 32 caracteres, o la API no arranca. Para generar
+uno y pegarlo en `.env`:
+
+```powershell
+.\.venv\Scripts\python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
+
 Al finalizar el trabajo local se puede detener Compose sin eliminar volúmenes:
 
 ```powershell

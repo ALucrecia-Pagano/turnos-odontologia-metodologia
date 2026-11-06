@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from enum import Enum
 from typing import Any
 from uuid import UUID
 
@@ -43,6 +44,16 @@ class MalformedErrorItem(BaseModel):
 
 class MalformedRequestResponse(BaseModel):
     errors: list[MalformedErrorItem]
+
+
+class AuthErrorCode(str, Enum):
+    INVALID_CREDENTIALS = "INVALID_CREDENTIALS"
+    INVALID_TOKEN = "INVALID_TOKEN"
+
+
+class AuthErrorResponse(BaseModel):
+    code: AuthErrorCode
+    message: str
 
 
 class HealthResponse(BaseModel):

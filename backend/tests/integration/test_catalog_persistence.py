@@ -108,6 +108,7 @@ def test_seed_is_idempotent_and_preserves_fixed_counts(connection: Connection) -
     from app.repositories.patients import PatientRepository
     from app.repositories.working_hours import WorkingHoursRepository
 
+    connection.execute(text("DELETE FROM app_user"))
     connection.execute(text("DELETE FROM patient"))
     connection.execute(text("DELETE FROM service"))
     connection.execute(text("DELETE FROM chair"))
@@ -210,6 +211,7 @@ def test_seed_database_is_idempotent_on_test_database(
     test_engine: Engine,
 ) -> None:
     with test_engine.begin() as cleanup_connection:
+        cleanup_connection.execute(text("DELETE FROM app_user"))
         cleanup_connection.execute(text("DELETE FROM patient"))
         cleanup_connection.execute(text("DELETE FROM service"))
         cleanup_connection.execute(text("DELETE FROM chair"))
@@ -228,11 +230,13 @@ def test_seed_database_is_idempotent_on_test_database(
         "service": 5,
         "patient": 5,
         "working_hours": 25,
+        "app_user": 3,
     }
     assert first == expected
     assert second == expected
 
     with test_engine.begin() as cleanup_connection:
+        cleanup_connection.execute(text("DELETE FROM app_user"))
         cleanup_connection.execute(text("DELETE FROM patient"))
         cleanup_connection.execute(text("DELETE FROM service"))
         cleanup_connection.execute(text("DELETE FROM chair"))
