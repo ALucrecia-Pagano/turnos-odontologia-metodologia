@@ -1,0 +1,44 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collected 1273 items / 866 deselected / 407 selected
+
+tests\integration\test_api_blocks.py .....................               [  5%]
+tests\integration\test_api_chairs.py ....................                [ 10%]
+tests\integration\test_api_deactivation.py ............................. [ 17%]
+.                                                                        [ 17%]
+tests\integration\test_api_health.py .                                   [ 17%]
+tests\integration\test_api_patients.py .....................             [ 22%]
+tests\integration\test_api_professionals.py .................            [ 27%]
+tests\integration\test_api_services.py ....................              [ 31%]
+tests\integration\test_api_session.py ...                                [ 32%]
+tests\integration\test_api_working_hours.py ...................          [ 37%]
+tests\integration\test_appointment_concurrency.py ...                    [ 38%]
+tests\integration\test_appointment_persistence.py .................      [ 42%]
+tests\integration\test_auth_current_user.py .................            [ 46%]
+tests\integration\test_auth_login.py ............                        [ 49%]
+tests\integration\test_auth_no_leaks.py ....                             [ 50%]
+tests\integration\test_availability_concurrency.py ..                    [ 50%]
+tests\integration\test_availability_persistence.py ....................  [ 55%]
+tests\integration\test_availability_services.py ....                     [ 56%]
+tests\integration\test_catalog_persistence.py ...............            [ 60%]
+tests\integration\test_catalog_services.py ...                           [ 61%]
+tests\integration\test_database_infrastructure.py ..............         [ 64%]
+tests\integration\test_patient_services.py .                             [ 64%]
+tests\integration\test_rbac_matrix.py .................................. [ 73%]
+........................................................................ [ 90%]
+..                                                                       [ 91%]
+tests\integration\test_seed_users.py ...............                     [ 95%]
+tests\integration\test_user_persistence.py ..............                [ 98%]
+tests\integration\test_user_repository.py ......                         [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========== 407 passed, 866 deselected, 1 warning in 83.07s (0:01:23) ==========

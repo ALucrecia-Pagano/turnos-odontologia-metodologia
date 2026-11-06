@@ -1,0 +1,101 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 2 items
+
+tests\integration\test_availability_concurrency.py F.                    [100%]
+
+================================== FAILURES ===================================
+______ test_concurrent_block_waiting_for_booking_reports_new_appointment ______
+
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_concurrent_block_waiting_for_booking_reports_new_appointment(
+        test_engine: Engine,
+    ) -> None:
+        _setup_resources(test_engine)
+    
+        tz = ZoneInfo("America/Argentina/Buenos_Aires")
+        monday = get_future_monday()
+        # lunes L 10:00 a 10:30 local -> 13:00 a 13:30 UTC
+        apt_start = monday.replace(hour=13, minute=0)
+        now = datetime.now(timezone.utc)
+        apt_id = uuid4()
+    
+        req_a = NewAppointmentRequest(
+            id=apt_id,
+            patient_id=PAT1,
+            professional_id=P1,
+            chair_id=C1,
+            service_id=S1,
+            start_at=apt_start,
+            duration_min=30,
+            changed_by=USER1,
+        )
+    
+        # Bloqueo: lunes L 09:00 a 13:00 local -> 12:00 a 16:00 UTC
+        block_start = monday.replace(hour=12, minute=0)
+        block_end = monday.replace(hour=16, minute=0)
+    
+        result_b: list[object] = []
+        pid_b_holder: list[int] = []
+        b_ready = threading.Event()
+    
+        def run_b() -> None:
+            with Session(bind=test_engine) as session_b:
+                session_b.execute(text("SET lock_timeout = '5s'"))
+                pid_b = session_b.scalar(text("SELECT pg_backend_pid()"))
+                assert pid_b is not None
+                pid_b_holder.append(pid_b)
+                b_ready.set()
+                res = create_block(
+                    session=session_b,
+                    professional_id=P1,
+                    start_at=block_start,
+                    end_at=block_end,
+                    reason="Congreso",
+                    auto_commit=True,
+                )
+                result_b.append(res)
+    
+        with Session(bind=test_engine) as session_a:
+            session_a.execute(text("SET lock_timeout = '5s'"))
+            # Conexión A toma el lock sobre P1 y C1 sin commitear (auto_commit=False)
+            res_a = book_appointment(session_a, req_a, now, tz, auto_commit=False)
+            assert isinstance(res_a, Ok)
+    
+            thread_b = threading.Thread(target=run_b)
+            thread_b.start()
+            b_ready.wait(timeout=2.0)
+    
+            with Session(bind=test_engine) as session_monitor:
+                # Comprobar por pg_locks que B quedó esperando el lock retenido por A
+                is_waiting = _wait_for_lock(session_monitor, pid_b_holder[0], timeout_sec=2.0)
+                assert is_waiting, "La conexión B debía quedar bloqueada esperando en pg_locks"
+    
+            # Liberar el lock de A haciendo commit
+            session_a.commit()
+            thread_b.join(timeout=5.0)
+    
+        assert len(result_b) == 1
+        block, affected = result_b[0]
+        assert block.professional_id == P1
+>       assert any(apt.id == apt_id for apt in affected)
+E       assert False
+E        +  where False = any(<generator object test_concurrent_block_waiting_for_booking_reports_new_appointment.<locals>.<genexpr> at 0x00000175AA10B6B0>)
+
+tests\integration\test_availability_concurrency.py:171: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_concurrency.py::test_concurrent_block_waiting_for_booking_reports_new_appointment
+=================== 1 failed, 1 passed, 1 warning in 1.51s ====================

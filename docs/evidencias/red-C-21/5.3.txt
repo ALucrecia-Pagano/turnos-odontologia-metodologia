@@ -1,0 +1,199 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 21 items
+
+tests\integration\test_api_blocks.py ...............FFFFFF               [100%]
+
+================================== FAILURES ===================================
+_____________________ test_odontologist_deletes_own_block _____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001375E2D6EB0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_odontologist_deletes_own_block(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        block_id = uuid4()
+        with Session(test_engine) as session:
+            session.add(
+                BlockModel(
+                    id=block_id,
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=lundi + timedelta(hours=9),
+                    end_at=lundi + timedelta(hours=12),
+                    reason="Para borrar",
+                )
+            )
+            session.commit()
+    
+        headers = token_for(auth_client, "odontologo")
+        res = auth_client.delete(f"/api/blocks/{block_id}", headers=headers)
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:450: AssertionError
+________________ test_admin_deletes_block_of_any_professional _________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001375F63C590>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_admin_deletes_block_of_any_professional(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        block_id = uuid4()
+        with Session(test_engine) as session:
+            session.add(
+                BlockModel(
+                    id=block_id,
+                    professional_id=OTHER_PROFESSIONAL_ID,
+                    start_at=lundi + timedelta(hours=9),
+                    end_at=lundi + timedelta(hours=12),
+                    reason="Admin borra",
+                )
+            )
+            session.commit()
+    
+        headers = token_for(auth_client, "administrador")
+        res = auth_client.delete(f"/api/blocks/{block_id}", headers=headers)
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:480: AssertionError
+________ test_odontologist_deletes_other_professional_block_forbidden _________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001375F79C670>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_odontologist_deletes_other_professional_block_forbidden(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        block_id = uuid4()
+        with Session(test_engine) as session:
+            session.add(
+                BlockModel(
+                    id=block_id,
+                    professional_id=OTHER_PROFESSIONAL_ID,
+                    start_at=lundi + timedelta(hours=9),
+                    end_at=lundi + timedelta(hours=12),
+                    reason="No tocar",
+                )
+            )
+            session.commit()
+    
+        headers = token_for(auth_client, "odontologo")
+        res = auth_client.delete(f"/api/blocks/{block_id}", headers=headers)
+>       assert res.status_code == 403, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 403
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:503: AssertionError
+___________________ test_reception_deletes_block_forbidden ____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001375F91D2B0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reception_deletes_block_forbidden(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        block_id = uuid4()
+        with Session(test_engine) as session:
+            session.add(
+                BlockModel(
+                    id=block_id,
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=lundi + timedelta(hours=9),
+                    end_at=lundi + timedelta(hours=12),
+                    reason="Recep delete",
+                )
+            )
+            session.commit()
+    
+        headers = token_for(auth_client, "recepcion")
+        res = auth_client.delete(f"/api/blocks/{block_id}", headers=headers)
+>       assert res.status_code == 403, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 403
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:527: AssertionError
+____________________ test_delete_unknown_block_returns_404 ____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001375F801550>
+
+    def test_delete_unknown_block_returns_404(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        res = auth_client.delete(f"/api/blocks/{UNKNOWN_BLOCK_ID}", headers=headers)
+        assert res.status_code == 404, res.text
+>       assert res.json() == {"code": "NOT_FOUND", "message": "Bloqueo no encontrado."}
+E       AssertionError: assert {'detail': 'Not Found'} == {'code': 'NOT... encontrado.'}
+E         
+E         Left contains 1 more item:
+E         {'detail': 'Not Found'}
+E         Right contains 2 more items:
+E         {'code': 'NOT_FOUND', 'message': 'Bloqueo no encontrado.'}
+E         Use -v to get more diff
+
+tests\integration\test_api_blocks.py:536: AssertionError
+______________________ test_delete_block_frees_schedule _______________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001375F934D70>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_delete_block_frees_schedule(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        from zoneinfo import ZoneInfo
+        from app.domain.model import NewAppointmentRequest
+        from app.services.appointments import book_appointment
+    
+        monday = get_future_monday()
+        block_start = monday.replace(hour=12, minute=0)
+        block_end = monday.replace(hour=16, minute=0)
+        block_id = uuid4()
+    
+        with Session(test_engine) as session:
+            session.add(
+                BlockModel(
+                    id=block_id,
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=block_start,
+                    end_at=block_end,
+                    reason="Bloqueo temporal",
+                )
+            )
+            session.commit()
+    
+        headers = token_for(auth_client, "administrador")
+        del_res = auth_client.delete(f"/api/blocks/{block_id}", headers=headers)
+>       assert del_res.status_code == 200, del_res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:565: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_blocks.py::test_odontologist_deletes_own_block
+FAILED tests/integration/test_api_blocks.py::test_admin_deletes_block_of_any_professional
+FAILED tests/integration/test_api_blocks.py::test_odontologist_deletes_other_professional_block_forbidden
+FAILED tests/integration/test_api_blocks.py::test_reception_deletes_block_forbidden
+FAILED tests/integration/test_api_blocks.py::test_delete_unknown_block_returns_404
+FAILED tests/integration/test_api_blocks.py::test_delete_block_frees_schedule
+=================== 6 failed, 15 passed, 1 warning in 7.22s ===================

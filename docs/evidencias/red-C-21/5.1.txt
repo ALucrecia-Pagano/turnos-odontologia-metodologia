@@ -1,0 +1,218 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 6 items
+
+tests\integration\test_api_blocks.py FFFFFF                              [100%]
+
+================================== FAILURES ===================================
+_________________ test_reception_lists_blocks_of_professional _________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002568E2BACF0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reception_lists_blocks_of_professional(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        b1_start = lundi + timedelta(hours=9)
+        b1_end = lundi + timedelta(hours=11)
+        b2_start = lundi + timedelta(hours=14)
+        b2_end = lundi + timedelta(hours=16)
+    
+        with Session(test_engine) as session:
+            session.add_all([
+                BlockModel(
+                    id=uuid4(),
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=b2_start,
+                    end_at=b2_end,
+                    reason="Tarde",
+                ),
+                BlockModel(
+                    id=uuid4(),
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=b1_start,
+                    end_at=b1_end,
+                    reason="Mañana",
+                ),
+            ])
+            session.commit()
+    
+        headers = token_for(auth_client, "recepcion")
+        res = auth_client.get(f"/api/professionals/{PROFESSIONAL_ID}/blocks", headers=headers)
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:104: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+_____________________ test_odontologist_lists_own_blocks ______________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002568E9587D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_odontologist_lists_own_blocks(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        with Session(test_engine) as session:
+            session.add(
+                BlockModel(
+                    id=uuid4(),
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=lundi + timedelta(hours=9),
+                    end_at=lundi + timedelta(hours=12),
+                    reason="Propio",
+                )
+            )
+            session.commit()
+    
+        headers = token_for(auth_client, "odontologo")
+        res = auth_client.get(f"/api/professionals/{PROFESSIONAL_ID}/blocks", headers=headers)
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_blocks.py:131: AssertionError
+_________ test_odontologist_lists_other_professional_blocks_forbidden _________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002568EA639D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_odontologist_lists_other_professional_blocks_forbidden(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+>       insert_professional(test_engine, OTHER_PROFESSIONAL_ID, "Dra. Otra")
+
+tests\integration\test_api_blocks.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+connection = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+identifier = UUID('00000000-0000-0000-0000-000000000002'), name = 'Dra. Otra'
+
+    def insert_professional(connection: Connection, identifier: UUID, name: str) -> None:
+>       connection.execute(
+        ^^^^^^^^^^^^^^^^^^
+            text(
+                "INSERT INTO professional (id, full_name, active) "
+                "VALUES (:id, :name, true) ON CONFLICT (id) DO NOTHING"
+            ),
+            {"id": identifier, "name": name},
+        )
+E       AttributeError: 'Engine' object has no attribute 'execute'
+
+tests\integration\auth_support.py:34: AttributeError
+____________ test_list_blocks_with_from_and_to_filters_overlapping ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000256889BA190>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_list_blocks_with_from_and_to_filters_overlapping(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        dt1_start = datetime(2026, 12, 7, 12, 0, tzinfo=timezone.utc)
+        dt1_end = datetime(2026, 12, 7, 16, 0, tzinfo=timezone.utc)
+        dt2_start = datetime(2026, 12, 21, 12, 0, tzinfo=timezone.utc)
+        dt2_end = datetime(2026, 12, 21, 16, 0, tzinfo=timezone.utc)
+    
+        with Session(test_engine) as session:
+            session.add_all([
+                BlockModel(
+                    id=uuid4(),
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=dt1_start,
+                    end_at=dt1_end,
+                    reason="Semana 1",
+                ),
+                BlockModel(
+                    id=uuid4(),
+                    professional_id=PROFESSIONAL_ID,
+                    start_at=dt2_start,
+                    end_at=dt2_end,
+                    reason="Semana 3",
+                ),
+            ])
+            session.commit()
+    
+>       headers = token_for(auth_client, "admin")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_blocks.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x00000256889BA190>
+role = 'admin'
+
+    def token_for(client: TestClient, role: str) -> dict[str, str]:
+        res = client.post(LOGIN, json={"username": role, "password": PASSWORD})
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"code":"INVALID_CREDENTIALS","message":"Usuario o contraseña incorrectos."}
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\integration\test_api_blocks.py:65: AssertionError
+_____________ test_list_blocks_from_without_timezone_returns_400 ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002568E7D1220>
+
+    def test_list_blocks_from_without_timezone_returns_400(auth_client: TestClient) -> None:
+>       headers = token_for(auth_client, "admin")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_blocks.py:188: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000002568E7D1220>
+role = 'admin'
+
+    def token_for(client: TestClient, role: str) -> dict[str, str]:
+        res = client.post(LOGIN, json={"username": role, "password": PASSWORD})
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"code":"INVALID_CREDENTIALS","message":"Usuario o contraseña incorrectos."}
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\integration\test_api_blocks.py:65: AssertionError
+______________ test_list_blocks_unknown_professional_returns_404 ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002568E93E0F0>
+
+    def test_list_blocks_unknown_professional_returns_404(auth_client: TestClient) -> None:
+>       headers = token_for(auth_client, "admin")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_blocks.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000002568E93E0F0>
+role = 'admin'
+
+    def token_for(client: TestClient, role: str) -> dict[str, str]:
+        res = client.post(LOGIN, json={"username": role, "password": PASSWORD})
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"code":"INVALID_CREDENTIALS","message":"Usuario o contraseña incorrectos."}
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\integration\test_api_blocks.py:65: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_blocks.py::test_reception_lists_blocks_of_professional
+FAILED tests/integration/test_api_blocks.py::test_odontologist_lists_own_blocks
+FAILED tests/integration/test_api_blocks.py::test_odontologist_lists_other_professional_blocks_forbidden
+FAILED tests/integration/test_api_blocks.py::test_list_blocks_with_from_and_to_filters_overlapping
+FAILED tests/integration/test_api_blocks.py::test_list_blocks_from_without_timezone_returns_400
+FAILED tests/integration/test_api_blocks.py::test_list_blocks_unknown_professional_returns_404
+======================== 6 failed, 1 warning in 2.79s =========================

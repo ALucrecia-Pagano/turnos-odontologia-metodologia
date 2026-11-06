@@ -1,0 +1,366 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 19 items / 5 deselected / 14 selected
+
+tests\integration\test_api_working_hours.py FFFFFFFFFFFFFF               [100%]
+
+================================== FAILURES ===================================
+________________ test_admin_replaces_working_hours_returns_200 ________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020904ACECF0>
+
+    def test_admin_replaces_working_hours_returns_200(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 2, "start": "08:00", "end": "12:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{OTHER_PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:139: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+__________ test_odontologist_replaces_own_working_hours_returns_200 ___________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020905130F50>
+
+    def test_odontologist_replaces_own_working_hours_returns_200(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "odontologo")
+        payload = [{"weekday": 1, "start": "09:00", "end": "13:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:159: AssertionError
+___ test_odontologist_replaces_other_professional_working_hours_returns_403 ___
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020905207ED0>
+
+    def test_odontologist_replaces_other_professional_working_hours_returns_403(
+        auth_client: TestClient,
+    ) -> None:
+        headers = token_for(auth_client, "odontologo")
+        payload = [{"weekday": 1, "start": "09:00", "end": "13:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{OTHER_PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 403
+E       assert 405 == 403
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:172: AssertionError
+______________ test_reception_replaces_working_hours_returns_403 ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020904AA5A70>
+
+    def test_reception_replaces_working_hours_returns_403(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        payload = [{"weekday": 1, "start": "09:00", "end": "13:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 403
+E       assert 405 == 403
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:183: AssertionError
+__________ test_replace_working_hours_with_empty_list_returns_empty ___________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020904CAE190>
+
+    def test_replace_working_hours_with_empty_list_returns_empty(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=[],
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:201: AssertionError
+_____________ test_replace_working_hours_overlapping_returns_422 ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000209052DAD50>
+
+    def test_replace_working_hours_overlapping_returns_422(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        payload = [
+            {"weekday": 2, "start": "09:00", "end": "13:00"},
+            {"weekday": 2, "start": "12:00", "end": "16:00"},
+        ]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 422
+E       assert 405 == 422
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:216: AssertionError
+___________ test_replace_working_hours_start_after_end_returns_422 ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020905543240>
+
+    def test_replace_working_hours_start_after_end_returns_422(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 1, "start": "13:00", "end": "09:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 422
+E       assert 405 == 422
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:235: AssertionError
+____________ test_replace_working_hours_malformed_time_returns_400 ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000209054705A0>
+
+    def test_replace_working_hours_malformed_time_returns_400(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 1, "start": "25:00", "end": "26:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 400
+E       assert 405 == 400
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:247: AssertionError
+__________ test_replace_working_hours_end_at_24_accepted_returns_200 __________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000209052B6850>
+
+    def test_replace_working_hours_end_at_24_accepted_returns_200(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 5, "start": "20:00", "end": "24:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:258: AssertionError
+_________ test_replace_working_hours_unknown_professional_returns_404 _________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000209052B5A50>
+
+    def test_replace_working_hours_unknown_professional_returns_404(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        res = auth_client.put(
+            f"/api/professionals/{UNKNOWN_PROFESSIONAL_ID}/working-hours",
+            json=[],
+            headers=headers,
+        )
+>       assert res.status_code == 404
+E       assert 405 == 404
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:269: AssertionError
+__________ test_replace_working_hours_inactive_professional_accepted __________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020905180140>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_replace_working_hours_inactive_professional_accepted(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        with test_engine.begin() as conn:
+            conn.execute(
+                text("UPDATE professional SET active = false WHERE id = :id"),
+                {"id": PROFESSIONAL_ID},
+            )
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 1, "start": "09:00", "end": "13:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:291: AssertionError
+__ test_replace_working_hours_reports_outside_appointment_without_cancelling __
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020905181040>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_replace_working_hours_reports_outside_appointment_without_cancelling(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        monday = get_future_monday()
+        # 10:00 a 10:30 local = 13:00 a 13:30 UTC
+        start_utc = monday.replace(hour=13, minute=0)
+        end_utc = monday.replace(hour=13, minute=30)
+        apt_id = uuid4()
+    
+        with test_engine.begin() as conn:
+            conn.execute(
+                text(
+                    "INSERT INTO appointment (id, patient_id, professional_id, chair_id, service_id, "
+                    "start_at, end_at, status, created_at, updated_at) "
+                    "VALUES (:id, :pat, :prof, :chair, :svc, :start, :end, 'reservado', :now, :now)"
+                ),
+                {
+                    "id": apt_id,
+                    "pat": PATIENT_ID,
+                    "prof": PROFESSIONAL_ID,
+                    "chair": CHAIR_ID,
+                    "svc": SERVICE_ID,
+                    "start": start_utc,
+                    "end": end_utc,
+                    "now": datetime.now(timezone.utc),
+                },
+            )
+    
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 1, "start": "15:00", "end": "19:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:329: AssertionError
+___ test_replace_working_hours_does_not_report_appointment_inside_new_hours ___
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020905968130>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_replace_working_hours_does_not_report_appointment_inside_new_hours(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        monday = get_future_monday()
+        start_utc = monday.replace(hour=13, minute=0)
+        end_utc = monday.replace(hour=13, minute=30)
+        apt_id = uuid4()
+    
+        with test_engine.begin() as conn:
+            conn.execute(
+                text(
+                    "INSERT INTO appointment (id, patient_id, professional_id, chair_id, service_id, "
+                    "start_at, end_at, status, created_at, updated_at) "
+                    "VALUES (:id, :pat, :prof, :chair, :svc, :start, :end, 'reservado', :now, :now)"
+                ),
+                {
+                    "id": apt_id,
+                    "pat": PATIENT_ID,
+                    "prof": PROFESSIONAL_ID,
+                    "chair": CHAIR_ID,
+                    "svc": SERVICE_ID,
+                    "start": start_utc,
+                    "end": end_utc,
+                    "now": datetime.now(timezone.utc),
+                },
+            )
+    
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 1, "start": "09:00", "end": "12:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:378: AssertionError
+______ test_replace_working_hours_does_not_report_cancelled_appointment _______
+
+auth_client = <starlette.testclient.TestClient object at 0x00000209059B5710>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_replace_working_hours_does_not_report_cancelled_appointment(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        monday = get_future_monday()
+        start_utc = monday.replace(hour=13, minute=0)
+        end_utc = monday.replace(hour=13, minute=30)
+        apt_id = uuid4()
+    
+        with test_engine.begin() as conn:
+            conn.execute(
+                text(
+                    "INSERT INTO appointment (id, patient_id, professional_id, chair_id, service_id, "
+                    "start_at, end_at, status, created_at, updated_at) "
+                    "VALUES (:id, :pat, :prof, :chair, :svc, :start, :end, 'cancelado', :now, :now)"
+                ),
+                {
+                    "id": apt_id,
+                    "pat": PATIENT_ID,
+                    "prof": PROFESSIONAL_ID,
+                    "chair": CHAIR_ID,
+                    "svc": SERVICE_ID,
+                    "start": start_utc,
+                    "end": end_utc,
+                    "now": datetime.now(timezone.utc),
+                },
+            )
+    
+        headers = token_for(auth_client, "administrador")
+        payload = [{"weekday": 1, "start": "15:00", "end": "19:00"}]
+        res = auth_client.put(
+            f"/api/professionals/{PROFESSIONAL_ID}/working-hours",
+            json=payload,
+            headers=headers,
+        )
+>       assert res.status_code == 200
+E       assert 405 == 200
+E        +  where 405 = <Response [405 Method Not Allowed]>.status_code
+
+tests\integration\test_api_working_hours.py:416: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_working_hours.py::test_admin_replaces_working_hours_returns_200
+FAILED tests/integration/test_api_working_hours.py::test_odontologist_replaces_own_working_hours_returns_200
+FAILED tests/integration/test_api_working_hours.py::test_odontologist_replaces_other_professional_working_hours_returns_403
+FAILED tests/integration/test_api_working_hours.py::test_reception_replaces_working_hours_returns_403
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_with_empty_list_returns_empty
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_overlapping_returns_422
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_start_after_end_returns_422
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_malformed_time_returns_400
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_end_at_24_accepted_returns_200
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_unknown_professional_returns_404
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_inactive_professional_accepted
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_reports_outside_appointment_without_cancelling
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_does_not_report_appointment_inside_new_hours
+FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_does_not_report_cancelled_appointment
+================= 14 failed, 5 deselected, 1 warning in 3.14s =================

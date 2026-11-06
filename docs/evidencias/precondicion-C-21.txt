@@ -1,0 +1,9 @@
+$ openspec list
+Changes:
+  api-dar-turno               0/16 tasks    37m ago
+  api-horarios-y-bloqueos     0/18 tasks    1h ago
+
+$ grep -rn NOT_FOUND backend/app/api
+backend/app/api/errors.py:71:        content={"code": "NOT_FOUND", "message": exc.message},
+backend/app/api/openapi.py:114:                        "code": "NOT_FOUND",
+backend/app/api/schemas.py:65:    code: str = "NOT_FOUND"

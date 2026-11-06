@@ -1,0 +1,6 @@
+Change 'api-horarios-y-bloqueos' is valid
+warning: in the working copy of 'backend/app/api/deps.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/domain/test_working_hours.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/api-horarios-y-bloqueos/tasks.md', LF will be replaced by CRLF the next time Git touches it

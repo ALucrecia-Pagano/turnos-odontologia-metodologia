@@ -1,0 +1,66 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 20 items / 19 deselected / 1 selected
+
+tests\integration\test_availability_persistence.py F                     [100%]
+
+================================== FAILURES ===================================
+_____________ test_block_repository_list_by_professional_in_range _____________
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000001A40C7DAD50>
+
+    def test_block_repository_list_by_professional_in_range(connection: Connection) -> None:
+        session = _session_with_professional(connection, P1)
+        if session.get(ProfessionalModel, P2) is None:
+            ProfessionalRepository(session).create(Professional(P2, "Segundo Profesional", True))
+        repo = BlockRepository(session, EmptyAppointmentReader())
+    
+        b1 = Block(
+            UUID("00000000-0000-0000-0000-000000000b11"),
+            P1,
+            datetime(2026, 12, 7, 12, tzinfo=timezone.utc),
+            datetime(2026, 12, 7, 16, tzinfo=timezone.utc),
+            "Congreso A",
+        )
+        b2 = Block(
+            UUID("00000000-0000-0000-0000-000000000b12"),
+            P1,
+            datetime(2026, 12, 21, 12, tzinfo=timezone.utc),
+            datetime(2026, 12, 21, 16, tzinfo=timezone.utc),
+            "Congreso B",
+        )
+        b_other = Block(
+            UUID("00000000-0000-0000-0000-000000000b13"),
+            P2,
+            datetime(2026, 12, 7, 12, tzinfo=timezone.utc),
+            datetime(2026, 12, 7, 16, tzinfo=timezone.utc),
+        )
+        assert isinstance(repo.create(b1), Ok)
+        assert isinstance(repo.create(b2), Ok)
+        assert isinstance(repo.create(b_other), Ok)
+    
+        # 1. Ambos filtros: solapa solo b1
+>       res = repo.list_by_professional_in_range(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            P1,
+            datetime(2026, 12, 7, 0, tzinfo=timezone.utc),
+            datetime(2026, 12, 14, 0, tzinfo=timezone.utc),
+        )
+E       AttributeError: 'BlockRepository' object has no attribute 'list_by_professional_in_range'
+
+tests\integration\test_availability_persistence.py:493: AttributeError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_persistence.py::test_block_repository_list_by_professional_in_range
+================= 1 failed, 19 deselected, 1 warning in 0.58s =================

@@ -1,0 +1,117 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collected 1210 items / 360 deselected / 850 selected
+
+tests\api\test_app.py ...                                                [  0%]
+tests\api\test_auth_openapi.py ......                                    [  1%]
+tests\api\test_catalog_openapi.py .                                      [  1%]
+tests\api\test_catalog_schemas.py .....                                  [  1%]
+tests\api\test_cors.py ...                                               [  2%]
+tests\api\test_domain_rejection.py .....................                 [  4%]
+tests\api\test_error_mapping.py ....                                     [  5%]
+tests\api\test_health.py .                                               [  5%]
+tests\api\test_login_input.py ......                                     [  5%]
+tests\api\test_malformed_request.py ....                                 [  6%]
+tests\api\test_not_found_error.py .                                      [  6%]
+tests\api\test_openapi.py .......                                        [  7%]
+tests\api\test_route_guards.py ....                                      [  7%]
+tests\api\test_token_rejection.py ...................                    [ 10%]
+tests\api\test_violation_body.py ....                                    [ 10%]
+tests\auth\test_model.py .                                               [ 10%]
+tests\auth\test_passwords.py .........                                   [ 11%]
+tests\auth\test_permissions.py ....                                      [ 12%]
+tests\auth\test_rbac_domain_parity.py ............                       [ 13%]
+tests\auth\test_tokens.py ..                                             [ 13%]
+tests\domain\test_blocks.py ..........                                   [ 14%]
+tests\domain\test_catalog.py ........................................... [ 20%]
+.....................................                                    [ 24%]
+tests\domain\test_catalog_agenda.py .......                              [ 25%]
+tests\domain\test_catalog_dependencies.py ...                            [ 25%]
+tests\domain\test_catalog_update.py .................                    [ 27%]
+tests\domain\test_clock_guard.py .....................                   [ 30%]
+tests\domain\test_domain_dependencies.py ..                              [ 30%]
+tests\domain\test_duration.py .....                                      [ 30%]
+tests\domain\test_import_guard.py ................................       [ 34%]
+tests\domain\test_intervals.py ......................................    [ 39%]
+tests\domain\test_lifecycle.py ......................................... [ 43%]
+..............................                                           [ 47%]
+tests\domain\test_lifecycle_agenda.py .......                            [ 48%]
+tests\domain\test_model.py ......................................        [ 52%]
+tests\domain\test_names.py ........                                      [ 53%]
+tests\domain\test_past.py .........                                      [ 54%]
+tests\domain\test_reschedule.py .............................            [ 58%]
+tests\domain\test_smoke.py ..                                            [ 58%]
+tests\domain\test_status_history.py ................                     [ 60%]
+tests\domain\test_transitions.py .................................       [ 64%]
+tests\domain\test_validate_new_appointment.py .......................... [ 67%]
+........................................................................ [ 75%]
+........................................................................ [ 84%]
+..............                                                           [ 85%]
+tests\domain\test_violations.py ....................................     [ 90%]
+tests\domain\test_working_hours.py .....................                 [ 92%]
+tests\test_alembic_configuration.py .                                    [ 92%]
+tests\test_api_dependencies.py ....                                      [ 93%]
+tests\test_auth_docs.py ......                                           [ 93%]
+tests\test_compose.py ........................                           [ 96%]
+tests\test_config.py .............                                       [ 98%]
+tests\test_demo_data.py ......                                           [ 98%]
+tests\test_persistence_metadata.py .....                                 [ 99%]
+tests\test_repository_contracts.py ...                                   [ 99%]
+tests\test_transition_types.py ..                                        [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/api/test_token_rejection.py::test_rejected_token[other_algorithm]
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\jwt\api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 32 bytes long, which is below the minimum recommended length of 64 bytes for SHA512. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============== 850 passed, 360 deselected, 2 warnings in 18.06s ===============
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collected 1210 items / 850 deselected / 360 selected
+
+tests\integration\test_api_chairs.py ....................                [  5%]
+tests\integration\test_api_deactivation.py ............................. [ 13%]
+.                                                                        [ 13%]
+tests\integration\test_api_health.py .                                   [ 14%]
+tests\integration\test_api_patients.py .....................             [ 20%]
+tests\integration\test_api_professionals.py .................            [ 24%]
+tests\integration\test_api_services.py ....................              [ 30%]
+tests\integration\test_api_session.py ...                                [ 31%]
+tests\integration\test_appointment_concurrency.py ...                    [ 31%]
+tests\integration\test_appointment_persistence.py .................      [ 36%]
+tests\integration\test_auth_current_user.py .................            [ 41%]
+tests\integration\test_auth_login.py ............                        [ 44%]
+tests\integration\test_auth_no_leaks.py ....                             [ 45%]
+tests\integration\test_availability_persistence.py ...................   [ 51%]
+tests\integration\test_catalog_persistence.py ...............            [ 55%]
+tests\integration\test_catalog_services.py ...                           [ 56%]
+tests\integration\test_database_infrastructure.py ..............         [ 60%]
+tests\integration\test_patient_services.py .                             [ 60%]
+tests\integration\test_rbac_matrix.py .................................. [ 69%]
+........................................................................ [ 89%]
+..                                                                       [ 90%]
+tests\integration\test_seed_users.py ...............                     [ 94%]
+tests\integration\test_user_persistence.py ..............                [ 98%]
+tests\integration\test_user_repository.py ......                         [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============== 360 passed, 850 deselected, 1 warning in 53.30s ===============
+Success: no issues found in 148 source files
