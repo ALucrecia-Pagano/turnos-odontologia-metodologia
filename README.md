@@ -72,7 +72,12 @@ Fijado por la cátedra:
   /api/professionals/{id}/blocks`, `DELETE /api/blocks/{block_id}`, con RBAC por
   profesional, horarios en `HH:MM` local y bloqueos en UTC, turnos fuera de
   horario y afectados informados sin cancelar, y bloqueo de la fila del
-  profesional para serializar con el alta de turnos).
+  profesional para serializar con el alta de turnos),
+  C-22 (endpoint para dar turnos: `POST /api/appointments` para recepción y
+  administrador, duración informada o la de la prestación, conflictos de agenda
+  en 409 y reglas de validez en 422 con todas las violaciones del dominio,
+  turno e historial en una sola transacción y un solo turno cuando dos altas
+  simultáneas piden el mismo hueco).
 - **Planificado:** los endpoints de negocio de la API REST
   y el frontend. La persistencia de entidades ya
   está implementada en C-15. El
@@ -214,6 +219,7 @@ está en el repositorio.
 | Change archivado de C-19 | [openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/](openspec/changes/archive/2026-11-06-autenticacion-jwt-y-roles/) |
 | Change archivado de C-20 | [openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/](openspec/changes/archive/2026-11-06-api-catalogos-y-pacientes/) |
 | Change archivado de C-21 | [openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/](openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/) |
+| Change archivado de C-22 | [openspec/changes/archive/2026-11-06-api-dar-turno/](openspec/changes/archive/2026-11-06-api-dar-turno/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -236,6 +242,7 @@ está en el repositorio.
 | Evidencias de C-19 (explore, verify, pytest, integración, mypy, alembic, seed, docker, e2e, mutaciones, matriz, trazabilidad, secretos, validate y RED) | [explore-C-19.md](docs/evidencias/explore-C-19.md), [verify-C-19.md](docs/evidencias/verify-C-19.md), [pytest-C-19.txt](docs/evidencias/pytest-C-19.txt), [pytest-integration-C-19.txt](docs/evidencias/pytest-integration-C-19.txt), [mypy-C-19.txt](docs/evidencias/mypy-C-19.txt), [alembic-C-19.txt](docs/evidencias/alembic-C-19.txt), [seed-C-19.txt](docs/evidencias/seed-C-19.txt), [docker-C-19.txt](docs/evidencias/docker-C-19.txt), [e2e-C-19.txt](docs/evidencias/e2e-C-19.txt), [mutaciones-C-19.txt](docs/evidencias/mutaciones-C-19.txt), [matriz-C-19.txt](docs/evidencias/matriz-C-19.txt), [trazabilidad-C-19.txt](docs/evidencias/trazabilidad-C-19.txt), [secretos-C-19.txt](docs/evidencias/secretos-C-19.txt), [validate-C-19.txt](docs/evidencias/validate-C-19.txt), [red-C-19/](docs/evidencias/red-C-19/) |
 | Evidencias de C-20 (explore, verify, baseline, pytest, integración, mypy, mutaciones, trazabilidad, validate y RED) | [explore-C-20.md](docs/evidencias/explore-C-20.md), [verify-C-20.md](docs/evidencias/verify-C-20.md), [baseline-C-20.txt](docs/evidencias/baseline-C-20.txt), [pytest-C-20.txt](docs/evidencias/pytest-C-20.txt), [pytest-integration-C-20.txt](docs/evidencias/pytest-integration-C-20.txt), [mypy-C-20.txt](docs/evidencias/mypy-C-20.txt), [mutaciones-C-20.py](docs/evidencias/mutaciones-C-20.py), [mutaciones-C-20.txt](docs/evidencias/mutaciones-C-20.txt), [trazabilidad-C-20.py](docs/evidencias/trazabilidad-C-20.py), [trazabilidad-C-20.txt](docs/evidencias/trazabilidad-C-20.txt), [validate-C-20.txt](docs/evidencias/validate-C-20.txt), [red-C-20/](docs/evidencias/red-C-20/) |
 | Evidencias de C-21 (explore, verify, precondición, baseline, pytest, integración, mypy, concurrencia, mutaciones, trazabilidad, validate y RED) | [explore-C-21.md](docs/evidencias/explore-C-21.md), [verify-C-21.md](docs/evidencias/verify-C-21.md), [precondicion-C-21.txt](docs/evidencias/precondicion-C-21.txt), [baseline-C-21.txt](docs/evidencias/baseline-C-21.txt), [pytest-C-21.txt](docs/evidencias/pytest-C-21.txt), [pytest-integration-C-21.txt](docs/evidencias/pytest-integration-C-21.txt), [mypy-C-21.txt](docs/evidencias/mypy-C-21.txt), [concurrencia-C-21.txt](docs/evidencias/concurrencia-C-21.txt), [mutaciones-C-21.py](docs/evidencias/mutaciones-C-21.py), [mutaciones-C-21.txt](docs/evidencias/mutaciones-C-21.txt), [trazabilidad-C-21.py](docs/evidencias/trazabilidad-C-21.py), [trazabilidad-C-21.txt](docs/evidencias/trazabilidad-C-21.txt), [validate-C-21.txt](docs/evidencias/validate-C-21.txt), [red-C-21/](docs/evidencias/red-C-21/) |
+| Evidencias de C-22 (explore, verify, precondición, baseline, pytest, integración, mypy, concurrencia, mutaciones, trazabilidad, validate, verificación HTTP y RED) | [explore-C-22.md](docs/evidencias/explore-C-22.md), [verify-C-22.md](docs/evidencias/verify-C-22.md), [precondicion-C-22.txt](docs/evidencias/precondicion-C-22.txt), [baseline-C-22.txt](docs/evidencias/baseline-C-22.txt), [pytest-C-22.txt](docs/evidencias/pytest-C-22.txt), [pytest-integration-C-22.txt](docs/evidencias/pytest-integration-C-22.txt), [mypy-C-22.txt](docs/evidencias/mypy-C-22.txt), [concurrencia-C-22.txt](docs/evidencias/concurrencia-C-22.txt), [mutaciones-C-22.py](docs/evidencias/mutaciones-C-22.py), [mutaciones-C-22.txt](docs/evidencias/mutaciones-C-22.txt), [trazabilidad-C-22.py](docs/evidencias/trazabilidad-C-22.py), [trazabilidad-C-22.txt](docs/evidencias/trazabilidad-C-22.txt), [validate-C-22.txt](docs/evidencias/validate-C-22.txt), [http-C-22.sh](docs/evidencias/http-C-22.sh), [http-C-22.txt](docs/evidencias/http-C-22.txt), [red-C-22/](docs/evidencias/red-C-22/) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

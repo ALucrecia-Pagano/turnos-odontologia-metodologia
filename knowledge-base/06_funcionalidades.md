@@ -32,9 +32,9 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 **Para** que quede registrado solo si es válido
 
 **Criterios de aceptación**:
-- [ ] CA-1: con profesional libre y sillón libre, el dominio devuelve `ok` con el turno en estado `reservado`. (Las condiciones de horario, bloqueos y pasado se agregan en los changes posteriores.)
-- [ ] CA-2: la duración por defecto es la de la prestación; si se informa duración explícita, se usa esa.
-- [ ] CA-3: `end = start + duración`; el intervalo es semiabierto.
+- [x] CA-1: con profesional libre y sillón libre, el dominio devuelve `ok` con el turno en estado `reservado`. (Las condiciones de horario, bloqueos y pasado se agregan en los changes posteriores.) (API lista en C-22).
+- [x] CA-2: la duración por defecto es la de la prestación; si se informa duración explícita, se usa esa (API lista en C-22).
+- [x] CA-3: `end = start + duración`; el intervalo es semiabierto (API lista en C-22).
 - [ ] CA-4: dos turnos consecutivos (uno termina cuando empieza el otro) del mismo profesional y sillón **son válidos**.
 
 **Reglas relacionadas**: RN-AG-07, RN-TU-01 (la validez de la duración, RN-AG-09, entra solo en su parte mínima: ver US-007; RN-AG-10 va a C-04)

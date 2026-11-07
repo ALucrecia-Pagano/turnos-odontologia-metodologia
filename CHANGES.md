@@ -525,7 +525,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/05_reglas_de_negocio.md` §RN-DI-04, §RN-AC-01
 
 ### [C-22] `api-dar-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-06)
 - **Scope**:
   - `POST /api/appointments`: caso de uso que abre la transacción, toma `SELECT ... FOR UPDATE` sobre profesional y sillón, carga el contexto (turnos, horarios, bloqueos, referencias), llama a `validate_new_appointment` y persiste turno + historial; el reloj es el `now` real (UTC) inyectado en el borde y `changed_by` sale del JWT.
   - Rechazo de dominio → `409`/`422` con la lista completa de violaciones (código + mensaje en español) tal como las devuelve el dominio.

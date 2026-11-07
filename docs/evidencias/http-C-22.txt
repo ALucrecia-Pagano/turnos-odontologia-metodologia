@@ -1,0 +1,47 @@
+# Salida de docs/evidencias/http-C-22.sh contra la API local (PostgreSQL 16 real, seed ficticio), 2026-11-06
+== 1 recepcion da turno Quiroga lunes 10:00 Control (201)
+HTTP 201
+{"id":"b7c1a0e9-93f3-44b7-a217-f5931300f9b7","patientId":"00000000-0000-0000-0000-0000000000c1","professionalId":"00000000-0000-0000-0000-000000000001","chairId":"00000000-0000-0000-0000-0000000000b1","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
+== 2 choque de profesional 10:15 otro sillon (409)
+HTTP 409
+{"violations":[{"code":"PROFESSIONAL_OVERLAP","message":"Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno b7c1a0e9-93f3-44b7-a217-f5931300f9b7).","conflictingAppointmentId":"b7c1a0e9-93f3-44b7-a217-f5931300f9b7","conflictingInterval":{"startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z"}}]}
+== 3 choque de sillon con Sosa 10:00 sillon 1 (409)
+HTTP 409
+{"violations":[{"code":"CHAIR_OVERLAP","message":"Sillón 1 está ocupado de 10:00 a 10:30 (hora local) por un turno que se superpone (turno b7c1a0e9-93f3-44b7-a217-f5931300f9b7).","conflictingAppointmentId":"b7c1a0e9-93f3-44b7-a217-f5931300f9b7","conflictingInterval":{"startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z"}}]}
+== 4 turno en el pasado (422)
+HTTP 422
+{"violations":[{"code":"IN_THE_PAST","message":"El inicio del turno (02/11/2026 10:00, hora local) es anterior al momento actual (06/11/2026 22:29:50, hora local): no se pueden dar turnos en el pasado."}]}
+== 5 fuera de horario 14:00 (409)
+HTTP 409
+{"violations":[{"code":"OUTSIDE_WORKING_HOURS","message":"El turno de 14:00 a 14:30 (hora local) queda fuera del horario de atención: Dra. Laura Quiroga atiende el lunes de 09:00 a 13:00 y de 15:00 a 19:00."}]}
+== 6 startAt sin zona (400)
+HTTP 400
+{"errors":[{"field":"startAt","type":"value_error","message":"Dato inválido."}]}
+== 7 paciente inexistente (422)
+HTTP 422
+{"violations":[{"code":"UNKNOWN_REFERENCE","message":"El paciente indicado no existe (id 00000000-0000-0000-0000-0000000000c9).","referenceKind":"PATIENT"}]}
+== 8 odontologo intenta dar turno (403)
+HTTP 403
+{"violations":[{"code":"FORBIDDEN_OPERATION","message":"No tiene permiso para dar turnos."}]}
+== 9 sin token (401)
+HTTP 401
+{"code":"INVALID_TOKEN","message":"La sesión venció o no es válida. Inicie sesión de nuevo."}
+== 10a odontologo bloquea 11:00-12:00 (201)
+HTTP 201
+{"block":{"id":"5c78a3e5-4c1f-4487-a5ae-8087ba252fd2","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T14:00:00Z","endAt":"2026-11-16T15:00:00Z","reason":"Prueba"},"affectedAppointments":[]}
+== 10b turno dentro del bloqueo (409)
+HTTP 409
+{"violations":[{"code":"BLOCKED_TIME","message":"El turno de 11:00 a 11:30 (hora local) se superpone con un bloqueo de agenda: Dra. Laura Quiroga tiene la agenda bloqueada del 16/11/2026 11:00 al 16/11/2026 12:00 (hora local) (bloqueo 5c78a3e5-4c1f-4487-a5ae-8087ba252fd2). Motivo: Prueba.","conflictingBlockId":"5c78a3e5-4c1f-4487-a5ae-8087ba252fd2","conflictingInterval":{"startAt":"2026-11-16T14:00:00Z","endAt":"2026-11-16T15:00:00Z"}}]}
+== 11 Extraccion sin durationMin: dura 60 min (201)
+HTTP 201
+{"id":"b3e8c5aa-161e-4b13-8d54-52e4a45b94a2","patientId":"00000000-0000-0000-0000-0000000000c3","professionalId":"00000000-0000-0000-0000-000000000001","chairId":"00000000-0000-0000-0000-0000000000b2","serviceId":"00000000-0000-0000-0000-0000000000d2","startAt":"2026-11-16T18:00:00Z","endAt":"2026-11-16T19:00:00Z","status":"reservado"}
+== 12 durationMin 45 explicito (201)
+HTTP 201
+{"id":"271a4fcd-76d5-4b4b-b1c1-9e9495038084","patientId":"00000000-0000-0000-0000-0000000000c2","professionalId":"00000000-0000-0000-0000-000000000002","chairId":"00000000-0000-0000-0000-0000000000b2","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T12:45:00Z","status":"reservado"}
+== 13 campo extra status (400)
+HTTP 400
+{"errors":[{"field":"status","type":"extra_forbidden","message":"Dato inválido."}]}
+== 14 historial en la base
+2026-11-16 12:00:00+00|reservado||reservado|recepcion
+2026-11-16 13:00:00+00|reservado||reservado|recepcion
+2026-11-16 18:00:00+00|reservado||reservado|recepcion

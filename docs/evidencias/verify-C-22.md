@@ -9,7 +9,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 16/16 en [tasks.md](../../openspec/changes/api-dar-turno/tasks.md).
+- Tareas: 16/16 en [tasks.md](../../openspec/changes/archive/2026-11-06-api-dar-turno/tasks.md).
 - Suite por defecto: [pytest-C-22.txt](pytest-C-22.txt) (872 passed, 426 deselected).
 - Integración: [pytest-integration-C-22.txt](pytest-integration-C-22.txt) (426 passed, 872 deselected).
 - `mypy --strict app tests`: [mypy-C-22.txt](mypy-C-22.txt) (Success: no issues found in 163 source files).
@@ -19,12 +19,34 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Validación OpenSpec: [validate-C-22.txt](validate-C-22.txt) (`openspec validate --strict` válido).
 - Línea de base: [baseline-C-22.txt](baseline-C-22.txt) (866 passed / 407 deselected; 407 integración; 158 archivos mypy).
 
+## Verificación manual por HTTP (2026-11-06)
+
+Se ejecutó [http-C-22.sh](http-C-22.sh) contra la API con PostgreSQL 16 real y el seed ficticio; la salida cruda está en [http-C-22.txt](http-C-22.txt). Son 14 pruebas: la 10 tiene dos pasos (10a y 10b), y la 14 consulta la base, sin pedido HTTP.
+
+| # | Prueba | HTTP | Código |
+|---|---|---|---|
+| 1 | recepcion da turno Quiroga lunes 10:00 Control (201) | 201 | — |
+| 2 | choque de profesional 10:15 otro sillon (409) | 409 | `PROFESSIONAL_OVERLAP` |
+| 3 | choque de sillon con Sosa 10:00 sillon 1 (409) | 409 | `CHAIR_OVERLAP` |
+| 4 | turno en el pasado (422) | 422 | `IN_THE_PAST` |
+| 5 | fuera de horario 14:00 (409) | 409 | `OUTSIDE_WORKING_HOURS` |
+| 6 | startAt sin zona (400) | 400 | Sin código de violación; `errors`: `startAt`, `value_error` |
+| 7 | paciente inexistente (422) | 422 | `UNKNOWN_REFERENCE` |
+| 8 | odontologo intenta dar turno (403) | 403 | `FORBIDDEN_OPERATION` |
+| 9 | sin token (401) | 401 | `INVALID_TOKEN` (campo `code`, no en `violations`) |
+| 10a | odontologo bloquea 11:00-12:00 (201) | 201 | — |
+| 10b | turno dentro del bloqueo (409) | 409 | `BLOCKED_TIME` |
+| 11 | Extraccion sin durationMin: dura 60 min (201) | 201 | — |
+| 12 | durationMin 45 explicito (201) | 201 | — |
+| 13 | campo extra status (400) | 400 | Sin código de violación; `errors`: `status`, `extra_forbidden` |
+| 14 | historial en la base | No aplica | 3 filas: `2026-11-16 12:00:00+00`, `13:00:00+00` y `18:00:00+00`, cada una con `reservado\|\|reservado\|recepcion` |
+
 ## Artefactos
 
-- [proposal.md](../../openspec/changes/api-dar-turno/proposal.md)
-- [design.md](../../openspec/changes/api-dar-turno/design.md)
-- [tasks.md](../../openspec/changes/api-dar-turno/tasks.md)
-- [spec.md (appointments-api)](../../openspec/changes/api-dar-turno/specs/appointments-api/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-06-api-dar-turno/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-06-api-dar-turno/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-06-api-dar-turno/tasks.md)
+- [spec.md (appointments-api)](../../openspec/changes/archive/2026-11-06-api-dar-turno/specs/appointments-api/spec.md)
 
 ## Línea de base
 
@@ -37,7 +59,8 @@ Antes de escribir código: 866 passed (y 407 deselected); 407 passed en integrac
 ## Desvíos
 
 - **D8 y D13 (fechas relativas al reloj del sistema)**: en los tests de integración y concurrencia se utilizaron fechas calculadas dinámicamente relativas al momento de ejecución (primer lunes a 7 o más días, "lunes futuro L") sin emplear mocks, monkeypatch, patch ni fechas fijas pasadas.
-- **Trigger append-only en AppointmentStatusChangeModel**: en la fixture de limpieza `clean_database_tables` (o teardown de tests), para permitir el truncate/clean se desactiva y reactiva temporalmente el trigger `trg_appointment_history_append_only` dentro de la transacción de limpieza, manteniendo la inmutabilidad durante la ejecución de los casos de prueba.
+- **Trigger append-only en AppointmentStatusChangeModel**: para permitir la limpieza, `test_api_appointments.py` y `test_appointments_http_concurrency.py` desactivan y reactivan el trigger con su propio código (con `finally`), sin `clean_database_tables`, manteniendo la inmutabilidad durante la ejecución de los casos de prueba.
+- **Limpieza duplicada en los tests de integración**: la limpieza de `test_api_appointments.py` y `test_appointments_http_concurrency.py` desactiva y reactiva el trigger con su propio código (con `finally`) en vez de reutilizar `clean_database_tables`; es seguro pero duplicado.
 
 ## Trazabilidad
 
