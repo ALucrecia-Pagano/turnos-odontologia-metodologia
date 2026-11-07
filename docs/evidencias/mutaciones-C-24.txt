@@ -1,0 +1,2734 @@
+Salida generada por docs/evidencias/mutaciones-C-24.py. No editar a mano.
+SHA-256 de backend/app antes: 981fb403863a738446874411ded83c4dbf29746af59f571202d35b9fde0ad2a0
+--- linea de base, sin mutaciones (codigo de salida 0) ---
+============================= test session starts =============================
+collected 70 items
+
+tests\api\test_agenda_schemas.py .........                               [ 12%]
+tests\api\test_agenda_response_schemas.py ...                            [ 17%]
+tests\api\test_agenda_query_errors.py .                                  [ 18%]
+tests\integration\test_agenda_repositories.py .........                  [ 31%]
+tests\integration\test_agenda_service.py ........                        [ 42%]
+tests\integration\test_api_agenda.py ...................                 [ 70%]
+tests\integration\test_api_agenda_midnight.py ....                       [ 75%]
+tests\integration\test_api_agenda_validation.py .........                [ 88%]
+tests\integration\test_api_appointment_detail.py ......                  [ 97%]
+tests\integration\test_agenda_openapi.py ..                              [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 70 passed, 1 warning in 30.45s ========================
+================================================================================
+[01/70] test_agenda_query_parses_dates_and_aliases
+test: tests/api/test_agenda_schemas.py::test_agenda_query_parses_dates_and_aliases
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -351,5 +351,5 @@
+ class AgendaQuery(BaseModel):
+     from_date: date = Field(
+-        alias="from", description="Fecha local inicial en formato AAAA-MM-DD."
++        alias="desde", description="Fecha local inicial en formato AAAA-MM-DD."
+     )
+     to_date: date = Field(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+_________________ test_agenda_query_parses_dates_and_aliases __________________
+tests\api\test_agenda_schemas.py:23: in test_agenda_query_parses_dates_and_aliases
+    query = AgendaQuery.model_validate(
+E   pydantic_core._pydantic_core.ValidationError: 2 validation errors for AgendaQuery
+E   desde
+E     Field required [type=missing, input_value={'from': '2026-12-07', 'to': '2026-12-13'}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.14/v/missing
+E   from
+E     Extra inputs are not permitted [type=extra_forbidden, input_value='2026-12-07', input_type=str]
+E       For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_parses_dates_and_aliases
+============================== 1 failed in 0.26s ==============================
+restaurado: test en verde
+================================================================================
+[02/70] test_agenda_query_accepts_single_day_and_31_day_ranges
+test: tests/api/test_agenda_schemas.py::test_agenda_query_accepts_single_day_and_31_day_ranges
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -155,5 +155,5 @@
+ 
+ _LOCAL_DATE_REGEX: Final = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+-MAX_AGENDA_DAYS: Final = 31
++MAX_AGENDA_DAYS: Final = 30
+ 
+ _START_TIME_REGEX: Final = re.compile(r"^(?:[01]\d|2[0-3]):[0-5]\d$")
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+___________ test_agenda_query_accepts_single_day_and_31_day_ranges ____________
+tests\api\test_agenda_schemas.py:35: in test_agenda_query_accepts_single_day_and_31_day_ranges
+    full = AgendaQuery.model_validate({"from": day().isoformat(), "to": day(30).isoformat()})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for AgendaQuery
+E     El rango no puede superar los 31 dÃ­as. [type=invalid_range_length, input_value={'from': '2026-12-07', 'to': '2027-01-06'}, input_type=dict]
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_accepts_single_day_and_31_day_ranges
+============================== 1 failed in 0.15s ==============================
+restaurado: test en verde
+================================================================================
+[03/70] test_agenda_query_rejects_range_longer_than_31_days
+test: tests/api/test_agenda_schemas.py::test_agenda_query_rejects_range_longer_than_31_days
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -391,5 +391,5 @@
+                 "La fecha final no puede ser anterior a la inicial.",
+             )
+-        if (self.to_date - self.from_date).days + 1 > MAX_AGENDA_DAYS:
++        if (self.to_date - self.from_date).days > MAX_AGENDA_DAYS:
+             raise PydanticCustomError(
+                 "invalid_range_length", "El rango no puede superar los 31 días."
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+_____________ test_agenda_query_rejects_range_longer_than_31_days _____________
+tests\api\test_agenda_schemas.py:40: in test_agenda_query_rejects_range_longer_than_31_days
+    with pytest.raises(ValidationError) as excinfo:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_rejects_range_longer_than_31_days
+============================== 1 failed in 0.16s ==============================
+restaurado: test en verde
+================================================================================
+[04/70] test_agenda_query_rejects_to_before_from
+test: tests/api/test_agenda_schemas.py::test_agenda_query_rejects_to_before_from
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -386,5 +386,5 @@
+     @model_validator(mode="after")
+     def validate_range(self) -> "AgendaQuery":
+-        if self.to_date < self.from_date:
++        if False and self.to_date < self.from_date:
+             raise PydanticCustomError(
+                 "invalid_range_order",
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+__________________ test_agenda_query_rejects_to_before_from ___________________
+tests\api\test_agenda_schemas.py:47: in test_agenda_query_rejects_to_before_from
+    with pytest.raises(ValidationError) as excinfo:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_rejects_to_before_from
+============================== 1 failed in 0.17s ==============================
+restaurado: test en verde
+================================================================================
+[05/70] test_agenda_query_rejects_invalid_date_format
+test: tests/api/test_agenda_schemas.py::test_agenda_query_rejects_invalid_date_format
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -381,5 +381,5 @@
+                 pass
+         raise PydanticCustomError(
+-            "invalid_date_format", "La fecha debe tener formato AAAA-MM-DD."
++            "invalid_date_format", "Fecha inválida."
+         )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+________________ test_agenda_query_rejects_invalid_date_format ________________
+tests\api\test_agenda_schemas.py:62: in test_agenda_query_rejects_invalid_date_format
+    assert excinfo.value.errors()[0]["msg"] == "La fecha debe tener formato AAAA-MM-DD."
+E   AssertionError: assert 'Fecha invÃ¡lida.' == 'La fecha deb...o AAAA-MM-DD.'
+E     
+E     - La fecha debe tener formato AAAA-MM-DD.
+E     + Fecha invÃ¡lida.
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_rejects_invalid_date_format
+============================== 1 failed in 0.15s ==============================
+restaurado: test en verde
+================================================================================
+[06/70] test_agenda_query_requires_from_and_to
+test: tests/api/test_agenda_schemas.py::test_agenda_query_requires_from_and_to
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -351,5 +351,5 @@
+ class AgendaQuery(BaseModel):
+     from_date: date = Field(
+-        alias="from", description="Fecha local inicial en formato AAAA-MM-DD."
++        default=date.max, alias="from", description="Fecha local inicial en formato AAAA-MM-DD."
+     )
+     to_date: date = Field(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+___________________ test_agenda_query_requires_from_and_to ____________________
+tests\api\test_agenda_schemas.py:71: in test_agenda_query_requires_from_and_to
+    assert sorted(error_types(excinfo.value)) == [("from", "missing"), ("to", "missing")]
+E   AssertionError: assert [('to', 'missing')] == [('from', 'mi...', 'missing')]
+E     
+E     At index 0 diff: ('to', 'missing') != ('from', 'missing')
+E     Right contains one more item: ('to', 'missing')
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_requires_from_and_to
+============================== 1 failed in 0.15s ==============================
+restaurado: test en verde
+================================================================================
+[07/70] test_agenda_query_professional_and_chair_ids_are_optional_uuids
+test: tests/api/test_agenda_schemas.py::test_agenda_query_professional_and_chair_ids_are_optional_uuids
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -359,5 +359,5 @@
+     professional_id: UUID | None = Field(
+         default=None,
+-        alias="professionalId",
++        alias="professionalID",
+         description="Filtra turnos, horarios y bloqueos de un profesional.",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+_______ test_agenda_query_professional_and_chair_ids_are_optional_uuids _______
+tests\api\test_agenda_schemas.py:75: in test_agenda_query_professional_and_chair_ids_are_optional_uuids
+    query = AgendaQuery.model_validate(
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for AgendaQuery
+E   professionalId
+E     Extra inputs are not permitted [type=extra_forbidden, input_value='00000000-0000-0000-0000-000000000001', input_type=str]
+E       For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_professional_and_chair_ids_are_optional_uuids
+============================== 1 failed in 0.15s ==============================
+restaurado: test en verde
+================================================================================
+[08/70] test_agenda_query_forbids_extra_parameters
+test: tests/api/test_agenda_schemas.py::test_agenda_query_forbids_extra_parameters
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -368,5 +368,5 @@
+     )
+ 
+-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
++    model_config = ConfigDict(populate_by_name=True, extra="ignore")
+ 
+     @field_validator("from_date", "to_date", mode="before")
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+_________________ test_agenda_query_forbids_extra_parameters __________________
+tests\api\test_agenda_schemas.py:101: in test_agenda_query_forbids_extra_parameters
+    with pytest.raises(ValidationError) as excinfo:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_forbids_extra_parameters
+============================== 1 failed in 0.15s ==============================
+restaurado: test en verde
+================================================================================
+[09/70] test_agenda_query_model_dump_by_alias
+test: tests/api/test_agenda_schemas.py::test_agenda_query_model_dump_by_alias
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -364,5 +364,5 @@
+     chair_id: UUID | None = Field(
+         default=None,
+-        alias="chairId",
++        alias="chair",
+         description="Filtra solo los turnos de un sillón.",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_schemas.py F                                       [100%]
+
+================================== FAILURES ===================================
+____________________ test_agenda_query_model_dump_by_alias ____________________
+tests\api\test_agenda_schemas.py:116: in test_agenda_query_model_dump_by_alias
+    assert query.model_dump(by_alias=True) == {
+E   AssertionError: assert {'chair': Non...(2026, 12, 8)} == {'chairId': N...(2026, 12, 8)}
+E     
+E     Omitting 3 identical items, use -vv to show
+E     Left contains 1 more item:
+E     {'chair': None}
+E     Right contains 1 more item:
+E     {'chairId': None}
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_schemas.py::test_agenda_query_model_dump_by_alias
+============================== 1 failed in 0.16s ==============================
+restaurado: test en verde
+================================================================================
+[10/70] test_agenda_appointment_response_serializes_names_in_camel_case
+test: tests/api/test_agenda_response_schemas.py::test_agenda_appointment_response_serializes_names_in_camel_case
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -403,5 +403,5 @@
+     patient_name: str = Field(serialization_alias="patientName")
+     professional_id: UUID = Field(serialization_alias="professionalId")
+-    professional_name: str = Field(serialization_alias="professionalName")
++    professional_name: str = Field(serialization_alias="professionalNm")
+     chair_id: UUID = Field(serialization_alias="chairId")
+     chair_name: str = Field(serialization_alias="chairName")
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_response_schemas.py F                              [100%]
+
+================================== FAILURES ===================================
+_______ test_agenda_appointment_response_serializes_names_in_camel_case _______
+tests\api\test_agenda_response_schemas.py:42: in test_agenda_appointment_response_serializes_names_in_camel_case
+    assert data == {
+E   AssertionError: assert {'chairId': '...00000a1', ...} == {'chairId': '...00000a1', ...}
+E     
+E     Omitting 11 identical items, use -vv to show
+E     Left contains 1 more item:
+E     {'professionalNm': 'Dra. Laura Quiroga'}
+E     Right contains 1 more item:
+E     {'professionalName': 'Dra. Laura Quiroga'}
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_response_schemas.py::test_agenda_appointment_response_serializes_names_in_camel_case
+============================== 1 failed in 0.15s ==============================
+restaurado: test en verde
+================================================================================
+[11/70] test_agenda_working_hours_response_keeps_hh_mm_including_24_00
+test: tests/api/test_agenda_response_schemas.py::test_agenda_working_hours_response_keeps_hh_mm_including_24_00
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -419,5 +419,5 @@
+     weekday: int
+     start: str
+-    end: str
++    end: str = Field(serialization_alias="finish")
+ 
+     model_config = ConfigDict(populate_by_name=True)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_response_schemas.py F                              [100%]
+
+================================== FAILURES ===================================
+_______ test_agenda_working_hours_response_keeps_hh_mm_including_24_00 ________
+tests\api\test_agenda_response_schemas.py:62: in test_agenda_working_hours_response_keeps_hh_mm_including_24_00
+    assert slot.model_dump(by_alias=True, mode="json") == {
+E   AssertionError: assert {'finish': '2... 'weekday': 1} == {'end': '24:0... 'weekday': 1}
+E     
+E     Omitting 3 identical items, use -vv to show
+E     Left contains 1 more item:
+E     {'finish': '24:00'}
+E     Right contains 1 more item:
+E     {'end': '24:00'}
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_response_schemas.py::test_agenda_working_hours_response_keeps_hh_mm_including_24_00
+============================== 1 failed in 0.17s ==============================
+restaurado: test en verde
+================================================================================
+[12/70] test_agenda_response_envelope_uses_from_to_and_timezone
+test: tests/api/test_agenda_response_schemas.py::test_agenda_response_envelope_uses_from_to_and_timezone
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -425,5 +425,5 @@
+ 
+ class AgendaResponse(BaseModel):
+-    from_date: date = Field(serialization_alias="from")
++    from_date: date = Field(serialization_alias="desde")
+     to_date: date = Field(serialization_alias="to")
+     timezone: str
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_response_schemas.py F                              [100%]
+
+================================== FAILURES ===================================
+___________ test_agenda_response_envelope_uses_from_to_and_timezone ___________
+tests\api\test_agenda_response_schemas.py:91: in test_agenda_response_envelope_uses_from_to_and_timezone
+    assert list(data) == ["from", "to", "timezone", "appointments", "workingHours", "blocks"]
+E   AssertionError: assert ['desde', 'to...rs', 'blocks'] == ['from', 'to'...rs', 'blocks']
+E     
+E     At index 0 diff: 'desde' != 'from'
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_response_schemas.py::test_agenda_response_envelope_uses_from_to_and_timezone
+============================== 1 failed in 0.14s ==============================
+restaurado: test en verde
+================================================================================
+[13/70] test_agenda_query_errors_return_400_with_spanish_messages
+test: tests/api/test_agenda_query_errors.py::test_agenda_query_errors_return_400_with_spanish_messages
+diff:
+--- a/backend/app/api/errors.py
++++ b/backend/app/api/errors.py
+@@ -113,5 +113,5 @@
+     "invalid_date_format": "La fecha debe tener formato AAAA-MM-DD.",
+     "invalid_range_order": "La fecha final no puede ser anterior a la inicial.",
+-    "invalid_range_length": "El rango no puede superar los 31 días.",
++    "invalid_range_length": "El rango es demasiado largo.",
+ }
+ DEFAULT_MALFORMED_MESSAGE = "Dato inválido."
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\api\test_agenda_query_errors.py F                                  [100%]
+
+================================== FAILURES ===================================
+__________ test_agenda_query_errors_return_400_with_spanish_messages __________
+tests\api\test_agenda_query_errors.py:49: in test_agenda_query_errors_return_400_with_spanish_messages
+    assert response.json() == {
+E   AssertionError: {'from': '2026-12-07', 'to': '2027-01-07'}
+E   assert {'errors': [{...nge_length'}]} == {'errors': [{...nge_length'}]}
+E     
+E     Differing items:
+E     {'errors': [{'field': None, 'message': 'El rango es demasiado largo.', 'type': 'invalid_range_length'}]} != {'errors': [{'field': None, 'message': 'El rango no puede superar los 31 dÃ­as.', 'type': 'invalid_range_length'}]}
+E     Use -v to get more diff
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_query_errors.py::test_agenda_query_errors_return_400_with_spanish_messages
+======================== 1 failed, 1 warning in 2.22s =========================
+restaurado: test en verde
+================================================================================
+[14/70] test_list_for_agenda_in_range_returns_appointments_with_names
+test: tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_returns_appointments_with_names
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -142,6 +142,6 @@
+         patient_name=patient_name,
+         professional_name=professional_name,
+-        chair_name=chair_name,
+-        service_name=service_name,
++        chair_name=service_name,
++        service_name=chair_name,
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+________ test_list_for_agenda_in_range_returns_appointments_with_names ________
+tests\integration\test_agenda_repositories.py:42: in test_list_for_agenda_in_range_returns_appointments_with_names
+    assert row.chair_name == "SillÃ³n Agenda A"
+E   AssertionError: assert 'Servicio Agenda' == 'SillÃ³n Agenda A'
+E     
+E     - SillÃ³n Agenda A
+E     + Servicio Agenda
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_returns_appointments_with_names
+======================== 1 failed, 1 warning in 0.54s =========================
+restaurado: test en verde
+================================================================================
+[15/70] test_list_for_agenda_in_range_uses_half_open_overlap
+test: tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_uses_half_open_overlap
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -197,5 +197,5 @@
+         stmt = _agenda_select().where(
+             AppointmentModel.start_at < end_at,
+-            AppointmentModel.end_at > start_at,
++            AppointmentModel.end_at >= start_at,
+         )
+         if professional_id is not None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+____________ test_list_for_agenda_in_range_uses_half_open_overlap _____________
+tests\integration\test_agenda_repositories.py:67: in test_list_for_agenda_in_range_uses_half_open_overlap
+    assert mine(rows) == [UUID(int=8003), UUID(int=8004), UUID(int=8005)]
+E   AssertionError: assert [UUID('000000...00000001f45')] == [UUID('000000...00000001f45')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f41') != UUID('00000000-0000-0000-0000-000000001f43')
+E     Left contains one more item: UUID('00000000-0000-0000-0000-000000001f45')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_uses_half_open_overlap
+======================== 1 failed, 1 warning in 0.49s =========================
+restaurado: test en verde
+================================================================================
+[16/70] test_list_for_agenda_in_range_combines_optional_filters
+test: tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_combines_optional_filters
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -202,5 +202,5 @@
+             stmt = stmt.where(AppointmentModel.professional_id == professional_id)
+         if chair_id is not None:
+-            stmt = stmt.where(AppointmentModel.chair_id == chair_id)
++            stmt = stmt.where(AppointmentModel.chair_id != chair_id)
+         stmt = stmt.order_by(AppointmentModel.start_at, AppointmentModel.id)
+         return tuple(_to_with_names(row) for row in self._session.execute(stmt).all())
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+___________ test_list_for_agenda_in_range_combines_optional_filters ___________
+tests\integration\test_agenda_repositories.py:90: in test_list_for_agenda_in_range_combines_optional_filters
+    assert mine(repo.list_for_agenda_in_range(day, end, chair_id=seed.chair_a)) == [
+E   AssertionError: assert [UUID('000000...00000001f42')] == [UUID('000000...00000001f44')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f43') != UUID('00000000-0000-0000-0000-000000001f41')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_combines_optional_filters
+======================== 1 failed, 1 warning in 0.53s =========================
+restaurado: test en verde
+================================================================================
+[17/70] test_list_for_agenda_in_range_orders_by_start_then_id
+test: tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_orders_by_start_then_id
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -203,5 +203,5 @@
+         if chair_id is not None:
+             stmt = stmt.where(AppointmentModel.chair_id == chair_id)
+-        stmt = stmt.order_by(AppointmentModel.start_at, AppointmentModel.id)
++        stmt = stmt.order_by(AppointmentModel.start_at, AppointmentModel.id.desc())
+         return tuple(_to_with_names(row) for row in self._session.execute(stmt).all())
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+____________ test_list_for_agenda_in_range_orders_by_start_then_id ____________
+tests\integration\test_agenda_repositories.py:111: in test_list_for_agenda_in_range_orders_by_start_then_id
+    assert mine(rows) == [UUID(int=8001), UUID(int=8002), UUID(int=8003)]
+E   AssertionError: assert [UUID('000000...00000001f43')] == [UUID('000000...00000001f43')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f42') != UUID('00000000-0000-0000-0000-000000001f41')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_orders_by_start_then_id
+======================== 1 failed, 1 warning in 0.58s =========================
+restaurado: test en verde
+================================================================================
+[18/70] test_list_for_agenda_in_range_runs_a_single_query
+test: tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_runs_a_single_query
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -204,5 +204,7 @@
+             stmt = stmt.where(AppointmentModel.chair_id == chair_id)
+         stmt = stmt.order_by(AppointmentModel.start_at, AppointmentModel.id)
+-        return tuple(_to_with_names(row) for row in self._session.execute(stmt).all())
++        rows = self._session.execute(stmt).all()
++        self._session.execute(stmt).all()
++        return tuple(_to_with_names(row) for row in rows)
+ 
+     def get_with_names(self, identifier: UUID) -> AppointmentWithNames | None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+______________ test_list_for_agenda_in_range_runs_a_single_query ______________
+tests\integration\test_agenda_repositories.py:135: in test_list_for_agenda_in_range_runs_a_single_query
+    assert len(statements) == 1
+E   AssertionError: assert 2 == 1
+E    +  where 2 = len(['SELECT appointment.id, appointment.patient_id, appointment.professional_id, appointment.chair_id, appointment.servic...ME ZONE AND appointment.end_at > %(end_at_1)s::TIMESTAMP WITH TIME ZONE ORDER BY appointment.start_at, appointment.id'])
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_list_for_agenda_in_range_runs_a_single_query
+======================== 1 failed, 1 warning in 0.52s =========================
+restaurado: test en verde
+================================================================================
+[19/70] test_get_with_names_returns_enriched_row_or_none
+test: tests/integration/test_agenda_repositories.py::test_get_with_names_returns_enriched_row_or_none
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -208,5 +208,5 @@
+     def get_with_names(self, identifier: UUID) -> AppointmentWithNames | None:
+         row = self._session.execute(
+-            _agenda_select().where(AppointmentModel.id == identifier)
++            _agenda_select().where(AppointmentModel.id != identifier)
+         ).first()
+         return None if row is None else _to_with_names(row)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+______________ test_get_with_names_returns_enriched_row_or_none _______________
+tests\integration\test_agenda_repositories.py:146: in test_get_with_names_returns_enriched_row_or_none
+    assert row is not None
+E   assert None is not None
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_get_with_names_returns_enriched_row_or_none
+======================== 1 failed, 1 warning in 0.50s =========================
+restaurado: test en verde
+================================================================================
+[20/70] test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing
+test: tests/integration/test_agenda_repositories.py::test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing
+diff:
+--- a/backend/app/repositories/blocks.py
++++ b/backend/app/repositories/blocks.py
+@@ -96,5 +96,5 @@
+         stmt = select(BlockModel).where(
+             BlockModel.start_at < end_at,
+-            BlockModel.end_at > start_at,
++            BlockModel.end_at >= start_at,
+         )
+         if professional_id is not None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+____ test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing ____
+tests\integration\test_agenda_repositories.py:181: in test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing
+    assert mine_blocks(blocks) == [UUID(int=8003), UUID(int=8004)]
+E   AssertionError: assert [UUID('000000...00000001f44')] == [UUID('000000...00000001f44')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f41') != UUID('00000000-0000-0000-0000-000000001f43')
+E     Left contains one more item: UUID('00000000-0000-0000-0000-000000001f44')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing
+======================== 1 failed, 1 warning in 0.51s =========================
+restaurado: test en verde
+================================================================================
+[21/70] test_block_list_in_range_filters_by_optional_professional
+test: tests/integration/test_agenda_repositories.py::test_block_list_in_range_filters_by_optional_professional
+diff:
+--- a/backend/app/repositories/blocks.py
++++ b/backend/app/repositories/blocks.py
+@@ -99,5 +99,5 @@
+         )
+         if professional_id is not None:
+-            stmt = stmt.where(BlockModel.professional_id == professional_id)
++            stmt = stmt.where(BlockModel.professional_id != professional_id)
+         stmt = stmt.order_by(BlockModel.start_at, BlockModel.id)
+         return tuple(self._to_domain(row) for row in self._session.scalars(stmt).all())
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+__________ test_block_list_in_range_filters_by_optional_professional __________
+tests\integration\test_agenda_repositories.py:193: in test_block_list_in_range_filters_by_optional_professional
+    assert mine_blocks(repo.list_in_range(day, end, professional_id=seed.prof_b)) == [
+E   AssertionError: assert [UUID('000000...00000001f41')] == [UUID('000000...00000001f42')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f41') != UUID('00000000-0000-0000-0000-000000001f42')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_block_list_in_range_filters_by_optional_professional
+======================== 1 failed, 1 warning in 0.50s =========================
+restaurado: test en verde
+================================================================================
+[22/70] test_block_list_in_range_orders_by_start_then_id
+test: tests/integration/test_agenda_repositories.py::test_block_list_in_range_orders_by_start_then_id
+diff:
+--- a/backend/app/repositories/blocks.py
++++ b/backend/app/repositories/blocks.py
+@@ -100,5 +100,5 @@
+         if professional_id is not None:
+             stmt = stmt.where(BlockModel.professional_id == professional_id)
+-        stmt = stmt.order_by(BlockModel.start_at, BlockModel.id)
++        stmt = stmt.order_by(BlockModel.start_at, BlockModel.id.desc())
+         return tuple(self._to_domain(row) for row in self._session.scalars(stmt).all())
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_repositories.py F                          [100%]
+
+================================== FAILURES ===================================
+______________ test_block_list_in_range_orders_by_start_then_id _______________
+tests\integration\test_agenda_repositories.py:208: in test_block_list_in_range_orders_by_start_then_id
+    assert mine_blocks(blocks) == [UUID(int=8001), UUID(int=8002), UUID(int=8003)]
+E   AssertionError: assert [UUID('000000...00000001f43')] == [UUID('000000...00000001f43')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f42') != UUID('00000000-0000-0000-0000-000000001f41')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_block_list_in_range_orders_by_start_then_id
+======================== 1 failed, 1 warning in 0.53s =========================
+restaurado: test en verde
+================================================================================
+[23/70] test_get_agenda_maps_appointments_with_names_and_utc_instants
+test: tests/integration/test_agenda_service.py::test_get_agenda_maps_appointments_with_names_and_utc_instants
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -57,5 +57,5 @@
+         professional_name=row.professional_name,
+         chair_id=appointment.chair_id,
+-        chair_name=row.chair_name,
++        chair_name=row.service_name,
+         service_id=appointment.service_id,
+         service_name=row.service_name,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+________ test_get_agenda_maps_appointments_with_names_and_utc_instants ________
+tests\integration\test_agenda_service.py:59: in test_get_agenda_maps_appointments_with_names_and_utc_instants
+    assert row.chair_name == "SillÃ³n Agenda A"
+E   AssertionError: assert 'Servicio Agenda' == 'SillÃ³n Agenda A'
+E     
+E     - SillÃ³n Agenda A
+E     + Servicio Agenda
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_maps_appointments_with_names_and_utc_instants
+======================== 1 failed, 1 warning in 0.50s =========================
+restaurado: test en verde
+================================================================================
+[24/70] test_get_agenda_returns_envelope_with_requested_dates_and_timezone
+test: tests/integration/test_agenda_service.py::test_get_agenda_returns_envelope_with_requested_dates_and_timezone
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -92,5 +92,5 @@
+         from_date=from_date,
+         to_date=to_date,
+-        timezone=tz.key,
++        timezone="UTC",
+         appointments=tuple(_to_agenda_appointment(row) for row in rows),
+         working_hours=working_hours,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+_____ test_get_agenda_returns_envelope_with_requested_dates_and_timezone ______
+tests\integration\test_agenda_service.py:78: in test_get_agenda_returns_envelope_with_requested_dates_and_timezone
+    assert agenda.timezone == "America/Argentina/Buenos_Aires"
+E   AssertionError: assert 'UTC' == 'America/Arge.../Buenos_Aires'
+E     
+E     - America/Argentina/Buenos_Aires
+E     + UTC
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_returns_envelope_with_requested_dates_and_timezone
+======================== 1 failed, 1 warning in 0.57s =========================
+restaurado: test en verde
+================================================================================
+[25/70] test_get_agenda_window_uses_local_midnights_and_inclusive_to
+test: tests/integration/test_agenda_service.py::test_get_agenda_window_uses_local_midnights_and_inclusive_to
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -75,5 +75,5 @@
+ ) -> Agenda:
+     window_start = datetime.combine(from_date, time.min, tzinfo=tz)
+-    window_end = datetime.combine(to_date + timedelta(days=1), time.min, tzinfo=tz)
++    window_end = datetime.combine(to_date, time.min, tzinfo=tz)
+ 
+     rows = AppointmentRepository(session).list_for_agenda_in_range(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+________ test_get_agenda_window_uses_local_midnights_and_inclusive_to _________
+tests\integration\test_agenda_service.py:100: in test_get_agenda_window_uses_local_midnights_and_inclusive_to
+    assert mine_ids([a.id for a in only_monday.appointments]) == [UUID(int=8001)]
+E   AssertionError: assert [] == [UUID('000000...00000001f41')]
+E     
+E     Right contains one more item: UUID('00000000-0000-0000-0000-000000001f41')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_window_uses_local_midnights_and_inclusive_to
+======================== 1 failed, 1 warning in 0.56s =========================
+restaurado: test en verde
+================================================================================
+[26/70] test_get_agenda_filters_working_hours_and_blocks_by_professional_but_not_by_chair
+test: tests/integration/test_agenda_service.py::test_get_agenda_filters_working_hours_and_blocks_by_professional_but_not_by_chair
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -84,9 +84,5 @@
+     )
+     hours_repo = WorkingHoursRepository(session)
+-    working_hours = (
+-        hours_repo.list()
+-        if professional_id is None
+-        else hours_repo.list_by_professional(professional_id)
+-    )
++    working_hours = hours_repo.list()
+     return Agenda(
+         from_date=from_date,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+_ test_get_agenda_filters_working_hours_and_blocks_by_professional_but_not_by_chair _
+tests\integration\test_agenda_service.py:129: in test_get_agenda_filters_working_hours_and_blocks_by_professional_but_not_by_chair
+    assert {w.professional_id for w in only_b.working_hours} == {seed.prof_b}
+E   AssertionError: assert {UUID('000000...00000001b5a')} == {UUID('000000...00000001b5a')}
+E     
+E     Extra items in the left set:
+E     UUID('00000000-0000-0000-0000-000000001b59')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_filters_working_hours_and_blocks_by_professional_but_not_by_chair
+======================== 1 failed, 1 warning in 0.56s =========================
+restaurado: test en verde
+================================================================================
+[27/70] test_get_agenda_applies_professional_and_chair_filters_to_appointments
+test: tests/integration/test_agenda_service.py::test_get_agenda_applies_professional_and_chair_filters_to_appointments
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -78,5 +78,5 @@
+ 
+     rows = AppointmentRepository(session).list_for_agenda_in_range(
+-        window_start, window_end, professional_id=professional_id, chair_id=chair_id
++        window_start, window_end, professional_id=professional_id, chair_id=None
+     )
+     blocks = BlockRepository(session, SqlAppointmentReader(session)).list_in_range(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+___ test_get_agenda_applies_professional_and_chair_filters_to_appointments ____
+tests\integration\test_agenda_service.py:152: in test_get_agenda_applies_professional_and_chair_filters_to_appointments
+    assert [a.id for a in by_chair.appointments] == [UUID(int=8002), UUID(int=8003)]
+E   AssertionError: assert [UUID('000000...00000001f43')] == [UUID('000000...00000001f43')]
+E     
+E     At index 0 diff: UUID('00000000-0000-0000-0000-000000001f41') != UUID('00000000-0000-0000-0000-000000001f42')
+E     Left contains one more item: UUID('00000000-0000-0000-0000-000000001f43')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_applies_professional_and_chair_filters_to_appointments
+======================== 1 failed, 1 warning in 0.62s =========================
+restaurado: test en verde
+================================================================================
+[28/70] test_get_agenda_runs_three_queries_without_n_plus_one
+test: tests/integration/test_agenda_service.py::test_get_agenda_runs_three_queries_without_n_plus_one
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -84,4 +84,5 @@
+     )
+     hours_repo = WorkingHoursRepository(session)
++    hours_repo.list()
+     working_hours = (
+         hours_repo.list()
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+____________ test_get_agenda_runs_three_queries_without_n_plus_one ____________
+tests\integration\test_agenda_service.py:175: in test_get_agenda_runs_three_queries_without_n_plus_one
+    assert len(statements) == 3
+E   AssertionError: assert 4 == 3
+E    +  where 4 = len(['SELECT appointment.id, appointment.patient_id, appointment.professional_id, appointment.chair_id, appointment.servic...minute \nFROM working_hours ORDER BY working_hours.professional_id, working_hours.weekday, working_hours.start_minute'])
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_runs_three_queries_without_n_plus_one
+======================== 1 failed, 1 warning in 0.51s =========================
+restaurado: test en verde
+================================================================================
+[29/70] test_get_agenda_does_not_commit_or_rollback
+test: tests/integration/test_agenda_service.py::test_get_agenda_does_not_commit_or_rollback
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -89,4 +89,5 @@
+         else hours_repo.list_by_professional(professional_id)
+     )
++    session.commit()
+     return Agenda(
+         from_date=from_date,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+_________________ test_get_agenda_does_not_commit_or_rollback _________________
+tests\integration\test_agenda_service.py:198: in test_get_agenda_does_not_commit_or_rollback
+    assert events == []
+E   AssertionError: assert ['commit'] == []
+E     
+E     Left contains one more item: 'commit'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_does_not_commit_or_rollback
+======================== 1 failed, 1 warning in 0.78s =========================
+restaurado: test en verde
+================================================================================
+[30/70] test_get_agenda_appointment_returns_mapped_appointment_or_none
+test: tests/integration/test_agenda_service.py::test_get_agenda_appointment_returns_mapped_appointment_or_none
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -62,5 +62,5 @@
+         start_at=appointment.start_at,
+         end_at=appointment.end_at,
+-        status=appointment.status.value,
++        status="reservado",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_service.py F                               [100%]
+
+================================== FAILURES ===================================
+_______ test_get_agenda_appointment_returns_mapped_appointment_or_none ________
+tests\integration\test_agenda_service.py:212: in test_get_agenda_appointment_returns_mapped_appointment_or_none
+    assert found.status == "cancelado"
+E   AssertionError: assert 'reservado' == 'cancelado'
+E     
+E     - cancelado
+E     + reservado
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_service.py::test_get_agenda_appointment_returns_mapped_appointment_or_none
+======================== 1 failed, 1 warning in 0.47s =========================
+restaurado: test en verde
+================================================================================
+[31/70] test_agenda_for_one_day_returns_complete_envelope
+test: tests/integration/test_api_agenda.py::test_agenda_for_one_day_returns_complete_envelope
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -66,5 +66,5 @@
+         from_date=agenda.from_date,
+         to_date=agenda.to_date,
+-        timezone=agenda.timezone,
++        timezone="UTC",
+         appointments=[to_agenda_appointment_response(item) for item in agenda.appointments],
+         working_hours=[
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+______________ test_agenda_for_one_day_returns_complete_envelope ______________
+tests\integration\test_api_agenda.py:66: in test_agenda_for_one_day_returns_complete_envelope
+    assert body["timezone"] == "America/Argentina/Buenos_Aires"
+E   AssertionError: assert 'UTC' == 'America/Arge.../Buenos_Aires'
+E     
+E     - America/Argentina/Buenos_Aires
+E     + UTC
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_for_one_day_returns_complete_envelope
+======================== 1 failed, 1 warning in 1.40s =========================
+restaurado: test en verde
+================================================================================
+[32/70] test_agenda_for_a_week_returns_the_appointments_of_the_range
+test: tests/integration/test_api_agenda.py::test_agenda_for_a_week_returns_the_appointments_of_the_range
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -65,5 +65,5 @@
+     return AgendaResponse(
+         from_date=agenda.from_date,
+-        to_date=agenda.to_date,
++        to_date=agenda.from_date,
+         timezone=agenda.timezone,
+         appointments=[to_agenda_appointment_response(item) for item in agenda.appointments],
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+________ test_agenda_for_a_week_returns_the_appointments_of_the_range _________
+tests\integration\test_api_agenda.py:98: in test_agenda_for_a_week_returns_the_appointments_of_the_range
+    assert body["to"] == (monday + timedelta(days=6)).isoformat()
+E   AssertionError: assert '2026-11-16' == '2026-11-22'
+E     
+E     - 2026-11-22
+E     ?         ^^
+E     + 2026-11-16
+E     ?         ^^
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_for_a_week_returns_the_appointments_of_the_range
+======================== 1 failed, 1 warning in 1.19s =========================
+restaurado: test en verde
+================================================================================
+[33/70] test_agenda_of_eight_days_crosses_two_weeks_in_order
+test: tests/integration/test_api_agenda.py::test_agenda_of_eight_days_crosses_two_weeks_in_order
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -93,5 +93,5 @@
+         to_date=to_date,
+         timezone=tz.key,
+-        appointments=tuple(_to_agenda_appointment(row) for row in rows),
++        appointments=tuple(_to_agenda_appointment(row) for row in reversed(rows)),
+         working_hours=working_hours,
+         blocks=blocks,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+____________ test_agenda_of_eight_days_crosses_two_weeks_in_order _____________
+tests\integration\test_api_agenda.py:111: in test_agenda_of_eight_days_crosses_two_weeks_in_order
+    assert [entry["id"] for entry in items(body, "appointments")] == [first, second]
+E   AssertionError: assert ['7b9f4ae2-f1...3f76521f19c6'] == ['23faae40-57...a11de137645e']
+E     
+E     At index 0 diff: '7b9f4ae2-f1d4-4a30-903a-a11de137645e' != '23faae40-570e-42c2-8aad-3f76521f19c6'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_of_eight_days_crosses_two_weeks_in_order
+======================== 1 failed, 1 warning in 1.31s =========================
+restaurado: test en verde
+================================================================================
+[34/70] test_agenda_of_31_days_crosses_months
+test: tests/integration/test_api_agenda.py::test_agenda_of_31_days_crosses_months
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -155,5 +155,5 @@
+ 
+ _LOCAL_DATE_REGEX: Final = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+-MAX_AGENDA_DAYS: Final = 31
++MAX_AGENDA_DAYS: Final = 30
+ 
+ _START_TIME_REGEX: Final = re.compile(r"^(?:[01]\d|2[0-3]):[0-5]\d$")
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+____________________ test_agenda_of_31_days_crosses_months ____________________
+tests\integration\test_api_agenda.py:125: in test_agenda_of_31_days_crosses_months
+    body = get_agenda(auth_client, headers, monday, last_day)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\agenda_api_support.py:200: in get_agenda
+    assert res.status_code == 200, res.text
+           ^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: {"errors":[{"field":null,"type":"invalid_range_length","message":"El rango no puede superar los 31 dÃ­as."}]}
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_of_31_days_crosses_months
+======================== 1 failed, 1 warning in 1.14s =========================
+restaurado: test en verde
+================================================================================
+[35/70] test_agenda_filter_by_professional_returns_their_appointments
+test: tests/integration/test_api_agenda.py::test_agenda_filter_by_professional_returns_their_appointments
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -59,5 +59,5 @@
+         params.from_date,
+         params.to_date,
+-        params.professional_id,
++        None,
+         params.chair_id,
+         ZoneInfo(settings.app_timezone),
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+________ test_agenda_filter_by_professional_returns_their_appointments ________
+tests\integration\test_api_agenda.py:139: in test_agenda_filter_by_professional_returns_their_appointments
+    assert appointment_ids(body) == {ids["p1c1"], ids["p1c2"]}
+E   AssertionError: assert {'2212b168-8a...5b85775f9c02'} == {'457cff9c-e5...e19014c364cb'}
+E     
+E     Extra items in the left set:
+E     '2212b168-8a64-4054-83cf-f165c0fdef80'
+E     'cd979360-5a42-4412-8549-5b85775f9c02'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_filter_by_professional_returns_their_appointments
+======================== 1 failed, 1 warning in 1.13s =========================
+restaurado: test en verde
+================================================================================
+[36/70] test_agenda_filter_by_chair_returns_their_appointments
+test: tests/integration/test_api_agenda.py::test_agenda_filter_by_chair_returns_their_appointments
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -60,5 +60,5 @@
+         params.to_date,
+         params.professional_id,
+-        params.chair_id,
++        None,
+         ZoneInfo(settings.app_timezone),
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+___________ test_agenda_filter_by_chair_returns_their_appointments ____________
+tests\integration\test_api_agenda.py:150: in test_agenda_filter_by_chair_returns_their_appointments
+    assert appointment_ids(body) == {ids["p1c1"], ids["p2c1"]}
+E   AssertionError: assert {'19c9c0e1-1e...47ff73625c37'} == {'ae3b8768-16...47ff73625c37'}
+E     
+E     Extra items in the left set:
+E     '985e08c6-3603-4ef8-8859-9f8a1dab7c4b'
+E     '19c9c0e1-1e9c-4432-96e6-9e3ebb06e040'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_filter_by_chair_returns_their_appointments
+======================== 1 failed, 1 warning in 1.22s =========================
+restaurado: test en verde
+================================================================================
+[37/70] test_agenda_professional_and_chair_filters_combine
+test: tests/integration/test_api_agenda.py::test_agenda_professional_and_chair_filters_combine
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -200,5 +200,5 @@
+         )
+         if professional_id is not None:
+-            stmt = stmt.where(AppointmentModel.professional_id == professional_id)
++            stmt = stmt.where(AppointmentModel.professional_id != professional_id)
+         if chair_id is not None:
+             stmt = stmt.where(AppointmentModel.chair_id == chair_id)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+_____________ test_agenda_professional_and_chair_filters_combine ______________
+tests\integration\test_api_agenda.py:163: in test_agenda_professional_and_chair_filters_combine
+    assert appointment_ids(body) == {ids["p1c2"]}
+E   AssertionError: assert {'b9843149-c2...f59b76c7ec53'} == {'dbe84a3d-d2...97f89c5931e6'}
+E     
+E     Extra items in the left set:
+E     'b9843149-c2a6-4112-b57f-f59b76c7ec53'
+E     Extra items in the right set:
+E     'dbe84a3d-d2ba-4e2d-995d-97f89c5931e6'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_professional_and_chair_filters_combine
+======================== 1 failed, 1 warning in 1.28s =========================
+restaurado: test en verde
+================================================================================
+[38/70] test_agenda_unknown_professional_returns_empty_lists
+test: tests/integration/test_api_agenda.py::test_agenda_unknown_professional_returns_empty_lists
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -199,5 +199,5 @@
+             AppointmentModel.end_at > start_at,
+         )
+-        if professional_id is not None:
++        if False:
+             stmt = stmt.where(AppointmentModel.professional_id == professional_id)
+         if chair_id is not None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+____________ test_agenda_unknown_professional_returns_empty_lists _____________
+tests\integration\test_api_agenda.py:174: in test_agenda_unknown_professional_returns_empty_lists
+    assert items(body, "appointments") == []
+E   AssertionError: assert [{'chairId': ...99c779', ...}] == []
+E     
+E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'chairName': 'SillÃ³n 1', 'endAt': '2026-11-16T13:30:00Z', 'id': '7b09eecb-6720-48d2-89ce-a3efc299c779', ...}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_unknown_professional_returns_empty_lists
+======================== 1 failed, 1 warning in 1.18s =========================
+restaurado: test en verde
+================================================================================
+[39/70] test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks
+test: tests/integration/test_api_agenda.py::test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -201,5 +201,5 @@
+         if professional_id is not None:
+             stmt = stmt.where(AppointmentModel.professional_id == professional_id)
+-        if chair_id is not None:
++        if False:
+             stmt = stmt.where(AppointmentModel.chair_id == chair_id)
+         stmt = stmt.order_by(AppointmentModel.start_at, AppointmentModel.id)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+___ test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks ____
+tests\integration\test_api_agenda.py:189: in test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks
+    assert items(body, "appointments") == []
+E   AssertionError: assert [{'chairId': ...6d7a3a', ...}] == []
+E     
+E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'chairName': 'SillÃ³n 1', 'endAt': '2026-11-16T13:30:00Z', 'id': 'b8c40084-9384-45fb-a99b-2d0adb6d7a3a', ...}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks
+======================== 1 failed, 1 warning in 1.27s =========================
+restaurado: test en verde
+================================================================================
+[40/70] test_agenda_chair_filter_does_not_filter_hours_or_blocks
+test: tests/integration/test_api_agenda.py::test_agenda_chair_filter_does_not_filter_hours_or_blocks
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -86,5 +86,5 @@
+     working_hours = (
+         hours_repo.list()
+-        if professional_id is None
++        if professional_id is None and chair_id is None
+         else hours_repo.list_by_professional(professional_id)
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+__________ test_agenda_chair_filter_does_not_filter_hours_or_blocks ___________
+tests\integration\test_api_agenda.py:202: in test_agenda_chair_filter_does_not_filter_hours_or_blocks
+    assert {"professionalId": str(P1_ID), "weekday": 1, "start": "09:00", "end": "13:00"} in hours
+E   AssertionError: assert {'end': '13:00', 'professionalId': '00000000-0000-0000-0000-000000000001', 'start': '09:00', 'weekday': 1} in []
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_chair_filter_does_not_filter_hours_or_blocks
+======================== 1 failed, 1 warning in 1.21s =========================
+restaurado: test en verde
+================================================================================
+[41/70] test_agenda_dentist_sees_appointments_of_another_professional
+test: tests/integration/test_api_agenda.py::test_agenda_dentist_sees_appointments_of_another_professional
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -59,5 +59,5 @@
+         params.from_date,
+         params.to_date,
+-        params.professional_id,
++        params.professional_id or permission.actor.professional_id,
+         params.chair_id,
+         ZoneInfo(settings.app_timezone),
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+________ test_agenda_dentist_sees_appointments_of_another_professional ________
+tests\integration\test_api_agenda.py:222: in test_agenda_dentist_sees_appointments_of_another_professional
+    entry = only(items(body, "appointments"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\agenda_api_support.py:216: in only
+    assert len(entries) == 1, entries
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: []
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_dentist_sees_appointments_of_another_professional
+======================== 1 failed, 1 warning in 1.29s =========================
+restaurado: test en verde
+================================================================================
+[42/70] test_agenda_working_hours_template_includes_all_professionals
+test: tests/integration/test_api_agenda.py::test_agenda_working_hours_template_includes_all_professionals
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -75,5 +75,5 @@
+                 end=f"{slot.end_minute // 60:02d}:{slot.end_minute % 60:02d}",
+             )
+-            for slot in agenda.working_hours
++            for slot in agenda.working_hours[:1]
+         ],
+         blocks=[
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+________ test_agenda_working_hours_template_includes_all_professionals ________
+tests\integration\test_api_agenda.py:239: in test_agenda_working_hours_template_includes_all_professionals
+    assert {"professionalId": str(P1_ID), "weekday": 1, "start": "15:00", "end": "19:00"} in hours
+E   AssertionError: assert {'end': '19:00', 'professionalId': '00000000-0000-0000-0000-000000000001', 'start': '15:00', 'weekday': 1} in [{'end': '13:00', 'professionalId': '00000000-0000-0000-0000-000000000001', 'start': '09:00', 'weekday': 1}]
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_working_hours_template_includes_all_professionals
+======================== 1 failed, 1 warning in 1.04s =========================
+restaurado: test en verde
+================================================================================
+[43/70] test_agenda_professional_filter_also_filters_working_hours
+test: tests/integration/test_api_agenda.py::test_agenda_professional_filter_also_filters_working_hours
+diff:
+--- a/backend/app/repositories/working_hours.py
++++ b/backend/app/repositories/working_hours.py
+@@ -66,5 +66,5 @@
+         rows = self._session.scalars(
+             select(WorkingHoursModel)
+-            .where(WorkingHoursModel.professional_id == professional_id)
++            .where(WorkingHoursModel.professional_id != professional_id)
+             .order_by(WorkingHoursModel.weekday, WorkingHoursModel.start_minute)
+         ).all()
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+_________ test_agenda_professional_filter_also_filters_working_hours __________
+tests\integration\test_api_agenda.py:251: in test_agenda_professional_filter_also_filters_working_hours
+    assert {entry["professionalId"] for entry in hours} == {str(P2_ID)}
+E   AssertionError: assert {'00000000-00...000000000001'} == {'00000000-00...000000000002'}
+E     
+E     Extra items in the left set:
+E     '00000000-0000-0000-0000-000000000001'
+E     Extra items in the right set:
+E     '00000000-0000-0000-0000-000000000002'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_professional_filter_also_filters_working_hours
+======================== 1 failed, 1 warning in 1.18s =========================
+restaurado: test en verde
+================================================================================
+[44/70] test_agenda_block_inside_range_is_returned_with_reason
+test: tests/integration/test_api_agenda.py::test_agenda_block_inside_range_is_returned_with_reason
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -83,5 +83,5 @@
+                 start_at=format_utc_iso(block.start_at),
+                 end_at=format_utc_iso(block.end_at),
+-                reason=block.reason,
++                reason=None,
+             )
+             for block in agenda.blocks
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+___________ test_agenda_block_inside_range_is_returned_with_reason ____________
+tests\integration\test_api_agenda.py:261: in test_agenda_block_inside_range_is_returned_with_reason
+    assert items(body, "blocks") == [
+E   AssertionError: assert [{'endAt': '2...': None, ...}] == [{'endAt': '2...ngreso', ...}]
+E     
+E     At index 0 diff: {'id': 'fd7bdbad-b603-49dc-9d52-de99da6e330e', 'professionalId': '00000000-0000-0000-0000-000000000002', 'startAt': '2026-11-16T17:00:00Z', 'endAt': '2026-11-16T18:00:00Z', 'reason': None} != {'id': 'fd7bdbad-b603-49dc-9d52-de99da6e330e', 'professionalId': '00000000-0000-0000-0000-000000000002', 'startAt': '2026-11-16T17:00:00Z', 'endAt': '2026-11-16T18:00:00Z', 'reason': 'Congreso'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_block_inside_range_is_returned_with_reason
+======================== 1 failed, 1 warning in 1.19s =========================
+restaurado: test en verde
+================================================================================
+[45/70] test_agenda_block_starting_before_the_range_is_included
+test: tests/integration/test_api_agenda.py::test_agenda_block_starting_before_the_range_is_included
+diff:
+--- a/backend/app/repositories/blocks.py
++++ b/backend/app/repositories/blocks.py
+@@ -96,5 +96,5 @@
+         stmt = select(BlockModel).where(
+             BlockModel.start_at < end_at,
+-            BlockModel.end_at > start_at,
++            BlockModel.start_at >= start_at,
+         )
+         if professional_id is not None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+___________ test_agenda_block_starting_before_the_range_is_included ___________
+tests\integration\test_api_agenda.py:280: in test_agenda_block_starting_before_the_range_is_included
+    assert [entry["reason"] for entry in items(body, "blocks")] == ["Guardia"]
+E   AssertionError: assert [] == ['Guardia']
+E     
+E     Right contains one more item: 'Guardia'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_block_starting_before_the_range_is_included
+======================== 1 failed, 1 warning in 1.22s =========================
+restaurado: test en verde
+================================================================================
+[46/70] test_agenda_professional_filter_also_filters_blocks
+test: tests/integration/test_api_agenda.py::test_agenda_professional_filter_also_filters_blocks
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -81,5 +81,5 @@
+     )
+     blocks = BlockRepository(session, SqlAppointmentReader(session)).list_in_range(
+-        window_start, window_end, professional_id=professional_id
++        window_start, window_end, professional_id=None
+     )
+     hours_repo = WorkingHoursRepository(session)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+_____________ test_agenda_professional_filter_also_filters_blocks _____________
+tests\integration\test_api_agenda.py:291: in test_agenda_professional_filter_also_filters_blocks
+    assert [entry["id"] for entry in items(body, "blocks")] == [mine]
+E   AssertionError: assert ['292d0980-bc...a541a0d021ed'] == ['292d0980-bc...4a31f45bef94']
+E     
+E     Left contains one more item: '4d02f91c-4057-4e5c-8fdf-a541a0d021ed'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_professional_filter_also_filters_blocks
+======================== 1 failed, 1 warning in 1.40s =========================
+restaurado: test en verde
+================================================================================
+[47/70] test_agenda_includes_cancelled_appointments_with_their_status
+test: tests/integration/test_api_agenda.py::test_agenda_includes_cancelled_appointments_with_their_status
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -43,5 +43,5 @@
+         start_at=start_at,
+         end_at=end_at,
+-        status=AppointmentStatus(row.status),
++        status=AppointmentStatus.RESERVED,
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+________ test_agenda_includes_cancelled_appointments_with_their_status ________
+tests\integration\test_api_agenda.py:304: in test_agenda_includes_cancelled_appointments_with_their_status
+    assert entry["status"] == "cancelado"
+E   AssertionError: assert 'reservado' == 'cancelado'
+E     
+E     - cancelado
+E     + reservado
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_includes_cancelled_appointments_with_their_status
+======================== 1 failed, 1 warning in 1.19s =========================
+restaurado: test en verde
+================================================================================
+[48/70] test_agenda_orders_appointments_blocks_and_working_hours
+test: tests/integration/test_api_agenda.py::test_agenda_orders_appointments_blocks_and_working_hours
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -95,5 +95,5 @@
+         appointments=tuple(_to_agenda_appointment(row) for row in rows),
+         working_hours=working_hours,
+-        blocks=blocks,
++        blocks=tuple(reversed(blocks)),
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+__________ test_agenda_orders_appointments_blocks_and_working_hours ___________
+tests\integration\test_api_agenda.py:321: in test_agenda_orders_appointments_blocks_and_working_hours
+    assert [entry["id"] for entry in items(body, "blocks")] == [early_block, late_block]
+E   AssertionError: assert ['9d05b91f-98...daae6471b240'] == ['37e7a7b0-92...93f829716074']
+E     
+E     At index 0 diff: '9d05b91f-98e1-4cdc-becb-93f829716074' != '37e7a7b0-9272-4d2d-83a8-daae6471b240'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_orders_appointments_blocks_and_working_hours
+======================== 1 failed, 1 warning in 1.32s =========================
+restaurado: test en verde
+================================================================================
+[49/70] test_agenda_uses_one_query_per_resource_without_n_plus_one
+test: tests/integration/test_api_agenda.py::test_agenda_uses_one_query_per_resource_without_n_plus_one
+diff:
+--- a/backend/app/repositories/blocks.py
++++ b/backend/app/repositories/blocks.py
+@@ -101,5 +101,7 @@
+             stmt = stmt.where(BlockModel.professional_id == professional_id)
+         stmt = stmt.order_by(BlockModel.start_at, BlockModel.id)
+-        return tuple(self._to_domain(row) for row in self._session.scalars(stmt).all())
++        rows = self._session.scalars(stmt).all()
++        self._session.scalars(stmt).all()
++        return tuple(self._to_domain(row) for row in rows)
+ 
+     def list(self) -> tuple[Block, ...]:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda.py F                                   [100%]
+
+================================== FAILURES ===================================
+_________ test_agenda_uses_one_query_per_resource_without_n_plus_one __________
+tests\integration\test_api_agenda.py:355: in test_agenda_uses_one_query_per_resource_without_n_plus_one
+    assert len([s for s in statements if re.search(r"FROM block\b", s)]) == 1
+E   AssertionError: assert 2 == 1
+E    +  where 2 = len(['SELECT block.id, block.professional_id, block.start_at, block.end_at, block.reason \nFROM block \nWHERE block.start_...:TIMESTAMP WITH TIME ZONE AND block.end_at > %(end_at_1)s::TIMESTAMP WITH TIME ZONE ORDER BY block.start_at, block.id'])
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_uses_one_query_per_resource_without_n_plus_one
+======================== 1 failed, 1 warning in 1.29s =========================
+restaurado: test en verde
+================================================================================
+[50/70] test_appointment_ending_at_midnight_appears_only_on_its_own_day
+test: tests/integration/test_api_agenda_midnight.py::test_appointment_ending_at_midnight_appears_only_on_its_own_day
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -196,5 +196,5 @@
+     ) -> tuple[AppointmentWithNames, ...]:
+         stmt = _agenda_select().where(
+-            AppointmentModel.start_at < end_at,
++            AppointmentModel.start_at <= end_at,
+             AppointmentModel.end_at > start_at,
+         )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_midnight.py F                          [100%]
+
+================================== FAILURES ===================================
+_______ test_appointment_ending_at_midnight_appears_only_on_its_own_day _______
+tests\integration\test_api_agenda_midnight.py:58: in test_appointment_ending_at_midnight_appears_only_on_its_own_day
+    entry = only(items(body, "appointments"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\agenda_api_support.py:216: in only
+    assert len(entries) == 1, entries
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: [{'id': '78d81c8e-3d73-456a-b1df-a3d88d9cbde5', 'patientId': '00000000-0000-0000-0000-0000000000c1', 'patientName': 'Ana PÃ©rez', 'professionalId': '00000000-0000-0000-0000-000000000001', 'professionalName': 'Dra. Laura Quiroga', 'chairId': '00000000-0000-0000-0000-0000000000b1', 'chairName': 'SillÃ³n 1', 'serviceId': '00000000-0000-0000-0000-0000000000d4', 'serviceName': 'Control', 'startAt': '2026-11-17T02:30:00Z', 'endAt': '2026-11-17T03:00:00Z', 'status': 'reservado'}, {'id': 'd1e1d1a4-328a-4767-8d67-703e6935e5c5', 'patientId': '00000000-0000-0000-0000-0000000000c1', 'patientName': 'Ana PÃ©rez', 'professionalId': '00000000-0000-0000-0000-000000000001', 'professionalName': 'Dra. Laura Quiroga', 'chairId': '00000000-0000-0000-0000-0000000000b1', 'chairName': 'SillÃ³n 1', 'serviceId': '00000000-0000-0000-0000-0000000000d4', 'serviceName': 'Control', 'startAt': '2026-11-17T03:00:00Z', 'endAt': '2026-11-17T03:30:00Z', 'status': 'reservado'}]
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_midnight.py::test_appointment_ending_at_midnight_appears_only_on_its_own_day
+======================== 1 failed, 1 warning in 1.39s =========================
+restaurado: test en verde
+================================================================================
+[51/70] test_appointment_starting_at_midnight_appears_only_on_its_own_day
+test: tests/integration/test_api_agenda_midnight.py::test_appointment_starting_at_midnight_appears_only_on_its_own_day
+diff:
+--- a/backend/app/repositories/appointment.py
++++ b/backend/app/repositories/appointment.py
+@@ -197,5 +197,5 @@
+         stmt = _agenda_select().where(
+             AppointmentModel.start_at < end_at,
+-            AppointmentModel.end_at > start_at,
++            AppointmentModel.end_at >= start_at,
+         )
+         if professional_id is not None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_midnight.py F                          [100%]
+
+================================== FAILURES ===================================
+______ test_appointment_starting_at_midnight_appears_only_on_its_own_day ______
+tests\integration\test_api_agenda_midnight.py:74: in test_appointment_starting_at_midnight_appears_only_on_its_own_day
+    entry = only(items(body, "appointments"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\agenda_api_support.py:216: in only
+    assert len(entries) == 1, entries
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: [{'id': 'bc90e099-92d4-4e22-bf09-b3f66a5a6656', 'patientId': '00000000-0000-0000-0000-0000000000c1', 'patientName': 'Ana PÃ©rez', 'professionalId': '00000000-0000-0000-0000-000000000001', 'professionalName': 'Dra. Laura Quiroga', 'chairId': '00000000-0000-0000-0000-0000000000b1', 'chairName': 'SillÃ³n 1', 'serviceId': '00000000-0000-0000-0000-0000000000d4', 'serviceName': 'Control', 'startAt': '2026-11-17T02:30:00Z', 'endAt': '2026-11-17T03:00:00Z', 'status': 'reservado'}, {'id': 'aeeacb87-75c3-40fe-8b6d-8960e21c11b5', 'patientId': '00000000-0000-0000-0000-0000000000c1', 'patientName': 'Ana PÃ©rez', 'professionalId': '00000000-0000-0000-0000-000000000001', 'professionalName': 'Dra. Laura Quiroga', 'chairId': '00000000-0000-0000-0000-0000000000b1', 'chairName': 'SillÃ³n 1', 'serviceId': '00000000-0000-0000-0000-0000000000d4', 'serviceName': 'Control', 'startAt': '2026-11-17T03:00:00Z', 'endAt': '2026-11-17T03:30:00Z', 'status': 'reservado'}]
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_midnight.py::test_appointment_starting_at_midnight_appears_only_on_its_own_day
+======================== 1 failed, 1 warning in 1.32s =========================
+restaurado: test en verde
+================================================================================
+[52/70] test_agenda_shows_the_replaced_hours_with_24_00_and_00_00
+test: tests/integration/test_api_agenda_midnight.py::test_agenda_shows_the_replaced_hours_with_24_00_and_00_00
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -73,5 +73,5 @@
+                 weekday=slot.weekday,
+                 start=f"{slot.start_minute // 60:02d}:{slot.start_minute % 60:02d}",
+-                end=f"{slot.end_minute // 60:02d}:{slot.end_minute % 60:02d}",
++                end=f"{slot.end_minute // 60 % 24:02d}:{slot.end_minute % 60:02d}",
+             )
+             for slot in agenda.working_hours
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_midnight.py F                          [100%]
+
+================================== FAILURES ===================================
+__________ test_agenda_shows_the_replaced_hours_with_24_00_and_00_00 __________
+tests\integration\test_api_agenda_midnight.py:88: in test_agenda_shows_the_replaced_hours_with_24_00_and_00_00
+    assert p1_hours == [
+E   AssertionError: assert [{'end': '00:...'weekday': 2}] == [{'end': '24:...'weekday': 2}]
+E     
+E     At index 0 diff: {'professionalId': '00000000-0000-0000-0000-000000000001', 'weekday': 1, 'start': '23:00', 'end': '00:00'} != {'professionalId': '00000000-0000-0000-0000-000000000001', 'weekday': 1, 'start': '23:00', 'end': '24:00'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_midnight.py::test_agenda_shows_the_replaced_hours_with_24_00_and_00_00
+======================== 1 failed, 1 warning in 1.27s =========================
+restaurado: test en verde
+================================================================================
+[53/70] test_block_crossing_midnight_appears_on_both_days
+test: tests/integration/test_api_agenda_midnight.py::test_block_crossing_midnight_appears_on_both_days
+diff:
+--- a/backend/app/repositories/blocks.py
++++ b/backend/app/repositories/blocks.py
+@@ -96,5 +96,5 @@
+         stmt = select(BlockModel).where(
+             BlockModel.start_at < end_at,
+-            BlockModel.end_at > start_at,
++            BlockModel.start_at >= start_at,
+         )
+         if professional_id is not None:
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_midnight.py F                          [100%]
+
+================================== FAILURES ===================================
+______________ test_block_crossing_midnight_appears_on_both_days ______________
+tests\integration\test_api_agenda_midnight.py:106: in test_block_crossing_midnight_appears_on_both_days
+    assert [b["id"] for b in items(tuesday_body, "blocks")] == [block_id]
+E   AssertionError: assert [] == ['fe92008a-4e...98ea41578037']
+E     
+E     Right contains one more item: 'fe92008a-4ef0-4e95-9f5d-98ea41578037'
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_midnight.py::test_block_crossing_midnight_appears_on_both_days
+======================== 1 failed, 1 warning in 1.22s =========================
+restaurado: test en verde
+================================================================================
+[54/70] test_missing_from_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_missing_from_returns_400
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -351,5 +351,5 @@
+ class AgendaQuery(BaseModel):
+     from_date: date = Field(
+-        alias="from", description="Fecha local inicial en formato AAAA-MM-DD."
++        default=date.max, alias="from", description="Fecha local inicial en formato AAAA-MM-DD."
+     )
+     to_date: date = Field(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+________________________ test_missing_from_returns_400 ________________________
+tests\integration\test_api_agenda_validation.py:25: in test_missing_from_returns_400
+    assert get_errors(auth_client, {"to": monday.isoformat()}) == [
+E   AssertionError: assert [{'field': No...range_order'}] == [{'field': 'f...': 'missing'}]
+E     
+E     At index 0 diff: {'field': None, 'type': 'invalid_range_order', 'message': 'La fecha final no puede ser anterior a la inicial.'} != {'field': 'from', 'type': 'missing', 'message': 'Falta este dato.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_missing_from_returns_400
+======================== 1 failed, 1 warning in 1.18s =========================
+restaurado: test en verde
+================================================================================
+[55/70] test_missing_to_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_missing_to_returns_400
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -354,5 +354,5 @@
+     )
+     to_date: date = Field(
+-        alias="to",
++        default=date.min, alias="to",
+         description="Fecha local final inclusiva en formato AAAA-MM-DD; máximo 31 días desde from.",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+_________________________ test_missing_to_returns_400 _________________________
+tests\integration\test_api_agenda_validation.py:32: in test_missing_to_returns_400
+    assert get_errors(auth_client, {"from": monday.isoformat()}) == [
+E   AssertionError: assert [{'field': No...range_order'}] == [{'field': 't...': 'missing'}]
+E     
+E     At index 0 diff: {'field': None, 'type': 'invalid_range_order', 'message': 'La fecha final no puede ser anterior a la inicial.'} != {'field': 'to', 'type': 'missing', 'message': 'Falta este dato.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_missing_to_returns_400
+======================== 1 failed, 1 warning in 1.28s =========================
+restaurado: test en verde
+================================================================================
+[56/70] test_invalid_date_format_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_invalid_date_format_returns_400
+diff:
+--- a/backend/app/api/errors.py
++++ b/backend/app/api/errors.py
+@@ -111,5 +111,5 @@
+     "json_invalid": "El cuerpo no es JSON válido.",
+     "missing": "Falta este dato.",
+-    "invalid_date_format": "La fecha debe tener formato AAAA-MM-DD.",
++    "invalid_date_format": "Fecha inválida.",
+     "invalid_range_order": "La fecha final no puede ser anterior a la inicial.",
+     "invalid_range_length": "El rango no puede superar los 31 días.",
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+____________________ test_invalid_date_format_returns_400 _____________________
+tests\integration\test_api_agenda_validation.py:40: in test_invalid_date_format_returns_400
+    assert get_errors(auth_client, {"from": wrong, "to": monday.isoformat()}) == [
+E   AssertionError: assert [{'field': 'f...date_format'}] == [{'field': 'f...date_format'}]
+E     
+E     At index 0 diff: {'field': 'from', 'type': 'invalid_date_format', 'message': 'Fecha invÃ¡lida.'} != {'field': 'from', 'type': 'invalid_date_format', 'message': 'La fecha debe tener formato AAAA-MM-DD.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_invalid_date_format_returns_400
+======================== 1 failed, 1 warning in 1.49s =========================
+restaurado: test en verde
+================================================================================
+[57/70] test_to_before_from_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_to_before_from_returns_400
+diff:
+--- a/backend/app/api/errors.py
++++ b/backend/app/api/errors.py
+@@ -112,5 +112,5 @@
+     "missing": "Falta este dato.",
+     "invalid_date_format": "La fecha debe tener formato AAAA-MM-DD.",
+-    "invalid_range_order": "La fecha final no puede ser anterior a la inicial.",
++    "invalid_range_order": "El orden de las fechas es inválido.",
+     "invalid_range_length": "El rango no puede superar los 31 días.",
+ }
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+_______________________ test_to_before_from_returns_400 _______________________
+tests\integration\test_api_agenda_validation.py:52: in test_to_before_from_returns_400
+    assert get_errors(auth_client, {"from": tuesday.isoformat(), "to": monday.isoformat()}) == [
+E   AssertionError: assert [{'field': No...range_order'}] == [{'field': No...range_order'}]
+E     
+E     At index 0 diff: {'field': None, 'type': 'invalid_range_order', 'message': 'El orden de las fechas es invÃ¡lido.'} != {'field': None, 'type': 'invalid_range_order', 'message': 'La fecha final no puede ser anterior a la inicial.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_to_before_from_returns_400
+======================== 1 failed, 1 warning in 1.23s =========================
+restaurado: test en verde
+================================================================================
+[58/70] test_range_longer_than_31_days_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_range_longer_than_31_days_returns_400
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -155,5 +155,5 @@
+ 
+ _LOCAL_DATE_REGEX: Final = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+-MAX_AGENDA_DAYS: Final = 31
++MAX_AGENDA_DAYS: Final = 32
+ 
+ _START_TIME_REGEX: Final = re.compile(r"^(?:[01]\d|2[0-3]):[0-5]\d$")
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+_________________ test_range_longer_than_31_days_returns_400 __________________
+tests\integration\test_api_agenda_validation.py:64: in test_range_longer_than_31_days_returns_400
+    assert get_errors(auth_client, {"from": monday.isoformat(), "to": too_far.isoformat()}) == [
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\test_api_agenda_validation.py:16: in get_errors
+    assert res.status_code == 400, res.text
+E   AssertionError: {"from":"2026-11-16","to":"2026-12-17","timezone":"America/Argentina/Buenos_Aires","appointments":[],"workingHours":[{"professionalId":"00000000-0000-0000-0000-000000000001","weekday":1,"start":"09:00","end":"13:00"},{"professionalId":"00000000-0000-0000-0000-000000000002","weekday":1,"start":"09:00","end":"13:00"}],"blocks":[]}
+E   assert 200 == 400
+E    +  where 200 = <Response [200 OK]>.status_code
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_range_longer_than_31_days_returns_400
+======================== 1 failed, 1 warning in 1.05s =========================
+restaurado: test en verde
+================================================================================
+[59/70] test_malformed_professional_id_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_malformed_professional_id_returns_400
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -359,5 +359,5 @@
+     professional_id: UUID | None = Field(
+         default=None,
+-        alias="professionalId",
++        alias="professional",
+         description="Filtra turnos, horarios y bloqueos de un profesional.",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+_________________ test_malformed_professional_id_returns_400 __________________
+tests\integration\test_api_agenda_validation.py:75: in test_malformed_professional_id_returns_400
+    assert get_errors(
+E   AssertionError: assert [{'field': 'p...a_forbidden'}] == [{'field': 'p...uid_parsing'}]
+E     
+E     At index 0 diff: {'field': 'professionalId', 'type': 'extra_forbidden', 'message': 'Dato invÃ¡lido.'} != {'field': 'professionalId', 'type': 'uuid_parsing', 'message': 'Dato invÃ¡lido.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_malformed_professional_id_returns_400
+======================== 1 failed, 1 warning in 1.16s =========================
+restaurado: test en verde
+================================================================================
+[60/70] test_malformed_chair_id_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_malformed_chair_id_returns_400
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -364,5 +364,5 @@
+     chair_id: UUID | None = Field(
+         default=None,
+-        alias="chairId",
++        alias="sillon",
+         description="Filtra solo los turnos de un sillón.",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+_____________________ test_malformed_chair_id_returns_400 _____________________
+tests\integration\test_api_agenda_validation.py:82: in test_malformed_chair_id_returns_400
+    assert get_errors(auth_client, {"from": monday, "to": monday, "chairId": "no-es-un-uuid"}) == [
+E   AssertionError: assert [{'field': 'c...a_forbidden'}] == [{'field': 'c...uid_parsing'}]
+E     
+E     At index 0 diff: {'field': 'chairId', 'type': 'extra_forbidden', 'message': 'Dato invÃ¡lido.'} != {'field': 'chairId', 'type': 'uuid_parsing', 'message': 'Dato invÃ¡lido.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_malformed_chair_id_returns_400
+======================== 1 failed, 1 warning in 1.17s =========================
+restaurado: test en verde
+================================================================================
+[61/70] test_unknown_query_parameter_returns_400
+test: tests/integration/test_api_agenda_validation.py::test_unknown_query_parameter_returns_400
+diff:
+--- a/backend/app/api/schemas.py
++++ b/backend/app/api/schemas.py
+@@ -368,5 +368,5 @@
+     )
+ 
+-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
++    model_config = ConfigDict(populate_by_name=True, extra="ignore")
+ 
+     @field_validator("from_date", "to_date", mode="before")
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+__________________ test_unknown_query_parameter_returns_400 ___________________
+tests\integration\test_api_agenda_validation.py:89: in test_unknown_query_parameter_returns_400
+    assert get_errors(auth_client, {"from": monday, "to": monday, "status": "cancelado"}) == [
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\integration\test_api_agenda_validation.py:16: in get_errors
+    assert res.status_code == 400, res.text
+E   AssertionError: {"from":"2026-11-16","to":"2026-11-16","timezone":"America/Argentina/Buenos_Aires","appointments":[],"workingHours":[{"professionalId":"00000000-0000-0000-0000-000000000001","weekday":1,"start":"09:00","end":"13:00"},{"professionalId":"00000000-0000-0000-0000-000000000002","weekday":1,"start":"09:00","end":"13:00"}],"blocks":[]}
+E   assert 200 == 400
+E    +  where 200 = <Response [200 OK]>.status_code
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_unknown_query_parameter_returns_400
+======================== 1 failed, 1 warning in 1.25s =========================
+restaurado: test en verde
+================================================================================
+[62/70] test_agenda_without_token_returns_401
+test: tests/integration/test_api_agenda_validation.py::test_agenda_without_token_returns_401
+diff:
+--- a/backend/app/main.py
++++ b/backend/app/main.py
+@@ -40,5 +40,5 @@
+ protected_router.include_router(blocks_router)
+ protected_router.include_router(appointments_router)
+-protected_router.include_router(agenda_router)
++pass
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_agenda_validation.py F                        [100%]
+
+================================== FAILURES ===================================
+____________________ test_agenda_without_token_returns_401 ____________________
+tests\integration\test_api_agenda_validation.py:97: in test_agenda_without_token_returns_401
+    assert res.status_code == 401
+E   assert 404 == 401
+E    +  where 404 = <Response [404 Not Found]>.status_code
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda_validation.py::test_agenda_without_token_returns_401
+======================== 1 failed, 1 warning in 1.20s =========================
+restaurado: test en verde
+================================================================================
+[63/70] test_detail_returns_the_enriched_appointment
+test: tests/integration/test_api_appointment_detail.py::test_detail_returns_the_enriched_appointment
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -30,5 +30,5 @@
+         professional_name=item.professional_name,
+         chair_id=item.chair_id,
+-        chair_name=item.chair_name,
++        chair_name=item.service_name,
+         service_id=item.service_id,
+         service_name=item.service_name,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_detail.py F                       [100%]
+
+================================== FAILURES ===================================
+________________ test_detail_returns_the_enriched_appointment _________________
+tests\integration\test_api_appointment_detail.py:37: in test_detail_returns_the_enriched_appointment
+    assert res.json() == {
+E   AssertionError: assert {'chairId': '...e2a7bc3', ...} == {'chairId': '...e2a7bc3', ...}
+E     
+E     Omitting 11 identical items, use -vv to show
+E     Differing items:
+E     {'chairName': 'Control'} != {'chairName': 'SillÃ³n 1'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_returns_the_enriched_appointment
+======================== 1 failed, 1 warning in 1.51s =========================
+restaurado: test en verde
+================================================================================
+[64/70] test_detail_shows_the_current_status_of_a_cancelled_appointment
+test: tests/integration/test_api_appointment_detail.py::test_detail_shows_the_current_status_of_a_cancelled_appointment
+diff:
+--- a/backend/app/services/agenda.py
++++ b/backend/app/services/agenda.py
+@@ -62,5 +62,5 @@
+         start_at=appointment.start_at,
+         end_at=appointment.end_at,
+-        status=appointment.status.value,
++        status="confirmado",
+     )
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_detail.py F                       [100%]
+
+================================== FAILURES ===================================
+_______ test_detail_shows_the_current_status_of_a_cancelled_appointment _______
+tests\integration\test_api_appointment_detail.py:64: in test_detail_shows_the_current_status_of_a_cancelled_appointment
+    assert res.json()["status"] == "cancelado"
+E   AssertionError: assert 'confirmado' == 'cancelado'
+E     
+E     - cancelado
+E     + confirmado
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_shows_the_current_status_of_a_cancelled_appointment
+======================== 1 failed, 1 warning in 1.50s =========================
+restaurado: test en verde
+================================================================================
+[65/70] test_detail_of_unknown_appointment_returns_404
+test: tests/integration/test_api_appointment_detail.py::test_detail_of_unknown_appointment_returns_404
+diff:
+--- a/backend/app/api/appointments.py
++++ b/backend/app/api/appointments.py
+@@ -312,4 +312,4 @@
+     appointment = get_agenda_appointment(session, id)
+     if appointment is None:
+-        raise NotFoundError("Turno no encontrado.")
++        raise NotFoundError("Turno inexistente.")
+     return to_agenda_appointment_response(appointment)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_detail.py F                       [100%]
+
+================================== FAILURES ===================================
+_______________ test_detail_of_unknown_appointment_returns_404 ________________
+tests\integration\test_api_appointment_detail.py:73: in test_detail_of_unknown_appointment_returns_404
+    assert res.json() == {"code": "NOT_FOUND", "message": "Turno no encontrado."}
+E   AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'message': 'Turno inexistente.'} != {'message': 'Turno no encontrado.'}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_of_unknown_appointment_returns_404
+======================== 1 failed, 1 warning in 1.05s =========================
+restaurado: test en verde
+================================================================================
+[66/70] test_detail_with_malformed_uuid_returns_400
+test: tests/integration/test_api_appointment_detail.py::test_detail_with_malformed_uuid_returns_400
+diff:
+--- a/backend/app/api/appointments.py
++++ b/backend/app/api/appointments.py
+@@ -294,5 +294,5 @@
+ 
+ @router.get(
+-    "/{id}",
++    "/{appointment_id}",
+     status_code=status.HTTP_200_OK,
+     response_model=AgendaAppointmentResponse,
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_detail.py F                       [100%]
+
+================================== FAILURES ===================================
+_________________ test_detail_with_malformed_uuid_returns_400 _________________
+tests\integration\test_api_appointment_detail.py:82: in test_detail_with_malformed_uuid_returns_400
+    assert res.json() == {
+E   AssertionError: assert {'errors': [{...: 'missing'}]} == {'errors': [{...id_parsing'}]}
+E     
+E     Differing items:
+E     {'errors': [{'field': 'id', 'message': 'Falta este dato.', 'type': 'missing'}]} != {'errors': [{'field': 'id', 'message': 'Dato invÃ¡lido.', 'type': 'uuid_parsing'}]}
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_with_malformed_uuid_returns_400
+======================== 1 failed, 1 warning in 1.16s =========================
+restaurado: test en verde
+================================================================================
+[67/70] test_detail_without_token_returns_401
+test: tests/integration/test_api_appointment_detail.py::test_detail_without_token_returns_401
+diff:
+--- a/backend/app/main.py
++++ b/backend/app/main.py
+@@ -39,5 +39,5 @@
+ protected_router.include_router(working_hours_router)
+ protected_router.include_router(blocks_router)
+-protected_router.include_router(appointments_router)
++pass
+ protected_router.include_router(agenda_router)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_detail.py F                       [100%]
+
+================================== FAILURES ===================================
+____________________ test_detail_without_token_returns_401 ____________________
+tests\integration\test_api_appointment_detail.py:90: in test_detail_without_token_returns_401
+    assert res.status_code == 401
+E   assert 404 == 401
+E    +  where 404 = <Response [404 Not Found]>.status_code
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_without_token_returns_401
+======================== 1 failed, 1 warning in 1.23s =========================
+restaurado: test en verde
+================================================================================
+[68/70] test_dentist_reads_the_detail_of_another_professionals_appointment
+test: tests/integration/test_api_appointment_detail.py::test_dentist_reads_the_detail_of_another_professionals_appointment
+diff:
+--- a/backend/app/api/appointments.py
++++ b/backend/app/api/appointments.py
+@@ -313,3 +313,5 @@
+     if appointment is None:
+         raise NotFoundError("Turno no encontrado.")
++    if permission.actor.professional_id not in (None, appointment.professional_id):
++        raise NotFoundError("Turno no encontrado.")
+     return to_agenda_appointment_response(appointment)
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_detail.py F                       [100%]
+
+================================== FAILURES ===================================
+_____ test_dentist_reads_the_detail_of_another_professionals_appointment ______
+tests\integration\test_api_appointment_detail.py:110: in test_dentist_reads_the_detail_of_another_professionals_appointment
+    assert res.status_code == 200, res.text
+E   AssertionError: {"code":"NOT_FOUND","message":"Turno no encontrado."}
+E   assert 404 == 200
+E    +  where 404 = <Response [404 Not Found]>.status_code
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_dentist_reads_the_detail_of_another_professionals_appointment
+======================== 1 failed, 1 warning in 1.27s =========================
+restaurado: test en verde
+================================================================================
+[69/70] test_agenda_openapi_documents_parameters_responses_and_models
+test: tests/integration/test_agenda_openapi.py::test_agenda_openapi_documents_parameters_responses_and_models
+diff:
+--- a/backend/app/api/agenda.py
++++ b/backend/app/api/agenda.py
+@@ -43,5 +43,5 @@
+     status_code=status.HTTP_200_OK,
+     response_model=AgendaResponse,
+-    responses={**permission_responses()},
++    responses={},
+ )
+ def get_agenda_endpoint(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_openapi.py F                               [100%]
+
+================================== FAILURES ===================================
+________ test_agenda_openapi_documents_parameters_responses_and_models ________
+tests\integration\test_agenda_openapi.py:15: in test_agenda_openapi_documents_parameters_responses_and_models
+    assert code in operation["responses"], code
+E   AssertionError: 403
+E   assert '403' in {'200': {'content': {'application/json': {'schema': {'$ref': '#/components/schemas/AgendaResponse'}}}, 'description': ...}, 'schema': {'$ref': '#/components/schemas/AuthErrorResponse'}}}, 'description': 'Token ausente, vencido o invÃ¡lido'}}
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_openapi.py::test_agenda_openapi_documents_parameters_responses_and_models
+======================== 1 failed, 1 warning in 0.90s =========================
+restaurado: test en verde
+================================================================================
+[70/70] test_appointment_detail_openapi_documents_responses_and_model
+test: tests/integration/test_agenda_openapi.py::test_appointment_detail_openapi_documents_responses_and_model
+diff:
+--- a/backend/app/api/appointments.py
++++ b/backend/app/api/appointments.py
+@@ -297,8 +297,5 @@
+     status_code=status.HTTP_200_OK,
+     response_model=AgendaAppointmentResponse,
+-    responses={
+-        **not_found_responses("Turno"),
+-        **permission_responses(),
+-    },
++    responses={**permission_responses()},
+ )
+ def get_appointment_endpoint(
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_agenda_openapi.py F                               [100%]
+
+================================== FAILURES ===================================
+________ test_appointment_detail_openapi_documents_responses_and_model ________
+tests\integration\test_agenda_openapi.py:54: in test_appointment_detail_openapi_documents_responses_and_model
+    assert code in operation["responses"], code
+E   AssertionError: 404
+E   assert '404' in {'200': {'content': {'application/json': {'schema': {'$ref': '#/components/schemas/AgendaAppointmentResponse'}}}, 'des...ref': '#/components/schemas/ViolationResponseSchema'}}}, 'description': 'El rol no tiene permiso para esta operaciÃ³n'}}
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_openapi.py::test_appointment_detail_openapi_documents_responses_and_model
+======================== 1 failed, 1 warning in 0.90s =========================
+restaurado: test en verde
+================================================================================
+RESUMEN
+mutaciones que hicieron fallar su test: 70
+mutaciones que NO lo hicieron fallar: 0
+mutaciones inválidas: 0
+SHA-256 de backend/app despues: 981fb403863a738446874411ded83c4dbf29746af59f571202d35b9fde0ad2a0
+SHA-256 sin cambios: si

@@ -1,0 +1,47 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+__________ test_agenda_query_errors_return_400_with_spanish_messages __________
+
+api_settings = Settings(app_env='test', api_port=8000, postgres_user='test_user', postgres_db='test_db', redis_url='redis://localhost...mezone='America/Argentina/Buenos_Aires', cors_origin='http://localhost:5173', vite_api_url='http://localhost:8000/api')
+
+    def test_agenda_query_errors_return_400_with_spanish_messages(api_settings: Settings) -> None:
+        client = build_client(api_settings)
+    
+        ok = client.get("/sample-agenda", params={"from": "2026-11-09", "to": "2026-11-09"})
+        assert ok.status_code == 200
+        assert ok.json() == {"from": "2026-11-09", "to": "2026-11-09"}
+    
+        cases = [
+            ({"from": "09-11-2026", "to": "2026-11-09"}, "from", "invalid_date_format",
+             "La fecha debe tener formato AAAA-MM-DD."),
+            ({"from": "2026-11-10", "to": "2026-11-09"}, None, "invalid_range_order",
+             "La fecha final no puede ser anterior a la inicial."),
+            ({"from": "2026-12-01", "to": "2027-01-01"}, None, "invalid_range_length",
+             "El rango no puede superar los 31 días."),
+            ({"to": "2026-11-09"}, "from", "missing", "Falta este dato."),
+            ({"from": "2026-11-09", "to": "2026-11-09", "status": "cancelado"}, "status",
+             "extra_forbidden", "Dato inválido."),
+        ]
+        for params, field, err_type, message in cases:
+            response = client.get("/sample-agenda", params=params)
+            assert response.status_code == 400, params
+>           assert response.json() == {
+                "errors": [{"field": field, "type": err_type, "message": message}]
+            }, params
+E           AssertionError: {'from': '09-11-2026', 'to': '2026-11-09'}
+E           assert {'errors': [{...ate_format'}]} == {'errors': [{...ate_format'}]}
+E             
+E             Differing items:
+E             {'errors': [{'field': 'from', 'message': 'Dato inválido.', 'type': 'invalid_date_format'}]} != {'errors': [{'field': 'from', 'message': 'La fecha debe tener formato AAAA-MM-DD.', 'type': 'invalid_date_format'}]}
+E             Use -v to get more diff
+
+tests\api\test_agenda_query_errors.py:44: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_agenda_query_errors.py::test_agenda_query_errors_return_400_with_spanish_messages
+1 failed, 1 warning in 2.74s

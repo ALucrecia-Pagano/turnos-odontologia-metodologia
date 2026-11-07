@@ -1,0 +1,42 @@
+F.                                                                       [100%]
+================================== FAILURES ===================================
+________ test_agenda_openapi_documents_parameters_responses_and_models ________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001E760556E40>
+
+    def test_agenda_openapi_documents_parameters_responses_and_models(
+        auth_client: TestClient,
+    ) -> None:
+        schema = auth_client.get("/api/openapi.json").json()
+        operation = schema["paths"]["/api/agenda"]["get"]
+    
+        assert operation["tags"] == ["Agenda"]
+        for code in ("200", "400", "401", "403"):
+            assert code in operation["responses"], code
+        assert "404" not in operation["responses"]
+        assert "409" not in operation["responses"]
+        assert "422" not in operation["responses"]
+    
+        parameters = {p["name"]: p for p in operation["parameters"]}
+        assert set(parameters) == {"from", "to", "professionalId", "chairId"}
+        assert parameters["from"]["required"] is True
+        assert parameters["to"]["required"] is True
+        assert parameters["professionalId"]["required"] is False
+        assert parameters["chairId"]["required"] is False
+>       assert "inclusiva" in parameters["to"]["description"]
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'description'
+
+tests\integration\test_agenda_openapi.py:26: KeyError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_openapi.py::test_agenda_openapi_documents_parameters_responses_and_models
+1 failed, 1 passed, 1 warning in 1.73s

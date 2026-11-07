@@ -1,0 +1,712 @@
+FFFFFFFFFFFFFFFFFFF                                                      [100%]
+================================== FAILURES ===================================
+______________ test_agenda_for_one_day_returns_complete_envelope ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34B883230>
+
+    def test_agenda_for_one_day_returns_complete_envelope(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        start = local_at(monday, 10)
+        appointment_id = book(auth_client, headers, start)
+    
+>       body = get_agenda(auth_client, headers, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34B883230>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTE3fQ.BItkpdqXFR9DC5X7a8hsH-lrI4l6hrrKiKefV7cLmeQ'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+________ test_agenda_for_a_week_returns_the_appointments_of_the_range _________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34C042D50>
+
+    def test_agenda_for_a_week_returns_the_appointments_of_the_range(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        appointment_id = book(auth_client, headers, local_at(monday, 10))
+    
+>       body = get_agenda(auth_client, headers, monday, monday + timedelta(days=6))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34C042D50>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTE4fQ.H4iDynEDdpB0XScTuvVKWESkTDJ7Q1IVEZuHEW4QC6o'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 22)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+____________ test_agenda_of_eight_days_crosses_two_weeks_in_order _____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34C2C65D0>
+
+    def test_agenda_of_eight_days_crosses_two_weeks_in_order(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+        next_monday = monday + timedelta(days=7)
+        second = book(auth_client, headers, local_at(next_monday, 9))
+        first = book(auth_client, headers, local_at(monday, 9))
+    
+>       body = get_agenda(auth_client, headers, monday, next_monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34C2C65D0>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTExOX0.MltnAG3FKOwu2KEb0COkavskWYb-ImN6BGNU1eLCdrM'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 23)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+____________________ test_agenda_of_31_days_crosses_months ____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34BB8C770>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_agenda_of_31_days_crosses_months(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        add_working_hours(test_engine, P1_ID, 3, 540, 780)
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+        last_day = monday + timedelta(days=30)
+        first = book(auth_client, headers, local_at(monday, 9))
+        last = book(auth_client, headers, local_at(last_day, 9))
+    
+>       body = get_agenda(auth_client, headers, monday, last_day)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34BB8C770>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTExOX0.MltnAG3FKOwu2KEb0COkavskWYb-ImN6BGNU1eLCdrM'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 12, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+________ test_agenda_filter_by_professional_returns_their_appointments ________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34BB8DA70>
+
+    def test_agenda_filter_by_professional_returns_their_appointments(auth_client: TestClient) -> None:
+        ids = book_four_filter_appointments(auth_client)
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+    
+>       body = get_agenda(auth_client, headers, monday, monday, professionalId=str(P1_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34BB8DA70>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTIwfQ.z8dOCLaOsDCyEe9DrTRcvLr0Q-9dIVv2CQTxboyduiw'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'professionalId': '00000000-0000-0000-0000-000000000001'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+___________ test_agenda_filter_by_chair_returns_their_appointments ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34C94F410>
+
+    def test_agenda_filter_by_chair_returns_their_appointments(auth_client: TestClient) -> None:
+        ids = book_four_filter_appointments(auth_client)
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+    
+>       body = get_agenda(auth_client, headers, monday, monday, chairId=str(CHAIR_1_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34C94F410>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTIxfQ.U_Y6LSgm7hysVTDXxRcn0DcH9c_fkoWjRuxa9WRCf4Y'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'chairId': '00000000-0000-0000-0000-0000000000b1'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+_____________ test_agenda_professional_and_chair_filters_combine ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34CB8ACF0>
+
+    def test_agenda_professional_and_chair_filters_combine(auth_client: TestClient) -> None:
+        ids = book_four_filter_appointments(auth_client)
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+    
+>       body = get_agenda(
+            auth_client, headers, monday, monday, professionalId=str(P1_ID), chairId=str(CHAIR_2_ID)
+        )
+
+tests\integration\test_api_agenda.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34CB8ACF0>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTIxfQ.U_Y6LSgm7hysVTDXxRcn0DcH9c_fkoWjRuxa9WRCf4Y'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'chairId': '00000000-0000-0000-0000-0000000000b2', 'professionalId': '00000000-0000-0000-0000-000000000001'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+____________ test_agenda_unknown_professional_returns_empty_lists _____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34DDD47C0>
+
+    def test_agenda_unknown_professional_returns_empty_lists(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        book(auth_client, headers, local_at(monday, 10))
+        add_block(auth_client, P1_ID, local_at(monday, 14), local_at(monday, 15), "Curso")
+    
+>       body = get_agenda(auth_client, headers, monday, monday, professionalId=str(UNKNOWN_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34DDD47C0>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTIyfQ.G9WD1hIEnXoQ4ZCMmpeWsPG2o5iVVJ0fa0uDjzAFSmA'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'professionalId': '00000000-0000-0000-0000-000000000999'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+___ test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks ____
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34DD2AD50>
+
+    def test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks(
+        auth_client: TestClient,
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        book(auth_client, headers, local_at(monday, 10))
+        add_block(auth_client, P1_ID, local_at(monday, 14), local_at(monday, 15), "Curso")
+    
+>       body = get_agenda(auth_client, headers, monday, monday, chairId=str(UNKNOWN_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34DD2AD50>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTIyfQ.G9WD1hIEnXoQ4ZCMmpeWsPG2o5iVVJ0fa0uDjzAFSmA'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'chairId': '00000000-0000-0000-0000-000000000999'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+__________ test_agenda_chair_filter_does_not_filter_hours_or_blocks ___________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34E03F650>
+
+    def test_agenda_chair_filter_does_not_filter_hours_or_blocks(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        block_id = add_block(auth_client, P2_ID, local_at(monday, 14), local_at(monday, 15), "Curso")
+    
+>       body = get_agenda(auth_client, headers, monday, monday, chairId=str(CHAIR_1_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:198: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34E03F650>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTIzfQ.lXcURV6zQfnDjBT88MnlruXKCTbreJL_w8Vy3_oloCk'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'chairId': '00000000-0000-0000-0000-0000000000b1'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+________ test_agenda_dentist_sees_appointments_of_another_professional ________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34DD3BA70>
+
+    def test_agenda_dentist_sees_appointments_of_another_professional(auth_client: TestClient) -> None:
+        reception = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        appointment_id = book(
+            auth_client,
+            reception,
+            local_at(monday, 9),
+            professional_id=P2_ID,
+            chair_id=CHAIR_2_ID,
+            patient_id=PATIENT_2_ID,
+        )
+        dentist = token_for(auth_client, "odontologo")
+    
+>       body = get_agenda(auth_client, dentist, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34DD3BA70>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTMiLCJyb2xlIjoib2RvbnRvbG9nbyIsImV4cCI6MTc5NDA3OTEyNH0.0dLiR8xCcp06tGaaXM1v5jhFu7Gls6qUE2fLirEJTUs'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+________ test_agenda_working_hours_template_includes_all_professionals ________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34E4035C0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_agenda_working_hours_template_includes_all_professionals(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        add_working_hours(test_engine, P1_ID, 1, 900, 1140)
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+    
+>       body = get_agenda(auth_client, headers, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:234: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34E4035C0>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTEyNH0.uyPQndnc00eO2XIIyj6eH7HgPBjLrZzZrGPQVUqw_dA'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+_________ test_agenda_professional_filter_also_filters_working_hours __________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34E764C90>
+
+    def test_agenda_professional_filter_also_filters_working_hours(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+    
+>       body = get_agenda(auth_client, headers, monday, monday, professionalId=str(P2_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:246: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34E764C90>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTEyNX0.4TMf5QP7uWYpjt99vBZNhZgtzDsDrQq4ECSnFHiWmAs'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'professionalId': '00000000-0000-0000-0000-000000000002'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+___________ test_agenda_block_inside_range_is_returned_with_reason ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34E631470>
+
+    def test_agenda_block_inside_range_is_returned_with_reason(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        block_id = add_block(auth_client, P2_ID, local_at(monday, 14), local_at(monday, 15), "Congreso")
+    
+>       body = get_agenda(auth_client, headers, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34E631470>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTI2fQ.Jj2bpqsanh_BRAn-PnJh5rRey3tPPT_RWRwr-OeXxdc'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+___________ test_agenda_block_starting_before_the_range_is_included ___________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34E214670>
+
+    def test_agenda_block_starting_before_the_range_is_included(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+        sunday = monday - timedelta(days=1)
+        add_block(auth_client, P1_ID, local_at(sunday, 23), local_at(monday, 1), "Guardia")
+    
+>       body = get_agenda(auth_client, headers, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:277: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34E214670>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTEyNn0.EXlsRHMaVb7Yu8UQ1YIt9kvNbgKpEqsfvSiVp7qjRwE'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+_____________ test_agenda_professional_filter_also_filters_blocks _____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34C91A5F0>
+
+    def test_agenda_professional_filter_also_filters_blocks(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+        mine = add_block(auth_client, P1_ID, local_at(monday, 14), local_at(monday, 15), "Propio")
+        add_block(auth_client, P2_ID, local_at(monday, 16), local_at(monday, 17), "Ajeno")
+    
+>       body = get_agenda(auth_client, headers, monday, monday, professionalId=str(P1_ID))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34C91A5F0>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTEyN30.rYr2zBoc0pbpzdvknKbM3Vq5kwExXVVscVFdClrtQ0A'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {'professionalId': '00000000-0000-0000-0000-000000000001'}
+res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+________ test_agenda_includes_cancelled_appointments_with_their_status ________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34C3598D0>
+
+    def test_agenda_includes_cancelled_appointments_with_their_status(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = future_monday()
+        appointment_id = book(auth_client, headers, local_at(monday, 10))
+        cancel(auth_client, headers, appointment_id)
+    
+>       body = get_agenda(auth_client, headers, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:299: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34C3598D0>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTIiLCJyb2xlIjoicmVjZXBjaW9uIiwiZXhwIjoxNzk0MDc5MTI4fQ.nKDnzlBfm8ii8e2pHScZ_X-5Ij3ohzdc3jirYb8pcq0'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+__________ test_agenda_orders_appointments_blocks_and_working_hours ___________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34E5C2A50>
+
+    def test_agenda_orders_appointments_blocks_and_working_hours(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+        third = book(auth_client, headers, local_at(monday, 10), professional_id=P1_ID, chair_id=CHAIR_2_ID)
+        first = book(auth_client, headers, local_at(monday, 9), professional_id=P1_ID, chair_id=CHAIR_1_ID)
+        second = book(
+            auth_client, headers, local_at(monday, 9, 30), professional_id=P2_ID, chair_id=CHAIR_2_ID
+        )
+        late_block = add_block(auth_client, P2_ID, local_at(monday, 11), local_at(monday, 11, 30), "B")
+        early_block = add_block(auth_client, P1_ID, local_at(monday, 10, 30), local_at(monday, 11), "A")
+    
+>       body = get_agenda(auth_client, headers, monday, monday)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34E5C2A50>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTEyOH0.y15irNd5sPh6EoAeoT-B_yd0-CsPFeNjcLtCdcKETFI'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+_________ test_agenda_uses_one_query_per_resource_without_n_plus_one __________
+
+auth_client = <starlette.testclient.TestClient object at 0x000001C34C756F90>
+auth_app = <fastapi.applications.FastAPI object at 0x000001C34CBA6210>
+
+    def test_agenda_uses_one_query_per_resource_without_n_plus_one(
+        auth_client: TestClient, auth_app: FastAPI
+    ) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = future_monday()
+        for hour in (9, 10, 11, 12):
+            book(auth_client, headers, local_at(monday, hour))
+        add_block(auth_client, P1_ID, local_at(monday, 14), local_at(monday, 15), "Curso")
+        statements: list[str] = []
+    
+        def count(conn: object, cursor: object, statement: str, *args: object) -> None:
+            statements.append(statement)
+    
+        engine = auth_app.state.engine
+        event.listen(engine, "before_cursor_execute", count)
+        try:
+>           body = get_agenda(auth_client, headers, monday, monday)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_api_agenda.py:348: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001C34C756F90>
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwZTEiLCJyb2xlIjoiYWRtaW5pc3RyYWRvciIsImV4cCI6MTc5NDA3OTEyOX0.t_dKfSms8AG8SfxbCxg0Z0bUiyUlY9ECbhlJcqagCww'}
+from_date = datetime.date(2026, 11, 16), to_date = datetime.date(2026, 11, 16)
+extra = {}, res = <Response [404 Not Found]>
+
+    def get_agenda(
+        client: TestClient, headers: dict[str, str], from_date: date, to_date: date, **extra: str
+    ) -> dict[str, object]:
+        res = client.get(
+            "/api/agenda",
+            params={"from": from_date.isoformat(), "to": to_date.isoformat(), **extra},
+            headers=headers,
+        )
+>       assert res.status_code == 200, res.text
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+
+tests\integration\agenda_api_support.py:200: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_agenda.py::test_agenda_for_one_day_returns_complete_envelope
+FAILED tests/integration/test_api_agenda.py::test_agenda_for_a_week_returns_the_appointments_of_the_range
+FAILED tests/integration/test_api_agenda.py::test_agenda_of_eight_days_crosses_two_weeks_in_order
+FAILED tests/integration/test_api_agenda.py::test_agenda_of_31_days_crosses_months
+FAILED tests/integration/test_api_agenda.py::test_agenda_filter_by_professional_returns_their_appointments
+FAILED tests/integration/test_api_agenda.py::test_agenda_filter_by_chair_returns_their_appointments
+FAILED tests/integration/test_api_agenda.py::test_agenda_professional_and_chair_filters_combine
+FAILED tests/integration/test_api_agenda.py::test_agenda_unknown_professional_returns_empty_lists
+FAILED tests/integration/test_api_agenda.py::test_agenda_unknown_chair_empties_appointments_but_not_hours_or_blocks
+FAILED tests/integration/test_api_agenda.py::test_agenda_chair_filter_does_not_filter_hours_or_blocks
+FAILED tests/integration/test_api_agenda.py::test_agenda_dentist_sees_appointments_of_another_professional
+FAILED tests/integration/test_api_agenda.py::test_agenda_working_hours_template_includes_all_professionals
+FAILED tests/integration/test_api_agenda.py::test_agenda_professional_filter_also_filters_working_hours
+FAILED tests/integration/test_api_agenda.py::test_agenda_block_inside_range_is_returned_with_reason
+FAILED tests/integration/test_api_agenda.py::test_agenda_block_starting_before_the_range_is_included
+FAILED tests/integration/test_api_agenda.py::test_agenda_professional_filter_also_filters_blocks
+FAILED tests/integration/test_api_agenda.py::test_agenda_includes_cancelled_appointments_with_their_status
+FAILED tests/integration/test_api_agenda.py::test_agenda_orders_appointments_blocks_and_working_hours
+FAILED tests/integration/test_api_agenda.py::test_agenda_uses_one_query_per_resource_without_n_plus_one
+19 failed, 1 warning in 13.54s

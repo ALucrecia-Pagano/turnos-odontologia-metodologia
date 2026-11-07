@@ -1,0 +1,11 @@
+## pytest
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+882 passed, 467 deselected, 2 warnings in 27.64s
+## pytest -m integration
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+467 passed, 882 deselected, 1 warning in 117.63s (0:01:57)
+## mypy
+Success: no issues found in 170 source files

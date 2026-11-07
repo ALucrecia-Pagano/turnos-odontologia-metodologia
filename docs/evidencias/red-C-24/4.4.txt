@@ -1,0 +1,127 @@
+FFFFFF                                                                   [100%]
+================================== FAILURES ===================================
+________________ test_detail_returns_the_enriched_appointment _________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002032FCBF230>
+
+    def test_detail_returns_the_enriched_appointment(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        start = local_at(future_monday(), 10)
+        appointment_id = book(auth_client, headers, start)
+    
+        res = auth_client.get(f"/api/appointments/{appointment_id}", headers=headers)
+    
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_detail.py:36: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+_______ test_detail_shows_the_current_status_of_a_cancelled_appointment _______
+
+auth_client = <starlette.testclient.TestClient object at 0x000002033046B110>
+
+    def test_detail_shows_the_current_status_of_a_cancelled_appointment(
+        auth_client: TestClient,
+    ) -> None:
+        headers = token_for(auth_client, "administrador")
+        appointment_id = book(auth_client, headers, local_at(future_monday(), 11))
+        cancel(auth_client, headers, appointment_id)
+    
+        res = auth_client.get(f"/api/appointments/{appointment_id}", headers=headers)
+    
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_detail.py:63: AssertionError
+_______________ test_detail_of_unknown_appointment_returns_404 ________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020330752C10>
+
+    def test_detail_of_unknown_appointment_returns_404(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+    
+        res = auth_client.get(f"/api/appointments/{UNKNOWN_ID}", headers=headers)
+    
+        assert res.status_code == 404
+>       assert res.json() == {"code": "NOT_FOUND", "message": "Turno no encontrado."}
+E       AssertionError: assert {'detail': 'Not Found'} == {'code': 'NOT... encontrado.'}
+E         
+E         Left contains 1 more item:
+E         {'detail': 'Not Found'}
+E         Right contains 2 more items:
+E         {'code': 'NOT_FOUND', 'message': 'Turno no encontrado.'}
+E         Use -v to get more diff
+
+tests\integration\test_api_appointment_detail.py:73: AssertionError
+_________________ test_detail_with_malformed_uuid_returns_400 _________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002033028F490>
+
+    def test_detail_with_malformed_uuid_returns_400(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+    
+        res = auth_client.get("/api/appointments/no-es-un-uuid", headers=headers)
+    
+>       assert res.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_detail.py:81: AssertionError
+____________________ test_detail_without_token_returns_401 ____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002033028E650>
+
+    def test_detail_without_token_returns_401(auth_client: TestClient) -> None:
+        res = auth_client.get(f"/api/appointments/{UNKNOWN_ID}")
+    
+>       assert res.status_code == 401
+E       assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_detail.py:90: AssertionError
+_____ test_dentist_reads_the_detail_of_another_professionals_appointment ______
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020330D8C170>
+
+    def test_dentist_reads_the_detail_of_another_professionals_appointment(
+        auth_client: TestClient,
+    ) -> None:
+        reception = token_for(auth_client, "recepcion")
+        appointment_id = book(
+            auth_client,
+            reception,
+            local_at(future_monday(), 9),
+            professional_id=P2_ID,
+            chair_id=CHAIR_2_ID,
+            patient_id=PATIENT_2_ID,
+        )
+        dentist = token_for(auth_client, "odontologo")
+    
+        res = auth_client.get(f"/api/appointments/{appointment_id}", headers=dentist)
+    
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_detail.py:110: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_returns_the_enriched_appointment
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_shows_the_current_status_of_a_cancelled_appointment
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_of_unknown_appointment_returns_404
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_with_malformed_uuid_returns_400
+FAILED tests/integration/test_api_appointment_detail.py::test_detail_without_token_returns_401
+FAILED tests/integration/test_api_appointment_detail.py::test_dentist_reads_the_detail_of_another_professionals_appointment
+6 failed, 1 warning in 3.98s

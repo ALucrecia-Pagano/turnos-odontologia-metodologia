@@ -1,0 +1,70 @@
+......FFF                                                                [100%]
+================================== FAILURES ===================================
+____ test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing ____
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000001CBD1E73C70>
+
+    def test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing(
+        connection: Connection,
+    ) -> None:
+        seed = seed_catalog(connection)
+        day = base_monday()
+        nxt = day + timedelta(days=1)
+        # Termina justo al abrir la ventana: queda fuera.
+        add_block(seed, 8001, day - timedelta(hours=2), day, seed.prof_a)
+        # Empieza justo al cerrar la ventana: queda fuera.
+        add_block(seed, 8002, nxt, nxt + timedelta(hours=1), seed.prof_a)
+        # Empieza antes y cruza la medianoche de apertura: queda dentro.
+        add_block(seed, 8003, day - timedelta(hours=1), day + timedelta(hours=1), seed.prof_a)
+        # Cruza la medianoche de cierre: queda dentro.
+        add_block(seed, 8004, nxt - timedelta(hours=1), nxt + timedelta(hours=1), seed.prof_b)
+    
+>       blocks = block_repo(seed).list_in_range(day, nxt)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'BlockRepository' object has no attribute 'list_in_range'
+
+tests\integration\test_agenda_repositories.py:271: AttributeError
+__________ test_block_list_in_range_filters_by_optional_professional __________
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000001CBD1C76390>
+
+    def test_block_list_in_range_filters_by_optional_professional(connection: Connection) -> None:
+        seed = seed_catalog(connection)
+        day = base_monday()
+        add_block(seed, 8001, day + timedelta(hours=9), day + timedelta(hours=10), seed.prof_a)
+        add_block(seed, 8002, day + timedelta(hours=11), day + timedelta(hours=12), seed.prof_b)
+        repo = block_repo(seed)
+        end = day + timedelta(days=1)
+    
+>       assert mine_blocks(repo.list_in_range(day, end)) == [UUID(int=8001), UUID(int=8002)]
+                           ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'BlockRepository' object has no attribute 'list_in_range'
+
+tests\integration\test_agenda_repositories.py:284: AttributeError
+______________ test_block_list_in_range_orders_by_start_then_id _______________
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000001CBD1C77F50>
+
+    def test_block_list_in_range_orders_by_start_then_id(connection: Connection) -> None:
+        seed = seed_catalog(connection)
+        day = base_monday()
+        add_block(seed, 8003, day + timedelta(hours=14), day + timedelta(hours=15), seed.prof_a)
+        add_block(seed, 8002, day + timedelta(hours=9), day + timedelta(hours=10), seed.prof_b)
+        add_block(seed, 8001, day + timedelta(hours=9), day + timedelta(hours=10), seed.prof_a)
+    
+>       blocks = block_repo(seed).list_in_range(day, day + timedelta(days=1))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'BlockRepository' object has no attribute 'list_in_range'
+
+tests\integration\test_agenda_repositories.py:298: AttributeError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_agenda_repositories.py::test_block_list_in_range_uses_half_open_overlap_and_midnight_crossing
+FAILED tests/integration/test_agenda_repositories.py::test_block_list_in_range_filters_by_optional_professional
+FAILED tests/integration/test_agenda_repositories.py::test_block_list_in_range_orders_by_start_then_id
+3 failed, 6 passed, 1 warning in 2.10s

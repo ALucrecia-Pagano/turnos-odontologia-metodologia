@@ -1,0 +1,7 @@
+Change 'api-consulta-de-agenda' is valid
+warning: in the working copy of 'backend/app/api/appointments.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/errors.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/repositories/appointment.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/api-consulta-de-agenda/tasks.md', LF will be replaced by CRLF the next time Git touches it
+git diff --check exit=0
