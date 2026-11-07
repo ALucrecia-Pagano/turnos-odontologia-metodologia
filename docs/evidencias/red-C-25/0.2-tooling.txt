@@ -1,0 +1,40 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/test/tooling.test.ts
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/tooling.test.ts (3 tests | 1 failed) 5833ms
+   ✓ tooling del frontend > npm run typecheck falla con un tipo inválido  2785ms
+   ✓ tooling del frontend > npm run lint detecta una violación  3037ms
+   × tooling del frontend > la estructura de carpetas y los scripts están presentes 9ms
+     → src/features: expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/tooling.test.ts > tooling del frontend > la estructura de carpetas y los scripts están presentes
+AssertionError: src/features: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/test/tooling.test.ts:64:61
+     62|   it("la estructura de carpetas y los scripts están presentes", () => {
+     63|     for (const folder of ["src", "src/features", "src/shared", "src/pa…
+     64|       expect(existsSync(resolve(FRONTEND, folder)), folder).toBe(true);
+       |                                                             ^
+     65|     }
+     66|     expect(existsSync(resolve(FRONTEND, "src/main.tsx"))).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  16:28:35
+   Duration  8.80s (transform 109ms, setup 573ms, collect 113ms, tests 5.83s, environment 1.62s, prepare 285ms)
+

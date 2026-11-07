@@ -1,0 +1,31 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____________ test_compose_defines_services_without_literal_secrets ____________
+
+    def test_compose_defines_services_without_literal_secrets() -> None:
+        content = _compose_text()
+    
+        assert "postgres:" in content
+        assert "redis:" in content
+        assert "backend:" in content
+        assert "postgres:16" in content
+        assert "redis:7" in content
+        assert '"5432:5432"' in content
+        assert '"6379:6379"' in content
+        assert "turnos_pgdata:" in content
+        assert "pg_isready" in content
+        assert "redis-cli" in content
+        assert "turnos_local_dev" not in content
+        assert _literal_secrets(content) == []
+    
+        frontend = _as_mapping(_services(content)["frontend"])
+        ports = frontend.get("ports")
+        assert isinstance(ports, list)
+        assert "5173:5173" in [str(port) for port in ports]
+>       assert "env_file" not in frontend
+E       AssertionError: assert 'env_file' not in {'build': './frontend', 'depends_on': ['backend'], 'env_file': '.env', 'environment': {'CHOKIDAR_USEPOLLING': 'true', 'VITE_API_URL': '${VITE_API_URL:-http://localhost:8000/api}'}, ...}
+
+tests\test_compose.py:85: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compose.py::test_compose_defines_services_without_literal_secrets
+1 failed in 0.28s

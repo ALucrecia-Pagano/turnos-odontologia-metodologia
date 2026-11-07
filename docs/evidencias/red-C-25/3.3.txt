@@ -1,0 +1,36 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/shared/components/ErrorState.test.tsx
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/ErrorState.test.tsx [ src/shared/components/ErrorState.test.tsx ]
+Error: Failed to resolve import "./ErrorState" from "src/shared/components/ErrorState.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/ErrorState.test.tsx:4:27
+  2  |  import { render, screen, within } from "@testing-library/react";
+  3  |  import userEvent from "@testing-library/user-event";
+  4  |  import { ErrorState } from "./ErrorState";
+     |                              ^
+  5  |  const OVERLAP_MESSAGE = "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno 00000000-0000-0000-0000-0000000000a1).";
+  6  |  describe("ErrorState", () => {
+ ❯ TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23
+ ❯ node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7
+ ❯ PluginContainer.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  16:32:33
+   Duration  1.60s (transform 32ms, setup 237ms, collect 0ms, tests 0ms, environment 894ms, prepare 155ms)
+

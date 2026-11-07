@@ -1,0 +1,55 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/test/docker.test.ts
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/docker.test.ts (3 tests | 1 failed) 28ms
+   × servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173 22ms
+     → expected '    build: ./frontend\n    env_file: …' not to contain 'env_file'
+   ✓ servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows 2ms
+   ✓ servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173
+AssertionError: expected '    build: ./frontend\n    env_file: …' not to contain 'env_file'
+
+- Expected
++ Received
+
+- env_file
++     build: ./frontend
++     env_file: .env
++     environment:
++       # El navegador del host no resuelve el hostname "backend": la API se llama por localhost.
++       VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
++       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
++       CHOKIDAR_USEPOLLING: "true"
++     ports:
++       - "5173:5173"
++     volumes:
++       - ./frontend:/app
++       - /app/node_modules
++     depends_on:
++       - backend
++
++
+
+ ❯ src/test/docker.test.ts:31:25
+     29|     expect(service).toContain("build: ./frontend");
+     30|     // Sin env_file: el frontend no recibe los secretos del .env (JWT_…
+     31|     expect(service).not.toContain("env_file");
+       |                         ^
+     32|     for (const secret of ["JWT_SECRET", "POSTGRES_PASSWORD", "POSTGRES…
+     33|       expect(service, secret).not.toContain(secret);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  17:02:44
+   Duration  4.65s (transform 279ms, setup 842ms, collect 82ms, tests 28ms, environment 2.48s, prepare 576ms)
+

@@ -1,0 +1,36 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/shared/components/StatusBadge.test.tsx
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/StatusBadge.test.tsx [ src/shared/components/StatusBadge.test.tsx ]
+Error: Failed to resolve import "./StatusBadge" from "src/shared/components/StatusBadge.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/StatusBadge.test.tsx:2:28
+  1  |  import { jsxDEV } from "react/jsx-dev-runtime";
+  2  |  import { render, screen } from "@testing-library/react";
+  3  |  import { StatusBadge } from "./StatusBadge";
+     |                               ^
+  4  |  describe("StatusBadge", () => {
+  5  |    it("el estado reservado muestra su variante", () => {
+ ❯ TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23
+ ❯ node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7
+ ❯ PluginContainer.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  16:31:38
+   Duration  2.34s (transform 60ms, setup 333ms, collect 0ms, tests 0ms, environment 1.32s, prepare 261ms)
+

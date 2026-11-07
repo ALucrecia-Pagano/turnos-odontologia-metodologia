@@ -1,0 +1,38 @@
+diff:
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -55,4 +55,5 @@
+       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
+       CHOKIDAR_USEPOLLING: "true"
++      JWT_SECRET: ${JWT_SECRET}
+     ports:
+       - "5173:5173"
+
+--- con la mutacion (se espera que falle) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\test_compose.py F                                                  [100%]
+
+================================== FAILURES ===================================
+____________ test_compose_defines_services_without_literal_secrets ____________
+tests\test_compose.py:87: in test_compose_defines_services_without_literal_secrets
+    assert frontend_environment.isdisjoint(
+E   AssertionError: assert False
+E    +  where False = <built-in method isdisjoint of set object at 0x000002D838B07680>({'DATABASE_URL', 'JWT_SECRET', 'POSTGRES_PASSWORD', 'POSTGRES_USER', 'SEED_USER_PASSWORD'})
+E    +    where <built-in method isdisjoint of set object at 0x000002D838B07680> = {'CHOKIDAR_USEPOLLING', 'JWT_SECRET', 'VITE_API_URL'}.isdisjoint
+=========================== short test summary info ===========================
+FAILED tests/test_compose.py::test_compose_defines_services_without_literal_secrets
+============================== 1 failed in 0.26s ==============================
+
+--- restaurado (se espera que pase) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\test_compose.py .                                                  [100%]
+
+============================== 1 passed in 0.12s ==============================
+
+codigo con la mutacion: 1
+codigo restaurado: 0
+docker-compose.yml restaurado byte a byte: si

@@ -1,0 +1,63 @@
+$ openspec validate frontend-base-react-vite --strict
+Change 'frontend-base-react-vite' is valid
+exit 0
+
+$ git diff --check
+warning: in the working copy of 'docker-compose.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/frontend-base-react-vite/tasks.md', LF will be replaced by CRLF the next time Git touches it
+exit 0
+
+$ git add -N (intent-to-add) no se usa: se revisan los archivos nuevos con git diff --no-index --check
+warning: in the working copy of 'docs/evidencias/docker-C-25.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/mutaciones-C-25.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/trazabilidad-C-25.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/verify-C-25.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/.dockerignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/Dockerfile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/eslint.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/main.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/pages/HomePage.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/pages/HomePage.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/pages/NotFoundPage.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/pages/NotFoundPage.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/auth.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/auth.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/client.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/client.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/errors.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/errors.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/EmptyState.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/EmptyState.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/EmptyState.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/ErrorState.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/ErrorState.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/ErrorState.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/LoadingState.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/LoadingState.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/LoadingState.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/PageShell.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/PageShell.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/PageShell.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/StatusBadge.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/StatusBadge.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/StatusBadge.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/styles/appointmentStatusTokens.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/styles/appointmentStatusTokens.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/styles/reset.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/styles/tokens.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/styles/tokens.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/test/docker.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/test/setup.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/test/smoke.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/test/tooling.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/vite-env.d.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tsconfig.node.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/vite.config.ts', LF will be replaced by CRLF the next time Git touches it
+exit nuevos: 0 si no hay líneas arriba

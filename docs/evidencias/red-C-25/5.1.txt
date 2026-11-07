@@ -1,0 +1,125 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/App.test.tsx
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (2 tests | 2 failed) 110ms
+   × App con router > la ruta raíz renderiza el HomePage de bienvenida 99ms
+     → Unable to find an accessible element with the role "main"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1 />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<h1>[39m
+      [0mTurnos Odontología[0m
+    [36m</h1>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   × App con router > una ruta desconocida muestra la página de no encontrada 8ms
+     → Unable to find an accessible element with the role "heading" and name "Página no encontrada"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1 />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<h1>[39m
+      [0mTurnos Odontología[0m
+    [36m</h1>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router > la ruta raíz renderiza el HomePage de bienvenida
+TestingLibraryElementError: Unable to find an accessible element with the role "main"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1 />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<h1>[39m
+      [0mTurnos Odontología[0m
+    [36m</h1>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.test.tsx:14:19
+     12| 
+     13|     expect(screen.getByRole("heading", { level: 1, name: "Turnos Odont…
+     14|     expect(screen.getByRole("main")).toHaveTextContent("Bienvenida");
+       |                   ^
+     15|     const statuses = within(screen.getByRole("list", { name: "Estados …
+     16|     expect(statuses.map((item) => item.textContent)).toEqual([
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/App.test.tsx > App con router > una ruta desconocida muestra la página de no encontrada
+TestingLibraryElementError: Unable to find an accessible element with the role "heading" and name "Página no encontrada"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1 />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<h1>[39m
+      [0mTurnos Odontología[0m
+    [36m</h1>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.test.tsx:29:19
+     27|     render(<App />);
+     28| 
+     29|     expect(screen.getByRole("heading", { level: 1, name: "Página no en…
+       |                   ^
+     30|     expect(screen.getByRole("link", { name: "Volver al inicio" })).toH…
+     31|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  16:37:46
+   Duration  3.68s (transform 107ms, setup 739ms, collect 70ms, tests 110ms, environment 1.84s, prepare 217ms)
+

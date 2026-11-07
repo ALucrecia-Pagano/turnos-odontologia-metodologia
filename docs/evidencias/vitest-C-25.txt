@@ -1,0 +1,36 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/api/auth.test.ts (3 tests) 184ms
+ ✓ src/shared/api/client.test.ts (10 tests) 183ms
+ ✓ src/shared/api/errors.test.ts (6 tests) 65ms
+ ✓ src/shared/components/LoadingState.test.tsx (1 test) 481ms
+   ✓ LoadingState > renderiza su rol y su texto  467ms
+ ✓ src/shared/components/StatusBadge.test.tsx (5 tests) 548ms
+   ✓ StatusBadge > el estado reservado muestra su variante  393ms
+ ✓ src/shared/components/PageShell.test.tsx (1 test) 764ms
+   ✓ PageShell > envuelve header, main y footer y renderiza sus hijos  752ms
+ ✓ src/shared/components/ErrorState.test.tsx (4 tests) 1132ms
+   ✓ ErrorState > muestra uno y varios mensajes  708ms
+ ✓ src/shared/components/EmptyState.test.tsx (2 tests) 1484ms
+   ✓ EmptyState > con acción muestra el botón  1337ms
+ ✓ src/test/smoke.test.tsx (1 test) 1033ms
+   ✓ smoke del andamiaje > monta App y muestra el título  1022ms
+ ✓ src/App.test.tsx (2 tests) 1414ms
+   ✓ App con router > la ruta raíz renderiza el HomePage de bienvenida  1331ms
+ ✓ src/shared/styles/tokens.test.ts (4 tests) 20ms
+ ✓ src/shared/styles/appointmentStatusTokens.test.ts (2 tests) 23ms
+ ✓ src/test/docker.test.ts (3 tests) 28ms
+ ✓ src/test/tooling.test.ts (3 tests) 18512ms
+   ✓ tooling del frontend > npm run typecheck falla con un tipo inválido  9858ms
+   ✓ tooling del frontend > npm run lint detecta una violación  8627ms
+
+ Test Files  14 passed (14)
+      Tests  47 passed (47)
+   Start at  17:05:35
+   Duration  31.65s (transform 6.38s, setup 21.94s, collect 18.03s, tests 25.87s, environment 95.45s, prepare 9.83s)
+

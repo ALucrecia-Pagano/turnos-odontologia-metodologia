@@ -1,0 +1,103 @@
+
+================================================================
+$ docker compose ps frontend backend
+================================================================
+NAME                            IMAGE                         COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+turnos-odontologia-backend-1    turnos-odontologia-backend    "sh -c 'alembic upgr…"   backend    22 minutes ago   Up 22 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+turnos-odontologia-frontend-1   turnos-odontologia-frontend   "docker-entrypoint.s…"   frontend   33 seconds ago   Up 28 seconds             0.0.0.0:5173->5173/tcp, [::]:5173->5173/tcp
+
+================================================================
+$ curl -s -i http://localhost:5173/ (cabecera y HTML)
+================================================================
+HTTP/1.1 200 OK
+Vary: Origin
+Content-Type: text/html
+Cache-Control: no-cache
+Etag: W/"234-sryTY65zDIHnIdmbbBFALks/NEc"
+Date: Sat, 07 Nov 2026 20:05:18 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Content-Length: 564
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turnos Odontología</title>
+  </head>
+  <body>
+
+================================================================
+$ docker compose exec frontend printenv VITE_API_URL CHOKIDAR_USEPOLLING
+================================================================
+http://localhost:8000/api
+true
+
+================================================================
+$ El contenedor frontend no recibe secretos (se espera 0 variables)
+================================================================
+0
+
+================================================================
+$ Base de la API que recibe el navegador: módulo transformado por Vite
+================================================================
+--- import.meta.env que Vite inyecta en el módulo (valor de VITE_API_URL):
+"VITE_API_URL": "http://localhost:8000/api"
+2:export const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
+--- ocurrencias de backend:8000 en el módulo servido (se espera 0):
+0
+
+================================================================
+$ Preflight CORS: OPTIONS http://localhost:8000/api/health con Origin http://localhost:5173
+================================================================
+HTTP/1.1 200 OK
+date: Sat, 07 Nov 2026 20:05:21 GMT
+server: uvicorn
+vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Request-Private-Network
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-max-age: 600
+access-control-allow-headers: Accept, Accept-Language, Authorization, Content-Language, Content-Type
+access-control-allow-origin: http://localhost:5173
+content-length: 2
+content-type: text/plain; charset=utf-8
+
+OK
+================================================================
+$ GET http://localhost:8000/api/health con Origin http://localhost:5173
+================================================================
+HTTP/1.1 200 OK
+date: Sat, 07 Nov 2026 20:05:21 GMT
+server: uvicorn
+content-length: 31
+content-type: application/json
+access-control-allow-origin: http://localhost:5173
+vary: Origin
+
+{"status":"ok","database":"ok"}
+================================================================
+$ HMR: editar frontend/src/pages/HomePage.tsx en el host y ver que Vite (en el contenedor) detecta el cambio
+================================================================
+--- módulo servido ANTES del cambio:
+Bienvenida a la agenda del consultorio.
+--- archivo editado en el host:
+12:          Bienvenida a la agenda del consultorio (cambio HMR). Pronto vas a poder ingresar y gestionar los turnos desde acá.
+--- Vite sirvió el módulo nuevo tras 1s sin reiniciar el contenedor:
+Bienvenida a la agenda del consultorio (cambio HMR).
+--- cambio detectado por Vite: si
+--- docker compose logs frontend desde 2026-11-07T20:05:22Z:
+8:05:23 PM [vite] hmr update /src/pages/HomePage.tsx
+--- contenedor sin reinicios (RestartCount y StartedAt):
+0 2026-11-07T20:04:48.676494981Z
+
+================================================================
+$ Restauración de frontend/src/pages/HomePage.tsx
+================================================================
+restaurado: sin el texto de prueba

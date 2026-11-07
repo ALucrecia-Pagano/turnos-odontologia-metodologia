@@ -1,0 +1,89 @@
+### Mutación 1: tsconfig.json "include": ["src"] -> ["src/shared"]
+21:  "include": ["src/shared"]
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/tooling.test.ts (3 tests | 1 failed | 2 skipped) 796ms
+   × tooling del frontend > npm run typecheck falla con un tipo inválido 794ms
+     → expected '\n> turnos-odontologia-frontend@0.1.0…' to contain '__fixture_typecheck__.ts'
+   ↓ tooling del frontend > npm run lint detecta una violación
+   ↓ tooling del frontend > la estructura de carpetas y los scripts están presentes
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/tooling.test.ts > tooling del frontend > npm run typecheck falla con un tipo inválido
+AssertionError: expected '\n> turnos-odontologia-frontend@0.1.0…' to contain '__fixture_typecheck__.ts'
+
+- Expected
++ Received
+
+- __fixture_typecheck__.ts
++
++ > turnos-odontologia-frontend@0.1.0 typecheck
++ > tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json
++
++ error TS18003: No inputs were found in config file 'C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/tsconfig.json'. Specified 'include' paths were '["src/shared"]' and 'exclude' paths were '[]'.
++
+
+ ❯ src/test/tooling.test.ts:39:22
+     37| 
+     38|       expect(status).not.toBe(0);
+     39|       expect(output).toContain("__fixture_typecheck__.ts");
+       |                      ^
+     40|       expect(output).toContain("TS2322");
+     41|       expect(output).toContain("Type 'number' is not assignable to typ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  16:29:01
+   Duration  3.06s (transform 68ms, setup 338ms, collect 50ms, tests 796ms, environment 1.30s, prepare 193ms)
+
+
+### Mutación 2: eslint.config.js ignores ["dist", "node_modules"] -> ["dist", "node_modules", "src/**"]
+8:  { ignores: ["dist", "node_modules", "src/**"] },
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/tooling.test.ts (3 tests | 1 failed | 2 skipped) 1721ms
+   ↓ tooling del frontend > npm run typecheck falla con un tipo inválido
+   × tooling del frontend > npm run lint detecta una violación 1719ms
+     → expected +0 not to be +0 // Object.is equality
+   ↓ tooling del frontend > la estructura de carpetas y los scripts están presentes
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/tooling.test.ts > tooling del frontend > npm run lint detecta una violación
+AssertionError: expected +0 not to be +0 // Object.is equality
+ ❯ src/test/tooling.test.ts:55:26
+     53|       );
+     54| 
+     55|       expect(status).not.toBe(0);
+       |                          ^
+     56|       expect(output).toContain("__fixture_lint__.ts");
+     57|       expect(output).toContain("no-unused-vars");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  16:29:07
+   Duration  3.34s (transform 58ms, setup 218ms, collect 65ms, tests 1.72s, environment 875ms, prepare 144ms)
+
+
+### Restaurado: suite de tooling completa
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/test/tooling.test.ts (3 tests) 4030ms
+   ✓ tooling del frontend > npm run typecheck falla con un tipo inválido  1988ms
+   ✓ tooling del frontend > npm run lint detecta una violación  2037ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  16:29:12
+   Duration  5.54s (transform 52ms, setup 224ms, collect 43ms, tests 4.03s, environment 820ms, prepare 144ms)
+

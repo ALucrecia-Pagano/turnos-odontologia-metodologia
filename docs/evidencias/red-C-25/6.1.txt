@@ -1,0 +1,78 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/test/docker.test.ts
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/docker.test.ts (3 tests | 3 failed) 21ms
+   × servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173 14ms
+     → expected false to be true // Object.is equality
+   × servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows 3ms
+     → expected '' to contain 'CHOKIDAR_USEPOLLING: "true"'
+   × servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost 1ms
+     → expected '' to contain 'VITE_API_URL: ${VITE_API_URL:-http://…'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/test/docker.test.ts:21:40
+     19|   it("docker compose up levanta el frontend en 5173", () => {
+     20|     const dockerfilePath = resolve(FRONTEND, "Dockerfile");
+     21|     expect(existsSync(dockerfilePath)).toBe(true);
+       |                                        ^
+     22|     const dockerfile = read(dockerfilePath);
+     23|     expect(dockerfile).toMatch(/^FROM node:24-alpine$/m);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows
+AssertionError: expected '' to contain 'CHOKIDAR_USEPOLLING: "true"'
+
+- Expected
++ Received
+
+- CHOKIDAR_USEPOLLING: "true"
+
+ ❯ src/test/docker.test.ts:38:31
+     36| 
+     37|   it("un cambio de archivo se refleja por HMR en Windows", () => {
+     38|     expect(frontendService()).toContain('CHOKIDAR_USEPOLLING: "true"');
+       |                               ^
+     39|     const viteConfig = read(resolve(FRONTEND, "vite.config.ts"));
+     40|     expect(viteConfig).toMatch(/watch:\s*\{\s*usePolling: true/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost
+AssertionError: expected '' to contain 'VITE_API_URL: ${VITE_API_URL:-http://…'
+
+- Expected
++ Received
+
+- VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
+
+ ❯ src/test/docker.test.ts:46:21
+     44|   it("VITE_API_URL del navegador apunta a localhost", () => {
+     45|     const service = frontendService();
+     46|     expect(service).toContain("VITE_API_URL: ${VITE_API_URL:-http://lo…
+       |                     ^
+     47|     expect(service).not.toContain("backend:8000");
+     48| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  16:38:57
+   Duration  2.81s (transform 79ms, setup 403ms, collect 94ms, tests 21ms, environment 1.60s, prepare 250ms)
+

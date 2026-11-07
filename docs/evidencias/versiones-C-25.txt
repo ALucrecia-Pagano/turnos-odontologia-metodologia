@@ -1,0 +1,28 @@
+$ node --version
+v24.19.0
+$ npm --version
+11.17.0
+$ npm ls --depth=0
+turnos-odontologia-frontend@0.1.0 C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend
++-- @eslint/js@10.0.1
++-- @testing-library/dom@10.4.2
++-- @testing-library/jest-dom@7.0.1
++-- @testing-library/react@16.3.3
++-- @testing-library/user-event@14.6.8
++-- @types/node@24.19.2
++-- @types/react-dom@18.3.7
++-- @types/react@18.3.31
++-- @vitejs/plugin-react@4.7.0
++-- eslint-plugin-react-hooks@7.1.1
++-- eslint-plugin-react-refresh@0.5.7
++-- eslint@10.14.0
++-- globals@17.14.0
++-- jsdom@31.0.0
++-- react-dom@18.3.1
++-- react-router-dom@6.30.6
++-- react@18.3.1
++-- typescript-eslint@8.72.1
++-- typescript@5.9.3
++-- vite@5.4.21
+`-- vitest@3.2.7
+

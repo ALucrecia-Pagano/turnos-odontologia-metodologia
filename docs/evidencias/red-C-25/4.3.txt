@@ -1,0 +1,36 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/shared/api/auth.test.ts
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/auth.test.ts [ src/shared/api/auth.test.ts ]
+Error: Failed to resolve import "./auth" from "src/shared/api/auth.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/auth.test.ts:3:32
+  1  |  import { readdirSync, readFileSync } from "node:fs";
+  2  |  import { resolve } from "node:path";
+  3  |  import { setAuthProvider } from "./auth";
+     |                                   ^
+  4  |  import { createApiClient } from "./client";
+  5  |  const SRC = resolve(process.cwd(), "src");
+ ❯ TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23
+ ❯ node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7
+ ❯ PluginContainer.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  16:37:01
+   Duration  2.56s (transform 59ms, setup 343ms, collect 0ms, tests 0ms, environment 1.53s, prepare 262ms)
+

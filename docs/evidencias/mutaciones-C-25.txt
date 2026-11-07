@@ -1,0 +1,2697 @@
+Salida generada por docs/evidencias/mutaciones-C-25.py. No editar a mano.
+tests de C-25 listados por vitest: 47; mutaciones: 47 (una por test)
+SHA-256 de produccion antes: 7770be4b6ff837dbd99152b4cf7e67cadcfe9deaea2f7d04326f335a03a8a25c
+--- linea de base, sin mutaciones (codigo de salida 0) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/api/auth.test.ts (3 tests) 59ms
+ ✓ src/shared/api/client.test.ts (10 tests) 43ms
+ ✓ src/shared/api/errors.test.ts (6 tests) 32ms
+ ✓ src/shared/components/LoadingState.test.tsx (1 test) 216ms
+ ✓ src/shared/components/StatusBadge.test.tsx (5 tests) 546ms
+   ✓ StatusBadge > el estado reservado muestra su variante  454ms
+ ✓ src/shared/components/PageShell.test.tsx (1 test) 622ms
+   ✓ PageShell > envuelve header, main y footer y renderiza sus hijos  618ms
+ ✓ src/test/smoke.test.tsx (1 test) 553ms
+   ✓ smoke del andamiaje > monta App y muestra el título  549ms
+ ✓ src/shared/components/EmptyState.test.tsx (2 tests) 736ms
+   ✓ EmptyState > con acción muestra el botón  695ms
+ ✓ src/shared/components/ErrorState.test.tsx (4 tests) 844ms
+   ✓ ErrorState > muestra uno y varios mensajes  447ms
+ ✓ src/App.test.tsx (2 tests) 736ms
+   ✓ App con router > la ruta raíz renderiza el HomePage de bienvenida  620ms
+ ✓ src/test/docker.test.ts (3 tests) 16ms
+ ✓ src/shared/styles/appointmentStatusTokens.test.ts (2 tests) 12ms
+ ✓ src/shared/styles/tokens.test.ts (4 tests) 16ms
+ ✓ src/test/tooling.test.ts (3 tests) 12753ms
+   ✓ tooling del frontend > npm run typecheck falla con un tipo inválido  6844ms
+   ✓ tooling del frontend > npm run lint detecta una violación  5898ms
+
+ Test Files  14 passed (14)
+      Tests  47 passed (47)
+   Start at  17:06:48
+   Duration  19.29s (transform 3.90s, setup 12.51s, collect 6.73s, tests 17.18s, environment 52.45s, prepare 6.69s)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppuywpnpt/vitest.json
+================================================================================
+[01/47] npm run typecheck falla con un tipo inválido
+test: src/test/tooling.test.ts > npm run typecheck falla con un tipo inválido
+diff:
+--- a/frontend/tsconfig.json
++++ b/frontend/tsconfig.json
+@@ -20,3 +20,3 @@
+   },
+-  "include": ["src"]
++  "include": ["src/shared"]
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/tooling.test.ts (3 tests | 1 failed | 2 skipped) 6415ms
+   × tooling del frontend > npm run typecheck falla con un tipo inválido 6412ms
+     → expected +0 not to be +0 // Object.is equality
+   ↓ tooling del frontend > npm run lint detecta una violación
+   ↓ tooling del frontend > la estructura de carpetas y los scripts están presentes
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:07:09
+   Duration  9.95s (transform 112ms, setup 408ms, collect 68ms, tests 6.42s, environment 1.91s, prepare 306ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppxfq_xxh/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/tooling.test.ts > tooling del frontend > npm run typecheck falla con un tipo inválido
+AssertionError: expected +0 not to be +0 // Object.is equality
+ ❯ src/test/tooling.test.ts:38:26
+     36|       );
+     37| 
+     38|       expect(status).not.toBe(0);
+       |                          ^
+     39|       expect(output).toContain("__fixture_typecheck__.ts");
+     40|       expect(output).toContain("TS2322");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[02/47] npm run lint detecta una violación
+test: src/test/tooling.test.ts > npm run lint detecta una violación
+diff:
+--- a/frontend/eslint.config.js
++++ b/frontend/eslint.config.js
+@@ -7,3 +7,3 @@
+ export default tseslint.config(
+-  { ignores: ["dist", "node_modules"] },
++  { ignores: ["dist", "node_modules", "src/**"] },
+   {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/tooling.test.ts (3 tests | 1 failed | 2 skipped) 4203ms
+   ↓ tooling del frontend > npm run typecheck falla con un tipo inválido
+   × tooling del frontend > npm run lint detecta una violación 4199ms
+     → expected +0 not to be +0 // Object.is equality
+   ↓ tooling del frontend > la estructura de carpetas y los scripts están presentes
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:07:30
+   Duration  7.63s (transform 105ms, setup 380ms, collect 77ms, tests 4.20s, environment 2.00s, prepare 370ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpazo18sii/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/tooling.test.ts > tooling del frontend > npm run lint detecta una violación
+AssertionError: expected +0 not to be +0 // Object.is equality
+ ❯ src/test/tooling.test.ts:55:26
+     53|       );
+     54| 
+     55|       expect(status).not.toBe(0);
+       |                          ^
+     56|       expect(output).toContain("__fixture_lint__.ts");
+     57|       expect(output).toContain("no-unused-vars");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[03/47] la estructura de carpetas y los scripts están presentes
+test: src/test/tooling.test.ts > la estructura de carpetas y los scripts están presentes
+diff:
+--- a/frontend/package.json
++++ b/frontend/package.json
+@@ -11,3 +11,2 @@
+     "build": "npm run typecheck && vite build",
+-    "preview": "vite preview",
+     "test": "vitest",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/tooling.test.ts (3 tests | 1 failed | 2 skipped) 29ms
+   ↓ tooling del frontend > npm run typecheck falla con un tipo inválido
+   ↓ tooling del frontend > npm run lint detecta una violación
+   × tooling del frontend > la estructura de carpetas y los scripts están presentes 26ms
+     → expected { …(8) } to match object { engines: { node: '>=20' }, …(1) }
+(27 matching properties omitted from actual)
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:07:49
+   Duration  3.24s (transform 107ms, setup 433ms, collect 89ms, tests 29ms, environment 1.82s, prepare 334ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsh9oqjto/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/tooling.test.ts > tooling del frontend > la estructura de carpetas y los scripts están presentes
+AssertionError: expected { …(8) } to match object { engines: { node: '>=20' }, …(1) }
+(27 matching properties omitted from actual)
+
+- Expected
++ Received
+
+@@ -4,11 +4,10 @@
+    },
+    "scripts": {
+      "build": Any<String>,
+      "dev": Any<String>,
+      "lint": StringContaining "eslint",
+-     "preview": Any<String>,
+      "test": Any<String>,
+      "test:run": Any<String>,
+      "typecheck": StringContaining "tsc --noEmit",
+    },
+  }
+
+ ❯ src/test/tooling.test.ts:71:25
+     69| 
+     70|     const packageJson: unknown = JSON.parse(readFileSync(resolve(FRONT…
+     71|     expect(packageJson).toMatchObject({
+       |                         ^
+     72|       engines: { node: ">=20" },
+     73|       scripts: {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[04/47] monta App y muestra el título
+test: src/test/smoke.test.tsx > monta App y muestra el título
+diff:
+--- a/frontend/src/pages/HomePage.tsx
++++ b/frontend/src/pages/HomePage.tsx
+@@ -9,3 +9,3 @@
+       <section className={styles.hero}>
+-        <h1 className={styles.title}>Turnos Odontología</h1>
++        <h1 className={styles.title}>Turnos</h1>
+         <p className={styles.lead}>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/smoke.test.tsx (1 test | 1 failed) 265ms
+   × smoke del andamiaje > monta App y muestra el título 262ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  17:07:58
+   Duration  3.90s (transform 367ms, setup 488ms, collect 441ms, tests 265ms, environment 1.88s, prepare 316ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6sknl9ql/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/smoke.test.tsx > smoke del andamiaje > monta App y muestra el título
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/test/smoke.test.tsx:7:75
+      5|   it("monta App y muestra el título", () => {
+      6|     render(<App />);
+      7|     expect(screen.queryByRole("heading", { name: "Turnos Odontología" …
+       |                                                                           ^
+      8|   });
+      9| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[05/47] el mapa cubre los cinco estados sin undefined
+test: src/shared/styles/appointmentStatusTokens.test.ts > el mapa cubre los cinco estados sin undefined
+diff:
+--- a/frontend/src/shared/styles/appointmentStatusTokens.ts
++++ b/frontend/src/shared/styles/appointmentStatusTokens.ts
+@@ -1,2 +1,2 @@
+-export const APPOINTMENT_STATUSES = ["reservado", "confirmado", "atendido", "ausente", "cancelado"] as const;
++export const APPOINTMENT_STATUSES = ["reservado", "confirmado", "atendido", "ausente"] as const;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/appointmentStatusTokens.test.ts (2 tests | 1 failed | 1 skipped) 29ms
+   × APPOINTMENT_STATUS_TOKENS > el mapa cubre los cinco estados sin undefined 25ms
+     → expected [ 'reservado', 'confirmado', …(2) ] to deeply equal [ 'reservado', 'confirmado', …(3) ]
+   ↓ APPOINTMENT_STATUS_TOKENS > cada par texto y fondo cumple contraste AA
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:08:09
+   Duration  3.02s (transform 99ms, setup 442ms, collect 43ms, tests 29ms, environment 1.68s, prepare 332ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppis6u4x5/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/appointmentStatusTokens.test.ts > APPOINTMENT_STATUS_TOKENS > el mapa cubre los cinco estados sin undefined
+AssertionError: expected [ 'reservado', 'confirmado', …(2) ] to deeply equal [ 'reservado', 'confirmado', …(3) ]
+
+- Expected
++ Received
+
+  [
+    "reservado",
+    "confirmado",
+    "atendido",
+    "ausente",
+-   "cancelado",
+  ]
+
+ ❯ src/shared/styles/appointmentStatusTokens.test.ts:23:34
+     21| describe("APPOINTMENT_STATUS_TOKENS", () => {
+     22|   it("el mapa cubre los cinco estados sin undefined", () => {
+     23|     expect(APPOINTMENT_STATUSES).toEqual(["reservado", "confirmado", "…
+       |                                  ^
+     24|     for (const status of ["reservado", "confirmado", "atendido", "ause…
+     25|       const tokens = APPOINTMENT_STATUS_TOKENS[status];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[06/47] cada par texto y fondo cumple contraste AA
+test: src/shared/styles/appointmentStatusTokens.test.ts > cada par texto y fondo cumple contraste AA
+diff:
+--- a/frontend/src/shared/styles/appointmentStatusTokens.ts
++++ b/frontend/src/shared/styles/appointmentStatusTokens.ts
+@@ -15,3 +15,3 @@
+   atendido: { text: "#374151", background: "#E5E7EB", border: "#9CA3AF" },
+-  ausente: { text: "#B45309", background: "#FEF3C7", border: "#FCD34D" },
++  ausente: { text: "#D97706", background: "#FEF3C7", border: "#FCD34D" },
+   cancelado: { text: "#B91C1C", background: "#FEE2E2", border: "#FCA5A5" },
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/appointmentStatusTokens.test.ts (2 tests | 1 failed | 1 skipped) 20ms
+   ↓ APPOINTMENT_STATUS_TOKENS > el mapa cubre los cinco estados sin undefined
+   × APPOINTMENT_STATUS_TOKENS > cada par texto y fondo cumple contraste AA 17ms
+     → ausente: expected '#D97706' to be '#B45309' // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:08:18
+   Duration  3.30s (transform 111ms, setup 407ms, collect 85ms, tests 20ms, environment 1.87s, prepare 405ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsw77o8c4/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/appointmentStatusTokens.test.ts > APPOINTMENT_STATUS_TOKENS > cada par texto y fondo cumple contraste AA
+AssertionError: ausente: expected '#D97706' to be '#B45309' // Object.is equality
+
+Expected: "#B45309"
+Received: "#D97706"
+
+ ❯ src/shared/styles/appointmentStatusTokens.test.ts:45:35
+     43|       const tokens = APPOINTMENT_STATUS_TOKENS[status];
+     44|       const ratio = contrastRatio(tokens.text, tokens.background);
+     45|       expect(tokens.text, status).toBe(expected[status].text);
+       |                                   ^
+     46|       expect(tokens.background, status).toBe(expected[status].backgrou…
+     47|       expect(ratio.toFixed(2), status).toBe(expected[status].ratio);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[07/47] define la escala de espaciado 4/8/12/16/24/32/48 px
+test: src/shared/styles/tokens.test.ts > define la escala de espaciado 4/8/12/16/24/32/48 px
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -6,3 +6,3 @@
+   --space-4: 16px;
+-  --space-5: 24px;
++  --space-5: 20px;
+   --space-6: 32px;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/tokens.test.ts (4 tests | 1 failed | 3 skipped) 24ms
+   × tokens.css > define la escala de espaciado 4/8/12/16/24/32/48 px 21ms
+     → expected [ '4px', '8px', '12px', '16px', …(3) ] to deeply equal [ '4px', '8px', '12px', '16px', …(3) ]
+   ↓ tokens.css > define la tipografía 12/14/16/20/24/32 px
+   ↓ tokens.css > usa el system font stack en el reset
+   ↓ tokens.css > el foco es visible
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:08:28
+   Duration  3.33s (transform 95ms, setup 451ms, collect 35ms, tests 24ms, environment 1.97s, prepare 321ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpomtc1ij5/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/tokens.test.ts > tokens.css > define la escala de espaciado 4/8/12/16/24/32/48 px
+AssertionError: expected [ '4px', '8px', '12px', '16px', …(3) ] to deeply equal [ '4px', '8px', '12px', '16px', …(3) ]
+
+- Expected
++ Received
+
+  [
+    "4px",
+    "8px",
+    "12px",
+    "16px",
+-   "24px",
++   "20px",
+    "32px",
+    "48px",
+  ]
+
+ ❯ src/shared/styles/tokens.test.ts:17:21
+     15|   it("define la escala de espaciado 4/8/12/16/24/32/48 px", () => {
+     16|     const spacing = [1, 2, 3, 4, 5, 6, 7].map((step) => declaration(`-…
+     17|     expect(spacing).toEqual(["4px", "8px", "12px", "16px", "24px", "32…
+       |                     ^
+     18|   });
+     19| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[08/47] define la tipografía 12/14/16/20/24/32 px
+test: src/shared/styles/tokens.test.ts > define la tipografía 12/14/16/20/24/32 px
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -15,3 +15,3 @@
+   --font-size-md: 16px;
+-  --font-size-lg: 20px;
++  --font-size-lg: 18px;
+   --font-size-xl: 24px;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/tokens.test.ts (4 tests | 1 failed | 3 skipped) 26ms
+   ↓ tokens.css > define la escala de espaciado 4/8/12/16/24/32/48 px
+   × tokens.css > define la tipografía 12/14/16/20/24/32 px 22ms
+     → expected [ Array(6) ] to deeply equal [ Array(6) ]
+   ↓ tokens.css > usa el system font stack en el reset
+   ↓ tokens.css > el foco es visible
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:08:37
+   Duration  3.06s (transform 79ms, setup 445ms, collect 34ms, tests 26ms, environment 1.77s, prepare 283ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuy7non18/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/tokens.test.ts > tokens.css > define la tipografía 12/14/16/20/24/32 px
+AssertionError: expected [ Array(6) ] to deeply equal [ Array(6) ]
+
+- Expected
++ Received
+
+  [
+    "12px",
+    "14px",
+    "16px",
+-   "20px",
++   "18px",
+    "24px",
+    "32px",
+  ]
+
+ ❯ src/shared/styles/tokens.test.ts:22:19
+     20|   it("define la tipografía 12/14/16/20/24/32 px", () => {
+     21|     const sizes = ["xs", "sm", "md", "lg", "xl", "2xl"].map((size) => …
+     22|     expect(sizes).toEqual(["12px", "14px", "16px", "20px", "24px", "32…
+       |                   ^
+     23|   });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[09/47] usa el system font stack en el reset
+test: src/shared/styles/tokens.test.ts > usa el system font stack en el reset
+diff:
+--- a/frontend/src/shared/styles/reset.css
++++ b/frontend/src/shared/styles/reset.css
+@@ -9,3 +9,3 @@
+   min-height: 100vh;
+-  font-family: var(--font-family-base);
++  font-family: serif;
+   font-size: var(--font-size-md);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/tokens.test.ts (4 tests | 1 failed | 3 skipped) 21ms
+   ↓ tokens.css > define la escala de espaciado 4/8/12/16/24/32/48 px
+   ↓ tokens.css > define la tipografía 12/14/16/20/24/32 px
+   × tokens.css > usa el system font stack en el reset 18ms
+     → expected '*,\n*::before,\n*::after {\n  box-siz…' to match /body\s*\{[^}]*font-family:\s*var\(--f…/
+   ↓ tokens.css > el foco es visible
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:08:46
+   Duration  3.16s (transform 94ms, setup 452ms, collect 31ms, tests 21ms, environment 1.78s, prepare 319ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpci_gexka/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/tokens.test.ts > tokens.css > usa el system font stack en el reset
+AssertionError: expected '*,\n*::before,\n*::after {\n  box-siz…' to match /body\s*\{[^}]*font-family:\s*var\(--f…/
+
+- Expected: 
+/body\s*\{[^}]*font-family:\s*var\(--font-family-base\)/
+
++ Received: 
+"*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: serif;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+"
+
+ ❯ src/shared/styles/tokens.test.ts:29:22
+     27|       'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",…
+     28|     );
+     29|     expect(resetCss).toMatch(/body\s*\{[^}]*font-family:\s*var\(--font…
+       |                      ^
+     30|   });
+     31| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[10/47] el foco es visible
+test: src/shared/styles/tokens.test.ts > el foco es visible
+diff:
+--- a/frontend/src/shared/styles/reset.css
++++ b/frontend/src/shared/styles/reset.css
+@@ -28,3 +28,3 @@
+ :focus-visible {
+-  outline: 2px solid var(--color-focus);
++  outline: none;
+   outline-offset: 2px;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/tokens.test.ts (4 tests | 1 failed | 3 skipped) 17ms
+   ↓ tokens.css > define la escala de espaciado 4/8/12/16/24/32/48 px
+   ↓ tokens.css > define la tipografía 12/14/16/20/24/32 px
+   ↓ tokens.css > usa el system font stack en el reset
+   × tokens.css > el foco es visible 15ms
+     → expected '*,\n*::before,\n*::after {\n  box-siz…' to match /:focus-visible\s*\{[^}]*outline:\s*2p…/
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:08:55
+   Duration  3.15s (transform 84ms, setup 456ms, collect 31ms, tests 17ms, environment 1.80s, prepare 349ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpw4iub7hp/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/tokens.test.ts > tokens.css > el foco es visible
+AssertionError: expected '*,\n*::before,\n*::after {\n  box-siz…' to match /:focus-visible\s*\{[^}]*outline:\s*2p…/
+
+- Expected: 
+/:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--color-focus\)/
+
++ Received: 
+"*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  outline-offset: 2px;
+}
+"
+
+ ❯ src/shared/styles/tokens.test.ts:34:22
+     32|   it("el foco es visible", () => {
+     33|     expect(declaration("--color-focus")).toMatch(/^#[0-9A-F]{6}$/);
+     34|     expect(resetCss).toMatch(
+       |                      ^
+     35|       /:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--color-focus…
+     36|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[11/47] el estado reservado muestra su variante
+test: src/shared/components/StatusBadge.test.tsx > el estado reservado muestra su variante
+diff:
+--- a/frontend/src/shared/components/StatusBadge.tsx
++++ b/frontend/src/shared/components/StatusBadge.tsx
+@@ -7,3 +7,3 @@
+ const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
+-  reservado: "Reservado",
++  reservado: "Reservada",
+   confirmado: "Confirmado",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/StatusBadge.test.tsx (5 tests | 1 failed | 4 skipped) 84ms
+   × StatusBadge > el estado reservado muestra su variante 80ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+   ↓ StatusBadge > el estado confirmado muestra su variante
+   ↓ StatusBadge > el estado atendido muestra su variante
+   ↓ StatusBadge > el estado ausente muestra su variante
+   ↓ StatusBadge > el estado cancelado muestra su variante
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  17:09:05
+   Duration  3.64s (transform 226ms, setup 495ms, collect 245ms, tests 84ms, environment 1.97s, prepare 288ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdp2yablr/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/StatusBadge.test.tsx > StatusBadge > el estado reservado muestra su variante
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/StatusBadge.test.tsx:8:19
+      6|     render(<StatusBadge status="reservado" />);
+      7|     const badge = screen.queryByText("Reservado");
+      8|     expect(badge).toBeInTheDocument();
+       |                   ^
+      9|     expect(badge).toHaveAttribute("data-status", "reservado");
+     10|     expect(badge).toHaveClass("badge", "reservado");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[12/47] el estado confirmado muestra su variante
+test: src/shared/components/StatusBadge.test.tsx > el estado confirmado muestra su variante
+diff:
+--- a/frontend/src/shared/components/StatusBadge.tsx
++++ b/frontend/src/shared/components/StatusBadge.tsx
+@@ -8,3 +8,3 @@
+   reservado: "Reservado",
+-  confirmado: "Confirmado",
++  confirmado: "Confirmada",
+   atendido: "Atendido",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/StatusBadge.test.tsx (5 tests | 1 failed | 4 skipped) 110ms
+   ↓ StatusBadge > el estado reservado muestra su variante
+   × StatusBadge > el estado confirmado muestra su variante 106ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+   ↓ StatusBadge > el estado atendido muestra su variante
+   ↓ StatusBadge > el estado ausente muestra su variante
+   ↓ StatusBadge > el estado cancelado muestra su variante
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  17:09:15
+   Duration  3.52s (transform 196ms, setup 407ms, collect 200ms, tests 110ms, environment 1.94s, prepare 321ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpafaoj2da/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/StatusBadge.test.tsx > StatusBadge > el estado confirmado muestra su variante
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/StatusBadge.test.tsx:17:19
+     15|     render(<StatusBadge status="confirmado" />);
+     16|     const badge = screen.queryByText("Confirmado");
+     17|     expect(badge).toBeInTheDocument();
+       |                   ^
+     18|     expect(badge).toHaveAttribute("data-status", "confirmado");
+     19|     expect(badge).toHaveClass("badge", "confirmado");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[13/47] el estado atendido muestra su variante
+test: src/shared/components/StatusBadge.test.tsx > el estado atendido muestra su variante
+diff:
+--- a/frontend/src/shared/components/StatusBadge.tsx
++++ b/frontend/src/shared/components/StatusBadge.tsx
+@@ -9,3 +9,3 @@
+   confirmado: "Confirmado",
+-  atendido: "Atendido",
++  atendido: "Atendida",
+   ausente: "Ausente",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/StatusBadge.test.tsx (5 tests | 1 failed | 4 skipped) 77ms
+   ↓ StatusBadge > el estado reservado muestra su variante
+   ↓ StatusBadge > el estado confirmado muestra su variante
+   × StatusBadge > el estado atendido muestra su variante 74ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+   ↓ StatusBadge > el estado ausente muestra su variante
+   ↓ StatusBadge > el estado cancelado muestra su variante
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  17:09:25
+   Duration  3.49s (transform 195ms, setup 405ms, collect 193ms, tests 77ms, environment 1.92s, prepare 298ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp14g9o_xt/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/StatusBadge.test.tsx > StatusBadge > el estado atendido muestra su variante
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/StatusBadge.test.tsx:26:19
+     24|     render(<StatusBadge status="atendido" />);
+     25|     const badge = screen.queryByText("Atendido");
+     26|     expect(badge).toBeInTheDocument();
+       |                   ^
+     27|     expect(badge).toHaveAttribute("data-status", "atendido");
+     28|     expect(badge).toHaveClass("badge", "atendido");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[14/47] el estado ausente muestra su variante
+test: src/shared/components/StatusBadge.test.tsx > el estado ausente muestra su variante
+diff:
+--- a/frontend/src/shared/components/StatusBadge.tsx
++++ b/frontend/src/shared/components/StatusBadge.tsx
+@@ -10,3 +10,3 @@
+   atendido: "Atendido",
+-  ausente: "Ausente",
++  ausente: "Ausencia",
+   cancelado: "Cancelado",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/StatusBadge.test.tsx (5 tests | 1 failed | 4 skipped) 84ms
+   ↓ StatusBadge > el estado reservado muestra su variante
+   ↓ StatusBadge > el estado confirmado muestra su variante
+   ↓ StatusBadge > el estado atendido muestra su variante
+   × StatusBadge > el estado ausente muestra su variante 80ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+   ↓ StatusBadge > el estado cancelado muestra su variante
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  17:09:35
+   Duration  4.21s (transform 218ms, setup 443ms, collect 229ms, tests 84ms, environment 2.42s, prepare 313ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2l12lqxu/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/StatusBadge.test.tsx > StatusBadge > el estado ausente muestra su variante
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/StatusBadge.test.tsx:35:19
+     33|     render(<StatusBadge status="ausente" />);
+     34|     const badge = screen.queryByText("Ausente");
+     35|     expect(badge).toBeInTheDocument();
+       |                   ^
+     36|     expect(badge).toHaveAttribute("data-status", "ausente");
+     37|     expect(badge).toHaveClass("badge", "ausente");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[15/47] el estado cancelado muestra su variante
+test: src/shared/components/StatusBadge.test.tsx > el estado cancelado muestra su variante
+diff:
+--- a/frontend/src/shared/components/StatusBadge.tsx
++++ b/frontend/src/shared/components/StatusBadge.tsx
+@@ -11,3 +11,3 @@
+   ausente: "Ausente",
+-  cancelado: "Cancelado",
++  cancelado: "Cancelada",
+ };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/StatusBadge.test.tsx (5 tests | 1 failed | 4 skipped) 105ms
+   ↓ StatusBadge > el estado reservado muestra su variante
+   ↓ StatusBadge > el estado confirmado muestra su variante
+   ↓ StatusBadge > el estado atendido muestra su variante
+   ↓ StatusBadge > el estado ausente muestra su variante
+   × StatusBadge > el estado cancelado muestra su variante 100ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  17:09:47
+   Duration  6.48s (transform 347ms, setup 729ms, collect 292ms, tests 105ms, environment 3.95s, prepare 466ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_mzfz1qw/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/StatusBadge.test.tsx > StatusBadge > el estado cancelado muestra su variante
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/StatusBadge.test.tsx:44:19
+     42|     render(<StatusBadge status="cancelado" />);
+     43|     const badge = screen.queryByText("Cancelado");
+     44|     expect(badge).toBeInTheDocument();
+       |                   ^
+     45|     expect(badge).toHaveAttribute("data-status", "cancelado");
+     46|     expect(badge).toHaveClass("badge", "cancelado");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[16/47] renderiza su rol y su texto
+test: src/shared/components/LoadingState.test.tsx > renderiza su rol y su texto
+diff:
+--- a/frontend/src/shared/components/LoadingState.tsx
++++ b/frontend/src/shared/components/LoadingState.tsx
+@@ -6,3 +6,3 @@
+ 
+-export function LoadingState({ label = "Cargando..." }: LoadingStateProps) {
++export function LoadingState({ label = "Cargando" }: LoadingStateProps) {
+   return (
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/LoadingState.test.tsx (1 test | 1 failed) 132ms
+   × LoadingState > renderiza su rol y su texto 129ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Cargando...
+Received:
+  Cargando
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  17:10:00
+   Duration  4.23s (transform 193ms, setup 560ms, collect 139ms, tests 132ms, environment 2.41s, prepare 359ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpa4gdo3zg/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/LoadingState.test.tsx > LoadingState > renderiza su rol y su texto
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Cargando...
+Received:
+  Cargando
+ ❯ src/shared/components/LoadingState.test.tsx:8:20
+      6|     render(<LoadingState />);
+      7|     const status = screen.getByRole("status");
+      8|     expect(status).toHaveTextContent("Cargando...");
+       |                    ^
+      9|   });
+     10| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[17/47] con acción muestra el botón
+test: src/shared/components/EmptyState.test.tsx > con acción muestra el botón
+diff:
+--- a/frontend/src/shared/components/EmptyState.tsx
++++ b/frontend/src/shared/components/EmptyState.tsx
+@@ -19,3 +19,3 @@
+       {action !== undefined && (
+-        <button type="button" className={styles.action} onClick={action.onClick}>
++        <button type="button" className={styles.action} onClick={() => undefined}>
+           {action.label}
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/EmptyState.test.tsx (2 tests | 1 failed | 1 skipped) 231ms
+   × EmptyState > con acción muestra el botón 228ms
+     → expected [] to deeply equal [ 'Crear turno' ]
+   ↓ EmptyState > sin acción no muestra botón
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:10:13
+   Duration  3.83s (transform 217ms, setup 424ms, collect 375ms, tests 231ms, environment 1.82s, prepare 325ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmsn7kd41/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/EmptyState.test.tsx > EmptyState > con acción muestra el botón
+AssertionError: expected [] to deeply equal [ 'Crear turno' ]
+
+- Expected
++ Received
+
+- [
+-   "Crear turno",
+- ]
++ []
+
+ ❯ src/shared/components/EmptyState.test.tsx:19:20
+     17|     expect(screen.queryByText("La agenda de hoy está vacía.")).toBeInT…
+     18|     await userEvent.click(screen.getByRole("button", { name: "Crear tu…
+     19|     expect(clicks).toEqual(["Crear turno"]);
+       |                    ^
+     20|   });
+     21| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[18/47] sin acción no muestra botón
+test: src/shared/components/EmptyState.test.tsx > sin acción no muestra botón
+diff:
+--- a/frontend/src/shared/components/EmptyState.tsx
++++ b/frontend/src/shared/components/EmptyState.tsx
+@@ -17,3 +17,3 @@
+       <h2 className={styles.title}>{title}</h2>
+-      <p className={styles.description}>{description}</p>
++      <p className={styles.description}>{title}</p>
+       {action !== undefined && (
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/EmptyState.test.tsx (2 tests | 1 failed | 1 skipped) 219ms
+   ↓ EmptyState > con acción muestra el botón
+   × EmptyState > sin acción no muestra botón 215ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:10:23
+   Duration  3.85s (transform 188ms, setup 413ms, collect 346ms, tests 219ms, environment 1.99s, prepare 298ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0x1moqfj/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/EmptyState.test.tsx > EmptyState > sin acción no muestra botón
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/EmptyState.test.tsx:26:64
+     24| 
+     25|     expect(screen.getByRole("heading", { name: "No hay turnos" })).toB…
+     26|     expect(screen.queryByText("La agenda de hoy está vacía.")).toBeInT…
+       |                                                                ^
+     27|     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+     28|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[19/47] muestra uno y varios mensajes
+test: src/shared/components/ErrorState.test.tsx > muestra uno y varios mensajes
+diff:
+--- a/frontend/src/shared/components/ErrorState.tsx
++++ b/frontend/src/shared/components/ErrorState.tsx
+@@ -14,3 +14,3 @@
+       <ul className={styles.messages}>
+-        {messages.map((message, index) => (
++        {messages.slice(0, 1).map((message, index) => (
+           <li key={`${index}-${message}`}>{message}</li>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/ErrorState.test.tsx (4 tests | 1 failed | 3 skipped) 218ms
+   × ErrorState > muestra uno y varios mensajes 214ms
+     → expected [ Array(1) ] to deeply equal [ …(2) ]
+   ↓ ErrorState > muestra el mensaje de un 409 textual
+   ↓ ErrorState > con reintento muestra el botón y lo ejecuta
+   ↓ ErrorState > sin reintento no muestra botón
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:10:33
+   Duration  3.89s (transform 279ms, setup 455ms, collect 492ms, tests 218ms, environment 1.89s, prepare 313ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpil3fe9g6/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/ErrorState.test.tsx > ErrorState > muestra uno y varios mensajes
+AssertionError: expected [ Array(1) ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+  [
+    "El profesional ya tiene un turno en ese horario.",
+-   "El sillón ya está ocupado en ese horario.",
+  ]
+
+ ❯ src/shared/components/ErrorState.test.tsx:29:86
+     27|     );
+     28|     const several = screen.getByRole("alert");
+     29|     expect(within(several).getAllByRole("listitem").map((item) => item…
+       |                                                                                      ^
+     30|       "El profesional ya tiene un turno en ese horario.",
+     31|       "El sillón ya está ocupado en ese horario.",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[20/47] muestra el mensaje de un 409 textual
+test: src/shared/components/ErrorState.test.tsx > muestra el mensaje de un 409 textual
+diff:
+--- a/frontend/src/shared/components/ErrorState.tsx
++++ b/frontend/src/shared/components/ErrorState.tsx
+@@ -15,3 +15,3 @@
+         {messages.map((message, index) => (
+-          <li key={`${index}-${message}`}>{message}</li>
++          <li key={`${index}-${message}`}>{message.replace(" (hora local)", "")}</li>
+         ))}
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/ErrorState.test.tsx (4 tests | 1 failed | 3 skipped) 157ms
+   ↓ ErrorState > muestra uno y varios mensajes
+   × ErrorState > muestra el mensaje de un 409 textual 153ms
+     → expected 'Dra. Laura Quiroga ya tiene un turno …' to be 'Dra. Laura Quiroga ya tiene un turno …' // Object.is equality
+   ↓ ErrorState > con reintento muestra el botón y lo ejecuta
+   ↓ ErrorState > sin reintento no muestra botón
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:10:44
+   Duration  4.15s (transform 226ms, setup 481ms, collect 405ms, tests 157ms, environment 2.14s, prepare 293ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkopw2cvz/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/ErrorState.test.tsx > ErrorState > muestra el mensaje de un 409 textual
+AssertionError: expected 'Dra. Laura Quiroga ya tiene un turno …' to be 'Dra. Laura Quiroga ya tiene un turno …' // Object.is equality
+
+Expected: "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno 00000000-0000-0000-0000-0000000000a1)."
+Received: "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 que se superpone (turno 00000000-0000-0000-0000-0000000000a1)."
+
+ ❯ src/shared/components/ErrorState.test.tsx:41:35
+     39|     const items = within(screen.getByRole("alert")).getAllByRole("list…
+     40|     expect(items).toHaveLength(1);
+     41|     expect(items[0]?.textContent).toBe(OVERLAP_MESSAGE);
+       |                                   ^
+     42|   });
+     43| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[21/47] con reintento muestra el botón y lo ejecuta
+test: src/shared/components/ErrorState.test.tsx > con reintento muestra el botón y lo ejecuta
+diff:
+--- a/frontend/src/shared/components/ErrorState.tsx
++++ b/frontend/src/shared/components/ErrorState.tsx
+@@ -19,3 +19,3 @@
+       {onRetry !== undefined && (
+-        <button type="button" className={styles.retry} onClick={onRetry}>
++        <button type="button" className={styles.retry} onClick={() => undefined}>
+           Reintentar
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/ErrorState.test.tsx (4 tests | 1 failed | 3 skipped) 200ms
+   ↓ ErrorState > muestra uno y varios mensajes
+   ↓ ErrorState > muestra el mensaje de un 409 textual
+   × ErrorState > con reintento muestra el botón y lo ejecuta 196ms
+     → expected +0 to be 1 // Object.is equality
+   ↓ ErrorState > sin reintento no muestra botón
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:10:55
+   Duration  3.76s (transform 230ms, setup 390ms, collect 435ms, tests 200ms, environment 1.88s, prepare 318ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp58eo0lcn/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/ErrorState.test.tsx > ErrorState > con reintento muestra el botón y lo ejecuta
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/shared/components/ErrorState.test.tsx:56:21
+     54| 
+     55|     await userEvent.click(screen.getByRole("button", { name: "Reintent…
+     56|     expect(retries).toBe(1);
+       |                     ^
+     57|   });
+     58| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[22/47] sin reintento no muestra botón
+test: src/shared/components/ErrorState.test.tsx > sin reintento no muestra botón
+diff:
+--- a/frontend/src/shared/components/ErrorState.tsx
++++ b/frontend/src/shared/components/ErrorState.tsx
+@@ -18,3 +18,3 @@
+       </ul>
+-      {onRetry !== undefined && (
++      {(onRetry !== undefined || messages.length > 0) && (
+         <button type="button" className={styles.retry} onClick={onRetry}>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/ErrorState.test.tsx (4 tests | 1 failed | 3 skipped) 164ms
+   ↓ ErrorState > muestra uno y varios mensajes
+   ↓ ErrorState > muestra el mensaje de un 409 textual
+   ↓ ErrorState > con reintento muestra el botón y lo ejecuta
+   × ErrorState > sin reintento no muestra botón 161ms
+     → expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <button
+  class="retry"
+  type="button"
+>
+  Reintentar
+</button> instead
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  17:11:05
+   Duration  3.83s (transform 225ms, setup 449ms, collect 365ms, tests 164ms, environment 2.08s, prepare 294ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmps9g45xlg/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/ErrorState.test.tsx > ErrorState > sin reintento no muestra botón
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <button
+  class="retry"
+  type="button"
+>
+  Reintentar
+</button> instead
+ ❯ src/shared/components/ErrorState.test.tsx:62:46
+     60|     render(<ErrorState messages={["No se pudo cargar la agenda."]} />);
+     61|     expect(screen.getByRole("alert")).toBeInTheDocument();
+     62|     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+       |                                              ^
+     63|   });
+     64| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[23/47] envuelve header, main y footer y renderiza sus hijos
+test: src/shared/components/PageShell.test.tsx > envuelve header, main y footer y renderiza sus hijos
+diff:
+--- a/frontend/src/shared/components/PageShell.tsx
++++ b/frontend/src/shared/components/PageShell.tsx
+@@ -15,3 +15,3 @@
+       <main className={styles.main}>{children}</main>
+-      <footer className={styles.footer}>Consultorio odontológico · agenda de turnos</footer>
++      <div className={styles.footer}>Consultorio odontológico · agenda de turnos</div>
+     </div>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/PageShell.test.tsx (1 test | 1 failed) 156ms
+   × PageShell > envuelve header, main y footer y renderiza sus hijos 152ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  17:11:15
+   Duration  3.74s (transform 207ms, setup 427ms, collect 210ms, tests 156ms, environment 2.06s, prepare 314ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_q4c0in0/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/PageShell.test.tsx > PageShell > envuelve header, main y footer y renderiza sus hijos
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/shared/components/PageShell.test.tsx:18:20
+     16|     expect(header).toHaveTextContent("Turnos Odontología");
+     17|     expect(main).toHaveTextContent("Agenda de Ana Pérez");
+     18|     expect(footer).toBeInTheDocument();
+       |                    ^
+     19|     if (footer === null) throw new Error("PageShell no renderizó el fo…
+     20|     expect(header.compareDocumentPosition(main) & Node.DOCUMENT_POSITI…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[24/47] una respuesta 200 devuelve ok con los datos
+test: src/shared/api/client.test.ts > una respuesta 200 devuelve ok con los datos
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -117,3 +117,3 @@
+     if (response.ok) {
+-      return { ok: true, status: response.status, data: parseJson(text) ?? null };
++      return { ok: true, status: response.status, data: null };
+     }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 38ms
+   × cliente de API > una respuesta 200 devuelve ok con los datos 34ms
+     → expected { ok: true, status: 200, data: null } to deeply equal { ok: true, status: 200, …(1) }
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:11:25
+   Duration  3.69s (transform 172ms, setup 458ms, collect 218ms, tests 38ms, environment 2.07s, prepare 337ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpl_riw4a7/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > una respuesta 200 devuelve ok con los datos
+AssertionError: expected { ok: true, status: 200, data: null } to deeply equal { ok: true, status: 200, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "data": {
+-     "status": "ok",
+-   },
++   "data": null,
+    "ok": true,
+    "status": 200,
+  }
+
+ ❯ src/shared/api/client.test.ts:37:20
+     35|     const result = await client.request("/health");
+     36| 
+     37|     expect(result).toEqual({ ok: true, status: 200, data: { status: "o…
+       |                    ^
+     38|     expect(log).toHaveLength(1);
+     39|     expect(log[0]?.url).toBe("http://localhost:8000/api/health");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[25/47] serializa el cuerpo como JSON y envía los headers de contenido
+test: src/shared/api/client.test.ts > serializa el cuerpo como JSON y envía los headers de contenido
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -103,3 +103,3 @@
+     if (body !== undefined) {
+-      headers.set("Content-Type", "application/json");
++      headers.set("Content-Type", "text/plain");
+       init.body = JSON.stringify(body);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 30ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   × cliente de API > serializa el cuerpo como JSON y envía los headers de contenido 27ms
+     → expected 'text/plain' to be 'application/json' // Object.is equality
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:11:36
+   Duration  3.38s (transform 153ms, setup 429ms, collect 182ms, tests 30ms, environment 1.92s, prepare 319ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc92rgiqv/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+AssertionError: expected 'text/plain' to be 'application/json' // Object.is equality
+
+Expected: "application/json"
+Received: "text/plain"
+
+ ❯ src/shared/api/client.test.ts:59:41
+     57|     expect(log[0]?.init?.method).toBe("POST");
+     58|     expect(log[0]?.init?.body).toBe('{"firstName":"Ana","lastName":"Pé…
+     59|     expect(headers.get("Content-Type")).toBe("application/json");
+       |                                         ^
+     60|     expect(headers.get("Accept")).toBe("application/json");
+     61|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[26/47] un 400 con errors se modela como validation
+test: src/shared/api/client.test.ts > un 400 con errors se modela como validation
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -70,3 +70,3 @@
+   if (isObject(body)) {
+-    if (status === 400) {
++    if (status === 418) {
+       const errors = asFieldErrors(body.errors);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 38ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   × cliente de API > un 400 con errors se modela como validation 34ms
+     → expected { ok: false, status: 400, …(1) } to deeply equal { ok: false, status: 400, …(1) }
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:11:45
+   Duration  3.33s (transform 144ms, setup 420ms, collect 165ms, tests 38ms, environment 1.87s, prepare 331ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9yyq54h7/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un 400 con errors se modela como validation
+AssertionError: expected { ok: false, status: 400, …(1) } to deeply equal { ok: false, status: 400, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "errors": [
+-       {
+-         "field": "startAt",
+-         "message": "Falta este dato.",
+-         "type": "missing",
+-       },
+-     ],
+-     "kind": "validation",
++     "kind": "unknown",
++     "rawText": "{\"errors\":[{\"field\":\"startAt\",\"type\":\"missing\",\"message\":\"Falta este dato.\"}]}",
+      "status": 400,
+    },
+    "ok": false,
+    "status": 400,
+  }
+
+ ❯ src/shared/api/client.test.ts:73:20
+     71|     const result = await client.request("/appointments", { method: "PO…
+     72| 
+     73|     expect(result).toEqual({
+       |                    ^
+     74|       ok: false,
+     75|       status: 400,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[27/47] un 401 con code y message se modela como auth
+test: src/shared/api/client.test.ts > un 401 con code y message se modela como auth
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -74,3 +74,3 @@
+     }
+-    if (status === 401 || status === 404) {
++    if (status === 404) {
+       const { code, message } = body;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 34ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   × cliente de API > un 401 con code y message se modela como auth 31ms
+     → expected { ok: false, status: 401, …(1) } to deeply equal { ok: false, status: 401, …(1) }
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:11:55
+   Duration  3.54s (transform 144ms, setup 460ms, collect 181ms, tests 34ms, environment 1.94s, prepare 290ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpx0cwbnki/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un 401 con code y message se modela como auth
+AssertionError: expected { ok: false, status: 401, …(1) } to deeply equal { ok: false, status: 401, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INVALID_CREDENTIALS",
+-     "kind": "auth",
+-     "message": "Usuario o contraseña incorrectos.",
++     "kind": "unknown",
++     "rawText": "{\"code\":\"INVALID_CREDENTIALS\",\"message\":\"Usuario o contraseña incorrectos.\"}",
+      "status": 401,
+    },
+    "ok": false,
+    "status": 401,
+  }
+
+ ❯ src/shared/api/client.test.ts:94:20
+     92|     const result = await client.request("/auth/login", { method: "POST…
+     93| 
+     94|     expect(result).toEqual({
+       |                    ^
+     95|       ok: false,
+     96|       status: 401,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[28/47] un 403 con violations se modela como forbidden
+test: src/shared/api/client.test.ts > un 403 con violations se modela como forbidden
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -85,3 +85,3 @@
+       if (violations !== undefined) {
+-        if (status === 403) return { kind: "forbidden", status, violations };
++        if (status === 403) return { kind: "unknown", status, rawText };
+         if (status === 409) return { kind: "conflict", status, violations };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 38ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   × cliente de API > un 403 con violations se modela como forbidden 34ms
+     → expected { ok: false, status: 403, …(1) } to deeply equal { ok: false, status: 403, …(1) }
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:12:05
+   Duration  3.94s (transform 149ms, setup 434ms, collect 163ms, tests 38ms, environment 2.17s, prepare 449ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6ksfvxxw/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un 403 con violations se modela como forbidden
+AssertionError: expected { ok: false, status: 403, …(1) } to deeply equal { ok: false, status: 403, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "kind": "forbidden",
++     "kind": "unknown",
++     "rawText": "{\"violations\":[{\"code\":\"FORBIDDEN\",\"message\":\"No tenés permiso para esta acción.\"}]}",
+      "status": 403,
+-     "violations": [
+-       {
+-         "code": "FORBIDDEN",
+-         "message": "No tenés permiso para esta acción.",
+-       },
+-     ],
+    },
+    "ok": false,
+    "status": 403,
+  }
+
+ ❯ src/shared/api/client.test.ts:115:20
+    113|     const result = await client.request("/catalog/chairs", { method: "…
+    114| 
+    115|     expect(result).toEqual({ ok: false, status: 403, error: { kind: "f…
+       |                    ^
+    116|   });
+    117| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[29/47] un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+test: src/shared/api/client.test.ts > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -86,3 +86,3 @@
+         if (status === 403) return { kind: "forbidden", status, violations };
+-        if (status === 409) return { kind: "conflict", status, violations };
++        if (status === 409) return { kind: "unprocessable", status: 422, violations };
+         return { kind: "unprocessable", status, violations };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 41ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   × cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto 37ms
+     → expected { kind: 'unprocessable', …(2) } to deeply equal { kind: 'conflict', status: 409, …(1) }
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:12:15
+   Duration  3.45s (transform 152ms, setup 443ms, collect 167ms, tests 41ms, environment 1.99s, prepare 279ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmphptve33x/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+AssertionError: expected { kind: 'unprocessable', …(2) } to deeply equal { kind: 'conflict', status: 409, …(1) }
+
+- Expected
++ Received
+
+@@ -1,8 +1,8 @@
+  {
+-   "kind": "conflict",
+-   "status": 409,
++   "kind": "unprocessable",
++   "status": 422,
+    "violations": [
+      {
+        "code": "PROFESSIONAL_OVERLAP",
+        "message": "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno 00000000-0000-0000-0000-0000000000a1).",
+      },
+
+ ❯ src/shared/api/client.test.ts:130:26
+    128|     expect(result.ok).toBe(false);
+    129|     if (result.ok) return;
+    130|     expect(result.error).toEqual({
+       |                          ^
+    131|       kind: "conflict",
+    132|       status: 409,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[30/47] un 422 con violations se modela como unprocessable
+test: src/shared/api/client.test.ts > un 422 con violations se modela como unprocessable
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -87,3 +87,3 @@
+         if (status === 409) return { kind: "conflict", status, violations };
+-        return { kind: "unprocessable", status, violations };
++        return { kind: "unknown", status, rawText };
+       }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 47ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   × cliente de API > un 422 con violations se modela como unprocessable 42ms
+     → expected { ok: false, status: 422, …(1) } to deeply equal { ok: false, status: 422, …(1) }
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:12:25
+   Duration  3.54s (transform 146ms, setup 421ms, collect 149ms, tests 47ms, environment 2.02s, prepare 332ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpnaf_hfpo/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un 422 con violations se modela como unprocessable
+AssertionError: expected { ok: false, status: 422, …(1) } to deeply equal { ok: false, status: 422, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "kind": "unprocessable",
++     "kind": "unknown",
++     "rawText": "{\"violations\":[{\"code\":\"APPOINTMENT_IN_PAST\",\"message\":\"No se puede dar un turno en el pasado.\"}]}",
+      "status": 422,
+-     "violations": [
+-       {
+-         "code": "APPOINTMENT_IN_PAST",
+-         "message": "No se puede dar un turno en el pasado.",
+-       },
+-     ],
+    },
+    "ok": false,
+    "status": 422,
+  }
+
+ ❯ src/shared/api/client.test.ts:146:20
+    144|     const result = await client.request("/appointments", { method: "PO…
+    145| 
+    146|     expect(result).toEqual({
+       |                    ^
+    147|       ok: false,
+    148|       status: 422,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[31/47] un 404 con code y message se modela como not_found
+test: src/shared/api/client.test.ts > un 404 con code y message se modela como not_found
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -79,3 +79,3 @@
+           ? { kind: "auth", status, code, message }
+-          : { kind: "not_found", status, code, message };
++          : { kind: "unknown", status, rawText };
+       }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 35ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   × cliente de API > un 404 con code y message se modela como not_found 32ms
+     → expected { ok: false, status: 404, …(1) } to deeply equal { ok: false, status: 404, …(1) }
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:12:35
+   Duration  3.51s (transform 128ms, setup 425ms, collect 191ms, tests 35ms, environment 1.99s, prepare 348ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0hqtsun5/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un 404 con code y message se modela como not_found
+AssertionError: expected { ok: false, status: 404, …(1) } to deeply equal { ok: false, status: 404, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "NOT_FOUND",
+-     "kind": "not_found",
+-     "message": "Turno no encontrado.",
++     "kind": "unknown",
++     "rawText": "{\"code\":\"NOT_FOUND\",\"message\":\"Turno no encontrado.\"}",
+      "status": 404,
+    },
+    "ok": false,
+    "status": 404,
+  }
+
+ ❯ src/shared/api/client.test.ts:161:20
+    159|     const result = await client.request("/appointments/00000000-0000-0…
+    160| 
+    161|     expect(result).toEqual({
+       |                    ^
+    162|       ok: false,
+    163|       status: 404,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[32/47] una respuesta desconocida se modela como unknown
+test: src/shared/api/client.test.ts > una respuesta desconocida se modela como unknown
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -91,3 +91,3 @@
+   }
+-  return { kind: "unknown", status, rawText };
++  return { kind: "unknown", status, rawText: "" };
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 33ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   × cliente de API > una respuesta desconocida se modela como unknown 30ms
+     → expected { ok: false, status: 500, …(1) } to deeply equal { ok: false, status: 500, …(1) }
+   ↓ cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:12:45
+   Duration  3.39s (transform 151ms, setup 437ms, collect 167ms, tests 33ms, environment 1.94s, prepare 365ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_ou23tad/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > una respuesta desconocida se modela como unknown
+AssertionError: expected { ok: false, status: 500, …(1) } to deeply equal { ok: false, status: 500, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+      "kind": "unknown",
+-     "rawText": "boom",
++     "rawText": "",
+      "status": 500,
+    },
+    "ok": false,
+    "status": 500,
+  }
+
+ ❯ src/shared/api/client.test.ts:176:20
+    174|     const result = await client.request("/health");
+    175| 
+    176|     expect(result).toEqual({ ok: false, status: 500, error: { kind: "u…
+       |                    ^
+    177|   });
+    178| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[33/47] un fallo de red se modela como unknown con status 0 sin lanzar
+test: src/shared/api/client.test.ts > un fallo de red se modela como unknown con status 0 sin lanzar
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -112,3 +112,3 @@
+       const rawText = error instanceof Error ? error.message : String(error);
+-      return { ok: false, status: 0, error: { kind: "unknown", status: 0, rawText } };
++      return { ok: false, status: -1, error: { kind: "unknown", status: -1, rawText } };
+     }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/client.test.ts (10 tests | 1 failed | 9 skipped) 24ms
+   ↓ cliente de API > una respuesta 200 devuelve ok con los datos
+   ↓ cliente de API > serializa el cuerpo como JSON y envía los headers de contenido
+   ↓ cliente de API > un 400 con errors se modela como validation
+   ↓ cliente de API > un 401 con code y message se modela como auth
+   ↓ cliente de API > un 403 con violations se modela como forbidden
+   ↓ cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto
+   ↓ cliente de API > un 422 con violations se modela como unprocessable
+   ↓ cliente de API > un 404 con code y message se modela como not_found
+   ↓ cliente de API > una respuesta desconocida se modela como unknown
+   × cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar 21ms
+     → expected { ok: false, status: -1, …(1) } to deeply equal { ok: false, status: +0, …(1) }
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  17:12:54
+   Duration  3.29s (transform 158ms, setup 487ms, collect 157ms, tests 24ms, environment 1.75s, prepare 291ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpxng2yg_a/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/client.test.ts > cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar
+AssertionError: expected { ok: false, status: -1, …(1) } to deeply equal { ok: false, status: +0, …(1) }
+
+- Expected
++ Received
+
+  {
+    "error": {
+      "kind": "unknown",
+      "rawText": "Failed to fetch",
+-     "status": 0,
++     "status": -1,
+    },
+    "ok": false,
+-   "status": 0,
++   "status": -1,
+  }
+
+ ❯ src/shared/api/client.test.ts:189:20
+    187|     const result = await client.request("/health");
+    188| 
+    189|     expect(result).toEqual({
+       |                    ^
+    190|       ok: false,
+    191|       status: 0,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[34/47] devuelve errors[].message de un 400 en orden y tal cual
+test: src/shared/api/errors.test.ts > devuelve errors[].message de un 400 en orden y tal cual
+diff:
+--- a/frontend/src/shared/api/errors.ts
++++ b/frontend/src/shared/api/errors.ts
+@@ -9,3 +9,3 @@
+     case "validation":
+-      return error.errors.map((fieldError) => fieldError.message);
++      return error.errors.map((fieldError) => fieldError.field);
+     case "forbidden":
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/errors.test.ts (6 tests | 1 failed | 5 skipped) 30ms
+   × getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual 27ms
+     → expected [ 'startAt', 'durationMin' ] to deeply equal [ 'Falta este dato.', …(1) ]
+   ↓ getApiErrorMessages > devuelve message de un 401 tal cual
+   ↓ getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+   ↓ getApiErrorMessages > devuelve violations[].message de un 403 y de un 422
+   ↓ getApiErrorMessages > devuelve message de un 404 tal cual
+   ↓ getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  17:13:04
+   Duration  3.45s (transform 156ms, setup 501ms, collect 166ms, tests 30ms, environment 1.88s, prepare 286ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpfhmh12vd/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/errors.test.ts > getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual
+AssertionError: expected [ 'startAt', 'durationMin' ] to deeply equal [ 'Falta este dato.', …(1) ]
+
+- Expected
++ Received
+
+  [
+-   "Falta este dato.",
+-   "Debe ser un número entero.",
++   "startAt",
++   "durationMin",
+  ]
+
+ ❯ src/shared/api/errors.test.ts:29:40
+     27|     });
+     28| 
+     29|     expect(getApiErrorMessages(error)).toEqual(["Falta este dato.", "D…
+       |                                        ^
+     30|   });
+     31| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[35/47] devuelve message de un 401 tal cual
+test: src/shared/api/errors.test.ts > devuelve message de un 401 tal cual
+diff:
+--- a/frontend/src/shared/api/errors.ts
++++ b/frontend/src/shared/api/errors.ts
+@@ -14,5 +14,5 @@
+       return error.violations.map((violation) => violation.message);
+-    case "auth":
+     case "not_found":
+       return [error.message];
++    case "auth":
+     case "unknown":
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/errors.test.ts (6 tests | 1 failed | 5 skipped) 34ms
+   ↓ getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual
+   × getApiErrorMessages > devuelve message de un 401 tal cual 31ms
+     → expected [ Array(1) ] to deeply equal [ 'Usuario o contraseña incorrectos.' ]
+   ↓ getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+   ↓ getApiErrorMessages > devuelve violations[].message de un 403 y de un 422
+   ↓ getApiErrorMessages > devuelve message de un 404 tal cual
+   ↓ getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  17:13:14
+   Duration  3.69s (transform 188ms, setup 571ms, collect 308ms, tests 34ms, environment 1.96s, prepare 266ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmplkcll7x9/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/errors.test.ts > getApiErrorMessages > devuelve message de un 401 tal cual
+AssertionError: expected [ Array(1) ] to deeply equal [ 'Usuario o contraseña incorrectos.' ]
+
+- Expected
++ Received
+
+  [
+-   "Usuario o contraseña incorrectos.",
++   "Ocurrió un error inesperado (HTTP 401).",
+  ]
+
+ ❯ src/shared/api/errors.test.ts:38:40
+     36|     });
+     37| 
+     38|     expect(getApiErrorMessages(error)).toEqual(["Usuario o contraseña …
+       |                                        ^
+     39|   });
+     40| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[36/47] devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+test: src/shared/api/errors.test.ts > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+diff:
+--- a/frontend/src/shared/api/errors.ts
++++ b/frontend/src/shared/api/errors.ts
+@@ -13,3 +13,3 @@
+     case "unprocessable":
+-      return error.violations.map((violation) => violation.message);
++      return error.violations.map((violation) => violation.message.replace(" (hora local)", ""));
+     case "auth":
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/errors.test.ts (6 tests | 1 failed | 5 skipped) 31ms
+   ↓ getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual
+   ↓ getApiErrorMessages > devuelve message de un 401 tal cual
+   × getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular 27ms
+     → expected [ …(2) ] to deeply equal [ …(2) ]
+   ↓ getApiErrorMessages > devuelve violations[].message de un 403 y de un 422
+   ↓ getApiErrorMessages > devuelve message de un 404 tal cual
+   ↓ getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  17:13:24
+   Duration  3.68s (transform 152ms, setup 588ms, collect 164ms, tests 31ms, environment 1.88s, prepare 335ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpwl2bi2i9/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/errors.test.ts > getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+AssertionError: expected [ …(2) ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+  [
+-   "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno 00000000-0000-0000-0000-0000000000a1).",
+-   "El sillón 2 ya está ocupado de 10:00 a 10:30 (hora local).",
++   "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 que se superpone (turno 00000000-0000-0000-0000-0000000000a1).",
++   "El sillón 2 ya está ocupado de 10:00 a 10:30.",
+  ]
+
+ ❯ src/shared/api/errors.test.ts:49:40
+     47|     });
+     48| 
+     49|     expect(getApiErrorMessages(error)).toEqual([
+       |                                        ^
+     50|       OVERLAP_MESSAGE,
+     51|       "El sillón 2 ya está ocupado de 10:00 a 10:30 (hora local).",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[37/47] devuelve violations[].message de un 403 y de un 422
+test: src/shared/api/errors.test.ts > devuelve violations[].message de un 403 y de un 422
+diff:
+--- a/frontend/src/shared/api/errors.ts
++++ b/frontend/src/shared/api/errors.ts
+@@ -10,5 +10,3 @@
+       return error.errors.map((fieldError) => fieldError.message);
+-    case "forbidden":
+     case "conflict":
+-    case "unprocessable":
+       return error.violations.map((violation) => violation.message);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/errors.test.ts (6 tests | 1 failed | 5 skipped) 51ms
+   ↓ getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual
+   ↓ getApiErrorMessages > devuelve message de un 401 tal cual
+   ↓ getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+   × getApiErrorMessages > devuelve violations[].message de un 403 y de un 422 46ms
+     → expected undefined to deeply equal [ Array(1) ]
+   ↓ getApiErrorMessages > devuelve message de un 404 tal cual
+   ↓ getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  17:13:34
+   Duration  3.30s (transform 157ms, setup 402ms, collect 192ms, tests 51ms, environment 1.74s, prepare 275ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3mvedlfr/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/errors.test.ts > getApiErrorMessages > devuelve violations[].message de un 403 y de un 422
+AssertionError: expected undefined to deeply equal [ Array(1) ]
+
+- Expected: 
+[
+  "No tenés permiso para esta acción.",
+]
+
++ Received: 
+undefined
+
+ ❯ src/shared/api/errors.test.ts:63:44
+     61|     });
+     62| 
+     63|     expect(getApiErrorMessages(forbidden)).toEqual(["No tenés permiso …
+       |                                            ^
+     64|     expect(getApiErrorMessages(unprocessable)).toEqual(["No se puede d…
+     65|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[38/47] devuelve message de un 404 tal cual
+test: src/shared/api/errors.test.ts > devuelve message de un 404 tal cual
+diff:
+--- a/frontend/src/shared/api/errors.ts
++++ b/frontend/src/shared/api/errors.ts
+@@ -15,4 +15,4 @@
+     case "auth":
++      return [error.message];
+     case "not_found":
+-      return [error.message];
+     case "unknown":
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/errors.test.ts (6 tests | 1 failed | 5 skipped) 30ms
+   ↓ getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual
+   ↓ getApiErrorMessages > devuelve message de un 401 tal cual
+   ↓ getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+   ↓ getApiErrorMessages > devuelve violations[].message de un 403 y de un 422
+   × getApiErrorMessages > devuelve message de un 404 tal cual 27ms
+     → expected [ Array(1) ] to deeply equal [ 'Turno no encontrado.' ]
+   ↓ getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  17:13:43
+   Duration  3.39s (transform 137ms, setup 414ms, collect 156ms, tests 30ms, environment 1.73s, prepare 387ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd522ltpl/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/errors.test.ts > getApiErrorMessages > devuelve message de un 404 tal cual
+AssertionError: expected [ Array(1) ] to deeply equal [ 'Turno no encontrado.' ]
+
+- Expected
++ Received
+
+  [
+-   "Turno no encontrado.",
++   "Ocurrió un error inesperado (HTTP 404).",
+  ]
+
+ ❯ src/shared/api/errors.test.ts:70:40
+     68|     const error = await errorFrom(404, { code: "NOT_FOUND", message: "…
+     69| 
+     70|     expect(getApiErrorMessages(error)).toEqual(["Turno no encontrado."…
+       |                                        ^
+     71|   });
+     72| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[39/47] un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+test: src/shared/api/errors.test.ts > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+diff:
+--- a/frontend/src/shared/api/errors.ts
++++ b/frontend/src/shared/api/errors.ts
+@@ -18,3 +18,3 @@
+     case "unknown":
+-      return [`Ocurrió un error inesperado (HTTP ${error.status}).`];
++      return [`Ocurrió un error inesperado: ${error.rawText}`];
+   }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/errors.test.ts (6 tests | 1 failed | 5 skipped) 27ms
+   ↓ getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual
+   ↓ getApiErrorMessages > devuelve message de un 401 tal cual
+   ↓ getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular
+   ↓ getApiErrorMessages > devuelve violations[].message de un 403 y de un 422
+   ↓ getApiErrorMessages > devuelve message de un 404 tal cual
+   × getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo 23ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  17:13:53
+   Duration  3.45s (transform 151ms, setup 400ms, collect 175ms, tests 27ms, environment 1.81s, prepare 357ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgvpuwec1/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/errors.test.ts > getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "Ocurrió un error inesperado (HTTP 500).",
++   "Ocurrió un error inesperado: <html>boom</html>",
+  ]
+
+ ❯ src/shared/api/errors.test.ts:76:40
+     74|     const error: ApiErrorPayload = { kind: "unknown", status: 500, raw…
+     75| 
+     76|     expect(getApiErrorMessages(error)).toEqual(["Ocurrió un error ines…
+       |                                        ^
+     77|   });
+     78| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[40/47] sin provider no se envía Authorization
+test: src/shared/api/auth.test.ts > sin provider no se envía Authorization
+diff:
+--- a/frontend/src/shared/api/auth.ts
++++ b/frontend/src/shared/api/auth.ts
+@@ -8,3 +8,3 @@
+ 
+-let currentProvider: AuthProvider | null = null;
++let currentProvider: AuthProvider | null = { getToken: () => "token-por-defecto" };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/auth.test.ts (3 tests | 1 failed | 2 skipped) 35ms
+   × punto de enganche del token > sin provider no se envía Authorization 31ms
+     → expected true to be false // Object.is equality
+   ↓ punto de enganche del token > con provider se agrega el Bearer
+   ↓ punto de enganche del token > C-25 no persiste el token
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:14:03
+   Duration  3.88s (transform 150ms, setup 443ms, collect 262ms, tests 35ms, environment 2.22s, prepare 370ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1ncl0v80/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/auth.test.ts > punto de enganche del token > sin provider no se envía Authorization
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/shared/api/auth.test.ts:38:42
+     36|     expect(result.ok).toBe(true);
+     37|     expect(log).toHaveLength(1);
+     38|     expect(log[0]?.has("Authorization")).toBe(false);
+       |                                          ^
+     39|   });
+     40| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[41/47] con provider se agrega el Bearer
+test: src/shared/api/auth.test.ts > con provider se agrega el Bearer
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -99,3 +99,3 @@
+     if (token !== null) {
+-      headers.set("Authorization", `Bearer ${token}`);
++      headers.set("Authorization", token);
+     }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/auth.test.ts (3 tests | 1 failed | 2 skipped) 33ms
+   ↓ punto de enganche del token > sin provider no se envía Authorization
+   × punto de enganche del token > con provider se agrega el Bearer 30ms
+     → expected 'token-ficticio-123' to be 'Bearer token-ficticio-123' // Object.is equality
+   ↓ punto de enganche del token > C-25 no persiste el token
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:14:13
+   Duration  3.31s (transform 152ms, setup 462ms, collect 176ms, tests 33ms, environment 1.77s, prepare 344ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3txpbw8e/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/auth.test.ts > punto de enganche del token > con provider se agrega el Bearer
+AssertionError: expected 'token-ficticio-123' to be 'Bearer token-ficticio-123' // Object.is equality
+
+Expected: "Bearer token-ficticio-123"
+Received: "token-ficticio-123"
+
+ ❯ src/shared/api/auth.test.ts:48:42
+     46|     await client.request("/auth/me");
+     47| 
+     48|     expect(log[0]?.get("Authorization")).toBe("Bearer token-ficticio-1…
+       |                                          ^
+     49|   });
+     50| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[42/47] C-25 no persiste el token
+test: src/shared/api/auth.test.ts > C-25 no persiste el token
+diff:
+--- a/frontend/src/shared/api/auth.ts
++++ b/frontend/src/shared/api/auth.ts
+@@ -15,3 +15,3 @@
+ export function getAuthToken(): string | null {
+-  return currentProvider?.getToken() ?? null;
++  return currentProvider?.getToken() ?? localStorage.getItem("token");
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/api/auth.test.ts (3 tests | 1 failed | 2 skipped) 31ms
+   ↓ punto de enganche del token > sin provider no se envía Authorization
+   ↓ punto de enganche del token > con provider se agrega el Bearer
+   × punto de enganche del token > C-25 no persiste el token 28ms
+     → expected [ 'shared\api\auth.ts' ] to deeply equal []
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:14:23
+   Duration  3.37s (transform 158ms, setup 486ms, collect 190ms, tests 31ms, environment 1.77s, prepare 310ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpr7bg1x69/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/api/auth.test.ts > punto de enganche del token > C-25 no persiste el token
+AssertionError: expected [ 'shared\api\auth.ts' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "shared\\api\\auth.ts",
++ ]
+
+ ❯ src/shared/api/auth.test.ts:58:23
+     56|       .filter(({ content }) => /localStorage|sessionStorage|document\.…
+     57|       .map(({ path }) => path);
+     58|     expect(offenders).toEqual([]);
+       |                       ^
+     59| 
+     60|     setAuthProvider({ getToken: () => null });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[43/47] la ruta raíz renderiza el HomePage de bienvenida
+test: src/App.test.tsx > la ruta raíz renderiza el HomePage de bienvenida
+diff:
+--- a/frontend/src/pages/HomePage.tsx
++++ b/frontend/src/pages/HomePage.tsx
+@@ -19,3 +19,3 @@
+         <ul className={styles.statuses} aria-label="Estados de un turno">
+-          {APPOINTMENT_STATUSES.map((status) => (
++          {APPOINTMENT_STATUSES.slice(1).map((status) => (
+             <li key={status}>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (2 tests | 1 failed | 1 skipped) 215ms
+   × App con router > la ruta raíz renderiza el HomePage de bienvenida 211ms
+     → expected [ 'Confirmado', 'Atendido', …(2) ] to deeply equal [ 'Reservado', 'Confirmado', …(3) ]
+   ↓ App con router > una ruta desconocida muestra la página de no encontrada
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:14:33
+   Duration  3.75s (transform 327ms, setup 383ms, collect 396ms, tests 215ms, environment 1.82s, prepare 283ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpr4ca7n7y/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router > la ruta raíz renderiza el HomePage de bienvenida
+AssertionError: expected [ 'Confirmado', 'Atendido', …(2) ] to deeply equal [ 'Reservado', 'Confirmado', …(3) ]
+
+- Expected
++ Received
+
+  [
+-   "Reservado",
+    "Confirmado",
+    "Atendido",
+    "Ausente",
+    "Cancelado",
+  ]
+
+ ❯ src/App.test.tsx:16:54
+     14|     expect(screen.getByRole("main")).toHaveTextContent("Bienvenida");
+     15|     const statuses = within(screen.getByRole("list", { name: "Estados …
+     16|     expect(statuses.map((item) => item.textContent)).toEqual([
+       |                                                      ^
+     17|       "Reservado",
+     18|       "Confirmado",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[44/47] una ruta desconocida muestra la página de no encontrada
+test: src/App.test.tsx > una ruta desconocida muestra la página de no encontrada
+diff:
+--- a/frontend/src/App.tsx
++++ b/frontend/src/App.tsx
+@@ -7,3 +7,3 @@
+   { path: "/", element: <HomePage /> },
+-  { path: "*", element: <NotFoundPage /> },
++  { path: "*", element: <HomePage /> },
+ ];
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (2 tests | 1 failed | 1 skipped) 213ms
+   ↓ App con router > la ruta raíz renderiza el HomePage de bienvenida
+   × App con router > una ruta desconocida muestra la página de no encontrada 209ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:14:43
+   Duration  3.74s (transform 284ms, setup 421ms, collect 367ms, tests 213ms, environment 1.86s, prepare 283ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpws2no_kj/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router > una ruta desconocida muestra la página de no encontrada
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/App.test.tsx:29:87
+     27|     render(<App />);
+     28| 
+     29|     expect(screen.queryByRole("heading", { level: 1, name: "Página no …
+       |                                                                                       ^
+     30|     expect(screen.getByRole("link", { name: "Volver al inicio" })).toH…
+     31|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[45/47] docker compose up levanta el frontend en 5173
+test: src/test/docker.test.ts > docker compose up levanta el frontend en 5173
+diff:
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -57,3 +57,3 @@
+     ports:
+-      - "5173:5173"
++      - "5174:5173"
+     volumes:
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/docker.test.ts (3 tests | 1 failed | 2 skipped) 62ms
+   × servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173 59ms
+     → expected '    build: ./frontend\n    # No recib…' to contain '- "5173:5173"'
+   ↓ servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows
+   ↓ servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:14:54
+   Duration  3.89s (transform 122ms, setup 603ms, collect 207ms, tests 62ms, environment 2.22s, prepare 285ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpq20j51p8/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173
+AssertionError: expected '    build: ./frontend\n    # No recib…' to contain '- "5173:5173"'
+
+- Expected
++ Received
+
+- - "5173:5173"
++     build: ./frontend
++     # No recibe el .env completo (secretos): Compose interpola VITE_API_URL
++     # desde el .env de la raíz y le pasa solo esa variable.
++     environment:
++       # El navegador del host no resuelve el hostname "backend": la API se llama por localhost.
++       VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
++       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
++       CHOKIDAR_USEPOLLING: "true"
++     ports:
++       - "5174:5173"
++     volumes:
++       - ./frontend:/app
++       - /app/node_modules
++     depends_on:
++       - backend
++
++
+
+ ❯ src/test/docker.test.ts:35:21
+     33|       expect(service, secret).not.toContain(secret);
+     34|     }
+     35|     expect(service).toContain('- "5173:5173"');
+       |                     ^
+     36|     expect(service).toContain("- ./frontend:/app");
+     37|     expect(service).toMatch(/^ {6}- \/app\/node_modules$/m);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[46/47] un cambio de archivo se refleja por HMR en Windows
+test: src/test/docker.test.ts > un cambio de archivo se refleja por HMR en Windows
+diff:
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -55,3 +55,3 @@
+       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
+-      CHOKIDAR_USEPOLLING: "true"
++      CHOKIDAR_USEPOLLING: "false"
+     ports:
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/docker.test.ts (3 tests | 1 failed | 2 skipped) 40ms
+   ↓ servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173
+   × servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows 37ms
+     → expected '    build: ./frontend\n    # No recib…' to contain 'CHOKIDAR_USEPOLLING: "true"'
+   ↓ servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:15:05
+   Duration  3.42s (transform 86ms, setup 395ms, collect 65ms, tests 40ms, environment 2.00s, prepare 273ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmptro0iv0a/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows
+AssertionError: expected '    build: ./frontend\n    # No recib…' to contain 'CHOKIDAR_USEPOLLING: "true"'
+
+- Expected
++ Received
+
+- CHOKIDAR_USEPOLLING: "true"
++     build: ./frontend
++     # No recibe el .env completo (secretos): Compose interpola VITE_API_URL
++     # desde el .env de la raíz y le pasa solo esa variable.
++     environment:
++       # El navegador del host no resuelve el hostname "backend": la API se llama por localhost.
++       VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
++       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
++       CHOKIDAR_USEPOLLING: "false"
++     ports:
++       - "5173:5173"
++     volumes:
++       - ./frontend:/app
++       - /app/node_modules
++     depends_on:
++       - backend
++
++
+
+ ❯ src/test/docker.test.ts:42:31
+     40| 
+     41|   it("un cambio de archivo se refleja por HMR en Windows", () => {
+     42|     expect(frontendService()).toContain('CHOKIDAR_USEPOLLING: "true"');
+       |                               ^
+     43|     const viteConfig = read(resolve(FRONTEND, "vite.config.ts"));
+     44|     expect(viteConfig).toMatch(/watch:\s*\{\s*usePolling: true/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[47/47] VITE_API_URL del navegador apunta a localhost
+test: src/test/docker.test.ts > VITE_API_URL del navegador apunta a localhost
+diff:
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -53,3 +53,3 @@
+       # El navegador del host no resuelve el hostname "backend": la API se llama por localhost.
+-      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
++      VITE_API_URL: http://backend:8000/api
+       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/test/docker.test.ts (3 tests | 1 failed | 2 skipped) 68ms
+   ↓ servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173
+   ↓ servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows
+   × servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost 62ms
+     → expected '    build: ./frontend\n    # No recib…' to contain 'VITE_API_URL: ${VITE_API_URL:-http://…'
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  17:15:14
+   Duration  3.12s (transform 89ms, setup 454ms, collect 84ms, tests 68ms, environment 1.72s, prepare 273ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpnnzw_7o9/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/docker.test.ts > servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost
+AssertionError: expected '    build: ./frontend\n    # No recib…' to contain 'VITE_API_URL: ${VITE_API_URL:-http://…'
+
+- Expected
++ Received
+
+- VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
++     build: ./frontend
++     # No recibe el .env completo (secretos): Compose interpola VITE_API_URL
++     # desde el .env de la raíz y le pasa solo esa variable.
++     environment:
++       # El navegador del host no resuelve el hostname "backend": la API se llama por localhost.
++       VITE_API_URL: http://backend:8000/api
++       # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
++       CHOKIDAR_USEPOLLING: "true"
++     ports:
++       - "5173:5173"
++     volumes:
++       - ./frontend:/app
++       - /app/node_modules
++     depends_on:
++       - backend
++
++
+
+ ❯ src/test/docker.test.ts:50:21
+     48|   it("VITE_API_URL del navegador apunta a localhost", () => {
+     49|     const service = frontendService();
+     50|     expect(service).toContain("VITE_API_URL: ${VITE_API_URL:-http://lo…
+       |                     ^
+     51|     expect(service).not.toContain("backend:8000");
+     52| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+RESUMEN
+mutaciones que hicieron fallar su test: 47
+mutaciones que NO lo hicieron fallar: 0
+mutaciones inválidas: 0
+SHA-256 de produccion despues: 7770be4b6ff837dbd99152b4cf7e67cadcfe9deaea2f7d04326f335a03a8a25c
+SHA-256 sin cambios: si
