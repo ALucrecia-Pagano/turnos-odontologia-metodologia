@@ -511,9 +511,9 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/08_arquitectura_propuesta.md` §Patrones aplicados (Caso de uso)
 
 ### [C-21] `api-horarios-y-bloqueos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-06)
 - **Scope**:
-  - Endpoints de horario de atención por profesional (`GET/PUT /api/professionals/:id/working-hours`) y de bloqueos (crear, listar, eliminar), con RBAC: odontólogo CRUD sobre lo propio, recepción lectura, administrador CRUD (RN-AC-01).
+  - Endpoints de horario de atención por profesional (`GET/PUT /api/professionals/:id/working-hours`) y de bloqueos (crear, listar, eliminar), con RBAC: odontólogo CRUD sobre lo propio, recepción solo lectura de horarios y bloqueos, administrador CRUD (RN-AC-01). El DELETE de un bloqueo responde 200 con el bloqueo borrado.
   - Crear un bloqueo o cambiar un horario que pisa turnos existentes se guarda y responde la lista de turnos afectados sin cancelarlos (US-010 CA-3, US-011 CA-3).
   - Tests de integración: 403 si el odontólogo toca horarios de otro, bloqueo con turnos afectados, tramos solapados → 422.
 - **Dependencias**: `C-16, C-17, C-20`

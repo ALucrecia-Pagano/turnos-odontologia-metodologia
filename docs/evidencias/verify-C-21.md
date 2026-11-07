@@ -9,7 +9,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 18/18 en [tasks.md](../../openspec/changes/api-horarios-y-bloqueos/tasks.md).
+- Tareas: 18/18 en [tasks.md](../../openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/tasks.md).
 - Suite por defecto: [pytest-C-21.txt](pytest-C-21.txt) (866 passed, 407 deselected).
 - Integración: [pytest-integration-C-21.txt](pytest-integration-C-21.txt) (407 passed, 866 deselected).
 - `mypy --strict app tests`: [mypy-C-21.txt](mypy-C-21.txt) (Success: 158 source files).
@@ -19,20 +19,35 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Validación OpenSpec: [validate-C-21.txt](validate-C-21.txt) (`openspec validate --strict` válido).
 - Línea de base: [baseline-C-21.txt](baseline-C-21.txt) (850 passed / 360 deselected; 360 integración; 148 archivos mypy).
 
+## Verificación manual en Swagger (2026-11-06)
+
+Ejecutada por la autora en http://localhost:8000/api/docs con el backend levantado con Docker Compose.
+
+| Prueba | Usuario | Esperado | Obtenido |
+|---|---|---|---|
+| GET horarios de Dra. Quiroga (...0001) | recepcion | 200 | 200 |
+| POST bloqueo para ...0001 | recepcion | 403 | 403 "No tiene permiso para crear bloqueos." |
+| POST bloqueo propio 2026-11-09 10:00-11:00 -03:00 | odontologo | 201 | 201, affectedAppointments [] |
+| POST bloqueo para Dr. Sosa (...0002) | odontologo | 403 | 403 |
+| POST bloqueo con id de profesional inexistente | odontologo | 404 | 404 "Profesional no encontrado." |
+| DELETE del bloqueo creado | odontologo | 200 con el bloqueo | 200, guardado como 13:00Z-14:00Z |
+| DELETE repetido del mismo bloqueo | odontologo | 404 | 404 "Bloqueo no encontrado." |
+
 ## Artefactos
 
-- [proposal.md](../../openspec/changes/api-horarios-y-bloqueos/proposal.md)
-- [design.md](../../openspec/changes/api-horarios-y-bloqueos/design.md)
-- [tasks.md](../../openspec/changes/api-horarios-y-bloqueos/tasks.md)
-- [spec.md (appointment-scheduling)](../../openspec/changes/api-horarios-y-bloqueos/specs/appointment-scheduling/spec.md)
-- [spec.md (working-hours-and-blocks-api)](../../openspec/changes/api-horarios-y-bloqueos/specs/working-hours-and-blocks-api/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/tasks.md)
+- [spec.md (appointment-scheduling)](../../openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/specs/appointment-scheduling/spec.md)
+- [spec.md (working-hours-and-blocks-api)](../../openspec/changes/archive/2026-11-06-api-horarios-y-bloqueos/specs/working-hours-and-blocks-api/spec.md)
 
 ## Desvíos
 
-1. **Helper único `ensure_own_professional` en `backend/app/api/deps.py` (D3)**: Se implementó un único helper parametrizado con `resource` y `action` (por defecto `Resource.WORKING_HOURS`, `Action.READ`), devolviendo 403 con código `FORBIDDEN_OPERATION` y el mensaje exacto de `PERMISSION_MESSAGES` cuando un odontólogo intenta operar sobre el horario o bloqueos de otro profesional.
+1. **Helper único `ensure_own_professional` en `backend/app/api/deps.py` (D3)**: Se implementó un único helper parametrizado con `resource` y `action` (opcionales: si no se pasan, usa el recurso y la acción del `Permission` de la ruta), devolviendo 403 con código `FORBIDDEN_OPERATION` y el mensaje exacto de `PERMISSION_MESSAGES` cuando un odontólogo intenta operar sobre el horario o bloqueos de otro profesional.
 2. **Inyección de `Query()` con alias para `from` y `to` en listado de bloqueos**: En `backend/app/api/blocks.py`, para que FastAPI 0.162 popule `BlocksQuery` desde query parameters respetando los alias `from` y `to` (`from_time` y `to_time`), se utilizó `Annotated[BlocksQuery, Query()]`.
 3. **Manejo de triggers de append-only en fixtures de tests**: La tabla `appointment_status_change` posee un trigger que impide `DELETE` directo. Los fixtures de limpieza de tests de integración para disponibilidad utilizan `clean_database_tables` (que desactiva triggers de usuario, trunca con cascade y reactiva triggers) para garantizar aislamiento idempotente.
 4. **Respuesta de endpoints 204 y mutaciones**: FastAPI prohíbe explícitamente definir `response_model` en endpoints que retornan `status_code=204`. En el test de mutación de `DELETE /blocks/{id}`, la mutación altera el código a 201 para verificar la aserción de status code sin provocar conflicto de contrato interno en FastAPI.
+5. **Mutaciones en dos corridas**: la primera corrida registró 48 mutaciones (una por escenario); se completó a 63 (una por test nuevo) en el commit `test(C-21): completa una mutación por cada test nuevo`, sin mutaciones supervivientes.
 
 ## Línea de base
 
