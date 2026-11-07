@@ -12,7 +12,7 @@ Convenciones de nombres y mensajes: P1 se llama "Dra. Laura Quiroga" y S1 "Sill�
 ## Requirements
 
 ### Requirement: Alta de un turno válido
-Si el paciente existe, el profesional, el sillón y la prestación existen y están activos, la duración es válida, el inicio está en la grilla de 5 minutos, el turno empieza y termina en el mismo día local, el inicio no es anterior al momento actual (`now`), el turno cae completo dentro del horario de atención del profesional, no se superpone con ningún bloqueo del profesional y el profesional y el sillón están libres en el intervalo pedido, el dominio SHALL devolver un resultado `Ok` con el turno nuevo: el id, el paciente, el profesional, el sillón y la prestación que pidió el llamador, inicio y fin en UTC, y estado `reservado` (RN-TU-01). El dominio no genera el id: lo recibe del llamador. En todos los escenarios, salvo que se diga otra cosa, el paciente, los profesionales, los sillones y la prestación del pedido existen y están activos, cada profesional atiende todos los días de la semana en un tramo de día completo, de 00:00 a 24:00 hora local (`[0, 1440)`), no hay bloqueos y el momento actual (`now`) es el 2026-10-01 a las 00:00 UTC, anterior a todos los turnos pedidos.
+Si el pedido es válido (referencias activas, duración e inicio en grilla de 5 min, un solo día local e inicio >= `now`) y no choca con la agenda (dentro del horario del profesional y sin bloqueos ni turnos ocupantes del profesional o sillón), el dominio SHALL devolver `Ok` con el turno `reservado` (RN-TU-01), inicio/fin UTC y el id y referencias recibidos sin generar id (por defecto en escenarios: referencias activas, horario `[0, 1440)`, sin bloqueos, `now` `2026-10-01T00:00:00Z`).
 
 #### Scenario: Turno válido con profesional y sillón libres
 - **GIVEN** una prestación con duración por defecto de 30 minutos y ningún turno existente para P1 ni para S1
@@ -156,7 +156,7 @@ El dominio SHALL decidir por sí mismo qué turnos existentes son relevantes (mi
 - **THEN** el resultado es `Ok`
 
 ### Requirement: Todas las violaciones, en orden estable
-El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido: referencias, duración, inicio en la grilla, turno dentro de un solo día local y turno que no empieza en el pasado, informadas todas juntas, en este orden: paciente, profesional, sillón, prestación, duración, inicio, medianoche y, al final, pasado (RN-AG-12). El pasado se evalúa siempre, aunque no haya duración efectiva o la duración sea inválida, porque solo depende del inicio y del momento actual. Si hay alguna, el dominio SHALL devolverlas sin evaluar los conflictos de agenda: un resultado MUST NOT mezclar violaciones de validez con conflictos de agenda. Devolver todas las violaciones significa devolver todas las del primer grupo que falla, nunca solo la primera: si el pedido no es válido no hay un turno válido contra el cual comparar la agenda, así que los conflictos de agenda no se evalúan (RN-AG-12, US-006 CA-2). Si el pedido es válido, el dominio SHALL evaluar los conflictos de agenda y devolverlos todos juntos, no solo el primero (DD-08), en este orden: primero `OUTSIDE_WORKING_HOURS` (como mucho una), después todas las `BLOCKED_TIME`, después todas las `PROFESSIONAL_OVERLAP` y al final todas las `CHAIR_OVERLAP` (RN-AG-12). Hay una violación de bloqueo por cada bloqueo que pisa el turno y una de solapamiento por cada turno con el que choca; dentro de cada tipo se ordenan por el inicio del bloqueo o del turno con el que chocan. Un mismo turno existente puede producir una violación de cada tipo de solapamiento.
+El dominio SHALL evaluar el pedido en dos grupos y devolver todas las violaciones del primer grupo que falle, sin mezclar grupos (RN-AG-12, DD-08, US-006 CA-2). Primero evalúa la validez en orden: paciente, profesional, sillón, prestación, duración, inicio, medianoche y pasado (`IN_THE_PAST` se evalúa siempre, aun sin duración efectiva o válida). Si hay violaciones de validez, MUST NOT evaluar los conflictos de agenda.
 
 #### Scenario: Varios conflictos de ambos tipos
 - **GIVEN** un turno B de P1 en S2 de 13:30 a 14:00, un turno C de P1 en S3 de 13:00 a 13:30 y un turno D de P2 en S1 de 13:45 a 14:15
@@ -269,7 +269,7 @@ El dominio SHALL evaluar el pedido en dos grupos. Primero la validez del pedido:
 - **THEN** el resultado es `Rejected` con una sola violación, `IN_THE_PAST`, sin `OUTSIDE_WORKING_HOURS`
 
 ### Requirement: Validez de la duración
-La duración efectiva SHALL ser mayor que cero, múltiplo de 5 minutos y de 480 minutos como máximo (RN-AG-09, RN-DI-05 en la parte de la duración, SU-02, US-007 CA-1). Si no cumple alguna de esas condiciones, el dominio SHALL rechazar el turno con **una sola** violación `INVALID_DURATION`, sin id de turno en conflicto, aunque rompa más de una condición. Si la prestación no existe y no hay duración explícita, no hay duración efectiva y la duración MUST NOT validarse. Con una duración inválida no existe un intervalo válido, así que los solapamientos MUST NOT evaluarse.
+La duración efectiva SHALL ser > 0, múltiplo de 5 minutos y <= 480 minutos (RN-AG-09, RN-DI-05, SU-02, US-007 CA-1). Si incumple una o más condiciones, el dominio SHALL rechazar el turno con **una sola** violación `INVALID_DURATION`, sin id de turno en conflicto, y MUST NOT evaluar solapamientos. Si la prestación no existe y no hay duración explícita, no hay duración efectiva y la duración MUST NOT validarse.
 
 #### Scenario: Duración explícita de cero minutos
 - **GIVEN** una prestación con duración por defecto de 30 minutos
@@ -337,9 +337,7 @@ La duración efectiva SHALL ser mayor que cero, múltiplo de 5 minutos y de 480 
 - **THEN** el resultado es `Rejected` con una sola violación, `INVALID_DURATION`, sin violaciones de solapamiento
 
 ### Requirement: Contenido de cada violación
-Cada violación SHALL tener un código estable, un mensaje no vacío en español y, en las de solapamiento, el id del turno con el que choca; el mensaje MUST incluir ese id. Las violaciones de referencias SHALL indicar el tipo de referencia que falló (`reference_kind`: `PATIENT`, `PROFESSIONAL`, `CHAIR` o `SERVICE`) y su mensaje MUST incluir el id de esa referencia; las demás violaciones no llevan tipo de referencia. El mensaje de `INVALID_DURATION` MUST mencionar la duración recibida y cada condición incumplida. El mensaje de `INVALID_START_TIME` MUST mencionar la hora de inicio recibida en hora local (`se recibió {hora}, hora local`) y cada condición incumplida, con el inicio como sujeto: si los minutos no son múltiplo de 5, la razón MUST decir "debe caer en un minuto múltiplo de 5"; si el inicio tiene segundos o fracciones de segundo, la razón MUST decir "no puede tener segundos ni fracciones de segundo"; las dos razones se unen con " y ". El mensaje de `CROSSES_MIDNIGHT` MUST mencionar el inicio y el fin del turno en hora local. Las horas de los mensajes SHALL mostrarse con formato `HH:MM`, o `HH:MM:SS` si la hora tiene segundos o microsegundos distintos de cero (los microsegundos no se muestran), salvo el momento actual del mensaje de `IN_THE_PAST`, que se muestra siempre con fecha y segundos (requisito "Mensaje de un turno en el pasado"). Ni `INVALID_START_TIME`, ni `CROSSES_MIDNIGHT` ni `IN_THE_PAST` llevan id de turno en conflicto. El intervalo en conflicto, con inicio y fin en UTC, SHALL estar presente si y solo si la violación lleva id de turno o de bloqueo en conflicto: en `PROFESSIONAL_OVERLAP` y `CHAIR_OVERLAP` es el del turno existente y en `BLOCKED_TIME`, el del bloqueo; ninguna otra violación lleva intervalo, tampoco `OUTSIDE_WORKING_HOURS` (US-006 CA-1). El mensaje de `PROFESSIONAL_OVERLAP` SHALL ser "{nombre del profesional} ya tiene un turno de {inicio} a {fin} (hora local) que se superpone (turno {id})." y el de `CHAIR_OVERLAP`, "{nombre del sillón} está ocupado de {inicio} a {fin} (hora local) por un turno que se superpone (turno {id}).", donde {inicio} y {fin} son los del turno existente, en hora local y con el formato de horas de este requisito (US-006 CA-3). Los nombres de los mensajes de conflicto de agenda son los del profesional y del sillón del pedido, recortados (sin espacios al principio ni al final), sin artículo y siempre como sujeto de la oración. Si el nombre está vacío o tiene solo espacios, el mensaje MUST usar en su lugar el sustantivo genérico: "El profesional" o "El sillón" al principio de la oración, y "el profesional", en minúscula, después de dos puntos (mensajes de `OUTSIDE_WORKING_HOURS` y `BLOCKED_TIME`). Los mensajes de `INVALID_DURATION`, `INVALID_START_TIME`, `CROSSES_MIDNIGHT`, `IN_THE_PAST`, `UNKNOWN_REFERENCE`, `INACTIVE_REFERENCE`, `INVALID_BLOCK`, `INVALID_WORKING_HOURS` y `OVERLAPPING_WORKING_HOURS` no llevan nombres y no cambian: las violaciones de referencias identifican la entidad por su id aunque tenga nombre. Las violaciones de negocio se devuelven en el resultado y nunca como excepción.
-
-En los escenarios de este requisito P1 se llama "Dra. Laura Quiroga" y S1 "Sillón 1", salvo que se diga otra cosa.
+Cada violación SHALL devolverse como resultado (nunca excepción) con código estable y mensaje en español. Solo `UNKNOWN_REFERENCE` e `INACTIVE_REFERENCE` llevan `reference_kind` (`PATIENT`, `PROFESSIONAL`, `CHAIR`, `SERVICE`) y el id en el mensaje (sin nombre). `conflicting_interval` (UTC) SHALL existir si y solo si hay `conflicting_appointment_id` (solapamientos, del turno existente) o `conflicting_block_id` (`BLOCKED_TIME`, del bloqueo); el resto no lleva id ni intervalo (US-006 CA-1).
 
 #### Scenario: Mensajes de las violaciones de solapamiento
 - **GIVEN** el turno existente A (P1, S1, de 13:00 a 13:30, de 10:00 a 10:30 hora local)
@@ -447,7 +445,7 @@ El paciente del turno MUST existir, y el profesional, el sillón y la prestació
 - **THEN** el resultado es `Ok`, sin violaciones de referencias
 
 ### Requirement: Turno dentro de un solo día local
-El inicio y el fin del turno MUST caer en el mismo día local (RN-AG-10, SU-09, US-007 CA-3). Si el turno cruza la medianoche local, el dominio SHALL rechazarlo con una violación `CROSSES_MIDNIGHT`. Por el intervalo semiabierto (DD-07), un turno que termina justo a las 00:00 locales no ocupa el día siguiente y MUST ser válido. La medianoche se evalúa con el instante completo del fin, incluidos segundos y fracciones de segundo: un fin a las 00:00:30 locales del día siguiente cruza la medianoche. La medianoche solo se evalúa si hay una duración efectiva válida, y se evalúa aunque el inicio esté fuera de la grilla.
+El inicio y el fin del turno MUST caer en el mismo día local; si cruza la medianoche local, el dominio SHALL rechazarlo con `CROSSES_MIDNIGHT` (RN-AG-10, SU-09, US-007 CA-3). Por el intervalo semiabierto (DD-07), terminar exactamente a las `00:00:00.000000` del día siguiente es válido, pero cualquier segundo o fracción posterior cruza la medianoche. Solo se evalúa si hay duración efectiva válida, aunque el inicio esté fuera de la grilla.
 
 #### Scenario: Turno que cruza la medianoche local
 - **GIVEN** una prestación con duración por defecto de 30 minutos y ningún turno existente
@@ -509,11 +507,7 @@ Las reglas de hora local (grilla del inicio, medianoche y horario de atención) 
 - **THEN** el resultado es `Ok`, porque en hora local el turno empieza y termina el mismo día
 
 ### Requirement: Turno dentro del horario de atención
-El turno MUST caer completo dentro de un tramo del horario de atención del profesional del pedido para el día de la semana local del turno, evaluado en hora local (RN-AG-04, RN-GL-03; US-004 CA-1, CA-2, CA-3, CA-6 y CA-7). Si no, el dominio SHALL rechazarlo con una sola violación `OUTSIDE_WORKING_HOURS`, sin id de turno en conflicto ni tipo de referencia. Un tramo `[inicio, fin)` es semiabierto (DD-07): el turno es válido si empieza en el inicio del tramo o después y termina en el fin del tramo o antes; un turno que termina a las 00:00 locales tiene su fin en el minuto 1440 del día de su inicio. Los tramos del mismo profesional y día que son contiguos (uno termina justo donde empieza el otro) cuentan como un solo tramo, y lo mismo pasa con los que se pisan (por ejemplo, uno contenido en otro): se unen desde el menor inicio hasta el mayor fin, así que un tramo contenido en otro no lo acorta; si hay un hueco entre dos tramos, un turno que lo pisa se rechaza. Un día sin tramos del profesional es un día en que no atiende. El dominio SHALL elegir por sí mismo los tramos que corresponden (del profesional del pedido y del día local del turno): la corrección del resultado MUST NOT depender de que el llamador haya filtrado la lista. Un turno existente puede quedar fuera del horario (por ejemplo, si el horario cambió después): el horario solo se evalúa sobre el turno nuevo.
-
-El mensaje de `OUTSIDE_WORKING_HOURS` MUST mencionar el inicio y el fin del turno en hora local, el nombre del profesional del pedido y, si el profesional tiene tramos ese día, todos los tramos del día ordenados por inicio, con los tramos contiguos ya unidos y el fin de la medianoche como `24:00`: "El turno de {inicio} a {fin} (hora local) queda fuera del horario de atención: {nombre del profesional} atiende el {día} de {inicio del tramo} a {fin del tramo}", con los tramos unidos por ", " y el último por " y ", y un punto final. Si el profesional no tiene tramos ese día, el mensaje termina en ": {nombre del profesional} no atiende los {día en plural}." El nombre va tal como se cargó, sin artículo y como sujeto; si está vacío o tiene solo espacios, se usa "el profesional", en minúscula porque va después de dos puntos (US-006 CA-3). El día de la semana va en español y en minúscula (lunes, martes, miércoles, jueves, viernes, sábado, domingo; en plural: lunes, martes, miércoles, jueves, viernes, sábados, domingos). Estos textos reemplazan a los aprobados antes ("…queda fuera del horario de atención del profesional: el {día} atiende…" y "…: no atiende los {día en plural}."), y con ellos cambian los tres escenarios de mensaje de este requisito.
-
-Horario base de los escenarios de este requisito, salvo que se diga otra cosa: P1 atiende el martes (día ISO 2) en `[540, 780)` (de 09:00 a 13:00) y `[900, 1140)` (de 15:00 a 19:00), y no tiene tramos el domingo (día ISO 7). Los turnos son de P1 en S1, el martes 2026-10-20, sin turnos existentes. P1 se llama "Dra. Laura Quiroga".
+El turno nuevo MUST caer completo dentro del horario del profesional para su día de semana local, o rechazarse con una violación `OUTSIDE_WORKING_HOURS` sin id en conflicto ni `reference_kind` (RN-AG-04, RN-GL-03, US-004). El dominio filtra por sí mismo los tramos del profesional y día local (los turnos existentes no se reevalúan). Por defecto en los escenarios: P1 en S1 el martes 2026-10-20, con `[540, 780)` y `[900, 1140)` el martes y sin tramos el domingo.
 
 #### Scenario: Turno completo dentro de un tramo
 - **GIVEN** el horario base
@@ -637,11 +631,7 @@ Horario base de los escenarios de este requisito, salvo que se diga otra cosa: P
 - **THEN** en ambos casos la violación `OUTSIDE_WORKING_HOURS` tiene exactamente el mensaje "El turno de 10:00 a 10:30 (hora local) queda fuera del horario de atención: el profesional no atiende los domingos."
 
 ### Requirement: Validez de un conjunto de tramos
-El dominio SHALL ofrecer la validación de un conjunto de tramos del horario de atención (los que se cargan para uno o varios profesionales; RN-DI-01, RN-DI-02; US-010 CA-1 y CA-2) y devolver la lista de violaciones, vacía si el conjunto es válido; las violaciones se devuelven como resultado y nunca como excepción. Un tramo es inválido si su día de la semana no está entre 1 y 7, si su inicio o su fin no están entre 0 y 1440, o si su inicio no es anterior a su fin: el dominio SHALL informar una sola violación `INVALID_WORKING_HOURS` por tramo inválido, aunque falle más de una condición. Dos tramos válidos del mismo profesional y el mismo día que se solapan (comparten al menos un minuto, con tramos semiabiertos) SHALL producir una violación `OVERLAPPING_WORKING_HOURS` por cada par. Puede haber varios tramos por día; los tramos contiguos, los de días distintos y los de profesionales distintos no se solapan. Un tramo inválido no participa de la búsqueda de solapamientos.
-
-Las violaciones se devuelven en orden estable: primero todas las `INVALID_WORKING_HOURS`, en el orden en que llegaron los tramos, y después todas las `OVERLAPPING_WORKING_HOURS`, ordenadas por la posición del primer tramo del par y, a igual primero, por la del segundo. Los tramos se identifican en los mensajes por su posición en la lista recibida, contando desde 1. El mensaje de `INVALID_WORKING_HOURS` MUST mencionar la posición del tramo; el de `OVERLAPPING_WORKING_HOURS` MUST mencionar las posiciones de los dos tramos y el día de la semana en español. Ninguna de las dos violaciones lleva id de turno en conflicto ni tipo de referencia.
-
-En los escenarios de este requisito los tramos son de P1, salvo que se diga otra cosa, y se listan en el orden en que se reciben.
+Al validar tramos de horario (RN-DI-01, RN-DI-02, US-010), el dominio SHALL devolver la lista de violaciones (vacía si es válido, nunca excepción). Un tramo con día fuera de `1..7`, límites fuera de `0..1440` o `inicio >= fin` da una sola `INVALID_WORKING_HOURS` y se excluye de solapamientos. Cada par de tramos válidos del mismo profesional y día que se pisen (semiabiertos) da `OVERLAPPING_WORKING_HOURS`; contiguos, de otro día o profesional no chocan (escenarios: de P1 en el orden dado).
 
 #### Scenario: Varios tramos válidos el mismo día
 - **GIVEN** los tramos del martes `[540, 780)` (de 09:00 a 13:00) y `[900, 1140)` (de 15:00 a 19:00)
@@ -688,7 +678,7 @@ En los escenarios de este requisito los tramos son de P1, salvo que se diga otra
 - **AND** no hay violación de los tramos 3 y 4, que no se solapan, ni del tramo 2 con los tramos 1 o 3, aunque su minuto 750 cae dentro de los dos, porque es inválido
 
 ### Requirement: Turno fuera de los bloqueos del profesional
-El turno MUST NOT superponerse con ningún bloqueo del profesional del pedido (RN-AG-05; US-004 CA-4 y CA-5). Por cada bloqueo que pisa, el dominio SHALL devolver una violación `BLOCKED_TIME` con el id del bloqueo y su intervalo, con inicio y fin en UTC, completo aunque el bloqueo dure varios días (US-006 CA-1), sin id de turno ni tipo de referencia. Bloqueo y turno son semiabiertos (DD-07) y se comparan como instantes, aunque el bloqueo dure varios días. El dominio elige los bloqueos del profesional: el resultado MUST NOT depender del filtrado del llamador.
+El turno MUST NOT superponerse con ningún bloqueo del profesional del pedido (RN-AG-05, US-004 CA-4 y CA-5). Por cada bloqueo con el que se solape (ambos semiabiertos, DD-07, comparados como instantes aunque duren varios días), el dominio SHALL devolver `BLOCKED_TIME` con el id del bloqueo y su intervalo completo en UTC (US-006 CA-1), sin id de turno ni `reference_kind`. El dominio filtra por sí mismo los bloqueos del profesional.
 
 #### Scenario: Turno dentro de un bloqueo
 - **GIVEN** el bloqueo BL1
@@ -776,7 +766,7 @@ El turno MUST NOT superponerse con ningún bloqueo del profesional del pedido (R
 - **THEN** la violación `BLOCKED_TIME` de BL1 lleva el intervalo de `2026-10-20T13:00:00+00:00` a `2026-10-20T15:00:00+00:00` y la de BL2, de `2026-10-20T14:00:00+00:00` a `2026-10-20T16:00:00+00:00`
 
 ### Requirement: Mensaje de un turno bloqueado
-El mensaje de `BLOCKED_TIME` MUST decir, en hora local, el inicio y el fin del turno, el nombre del profesional del pedido, el inicio y el fin del bloqueo con fecha (`dd/mm/aaaa HH:MM`, porque puede durar varios días), el id del bloqueo y, si tiene, el motivo: "El turno de {inicio} a {fin} (hora local) se superpone con un bloqueo de agenda: {nombre del profesional} tiene la agenda bloqueada del {inicio del bloqueo} al {fin del bloqueo} (hora local) (bloqueo {id}).", seguido, si hay motivo, de la oración aparte " Motivo: {motivo}." Un motivo vacío o con solo espacios cuenta como sin motivo; si no, se muestra tal como se cargó. El nombre va tal como se cargó, sin artículo y como sujeto; si está vacío o tiene solo espacios, se usa "el profesional", en minúscula porque va después de dos puntos (US-006 CA-3). Este texto reemplaza al aprobado antes ("…se superpone con el bloqueo {id} del profesional, del {inicio del bloqueo} al {fin del bloqueo} (hora local)."), y con él cambian los tres escenarios de mensaje de este requisito. En los escenarios de este requisito P1 se llama "Dra. Laura Quiroga".
+El mensaje de `BLOCKED_TIME` MUST ser `"El turno de {inicio} a {fin} (hora local) se superpone con un bloqueo de agenda: {nombre} tiene la agenda bloqueada del {inicio_bloqueo} al {fin_bloqueo} (hora local) (bloqueo {id})."`, con horas locales y el bloqueo en `dd/mm/aaaa HH:MM`, seguido de `" Motivo: {motivo}."` si el motivo no es vacío/blanco (tal como se cargó). `{nombre}` va recortado sin artículo, o `"el profesional"` si es vacío/blanco (US-006 CA-3).
 
 #### Scenario: Mensaje de un bloqueo sin motivo
 - **GIVEN** el bloqueo BL1, sin motivo
@@ -835,9 +825,7 @@ El inicio y el fin de un bloqueo SHALL tener zona horaria y MUST normalizarse a 
 - **THEN** la construcción falla con `ValueError` cuyo mensaje indica que el instante necesita zona horaria
 
 ### Requirement: Turnos afectados por un bloqueo
-Dado un bloqueo y una lista de turnos existentes, el dominio SHALL devolver los turnos que pisa: del mismo profesional, en un estado que ocupa agenda (`reservado`, `confirmado`, `atendido`) y que se solapan con el bloqueo (semiabiertos), ordenados por inicio (RN-DI-04, SU-05; US-011 CA-3). Crear el bloqueo MUST NOT cancelar ni mover esos turnos: se devuelven sin cambios, para que recepción los reprograme.
-
-Turnos de los escenarios de este requisito, todos del 2026-10-20: T1 de P1 de 09:30 a 10:00 hora local (de 12:30 a 13:00 UTC), `reservado`; T2 de P1 de 10:30 a 11:00 (de 13:30 a 14:00 UTC), `confirmado`; T3 de P1 de 11:45 a 12:15 (de 14:45 a 15:15 UTC), `reservado`; T4 de P1 de 11:00 a 11:30 (de 14:00 a 14:30 UTC), `cancelado`; T5 de P1 de 10:00 a 10:30 (de 13:00 a 13:30 UTC), `ausente`; T6 de P2 de 10:30 a 11:00 (de 13:30 a 14:00 UTC), `reservado`; T7 de P1 de 12:00 a 12:30 (de 15:00 a 15:30 UTC), `reservado`.
+Dado un bloqueo y turnos existentes, el dominio SHALL devolver sin cambios los del mismo profesional en estado ocupante (`reservado`, `confirmado`, `atendido`) que se solapen con él (semiabiertos), ordenados por inicio, sin cancelarlos ni moverlos (RN-DI-04, SU-05, US-011 CA-3). Escenarios (2026-10-20 local): P1 con T1 09:30–10:00, T3 11:45–12:15, T7 12:00–12:30 `reservado`, T2 10:30–11:00 `confirmado`, T4 11:00–11:30 `cancelado`, T5 10:00–10:30 `ausente`; P2 con T6 10:30–11:00 `reservado`.
 
 #### Scenario: Bloqueo que pisa turnos existentes
 - **GIVEN** el bloqueo BL1 y los turnos T1 a T7, recibidos en orden inverso (T7 primero)
@@ -909,7 +897,7 @@ El inicio del turno MUST NOT ser anterior al momento actual (`now`) que recibe e
 - **THEN** el resultado es `Rejected` con exactamente una violación `IN_THE_PAST`
 
 ### Requirement: Mensaje de un turno en el pasado
-El mensaje de `IN_THE_PAST` MUST decir, en hora local, el inicio del turno con fecha (`dd/mm/aaaa HH:MM`) y el momento actual con fecha y segundos (`dd/mm/aaaa HH:MM:SS`, sin microsegundos): "El inicio del turno ({inicio}, hora local) es anterior al momento actual ({now}, hora local): no se pueden {operación} en el pasado." La fecha es la del día local, no la de UTC. El mensaje no menciona al profesional ni al sillón. La operación (verbo del mensaje) SHALL recibirse como parámetro de `validate_new_appointment`, con valor por defecto "dar turnos", que la pasa a la regla del pasado (`check_not_in_the_past`): el alta no la pasa y conserva "dar turnos"; reprogramar le pasa "reprogramar turnos". El alta conserva exactamente el texto vigente "no se pueden dar turnos en el pasado"; reprogramar usa "no se pueden reprogramar turnos en el pasado". El valor por defecto "dar turnos" mantiene el alta y sus tests existentes idénticos.
+El mensaje de `IN_THE_PAST` MUST ser `"El inicio del turno ({inicio}, hora local) es anterior al momento actual ({now}, hora local): no se pueden {operación} en el pasado."`, en fecha/hora local (`{inicio}` `dd/mm/aaaa HH:MM`, `{now}` `dd/mm/aaaa HH:MM:SS` sin microsegundos, sin profesional ni sillón). `validate_new_appointment` SHALL recibir `operación` con default `"dar turnos"` y pasarla a `check_not_in_the_past` (alta: `"dar turnos"`; reprogramar: `"reprogramar turnos"`).
 
 #### Scenario: Mensaje de un turno en el pasado
 - **GIVEN** que `now` es el martes 2026-10-20 a las 10:00 hora local (13:00 UTC)
@@ -954,7 +942,7 @@ El dominio SHALL recibir el momento actual (`now`) con el contexto de la agenda,
 - **THEN** la construcción falla con `ValueError` cuyo mensaje indica que el instante necesita zona horaria
 
 ### Requirement: Nombre del profesional y del sillón
-El profesional SHALL tener un nombre completo y el sillón, un nombre (KB 04), que el llamador informa siempre al construir la entidad: no tienen valor por defecto. El dominio MUST NOT validarlos ni lanzar una excepción al construir la entidad, aunque estén vacíos o tengan solo espacios, y MUST conservarlos tal como se cargaron: la validez del nombre la decide el alta del catálogo. El dominio usa el nombre solo en los mensajes de conflicto de agenda, y ahí MUST mostrarlo recortado, sin los espacios del principio ni del final, para que el mensaje no tenga espacios dobles.
+El profesional SHALL tener nombre completo y el sillón un nombre (KB 04), obligatorios y sin valor por defecto al construir la entidad. El dominio MUST conservarlos tal como se cargaron sin validarlos ni lanzar excepción aunque sean vacíos o solo espacios (su validez corresponde al alta del catálogo). Solo se usan en los mensajes de conflicto de agenda, donde MUST mostrarse recortados (`strip`) para evitar espacios dobles.
 
 #### Scenario: Profesional y sillón con nombre
 - **WHEN** se construyen P1 con el nombre "Dra. Laura Quiroga" y S1 con el nombre "Sillón 1", los dos activos
@@ -1018,3 +1006,52 @@ El dominio SHALL ofrecer la función pura appointments_outside_working_hours(pro
 - **GIVEN** los turnos reservados T5 (lunes 2026-12-14 de 13:00:00Z a 13:30:00Z) y T6 (lunes 2026-12-07 de 13:00:00Z a 13:30:00Z) de la misma profesional y now 2026-11-06T12:00:00Z
 - **WHEN** se llama a appointments_outside_working_hours con el horario del lunes de 900 a 1140
 - **THEN** el resultado es la lista T6, T5
+
+### Requirement: Orden de los conflictos de agenda
+Si el pedido es válido, el dominio SHALL evaluar los conflictos de agenda y devolverlos todos juntos en este orden: `OUTSIDE_WORKING_HOURS` (como mucho una), todas las `BLOCKED_TIME`, todas las `PROFESSIONAL_OVERLAP` y todas las `CHAIR_OVERLAP` (RN-AG-12, DD-08). Se emite una violación por cada bloqueo o turno en conflicto, ordenadas dentro de cada tipo por el inicio del bloqueo o turno; un mismo turno puede producir ambos solapamientos.
+
+#### Scenario: Orden entre horario, bloqueos y solapamientos de profesional y sillón
+- **GIVEN** que P1 atiende el martes en `[540, 780)` y `[900, 1140)`
+- **AND** un bloqueo BL3 de P1 del 2026-10-20 de 12:00 a 14:00 hora local (de 15:00 a 17:00 UTC)
+- **AND** un turno existente E de P1 en S2 de 12:30 a 13:00 hora local (de 15:30 a 16:00 UTC) y un turno existente F de P2 en S1 de 12:45 a 13:15 hora local (de 15:45 a 16:15 UTC)
+- **WHEN** se pide un turno para P1 en S1 de 12:30 a 13:30 hora local (de 15:30 a 16:30 UTC), con duración explícita de 60 minutos
+- **THEN** el resultado es `Rejected` con `OUTSIDE_WORKING_HOURS`, `BLOCKED_TIME` (BL3), `PROFESSIONAL_OVERLAP` (E) y `CHAIR_OVERLAP` (F) en ese orden exacto
+
+### Requirement: Mensajes de validez de duración, inicio y medianoche
+Las violaciones de validez no llevan nombres ni id en conflicto. `INVALID_DURATION` MUST indicar la duración recibida y cada condición fallida. `INVALID_START_TIME` MUST decir `se recibió {hora}, hora local` y unir con `" y "` cada razón (`"debe caer en un minuto múltiplo de 5"`, `"no puede tener segundos ni fracciones de segundo"`). `CROSSES_MIDNIGHT` MUST indicar inicio y fin locales. Las horas usan `HH:MM`, o `HH:MM:SS` con segundos/fracciones != 0, salvo `now` en `IN_THE_PAST`.
+
+#### Scenario: Formato de horas y razones en violaciones de validez
+- **WHEN** se pide un turno con duración explícita de 487 minutos (primer caso), a las 10:03:30 hora local (segundo caso) o de 23:30 a 00:30 hora local (tercer caso)
+- **THEN** `INVALID_DURATION` menciona 487 y ambas condiciones; `INVALID_START_TIME` muestra `10:03:30, hora local` y une las dos razones con `" y "`; y `CROSSES_MIDNIGHT` muestra `23:30` y `00:30` en hora local
+
+### Requirement: Plantillas y nombres en mensajes de solapamiento
+En `PROFESSIONAL_OVERLAP` el mensaje SHALL ser `"{nombre} ya tiene un turno de {inicio} a {fin} (hora local) que se superpone (turno {id})."` y en `CHAIR_OVERLAP`, `"{sillón} está ocupado de {inicio} a {fin} (hora local) por un turno que se superpone (turno {id})."`, con `{inicio}` y `{fin}` locales del turno existente (US-006 CA-3). En conflictos de agenda el nombre va con `strip` y sin artículo; si queda vacío, MUST usarse `"El profesional"`, `"El sillón"` o, tras `:`, `"el profesional"`.
+
+#### Scenario: Plantillas de solapamiento con nombres reales y genéricos
+- **GIVEN** el turno existente A (P1, S1, de 10:00 a 10:30 hora local) con nombres `"Dra. Laura Quiroga"` y `"Sillón 1"` en un primer caso, y nombres en blanco `"   "` en un segundo caso
+- **WHEN** se pide un turno para P1 en S1 de 10:15 a 10:45 hora local
+- **THEN** en el primer caso los mensajes usan `"Dra. Laura Quiroga"` y `"Sillón 1"`, y en el segundo usan `"El profesional"` y `"El sillón"` como sujeto
+
+### Requirement: Unión de tramos contiguos o superpuestos del día
+Al evaluar el horario del día local, cada tramo `[inicio, fin)` es semiabierto (DD-07) y un turno que termina a las `00:00` locales tiene fin en el minuto `1440` de su día de inicio. Los tramos del mismo profesional y día contiguos o superpuestos SHALL unirse desde el menor inicio hasta el mayor fin (un tramo contenido no acorta al que lo contiene); si queda un hueco entre tramos, un turno que lo pise se rechaza; sin tramos ese día, no atiende.
+
+#### Scenario: Unión de tramos contiguos y superpuestos con fin en medianoche
+- **GIVEN** que P1 atiende el martes en `[540, 780)`, `[600, 700)` y `[780, 1440)`
+- **WHEN** se pide un turno para P1 el martes de 12:30 a 13:30 hora local (primer caso) o de 23:30 a 00:00 hora local (segundo caso)
+- **THEN** ambos resultados son `Ok` porque los tramos se unen en `[540, 1440)` y el fin a las `00:00` locales corresponde al minuto `1440`
+
+### Requirement: Mensaje de un turno fuera del horario de atención
+El mensaje de `OUTSIDE_WORKING_HOURS` MUST ser `"El turno de {inicio} a {fin} (hora local) queda fuera del horario de atención: {nombre} atiende el {día} de {inicio_tramo} a {fin_tramo}."` (tramos del día unidos y ordenados, separados por `", "` y `" y "`, medianoche `24:00`), o `"...: {nombre} no atiende los {día_plural}."` si no atiende ese día (`lunes`..`domingo`, plural `sábados`/`domingos`; `{nombre}` recortado o `"el profesional"` si es vacío/blanco; US-006 CA-3).
+
+#### Scenario: Mensajes fuera de horario con tramos unidos y día sin atención
+- **GIVEN** que P1 ("Dra. Laura Quiroga") atiende el martes en `[540, 780)`, `[780, 1020)` y `[1200, 1440)` y no tiene tramos el domingo
+- **WHEN** se pide un turno de 17:30 a 18:00 hora local el martes (primer caso) o de 10:00 a 10:30 hora local el domingo (segundo caso)
+- **THEN** el primer mensaje indica `"Dra. Laura Quiroga atiende el martes de 09:00 a 17:00 y de 20:00 a 24:00."` y el segundo indica `"Dra. Laura Quiroga no atiende los domingos."`
+
+### Requirement: Orden y mensajes al validar tramos de horario
+Al validar tramos, el dominio SHALL devolver primero todas las `INVALID_WORKING_HOURS` en orden de llegada y luego todas las `OVERLAPPING_WORKING_HOURS` ordenadas por la posición (desde 1) del primer tramo del par y, a igualdad, la del segundo. El mensaje de `INVALID_WORKING_HOURS` MUST mencionar la posición del tramo y el de `OVERLAPPING_WORKING_HOURS`, ambas posiciones y el día de la semana en español; ninguna lleva id en conflicto ni `reference_kind`.
+
+#### Scenario: Orden y posiciones en violaciones de tramos inválidos y solapados
+- **GIVEN** los tramos del martes `[540, 780)`, `[750, 750)`, `[720, 900)` y `[600, 660)` en ese orden
+- **WHEN** se valida el conjunto
+- **THEN** devuelve `INVALID_WORKING_HOURS` (tramo 2), `OVERLAPPING_WORKING_HOURS` (tramos 1 y 3, martes) y `OVERLAPPING_WORKING_HOURS` (tramos 1 y 4, martes), todas sin id en conflicto ni `reference_kind`

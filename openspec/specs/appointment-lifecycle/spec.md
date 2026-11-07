@@ -8,9 +8,8 @@ Transiciones de estado del turno según una tabla única (RN-TU-02); cancelació
 
 ## Requirements
 
-
 ### Requirement: Tabla única de transiciones ordinarias
-El dominio SHALL representar RN-TU-02 una sola vez en appointment/transitions.py como dict privado del módulo declarado `Mapping[AppointmentStatus, frozenset[AppointmentStatus]]`, con Mapping de collections.abc o typing ya permitidos e inmutabilidad del mapa garantizada por el tipo para mypy y SHALL ofrecer consulta pública can_transition(origin, target). RESERVED permite CONFIRMED, ATTENDED, NO_SHOW, CANCELLED; CONFIRMED permite ATTENDED, NO_SHOW, CANCELLED; ATTENDED, NO_SHOW, CANCELLED no permiten destinos. Son exactamente siete aristas. Toda diagonal y todo destino RESERVED MUST ser inválido. SU-03 queda confirmada por la autora para este change. La reprogramación no forma parte de esta tabla.
+El dominio SHALL definir RN-TU-02 una vez en `appointment/transitions.py` como dict privado `Mapping[AppointmentStatus, frozenset[AppointmentStatus]]` (`collections.abc`/`typing`, inmutable en mypy) y exponer `can_transition(origin, target)`. `RESERVED` permite `CONFIRMED`, `ATTENDED`, `NO_SHOW`, `CANCELLED`; `CONFIRMED`, los tres últimos; `ATTENDED`, `NO_SHOW` y `CANCELLED`, ninguno (7 aristas, SU-03). Diagonales y destino `RESERVED` MUST ser inválidos; reprogramar es aparte.
 
 #### Scenario: Todos los pares de estados
 - **GIVEN** los cinco estados, con producto cartesiano de origen y destino
@@ -40,7 +39,7 @@ Actor SHALL ser dataclass frozen/slots con user_id UUID, role Role y professiona
 - **THEN** ambos actores son válidos y conservan None
 
 ### Requirement: Operaciones con resultado de agenda y copia
-cancel_appointment SHALL recibir appointment, actor, now, professional_name y tz. change_status SHALL recibir appointment, target, actor, now, professional_name y tz. Ambas SHALL devolver ValidationResult, con el Ok de agenda y sus campos appointment y status_change, o Rejected no vacío de Violation. En éxito SHALL devolver copia cambiando solo status; en rechazo SHALL conservar el original sin cambios. Los ids y el reloj se reciben; no se generan. El Ok de catálogo y los contratos previos MUST permanecer compatibles.
+`cancel_appointment(appointment, actor, now, professional_name, tz)` y `change_status(appointment, target, actor, now, professional_name, tz)` SHALL devolver `ValidationResult`: `Ok` de agenda (con `appointment` y `status_change`) o `Rejected` no vacío de `Violation`. En éxito SHALL devolver copia cambiando solo `status`; en rechazo SHALL conservar el original sin cambios. Los ids y el reloj se reciben sin generarse. El `Ok` de catálogo y los contratos previos MUST permanecer compatibles.
 
 #### Scenario: Cancelar reservado
 - **GIVEN** T1 reservado y recepción U2, now 09:00 local
@@ -181,7 +180,7 @@ Tras verificar errores de contrato, el dominio SHALL evaluar permiso primero y c
 - **THEN** cada caso produce solo INVALID_TRANSITION
 
 ### Requirement: Mensajes exactos y metadatos
-Las tres violaciones SHALL incluir mensajes en español con nombre recortado mediante strip (sin colapsar espacios internos), fecha del inicio e intervalo en hora local inyectada. Nombre vacío/blanco SHALL usar `el profesional`. SHALL reutilizar formatos locales vigentes: fecha dd/mm/aaaa, horas HH:MM o HH:MM:SS si hay segundos/fracciones; now con fecha y segundos siempre. Los metadatos reference_kind, conflicting_appointment_id, conflicting_block_id y conflicting_interval MUST ser None. Los textos exactos son los siguientes escenarios; variar estados/datos según el caso conservando plantilla.
+Las tres violaciones SHALL usar las plantillas en español de los escenarios, con el nombre recortado con `strip` sin colapsar espacios internos (`el profesional` si queda vacío), fecha `dd/mm/aaaa` e intervalo en hora local inyectada (`HH:MM` o `HH:MM:SS` con segundos/fracciones; `now` siempre con fecha y segundos). Los metadatos `reference_kind`, `conflicting_appointment_id`, `conflicting_block_id` y `conflicting_interval` MUST ser `None`.
 
 #### Scenario: Texto de transición inválida
 - **GIVEN** T1 atendido, recepción U2 y now 09:00 local

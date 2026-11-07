@@ -1,0 +1,24 @@
+## appointment-lifecycle
+  leido (LF): openspec/changes/specs-requisitos-concisos/specs/appointment-lifecycle/spec.md
+  leido (LF): openspec/specs/appointment-lifecycle/spec.md
+  OK       2 escenarios  Tabla única de transiciones ordinarias
+  OK       3 escenarios  Operaciones con resultado de agenda y copia
+  OK       9 escenarios  Mensajes exactos y metadatos
+
+## appointment-scheduling
+  leido (LF): openspec/changes/specs-requisitos-concisos/specs/appointment-scheduling/spec.md
+  leido (CRLF): openspec/specs/appointment-scheduling/spec.md
+  OK       2 escenarios  Alta de un turno válido
+  OK      21 escenarios  Todas las violaciones, en orden estable
+  OK      13 escenarios  Validez de la duración
+  OK      12 escenarios  Contenido de cada violación
+  OK       4 escenarios  Turno dentro de un solo día local
+  OK      24 escenarios  Turno dentro del horario de atención
+  OK       8 escenarios  Validez de un conjunto de tramos
+  OK      17 escenarios  Turno fuera de los bloqueos del profesional
+  OK       4 escenarios  Mensaje de un turno bloqueado
+  OK       5 escenarios  Turnos afectados por un bloqueo
+  OK       5 escenarios  Mensaje de un turno en el pasado
+  OK       3 escenarios  Nombre del profesional y del sillón
+
+15 requisitos, 132 escenarios, 0 diferencias

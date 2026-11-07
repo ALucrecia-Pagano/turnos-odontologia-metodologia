@@ -1,0 +1,14 @@
+✓ spec/agenda-api
+✓ spec/api-foundation
+✓ spec/appointment-lifecycle
+✓ spec/appointment-scheduling
+✓ spec/appointments-api
+✓ spec/authentication-and-rbac
+✓ spec/backend-toolchain
+✓ spec/catalog-and-patients
+✓ spec/database-infrastructure
+✓ spec/domain-dependency-guard
+✓ change/frontend-base-react-vite
+✓ change/ui-login-y-sesion
+✓ spec/working-hours-and-blocks-api
+Totals: 13 passed, 0 failed (13 items)
