@@ -261,3 +261,34 @@ class BlocksQuery(BaseModel):
             raise ValueError("La fecha y hora debe incluir zona horaria.")
         return v
 
+
+class AppointmentInput(BaseModel):
+    patient_id: UUID = Field(alias="patientId")
+    professional_id: UUID = Field(alias="professionalId")
+    chair_id: UUID = Field(alias="chairId")
+    service_id: UUID = Field(alias="serviceId")
+    start_at: datetime = Field(alias="startAt")
+    duration_min: int | None = Field(default=None, alias="durationMin")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @field_validator("start_at")
+    @classmethod
+    def validate_tz(cls, v: datetime) -> datetime:
+        if v.tzinfo is None:
+            raise ValueError("La fecha y hora debe incluir zona horaria.")
+        return v
+
+
+class AppointmentResponse(BaseModel):
+    id: UUID
+    patient_id: UUID = Field(serialization_alias="patientId")
+    professional_id: UUID = Field(serialization_alias="professionalId")
+    chair_id: UUID = Field(serialization_alias="chairId")
+    service_id: UUID = Field(serialization_alias="serviceId")
+    start_at: str = Field(serialization_alias="startAt")
+    end_at: str = Field(serialization_alias="endAt")
+    status: str
+
+    model_config = ConfigDict(populate_by_name=True)
+

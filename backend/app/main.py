@@ -18,6 +18,7 @@ from app.api.errors import (
     not_found_error_handler,
     request_validation_handler,
 )
+from app.api.appointments import router as appointments_router
 from app.api.blocks import router as blocks_router
 from app.api.chairs import router as chairs_router
 from app.api.health import router as health_router
@@ -36,6 +37,8 @@ protected_router.include_router(services_router)
 protected_router.include_router(patients_router)
 protected_router.include_router(working_hours_router)
 protected_router.include_router(blocks_router)
+protected_router.include_router(appointments_router)
+
 
 
 
