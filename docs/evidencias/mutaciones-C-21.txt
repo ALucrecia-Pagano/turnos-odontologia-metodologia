@@ -1,17 +1,22 @@
 Salida generada por docs/evidencias/mutaciones-C-21.py. No editar a mano.
-SHA-256 de backend/app antes: 9028e11a7f434f8ec47c1b33c286deb723e7b1e1239b966b1305d40c7e585358
+SHA-256 de backend/app antes: 4699d91df217d57c4159ebe35b5c0062627aed18c1331b4491ff017bc041301d
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
 plugins: anyio-4.16.0
-collected 48 items
+collected 63 items
 
-tests\domain\test_working_hours.py ......                                [ 12%]
-tests\integration\test_api_working_hours.py ...................          [ 52%]
-tests\integration\test_api_blocks.py .....................               [ 95%]
-tests\integration\test_availability_concurrency.py ..                    [100%]
+tests\domain\test_working_hours.py ......                                [  9%]
+tests\integration\test_api_working_hours.py ...................          [ 39%]
+tests\integration\test_api_blocks.py .....................               [ 73%]
+tests\integration\test_availability_concurrency.py ..                    [ 76%]
+tests\integration\test_availability_persistence.py .                     [ 77%]
+tests\api\test_availability_schemas.py ......                            [ 87%]
+tests\integration\test_availability_services.py ....                     [ 93%]
+tests\api\test_own_professional_guard.py ...                             [ 98%]
+tests\api\test_availability_openapi.py .                                 [100%]
 
 ============================== warnings summary ===============================
 .venv\Lib\site-packages\fastapi\testclient.py:1
@@ -19,10 +24,10 @@ tests\integration\test_availability_concurrency.py ..                    [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 48 passed, 1 warning in 16.76s ========================
+======================= 63 passed, 1 warning in 15.89s ========================
 
 ================================================================================
-MUTACION 01/48
+MUTACION 01/63
 test: tests/domain/test_working_hours.py::test_appointments_outside_working_hours_lists_future_occupying_appointment_outside_new_hours
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -52,7 +57,7 @@ E     Right contains one more item: Appointment(id=UUID('00000000-0000-0000-0000
 E     Use -v to get more diff
 =========================== short test summary info ===========================
 FAILED tests/domain/test_working_hours.py::test_appointments_outside_working_hours_lists_future_occupying_appointment_outside_new_hours
-============================== 1 failed in 0.23s ==============================
+============================== 1 failed in 0.27s ==============================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [] == [Appointment(...'reservado'>)]
@@ -66,11 +71,11 @@ collected 1 item
 
 tests\domain\test_working_hours.py .                                     [100%]
 
-============================== 1 passed in 0.14s ==============================
+============================== 1 passed in 0.13s ==============================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 02/48
+MUTACION 02/63
 test: tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_appointment_inside_new_hours
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -98,7 +103,7 @@ E     Left contains one more item: Appointment(id=UUID('00000000-0000-0000-0000-
 E     Use -v to get more diff
 =========================== short test summary info ===========================
 FAILED tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_appointment_inside_new_hours
-============================== 1 failed in 0.24s ==============================
+============================== 1 failed in 0.17s ==============================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [Appointment(...'reservado'>)] == []
@@ -112,11 +117,11 @@ collected 1 item
 
 tests\domain\test_working_hours.py .                                     [100%]
 
-============================== 1 passed in 0.14s ==============================
+============================== 1 passed in 0.11s ==============================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 03/48
+MUTACION 03/63
 test: tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_cancelled_appointment
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -146,7 +151,7 @@ E     Left contains one more item: Appointment(id=UUID('00000000-0000-0000-0000-
 E     Use -v to get more diff
 =========================== short test summary info ===========================
 FAILED tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_cancelled_appointment
-============================== 1 failed in 0.18s ==============================
+============================== 1 failed in 0.21s ==============================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [Appointment(...'cancelado'>)] == []
@@ -160,11 +165,11 @@ collected 1 item
 
 tests\domain\test_working_hours.py .                                     [100%]
 
-============================== 1 passed in 0.11s ==============================
+============================== 1 passed in 0.10s ==============================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 04/48
+MUTACION 04/63
 test: tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_past_appointment
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -212,7 +217,7 @@ tests\domain\test_working_hours.py .                                     [100%]
 
 restaurado: test en verde
 ================================================================================
-MUTACION 05/48
+MUTACION 05/63
 test: tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_other_professional_appointments
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -242,7 +247,7 @@ E     Left contains one more item: Appointment(id=UUID('00000000-0000-0000-0000-
 E     Use -v to get more diff
 =========================== short test summary info ===========================
 FAILED tests/domain/test_working_hours.py::test_appointments_outside_working_hours_ignores_other_professional_appointments
-============================== 1 failed in 0.24s ==============================
+============================== 1 failed in 0.21s ==============================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [Appointment(...'reservado'>)] == []
@@ -256,11 +261,11 @@ collected 1 item
 
 tests\domain\test_working_hours.py .                                     [100%]
 
-============================== 1 passed in 0.11s ==============================
+============================== 1 passed in 0.14s ==============================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 06/48
+MUTACION 06/63
 test: tests/domain/test_working_hours.py::test_appointments_outside_working_hours_returns_appointments_ordered_by_start_and_id
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -303,11 +308,11 @@ collected 1 item
 
 tests\domain\test_working_hours.py .                                     [100%]
 
-============================== 1 passed in 0.15s ==============================
+============================== 1 passed in 0.13s ==============================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 07/48
+MUTACION 07/63
 test: tests/integration/test_api_working_hours.py::test_reception_gets_working_hours_returns_200
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -346,7 +351,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_reception_gets_working_hours_returns_200
-======================== 1 failed, 1 warning in 0.79s =========================
+======================== 1 failed, 1 warning in 1.00s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 201 == 200
@@ -366,11 +371,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.52s =========================
+======================== 1 passed, 1 warning in 0.48s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 08/48
+MUTACION 08/63
 test: tests/integration/test_api_working_hours.py::test_odontologist_gets_own_working_hours_returns_200
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -408,7 +413,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_odontologist_gets_own_working_hours_returns_200
-======================== 1 failed, 1 warning in 0.69s =========================
+======================== 1 failed, 1 warning in 0.76s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 404 == 200
@@ -428,11 +433,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.50s =========================
+======================== 1 passed, 1 warning in 0.56s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 09/48
+MUTACION 09/63
 test: tests/integration/test_api_working_hours.py::test_odontologist_gets_other_professional_working_hours_returns_403
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -469,7 +474,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_odontologist_gets_other_professional_working_hours_returns_403
-======================== 1 failed, 1 warning in 0.74s =========================
+======================== 1 failed, 1 warning in 0.71s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 200 == 403
@@ -489,11 +494,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.55s =========================
+======================== 1 passed, 1 warning in 0.52s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 10/48
+MUTACION 10/63
 test: tests/integration/test_api_working_hours.py::test_get_working_hours_without_token_returns_401
 archivo: backend/app/api/deps.py
 --- texto original ---
@@ -643,7 +648,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_get_working_hours_without_token_returns_401
-======================== 1 failed, 1 warning in 1.46s =========================
+======================== 1 failed, 1 warning in 1.48s =========================
 
 resultado: FALLO
 primera linea del fallo: AttributeError: 'NoneType' object has no attribute 'credentials'
@@ -663,11 +668,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.46s =========================
+======================== 1 passed, 1 warning in 0.41s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 11/48
+MUTACION 11/63
 test: tests/integration/test_api_working_hours.py::test_get_working_hours_unknown_professional_returns_404
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -706,7 +711,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_get_working_hours_unknown_professional_returns_404
-======================== 1 failed, 1 warning in 0.76s =========================
+======================== 1 failed, 1 warning in 0.65s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 200 == 404
@@ -726,11 +731,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.51s =========================
+======================== 1 passed, 1 warning in 0.48s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 12/48
+MUTACION 12/63
 test: tests/integration/test_api_working_hours.py::test_admin_replaces_working_hours_returns_200
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -769,7 +774,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_admin_replaces_working_hours_returns_200
-======================== 1 failed, 1 warning in 0.73s =========================
+======================== 1 failed, 1 warning in 0.69s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 202 == 200
@@ -789,11 +794,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.56s =========================
+======================== 1 passed, 1 warning in 0.54s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 13/48
+MUTACION 13/63
 test: tests/integration/test_api_working_hours.py::test_odontologist_replaces_own_working_hours_returns_200
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -832,7 +837,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_odontologist_replaces_own_working_hours_returns_200
-======================== 1 failed, 1 warning in 0.75s =========================
+======================== 1 failed, 1 warning in 0.65s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 404 == 200
@@ -852,11 +857,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.54s =========================
+======================== 1 passed, 1 warning in 0.48s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 14/48
+MUTACION 14/63
 test: tests/integration/test_api_working_hours.py::test_odontologist_replaces_other_professional_working_hours_returns_403
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -895,7 +900,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_odontologist_replaces_other_professional_working_hours_returns_403
-======================== 1 failed, 1 warning in 0.76s =========================
+======================== 1 failed, 1 warning in 0.69s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 200 == 403
@@ -915,11 +920,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.49s =========================
+======================== 1 passed, 1 warning in 0.56s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 15/48
+MUTACION 15/63
 test: tests/integration/test_api_working_hours.py::test_reception_replaces_working_hours_returns_403
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -954,7 +959,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_reception_replaces_working_hours_returns_403
-======================== 1 failed, 1 warning in 0.82s =========================
+======================== 1 failed, 1 warning in 0.78s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 200 == 403
@@ -974,11 +979,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.46s =========================
+======================== 1 passed, 1 warning in 0.47s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 16/48
+MUTACION 16/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_with_empty_list_returns_empty
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -1017,7 +1022,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_with_empty_list_returns_empty
-======================== 1 failed, 1 warning in 0.75s =========================
+======================== 1 failed, 1 warning in 0.78s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [{'end': '13:...'weekday': 1}] == []
@@ -1037,11 +1042,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.56s =========================
+======================== 1 passed, 1 warning in 0.52s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 17/48
+MUTACION 17/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_overlapping_returns_422
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -1078,7 +1083,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_overlapping_returns_422
-======================== 1 failed, 1 warning in 0.73s =========================
+======================== 1 failed, 1 warning in 0.79s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'INVALID_WORKING_HOURS' == 'OVERLAPPING_WORKING_HOURS'
@@ -1098,11 +1103,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.60s =========================
+======================== 1 passed, 1 warning in 0.49s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 18/48
+MUTACION 18/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_start_after_end_returns_422
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -1139,7 +1144,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_start_after_end_returns_422
-======================== 1 failed, 1 warning in 0.82s =========================
+======================== 1 failed, 1 warning in 0.68s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'OVERLAPPING_WORKING_HOURS' == 'INVALID_WORKING_HOURS'
@@ -1159,11 +1164,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.49s =========================
+======================== 1 passed, 1 warning in 0.46s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 19/48
+MUTACION 19/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_malformed_time_returns_400
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -1218,7 +1223,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_malformed_time_returns_400
-======================== 1 failed, 1 warning in 0.66s =========================
+======================== 1 failed, 1 warning in 0.72s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 422 == 400
@@ -1238,11 +1243,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.50s =========================
+======================== 1 passed, 1 warning in 0.53s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 20/48
+MUTACION 20/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_end_at_24_accepted_returns_200
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -1277,7 +1282,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_end_at_24_accepted_returns_200
-======================== 1 failed, 1 warning in 0.66s =========================
+======================== 1 failed, 1 warning in 0.69s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 400 == 200
@@ -1297,11 +1302,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.58s =========================
+======================== 1 passed, 1 warning in 0.51s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 21/48
+MUTACION 21/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_unknown_professional_returns_404
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -1453,7 +1458,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_unknown_professional_returns_404
-======================== 1 failed, 1 warning in 1.46s =========================
+======================== 1 failed, 1 warning in 1.50s =========================
 
 resultado: FALLO
 primera linea del fallo: ValueError: Error forzado
@@ -1473,11 +1478,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.56s =========================
+======================== 1 passed, 1 warning in 0.49s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 22/48
+MUTACION 22/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_inactive_professional_accepted
 archivo: backend/app/api/working_hours.py
 --- texto original ---
@@ -1516,7 +1521,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_inactive_professional_accepted
-======================== 1 failed, 1 warning in 0.73s =========================
+======================== 1 failed, 1 warning in 0.72s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 404 == 200
@@ -1536,11 +1541,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.52s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 23/48
+MUTACION 23/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_reports_outside_appointment_without_cancelling
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -1577,7 +1582,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_reports_outside_appointment_without_cancelling
-======================== 1 failed, 1 warning in 0.78s =========================
+======================== 1 failed, 1 warning in 0.88s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 0 == 1
@@ -1597,11 +1602,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.52s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 24/48
+MUTACION 24/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_does_not_report_appointment_inside_new_hours
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -1627,7 +1632,7 @@ tests\integration\test_api_working_hours.py:379: in test_replace_working_hours_d
     assert res.json()["appointmentsOutsideHours"] == []
 E   AssertionError: assert [{'chairId': ...0000c1', ...}] == []
 E     
-E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'endAt': '2026-11-16T13:30:00Z', 'id': 'cf6c6091-4fe5-4005-86e8-42c196d2fdc0', 'patientId': '00000000-0000-0000-0000-0000000000c1', ...}
+E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'endAt': '2026-11-16T13:30:00Z', 'id': '96706657-19c7-4e5e-9eb2-08135ba1727e', 'patientId': '00000000-0000-0000-0000-0000000000c1', ...}
 E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
@@ -1640,7 +1645,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_does_not_report_appointment_inside_new_hours
-======================== 1 failed, 1 warning in 0.76s =========================
+======================== 1 failed, 1 warning in 0.75s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [{'chairId': ...0000c1', ...}] == []
@@ -1660,11 +1665,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.52s =========================
+======================== 1 passed, 1 warning in 0.72s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 25/48
+MUTACION 25/63
 test: tests/integration/test_api_working_hours.py::test_replace_working_hours_does_not_report_cancelled_appointment
 archivo: backend/app/domain/rules/working_hours.py
 --- texto original ---
@@ -1690,7 +1695,7 @@ tests\integration\test_api_working_hours.py:417: in test_replace_working_hours_d
     assert res.json()["appointmentsOutsideHours"] == []
 E   AssertionError: assert [{'chairId': ...0000c1', ...}] == []
 E     
-E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'endAt': '2026-11-16T13:30:00Z', 'id': 'db1f665e-e117-4944-8df2-f39b641a0d18', 'patientId': '00000000-0000-0000-0000-0000000000c1', ...}
+E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'endAt': '2026-11-16T13:30:00Z', 'id': '8f404685-b278-40c8-ada6-30fa547369d0', 'patientId': '00000000-0000-0000-0000-0000000000c1', ...}
 E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
@@ -1703,7 +1708,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_working_hours.py::test_replace_working_hours_does_not_report_cancelled_appointment
-======================== 1 failed, 1 warning in 0.74s =========================
+======================== 1 failed, 1 warning in 0.73s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [{'chairId': ...0000c1', ...}] == []
@@ -1723,11 +1728,11 @@ tests\integration\test_api_working_hours.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.49s =========================
+======================== 1 passed, 1 warning in 0.51s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 26/48
+MUTACION 26/63
 test: tests/integration/test_api_blocks.py::test_reception_lists_blocks_of_professional
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -1753,7 +1758,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 _________________ test_reception_lists_blocks_of_professional _________________
 tests\integration\test_api_blocks.py:120: in test_reception_lists_blocks_of_professional
     assert res.status_code == 200, res.text
-E   AssertionError: [{"id":"ef93e7a9-4c6a-4afd-b31f-e7ab7436dbdd","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T11:00:00Z","reason":"Mañana"},{"id":"0648ff8d-47c1-494f-ab5c-378362de6534","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T14:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Tarde"}]
+E   AssertionError: [{"id":"80305cf7-f37e-4243-8c2b-4177810a42c8","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T11:00:00Z","reason":"Mañana"},{"id":"0d318949-82a7-496b-89b8-3517cc493dc0","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T14:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Tarde"}]
 E   assert 201 == 200
 E    +  where 201 = <Response [201 Created]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -1767,10 +1772,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_reception_lists_blocks_of_professional
-======================== 1 failed, 1 warning in 0.96s =========================
+======================== 1 failed, 1 warning in 0.89s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: [{"id":"ef93e7a9-4c6a-4afd-b31f-e7ab7436dbdd","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T11:<linea>:<linea>Z
+primera linea del fallo: AssertionError: [{"id":"80305cf7-f37e-4243-8c2b-4177810a42c8","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T11:<linea>:<linea>Z
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -1787,11 +1792,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.75s =========================
+======================== 1 passed, 1 warning in 0.71s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 27/48
+MUTACION 27/63
 test: tests/integration/test_api_blocks.py::test_odontologist_lists_own_blocks
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -1828,7 +1833,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_odontologist_lists_own_blocks
-======================== 1 failed, 1 warning in 0.75s =========================
+======================== 1 failed, 1 warning in 0.79s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 0 == 1
@@ -1848,11 +1853,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.60s =========================
+======================== 1 passed, 1 warning in 0.64s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 28/48
+MUTACION 28/63
 test: tests/integration/test_api_blocks.py::test_odontologist_lists_other_professional_blocks_forbidden
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -1890,7 +1895,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_odontologist_lists_other_professional_blocks_forbidden
-======================== 1 failed, 1 warning in 0.88s =========================
+======================== 1 failed, 1 warning in 0.81s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: []
@@ -1910,11 +1915,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.62s =========================
+======================== 1 passed, 1 warning in 0.67s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 29/48
+MUTACION 29/63
 test: tests/integration/test_api_blocks.py::test_list_blocks_with_from_and_to_filters_overlapping
 archivo: backend/app/repositories/blocks.py
 --- texto original ---
@@ -1939,7 +1944,7 @@ ____________ test_list_blocks_with_from_and_to_filters_overlapping ____________
 tests\integration\test_api_blocks.py:198: in test_list_blocks_with_from_and_to_filters_overlapping
     assert len(data) == 1
 E   AssertionError: assert 2 == 1
-E    +  where 2 = len([{'endAt': '2026-12-07T16:00:00Z', 'id': '3b08fc99-4bf2-4914-bb2c-af28f67ac34b', 'professionalId': '00000000-0000-0000...228-fdfb-4516-a2eb-160fc595865a', 'professionalId': '00000000-0000-0000-0000-000000000001', 'reason': 'Semana 3', ...}])
+E    +  where 2 = len([{'endAt': '2026-12-07T16:00:00Z', 'id': '128d2792-3229-44f2-823a-45aa207fef65', 'professionalId': '00000000-0000-0000...9e6-858c-434e-9b82-68e9740ac79a', 'professionalId': '00000000-0000-0000-0000-000000000001', 'reason': 'Semana 3', ...}])
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1951,7 +1956,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_list_blocks_with_from_and_to_filters_overlapping
-======================== 1 failed, 1 warning in 0.87s =========================
+======================== 1 failed, 1 warning in 0.97s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 2 == 1
@@ -1975,7 +1980,7 @@ tests\integration\test_api_blocks.py .                                   [100%]
 
 restaurado: test en verde
 ================================================================================
-MUTACION 30/48
+MUTACION 30/63
 test: tests/integration/test_api_blocks.py::test_list_blocks_from_without_timezone_returns_400
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -2013,7 +2018,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_list_blocks_from_without_timezone_returns_400
-======================== 1 failed, 1 warning in 0.81s =========================
+======================== 1 failed, 1 warning in 0.79s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: []
@@ -2033,11 +2038,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.55s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 31/48
+MUTACION 31/63
 test: tests/integration/test_api_blocks.py::test_list_blocks_unknown_professional_returns_404
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -2089,7 +2094,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_list_blocks_unknown_professional_returns_404
-======================== 1 failed, 1 warning in 0.78s =========================
+======================== 1 failed, 1 warning in 0.79s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: []
@@ -2109,11 +2114,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.63s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 32/48
+MUTACION 32/63
 test: tests/integration/test_api_blocks.py::test_odontologist_creates_own_block_without_affected_appointments
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -2139,7 +2144,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 ______ test_odontologist_creates_own_block_without_affected_appointments ______
 tests\integration\test_api_blocks.py:234: in test_odontologist_creates_own_block_without_affected_appointments
     assert res.status_code == 201, res.text
-E   AssertionError: {"block":{"id":"a186548f-da78-4419-bfd2-e3c4024f87ab","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Congreso"},"affectedAppointments":[]}
+E   AssertionError: {"block":{"id":"2640e3d2-c1dc-4b5b-bca8-2bbbdd0474ac","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Congreso"},"affectedAppointments":[]}
 E   assert 200 == 201
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -2153,10 +2158,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_odontologist_creates_own_block_without_affected_appointments
-======================== 1 failed, 1 warning in 0.88s =========================
+======================== 1 failed, 1 warning in 0.82s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: {"block":{"id":"a186548f-da78-4419-bfd2-e3c4024f87ab","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:<linea>:<linea>Z","endAt":"2026-11-16T16:<linea>:
+primera linea del fallo: AssertionError: {"block":{"id":"2640e3d2-c1dc-4b5b-bca8-2bbbdd0474ac","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:<linea>:<linea>Z","endAt":"2026-11-16T16:<linea>:
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -2173,11 +2178,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.64s =========================
+======================== 1 passed, 1 warning in 0.65s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 33/48
+MUTACION 33/63
 test: tests/integration/test_api_blocks.py::test_admin_creates_block_for_any_professional
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -2237,11 +2242,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.63s =========================
+======================== 1 passed, 1 warning in 0.62s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 34/48
+MUTACION 34/63
 test: tests/integration/test_api_blocks.py::test_odontologist_creates_block_for_other_professional_forbidden
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -2267,7 +2272,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 ______ test_odontologist_creates_block_for_other_professional_forbidden _______
 tests\integration\test_api_blocks.py:275: in test_odontologist_creates_block_for_other_professional_forbidden
     assert res.status_code == 403, res.text
-E   AssertionError: {"block":{"id":"557c2aae-fc1c-48b0-9ef0-d06ae7e6bc35","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Otro prof"},"affectedAppointments":[]}
+E   AssertionError: {"block":{"id":"47399b12-c25a-48eb-b378-f7b1afa4ed7d","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Otro prof"},"affectedAppointments":[]}
 E   assert 201 == 403
 E    +  where 201 = <Response [201 Created]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -2281,10 +2286,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_odontologist_creates_block_for_other_professional_forbidden
-======================== 1 failed, 1 warning in 0.81s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: {"block":{"id":"557c2aae-fc1c-48b0-9ef0-d06ae7e6bc35","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T12:<linea>:<linea>Z","endAt":"2026-11-16T16:<linea>:
+primera linea del fallo: AssertionError: {"block":{"id":"47399b12-c25a-48eb-b378-f7b1afa4ed7d","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T12:<linea>:<linea>Z","endAt":"2026-11-16T16:<linea>:
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -2301,11 +2306,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.62s =========================
+======================== 1 passed, 1 warning in 0.60s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 35/48
+MUTACION 35/63
 test: tests/integration/test_api_blocks.py::test_reception_creates_block_forbidden
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -2327,7 +2332,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 ___________________ test_reception_creates_block_forbidden ____________________
 tests\integration\test_api_blocks.py:292: in test_reception_creates_block_forbidden
     assert res.status_code == 403, res.text
-E   AssertionError: {"block":{"id":"856f36d1-544f-4513-a789-8cef4d5ec58b","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Recep"},"affectedAppointments":[]}
+E   AssertionError: {"block":{"id":"87364504-9c53-4643-b68c-9321ff298c05","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:00:00Z","endAt":"2026-11-16T16:00:00Z","reason":"Recep"},"affectedAppointments":[]}
 E   assert 201 == 403
 E    +  where 201 = <Response [201 Created]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -2341,10 +2346,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_reception_creates_block_forbidden
-======================== 1 failed, 1 warning in 0.80s =========================
+======================== 1 failed, 1 warning in 0.90s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: {"block":{"id":"856f36d1-544f-4513-a789-8cef4d5ec58b","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:<linea>:<linea>Z","endAt":"2026-11-16T16:<linea>:
+primera linea del fallo: AssertionError: {"block":{"id":"87364504-9c53-4643-b68c-9321ff298c05","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T12:<linea>:<linea>Z","endAt":"2026-11-16T16:<linea>:
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -2361,11 +2366,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.56s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 36/48
+MUTACION 36/63
 test: tests/integration/test_api_blocks.py::test_block_start_equal_to_end_returns_422
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -2520,7 +2525,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_block_start_equal_to_end_returns_422
-======================== 1 failed, 1 warning in 1.67s =========================
+======================== 1 failed, 1 warning in 1.70s =========================
 
 resultado: FALLO
 primera linea del fallo: AttributeError: 'Rejected' object has no attribute 'entity'
@@ -2540,11 +2545,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.57s =========================
+======================== 1 passed, 1 warning in 0.61s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 37/48
+MUTACION 37/63
 test: tests/integration/test_api_blocks.py::test_block_without_timezone_returns_400
 archivo: backend/app/api/schemas.py
 --- texto original ---
@@ -2703,7 +2708,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_block_without_timezone_returns_400
-======================== 1 failed, 1 warning in 1.66s =========================
+======================== 1 failed, 1 warning in 1.70s =========================
 
 resultado: FALLO
 primera linea del fallo: ValueError: start_at necesita zona horaria (datetime naive)
@@ -2723,11 +2728,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.61s =========================
+======================== 1 passed, 1 warning in 0.59s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 38/48
+MUTACION 38/63
 test: tests/integration/test_api_blocks.py::test_block_unknown_professional_returns_404
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -2879,7 +2884,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_block_unknown_professional_returns_404
-======================== 1 failed, 1 warning in 1.56s =========================
+======================== 1 failed, 1 warning in 1.76s =========================
 
 resultado: FALLO
 primera linea del fallo: ValueError: Error forzado
@@ -2899,11 +2904,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.65s =========================
+======================== 1 passed, 1 warning in 0.62s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 39/48
+MUTACION 39/63
 test: tests/integration/test_api_blocks.py::test_block_overlapping_reserved_appointment_reports_it_without_canceling
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -2940,7 +2945,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_block_overlapping_reserved_appointment_reports_it_without_canceling
-======================== 1 failed, 1 warning in 0.85s =========================
+======================== 1 failed, 1 warning in 0.90s =========================
 
 resultado: FALLO
 primera linea del fallo: assert 0 == 1
@@ -2960,11 +2965,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.62s =========================
+======================== 1 passed, 1 warning in 0.61s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 40/48
+MUTACION 40/63
 test: tests/integration/test_api_blocks.py::test_block_overlapping_canceled_appointment_not_reported
 archivo: backend/app/domain/rules/blocks.py
 --- texto original ---
@@ -2990,7 +2995,7 @@ tests\integration\test_api_blocks.py:431: in test_block_overlapping_canceled_app
     assert res.json()["affectedAppointments"] == []
 E   AssertionError: assert [{'chairId': ...0000c1', ...}] == []
 E     
-E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'endAt': '2026-11-16T13:30:00Z', 'id': '1769e01c-a55b-4ab0-adc9-a910b7f4aabb', 'patientId': '00000000-0000-0000-0000-0000000000c1', ...}
+E     Left contains one more item: {'chairId': '00000000-0000-0000-0000-0000000000b1', 'endAt': '2026-11-16T13:30:00Z', 'id': 'b549a34c-cbb4-4c76-ab4d-b44cdbab40b2', 'patientId': '00000000-0000-0000-0000-0000000000c1', ...}
 E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
@@ -3003,7 +3008,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_block_overlapping_canceled_appointment_not_reported
-======================== 1 failed, 1 warning in 0.95s =========================
+======================== 1 failed, 1 warning in 0.92s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [{'chairId': ...0000c1', ...}] == []
@@ -3023,11 +3028,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.70s =========================
+======================== 1 passed, 1 warning in 0.67s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 41/48
+MUTACION 41/63
 test: tests/integration/test_api_blocks.py::test_odontologist_deletes_own_block
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -3053,7 +3058,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 _____________________ test_odontologist_deletes_own_block _____________________
 tests\integration\test_api_blocks.py:458: in test_odontologist_deletes_own_block
     assert res.status_code == 200, res.text
-E   AssertionError: {"id":"f129d5d5-d2d6-4972-aefb-83dbf7aade9b","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T12:00:00Z","reason":"Para borrar"}
+E   AssertionError: {"id":"06ebbd92-ca67-4a42-8976-f15644a7fed5","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T12:00:00Z","reason":"Para borrar"}
 E   assert 201 == 200
 E    +  where 201 = <Response [201 Created]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -3067,10 +3072,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_odontologist_deletes_own_block
-======================== 1 failed, 1 warning in 0.81s =========================
+======================== 1 failed, 1 warning in 0.82s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: {"id":"f129d5d5-d2d6-4972-aefb-83dbf7aade9b","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T12:<linea>:<linea>Z"
+primera linea del fallo: AssertionError: {"id":"06ebbd92-ca67-4a42-8976-f15644a7fed5","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T12:<linea>:<linea>Z"
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -3087,11 +3092,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.61s =========================
+======================== 1 passed, 1 warning in 0.69s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 42/48
+MUTACION 42/63
 test: tests/integration/test_api_blocks.py::test_admin_deletes_block_of_any_professional
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -3129,7 +3134,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_admin_deletes_block_of_any_professional
-======================== 1 failed, 1 warning in 0.78s =========================
+======================== 1 failed, 1 warning in 0.81s =========================
 
 resultado: FALLO
 primera linea del fallo: AssertionError: {"code":"NOT_FOUND","message":"Forzado"}
@@ -3149,11 +3154,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.62s =========================
+======================== 1 passed, 1 warning in 0.57s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 43/48
+MUTACION 43/63
 test: tests/integration/test_api_blocks.py::test_odontologist_deletes_other_professional_block_forbidden
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -3177,7 +3182,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 ________ test_odontologist_deletes_other_professional_block_forbidden _________
 tests\integration\test_api_blocks.py:511: in test_odontologist_deletes_other_professional_block_forbidden
     assert res.status_code == 403, res.text
-E   AssertionError: {"id":"4c315cd0-e016-4392-896c-0bc70abed1bc","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T12:00:00Z","reason":"No tocar"}
+E   AssertionError: {"id":"6a92df8f-1574-4c2d-ad53-4f0ac754ac00","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T12:00:00Z","reason":"No tocar"}
 E   assert 200 == 403
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -3191,10 +3196,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_odontologist_deletes_other_professional_block_forbidden
-======================== 1 failed, 1 warning in 0.87s =========================
+======================== 1 failed, 1 warning in 0.81s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: {"id":"4c315cd0-e016-4392-896c-0bc70abed1bc","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T12:<linea>:<linea>Z"
+primera linea del fallo: AssertionError: {"id":"6a92df8f-1574-4c2d-ad53-4f0ac754ac00","professionalId":"00000000-0000-0000-0000-000000000002","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T12:<linea>:<linea>Z"
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -3211,11 +3216,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.63s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 44/48
+MUTACION 44/63
 test: tests/integration/test_api_blocks.py::test_reception_deletes_block_forbidden
 archivo: backend/app/api/blocks.py
 --- texto original ---
@@ -3237,7 +3242,7 @@ tests\integration\test_api_blocks.py F                                   [100%]
 ___________________ test_reception_deletes_block_forbidden ____________________
 tests\integration\test_api_blocks.py:535: in test_reception_deletes_block_forbidden
     assert res.status_code == 403, res.text
-E   AssertionError: {"id":"11cb02b0-788c-4a21-b25d-79b646085058","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T12:00:00Z","reason":"Recep delete"}
+E   AssertionError: {"id":"b2e7d050-fb46-4a0a-98aa-3c3e36987732","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:00:00Z","endAt":"2026-11-16T12:00:00Z","reason":"Recep delete"}
 E   assert 200 == 403
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -3251,10 +3256,10 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_reception_deletes_block_forbidden
-======================== 1 failed, 1 warning in 0.77s =========================
+======================== 1 failed, 1 warning in 0.81s =========================
 
 resultado: FALLO
-primera linea del fallo: AssertionError: {"id":"11cb02b0-788c-4a21-b25d-79b646085058","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T12:<linea>:<linea>Z"
+primera linea del fallo: AssertionError: {"id":"b2e7d050-fb46-4a0a-98aa-3c3e36987732","professionalId":"00000000-0000-0000-0000-000000000001","startAt":"2026-11-16T09:<linea>:<linea>Z","endAt":"2026-11-16T12:<linea>:<linea>Z"
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -3271,11 +3276,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.70s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 45/48
+MUTACION 45/63
 test: tests/integration/test_api_blocks.py::test_delete_unknown_block_returns_404
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -3435,7 +3440,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_blocks.py::test_delete_unknown_block_returns_404
-======================== 1 failed, 1 warning in 1.52s =========================
+======================== 1 failed, 1 warning in 1.71s =========================
 
 resultado: FALLO
 primera linea del fallo: AttributeError: 'NoneType' object has no attribute 'professional_id'
@@ -3455,11 +3460,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.72s =========================
+======================== 1 passed, 1 warning in 0.59s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 46/48
+MUTACION 46/63
 test: tests/integration/test_api_blocks.py::test_delete_block_frees_schedule
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -3526,11 +3531,11 @@ tests\integration\test_api_blocks.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.65s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 47/48
+MUTACION 47/63
 test: tests/integration/test_availability_concurrency.py::test_concurrent_block_waiting_for_booking_reports_new_appointment
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -3555,7 +3560,7 @@ ______ test_concurrent_block_waiting_for_booking_reports_new_appointment ______
 tests\integration\test_availability_concurrency.py:171: in test_concurrent_block_waiting_for_booking_reports_new_appointment
     assert any(apt.id == apt_id for apt in affected)
 E   assert False
-E    +  where False = any(<generator object test_concurrent_block_waiting_for_booking_reports_new_appointment.<locals>.<genexpr> at 0x0000016C9E1BA190>)
+E    +  where False = any(<generator object test_concurrent_block_waiting_for_booking_reports_new_appointment.<locals>.<genexpr> at 0x000002081457A190>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -3567,7 +3572,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_availability_concurrency.py::test_concurrent_block_waiting_for_booking_reports_new_appointment
-======================== 1 failed, 1 warning in 0.62s =========================
+======================== 1 failed, 1 warning in 0.64s =========================
 
 resultado: FALLO
 primera linea del fallo: assert False
@@ -3587,11 +3592,11 @@ tests\integration\test_availability_concurrency.py .                     [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.45s =========================
+======================== 1 passed, 1 warning in 0.46s =========================
 
 restaurado: test en verde
 ================================================================================
-MUTACION 48/48
+MUTACION 48/63
 test: tests/integration/test_availability_concurrency.py::test_concurrent_booking_waiting_for_block_receives_blocked_time
 archivo: backend/app/services/availability.py
 --- texto original ---
@@ -3632,7 +3637,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_availability_concurrency.py::test_concurrent_booking_waiting_for_block_receives_blocked_time
-======================== 1 failed, 1 warning in 0.68s =========================
+======================== 1 failed, 1 warning in 0.52s =========================
 
 resultado: FALLO
 primera linea del fallo: NameError: name 'Ok' is not defined
@@ -3652,12 +3657,864 @@ tests\integration\test_availability_concurrency.py .                     [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.60s =========================
+======================== 1 passed, 1 warning in 0.38s =========================
+
+restaurado: test en verde
+================================================================================
+MUTACION 49/63
+test: tests/integration/test_availability_persistence.py::test_block_repository_list_by_professional_in_range
+archivo: backend/app/repositories/blocks.py
+--- texto original ---
+        if start_at is not None:
+            stmt = stmt.where(BlockModel.end_at > start_at)
+--- texto mutado ---
+        if start_at is not None:
+            stmt = stmt.where(BlockModel.end_at >= start_at)
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_persistence.py F                     [100%]
+
+================================== FAILURES ===================================
+_____________ test_block_repository_list_by_professional_in_range _____________
+tests\integration\test_availability_persistence.py:506: in test_block_repository_list_by_professional_in_range
+    assert res_border_after == ()
+E   AssertionError: assert (Block(id=UUI...Congreso A'),) == ()
+E     
+E     Left contains one more item: Block(id=UUID('00000000-0000-0000-0000-000000000b11'), professional_id=UUID('00000000-0000-0000-0000-000000000001'), s...atetime.timezone.utc), end_at=datetime.datetime(2026, 12, 7, 16, 0, tzinfo=datetime.timezone.utc), reason='Congreso A')
+E     Use -v to get more diff
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_persistence.py::test_block_repository_list_by_professional_in_range
+======================== 1 failed, 1 warning in 0.41s =========================
+
+resultado: FALLO
+primera linea del fallo: AssertionError: assert (Block(id=UUI...Congreso A'),) == ()
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_persistence.py .                     [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.17s =========================
+
+restaurado: test en verde
+================================================================================
+MUTACION 50/63
+test: tests/api/test_availability_schemas.py::test_working_hours_slot_valid_and_24_end
+archivo: backend/app/api/schemas.py
+--- texto original ---
+    @field_validator("end")
+    @classmethod
+    def validate_end(cls, v: str) -> str:
+        if not _END_TIME_REGEX.match(v):
+            raise ValueError("end debe tener formato HH:MM válido (00:00 a 24:00).")
+        return v
+--- texto mutado ---
+    @field_validator("end")
+    @classmethod
+    def validate_end(cls, v: str) -> str:
+        if not _END_TIME_REGEX.match(v):
+            raise ValueError("end debe tener formato HH:MM válido (00:00 a 24:00).")
+        return "23:59"
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py F                                 [100%]
+
+================================== FAILURES ===================================
+__________________ test_working_hours_slot_valid_and_24_end ___________________
+tests\api\test_availability_schemas.py:23: in test_working_hours_slot_valid_and_24_end
+    assert slot.end == "13:00"
+E   AssertionError: assert '23:59' == '13:00'
+E     
+E     - 13:00
+E     + 23:59
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_schemas.py::test_working_hours_slot_valid_and_24_end
+============================== 1 failed in 0.20s ==============================
+
+resultado: FALLO
+primera linea del fallo: AssertionError: assert '23:<linea>' == '13:<linea>'
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py .                                 [100%]
+
+============================== 1 passed in 0.08s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 51/63
+test: tests/api/test_availability_schemas.py::test_working_hours_slot_rejects_25_and_24_start
+archivo: backend/app/api/schemas.py
+--- texto original ---
+    @field_validator("start")
+    @classmethod
+    def validate_start(cls, v: str) -> str:
+        if not _START_TIME_REGEX.match(v):
+            raise ValueError("start debe tener formato HH:MM válido (00:00 a 23:59).")
+        return v
+--- texto mutado ---
+    @field_validator("start")
+    @classmethod
+    def validate_start(cls, v: str) -> str:
+        return v
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py F                                 [100%]
+
+================================== FAILURES ===================================
+_______________ test_working_hours_slot_rejects_25_and_24_start _______________
+tests\api\test_availability_schemas.py:33: in test_working_hours_slot_rejects_25_and_24_start
+    with pytest.raises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_schemas.py::test_working_hours_slot_rejects_25_and_24_start
+============================== 1 failed in 0.17s ==============================
+
+resultado: FALLO
+primera linea del fallo: Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py .                                 [100%]
+
+============================== 1 passed in 0.08s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 52/63
+test: tests/api/test_availability_schemas.py::test_working_hours_slot_extra_forbid
+archivo: backend/app/api/schemas.py
+--- texto original ---
+class WorkingHoursSlotInput(BaseModel):
+    weekday: int
+    start: str
+    end: str
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+--- texto mutado ---
+class WorkingHoursSlotInput(BaseModel):
+    weekday: int
+    start: str
+    end: str
+
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py F                                 [100%]
+
+================================== FAILURES ===================================
+____________________ test_working_hours_slot_extra_forbid _____________________
+tests\api\test_availability_schemas.py:41: in test_working_hours_slot_extra_forbid
+    with pytest.raises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_schemas.py::test_working_hours_slot_extra_forbid
+============================== 1 failed in 0.18s ==============================
+
+resultado: FALLO
+primera linea del fallo: Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py .                                 [100%]
+
+============================== 1 passed in 0.09s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 53/63
+test: tests/api/test_availability_schemas.py::test_block_input_timezone_mandatory
+archivo: backend/app/api/schemas.py
+--- texto original ---
+    @field_validator("start_at", "end_at")
+    @classmethod
+    def validate_tz(cls, v: datetime) -> datetime:
+        if v.tzinfo is None:
+            raise ValueError("La fecha y hora debe incluir zona horaria.")
+        return v
+--- texto mutado ---
+    @field_validator("start_at", "end_at")
+    @classmethod
+    def validate_tz(cls, v: datetime) -> datetime:
+        return v
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py F                                 [100%]
+
+================================== FAILURES ===================================
+_____________________ test_block_input_timezone_mandatory _____________________
+tests\api\test_availability_schemas.py:60: in test_block_input_timezone_mandatory
+    with pytest.raises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_schemas.py::test_block_input_timezone_mandatory
+============================== 1 failed in 0.17s ==============================
+
+resultado: FALLO
+primera linea del fallo: Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py .                                 [100%]
+
+============================== 1 passed in 0.08s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 54/63
+test: tests/api/test_availability_schemas.py::test_blocks_query_filter_timezone_mandatory
+archivo: backend/app/api/schemas.py
+--- texto original ---
+    @field_validator("from_time", "to_time")
+    @classmethod
+    def validate_tz(cls, v: datetime | None) -> datetime | None:
+        if v is not None and v.tzinfo is None:
+            raise ValueError("La fecha y hora debe incluir zona horaria.")
+        return v
+--- texto mutado ---
+    @field_validator("from_time", "to_time")
+    @classmethod
+    def validate_tz(cls, v: datetime | None) -> datetime | None:
+        return v
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py F                                 [100%]
+
+================================== FAILURES ===================================
+_________________ test_blocks_query_filter_timezone_mandatory _________________
+tests\api\test_availability_schemas.py:86: in test_blocks_query_filter_timezone_mandatory
+    with pytest.raises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_schemas.py::test_blocks_query_filter_timezone_mandatory
+============================== 1 failed in 0.16s ==============================
+
+resultado: FALLO
+primera linea del fallo: Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py .                                 [100%]
+
+============================== 1 passed in 0.08s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 55/63
+test: tests/api/test_availability_schemas.py::test_affected_appointment_response_camelcase
+archivo: backend/app/api/schemas.py
+--- texto original ---
+    patient_id: UUID = Field(serialization_alias="patientId")
+--- texto mutado ---
+    patient_id: UUID = Field(serialization_alias="patient_id")
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py F                                 [100%]
+
+================================== FAILURES ===================================
+________________ test_affected_appointment_response_camelcase _________________
+tests\api\test_availability_schemas.py:110: in test_affected_appointment_response_camelcase
+    assert dumped == {
+E   AssertionError: assert {'chairId': '...a Pérez', ...} == {'chairId': '...00000c1', ...}
+E     
+E     Omitting 6 identical items, use -vv to show
+E     Left contains 1 more item:
+E     {'patient_id': '00000000-0000-0000-0000-0000000000c1'}
+E     Right contains 1 more item:
+E     {'patientId': '00000000-0000-0000-0000-0000000000c1'}
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_schemas.py::test_affected_appointment_response_camelcase
+============================== 1 failed in 0.20s ==============================
+
+resultado: FALLO
+primera linea del fallo: AssertionError: assert {'chairId': '...a Pérez', ...} == {'chairId': '...00000c1', ...}
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_schemas.py .                                 [100%]
+
+============================== 1 passed in 0.08s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 56/63
+test: tests/integration/test_availability_services.py::test_get_working_hours_success_and_not_found
+archivo: backend/app/services/availability.py
+--- texto original ---
+def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:
+    prof = ProfessionalRepository(session).get_by_id(professional_id)
+    if prof is None:
+        raise NotFoundError("Profesional no encontrado.")
+--- texto mutado ---
+def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:
+    prof = ProfessionalRepository(session).get_by_id(professional_id)
+    if prof is None:
+        raise ValueError("Error forzado")
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py F                        [100%]
+
+================================== FAILURES ===================================
+________________ test_get_working_hours_success_and_not_found _________________
+tests\integration\test_availability_services.py:68: in test_get_working_hours_success_and_not_found
+    get_working_hours(session, P_UNKNOWN)
+app\services\availability.py:64: in get_working_hours
+    raise ValueError("Error forzado")
+E   ValueError: Error forzado
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_services.py::test_get_working_hours_success_and_not_found
+======================== 1 failed, 1 warning in 0.43s =========================
+
+resultado: FALLO
+primera linea del fallo: ValueError: Error forzado
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py .                        [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.23s =========================
+
+restaurado: test en verde
+================================================================================
+MUTACION 57/63
+test: tests/integration/test_availability_services.py::test_replace_working_hours_empty_and_inactive_professional
+archivo: backend/app/services/availability.py
+--- texto original ---
+def replace_working_hours(
+    session: Session,
+    professional_id: UUID,
+    slots: Sequence[WorkingHours],
+    now: datetime,
+    tz: ZoneInfo,
+    auto_commit: bool = True,
+) -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:
+    prof = ProfessionalRepository(session).get_by_id(professional_id)
+    if prof is None:
+        raise NotFoundError("Profesional no encontrado.")
+--- texto mutado ---
+def replace_working_hours(
+    session: Session,
+    professional_id: UUID,
+    slots: Sequence[WorkingHours],
+    now: datetime,
+    tz: ZoneInfo,
+    auto_commit: bool = True,
+) -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:
+    prof = ProfessionalRepository(session).get_by_id(professional_id)
+    if prof is None or not prof.active:
+        raise NotFoundError("Profesional no encontrado.")
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py F                        [100%]
+
+================================== FAILURES ===================================
+_________ test_replace_working_hours_empty_and_inactive_professional __________
+tests\integration\test_availability_services.py:95: in test_replace_working_hours_empty_and_inactive_professional
+    res_inactive, _ = replace_working_hours(session, prof_id, slots, now, TZ)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\services\availability.py:78: in replace_working_hours
+    raise NotFoundError("Profesional no encontrado.")
+E   app.api.errors.NotFoundError: Profesional no encontrado.
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_services.py::test_replace_working_hours_empty_and_inactive_professional
+======================== 1 failed, 1 warning in 0.47s =========================
+
+resultado: FALLO
+primera linea del fallo: app.api.errors.NotFoundError: Profesional no encontrado.
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py .                        [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.24s =========================
+
+restaurado: test en verde
+================================================================================
+MUTACION 58/63
+test: tests/integration/test_availability_services.py::test_replace_working_hours_outside_90_days_window
+archivo: backend/app/services/availability.py
+--- texto original ---
+    candidates = AppointmentRepository(session).list_for_professional_in_range(
+        professional_id, now, now + timedelta(days=90)
+    )
+--- texto mutado ---
+    candidates = AppointmentRepository(session).list_for_professional_in_range(
+        professional_id, now, now + timedelta(days=120)
+    )
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py F                        [100%]
+
+================================== FAILURES ===================================
+______________ test_replace_working_hours_outside_90_days_window ______________
+tests\integration\test_availability_services.py:161: in test_replace_working_hours_outside_90_days_window
+    assert len(outside) == 1
+E   AssertionError: assert 2 == 1
+E    +  where 2 = len([AffectedAppointment(id=UUID('fd93ce3e-56d0-4151-98cb-a20163918764'), patient_id=UUID('edd257dc-990f-4166-bb6f-dc88573...tetime.timezone.utc), end_at=datetime.datetime(2027, 2, 15, 13, 30, tzinfo=datetime.timezone.utc), status='reservado')])
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_services.py::test_replace_working_hours_outside_90_days_window
+======================== 1 failed, 1 warning in 0.48s =========================
+
+resultado: FALLO
+primera linea del fallo: AssertionError: assert 2 == 1
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py .                        [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.25s =========================
+
+restaurado: test en verde
+================================================================================
+MUTACION 59/63
+test: tests/integration/test_availability_services.py::test_create_and_delete_block_services
+archivo: backend/app/services/availability.py
+--- texto original ---
+def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:
+    repo = BlockRepository(session, SqlAppointmentReader(session))
+    deleted = repo.delete(block_id)
+    if deleted is None:
+        raise NotFoundError("Bloqueo no encontrado.")
+--- texto mutado ---
+def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:
+    repo = BlockRepository(session, SqlAppointmentReader(session))
+    deleted = repo.delete(block_id)
+    if deleted is None:
+        raise ValueError("Error forzado")
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py F                        [100%]
+
+================================== FAILURES ===================================
+____________________ test_create_and_delete_block_services ____________________
+tests\integration\test_availability_services.py:225: in test_create_and_delete_block_services
+    delete_block(session, uuid4())
+app\services\availability.py:160: in delete_block
+    raise ValueError("Error forzado")
+E   ValueError: Error forzado
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_availability_services.py::test_create_and_delete_block_services
+======================== 1 failed, 1 warning in 0.46s =========================
+
+resultado: FALLO
+primera linea del fallo: ValueError: Error forzado
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\integration\test_availability_services.py .                        [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.22s =========================
+
+restaurado: test en verde
+================================================================================
+MUTACION 60/63
+test: tests/api/test_own_professional_guard.py::test_odontologist_over_own_professional_passes
+archivo: backend/app/api/deps.py
+--- texto original ---
+        if permission.actor.professional_id != professional_id:
+--- texto mutado ---
+        if permission.actor.professional_id == professional_id:
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_own_professional_guard.py F                               [100%]
+
+================================== FAILURES ===================================
+_______________ test_odontologist_over_own_professional_passes ________________
+tests\api\test_own_professional_guard.py:23: in test_odontologist_over_own_professional_passes
+    ensure_own_professional(permission, P1)
+app\api\deps.py:132: in ensure_own_professional
+    raise DomainRejectedError(
+E   app.api.errors.DomainRejectedError: Domain rejected with 1 violation(s)
+=========================== short test summary info ===========================
+FAILED tests/api/test_own_professional_guard.py::test_odontologist_over_own_professional_passes
+============================== 1 failed in 0.80s ==============================
+
+resultado: FALLO
+primera linea del fallo: app.api.errors.DomainRejectedError: Domain rejected with 1 violation(s)
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_own_professional_guard.py .                               [100%]
+
+============================== 1 passed in 0.63s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 61/63
+test: tests/api/test_own_professional_guard.py::test_odontologist_over_other_professional_raises_403_with_cell_message
+archivo: backend/app/api/deps.py
+--- texto original ---
+            message = (
+                PERMISSION_MESSAGES.get((res, act))
+                if res and act
+                else None
+            )
+--- texto mutado ---
+            message = "Mensaje forzado para prueba de mutacion"
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_own_professional_guard.py F                               [100%]
+
+================================== FAILURES ===================================
+___ test_odontologist_over_other_professional_raises_403_with_cell_message ____
+tests\api\test_own_professional_guard.py:37: in test_odontologist_over_other_professional_raises_403_with_cell_message
+    assert violations[0].message == "No tiene permiso para leer horarios."
+E   AssertionError: assert 'Mensaje forz...a de mutacion' == 'No tiene per...eer horarios.'
+E     
+E     - No tiene permiso para leer horarios.
+E     + Mensaje forzado para prueba de mutacion
+=========================== short test summary info ===========================
+FAILED tests/api/test_own_professional_guard.py::test_odontologist_over_other_professional_raises_403_with_cell_message
+============================== 1 failed in 0.77s ==============================
+
+resultado: FALLO
+primera linea del fallo: AssertionError: assert 'Mensaje forz...a de mutacion' == 'No tiene per...eer horarios.'
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_own_professional_guard.py .                               [100%]
+
+============================== 1 passed in 0.62s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 62/63
+test: tests/api/test_own_professional_guard.py::test_reception_and_admin_pass_always
+archivo: backend/app/api/deps.py
+--- texto original ---
+    if permission.scope is Scope.OWN:
+--- texto mutado ---
+    if permission.scope is Scope.OWN or permission.scope is Scope.ALL:
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_own_professional_guard.py F                               [100%]
+
+================================== FAILURES ===================================
+____________________ test_reception_and_admin_pass_always _____________________
+tests\api\test_own_professional_guard.py:61: in test_reception_and_admin_pass_always
+    ensure_own_professional(perm_recep, P1)
+app\api\deps.py:132: in ensure_own_professional
+    raise DomainRejectedError(
+E   app.api.errors.DomainRejectedError: Domain rejected with 1 violation(s)
+=========================== short test summary info ===========================
+FAILED tests/api/test_own_professional_guard.py::test_reception_and_admin_pass_always
+============================== 1 failed in 0.77s ==============================
+
+resultado: FALLO
+primera linea del fallo: app.api.errors.DomainRejectedError: Domain rejected with 1 violation(s)
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_own_professional_guard.py .                               [100%]
+
+============================== 1 passed in 0.68s ==============================
+
+restaurado: test en verde
+================================================================================
+MUTACION 63/63
+test: tests/api/test_availability_openapi.py::test_availability_routes_in_openapi
+archivo: backend/app/api/working_hours.py
+--- texto original ---
+router = APIRouter(prefix="/professionals", tags=["Horarios"])
+--- texto mutado ---
+router = APIRouter(prefix="/professionals", tags=["HorariosMutados"])
+--- fin de textos ---
+--- pytest con la mutacion (codigo de salida 1) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_openapi.py F                                 [100%]
+
+================================== FAILURES ===================================
+_____________________ test_availability_routes_in_openapi _____________________
+tests\api\test_availability_openapi.py:17: in test_availability_routes_in_openapi
+    assert "Horarios" in wh_get["tags"]
+E   AssertionError: assert 'Horarios' in ['HorariosMutados']
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/test_availability_openapi.py::test_availability_routes_in_openapi
+======================== 1 failed, 1 warning in 1.53s =========================
+
+resultado: FALLO
+primera linea del fallo: AssertionError: assert 'Horarios' in ['HorariosMutados']
+--- pytest tras restaurar (codigo de salida 0) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 1 item
+
+tests\api\test_availability_openapi.py .                                 [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 1.21s =========================
 
 restaurado: test en verde
 ================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 48
+mutaciones que hicieron fallar su test: 63
 mutaciones que NO lo hicieron fallar: 0
-SHA-256 de backend/app despues: 9028e11a7f434f8ec47c1b33c286deb723e7b1e1239b966b1305d40c7e585358
+SHA-256 de backend/app despues: 4699d91df217d57c4159ebe35b5c0062627aed18c1331b4491ff017bc041301d
 SHA-256 sin cambios: si

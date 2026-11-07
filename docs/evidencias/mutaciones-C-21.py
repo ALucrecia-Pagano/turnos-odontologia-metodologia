@@ -43,6 +43,11 @@ TEST_DOMAIN_WH = "tests/domain/test_working_hours.py"
 TEST_API_WH = "tests/integration/test_api_working_hours.py"
 TEST_API_BLOCKS = "tests/integration/test_api_blocks.py"
 TEST_CONCURRENCY = "tests/integration/test_availability_concurrency.py"
+TEST_PERSISTENCE = "tests/integration/test_availability_persistence.py"
+TEST_SCHEMAS = "tests/api/test_availability_schemas.py"
+TEST_SERVICES = "tests/integration/test_availability_services.py"
+TEST_GUARD = "tests/api/test_own_professional_guard.py"
+TEST_OPENAPI = "tests/api/test_availability_openapi.py"
 
 DOMAIN_WH = "backend/app/domain/rules/working_hours.py"
 REPO_BLOCKS = "backend/app/repositories/blocks.py"
@@ -418,6 +423,126 @@ MUTATIONS: tuple[Mutation, ...] = (
         SERVICE_AVAILABILITY,
         "    res = repo.create(candidate)\n    if isinstance(res, Rejected):\n        raise DomainRejectedError(res)",
         "    res = Ok(candidate)\n    if isinstance(res, Rejected):\n        raise DomainRejectedError(res)",
+    ),
+    # -------------------------------------------------------------------------
+    # 2.1 Repositorio (1 test)
+    # -------------------------------------------------------------------------
+    Mutation(
+        TEST_PERSISTENCE,
+        "test_block_repository_list_by_professional_in_range",
+        REPO_BLOCKS,
+        "        if start_at is not None:\n            stmt = stmt.where(BlockModel.end_at > start_at)",
+        "        if start_at is not None:\n            stmt = stmt.where(BlockModel.end_at >= start_at)",
+    ),
+    # -------------------------------------------------------------------------
+    # 2.2 Esquemas (6 tests)
+    # -------------------------------------------------------------------------
+    Mutation(
+        TEST_SCHEMAS,
+        "test_working_hours_slot_valid_and_24_end",
+        API_SCHEMAS,
+        '    @field_validator("end")\n    @classmethod\n    def validate_end(cls, v: str) -> str:\n        if not _END_TIME_REGEX.match(v):\n            raise ValueError("end debe tener formato HH:MM válido (00:00 a 24:00).")\n        return v',
+        '    @field_validator("end")\n    @classmethod\n    def validate_end(cls, v: str) -> str:\n        if not _END_TIME_REGEX.match(v):\n            raise ValueError("end debe tener formato HH:MM válido (00:00 a 24:00).")\n        return "23:59"',
+    ),
+    Mutation(
+        TEST_SCHEMAS,
+        "test_working_hours_slot_rejects_25_and_24_start",
+        API_SCHEMAS,
+        '    @field_validator("start")\n    @classmethod\n    def validate_start(cls, v: str) -> str:\n        if not _START_TIME_REGEX.match(v):\n            raise ValueError("start debe tener formato HH:MM válido (00:00 a 23:59).")\n        return v',
+        '    @field_validator("start")\n    @classmethod\n    def validate_start(cls, v: str) -> str:\n        return v',
+    ),
+    Mutation(
+        TEST_SCHEMAS,
+        "test_working_hours_slot_extra_forbid",
+        API_SCHEMAS,
+        'class WorkingHoursSlotInput(BaseModel):\n    weekday: int\n    start: str\n    end: str\n\n    model_config = ConfigDict(populate_by_name=True, extra="forbid")',
+        'class WorkingHoursSlotInput(BaseModel):\n    weekday: int\n    start: str\n    end: str\n\n    model_config = ConfigDict(populate_by_name=True, extra="ignore")',
+    ),
+    Mutation(
+        TEST_SCHEMAS,
+        "test_block_input_timezone_mandatory",
+        API_SCHEMAS,
+        '    @field_validator("start_at", "end_at")\n    @classmethod\n    def validate_tz(cls, v: datetime) -> datetime:\n        if v.tzinfo is None:\n            raise ValueError("La fecha y hora debe incluir zona horaria.")\n        return v',
+        '    @field_validator("start_at", "end_at")\n    @classmethod\n    def validate_tz(cls, v: datetime) -> datetime:\n        return v',
+    ),
+    Mutation(
+        TEST_SCHEMAS,
+        "test_blocks_query_filter_timezone_mandatory",
+        API_SCHEMAS,
+        '    @field_validator("from_time", "to_time")\n    @classmethod\n    def validate_tz(cls, v: datetime | None) -> datetime | None:\n        if v is not None and v.tzinfo is None:\n            raise ValueError("La fecha y hora debe incluir zona horaria.")\n        return v',
+        '    @field_validator("from_time", "to_time")\n    @classmethod\n    def validate_tz(cls, v: datetime | None) -> datetime | None:\n        return v',
+    ),
+    Mutation(
+        TEST_SCHEMAS,
+        "test_affected_appointment_response_camelcase",
+        API_SCHEMAS,
+        '    patient_id: UUID = Field(serialization_alias="patientId")',
+        '    patient_id: UUID = Field(serialization_alias="patient_id")',
+    ),
+    # -------------------------------------------------------------------------
+    # 3.1 Servicios de disponibilidad (4 tests)
+    # -------------------------------------------------------------------------
+    Mutation(
+        TEST_SERVICES,
+        "test_get_working_hours_success_and_not_found",
+        SERVICE_AVAILABILITY,
+        'def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None:\n        raise NotFoundError("Profesional no encontrado.")',
+        'def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None:\n        raise ValueError("Error forzado")',
+    ),
+    Mutation(
+        TEST_SERVICES,
+        "test_replace_working_hours_empty_and_inactive_professional",
+        SERVICE_AVAILABILITY,
+        'def replace_working_hours(\n    session: Session,\n    professional_id: UUID,\n    slots: Sequence[WorkingHours],\n    now: datetime,\n    tz: ZoneInfo,\n    auto_commit: bool = True,\n) -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None:\n        raise NotFoundError("Profesional no encontrado.")',
+        'def replace_working_hours(\n    session: Session,\n    professional_id: UUID,\n    slots: Sequence[WorkingHours],\n    now: datetime,\n    tz: ZoneInfo,\n    auto_commit: bool = True,\n) -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None or not prof.active:\n        raise NotFoundError("Profesional no encontrado.")',
+    ),
+    Mutation(
+        TEST_SERVICES,
+        "test_replace_working_hours_outside_90_days_window",
+        SERVICE_AVAILABILITY,
+        '    candidates = AppointmentRepository(session).list_for_professional_in_range(\n        professional_id, now, now + timedelta(days=90)\n    )',
+        '    candidates = AppointmentRepository(session).list_for_professional_in_range(\n        professional_id, now, now + timedelta(days=120)\n    )',
+    ),
+    Mutation(
+        TEST_SERVICES,
+        "test_create_and_delete_block_services",
+        SERVICE_AVAILABILITY,
+        'def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:\n    repo = BlockRepository(session, SqlAppointmentReader(session))\n    deleted = repo.delete(block_id)\n    if deleted is None:\n        raise NotFoundError("Bloqueo no encontrado.")',
+        'def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:\n    repo = BlockRepository(session, SqlAppointmentReader(session))\n    deleted = repo.delete(block_id)\n    if deleted is None:\n        raise ValueError("Error forzado")',
+    ),
+    # -------------------------------------------------------------------------
+    # 3.2 Helper de propiedad (3 tests)
+    # -------------------------------------------------------------------------
+    Mutation(
+        TEST_GUARD,
+        "test_odontologist_over_own_professional_passes",
+        API_DEPS,
+        "        if permission.actor.professional_id != professional_id:",
+        "        if permission.actor.professional_id == professional_id:",
+    ),
+    Mutation(
+        TEST_GUARD,
+        "test_odontologist_over_other_professional_raises_403_with_cell_message",
+        API_DEPS,
+        "            message = (\n                PERMISSION_MESSAGES.get((res, act))\n                if res and act\n                else None\n            )",
+        '            message = "Mensaje forzado para prueba de mutacion"',
+    ),
+    Mutation(
+        TEST_GUARD,
+        "test_reception_and_admin_pass_always",
+        API_DEPS,
+        "    if permission.scope is Scope.OWN:",
+        "    if permission.scope is Scope.OWN or permission.scope is Scope.ALL:",
+    ),
+    # -------------------------------------------------------------------------
+    # 7.1 OpenAPI / Swagger (1 test)
+    # -------------------------------------------------------------------------
+    Mutation(
+        TEST_OPENAPI,
+        "test_availability_routes_in_openapi",
+        API_WH,
+        'router = APIRouter(prefix="/professionals", tags=["Horarios"])',
+        'router = APIRouter(prefix="/professionals", tags=["HorariosMutados"])',
     ),
 )
 
