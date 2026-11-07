@@ -1,11 +1,19 @@
 from collections.abc import Sequence
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import Row, Select, select
 from sqlalchemy.orm import Session
 
-from app.db.models import AppointmentModel, AppointmentStatusChangeModel
+from app.db.models import (
+    AppointmentModel,
+    AppointmentStatusChangeModel,
+    ChairModel,
+    PatientModel,
+    ProfessionalModel,
+    ServiceModel,
+)
 from app.domain.intervals import Interval
 from app.domain.model import (
     Appointment,
@@ -100,6 +108,44 @@ def _to_status_change_domain(
     )
 
 
+@dataclass(frozen=True, slots=True)
+class AppointmentWithNames:
+    appointment: Appointment
+    patient_name: str
+    professional_name: str
+    chair_name: str
+    service_name: str
+
+
+def _agenda_select() -> Select[AppointmentModel, str, str, str, str]:
+    return (
+        select(
+            AppointmentModel,
+            PatientModel.full_name,
+            ProfessionalModel.full_name,
+            ChairModel.name,
+            ServiceModel.name,
+        )
+        .join(PatientModel, PatientModel.id == AppointmentModel.patient_id)
+        .join(ProfessionalModel, ProfessionalModel.id == AppointmentModel.professional_id)
+        .join(ChairModel, ChairModel.id == AppointmentModel.chair_id)
+        .join(ServiceModel, ServiceModel.id == AppointmentModel.service_id)
+    )
+
+
+def _to_with_names(
+    row: Row[AppointmentModel, str, str, str, str],
+) -> AppointmentWithNames:
+    model, patient_name, professional_name, chair_name, service_name = row
+    return AppointmentWithNames(
+        appointment=_to_appointment_domain(model),
+        patient_name=patient_name,
+        professional_name=professional_name,
+        chair_name=chair_name,
+        service_name=service_name,
+    )
+
+
 class SqlAppointmentReader:
     def __init__(self, session: Session) -> None:
         self._session = session
@@ -140,6 +186,30 @@ class AppointmentRepository:
         return self._reader.list_for_professional_in_range(
             professional_id, start_at, end_at
         )
+
+    def list_for_agenda_in_range(
+        self,
+        start_at: datetime,
+        end_at: datetime,
+        professional_id: UUID | None = None,
+        chair_id: UUID | None = None,
+    ) -> tuple[AppointmentWithNames, ...]:
+        stmt = _agenda_select().where(
+            AppointmentModel.start_at < end_at,
+            AppointmentModel.end_at > start_at,
+        )
+        if professional_id is not None:
+            stmt = stmt.where(AppointmentModel.professional_id == professional_id)
+        if chair_id is not None:
+            stmt = stmt.where(AppointmentModel.chair_id == chair_id)
+        stmt = stmt.order_by(AppointmentModel.start_at, AppointmentModel.id)
+        return tuple(_to_with_names(row) for row in self._session.execute(stmt).all())
+
+    def get_with_names(self, identifier: UUID) -> AppointmentWithNames | None:
+        row = self._session.execute(
+            _agenda_select().where(AppointmentModel.id == identifier)
+        ).first()
+        return None if row is None else _to_with_names(row)
 
     def list_for_chair_in_range(
         self,

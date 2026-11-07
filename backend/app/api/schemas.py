@@ -1,10 +1,11 @@
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from enum import Enum
 import re
 from typing import Any, Final, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic_core import PydanticCustomError
 
 from app.domain.intervals import Interval
 from app.domain.violations import ReferenceKind, Violation, ViolationCode
@@ -151,6 +152,9 @@ def serialize_violation(v: Violation) -> dict[str, Any]:
     )
     return item.model_dump(by_alias=True, exclude_none=True, mode="json")
 
+
+_LOCAL_DATE_REGEX: Final = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+MAX_AGENDA_DAYS: Final = 31
 
 _START_TIME_REGEX: Final = re.compile(r"^(?:[01]\d|2[0-3]):[0-5]\d$")
 _END_TIME_REGEX: Final = re.compile(r"^(?:(?:[01]\d|2[0-3]):[0-5]\d|24:00)$")
@@ -343,3 +347,88 @@ class HistoryEntryResponse(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
+
+class AgendaQuery(BaseModel):
+    from_date: date = Field(
+        alias="from", description="Fecha local inicial en formato AAAA-MM-DD."
+    )
+    to_date: date = Field(
+        alias="to",
+        description="Fecha local final inclusiva en formato AAAA-MM-DD; máximo 31 días desde from.",
+    )
+    professional_id: UUID | None = Field(
+        default=None,
+        alias="professionalId",
+        description="Filtra turnos, horarios y bloqueos de un profesional.",
+    )
+    chair_id: UUID | None = Field(
+        default=None,
+        alias="chairId",
+        description="Filtra solo los turnos de un sillón.",
+    )
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @field_validator("from_date", "to_date", mode="before")
+    @classmethod
+    def validate_local_date(cls, v: object) -> object:
+        if isinstance(v, date):
+            return v
+        if isinstance(v, str) and _LOCAL_DATE_REGEX.match(v):
+            try:
+                return date.fromisoformat(v)
+            except ValueError:
+                pass
+        raise PydanticCustomError(
+            "invalid_date_format", "La fecha debe tener formato AAAA-MM-DD."
+        )
+
+    @model_validator(mode="after")
+    def validate_range(self) -> "AgendaQuery":
+        if self.to_date < self.from_date:
+            raise PydanticCustomError(
+                "invalid_range_order",
+                "La fecha final no puede ser anterior a la inicial.",
+            )
+        if (self.to_date - self.from_date).days + 1 > MAX_AGENDA_DAYS:
+            raise PydanticCustomError(
+                "invalid_range_length", "El rango no puede superar los 31 días."
+            )
+        return self
+
+
+class AgendaAppointmentResponse(BaseModel):
+    id: UUID
+    patient_id: UUID = Field(serialization_alias="patientId")
+    patient_name: str = Field(serialization_alias="patientName")
+    professional_id: UUID = Field(serialization_alias="professionalId")
+    professional_name: str = Field(serialization_alias="professionalName")
+    chair_id: UUID = Field(serialization_alias="chairId")
+    chair_name: str = Field(serialization_alias="chairName")
+    service_id: UUID = Field(serialization_alias="serviceId")
+    service_name: str = Field(serialization_alias="serviceName")
+    start_at: str = Field(serialization_alias="startAt")
+    end_at: str = Field(serialization_alias="endAt")
+    status: str
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class AgendaWorkingHoursResponse(BaseModel):
+    professional_id: UUID = Field(serialization_alias="professionalId")
+    weekday: int
+    start: str
+    end: str
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class AgendaResponse(BaseModel):
+    from_date: date = Field(serialization_alias="from")
+    to_date: date = Field(serialization_alias="to")
+    timezone: str
+    appointments: list[AgendaAppointmentResponse]
+    working_hours: list[AgendaWorkingHoursResponse] = Field(serialization_alias="workingHours")
+    blocks: list[BlockResponse]
+
+    model_config = ConfigDict(populate_by_name=True)

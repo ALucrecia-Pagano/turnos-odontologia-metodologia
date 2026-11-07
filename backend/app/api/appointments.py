@@ -6,10 +6,12 @@ from zoneinfo import ZoneInfo
 from fastapi import APIRouter, Depends, Request, status
 from sqlalchemy.orm import Session
 
+from app.api.agenda import to_agenda_appointment_response
 from app.api.deps import Permission, ensure_own_professional, get_db_session, require_permission
 from app.api.errors import DomainRejectedError, NotFoundError
 from app.api.openapi import not_found_responses, permission_responses, violation_responses
 from app.api.schemas import (
+    AgendaAppointmentResponse,
     AppointmentInput,
     AppointmentResponse,
     HistoryEntryResponse,
@@ -22,6 +24,7 @@ from app.config import Settings
 from app.domain.model import AppointmentStatus, NewAppointmentRequest, RescheduleRequest
 from app.domain.violations import Ok, Rejected
 from app.repositories.appointment import AppointmentRepository
+from app.services.agenda import get_agenda_appointment
 from app.services.appointments import (
     book_appointment,
     cancel_appointment,
@@ -287,3 +290,26 @@ def get_appointment_history_endpoint(
         raise NotFoundError("Turno no encontrado.")
 
     return history
+
+
+@router.get(
+    "/{id}",
+    status_code=status.HTTP_200_OK,
+    response_model=AgendaAppointmentResponse,
+    responses={
+        **not_found_responses("Turno"),
+        **permission_responses(),
+    },
+)
+def get_appointment_endpoint(
+    id: UUID,
+    permission: Annotated[
+        Permission,
+        Depends(require_permission(Resource.APPOINTMENT, Action.READ_AGENDA)),
+    ],
+    session: Annotated[Session, Depends(get_db_session)],
+) -> AgendaAppointmentResponse:
+    appointment = get_agenda_appointment(session, id)
+    if appointment is None:
+        raise NotFoundError("Turno no encontrado.")
+    return to_agenda_appointment_response(appointment)

@@ -110,6 +110,9 @@ def authentication_error_handler(request: Request, exc: Exception) -> JSONRespon
 MALFORMED_MESSAGES: Mapping[str, str] = {
     "json_invalid": "El cuerpo no es JSON válido.",
     "missing": "Falta este dato.",
+    "invalid_date_format": "La fecha debe tener formato AAAA-MM-DD.",
+    "invalid_range_order": "La fecha final no puede ser anterior a la inicial.",
+    "invalid_range_length": "El rango no puede superar los 31 días.",
 }
 DEFAULT_MALFORMED_MESSAGE = "Dato inválido."
 

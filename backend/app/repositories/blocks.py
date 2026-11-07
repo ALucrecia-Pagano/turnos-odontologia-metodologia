@@ -87,6 +87,21 @@ class BlockRepository:
         rows = self._session.scalars(stmt).all()
         return tuple(self._to_domain(row) for row in rows)
 
+    def list_in_range(
+        self,
+        start_at: datetime,
+        end_at: datetime,
+        professional_id: UUID | None = None,
+    ) -> tuple[Block, ...]:
+        stmt = select(BlockModel).where(
+            BlockModel.start_at < end_at,
+            BlockModel.end_at > start_at,
+        )
+        if professional_id is not None:
+            stmt = stmt.where(BlockModel.professional_id == professional_id)
+        stmt = stmt.order_by(BlockModel.start_at, BlockModel.id)
+        return tuple(self._to_domain(row) for row in self._session.scalars(stmt).all())
+
     def list(self) -> tuple[Block, ...]:
         rows = self._session.scalars(
             select(BlockModel).order_by(BlockModel.start_at, BlockModel.id)
