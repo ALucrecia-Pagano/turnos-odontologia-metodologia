@@ -124,6 +124,7 @@ La base que se reutiliza: contrato HTTP con cuatro cuerpos de error (`openspec/s
 - **Opción B**: build estático + nginx. Sin hot reload; no es lo que pide C-25. Descartada.
 - **Opción C**: correr Vite solo en el host. Contradice KB 08/DD-05 (cuatro servicios) y el scope. Descartada.
 - **Decisión**: **A**. `VITE_API_URL` en el navegador es `http://localhost:8000/api` (el browser no resuelve el hostname `backend`). Se documenta y se verifica en `verify-C-25.md`.
+- **Nota de implementación (mínimo privilegio)**: en el apply se descartó `env_file: .env` en el servicio `frontend` por principio de mínimo privilegio, porque cargaba en el contenedor del frontend todos los secretos del backend y de la base de datos (`JWT_SECRET`, `POSTGRES_PASSWORD`, `POSTGRES_USER`, `DATABASE_URL`, `SEED_USER_PASSWORD`). En su lugar, Compose interpola `VITE_API_URL` desde el `.env` de la raíz y el servicio recibe en `environment` únicamente `VITE_API_URL` y `CHOKIDAR_USEPOLLING`.
 
 ### D12 — Variables de entorno y tipado de `import.meta.env`
 

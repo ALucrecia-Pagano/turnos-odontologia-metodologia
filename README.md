@@ -88,11 +88,18 @@ Fijado por la cátedra:
   profesional y por sillón, sobre único con turnos enriquecidos con nombres —
   incluidos los cancelados —, plantilla semanal de horarios y bloqueos del
   rango, y `GET /api/appointments/{id}` con `200`/`404`, ambos en solo lectura
-  para los tres roles).
-- **Planificado:** los endpoints de negocio de la API REST
-  y el frontend. La persistencia de entidades ya
-  está implementada en C-15. El
-  plan completo
+  para los tres roles) y
+  C-25 (base del frontend en React 18 + TypeScript `strict` + Vite 5: estructura
+  `features/shared/pages`, router mínimo, tokens de diseño y paleta con
+  contraste AA para los cinco estados del turno, `StatusBadge`, `LoadingState`,
+  `EmptyState`, `ErrorState` y `PageShell` presentacionales, cliente HTTP tipado
+  con `fetch` inyectado por parámetro y las cuatro formas de error sin
+  reformular mensajes del dominio, costura de token para C-26, servicio
+  `frontend` en Docker Compose en el puerto `5173` con HMR en Windows y sin
+  recibir secretos del `.env`, y suite Vitest + Testing Library con mutaciones y
+  trazabilidad).
+- **Planificado:** las pantallas del frontend (C-26 a C-33). La persistencia de
+  entidades y la API REST ya están implementadas. El plan completo
   está en [CHANGES.md](CHANGES.md).
 
 ## Requisitos
@@ -160,6 +167,7 @@ docker compose up --build
 
 - Swagger: `http://localhost:<API_PORT>/api/docs`
 - Salud: `GET http://localhost:<API_PORT>/api/health`
+- Frontend: `http://localhost:5173`
 
 ### PowerShell
 
@@ -234,6 +242,7 @@ está en el repositorio.
 | Change archivado de C-23 | [openspec/changes/archive/2026-11-07-api-ciclo-de-vida-del-turno/](openspec/changes/archive/2026-11-07-api-ciclo-de-vida-del-turno/) |
 | Change archivado de C-24 | [openspec/changes/archive/2026-11-07-api-consulta-de-agenda/](openspec/changes/archive/2026-11-07-api-consulta-de-agenda/) |
 | Change archivado de mantenimiento: specs-requisitos-concisos | [openspec/changes/archive/2026-11-07-specs-requisitos-concisos/](openspec/changes/archive/2026-11-07-specs-requisitos-concisos/) |
+| Change archivado de C-25 | [openspec/changes/archive/2026-11-07-frontend-base-react-vite/](openspec/changes/archive/2026-11-07-frontend-base-react-vite/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -260,6 +269,7 @@ está en el repositorio.
 | Evidencias de C-23 (explore, verify, precondición, baseline, pytest, integración, mypy, mutaciones, trazabilidad, validate, verificación HTTP y RED) | [explore-C-23.md](docs/evidencias/explore-C-23.md), [verify-C-23.md](docs/evidencias/verify-C-23.md), [precondicion-C-23.txt](docs/evidencias/precondicion-C-23.txt), [baseline-C-23.txt](docs/evidencias/baseline-C-23.txt), [pytest-C-23.txt](docs/evidencias/pytest-C-23.txt), [pytest-integration-C-23.txt](docs/evidencias/pytest-integration-C-23.txt), [mypy-C-23.txt](docs/evidencias/mypy-C-23.txt), [mutaciones-C-23.py](docs/evidencias/mutaciones-C-23.py), [mutaciones-C-23.txt](docs/evidencias/mutaciones-C-23.txt), [trazabilidad-C-23.py](docs/evidencias/trazabilidad-C-23.py), [trazabilidad-C-23.txt](docs/evidencias/trazabilidad-C-23.txt), [validate-C-23.txt](docs/evidencias/validate-C-23.txt), [http-C-23.sh](docs/evidencias/http-C-23.sh), [http-C-23.txt](docs/evidencias/http-C-23.txt), [red-C-23/](docs/evidencias/red-C-23/) |
 | Evidencias de C-24 (explore, verify, precondición, baseline, pytest, integración, mypy, mutaciones, trazabilidad, validate, verificación HTTP y RED) | [explore-C-24.md](docs/evidencias/explore-C-24.md), [verify-C-24.md](docs/evidencias/verify-C-24.md), [precondicion-C-24.txt](docs/evidencias/precondicion-C-24.txt), [baseline-C-24.txt](docs/evidencias/baseline-C-24.txt), [pytest-C-24.txt](docs/evidencias/pytest-C-24.txt), [pytest-integration-C-24.txt](docs/evidencias/pytest-integration-C-24.txt), [mypy-C-24.txt](docs/evidencias/mypy-C-24.txt), [mutaciones-C-24.py](docs/evidencias/mutaciones-C-24.py), [mutaciones-C-24.txt](docs/evidencias/mutaciones-C-24.txt), [trazabilidad-C-24.py](docs/evidencias/trazabilidad-C-24.py), [trazabilidad-C-24.txt](docs/evidencias/trazabilidad-C-24.txt), [validate-C-24.txt](docs/evidencias/validate-C-24.txt), [http-C-24.sh](docs/evidencias/http-C-24.sh), [http-C-24.txt](docs/evidencias/http-C-24.txt), [red-C-24/](docs/evidencias/red-C-24/) |
 | Evidencias de specs-requisitos-concisos (verify, validate antes y después, simulación del archive, escenarios, pytest, integración y mypy) | [verify-specs-requisitos-concisos.md](docs/evidencias/verify-specs-requisitos-concisos.md), [validate-antes-specs.txt](docs/evidencias/validate-antes-specs.txt), [validate-despues-specs.txt](docs/evidencias/validate-despues-specs.txt), [validate-simulacion-archive-specs.txt](docs/evidencias/validate-simulacion-archive-specs.txt), [escenarios-specs.py](docs/evidencias/escenarios-specs.py), [escenarios-specs.txt](docs/evidencias/escenarios-specs.txt), [pytest-specs.txt](docs/evidencias/pytest-specs.txt), [pytest-integration-specs.txt](docs/evidencias/pytest-integration-specs.txt) y [mypy-specs.txt](docs/evidencias/mypy-specs.txt) |
+| Evidencias de C-25 (explore, verify, precondición, versiones, tsc, eslint, vitest, mutaciones, trazabilidad, docker, backend, validate, captura y RED) | [explore-C-25.md](docs/evidencias/explore-C-25.md), [verify-C-25.md](docs/evidencias/verify-C-25.md), [precondicion-C-25.txt](docs/evidencias/precondicion-C-25.txt), [versiones-C-25.txt](docs/evidencias/versiones-C-25.txt), [tsc-C-25.txt](docs/evidencias/tsc-C-25.txt), [eslint-C-25.txt](docs/evidencias/eslint-C-25.txt), [vitest-C-25.txt](docs/evidencias/vitest-C-25.txt), [mutaciones-C-25.py](docs/evidencias/mutaciones-C-25.py), [mutaciones-C-25.txt](docs/evidencias/mutaciones-C-25.txt), [trazabilidad-C-25.py](docs/evidencias/trazabilidad-C-25.py), [trazabilidad-C-25.txt](docs/evidencias/trazabilidad-C-25.txt), [docker-C-25.sh](docs/evidencias/docker-C-25.sh), [docker-C-25.txt](docs/evidencias/docker-C-25.txt), [backend-C-25.txt](docs/evidencias/backend-C-25.txt), [validate-C-25.txt](docs/evidencias/validate-C-25.txt), [capturas/C-25-home.png](docs/evidencias/capturas/C-25-home.png), [red-C-25/](docs/evidencias/red-C-25/) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

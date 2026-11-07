@@ -22,7 +22,7 @@ FRONTEND = REPO / "frontend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-25.txt"
 VERIFY = EVIDENCE / "verify-C-25.md"
-SPEC = REPO / "openspec" / "changes" / "frontend-base-react-vite" / "specs" / "frontend-foundation" / "spec.md"
+SPEC = REPO / "openspec" / "changes" / "archive" / "2026-11-07-frontend-base-react-vite" / "specs" / "frontend-foundation" / "spec.md"
 TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str(FRONTEND / "node_modules" / "vitest" / "vitest.mjs")]
@@ -93,6 +93,8 @@ TRACE: dict[str, dict[str, str]] = {
         "docker compose up levanta el frontend en 5173": f"{DOCKER} > docker compose up levanta el frontend en 5173",
         "Un cambio de archivo se refleja por HMR en Windows": f"{DOCKER} > un cambio de archivo se refleja por HMR en Windows",
         "VITE_API_URL del navegador apunta a localhost": f"{DOCKER} > VITE_API_URL del navegador apunta a localhost",
+        # Respaldado además en el backend por backend/tests/test_compose.py::test_compose_defines_services_without_literal_secrets
+        "El servicio frontend no recibe secretos": f"{DOCKER} > docker compose up levanta el frontend en 5173",
     },
 }
 

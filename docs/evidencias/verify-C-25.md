@@ -4,10 +4,10 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 22/22 en [tasks.md](../../openspec/changes/frontend-base-react-vite/tasks.md).
+- Tareas: 22/22 en [tasks.md](../../openspec/changes/archive/2026-11-07-frontend-base-react-vite/tasks.md).
 - Vitest: 14 archivos, 47 tests en verde; `tsc` y ESLint sin errores ni warnings.
 - Mutaciones: 47/47 hicieron fallar su test (una por test); mutaciones inválidas: 0; SHA-256 de producción intacto.
-- Trazabilidad: 28 escenarios, 0 problemas.
+- Trazabilidad: 29 escenarios, 0 problemas.
 - Backend: 895 passed tras actualizar el test de compose de C-18 (ver Desvíos).
 - Precondición (GATE 15): [precondicion-C-25.txt](precondicion-C-25.txt); C-22, C-23 y C-24 archivados.
 - Versiones instaladas (C2): [versiones-C-25.txt](versiones-C-25.txt).
@@ -33,9 +33,18 @@ Pares de `APPOINTMENT_STATUS_TOKENS` (`frontend/src/shared/styles/appointmentSta
 | `ausente` | `#B45309` | `#FEF3C7` | `#FCD34D` | 4.51:1 | sí |
 | `cancelado` | `#B91C1C` | `#FEE2E2` | `#FCA5A5` | 5.30:1 | sí |
 
-## Verificación manual con Docker (2026-11-07)
+## Verificación manual
 
-Se ejecutó `docker compose up -d --build frontend` (sin `down` ni `-v`) y luego [docker-C-25.sh](docker-C-25.sh); la salida cruda está en [docker-C-25.txt](docker-C-25.txt).
+La autora abrió `http://localhost:5173` desde Docker Compose y vio el shell con los cinco estados ([capturas/C-25-home.png](capturas/C-25-home.png)). Se ejecutó `docker compose up -d --build frontend` (sin `down` ni `-v`) y luego [docker-C-25.sh](docker-C-25.sh); la salida cruda está en [docker-C-25.txt](docker-C-25.txt).
+
+![Shell inicial en http://localhost:5173 con los cinco estados](capturas/C-25-home.png)
+
+## Artefactos
+
+- [proposal.md](../../openspec/changes/archive/2026-11-07-frontend-base-react-vite/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-07-frontend-base-react-vite/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-07-frontend-base-react-vite/tasks.md)
+- [spec.md (frontend-foundation)](../../openspec/changes/archive/2026-11-07-frontend-base-react-vite/specs/frontend-foundation/spec.md)
 
 ## Desvíos
 
@@ -142,4 +151,5 @@ Se ejecutó `docker compose up -d --build frontend` (sin `down` ni `-v`) y luego
 | 26 | Servicio frontend en Docker Compose | docker compose up levanta el frontend en 5173 | `src/test/docker.test.ts > docker compose up levanta el frontend en 5173` |
 | 27 | Servicio frontend en Docker Compose | Un cambio de archivo se refleja por HMR en Windows | `src/test/docker.test.ts > un cambio de archivo se refleja por HMR en Windows` |
 | 28 | Servicio frontend en Docker Compose | VITE_API_URL del navegador apunta a localhost | `src/test/docker.test.ts > VITE_API_URL del navegador apunta a localhost` |
+| 29 | Servicio frontend en Docker Compose | El servicio frontend no recibe secretos | `src/test/docker.test.ts > docker compose up levanta el frontend en 5173` |
 <!-- trazabilidad:fin -->

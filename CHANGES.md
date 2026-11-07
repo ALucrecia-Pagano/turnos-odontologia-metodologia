@@ -575,7 +575,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 > La UI recién arranca con la API de turnos completa (GATE 14). Lineamientos comunes de 08 §Frontend cuidado: tokens de diseño mínimos, estados de carga/vacío/error en toda vista, mensajes del dominio mostrados tal cual, accesibilidad básica y responsive para escritorio y tablet. Los tests de componentes usan la herramienta que se elige en C-25 (SU-10).
 
 ### [C-25] `frontend-base-react-vite`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-07)
 - **Scope**:
   - `frontend/` con Vite + React 18 + TypeScript en modo `strict`; `main.tsx`, router mínimo, estructura `features/`, `shared/` y `pages/`.
   - `shared/`: tokens de diseño (color, espaciado, tipografía), colores por estado del turno y componentes base de carga, vacío y error.

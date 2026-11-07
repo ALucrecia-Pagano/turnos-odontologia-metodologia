@@ -44,7 +44,7 @@
 
 ## 6. Docker Compose
 
-- [x] 6.1 Crear `frontend/Dockerfile` de desarrollo con `node:24-alpine`, `npm ci`, `EXPOSE 5173` y `CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]`, y agregar el servicio `frontend` a `docker-compose.yml` con puerto `5173`, `env_file: .env`, `VITE_API_URL`, volúmenes `./frontend:/app` + `/app/node_modules` anónimo, `depends_on: backend` y polling para Windows (D11, D13). No tocar los servicios `postgres`, `redis` ni `backend`, ni `backend/`, ni `.env.example`. Verificar que `VITE_API_URL` del navegador sea `http://localhost:8000/api` y redirigir la prueba a `docs/evidencias/docker-C-25.txt`.
+- [x] 6.1 Crear `frontend/Dockerfile` de desarrollo con `node:24-alpine`, `npm ci`, `EXPOSE 5173` y `CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]`, y agregar el servicio `frontend` a `docker-compose.yml` con puerto `5173`, `env_file: .env`, `VITE_API_URL`, volúmenes `./frontend:/app` + `/app/node_modules` anónimo, `depends_on: backend` y polling para Windows (D11, D13). No tocar los servicios `postgres`, `redis` ni `backend`, ni `backend/`, ni `.env.example`. Verificar que `VITE_API_URL` del navegador sea `http://localhost:8000/api` y redirigir la prueba a `docs/evidencias/docker-C-25.txt` (se reemplazó env_file por environment con solo VITE_API_URL; ver Desvíos de verify-C-25.md).
 
 ## 7. Verificación y evidencias
 

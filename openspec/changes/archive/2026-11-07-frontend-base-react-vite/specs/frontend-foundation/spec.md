@@ -187,3 +187,10 @@ El cliente MUST exponer una costura `setAuthProvider({ getToken })` con valor po
 - **WHEN** el navegador del host consume la aplicación
 - **THEN** la base de la API es `http://localhost:8000/api`
 - **AND** no se usa `http://backend:8000`
+
+#### Scenario: El servicio frontend no recibe secretos
+- **GIVEN** el servicio `frontend` de `docker-compose.yml`
+- **WHEN** se inspecciona su configuración
+- **THEN** no tiene `env_file` con el `.env` completo
+- **AND** su entorno no incluye `JWT_SECRET`, `POSTGRES_PASSWORD`, `POSTGRES_USER`, `DATABASE_URL` ni `SEED_USER_PASSWORD`
+- **AND** recibe solo `VITE_API_URL` y `CHOKIDAR_USEPOLLING`
