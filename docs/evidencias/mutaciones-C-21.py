@@ -11,11 +11,23 @@ mutacion, corre solo su test, restaura el archivo en un finally y vuelve a corre
 Con --check solo ejecuta check_definition sobre todas las mutaciones.
 Solo toca la base <POSTGRES_DB>_test. Genera mutaciones-C-21.txt y regenera la tabla de
 verify-C-21.md leyendo ese .txt. Termina con codigo 0 solo si todas las mutaciones
-hicieron fallar su test y el SHA-256 no cambio.
+hicieron fallar su test, ninguna es INVALIDA y el SHA-256 no cambio.
+
+Una mutacion es INVALIDA si su test no la detecta con una afirmacion propia: la salida
+contiene NameError o ImportError, o el primer "E" no tiene su frame en tests/, o no es
+assert/AssertionError. Dentro de tests/ tambien valen pytest.raises sin excepcion
+("Failed: DID NOT RAISE"), un ValidationError del esquema que el test valida directamente
+y un KeyError/IndexError sobre un campo que el propio test lee.
+
+Unica excepcion: los tests de NO_RAISE_TESTS verifican que el codigo no lance, y su funcion
+no tiene assert ni pytest.raises. Para ellos, una excepcion lanzada desde produccion es la
+falla de su afirmacion implicita y se informa como "detectada por excepción (test de
+no-lanzar)". Cualquier otro test que falle fuera de tests/ sigue siendo INVALIDA.
 """
 
 from __future__ import annotations
 
+import ast
 import difflib
 import hashlib
 import os
@@ -35,6 +47,21 @@ TABLE_START = "<!-- mutaciones:inicio -->"
 TABLE_END = "<!-- mutaciones:fin -->"
 SEPARATOR = "=" * 80
 TIMEOUT_SECONDS = 180
+NO_RAISE_TESTS = frozenset(
+    {
+        "test_odontologist_over_own_professional_passes",
+        "test_reception_and_admin_pass_always",
+    }
+)
+NO_RAISE_LABEL = "detectada por excepción (test de no-lanzar)"
+
+INVALID_NAME_ERROR = re.compile(r"\b(NameError|ImportError|ModuleNotFoundError)\b")
+FRAME_LINE = re.compile(r"^(\S+\.py):\d+: ")
+TEST_DETECTION = re.compile(
+    r"""^(assert\b|AssertionError\b|Failed: DID NOT RAISE\b"""
+    r"""|pydantic_core\._pydantic_core\.ValidationError\b"""
+    r"""|KeyError: ['"]|IndexError\b)"""
+)
 
 VENV_PYTHON = BACKEND / ".venv" / "Scripts" / "python.exe"
 PYTHON = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
@@ -56,6 +83,7 @@ SERVICE_AVAILABILITY = "backend/app/services/availability.py"
 API_WH = "backend/app/api/working_hours.py"
 API_BLOCKS = "backend/app/api/blocks.py"
 API_DEPS = "backend/app/api/deps.py"
+API_ERRORS = "backend/app/api/errors.py"
 
 
 @dataclass(frozen=True)
@@ -150,7 +178,10 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_get_working_hours_without_token_returns_401",
         API_DEPS,
         "    if credentials is None:\n        raise AuthenticationError(AuthErrorCode.INVALID_TOKEN)",
-        "    if False:\n        raise AuthenticationError(AuthErrorCode.INVALID_TOKEN)",
+        '    if credentials is None:\n'
+        '        raise DomainRejectedError(\n'
+        '            Rejected((Violation(ViolationCode.FORBIDDEN_OPERATION, "Sin credenciales."),))\n'
+        '        )',
     ),
     Mutation(
         TEST_API_WH,
@@ -227,7 +258,9 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_replace_working_hours_unknown_professional_returns_404",
         API_WH,
         '    prof = ProfessionalRepository(session).get_by_id(id)\n    if prof is None:\n        raise NotFoundError("Profesional no encontrado.")',
-        '    prof = ProfessionalRepository(session).get_by_id(id)\n    if prof is None:\n        raise ValueError("Error forzado")',
+        '    prof = ProfessionalRepository(session).get_by_id(id)\n'
+        '    if prof is None:\n'
+        '        return WorkingHoursResponse(working_hours=[], appointments_outside_hours=[])',
     ),
     Mutation(
         TEST_API_WH,
@@ -333,23 +366,42 @@ MUTATIONS: tuple[Mutation, ...] = (
     Mutation(
         TEST_API_BLOCKS,
         "test_block_start_equal_to_end_returns_422",
-        SERVICE_AVAILABILITY,
-        "    res = repo.create(candidate)\n    if isinstance(res, Rejected):\n        raise DomainRejectedError(res)",
-        "    res = repo.create(candidate)\n    if False:\n        raise DomainRejectedError(res)",
+        API_ERRORS,
+        '    ViolationCode.INVALID_BLOCK: 422,',
+        '    ViolationCode.INVALID_BLOCK: 409,',
     ),
     Mutation(
         TEST_API_BLOCKS,
         "test_block_without_timezone_returns_400",
         API_SCHEMAS,
-        '        if v.tzinfo is None:\n            raise ValueError("La fecha y hora debe incluir zona horaria.")',
-        "        if False:\n            pass",
+        '    @field_validator("start_at", "end_at")\n'
+        '    @classmethod\n'
+        '    def validate_tz(cls, v: datetime) -> datetime:\n'
+        '        if v.tzinfo is None:\n'
+        '            raise ValueError("La fecha y hora debe incluir zona horaria.")',
+        '    @field_validator("start_at", "end_at")\n'
+        '    @classmethod\n'
+        '    def validate_tz(cls, v: datetime) -> datetime:\n'
+        '        if v.tzinfo is None:\n'
+        '            return v.replace(tzinfo=timezone.utc)',
     ),
     Mutation(
         TEST_API_BLOCKS,
         "test_block_unknown_professional_returns_404",
         API_BLOCKS,
         '    prof = ProfessionalRepository(session).get_by_id(id)\n    if prof is None:\n        raise NotFoundError("Profesional no encontrado.")',
-        '    prof = ProfessionalRepository(session).get_by_id(id)\n    if prof is None:\n        raise ValueError("Error forzado")',
+        '    prof = ProfessionalRepository(session).get_by_id(id)\n'
+        '    if prof is None:\n'
+        '        return BlockCreateResponse(\n'
+        '            block=BlockResponse(\n'
+        '                id=id,\n'
+        '                professional_id=id,\n'
+        '                start_at=format_utc_iso(payload.start_at),\n'
+        '                end_at=format_utc_iso(payload.end_at),\n'
+        '                reason=payload.reason,\n'
+        '            ),\n'
+        '            affected_appointments=[],\n'
+        '        )',
     ),
     Mutation(
         TEST_API_BLOCKS,
@@ -398,7 +450,12 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_delete_unknown_block_returns_404",
         SERVICE_AVAILABILITY,
         'def get_block(session: Session, block_id: UUID) -> Block:\n    repo = BlockRepository(session, SqlAppointmentReader(session))\n    block = repo.get_by_id(block_id)\n    if block is None:\n        raise NotFoundError("Bloqueo no encontrado.")\n    return block',
-        'def get_block(session: Session, block_id: UUID) -> Block:\n    repo = BlockRepository(session, SqlAppointmentReader(session))\n    block = repo.get_by_id(block_id)\n    if False:\n        raise NotFoundError("Bloqueo no encontrado.")\n    return block',
+        'def get_block(session: Session, block_id: UUID) -> Block:\n'
+        '    repo = BlockRepository(session, SqlAppointmentReader(session))\n'
+        '    block = repo.get_by_id(block_id)\n'
+        '    if block is None:\n'
+        '        raise NotFoundError("Profesional no encontrado.")\n'
+        '    return block',
     ),
     Mutation(
         TEST_API_BLOCKS,
@@ -421,8 +478,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_CONCURRENCY,
         "test_concurrent_booking_waiting_for_block_receives_blocked_time",
         SERVICE_AVAILABILITY,
-        "    res = repo.create(candidate)\n    if isinstance(res, Rejected):\n        raise DomainRejectedError(res)",
-        "    res = Ok(candidate)\n    if isinstance(res, Rejected):\n        raise DomainRejectedError(res)",
+        '        start_at=start_at,\n'
+        '        end_at=end_at,\n'
+        '        reason=reason,\n'
+        '    )\n'
+        '    repo = BlockRepository(session, SqlAppointmentReader(session))',
+        '        start_at=start_at,\n'
+        '        end_at=start_at + timedelta(minutes=30),\n'
+        '        reason=reason,\n'
+        '    )\n'
+        '    repo = BlockRepository(session, SqlAppointmentReader(session))',
     ),
     # -------------------------------------------------------------------------
     # 2.1 Repositorio (1 test)
@@ -476,7 +541,11 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_SCHEMAS,
         "test_affected_appointment_response_camelcase",
         API_SCHEMAS,
+        'class AffectedAppointmentResponse(BaseModel):\n'
+        '    id: UUID\n'
         '    patient_id: UUID = Field(serialization_alias="patientId")',
+        'class AffectedAppointmentResponse(BaseModel):\n'
+        '    id: UUID\n'
         '    patient_id: UUID = Field(serialization_alias="patient_id")',
     ),
     # -------------------------------------------------------------------------
@@ -487,14 +556,29 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_get_working_hours_success_and_not_found",
         SERVICE_AVAILABILITY,
         'def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None:\n        raise NotFoundError("Profesional no encontrado.")',
-        'def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None:\n        raise ValueError("Error forzado")',
+        'def get_working_hours(session: Session, professional_id: UUID) -> tuple[WorkingHours, ...]:\n'
+        '    prof = ProfessionalRepository(session).get_by_id(professional_id)\n'
+        '    if prof is None:\n'
+        '        return ()',
     ),
     Mutation(
         TEST_SERVICES,
         "test_replace_working_hours_empty_and_inactive_professional",
         SERVICE_AVAILABILITY,
         'def replace_working_hours(\n    session: Session,\n    professional_id: UUID,\n    slots: Sequence[WorkingHours],\n    now: datetime,\n    tz: ZoneInfo,\n    auto_commit: bool = True,\n) -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None:\n        raise NotFoundError("Profesional no encontrado.")',
-        'def replace_working_hours(\n    session: Session,\n    professional_id: UUID,\n    slots: Sequence[WorkingHours],\n    now: datetime,\n    tz: ZoneInfo,\n    auto_commit: bool = True,\n) -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:\n    prof = ProfessionalRepository(session).get_by_id(professional_id)\n    if prof is None or not prof.active:\n        raise NotFoundError("Profesional no encontrado.")',
+        'def replace_working_hours(\n'
+        '    session: Session,\n'
+        '    professional_id: UUID,\n'
+        '    slots: Sequence[WorkingHours],\n'
+        '    now: datetime,\n'
+        '    tz: ZoneInfo,\n'
+        '    auto_commit: bool = True,\n'
+        ') -> tuple[tuple[WorkingHours, ...], list[AffectedAppointment]]:\n'
+        '    prof = ProfessionalRepository(session).get_by_id(professional_id)\n'
+        '    if prof is None:\n'
+        '        raise NotFoundError("Profesional no encontrado.")\n'
+        '    if not prof.active:\n'
+        '        return (), []',
     ),
     Mutation(
         TEST_SERVICES,
@@ -508,7 +592,11 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_create_and_delete_block_services",
         SERVICE_AVAILABILITY,
         'def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:\n    repo = BlockRepository(session, SqlAppointmentReader(session))\n    deleted = repo.delete(block_id)\n    if deleted is None:\n        raise NotFoundError("Bloqueo no encontrado.")',
-        'def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:\n    repo = BlockRepository(session, SqlAppointmentReader(session))\n    deleted = repo.delete(block_id)\n    if deleted is None:\n        raise ValueError("Error forzado")',
+        'def delete_block(session: Session, block_id: UUID, auto_commit: bool = True) -> Block:\n'
+        '    repo = BlockRepository(session, SqlAppointmentReader(session))\n'
+        '    deleted = repo.delete(block_id)\n'
+        '    if deleted is None:\n'
+        '        raise NotFoundError("Profesional no encontrado.")',
     ),
     # -------------------------------------------------------------------------
     # 3.2 Helper de propiedad (3 tests)
@@ -598,16 +686,27 @@ def run_pytest(node_ids: list[str]) -> subprocess.CompletedProcess[str]:
 
 
 def read_source(mutation: Mutation) -> str:
-    return (REPO / mutation.file).read_text(encoding="utf-8")
+    return (REPO / mutation.file).read_bytes().decode("utf-8")
 
 
-def check_definition(mutation: Mutation) -> None:
-    occurrences = read_source(mutation).count(mutation.original)
+def apply_mutation(mutation: Mutation, content: str) -> str:
+    """Aplica la mutacion respetando el final de linea del archivo (LF o CRLF)."""
+    newline = "\r\n" if "\r\n" in content else "\n"
+    original = mutation.original.replace("\n", newline)
+    mutated = mutation.mutated.replace("\n", newline)
+    occurrences = content.count(original)
     if occurrences != 1:
         raise MutationAbort(
             f"{mutation.test_name}: el texto original aparece {occurrences} veces "
             f"en {mutation.file}; debe aparecer exactamente una"
         )
+    return content.replace(original, mutated, 1)
+
+
+def check_definition(mutation: Mutation) -> None:
+    source = read_source(mutation)
+    if apply_mutation(mutation, source) == source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
     test_source = (BACKEND / mutation.test_file).read_text(encoding="utf-8")
     if test_source.count(f"def {mutation.function_name}(") != 1:
         raise MutationAbort(f"No existe el test {mutation.node_id}")
@@ -631,7 +730,90 @@ def classify(result: subprocess.CompletedProcess[str]) -> str:
     raise MutationAbort(f"Salida inesperada de pytest: {summary or result.stderr}")
 
 
-def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
+def first_error_with_frame(output: str) -> tuple[str, str] | None:
+    """Devuelve el frame y el texto del primer "E" de la salida."""
+    frame = ""
+    for line in output.splitlines():
+        frame_match = FRAME_LINE.match(line)
+        if frame_match:
+            frame = frame_match.group(1).replace("\\", "/")
+            continue
+        if line.startswith("E   "):
+            return frame, line.removeprefix("E   ").strip()
+    return None
+
+
+def invalid_reason(output: str) -> str | None:
+    """Devuelve el motivo si el test no detecto la mutacion con una afirmacion propia."""
+    name_error = INVALID_NAME_ERROR.search(output)
+    if name_error:
+        return f"la salida contiene {name_error.group(1)}"
+
+    first = first_error_with_frame(output)
+    if first is None:
+        return "la salida no tiene ninguna linea E"
+    frame, first_error = first
+    if not frame.startswith("tests/"):
+        return f"primer E fuera de tests/ ({frame}): {first_error}"
+    if not TEST_DETECTION.match(first_error):
+        return f"primer E no es una afirmacion del test: {first_error}"
+    return None
+
+
+def test_has_explicit_check(mutation: Mutation) -> bool:
+    """Lee el archivo de test: indica si la funcion tiene assert o pytest.raises."""
+    source = (BACKEND / mutation.test_file).read_bytes().decode("utf-8")
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.FunctionDef) and node.name == mutation.function_name:
+            for inner in ast.walk(node):
+                if isinstance(inner, ast.Assert):
+                    return True
+                if isinstance(inner, ast.Attribute) and inner.attr == "raises":
+                    return True
+                if isinstance(inner, ast.Name) and inner.id == "raises":
+                    return True
+            return False
+    raise MutationAbort(f"No existe el test {mutation.node_id}")
+
+
+def accepted_as_no_raise(mutation: Mutation, output: str) -> bool:
+    """Excepcion de produccion en un test de NO_RAISE_TESTS sin afirmaciones explicitas."""
+    if mutation.function_name not in NO_RAISE_TESTS:
+        return False
+    if INVALID_NAME_ERROR.search(output):
+        return False
+    first = first_error_with_frame(output)
+    if first is None:
+        return False
+    frame, first_error = first
+    if not frame.startswith("app/"):
+        return False
+    if first_error.startswith(("AttributeError", "KeyError")):
+        return False
+    return not test_has_explicit_check(mutation)
+
+
+def detection(mutation: Mutation, output: str) -> tuple[str | None, bool]:
+    """Devuelve (motivo de invalidez, detectada por excepcion en un test de no-lanzar)."""
+    reason = invalid_reason(output)
+    if reason and accepted_as_no_raise(mutation, output):
+        return None, True
+    return reason, False
+
+
+def check_no_raise_tests() -> None:
+    """Aborta si la lista quedo desalineada con las mutaciones o con los tests."""
+    by_name = {mutation.function_name: mutation for mutation in MUTATIONS}
+    for name in sorted(NO_RAISE_TESTS):
+        if name not in by_name:
+            raise MutationAbort(f"NO_RAISE_TESTS: {name} no tiene mutacion")
+        if test_has_explicit_check(by_name[name]):
+            raise MutationAbort(f"NO_RAISE_TESTS: {name} tiene assert o pytest.raises")
+
+
+def run_mutation(
+    mutation: Mutation, index: int, report: Report
+) -> tuple[bool, str | None, bool]:
     check_definition(mutation)
     report.write(SEPARATOR)
     report.write(f"MUTACION {index:02d}/{len(MUTATIONS)}")
@@ -646,13 +828,12 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     path = REPO / mutation.file
     original_bytes = path.read_bytes()
     original_stat = path.stat()
-    crlf = b"\r\n" in original_bytes
+    original_source = original_bytes.decode("utf-8")
+    mutated_source = apply_mutation(mutation, original_source)
+    if mutated_source == original_source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
 
     try:
-        source = path.read_text(encoding="utf-8")
-        mutated_source = source.replace(mutation.original, mutation.mutated)
-        if crlf:
-            mutated_source = mutated_source.replace("\r\n", "\n").replace("\n", "\r\n")
         path.write_bytes(mutated_source.encode("utf-8"))
         mutated_run = run_pytest([mutation.node_id])
     finally:
@@ -662,8 +843,15 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     report.write(f"--- pytest con la mutacion (codigo de salida {mutated_run.returncode}) ---")
     report.write(mutated_run.stdout + mutated_run.stderr)
     outcome = classify(mutated_run)
+    killed = outcome == "FALLO"
+    mutated_output = mutated_run.stdout + mutated_run.stderr
+    reason, by_exception = detection(mutation, mutated_output) if killed else (None, False)
     report.write(f"resultado: {outcome}")
-    if outcome == "FALLO":
+    if by_exception:
+        report.write(
+            f"primera linea del fallo: {NO_RAISE_LABEL}: {first_failure_line(mutated_run.stdout)}"
+        )
+    elif killed:
         report.write(f"primera linea del fallo: {first_failure_line(mutated_run.stdout)}")
     else:
         report.write("primera linea del fallo: (el test no fallo)")
@@ -674,7 +862,11 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     if restored_run.returncode != 0:
         raise MutationAbort(f"{mutation.test_name} no pasa con el codigo restaurado")
     report.write("restaurado: test en verde")
-    return outcome == "FALLO"
+    if reason:
+        report.write(f"INVALIDA: {reason}")
+    if by_exception:
+        report.write(NO_RAISE_LABEL)
+    return killed, reason, by_exception
 
 
 def tree_sha256() -> str:
@@ -750,6 +942,7 @@ def main() -> int:
 
     for mutation in MUTATIONS:
         check_definition(mutation)
+    check_no_raise_tests()
     if "--check" in sys.argv[1:]:
         print(f"check_definition: {len(MUTATIONS)} mutaciones correctas")
         return 0
@@ -757,6 +950,8 @@ def main() -> int:
     sha_before = tree_sha256()
     killed: list[str] = []
     survived: list[str] = []
+    invalid: list[str] = []
+    by_exception: list[str] = []
     with OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
         report = Report(stream)
         report.write("Salida generada por docs/evidencias/mutaciones-C-21.py. No editar a mano.")
@@ -769,8 +964,15 @@ def main() -> int:
 
         for index, mutation in enumerate(MUTATIONS, start=1):
             print(f"[{index:02d}/{len(MUTATIONS)}] {mutation.test_name}", flush=True)
-            if run_mutation(mutation, index, report):
+            was_killed, reason, detected_by_exception = run_mutation(mutation, index, report)
+            if reason:
+                invalid.append(f"{mutation.test_name}: {reason}")
+                print(f"    INVALIDA: {reason}", flush=True)
+            elif was_killed:
                 killed.append(mutation.test_name)
+                if detected_by_exception:
+                    by_exception.append(mutation.test_name)
+                    print(f"    {NO_RAISE_LABEL}", flush=True)
             else:
                 survived.append(mutation.test_name)
                 print("    NO hizo fallar su test", flush=True)
@@ -783,6 +985,10 @@ def main() -> int:
             f"mutaciones que hicieron fallar su test: {len(killed)}",
             f"mutaciones que NO lo hicieron fallar: {len(survived)}",
             *[f"  - {name}" for name in survived],
+            f"mutaciones inválidas: {len(invalid)}",
+            *[f"  - {entry}" for entry in invalid],
+            f"mutaciones detectadas por excepción (test de no-lanzar): {len(by_exception)}",
+            *[f"  - {name}" for name in by_exception],
             f"SHA-256 de backend/app despues: {sha_after}",
             f"SHA-256 sin cambios: {'si' if same else 'NO'}",
         ]
@@ -790,7 +996,7 @@ def main() -> int:
 
     print("\n".join(summary))
     update_verify_table()
-    return 0 if same and not survived else 1
+    return 0 if same and not survived and not invalid else 1
 
 
 if __name__ == "__main__":

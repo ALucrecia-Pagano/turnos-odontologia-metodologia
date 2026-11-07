@@ -11,7 +11,13 @@ mutacion, corre solo su test, restaura el archivo en un finally y vuelve a corre
 Con --check solo ejecuta check_definition sobre todas las mutaciones.
 Solo toca la base <POSTGRES_DB>_test. Genera mutaciones-C-22.txt y regenera la tabla de
 verify-C-22.md leyendo ese .txt. Termina con codigo 0 solo si todas las mutaciones
-hicieron fallar su test y el SHA-256 no cambio.
+hicieron fallar su test, ninguna es INVALIDA y el SHA-256 no cambio.
+
+Una mutacion es INVALIDA si su test no la detecta con una afirmacion propia: la salida
+contiene NameError o ImportError, o el primer "E" no tiene su frame en tests/, o no es
+assert/AssertionError. Dentro de tests/ tambien valen pytest.raises sin excepcion
+("Failed: DID NOT RAISE"), un ValidationError del esquema que el test valida directamente
+y un KeyError/IndexError sobre un campo que el propio test lee.
 """
 
 from __future__ import annotations
@@ -35,6 +41,14 @@ TABLE_START = "<!-- mutaciones:inicio -->"
 TABLE_END = "<!-- mutaciones:fin -->"
 SEPARATOR = "=" * 80
 TIMEOUT_SECONDS = 180
+
+INVALID_NAME_ERROR = re.compile(r"\b(NameError|ImportError|ModuleNotFoundError)\b")
+FRAME_LINE = re.compile(r"^(\S+\.py):\d+: ")
+TEST_DETECTION = re.compile(
+    r"""^(assert\b|AssertionError\b|Failed: DID NOT RAISE\b"""
+    r"""|pydantic_core\._pydantic_core\.ValidationError\b"""
+    r"""|KeyError: ['"]|IndexError\b)"""
+)
 
 VENV_PYTHON = BACKEND / ".venv" / "Scripts" / "python.exe"
 PYTHON = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
@@ -72,12 +86,18 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_SCHEMAS,
         "test_appointment_input_start_at_with_tz_accepted",
         API_SCHEMAS,
+        '    start_at: datetime = Field(alias="startAt")\n'
+        '    duration_min: int | None = Field(default=None, alias="durationMin")\n\n'
+        '    model_config = ConfigDict(populate_by_name=True, extra="forbid")\n\n'
         '    @field_validator("start_at")\n'
         '    @classmethod\n'
         '    def validate_tz(cls, v: datetime) -> datetime:\n'
         '        if v.tzinfo is None:\n'
         '            raise ValueError("La fecha y hora debe incluir zona horaria.")\n'
         '        return v',
+        '    start_at: datetime = Field(alias="startAt")\n'
+        '    duration_min: int | None = Field(default=None, alias="durationMin")\n\n'
+        '    model_config = ConfigDict(populate_by_name=True, extra="forbid")\n\n'
         '    @field_validator("start_at")\n'
         '    @classmethod\n'
         '    def validate_tz(cls, v: datetime) -> datetime:\n'
@@ -90,10 +110,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_SCHEMAS,
         "test_appointment_input_start_at_without_tz_rejected",
         API_SCHEMAS,
+        '    start_at: datetime = Field(alias="startAt")\n'
+        '    duration_min: int | None = Field(default=None, alias="durationMin")\n\n'
+        '    model_config = ConfigDict(populate_by_name=True, extra="forbid")\n\n'
         '    @field_validator("start_at")\n'
         '    @classmethod\n'
         '    def validate_tz(cls, v: datetime) -> datetime:\n'
         '        if v.tzinfo is None:',
+        '    start_at: datetime = Field(alias="startAt")\n'
+        '    duration_min: int | None = Field(default=None, alias="durationMin")\n\n'
+        '    model_config = ConfigDict(populate_by_name=True, extra="forbid")\n\n'
         '    @field_validator("start_at")\n'
         '    @classmethod\n'
         '    def validate_tz(cls, v: datetime) -> datetime:\n'
@@ -104,8 +130,10 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_SCHEMAS,
         "test_appointment_input_extra_field_forbidden",
         API_SCHEMAS,
+        '    start_at: datetime = Field(alias="startAt")\n'
         '    duration_min: int | None = Field(default=None, alias="durationMin")\n\n'
         '    model_config = ConfigDict(populate_by_name=True, extra="forbid")',
+        '    start_at: datetime = Field(alias="startAt")\n'
         '    duration_min: int | None = Field(default=None, alias="durationMin")\n\n'
         '    model_config = ConfigDict(populate_by_name=True, extra="ignore")',
     ),
@@ -180,7 +208,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    ],',
         '    permission: Annotated[\n'
         '        Permission,\n'
-        '        Depends(require_permission(Resource.APPOINTMENT, Action.READ)),\n'
+        '        Depends(require_permission(Resource.APPOINTMENT, Action.READ_AGENDA)),\n'
         '    ],',
     ),
     # 10. 2.1 Alta sin token 401
@@ -356,8 +384,12 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_APPOINTMENTS,
         "test_rejection_leaves_no_appointment_nor_history",
         API_APPOINTMENTS,
+        '        auto_commit=True,\n'
+        '    )\n\n'
         '    if isinstance(result, Rejected):\n'
         '        raise DomainRejectedError(result)',
+        '        auto_commit=True,\n'
+        '    )\n\n'
         '    if isinstance(result, Rejected):\n'
         '        return AppointmentResponse(\n'
         '            id=uuid4(),\n'
@@ -445,16 +477,27 @@ def run_pytest(node_ids: list[str]) -> subprocess.CompletedProcess[str]:
 
 
 def read_source(mutation: Mutation) -> str:
-    return (REPO / mutation.file).read_text(encoding="utf-8")
+    return (REPO / mutation.file).read_bytes().decode("utf-8")
 
 
-def check_definition(mutation: Mutation) -> None:
-    occurrences = read_source(mutation).count(mutation.original)
+def apply_mutation(mutation: Mutation, content: str) -> str:
+    """Aplica la mutacion respetando el final de linea del archivo (LF o CRLF)."""
+    newline = "\r\n" if "\r\n" in content else "\n"
+    original = mutation.original.replace("\n", newline)
+    mutated = mutation.mutated.replace("\n", newline)
+    occurrences = content.count(original)
     if occurrences != 1:
         raise MutationAbort(
             f"{mutation.test_name}: el texto original aparece {occurrences} veces "
             f"en {mutation.file}; debe aparecer exactamente una"
         )
+    return content.replace(original, mutated, 1)
+
+
+def check_definition(mutation: Mutation) -> None:
+    source = read_source(mutation)
+    if apply_mutation(mutation, source) == source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
     test_source = (BACKEND / mutation.test_file).read_text(encoding="utf-8")
     if test_source.count(f"def {mutation.function_name}(") != 1:
         raise MutationAbort(f"No existe el test {mutation.node_id}")
@@ -478,7 +521,30 @@ def classify(result: subprocess.CompletedProcess[str]) -> str:
     raise MutationAbort(f"Salida inesperada de pytest: {summary or result.stderr}")
 
 
-def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
+def invalid_reason(output: str) -> str | None:
+    """Devuelve el motivo si el test no detecto la mutacion con una afirmacion propia."""
+    name_error = INVALID_NAME_ERROR.search(output)
+    if name_error:
+        return f"la salida contiene {name_error.group(1)}"
+
+    frame = ""
+    for line in output.splitlines():
+        frame_match = FRAME_LINE.match(line)
+        if frame_match:
+            frame = frame_match.group(1).replace("\\", "/")
+            continue
+        if not line.startswith("E   "):
+            continue
+        first_error = line.removeprefix("E   ").strip()
+        if not frame.startswith("tests/"):
+            return f"primer E fuera de tests/ ({frame}): {first_error}"
+        if not TEST_DETECTION.match(first_error):
+            return f"primer E no es una afirmacion del test: {first_error}"
+        return None
+    return "la salida no tiene ninguna linea E"
+
+
+def run_mutation(mutation: Mutation, index: int, report: Report) -> tuple[bool, str | None]:
     check_definition(mutation)
     report.write(SEPARATOR)
     report.write(f"MUTACION {index:02d}/{len(MUTATIONS)}")
@@ -493,13 +559,12 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     path = REPO / mutation.file
     original_bytes = path.read_bytes()
     original_stat = path.stat()
-    crlf = b"\r\n" in original_bytes
+    original_source = original_bytes.decode("utf-8")
+    mutated_source = apply_mutation(mutation, original_source)
+    if mutated_source == original_source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
 
     try:
-        source = path.read_text(encoding="utf-8")
-        mutated_source = source.replace(mutation.original, mutation.mutated)
-        if crlf:
-            mutated_source = mutated_source.replace("\r\n", "\n").replace("\n", "\r\n")
         path.write_bytes(mutated_source.encode("utf-8"))
         mutated_run = run_pytest([mutation.node_id])
     finally:
@@ -521,7 +586,11 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     if restored_run.returncode != 0:
         raise MutationAbort(f"{mutation.test_name} no pasa con el codigo restaurado")
     report.write("restaurado: test en verde")
-    return outcome == "FALLO"
+    killed = outcome == "FALLO"
+    reason = invalid_reason(mutated_run.stdout + mutated_run.stderr) if killed else None
+    if reason:
+        report.write(f"INVALIDA: {reason}")
+    return killed, reason
 
 
 def tree_sha256() -> str:
@@ -602,6 +671,7 @@ def main() -> int:
     sha_before = tree_sha256()
     killed: list[str] = []
     survived: list[str] = []
+    invalid: list[str] = []
     with OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
         report = Report(stream)
         report.write("Salida generada por docs/evidencias/mutaciones-C-22.py. No editar a mano.")
@@ -614,7 +684,11 @@ def main() -> int:
 
         for index, mutation in enumerate(MUTATIONS, start=1):
             print(f"[{index:02d}/{len(MUTATIONS)}] {mutation.test_name}", flush=True)
-            if run_mutation(mutation, index, report):
+            was_killed, reason = run_mutation(mutation, index, report)
+            if reason:
+                invalid.append(f"{mutation.test_name}: {reason}")
+                print(f"    INVALIDA: {reason}", flush=True)
+            elif was_killed:
                 killed.append(mutation.test_name)
             else:
                 survived.append(mutation.test_name)
@@ -628,6 +702,8 @@ def main() -> int:
             f"mutaciones que hicieron fallar su test: {len(killed)}",
             f"mutaciones que NO lo hicieron fallar: {len(survived)}",
             *[f"  - {name}" for name in survived],
+            f"mutaciones inválidas: {len(invalid)}",
+            *[f"  - {entry}" for entry in invalid],
             f"SHA-256 de backend/app despues: {sha_after}",
             f"SHA-256 sin cambios: {'si' if same else 'NO'}",
         ]
@@ -635,7 +711,7 @@ def main() -> int:
 
     print("\n".join(summary))
     update_verify_table()
-    return 0 if same and not survived else 1
+    return 0 if same and not survived and not invalid else 1
 
 
 if __name__ == "__main__":
