@@ -1,0 +1,82 @@
+# Salida de docs/evidencias/http-C-24.sh contra la API local (PostgreSQL 16 real, seed ficticio), 2026-11-07
+preparacion: A1 Quiroga lun 10:00 Sillon 1; A2 Sosa lun 09:00 Sillon 2 (se cancela); A3 Quiroga mar 10:00 Sillon 1
+preparacion: bloqueo de Quiroga lun 12:00-13:00
+== 1 agenda del lunes, recepcion (200; A1 y A2 cancelado, en orden)
+HTTP 200
+  turno 2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control
+  turno 2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 25 elementos
+  blocks: 1 elementos
+== 2 filtro por profesional Quiroga (200; solo A1)
+HTTP 200
+  turno 2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 10 elementos
+  blocks: 1 elementos
+== 3 filtro por Sillon 2 (200; solo A2)
+HTTP 200
+  turno 2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 25 elementos
+  blocks: 1 elementos
+== 4 filtros combinados Quiroga + Sillon 2 (200; ningun turno)
+HTTP 200
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 10 elementos
+  blocks: 1 elementos
+== 5 odontologo ve la agenda completa, con el turno de Sosa (200)
+HTTP 200
+  turno 2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control
+  turno 2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 25 elementos
+  blocks: 1 elementos
+== 6 semana lunes a domingo (200; A1, A2 y A3)
+HTTP 200
+  turno 2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control
+  turno 2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control
+  turno 2026-11-17T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Carla Medina Control
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 25 elementos
+  blocks: 1 elementos
+== 7 profesional inexistente (200; listas vacias)
+HTTP 200
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 0 elementos
+  blocks: 0 elementos
+== 8 falta to (400)
+HTTP 400
+{"errors":[{"field":"to","type":"missing","message":"Falta este dato."}]}
+== 9 to anterior a from (400)
+HTTP 400
+{"errors":[{"field":null,"type":"invalid_range_order","message":"La fecha final no puede ser anterior a la inicial."}]}
+== 10 rango de 32 dias (400)
+HTTP 400
+{"errors":[{"field":null,"type":"invalid_range_length","message":"El rango no puede superar los 31 días."}]}
+== 11 rango de 31 dias (200)
+HTTP 200
+  turno 2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control
+  turno 2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control
+  turno 2026-11-17T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Carla Medina Control
+  claves: ['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']
+  workingHours: 25 elementos
+  blocks: 1 elementos
+== 12 parametro desconocido status (400)
+HTTP 400
+{"errors":[{"field":"status","type":"extra_forbidden","message":"Dato inválido."}]}
+== 13 UUID mal formado (400)
+HTTP 400
+{"errors":[{"field":"chairId","type":"uuid_parsing","message":"Dato inválido."}]}
+== 14 fecha con formato invalido (400)
+HTTP 400
+{"errors":[{"field":"from","type":"invalid_date_format","message":"La fecha debe tener formato AAAA-MM-DD."}]}
+== 15 sin token (401)
+HTTP 401
+{"code":"INVALID_TOKEN","message":"La sesión venció o no es válida. Inicie sesión de nuevo."}
+== 16 detalle de A1 (200, con nombres)
+HTTP 200
+{"id":"4f2ee71b-800c-4091-b0a9-c94cd604c7dc","patientId":"00000000-0000-0000-0000-0000000000c1","patientName":"Ana Pérez","professionalId":"00000000-0000-0000-0000-000000000001","professionalName":"Dra. Laura Quiroga","chairId":"00000000-0000-0000-0000-0000000000b1","chairName":"Sillón 1","serviceId":"00000000-0000-0000-0000-0000000000d4","serviceName":"Control","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
+== 17 detalle de turno inexistente (404)
+HTTP 404
+{"code":"NOT_FOUND","message":"Turno no encontrado."}

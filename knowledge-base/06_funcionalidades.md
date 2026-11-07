@@ -187,11 +187,11 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-040 — Agenda diaria y semanal
 **Como** recepción u odontólogo, **quiero** ver la agenda por día y por semana, filtrable por profesional y por sillón, **para** operar el consultorio.
-- [ ] CA-1: vista diaria con columna por profesional. CA-2: vista semanal por profesional. CA-3: los turnos se colorean por estado. CA-4: usable en pantallas de escritorio y tablet; responsive básico.
+- [x] CA-1: vista diaria con columna por profesional (API lista en C-24). [x] CA-2: vista semanal por profesional (API lista en C-24). [ ] CA-3: los turnos se colorean por estado. [ ] CA-4: usable en pantallas de escritorio y tablet; responsive básico.
 
 ### US-041 — Vista de recepción por sillón (diferenciador)
 **Como** recepción, **quiero** ver la agenda con una columna por sillón, **para** saber qué sillón está libre.
-- [ ] CA-1: columnas por sillón con turnos de todos los profesionales. CA-2: los huecos libres son visibles.
+- [x] CA-1: columnas por sillón con turnos de todos los profesionales (API lista en C-24). [ ] CA-2: los huecos libres son visibles.
 
 ### US-042 — Dar y reprogramar turno desde la UI con errores explicados
 **Como** secretaria, **quiero** que el formulario muestre el motivo del rechazo, **para** corregirlo sin adivinar.

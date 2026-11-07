@@ -4,7 +4,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 27/27 en [tasks.md](../../openspec/changes/api-consulta-de-agenda/tasks.md).
+- Tareas: 27/27 en [tasks.md](../../openspec/changes/archive/2026-11-07-api-consulta-de-agenda/tasks.md).
 - Precondición (C3): [precondicion-C-24.txt](precondicion-C-24.txt); C-21, C-22 y C-23 archivados.
 - Línea de base: [baseline-C-24.txt](baseline-C-24.txt) (882 passed, 467 deselected; 467 passed en integración; mypy en 170 archivos).
 - Suite por defecto: [pytest-C-24.txt](pytest-C-24.txt).
@@ -14,6 +14,38 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Trazabilidad: [trazabilidad-C-24.txt](trazabilidad-C-24.txt) (34 escenarios, 0 problemas).
 - Validación OpenSpec: [validate-C-24.txt](validate-C-24.txt).
 - Rojos (TDD): carpeta [red-C-24/](red-C-24/).
+
+## Verificación manual por HTTP (2026-11-07)
+
+Se ejecutó [http-C-24.sh](http-C-24.sh) contra la API con PostgreSQL 16 real y el seed ficticio; la salida cruda está en [http-C-24.txt](http-C-24.txt).
+
+| # | Título | Código HTTP | Resultado |
+|---|---|---|---|
+| 1 | agenda del lunes, recepcion (200; A1 y A2 cancelado, en orden) | 200 | Sobre `['appointments', 'blocks', 'from', 'timezone', 'to', 'workingHours']`; 2 turnos en orden (`2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control` y `2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control`); `workingHours`: 25; `blocks`: 1 (`2026-11-16T15:00:00Z`–`2026-11-16T16:00:00Z`, `"Reunión ficticia C-24"`) |
+| 2 | filtro por profesional Quiroga (200; solo A1) | 200 | 1 turno (`2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control`); `workingHours`: 10; `blocks`: 1 |
+| 3 | filtro por Sillon 2 (200; solo A2) | 200 | 1 turno (`2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control`); `workingHours`: 25; `blocks`: 1 |
+| 4 | filtros combinados Quiroga + Sillon 2 (200; ningun turno) | 200 | `appointments`: 0; `workingHours`: 10; `blocks`: 1 |
+| 5 | odontologo ve la agenda completa, con el turno de Sosa (200) | 200 | 2 turnos (incluye `2026-11-16T12:00:00Z cancelado Dr. Martín Sosa Sillón 2 Bruno Acosta Control` y `2026-11-16T13:00:00Z reservado Dra. Laura Quiroga Sillón 1 Ana Pérez Control`); `workingHours`: 25; `blocks`: 1 |
+| 6 | semana lunes a domingo (200; A1, A2 y A3) | 200 | 3 turnos en orden (`2026-11-16T12:00:00Z` Sosa, `2026-11-16T13:00:00Z` Quiroga y `2026-11-17T13:00:00Z` Quiroga); `workingHours`: 25; `blocks`: 1 |
+| 7 | profesional inexistente (200; listas vacias) | 200 | `appointments`: 0; `workingHours`: 0; `blocks`: 0 |
+| 8 | falta to (400) | 400 | `errors`: `field="to"`, `type="missing"`, `"Falta este dato."` |
+| 9 | to anterior a from (400) | 400 | `errors`: `field=null`, `type="invalid_range_order"`, `"La fecha final no puede ser anterior a la inicial."` |
+| 10 | rango de 32 dias (400) | 400 | `errors`: `field=null`, `type="invalid_range_length"`, `"El rango no puede superar los 31 días."` |
+| 11 | rango de 31 dias (200) | 200 | 3 turnos (A2, A1 y A3); `workingHours`: 25; `blocks`: 1 |
+| 12 | parametro desconocido status (400) | 400 | `errors`: `field="status"`, `type="extra_forbidden"`, `"Dato inválido."` |
+| 13 | UUID mal formado (400) | 400 | `errors`: `field="chairId"`, `type="uuid_parsing"`, `"Dato inválido."` |
+| 14 | fecha con formato invalido (400) | 400 | `errors`: `field="from"`, `type="invalid_date_format"`, `"La fecha debe tener formato AAAA-MM-DD."` |
+| 15 | sin token (401) | 401 | `code="INVALID_TOKEN"`, `"La sesión venció o no es válida. Inicie sesión de nuevo."` |
+| 16 | detalle de A1 (200, con nombres) | 200 | Turno enriquecido con `patientName="Ana Pérez"`, `professionalName="Dra. Laura Quiroga"`, `chairName="Sillón 1"`, `serviceName="Control"`, `startAt="2026-11-16T13:00:00Z"`, `endAt="2026-11-16T13:30:00Z"`, `status="reservado"` |
+| 17 | detalle de turno inexistente (404) | 404 | `code="NOT_FOUND"`, `"Turno no encontrado."` |
+
+## Artefactos
+
+- [proposal.md](../../openspec/changes/archive/2026-11-07-api-consulta-de-agenda/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-07-api-consulta-de-agenda/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-07-api-consulta-de-agenda/tasks.md)
+- [spec.md (agenda-api)](../../openspec/changes/archive/2026-11-07-api-consulta-de-agenda/specs/agenda-api/spec.md)
+- [spec.md (appointments-api)](../../openspec/changes/archive/2026-11-07-api-consulta-de-agenda/specs/appointments-api/spec.md)
 
 ## Desvíos
 

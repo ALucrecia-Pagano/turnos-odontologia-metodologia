@@ -1,0 +1,70 @@
+# Salida de docs/evidencias/http-C-20.sh contra la API local (PostgreSQL 16 real, seed ficticio), 2026-11-07
+== 1 recepcion lista profesionales (200)
+HTTP 200
+  [{"id": "00000000-0000-0000-0000-000000000002", "fullName": "Dr. Martín Sosa", "active": true, "licenseNumber": "MP-FIC-002"}, {"id": "00000000-0000-0000-0000-000000000001", "fullName": "Dra. Laura Quiroga", "active": true, "licenseNumber": "MP-FIC-001"}, {"id": "00000000-0000-0000-0000-000000000003", "fullName": "Dra. Paula Ben
+== 2 odontologo lista sillones (200)
+HTTP 200
+  [{"id": "00000000-0000-0000-0000-0000000000b1", "name": "Sillón 1", "active": true}, {"id": "00000000-0000-0000-0000-0000000000b2", "name": "Sillón 2", "active": true}, {"id": "00000000-0000-0000-0000-0000000000b3", "name": "Sillón 3", "active": true}]
+== 3 odontologo lista prestaciones (200)
+HTTP 200
+  [{"id": "00000000-0000-0000-0000-0000000000d5", "name": "Blanqueamiento", "defaultDurationMin": 90, "active": true}, {"id": "00000000-0000-0000-0000-0000000000d4", "name": "Control", "defaultDurationMin": 30, "active": true}, {"id": "00000000-0000-0000-0000-0000000000d2", "name": "Extracción", "defaultDurationMin": 60, "active":
+== 4 admin crea profesional Dr. Ficticio Nuevo (201)
+HTTP 201
+  {"id": "bfaa0ea9-7000-4280-94eb-67fd429dee4e", "fullName": "Dr. Ficticio Nuevo", "active": true, "licenseNumber": "MP-9999"}
+== 5 recepcion intenta crear profesional (403)
+HTTP 403
+  {"violations": [{"code": "FORBIDDEN_OPERATION", "message": "No tiene permiso para crear profesionales."}]}
+== 6 admin edita el profesional (200)
+HTTP 200
+  {"id": "bfaa0ea9-7000-4280-94eb-67fd429dee4e", "fullName": "Dr. Ficticio Editado", "active": true, "licenseNumber": "MP-9999"}
+== 7 admin desactiva el profesional (200, active false)
+HTTP 200
+  {"id": "bfaa0ea9-7000-4280-94eb-67fd429dee4e", "fullName": "Dr. Ficticio Editado", "active": false, "licenseNumber": "MP-9999"}
+== 8 admin reactiva el profesional (200, active true)
+HTTP 200
+  {"id": "bfaa0ea9-7000-4280-94eb-67fd429dee4e", "fullName": "Dr. Ficticio Editado", "active": true, "licenseNumber": "MP-9999"}
+== 9 profesional inexistente (404)
+HTTP 404
+  {"code": "NOT_FOUND", "message": "Profesional no encontrado."}
+== 10 admin crea Sillon 4 (201)
+HTTP 201
+  {"id": "f369d28e-bb8d-407f-b213-2f4a44df7215", "name": "Sillón 4", "active": true}
+== 11 sillon con nombre repetido, otras mayusculas (409 DUPLICATE_NAME)
+HTTP 409
+  {"violations": [{"code": "DUPLICATE_NAME", "message": "Ya existe un sillón con el nombre \"sillón 4\"."}]}
+== 12 admin crea prestacion Sellado ficticio 45 min (201)
+HTTP 201
+  {"id": "b2f53e24-7639-40cb-8177-c8176b3c6ab4", "name": "Sellado ficticio", "defaultDurationMin": 45, "active": true}
+== 12b prestacion repetida Blanqueamiento, ya existe en el seed (409 DUPLICATE_NAME)
+HTTP 409
+  {"violations": [{"code": "DUPLICATE_NAME", "message": "Ya existe una prestación con el nombre \"Blanqueamiento\"."}]}
+== 13 prestacion con duracion 0 (422)
+HTTP 422
+  {"violations": [{"code": "INVALID_DURATION", "message": "La duración de la prestación no es válida (se recibió 0 minutos): debe ser mayor que cero minutos."}]}
+== 14 recepcion crea paciente ficticio (201)
+HTTP 201
+  {"id": "8fd75add-601a-4037-88a2-4356790e2452", "fullName": "Paciente Ficticio", "dni": "40111222", "phone": "261-0000000", "healthInsurance": null}
+== 15 paciente con DNI repetido (409 DUPLICATE_DNI)
+HTTP 409
+  {"violations": [{"code": "DUPLICATE_DNI", "message": "Ya existe un paciente con el DNI 40.111.222."}]}
+== 16 paciente con DNI de 6 digitos (422)
+HTTP 422
+  {"violations": [{"code": "INVALID_DNI", "message": "El DNI no es válido (se recibió \"123456\"): debe tener 7 u 8 dígitos, con o sin puntos."}]}
+== 17 odontologo intenta crear paciente (403)
+HTTP 403
+  {"violations": [{"code": "FORBIDDEN_OPERATION", "message": "No tiene permiso para crear pacientes."}]}
+== 18 buscar paciente por nombre 'pérez' (200)
+HTTP 200
+  [{"id": "00000000-0000-0000-0000-0000000000c1", "fullName": "Ana Pérez", "dni": "30111222", "phone": null, "healthInsurance": null}]
+== 19 buscar paciente por prefijo de DNI '401' (200)
+HTTP 200
+  [{"id": "8fd75add-601a-4037-88a2-4356790e2452", "fullName": "Paciente Ficticio", "dni": "40111222", "phone": "261-0000000", "healthInsurance": null}]
+== 20 recepcion edita el telefono del paciente (200)
+HTTP 200
+  {"id": "8fd75add-601a-4037-88a2-4356790e2452", "fullName": "Paciente Ficticio", "dni": "40111222", "phone": "261-1111111", "healthInsurance": null}
+== 21 campo extra en el paciente (400)
+HTTP 400
+  {"errors": [{"field": "historiaClinica", "type": "extra_forbidden", "message": "Dato inválido."}]}
+== 22 sin token (401)
+HTTP 401
+  {"code": "INVALID_TOKEN", "message": "La sesión venció o no es válida. Inicie sesión de nuevo."}

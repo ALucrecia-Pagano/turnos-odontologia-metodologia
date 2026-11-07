@@ -555,7 +555,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/03_actores_y_roles.md` §RBAC
 
 ### [C-24] `api-consulta-de-agenda`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-07)
 - **Scope**:
   - `GET /api/agenda?from&to&professionalId&chairId`: turnos del rango (día o semana, en hora local `APP_TIMEZONE`) filtrables por profesional y por sillón; incluye horarios de atención y bloqueos del rango para que la UI los dibuje.
   - RBAC: odontólogo ve su agenda (y el resto en solo lectura según 03), recepción y administrador ven todo.
