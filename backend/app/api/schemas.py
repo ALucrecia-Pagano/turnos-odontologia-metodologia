@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from enum import Enum
 import re
-from typing import Any, Final
+from typing import Any, Final, Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -289,6 +289,57 @@ class AppointmentResponse(BaseModel):
     start_at: str = Field(serialization_alias="startAt")
     end_at: str = Field(serialization_alias="endAt")
     status: str
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+AllowedStatusChange = Literal["confirmado", "atendido", "ausente"]
+
+
+class StatusChangeInput(BaseModel):
+    to_status: AllowedStatusChange = Field(alias="toStatus")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+
+class RescheduleInput(BaseModel):
+    start_at: datetime = Field(alias="startAt")
+    professional_id: UUID | None = Field(default=None, alias="professionalId")
+    chair_id: UUID | None = Field(default=None, alias="chairId")
+    duration_min: int | None = Field(default=None, alias="durationMin")
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @field_validator("start_at")
+    @classmethod
+    def validate_tz(cls, v: datetime) -> datetime:
+        if v.tzinfo is None:
+            raise ValueError("La fecha y hora debe incluir zona horaria.")
+        return v
+
+
+class RescheduleDetailResponse(BaseModel):
+    previous_start_at: str = Field(serialization_alias="previousStartAt")
+    previous_end_at: str = Field(serialization_alias="previousEndAt")
+    new_start_at: str = Field(serialization_alias="newStartAt")
+    new_end_at: str = Field(serialization_alias="newEndAt")
+    previous_professional_id: UUID = Field(serialization_alias="previousProfessionalId")
+    new_professional_id: UUID = Field(serialization_alias="newProfessionalId")
+    previous_chair_id: UUID = Field(serialization_alias="previousChairId")
+    new_chair_id: UUID = Field(serialization_alias="newChairId")
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+class HistoryEntryResponse(BaseModel):
+    from_status: str | None = Field(default=None, serialization_alias="from")
+    to_status: str = Field(serialization_alias="to")
+    changed_by: UUID = Field(serialization_alias="changedBy")
+    changed_by_name: str | None = Field(default=None, serialization_alias="changedByName")
+    changed_at: str = Field(serialization_alias="changedAt")
+    reschedule: RescheduleDetailResponse | None = Field(
+        default=None, serialization_alias="reschedule"
+    )
 
     model_config = ConfigDict(populate_by_name=True)
 

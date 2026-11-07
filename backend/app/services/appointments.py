@@ -5,6 +5,11 @@ from zoneinfo import ZoneInfo
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.api.schemas import (
+    HistoryEntryResponse,
+    RescheduleDetailResponse,
+    format_utc_iso,
+)
 from app.db.models import (
     AppointmentModel,
     AppointmentStatusChangeModel,
@@ -27,7 +32,11 @@ from app.domain.model import (
     ScheduleContext,
 )
 from app.domain.violations import Ok, Rejected, ValidationResult
-from app.repositories.appointment import AppointmentRepository, SqlAppointmentReader
+from app.repositories.appointment import (
+    AppointmentRepository,
+    AppointmentStatusChangeRepository,
+    SqlAppointmentReader,
+)
 from app.repositories.blocks import BlockRepository
 from app.repositories.catalog import (
     ChairRepository,
@@ -35,6 +44,7 @@ from app.repositories.catalog import (
     ServiceRepository,
 )
 from app.repositories.patients import PatientRepository
+from app.repositories.users import UserRepository
 from app.repositories.working_hours import WorkingHoursRepository
 
 
@@ -434,3 +444,51 @@ def reschedule_appointment(
     except Exception:
         session.rollback()
         raise
+
+
+def get_appointment_history(
+    session: Session,
+    appointment_id: UUID,
+) -> list[HistoryEntryResponse] | None:
+    app_repo = AppointmentRepository(session)
+    appointment = app_repo.get_by_id(appointment_id)
+    if appointment is None:
+        return None
+
+    status_repo = AppointmentStatusChangeRepository(session)
+    changes = status_repo.list_by_appointment_id(appointment_id)
+
+    user_ids = {c.changed_by for c in changes}
+    names_by_id = UserRepository(session).get_display_names(user_ids)
+
+    result: list[HistoryEntryResponse] = []
+    for c in changes:
+        from_val = c.from_status.value if c.from_status is not None else None
+        to_val = c.to_status.value
+        changed_name = names_by_id.get(c.changed_by)
+        changed_at_str = format_utc_iso(c.changed_at)
+
+        reschedule_resp: RescheduleDetailResponse | None = None
+        if c.reschedule is not None:
+            reschedule_resp = RescheduleDetailResponse(
+                previous_start_at=format_utc_iso(c.reschedule.previous_interval.start),
+                previous_end_at=format_utc_iso(c.reschedule.previous_interval.end),
+                new_start_at=format_utc_iso(c.reschedule.new_interval.start),
+                new_end_at=format_utc_iso(c.reschedule.new_interval.end),
+                previous_professional_id=c.reschedule.previous_professional_id,
+                new_professional_id=c.reschedule.new_professional_id,
+                previous_chair_id=c.reschedule.previous_chair_id,
+                new_chair_id=c.reschedule.new_chair_id,
+            )
+
+        result.append(
+            HistoryEntryResponse(
+                from_status=from_val,
+                to_status=to_val,
+                changed_by=c.changed_by,
+                changed_by_name=changed_name,
+                changed_at=changed_at_str,
+                reschedule=reschedule_resp,
+            )
+        )
+    return result

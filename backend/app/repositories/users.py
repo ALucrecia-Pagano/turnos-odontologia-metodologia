@@ -1,3 +1,4 @@
+from collections.abc import Collection
 from uuid import UUID
 
 from sqlalchemy import func, select
@@ -51,6 +52,15 @@ class UserRepository:
         if row is None:
             return None
         return StoredUser(user=_to_user(row), active=row.active)
+
+    def get_display_names(self, ids: Collection[UUID]) -> dict[UUID, str]:
+        unique_ids = set(ids)
+        if not unique_ids:
+            return {}
+        stmt = select(UserModel.id, UserModel.display_name).where(UserModel.id.in_(unique_ids))
+        rows = self._session.execute(stmt).all()
+        return {row.id: row.display_name for row in rows}
+
 
     def count(self) -> int:
         return self._session.scalar(select(func.count()).select_from(UserModel)) or 0

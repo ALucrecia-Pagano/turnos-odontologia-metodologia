@@ -1,8 +1,9 @@
 import traceback
+from typing import Any
 from uuid import UUID
 
 import pytest
-from sqlalchemy import Connection, text
+from sqlalchemy import Connection, event, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -122,3 +123,61 @@ def test_role_rule_error_hides_hash(connection: Connection) -> None:
 
     assert RECOGNIZABLE_HASH not in full_error_text(error.value)
     assert error.value.constraint == "ck_app_user_professional_by_role"
+
+
+def test_get_display_names_resolves_in_single_query(connection: Connection) -> None:
+    session = Session(bind=connection)
+    repository = UserRepository(session)
+    admin_user = AuthenticatedUser(
+        id=OTHER_ID,
+        username="admin",
+        display_name="Administración Demo",
+        role=Role.ADMINISTRADOR,
+        professional_id=None,
+    )
+    repository.create(reception_user(USER_ID), RECOGNIZABLE_HASH)
+    repository.create(admin_user, RECOGNIZABLE_HASH)
+
+    queries: list[str] = []
+
+    def before_cursor_execute(
+        conn: Any, cursor: Any, statement: str, parameters: Any, context: Any, executemany: bool
+    ) -> None:
+        queries.append(statement)
+
+    event.listen(connection.engine, "before_cursor_execute", before_cursor_execute)
+    try:
+        names = repository.get_display_names([
+            USER_ID,
+            OTHER_ID,
+            UUID("00000000-0000-0000-0000-000000000999"),
+        ])
+    finally:
+        event.remove(connection.engine, "before_cursor_execute", before_cursor_execute)
+
+    assert len(queries) == 1
+    assert names == {
+        USER_ID: "Recepción de Prueba",
+        OTHER_ID: "Administración Demo",
+    }
+
+
+def test_get_display_names_empty_list_makes_zero_queries(connection: Connection) -> None:
+    session = Session(bind=connection)
+    repository = UserRepository(session)
+
+    queries: list[str] = []
+
+    def before_cursor_execute(
+        conn: Any, cursor: Any, statement: str, parameters: Any, context: Any, executemany: bool
+    ) -> None:
+        queries.append(statement)
+
+    event.listen(connection.engine, "before_cursor_execute", before_cursor_execute)
+    try:
+        names = repository.get_display_names([])
+    finally:
+        event.remove(connection.engine, "before_cursor_execute", before_cursor_execute)
+
+    assert len(queries) == 0
+    assert names == {}
