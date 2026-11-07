@@ -649,7 +649,7 @@ El profesional SHALL tener nombre completo y el sillón un nombre (KB 04), oblig
 
 #### Scenario: Nombre con espacios alrededor en el mensaje
 - **GIVEN** P1 con el nombre `"  Dra. Laura Quiroga  "`, con espacios al principio y al final, y el turno existente A (P1, S1, de 13:00 a 13:30, de 10:00 a 10:30 hora local)
-- **WHEN** se pide un turno para P1 en S1 de 13:15 a 13:45 (de 10:15 a 10:45 hora local)
+- **WHEN** se pide un turno para P1 en S2 de 13:15 a 13:45 (de 10:15 a 10:45 hora local)
 - **THEN** el resultado es `Rejected` con una sola violación, `PROFESSIONAL_OVERLAP`, cuyo mensaje es exactamente "Dra. Laura Quiroga ya tiene un turno de 10:00 a 10:30 (hora local) que se superpone (turno {id de A})."
 - **AND** el mensaje no contiene espacios dobles
 - **AND** P1 conserva el nombre tal como se cargó, con sus espacios
