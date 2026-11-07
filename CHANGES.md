@@ -540,7 +540,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/06_funcionalidades.md` §US-001, §US-006
 
 ### [C-23] `api-ciclo-de-vida-del-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-07)
 - **Scope**:
   - `POST /api/appointments/:id/cancel`, `POST /api/appointments/:id/reschedule`, `POST /api/appointments/:id/status` (confirmado, atendido, ausente) y `GET /api/appointments/:id/history`.
   - Transaccional con historial (turno + entrada en una sola transacción); `INVALID_TRANSITION` → `422`; odontólogo solo sobre sus turnos y con historial propio de solo lectura (RN-AC-01).

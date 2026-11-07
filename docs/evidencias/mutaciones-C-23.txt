@@ -1,5 +1,5 @@
 Salida generada por docs/evidencias/mutaciones-C-23.py. No editar a mano.
-SHA-256 de backend/app antes: 7e528b381a47dbdcf684afed77315fac8bd39ba4b51d67063e1442572b22bbc9
+SHA-256 de backend/app antes: dfde27a6ababdec32fd8671121d26a0370b9201b6bf1e51017b8c55c4a427fb0
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 ============================= test session starts =============================
 collected 51 items
@@ -19,7 +19,7 @@ tests\integration\test_appointment_lifecycle_openapi.py .                [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 51 passed, 1 warning in 14.29s ========================
+======================= 51 passed, 1 warning in 14.13s ========================
 ================================================================================
 [01/51] test_status_change_input_valid_statuses
 test: tests/api/test_appointment_lifecycle_schemas.py::test_status_change_input_valid_statuses
@@ -48,7 +48,7 @@ E     Input should be 'confirmado_mutado', 'atendido' or 'ausente' [type=literal
 E       For further information visit https://errors.pydantic.dev/2.14/v/literal_error
 =========================== short test summary info ===========================
 FAILED tests/api/test_appointment_lifecycle_schemas.py::test_status_change_input_valid_statuses
-============================== 1 failed in 0.13s ==============================
+============================== 1 failed in 0.19s ==============================
 restaurado: test en verde
 ================================================================================
 [02/51] test_status_change_input_cancelado_rejected
@@ -77,7 +77,7 @@ tests\api\test_appointment_lifecycle_schemas.py:21: in test_status_change_input_
 E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
 =========================== short test summary info ===========================
 FAILED tests/api/test_appointment_lifecycle_schemas.py::test_status_change_input_cancelado_rejected
-============================== 1 failed in 0.11s ==============================
+============================== 1 failed in 0.13s ==============================
 restaurado: test en verde
 ================================================================================
 [03/51] test_status_change_input_reservado_rejected
@@ -131,7 +131,7 @@ tests\api\test_appointment_lifecycle_schemas.py:32: in test_status_change_input_
 E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
 =========================== short test summary info ===========================
 FAILED tests/api/test_appointment_lifecycle_schemas.py::test_status_change_input_extra_field_forbidden
-============================== 1 failed in 0.11s ==============================
+============================== 1 failed in 0.14s ==============================
 restaurado: test en verde
 ================================================================================
 [05/51] test_reschedule_input_start_at_with_tz_accepted
@@ -253,7 +253,7 @@ tests\api\test_appointment_lifecycle_schemas.py:64: in test_reschedule_input_ext
 E   Failed: DID NOT RAISE <class 'pydantic_core._pydantic_core.ValidationError'>
 =========================== short test summary info ===========================
 FAILED tests/api/test_appointment_lifecycle_schemas.py::test_reschedule_input_extra_field_forbidden
-============================== 1 failed in 0.12s ==============================
+============================== 1 failed in 0.11s ==============================
 restaurado: test en verde
 ================================================================================
 [09/51] test_history_entry_initial_entry_serializes_from_and_reschedule_as_null
@@ -278,10 +278,10 @@ tests\api\test_appointment_lifecycle_schemas.py F                        [100%]
 ___ test_history_entry_initial_entry_serializes_from_and_reschedule_as_null ___
 tests\api\test_appointment_lifecycle_schemas.py:81: in test_history_entry_initial_entry_serializes_from_and_reschedule_as_null
     assert "from" in dumped
-E   AssertionError: assert 'from' in {'changedAt': '2026-11-16T10:00:00Z', 'changedBy': UUID('00000000-0000-0000-0000-0000000000e2'), 'changedByName': 'Recepción Demo', 'fromStatus': None, ...}
+E   AssertionError: assert 'from' in {'changedAt': '2026-11-16T10:00:00Z', 'changedBy': UUID('00000000-0000-0000-0000-0000000000e2'), 'changedByName': 'RecepciÃ³n Demo', 'fromStatus': None, ...}
 =========================== short test summary info ===========================
 FAILED tests/api/test_appointment_lifecycle_schemas.py::test_history_entry_initial_entry_serializes_from_and_reschedule_as_null
-============================== 1 failed in 0.11s ==============================
+============================== 1 failed in 0.12s ==============================
 restaurado: test en verde
 ================================================================================
 [10/51] test_history_entry_reschedule_detail_flat_eight_fields
@@ -310,7 +310,7 @@ tests\api\test_appointment_lifecycle_schemas.py:116: in test_history_entry_resch
 E   KeyError: 'previousStartAt'
 =========================== short test summary info ===========================
 FAILED tests/api/test_appointment_lifecycle_schemas.py::test_history_entry_reschedule_detail_flat_eight_fields
-============================== 1 failed in 0.11s ==============================
+============================== 1 failed in 0.14s ==============================
 restaurado: test en verde
 ================================================================================
 [11/51] test_get_display_names_empty_list_makes_zero_queries
@@ -351,7 +351,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_repository.py::test_get_display_names_empty_list_makes_zero_queries
-======================== 1 failed, 1 warning in 0.28s =========================
+======================== 1 failed, 1 warning in 0.37s =========================
 restaurado: test en verde
 ================================================================================
 [12/51] test_get_display_names_resolves_in_single_query
@@ -376,11 +376,11 @@ tests\integration\test_user_repository.py F                              [100%]
 _______________ test_get_display_names_resolves_in_single_query _______________
 tests\integration\test_user_repository.py:159: in test_get_display_names_resolves_in_single_query
     assert names == {
-E   AssertionError: assert {} == {UUID('000000...tración Demo'}
+E   AssertionError: assert {} == {UUID('000000...traciÃ³n Demo'}
 E     
 E     Right contains 2 more items:
-E     {UUID('00000000-0000-0000-0000-00000000f0a1'): 'Recepción de Prueba',
-E      UUID('00000000-0000-0000-0000-00000000f0a2'): 'Administración Demo'}
+E     {UUID('00000000-0000-0000-0000-00000000f0a1'): 'RecepciÃ³n de Prueba',
+E      UUID('00000000-0000-0000-0000-00000000f0a2'): 'AdministraciÃ³n Demo'}
 E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
@@ -393,7 +393,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_repository.py::test_get_display_names_resolves_in_single_query
-======================== 1 failed, 1 warning in 0.29s =========================
+======================== 1 failed, 1 warning in 0.33s =========================
 restaurado: test en verde
 ================================================================================
 [13/51] test_get_appointment_history_returns_none_if_appointment_not_found
@@ -430,7 +430,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_lifecycle_services.py::test_get_appointment_history_returns_none_if_appointment_not_found
-======================== 1 failed, 1 warning in 0.43s =========================
+======================== 1 failed, 1 warning in 0.46s =========================
 restaurado: test en verde
 ================================================================================
 [14/51] test_get_appointment_history_ascending_order_and_reschedule_mapping
@@ -468,7 +468,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_lifecycle_services.py::test_get_appointment_history_ascending_order_and_reschedule_mapping
-======================== 1 failed, 1 warning in 0.47s =========================
+======================== 1 failed, 1 warning in 0.46s =========================
 restaurado: test en verde
 ================================================================================
 [15/51] test_get_appointment_history_unknown_user_leaves_changed_by_name_null
@@ -505,7 +505,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_lifecycle_services.py::test_get_appointment_history_unknown_user_leaves_changed_by_name_null
-======================== 1 failed, 1 warning in 0.45s =========================
+======================== 1 failed, 1 warning in 0.53s =========================
 restaurado: test en verde
 ================================================================================
 [16/51] test_reception_cancels_reserved_appointment
@@ -530,7 +530,7 @@ _________________ test_reception_cancels_reserved_appointment _________________
 tests\integration\test_api_appointment_cancel.py:203: in test_reception_cancels_reserved_appointment
     assert len(changes) == 2
 E   AssertionError: assert 1 == 2
-E    +  where 1 = len((AppointmentStatusChange(appointment_id=UUID('38f96a6e-9086-4c7e-a380-8e8b63462fa4'), from_status=None, to_status=<App...000e2'), changed_at=datetime.datetime(2026, 11, 7, 3, 12, 52, 906260, tzinfo=datetime.timezone.utc), reschedule=None),))
+E    +  where 1 = len((AppointmentStatusChange(appointment_id=UUID('e67dadeb-9f03-4426-b2eb-0d97a7033af3'), from_status=None, to_status=<App...0000e2'), changed_at=datetime.datetime(2026, 11, 7, 4, 4, 25, 653569, tzinfo=datetime.timezone.utc), reschedule=None),))
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -542,7 +542,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_cancel.py::test_reception_cancels_reserved_appointment
-======================== 1 failed, 1 warning in 1.00s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 restaurado: test en verde
 ================================================================================
 [17/51] test_admin_cancels_confirmed_appointment
@@ -581,7 +581,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_cancel.py::test_admin_cancels_confirmed_appointment
-======================== 1 failed, 1 warning in 0.87s =========================
+======================== 1 failed, 1 warning in 0.77s =========================
 restaurado: test en verde
 ================================================================================
 [18/51] test_cancel_attended_appointment_returns_422
@@ -589,12 +589,13 @@ test: tests/integration/test_api_appointment_cancel.py::test_cancel_attended_app
 diff:
 --- a/backend/app/api/appointments.py
 +++ b/backend/app/api/appointments.py
-@@ -127,5 +127,5 @@
-         raise NotFoundError("Turno no encontrado.")
+@@ -128,5 +128,5 @@
  
--    if isinstance(result, Rejected):
-+    if False and isinstance(result, Rejected):
-         raise DomainRejectedError(result)
+     if isinstance(result, Rejected):
+-        raise DomainRejectedError(result)
++        raise NotFoundError("Turno no encontrado.")
+ 
+     assert isinstance(result, Ok)
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
 collected 1 item
@@ -603,125 +604,11 @@ tests\integration\test_api_appointment_cancel.py F                       [100%]
 
 ================================== FAILURES ===================================
 ________________ test_cancel_attended_appointment_returns_422 _________________
-tests\integration\test_api_appointment_cancel.py:265: in test_cancel_attended_appointment_returns_422
-    res = auth_client.post(f"/api/appointments/{app_id}/cancel", headers=admin_headers)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:132: in cancel_appointment_endpoint
-    assert isinstance(result, Ok)
-           ^^^^^^^^^^^^^^^^^^^^^^
-E   AssertionError
+tests\integration\test_api_appointment_cancel.py:266: in test_cancel_attended_appointment_returns_422
+    assert res.status_code == 422, res.text
+E   AssertionError: {"code":"NOT_FOUND","message":"Turno no encontrado."}
+E   assert 404 == 422
+E    +  where 404 = <Response [404 Not Found]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -733,7 +620,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_cancel.py::test_cancel_attended_appointment_returns_422
-======================== 1 failed, 1 warning in 1.38s =========================
+======================== 1 failed, 1 warning in 0.82s =========================
 restaurado: test en verde
 ================================================================================
 [19/51] test_cancel_already_cancelled_appointment_returns_422
@@ -772,7 +659,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_cancel.py::test_cancel_already_cancelled_appointment_returns_422
-======================== 1 failed, 1 warning in 0.82s =========================
+======================== 1 failed, 1 warning in 1.01s =========================
 restaurado: test en verde
 ================================================================================
 [20/51] test_cancel_nonexistent_appointment_returns_404
@@ -780,12 +667,16 @@ test: tests/integration/test_api_appointment_cancel.py::test_cancel_nonexistent_
 diff:
 --- a/backend/app/api/appointments.py
 +++ b/backend/app/api/appointments.py
-@@ -124,5 +124,5 @@
-     )
+@@ -125,5 +125,8 @@
  
--    if result is None:
-+    if False and result is None:
-         raise NotFoundError("Turno no encontrado.")
+     if result is None:
+-        raise NotFoundError("Turno no encontrado.")
++        return AppointmentResponse(
++            id=id, patient_id=id, professional_id=id, chair_id=id, service_id=id,
++            start_at=format_utc_iso(now), end_at=format_utc_iso(now), status="reservado",
++        )
+ 
+     if isinstance(result, Rejected):
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
 collected 1 item
@@ -794,124 +685,10 @@ tests\integration\test_api_appointment_cancel.py F                       [100%]
 
 ================================== FAILURES ===================================
 _______________ test_cancel_nonexistent_appointment_returns_404 _______________
-tests\integration\test_api_appointment_cancel.py:298: in test_cancel_nonexistent_appointment_returns_404
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:132: in cancel_appointment_endpoint
-    assert isinstance(result, Ok)
-           ^^^^^^^^^^^^^^^^^^^^^^
-E   AssertionError
+tests\integration\test_api_appointment_cancel.py:302: in test_cancel_nonexistent_appointment_returns_404
+    assert res.status_code == 404
+E   assert 200 == 404
+E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -923,7 +700,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_cancel.py::test_cancel_nonexistent_appointment_returns_404
-======================== 1 failed, 1 warning in 1.20s =========================
+======================== 1 failed, 1 warning in 0.73s =========================
 restaurado: test en verde
 ================================================================================
 [21/51] test_dentist_cannot_cancel_appointment_returns_403
@@ -935,7 +712,7 @@ diff:
      permission: Annotated[
          Permission,
 -        Depends(require_permission(Resource.APPOINTMENT, Action.CANCEL)),
-+        Depends(require_permission(Resource.APPOINTMENT, Action.READ)),
++        Depends(require_permission(Resource.APPOINTMENT, Action.CHANGE_STATUS)),
      ],
      request: Request,
 --- salida mutada (codigo de salida 1) ---
@@ -946,123 +723,10 @@ tests\integration\test_api_appointment_cancel.py F                       [100%]
 
 ================================== FAILURES ===================================
 _____________ test_dentist_cannot_cancel_appointment_returns_403 ______________
-tests\integration\test_api_appointment_cancel.py:312: in test_dentist_cannot_cancel_appointment_returns_403
-    res = auth_client.post(f"/api/appointments/{app_id}/cancel", headers=dentist_headers)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:511: in app
-    solved_result = await solve_dependencies(
-.venv\Lib\site-packages\fastapi\dependencies\utils.py:733: in solve_dependencies
-    solved = await run_in_threadpool(call, **solved_result.values)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-app\api\deps.py:97: in __call__
-    PERMISSION_MESSAGES[(self.resource, self.action)],
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E   KeyError: (<Resource.APPOINTMENT: 'appointment'>, <Action.READ: 'read'>)
+tests\integration\test_api_appointment_cancel.py:315: in test_dentist_cannot_cancel_appointment_returns_403
+    assert any(
+E   assert False
+E    +  where False = any(<generator object test_dentist_cannot_cancel_appointment_returns_403.<locals>.<genexpr> at 0x00000233F3685E50>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1074,7 +738,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_cancel.py::test_dentist_cannot_cancel_appointment_returns_403
-======================== 1 failed, 1 warning in 1.50s =========================
+======================== 1 failed, 1 warning in 0.94s =========================
 restaurado: test en verde
 ================================================================================
 [22/51] test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado
@@ -1098,7 +762,7 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 _ test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado _
 tests\integration\test_api_appointment_reschedule.py:148: in test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado
     assert res.status_code == 200, res.text
-E   AssertionError: {"violations":[{"code":"INVALID_DURATION","message":"La duración del turno no es válida (se recibió 999 minutos): debe ser múltiplo de 5 minutos y no puede superar los 480 minutos."}]}
+E   AssertionError: {"violations":[{"code":"INVALID_DURATION","message":"La duraciÃ³n del turno no es vÃ¡lida (se recibiÃ³ 999 minutos): debe ser mÃºltiplo de 5 minutos y no puede superar los 480 minutos."}]}
 E   assert 422 == 200
 E    +  where 422 = <Response [422 Unprocessable Entity]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -1112,7 +776,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado
-======================== 1 failed, 1 warning in 0.81s =========================
+======================== 1 failed, 1 warning in 0.88s =========================
 restaurado: test en verde
 ================================================================================
 [23/51] test_reschedule_with_explicit_professional_chair_and_duration
@@ -1154,7 +818,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_with_explicit_professional_chair_and_duration
-======================== 1 failed, 1 warning in 0.79s =========================
+======================== 1 failed, 1 warning in 0.87s =========================
 restaurado: test en verde
 ================================================================================
 [24/51] test_reschedule_professional_overlap_returns_409
@@ -1162,12 +826,13 @@ test: tests/integration/test_api_appointment_reschedule.py::test_reschedule_prof
 diff:
 --- a/backend/app/api/appointments.py
 +++ b/backend/app/api/appointments.py
-@@ -188,5 +188,5 @@
-         raise NotFoundError("Turno no encontrado.")
- 
--    if isinstance(result, Rejected):
-+    if False and isinstance(result, Rejected):
-         raise DomainRejectedError(result)
+@@ -170,5 +170,5 @@
+     reschedule_req = RescheduleRequest(
+         start_at=body.start_at,
+-        professional_id=body.professional_id,
++        professional_id=None,
+         chair_id=body.chair_id,
+         duration_min=body.duration_min,
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
 collected 1 item
@@ -1176,124 +841,11 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 
 ================================== FAILURES ===================================
 ______________ test_reschedule_professional_overlap_returns_409 _______________
-tests\integration\test_api_appointment_reschedule.py:201: in test_reschedule_professional_overlap_returns_409
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:193: in reschedule_appointment_endpoint
-    assert isinstance(result, Ok)
-           ^^^^^^^^^^^^^^^^^^^^^^
-E   AssertionError
+tests\integration\test_api_appointment_reschedule.py:209: in test_reschedule_professional_overlap_returns_409
+    assert res.status_code == 409, res.text
+E   AssertionError: {"id":"232a8d26-9865-43ea-b1ee-8749fcbf993f","patientId":"00000000-0000-0000-0000-0000000000c2","professionalId":"00000000-0000-0000-0000-000000000002","chairId":"00000000-0000-0000-0000-0000000000b2","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
+E   assert 200 == 409
+E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1305,7 +857,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_professional_overlap_returns_409
-======================== 1 failed, 1 warning in 1.30s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 restaurado: test en verde
 ================================================================================
 [25/51] test_reschedule_chair_overlap_returns_409
@@ -1330,7 +882,7 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 __________________ test_reschedule_chair_overlap_returns_409 __________________
 tests\integration\test_api_appointment_reschedule.py:236: in test_reschedule_chair_overlap_returns_409
     assert res.status_code == 409, res.text
-E   AssertionError: {"id":"815f9856-9b9f-4226-9581-8c086e186aff","patientId":"00000000-0000-0000-0000-0000000000c2","professionalId":"00000000-0000-0000-0000-000000000002","chairId":"00000000-0000-0000-0000-0000000000b2","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
+E   AssertionError: {"id":"ac301b7f-a4d1-410a-96a3-09c475eb4b2f","patientId":"00000000-0000-0000-0000-0000000000c2","professionalId":"00000000-0000-0000-0000-000000000002","chairId":"00000000-0000-0000-0000-0000000000b2","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
 E   assert 200 == 409
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -1344,7 +896,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_chair_overlap_returns_409
-======================== 1 failed, 1 warning in 0.83s =========================
+======================== 1 failed, 1 warning in 0.88s =========================
 restaurado: test en verde
 ================================================================================
 [26/51] test_reschedule_inside_block_returns_409
@@ -1356,7 +908,7 @@ diff:
  
      reschedule_req = RescheduleRequest(
 -        start_at=body.start_at,
-+        start_at=body.start_at + timedelta(days=1),
++        start_at=body.start_at.replace(hour=14),
          professional_id=body.professional_id,
          chair_id=body.chair_id,
 --- salida mutada (codigo de salida 1) ---
@@ -1367,124 +919,10 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 
 ================================== FAILURES ===================================
 __________________ test_reschedule_inside_block_returns_409 ___________________
-tests\integration\test_api_appointment_reschedule.py:261: in test_reschedule_inside_block_returns_409
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:171: in reschedule_appointment_endpoint
-    start_at=body.start_at + timedelta(days=1),
-                             ^^^^^^^^^
-E   NameError: name 'timedelta' is not defined
+tests\integration\test_api_appointment_reschedule.py:268: in test_reschedule_inside_block_returns_409
+    assert any(v["code"] == "BLOCKED_TIME" for v in violations)
+E   assert False
+E    +  where False = any(<generator object test_reschedule_inside_block_returns_409.<locals>.<genexpr> at 0x000001F730DD9F20>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1496,7 +934,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_inside_block_returns_409
-======================== 1 failed, 1 warning in 1.30s =========================
+======================== 1 failed, 1 warning in 0.87s =========================
 restaurado: test en verde
 ================================================================================
 [27/51] test_reschedule_outside_working_hours_returns_409
@@ -1521,7 +959,7 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 ______________ test_reschedule_outside_working_hours_returns_409 ______________
 tests\integration\test_api_appointment_reschedule.py:284: in test_reschedule_outside_working_hours_returns_409
     assert res.status_code == 409, res.text
-E   AssertionError: {"id":"f4e4265c-bde9-49c9-b3be-0108d3118eb8","patientId":"00000000-0000-0000-0000-0000000000c1","professionalId":"00000000-0000-0000-0000-000000000001","chairId":"00000000-0000-0000-0000-0000000000b1","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
+E   AssertionError: {"id":"a3052ab2-7752-446e-b8a3-6ac47e0a722b","patientId":"00000000-0000-0000-0000-0000000000c1","professionalId":"00000000-0000-0000-0000-000000000001","chairId":"00000000-0000-0000-0000-0000000000b1","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"reservado"}
 E   assert 200 == 409
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -1535,7 +973,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_outside_working_hours_returns_409
-======================== 1 failed, 1 warning in 0.78s =========================
+======================== 1 failed, 1 warning in 0.84s =========================
 restaurado: test en verde
 ================================================================================
 [28/51] test_reschedule_in_the_past_returns_422
@@ -1547,7 +985,7 @@ diff:
          request=reschedule_req,
          actor=permission.actor,
 -        now=now,
-+        now=now - timedelta(days=365),
++        now=datetime(2000, 1, 1, tzinfo=UTC),
          tz=tz,
          auto_commit=True,
 --- salida mutada (codigo de salida 1) ---
@@ -1558,124 +996,11 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 
 ================================== FAILURES ===================================
 ___________________ test_reschedule_in_the_past_returns_422 ___________________
-tests\integration\test_api_appointment_reschedule.py:300: in test_reschedule_in_the_past_returns_422
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:182: in reschedule_appointment_endpoint
-    now=now - timedelta(days=365),
-              ^^^^^^^^^
-E   NameError: name 'timedelta' is not defined
+tests\integration\test_api_appointment_reschedule.py:305: in test_reschedule_in_the_past_returns_422
+    assert res.status_code == 422, res.text
+E   AssertionError: {"violations":[{"code":"OUTSIDE_WORKING_HOURS","message":"El turno de 01:05 a 01:35 (hora local) queda fuera del horario de atenciÃ³n: Dra. Ficticia Uno no atiende los viernes."}]}
+E   assert 409 == 422
+E    +  where 409 = <Response [409 Conflict]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1687,7 +1012,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_in_the_past_returns_422
-======================== 1 failed, 1 warning in 1.63s =========================
+======================== 1 failed, 1 warning in 0.81s =========================
 restaurado: test en verde
 ================================================================================
 [29/51] test_reschedule_start_at_without_timezone_returns_400
@@ -1695,12 +1020,11 @@ test: tests/integration/test_api_appointment_reschedule.py::test_reschedule_star
 diff:
 --- a/backend/app/api/schemas.py
 +++ b/backend/app/api/schemas.py
-@@ -314,5 +314,5 @@
-     @classmethod
+@@ -315,5 +315,5 @@
      def validate_tz(cls, v: datetime) -> datetime:
--        if v.tzinfo is None:
-+        if False and v.tzinfo is None:
-             raise ValueError("La fecha y hora debe incluir zona horaria.")
+         if v.tzinfo is None:
+-            raise ValueError("La fecha y hora debe incluir zona horaria.")
++            return v.replace(tzinfo=timezone.utc)
          return v
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -1710,130 +1034,10 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 
 ================================== FAILURES ===================================
 ____________ test_reschedule_start_at_without_timezone_returns_400 ____________
-tests\integration\test_api_appointment_reschedule.py:317: in test_reschedule_start_at_without_timezone_returns_400
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:170: in reschedule_appointment_endpoint
-    reschedule_req = RescheduleRequest(
-<string>:7: in __init__
-    ???
-app\domain\model.py:189: in __post_init__
-    object.__setattr__(self, "start_at", _to_utc("start_at", self.start_at))
-                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-app\domain\model.py:55: in _to_utc
-    raise ValueError(f"{field_name} necesita zona horaria (datetime naive)")
-E   ValueError: start_at necesita zona horaria (datetime naive)
+tests\integration\test_api_appointment_reschedule.py:322: in test_reschedule_start_at_without_timezone_returns_400
+    assert res.status_code == 400
+E   assert 409 == 400
+E    +  where 409 = <Response [409 Conflict]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1845,7 +1049,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_start_at_without_timezone_returns_400
-======================== 1 failed, 1 warning in 1.32s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 restaurado: test en verde
 ================================================================================
 [30/51] test_reschedule_extra_field_returns_400
@@ -1891,12 +1095,16 @@ test: tests/integration/test_api_appointment_reschedule.py::test_reschedule_none
 diff:
 --- a/backend/app/api/appointments.py
 +++ b/backend/app/api/appointments.py
-@@ -185,5 +185,5 @@
-     )
+@@ -186,5 +186,8 @@
  
--    if result is None:
-+    if False and result is None:
-         raise NotFoundError("Turno no encontrado.")
+     if result is None:
+-        raise NotFoundError("Turno no encontrado.")
++        return AppointmentResponse(
++            id=id, patient_id=id, professional_id=id, chair_id=id, service_id=id,
++            start_at=format_utc_iso(now), end_at=format_utc_iso(now), status="reservado",
++        )
+ 
+     if isinstance(result, Rejected):
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
 collected 1 item
@@ -1905,124 +1113,10 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 
 ================================== FAILURES ===================================
 _____________ test_reschedule_nonexistent_appointment_returns_404 _____________
-tests\integration\test_api_appointment_reschedule.py:348: in test_reschedule_nonexistent_appointment_returns_404
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:193: in reschedule_appointment_endpoint
-    assert isinstance(result, Ok)
-           ^^^^^^^^^^^^^^^^^^^^^^
-E   AssertionError
+tests\integration\test_api_appointment_reschedule.py:353: in test_reschedule_nonexistent_appointment_returns_404
+    assert res.status_code == 404
+E   assert 200 == 404
+E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -2034,7 +1128,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_nonexistent_appointment_returns_404
-======================== 1 failed, 1 warning in 1.23s =========================
+======================== 1 failed, 1 warning in 0.76s =========================
 restaurado: test en verde
 ================================================================================
 [32/51] test_dentist_cannot_reschedule_returns_403
@@ -2046,7 +1140,7 @@ diff:
      permission: Annotated[
          Permission,
 -        Depends(require_permission(Resource.APPOINTMENT, Action.RESCHEDULE)),
-+        Depends(require_permission(Resource.APPOINTMENT, Action.READ)),
++        Depends(require_permission(Resource.APPOINTMENT, Action.CHANGE_STATUS)),
      ],
      request: Request,
 --- salida mutada (codigo de salida 1) ---
@@ -2057,122 +1151,10 @@ tests\integration\test_api_appointment_reschedule.py F                   [100%]
 
 ================================== FAILURES ===================================
 _________________ test_dentist_cannot_reschedule_returns_403 __________________
-tests\integration\test_api_appointment_reschedule.py:366: in test_dentist_cannot_reschedule_returns_403
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:511: in app
-    solved_result = await solve_dependencies(
-.venv\Lib\site-packages\fastapi\dependencies\utils.py:733: in solve_dependencies
-    solved = await run_in_threadpool(call, **solved_result.values)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-app\api\deps.py:97: in __call__
-    PERMISSION_MESSAGES[(self.resource, self.action)],
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E   KeyError: (<Resource.APPOINTMENT: 'appointment'>, <Action.READ: 'read'>)
+tests\integration\test_api_appointment_reschedule.py:373: in test_dentist_cannot_reschedule_returns_403
+    assert any(
+E   assert False
+E    +  where False = any(<generator object test_dentist_cannot_reschedule_returns_403.<locals>.<genexpr> at 0x000002743F4CDF20>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -2184,7 +1166,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_dentist_cannot_reschedule_returns_403
-======================== 1 failed, 1 warning in 1.26s =========================
+======================== 1 failed, 1 warning in 0.87s =========================
 restaurado: test en verde
 ================================================================================
 [33/51] test_reschedule_terminal_state_appointment_returns_422
@@ -2223,7 +1205,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_terminal_state_appointment_returns_422
-======================== 1 failed, 1 warning in 0.85s =========================
+======================== 1 failed, 1 warning in 0.75s =========================
 restaurado: test en verde
 ================================================================================
 [34/51] test_confirm_reserved_appointment
@@ -2235,7 +1217,7 @@ diff:
          session=session,
          appointment_id=id,
 -        target_status=AppointmentStatus(body.to_status),
-+        target_status=AppointmentStatus.CANCELADO,
++        target_status=AppointmentStatus.ATTENDED,
          actor=permission.actor,
          now=now,
 --- salida mutada (codigo de salida 1) ---
@@ -2246,124 +1228,11 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 
 ================================== FAILURES ===================================
 ______________________ test_confirm_reserved_appointment ______________________
-tests\integration\test_api_appointment_status.py:192: in test_confirm_reserved_appointment
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:234: in change_appointment_status_endpoint
-    target_status=AppointmentStatus.CANCELADO,
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E   AttributeError: type object 'AppointmentStatus' has no attribute 'CANCELADO'. Did you mean: 'CANCELLED'?
+tests\integration\test_api_appointment_status.py:197: in test_confirm_reserved_appointment
+    assert res.status_code == 200, res.text
+E   AssertionError: {"violations":[{"code":"STATUS_CHANGE_TOO_EARLY","message":"El turno de Dra. Ficticia Uno del 16/11/2026 de 10:00 a 10:30 (hora local) todavÃ­a no empezÃ³: no se puede marcar como \"atendido\" antes del inicio (momento actual: 07/11/2026 01:06:15, hora local)."}]}
+E   assert 422 == 200
+E    +  where 422 = <Response [422 Unprocessable Entity]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -2375,7 +1244,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_confirm_reserved_appointment
-======================== 1 failed, 1 warning in 1.47s =========================
+======================== 1 failed, 1 warning in 0.78s =========================
 restaurado: test en verde
 ================================================================================
 [35/51] test_mark_attended_confirmed_appointment_with_past_start
@@ -2387,7 +1256,7 @@ diff:
  ) -> AppointmentResponse:
      settings: Settings = request.app.state.settings
 -    now = datetime.now(UTC)
-+    now = datetime.now(UTC) - timedelta(days=365)
++    now = datetime(2000, 1, 1, tzinfo=UTC)
      tz = ZoneInfo(settings.app_timezone)
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -2397,124 +1266,11 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 
 ================================== FAILURES ===================================
 __________ test_mark_attended_confirmed_appointment_with_past_start ___________
-tests\integration\test_api_appointment_status.py:224: in test_mark_attended_confirmed_appointment_with_past_start
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:228: in change_appointment_status_endpoint
-    now = datetime.now(UTC) - timedelta(days=365)
-                              ^^^^^^^^^
-E   NameError: name 'timedelta' is not defined
+tests\integration\test_api_appointment_status.py:229: in test_mark_attended_confirmed_appointment_with_past_start
+    assert res.status_code == 200, res.text
+E   AssertionError: {"violations":[{"code":"STATUS_CHANGE_TOO_EARLY","message":"El turno de Dra. Ficticia Uno del 06/11/2026 de 23:05 a 23:35 (hora local) todavÃ­a no empezÃ³: no se puede marcar como \"atendido\" antes del inicio (momento actual: 31/12/1999 21:00:00, hora local)."}]}
+E   assert 422 == 200
+E    +  where 422 = <Response [422 Unprocessable Entity]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -2526,7 +1282,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_mark_attended_confirmed_appointment_with_past_start
-======================== 1 failed, 1 warning in 1.36s =========================
+======================== 1 failed, 1 warning in 0.82s =========================
 restaurado: test en verde
 ================================================================================
 [36/51] test_mark_absent_confirmed_appointment_with_past_start
@@ -2538,7 +1294,7 @@ diff:
          session=session,
          appointment_id=id,
 -        target_status=AppointmentStatus(body.to_status),
-+        target_status=AppointmentStatus.CONFIRMADO,
++        target_status=AppointmentStatus.ATTENDED,
          actor=permission.actor,
          now=now,
 --- salida mutada (codigo de salida 1) ---
@@ -2549,124 +1305,12 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 
 ================================== FAILURES ===================================
 ___________ test_mark_absent_confirmed_appointment_with_past_start ____________
-tests\integration\test_api_appointment_status.py:256: in test_mark_absent_confirmed_appointment_with_past_start
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:234: in change_appointment_status_endpoint
-    target_status=AppointmentStatus.CONFIRMADO,
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E   AttributeError: type object 'AppointmentStatus' has no attribute 'CONFIRMADO'. Did you mean: 'CONFIRMED'?
+tests\integration\test_api_appointment_status.py:262: in test_mark_absent_confirmed_appointment_with_past_start
+    assert res.json()["status"] == "ausente"
+E   AssertionError: assert 'atendido' == 'ausente'
+E     
+E     - ausente
+E     + atendido
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -2678,7 +1322,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_mark_absent_confirmed_appointment_with_past_start
-======================== 1 failed, 1 warning in 1.43s =========================
+======================== 1 failed, 1 warning in 0.84s =========================
 restaurado: test en verde
 ================================================================================
 [37/51] test_mark_attended_before_start_returns_422
@@ -2717,7 +1361,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_mark_attended_before_start_returns_422
-======================== 1 failed, 1 warning in 0.86s =========================
+======================== 1 failed, 1 warning in 0.76s =========================
 restaurado: test en verde
 ================================================================================
 [38/51] test_double_sequential_transition_leaves_single_new_entry
@@ -2741,7 +1385,7 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 __________ test_double_sequential_transition_leaves_single_new_entry __________
 tests\integration\test_api_appointment_status.py:318: in test_double_sequential_transition_leaves_single_new_entry
     assert res2.status_code == 422, res2.text
-E   AssertionError: {"id":"2f5c4e1d-e1cc-4381-9b1a-ed633569ff9d","patientId":"00000000-0000-0000-0000-0000000000c1","professionalId":"00000000-0000-0000-0000-000000000001","chairId":"00000000-0000-0000-0000-0000000000b1","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"confirmado"}
+E   AssertionError: {"id":"2501fac5-a927-4436-9777-d85b139014f1","patientId":"00000000-0000-0000-0000-0000000000c1","professionalId":"00000000-0000-0000-0000-000000000001","chairId":"00000000-0000-0000-0000-0000000000b1","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"confirmado"}
 E   assert 200 == 422
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -2755,7 +1399,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_double_sequential_transition_leaves_single_new_entry
-======================== 1 failed, 1 warning in 0.90s =========================
+======================== 1 failed, 1 warning in 0.88s =========================
 restaurado: test en verde
 ================================================================================
 [39/51] test_confirm_cancelled_appointment_returns_422
@@ -2794,19 +1438,19 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_confirm_cancelled_appointment_returns_422
-======================== 1 failed, 1 warning in 0.92s =========================
+======================== 1 failed, 1 warning in 0.78s =========================
 restaurado: test en verde
 ================================================================================
 [40/51] test_to_status_cancelado_returns_400
 test: tests/integration/test_api_appointment_status.py::test_to_status_cancelado_returns_400
 diff:
---- a/backend/app/api/schemas.py
-+++ b/backend/app/api/schemas.py
-@@ -294,5 +294,5 @@
- 
- 
--AllowedStatusChange = Literal["confirmado", "atendido", "ausente"]
-+AllowedStatusChange = Literal["confirmado", "atendido", "ausente", "cancelado"]
+--- a/backend/app/api/errors.py
++++ b/backend/app/api/errors.py
+@@ -133,3 +133,3 @@
+             }
+         )
+-    return JSONResponse(status_code=400, content={"errors": error_items})
++    return JSONResponse(status_code=422, content={"errors": error_items})
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
 collected 1 item
@@ -2815,127 +1459,10 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 
 ================================== FAILURES ===================================
 ____________________ test_to_status_cancelado_returns_400 _____________________
-tests\integration\test_api_appointment_status.py:357: in test_to_status_cancelado_returns_400
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:231: in change_appointment_status_endpoint
-    result = change_appointment_status(
-app\services\appointments.py:213: in change_appointment_status
-    result = domain_change_status(
-app\domain\appointment\transitions.py:80: in change_status
-    raise ValueError("Para cancelar debe usar cancel_appointment")
-E   ValueError: Para cancelar debe usar cancel_appointment
+tests\integration\test_api_appointment_status.py:362: in test_to_status_cancelado_returns_400
+    assert res.status_code == 400
+E   assert 422 == 400
+E    +  where 422 = <Response [422 Unprocessable Entity]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -2947,7 +1474,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_to_status_cancelado_returns_400
-======================== 1 failed, 1 warning in 1.30s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 restaurado: test en verde
 ================================================================================
 [41/51] test_to_status_reservado_returns_400
@@ -2985,7 +1512,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_to_status_reservado_returns_400
-======================== 1 failed, 1 warning in 0.78s =========================
+======================== 1 failed, 1 warning in 0.87s =========================
 restaurado: test en verde
 ================================================================================
 [42/51] test_change_status_nonexistent_appointment_returns_404
@@ -2993,12 +1520,16 @@ test: tests/integration/test_api_appointment_status.py::test_change_status_nonex
 diff:
 --- a/backend/app/api/appointments.py
 +++ b/backend/app/api/appointments.py
-@@ -239,5 +239,5 @@
-     )
+@@ -240,5 +240,8 @@
  
--    if result is None:
-+    if False and result is None:
-         raise NotFoundError("Turno no encontrado.")
+     if result is None:
+-        raise NotFoundError("Turno no encontrado.")
++        return AppointmentResponse(
++            id=id, patient_id=id, professional_id=id, chair_id=id, service_id=id,
++            start_at=format_utc_iso(now), end_at=format_utc_iso(now), status="reservado",
++        )
+ 
+     if isinstance(result, Rejected):
 --- salida mutada (codigo de salida 1) ---
 ============================= test session starts =============================
 collected 1 item
@@ -3007,124 +1538,10 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 
 ================================== FAILURES ===================================
 ___________ test_change_status_nonexistent_appointment_returns_404 ____________
-tests\integration\test_api_appointment_status.py:382: in test_change_status_nonexistent_appointment_returns_404
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:247: in change_appointment_status_endpoint
-    assert isinstance(result, Ok)
-           ^^^^^^^^^^^^^^^^^^^^^^
-E   AssertionError
+tests\integration\test_api_appointment_status.py:387: in test_change_status_nonexistent_appointment_returns_404
+    assert res.status_code == 404
+E   assert 200 == 404
+E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -3136,7 +1553,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_change_status_nonexistent_appointment_returns_404
-======================== 1 failed, 1 warning in 1.33s =========================
+======================== 1 failed, 1 warning in 0.75s =========================
 restaurado: test en verde
 ================================================================================
 [43/51] test_dentist_changes_status_of_other_professional_returns_403_from_domain
@@ -3144,11 +1561,14 @@ test: tests/integration/test_api_appointment_status.py::test_dentist_changes_sta
 diff:
 --- a/backend/app/api/appointments.py
 +++ b/backend/app/api/appointments.py
-@@ -233,5 +233,5 @@
+@@ -233,5 +233,8 @@
          appointment_id=id,
          target_status=AppointmentStatus(body.to_status),
 -        actor=permission.actor,
-+        actor=Actor(user_id=permission.actor.user_id, role=Role.ADMINISTRADOR, professional_id=None),
++        actor=type(permission.actor)(
++            user_id=permission.actor.user_id,
++            role=type(permission.actor.role).ADMINISTRADOR,
++        ),
          now=now,
          tz=tz,
 --- salida mutada (codigo de salida 1) ---
@@ -3159,124 +1579,11 @@ tests\integration\test_api_appointment_status.py F                       [100%]
 
 ================================== FAILURES ===================================
 __ test_dentist_changes_status_of_other_professional_returns_403_from_domain __
-tests\integration\test_api_appointment_status.py:408: in test_dentist_changes_status_of_other_professional_returns_403_from_domain
-    res = auth_client.post(
-.venv\Lib\site-packages\httpx\_client.py:1144: in post
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:235: in change_appointment_status_endpoint
-    actor=Actor(user_id=permission.actor.user_id, role=Role.ADMINISTRADOR, professional_id=None),
-          ^^^^^
-E   NameError: name 'Actor' is not defined
+tests\integration\test_api_appointment_status.py:413: in test_dentist_changes_status_of_other_professional_returns_403_from_domain
+    assert res.status_code == 403, res.text
+E   AssertionError: {"id":"58f0c46a-47c6-4061-8be0-96e6ad7ec6d8","patientId":"00000000-0000-0000-0000-0000000000c2","professionalId":"00000000-0000-0000-0000-000000000002","chairId":"00000000-0000-0000-0000-0000000000b2","serviceId":"00000000-0000-0000-0000-0000000000d4","startAt":"2026-11-16T13:00:00Z","endAt":"2026-11-16T13:30:00Z","status":"confirmado"}
+E   assert 200 == 403
+E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -3288,7 +1595,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_status.py::test_dentist_changes_status_of_other_professional_returns_403_from_domain
-======================== 1 failed, 1 warning in 1.36s =========================
+======================== 1 failed, 1 warning in 0.92s =========================
 restaurado: test en verde
 ================================================================================
 [44/51] test_history_ascending_with_creation_and_changed_by_name
@@ -3323,7 +1630,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_history.py::test_history_ascending_with_creation_and_changed_by_name
-======================== 1 failed, 1 warning in 0.80s =========================
+======================== 1 failed, 1 warning in 0.81s =========================
 restaurado: test en verde
 ================================================================================
 [45/51] test_history_reschedule_entry_has_to_reservado_and_flat_detail
@@ -3361,7 +1668,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_history.py::test_history_reschedule_entry_has_to_reservado_and_flat_detail
-======================== 1 failed, 1 warning in 0.81s =========================
+======================== 1 failed, 1 warning in 0.82s =========================
 restaurado: test en verde
 ================================================================================
 [46/51] test_history_nonexistent_appointment_returns_404
@@ -3399,7 +1706,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_history.py::test_history_nonexistent_appointment_returns_404
-======================== 1 failed, 1 warning in 0.74s =========================
+======================== 1 failed, 1 warning in 0.73s =========================
 restaurado: test en verde
 ================================================================================
 [47/51] test_dentist_reads_own_appointment_history_returns_200
@@ -3411,7 +1718,7 @@ diff:
  
      if permission.scope is Scope.OWN:
 -        ensure_own_professional(permission, appointment.professional_id)
-+        raise ForbiddenError("Denegado mutado")
++        ensure_own_professional(permission, uuid4())
  
      history = get_appointment_history(session, id)
 --- salida mutada (codigo de salida 1) ---
@@ -3422,125 +1729,11 @@ tests\integration\test_api_appointment_history.py F                      [100%]
 
 ================================== FAILURES ===================================
 ___________ test_dentist_reads_own_appointment_history_returns_200 ____________
-tests\integration\test_api_appointment_history.py:244: in test_dentist_reads_own_appointment_history_returns_200
-    res = auth_client.get(f"/api/appointments/{app_id}/history", headers=dentist_headers)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:1053: in get
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\appointments.py:283: in get_appointment_history_endpoint
-    raise ForbiddenError("Denegado mutado")
-          ^^^^^^^^^^^^^^
-E   NameError: name 'ForbiddenError' is not defined
+tests\integration\test_api_appointment_history.py:245: in test_dentist_reads_own_appointment_history_returns_200
+    assert res.status_code == 200, res.text
+E   AssertionError: {"violations":[{"code":"FORBIDDEN_OPERATION","message":"No tiene permiso para leer el historial de turnos."}]}
+E   assert 403 == 200
+E    +  where 403 = <Response [403 Forbidden]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -3552,7 +1745,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_history.py::test_dentist_reads_own_appointment_history_returns_200
-======================== 1 failed, 1 warning in 1.39s =========================
+======================== 1 failed, 1 warning in 0.78s =========================
 restaurado: test en verde
 ================================================================================
 [48/51] test_dentist_reads_other_professional_history_returns_403
@@ -3576,7 +1769,7 @@ tests\integration\test_api_appointment_history.py F                      [100%]
 __________ test_dentist_reads_other_professional_history_returns_403 __________
 tests\integration\test_api_appointment_history.py:271: in test_dentist_reads_other_professional_history_returns_403
     assert res.status_code == 403, res.text
-E   AssertionError: [{"from":null,"to":"reservado","changedBy":"00000000-0000-0000-0000-0000000000e2","changedByName":"Recepción Demo","changedAt":"2026-11-07T03:16:16Z","reschedule":null}]
+E   AssertionError: [{"from":null,"to":"reservado","changedBy":"00000000-0000-0000-0000-0000000000e2","changedByName":"RecepciÃ³n Demo","changedAt":"2026-11-07T04:07:40Z","reschedule":null}]
 E   assert 200 == 403
 E    +  where 200 = <Response [200 OK]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -3590,7 +1783,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_history.py::test_dentist_reads_other_professional_history_returns_403
-======================== 1 failed, 1 warning in 0.83s =========================
+======================== 1 failed, 1 warning in 0.86s =========================
 restaurado: test en verde
 ================================================================================
 [49/51] test_reception_reads_other_professional_history_returns_200
@@ -3602,19 +1795,34 @@ diff:
      permission: Annotated[
          Permission,
 -        Depends(require_permission(Resource.APPOINTMENT_HISTORY, Action.READ)),
-+        Depends(require_permission(Resource.SETTINGS, Action.WRITE)),
++        Depends(require_permission(Resource.WORKING_HOURS, Action.UPDATE)),
      ],
      session: Annotated[Session, Depends(get_db_session)],
---- salida mutada (codigo de salida 4) ---
-ImportError while loading conftest 'C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\integration\conftest.py'.
-tests\integration\conftest.py:16: in <module>
-    from app.main import create_app
-app\main.py:21: in <module>
-    from app.api.appointments import router as appointments_router
-app\api\appointments.py:274: in <module>
-    Depends(require_permission(Resource.SETTINGS, Action.WRITE)),
-                               ^^^^^^^^^^^^^^^^^
-E   AttributeError: type object 'Resource' has no attribute 'SETTINGS'
+--- salida mutada (codigo de salida 1) ---
+============================= test session starts =============================
+collected 1 item
+
+tests\integration\test_api_appointment_history.py F                      [100%]
+
+================================== FAILURES ===================================
+_________ test_reception_reads_other_professional_history_returns_200 _________
+tests\integration\test_api_appointment_history.py:299: in test_reception_reads_other_professional_history_returns_200
+    assert res.status_code == 200, res.text
+E   AssertionError: {"violations":[{"code":"FORBIDDEN_OPERATION","message":"No tiene permiso para actualizar horarios."}]}
+E   assert 403 == 200
+E    +  where 403 = <Response [403 Forbidden]>.status_code
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_history.py::test_reception_reads_other_professional_history_returns_200
+======================== 1 failed, 1 warning in 0.83s =========================
 restaurado: test en verde
 ================================================================================
 [50/51] test_admin_reads_other_professional_history_returns_200
@@ -3639,7 +1847,7 @@ tests\integration\test_api_appointment_history.py F                      [100%]
 ___________ test_admin_reads_other_professional_history_returns_200 ___________
 tests\integration\test_api_appointment_history.py:321: in test_admin_reads_other_professional_history_returns_200
     assert res.status_code == 200, res.text
-E   AssertionError: [{"from":null,"to":"reservado","changedBy":"00000000-0000-0000-0000-0000000000e2","changedByName":"Recepción Demo","changedAt":"2026-11-07T03:16:27Z","reschedule":null}]
+E   AssertionError: [{"from":null,"to":"reservado","changedBy":"00000000-0000-0000-0000-0000000000e2","changedByName":"RecepciÃ³n Demo","changedAt":"2026-11-07T04:07:53Z","reschedule":null}]
 E   assert 403 == 200
 E    +  where 403 = <Response [403 Forbidden]>.status_code
 ---------------------------- Captured stderr setup ----------------------------
@@ -3653,7 +1861,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_appointment_history.py::test_admin_reads_other_professional_history_returns_200
-======================== 1 failed, 1 warning in 0.77s =========================
+======================== 1 failed, 1 warning in 1.03s =========================
 restaurado: test en verde
 ================================================================================
 [51/51] test_appointment_lifecycle_openapi_documentation
@@ -3678,7 +1886,7 @@ tests\integration\test_appointment_lifecycle_openapi.py F                [100%]
 ______________ test_appointment_lifecycle_openapi_documentation _______________
 tests\integration\test_appointment_lifecycle_openapi.py:31: in test_appointment_lifecycle_openapi_documentation
     assert "409" in reschedule_path["responses"]
-E   AssertionError: assert '409' in {'200': {'content': {'application/json': {'schema': {'$ref': '#/components/schemas/AppointmentResponse'}}}, 'descripti... '#/components/schemas/ViolationResponseSchema'}}}, 'description': 'El rol no tiene permiso para esta operación'}, ...}
+E   AssertionError: assert '409' in {'200': {'content': {'application/json': {'schema': {'$ref': '#/components/schemas/AppointmentResponse'}}}, 'descripti... '#/components/schemas/ViolationResponseSchema'}}}, 'description': 'El rol no tiene permiso para esta operaciÃ³n'}, ...}
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -3690,11 +1898,12 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_lifecycle_openapi.py::test_appointment_lifecycle_openapi_documentation
-======================== 1 failed, 1 warning in 0.62s =========================
+======================== 1 failed, 1 warning in 0.67s =========================
 restaurado: test en verde
 ================================================================================
 RESUMEN
 mutaciones que hicieron fallar su test: 51
 mutaciones que NO lo hicieron fallar: 0
-SHA-256 de backend/app despues: 7e528b381a47dbdcf684afed77315fac8bd39ba4b51d67063e1442572b22bbc9
+mutaciones inválidas: 0
+SHA-256 de backend/app despues: dfde27a6ababdec32fd8671121d26a0370b9201b6bf1e51017b8c55c4a427fb0
 SHA-256 sin cambios: si

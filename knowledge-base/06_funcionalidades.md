@@ -160,26 +160,26 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 ### US-030 — Cancelar turno
 **Como** secretaria, **quiero** cancelar un turno, **para** mantener la agenda al día.
 - [x] CA-1: `reservado`/`confirmado` → `cancelado` libera profesional y sillón (dominio listo en C-10).
-- [x] CA-2: desde estado terminal → `INVALID_TRANSITION` (dominio listo en C-10).
-- [ ] CA-3: queda entrada de historial (dominio listo en C-12) (persistencia lista en C-17).
+- [x] CA-2: desde estado terminal → `INVALID_TRANSITION` (dominio listo en C-10) (API lista en C-23).
+- [x] CA-3: queda entrada de historial (dominio listo en C-12) (persistencia lista en C-17) (API lista en C-23).
 
 ### US-031 — Reprogramar turno
 **Como** secretaria, **quiero** mover un turno a otro horario, profesional o sillón, **para** reorganizar la agenda.
-- [x] CA-1: se revalidan todas las RN-AG excluyendo al propio turno (dominio listo en C-11). [x] CA-2: no se puede reprogramar al pasado (dominio listo en C-11). [x] CA-3: solo en `reservado`/`confirmado` (dominio listo en C-11). [x] CA-4: el turno vuelve a `reservado` (dominio listo en C-11). [ ] CA-5: se registra en el historial (dominio listo en C-12) (persistencia lista en C-17).
+- [x] CA-1: se revalidan todas las RN-AG excluyendo al propio turno (dominio listo en C-11). [x] CA-2: no se puede reprogramar al pasado (dominio listo en C-11) (API lista en C-23). [x] CA-3: solo en `reservado`/`confirmado` (dominio listo en C-11) (API lista en C-23). [x] CA-4: el turno vuelve a `reservado` (dominio listo en C-11) (API lista en C-23). [x] CA-5: se registra en el historial (dominio listo en C-12) (persistencia lista en C-17) (API lista en C-23).
 
 **Reglas**: RN-TU-03, RN-AG-06
 
 ### US-032 — Cambiar estado
 **Como** recepción u odontólogo, **quiero** marcar un turno como confirmado, atendido o ausente, **para** reflejar lo ocurrido.
-- [x] CA-1: solo transiciones de la tabla RN-TU-02 (dominio listo en C-10).
-- [x] CA-2: `atendido`/`ausente` solo con `now >= inicio` (dominio listo en C-10).
-- [x] CA-3: odontólogo solo modifica turnos propios (dominio listo en C-10).
+- [x] CA-1: solo transiciones de la tabla RN-TU-02 (dominio listo en C-10) (API lista en C-23).
+- [x] CA-2: `atendido`/`ausente` solo con `now >= inicio` (dominio listo en C-10) (API lista en C-23).
+- [x] CA-3: odontólogo solo modifica turnos propios (dominio listo en C-10) (API lista en C-23).
 
 **Reglas**: RN-TU-02, RN-TU-05, RN-AC-01
 
 ### US-033 — Historial de cambios
 **Como** administrador, **quiero** ver quién cambió qué y cuándo, **para** tener trazabilidad.
-- [ ] CA-1: cada transición/reprogramación genera una entrada con `from`, `to`, `changed_by`, `changed_at` (dominio listo en C-12) (persistencia lista en C-17). CA-2: el historial no se edita ni se borra (dominio listo en C-12) (persistencia lista en C-17).
+- [x] CA-1: cada transición/reprogramación genera una entrada con `from`, `to`, `changed_by`, `changed_at` (dominio listo en C-12) (persistencia lista en C-17) (API lista en C-23). [ ] CA-2: el historial no se edita ni se borra (dominio listo en C-12) (persistencia lista en C-17).
 
 **Reglas**: RN-TU-06
 

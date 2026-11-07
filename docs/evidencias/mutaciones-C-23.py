@@ -11,7 +11,13 @@ mutacion, corre solo su test, restaura el archivo en un finally y vuelve a corre
 Con --check solo ejecuta check_definition sobre todas las mutaciones.
 Solo toca la base <POSTGRES_DB>_test. Genera mutaciones-C-23.txt y regenera la tabla de
 verify-C-23.md leyendo ese .txt. Termina con codigo 0 solo si todas las mutaciones
-hicieron fallar su test y el SHA-256 no cambio.
+hicieron fallar su test, ninguna es INVALIDA y el SHA-256 no cambio.
+
+Una mutacion es INVALIDA si su test no la detecta con una afirmacion propia: la salida
+contiene NameError o ImportError, o el primer "E" no tiene su frame en tests/, o no es
+assert/AssertionError. Dentro de tests/ tambien valen pytest.raises sin excepcion
+("Failed: DID NOT RAISE"), un ValidationError del esquema que el test valida directamente
+y un KeyError/IndexError sobre un campo que el propio test lee.
 """
 
 from __future__ import annotations
@@ -36,6 +42,14 @@ TABLE_END = "<!-- mutaciones:fin -->"
 SEPARATOR = "=" * 80
 TIMEOUT_SECONDS = 180
 
+INVALID_NAME_ERROR = re.compile(r"\b(NameError|ImportError|ModuleNotFoundError)\b")
+FRAME_LINE = re.compile(r"^(\S+\.py):\d+: ")
+TEST_DETECTION = re.compile(
+    r"""^(assert\b|AssertionError\b|Failed: DID NOT RAISE\b"""
+    r"""|pydantic_core\._pydantic_core\.ValidationError\b"""
+    r"""|KeyError: ['"]|IndexError\b)"""
+)
+
 VENV_PYTHON = BACKEND / ".venv" / "Scripts" / "python.exe"
 PYTHON = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
 
@@ -52,6 +66,15 @@ API_SCHEMAS = "backend/app/api/schemas.py"
 REPOSITORY_USERS = "backend/app/repositories/users.py"
 SERVICE_APPOINTMENTS = "backend/app/services/appointments.py"
 API_APPOINTMENTS = "backend/app/api/appointments.py"
+API_ERRORS = "backend/app/api/errors.py"
+
+# Un turno inexistente responde 200 con datos inventados en lugar de 404.
+FABRICATED_APPOINTMENT = (
+    '        return AppointmentResponse(\n'
+    '            id=id, patient_id=id, professional_id=id, chair_id=id, service_id=id,\n'
+    '            start_at=format_utc_iso(now), end_at=format_utc_iso(now), status="reservado",\n'
+    '        )'
+)
 
 
 @dataclass(frozen=True)
@@ -377,7 +400,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    )\n\n'
         '    if result is None:\n'
         '        raise NotFoundError("Turno no encontrado.")\n\n'
-        '    if isinstance(result, Rejected):',
+        '    if isinstance(result, Rejected):\n'
+        '        raise DomainRejectedError(result)',
         'def cancel_appointment_endpoint(\n'
         '    id: UUID,\n'
         '    permission: Annotated[\n'
@@ -400,7 +424,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    )\n\n'
         '    if result is None:\n'
         '        raise NotFoundError("Turno no encontrado.")\n\n'
-        '    if False and isinstance(result, Rejected):',
+        '    if isinstance(result, Rejected):\n'
+        '        raise NotFoundError("Turno no encontrado.")',
     ),
     # 19. API Cancel - already cancelled returns 422
     Mutation(
@@ -453,8 +478,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        tz=tz,\n'
         '        auto_commit=True,\n'
         '    )\n\n'
-        '    if False and result is None:\n'
-        '        raise NotFoundError("Turno no encontrado.")',
+        '    if result is None:\n'
+        f'{FABRICATED_APPOINTMENT}',
     ),
     # 21. API Cancel - dentist cannot cancel returns 403
     Mutation(
@@ -462,7 +487,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_dentist_cannot_cancel_appointment_returns_403",
         API_APPOINTMENTS,
         '        Depends(require_permission(Resource.APPOINTMENT, Action.CANCEL)),',
-        '        Depends(require_permission(Resource.APPOINTMENT, Action.READ)),',
+        '        Depends(require_permission(Resource.APPOINTMENT, Action.CHANGE_STATUS)),',
     ),
     # 22. API Reschedule - start only preserves duration
     Mutation(
@@ -501,30 +526,12 @@ MUTATIONS: tuple[Mutation, ...] = (
         TEST_RESCHEDULE,
         "test_reschedule_professional_overlap_returns_409",
         API_APPOINTMENTS,
-        '    result = reschedule_appointment(\n'
-        '        session=session,\n'
-        '        appointment_id=id,\n'
-        '        request=reschedule_req,\n'
-        '        actor=permission.actor,\n'
-        '        now=now,\n'
-        '        tz=tz,\n'
-        '        auto_commit=True,\n'
-        '    )\n\n'
-        '    if result is None:\n'
-        '        raise NotFoundError("Turno no encontrado.")\n\n'
-        '    if isinstance(result, Rejected):',
-        '    result = reschedule_appointment(\n'
-        '        session=session,\n'
-        '        appointment_id=id,\n'
-        '        request=reschedule_req,\n'
-        '        actor=permission.actor,\n'
-        '        now=now,\n'
-        '        tz=tz,\n'
-        '        auto_commit=True,\n'
-        '    )\n\n'
-        '    if result is None:\n'
-        '        raise NotFoundError("Turno no encontrado.")\n\n'
-        '    if False and isinstance(result, Rejected):',
+        '    reschedule_req = RescheduleRequest(\n'
+        '        start_at=body.start_at,\n'
+        '        professional_id=body.professional_id,',
+        '    reschedule_req = RescheduleRequest(\n'
+        '        start_at=body.start_at,\n'
+        '        professional_id=None,',
     ),
     # 25. API Reschedule - chair overlap returns 409
     Mutation(
@@ -553,7 +560,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    )\n\n'
         '    result = reschedule_appointment(',
         '    reschedule_req = RescheduleRequest(\n'
-        '        start_at=body.start_at + timedelta(days=1),\n'
+        '        start_at=body.start_at.replace(hour=14),\n'
         '        professional_id=body.professional_id,\n'
         '        chair_id=body.chair_id,\n'
         '        duration_min=body.duration_min,\n'
@@ -597,7 +604,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        appointment_id=id,\n'
         '        request=reschedule_req,\n'
         '        actor=permission.actor,\n'
-        '        now=now - timedelta(days=365),\n'
+        '        now=datetime(2000, 1, 1, tzinfo=UTC),\n'
         '        tz=tz,\n'
         '        auto_commit=True,\n'
         '    )',
@@ -617,8 +624,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    @field_validator("start_at")\n'
         '    @classmethod\n'
         '    def validate_tz(cls, v: datetime) -> datetime:\n'
-        '        if False and v.tzinfo is None:\n'
-        '            raise ValueError("La fecha y hora debe incluir zona horaria.")\n'
+        '        if v.tzinfo is None:\n'
+        '            return v.replace(tzinfo=timezone.utc)\n'
         '        return v\n\n\n'
         'class RescheduleDetailResponse',
     ),
@@ -654,7 +661,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        tz=tz,\n'
         '        auto_commit=True,\n'
         '    )\n\n'
-        '    if result is None:',
+        '    if result is None:\n'
+        '        raise NotFoundError("Turno no encontrado.")',
         '    result = reschedule_appointment(\n'
         '        session=session,\n'
         '        appointment_id=id,\n'
@@ -664,7 +672,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        tz=tz,\n'
         '        auto_commit=True,\n'
         '    )\n\n'
-        '    if False and result is None:',
+        '    if result is None:\n'
+        f'{FABRICATED_APPOINTMENT}',
     ),
     # 32. API Reschedule - dentist cannot reschedule returns 403
     Mutation(
@@ -672,7 +681,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_dentist_cannot_reschedule_returns_403",
         API_APPOINTMENTS,
         '        Depends(require_permission(Resource.APPOINTMENT, Action.RESCHEDULE)),',
-        '        Depends(require_permission(Resource.APPOINTMENT, Action.READ)),',
+        '        Depends(require_permission(Resource.APPOINTMENT, Action.CHANGE_STATUS)),',
     ),
     # 33. API Reschedule - terminal state returns 422
     Mutation(
@@ -710,7 +719,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_confirm_reserved_appointment",
         API_APPOINTMENTS,
         '        target_status=AppointmentStatus(body.to_status),',
-        '        target_status=AppointmentStatus.CANCELADO,',
+        '        target_status=AppointmentStatus.ATTENDED,',
     ),
     # 35. API Status - mark attended confirmed
     Mutation(
@@ -740,7 +749,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    session: Annotated[Session, Depends(get_db_session)],\n'
         ') -> AppointmentResponse:\n'
         '    settings: Settings = request.app.state.settings\n'
-        '    now = datetime.now(UTC) - timedelta(days=365)',
+        '    now = datetime(2000, 1, 1, tzinfo=UTC)',
     ),
     # 36. API Status - mark absent confirmed
     Mutation(
@@ -759,7 +768,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    result = change_appointment_status(\n'
         '        session=session,\n'
         '        appointment_id=id,\n'
-        '        target_status=AppointmentStatus.CONFIRMADO,\n'
+        '        target_status=AppointmentStatus.ATTENDED,\n'
         '        actor=permission.actor,\n'
         '        now=now,\n'
         '        tz=tz,\n'
@@ -858,11 +867,9 @@ MUTATIONS: tuple[Mutation, ...] = (
     Mutation(
         TEST_STATUS,
         "test_to_status_cancelado_returns_400",
-        API_SCHEMAS,
-        'AllowedStatusChange = Literal["confirmado", "atendido", "ausente"]\n\n\n'
-        'class StatusChangeInput(BaseModel):',
-        'AllowedStatusChange = Literal["confirmado", "atendido", "ausente", "cancelado"]\n\n\n'
-        'class StatusChangeInput(BaseModel):',
+        API_ERRORS,
+        '    return JSONResponse(status_code=400, content={"errors": error_items})',
+        '    return JSONResponse(status_code=422, content={"errors": error_items})',
     ),
     # 41. API Status - toStatus reservado returns 400
     Mutation(
@@ -890,7 +897,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        tz=tz,\n'
         '        auto_commit=True,\n'
         '    )\n\n'
-        '    if result is None:',
+        '    if result is None:\n'
+        '        raise NotFoundError("Turno no encontrado.")',
         '    result = change_appointment_status(\n'
         '        session=session,\n'
         '        appointment_id=id,\n'
@@ -900,7 +908,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        tz=tz,\n'
         '        auto_commit=True,\n'
         '    )\n\n'
-        '    if False and result is None:',
+        '    if result is None:\n'
+        f'{FABRICATED_APPOINTMENT}',
     ),
     # 43. API Status - dentist foreign returns 403 from domain
     Mutation(
@@ -916,7 +925,10 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        session=session,\n'
         '        appointment_id=id,\n'
         '        target_status=AppointmentStatus(body.to_status),\n'
-        '        actor=Actor(user_id=permission.actor.user_id, role=Role.ADMINISTRADOR, professional_id=None),',
+        '        actor=type(permission.actor)(\n'
+        '            user_id=permission.actor.user_id,\n'
+        '            role=type(permission.actor.role).ADMINISTRADOR,\n'
+        '        ),',
     ),
     # 44. API History - ascending with creation and changedByName
     Mutation(
@@ -966,7 +978,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    if permission.scope is Scope.OWN:\n'
         '        ensure_own_professional(permission, appointment.professional_id)',
         '    if permission.scope is Scope.OWN:\n'
-        '        raise ForbiddenError("Denegado mutado")',
+        '        ensure_own_professional(permission, uuid4())',
     ),
     # 48. API History - dentist reads other returns 403
     Mutation(
@@ -984,7 +996,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_reception_reads_other_professional_history_returns_200",
         API_APPOINTMENTS,
         '        Depends(require_permission(Resource.APPOINTMENT_HISTORY, Action.READ)),',
-        '        Depends(require_permission(Resource.SETTINGS, Action.WRITE)),',
+        '        Depends(require_permission(Resource.WORKING_HOURS, Action.UPDATE)),',
     ),
     # 50. API History - admin reads other returns 200
     Mutation(
@@ -1045,11 +1057,25 @@ def tree_sha256() -> str:
     return hasher.hexdigest()
 
 
+def apply_mutation(mutation: Mutation, content: str) -> str:
+    """Aplica la mutacion respetando el final de linea del archivo (LF o CRLF)."""
+    newline = "\r\n" if "\r\n" in content else "\n"
+    original = mutation.original.replace("\n", newline)
+    mutated = mutation.mutated.replace("\n", newline)
+    count = content.count(original)
+    if count != 1:
+        raise MutationAbort(
+            f"{mutation.test_name}: original presente {count} veces en {mutation.file}"
+        )
+    return content.replace(original, mutated, 1)
+
+
 def check_definition(mutation: Mutation) -> None:
     target = REPO / mutation.file
     if not target.exists():
         raise MutationAbort(f"{mutation.test_name}: {mutation.file} no existe")
-    content = target.read_text(encoding="utf-8")
+    raw_content = target.read_bytes().decode("utf-8")
+    content = raw_content.replace("\r\n", "\n")
     count = content.count(mutation.original)
     if count == 0:
         raise MutationAbort(
@@ -1062,6 +1088,8 @@ def check_definition(mutation: Mutation) -> None:
         )
     if mutation.original == mutation.mutated:
         raise MutationAbort(f"{mutation.test_name}: mutacion identica al original")
+    if apply_mutation(mutation, raw_content) == raw_content:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
 
 
 def run_pytest(test_targets: list[str]) -> subprocess.CompletedProcess[str]:
@@ -1090,11 +1118,36 @@ def run_pytest(test_targets: list[str]) -> subprocess.CompletedProcess[str]:
     )
 
 
-def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
+def invalid_reason(output: str) -> str | None:
+    """Devuelve el motivo si el test no detecto la mutacion con una afirmacion propia."""
+    name_error = INVALID_NAME_ERROR.search(output)
+    if name_error:
+        return f"la salida contiene {name_error.group(1)}"
+
+    frame = ""
+    for line in output.splitlines():
+        frame_match = FRAME_LINE.match(line)
+        if frame_match:
+            frame = frame_match.group(1).replace("\\", "/")
+            continue
+        if not line.startswith("E   "):
+            continue
+        first_error = line.removeprefix("E   ").strip()
+        if not frame.startswith("tests/"):
+            return f"primer E fuera de tests/ ({frame}): {first_error}"
+        if not TEST_DETECTION.match(first_error):
+            return f"primer E no es una afirmacion del test: {first_error}"
+        return None
+    return "la salida no tiene ninguna linea E"
+
+
+def run_mutation(mutation: Mutation, index: int, report: Report) -> tuple[bool, str | None]:
     target = REPO / mutation.file
     original_bytes = target.read_bytes()
     original_content = original_bytes.decode("utf-8")
-    mutated_content = original_content.replace(mutation.original, mutation.mutated, 1)
+    mutated_content = apply_mutation(mutation, original_content)
+    if mutated_content == original_content:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
 
     diff = "".join(
         difflib.unified_diff(
@@ -1104,7 +1157,7 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
             tofile=f"b/{mutation.file}",
             n=2,
         )
-    )
+    ).replace("\r\n", "\n")
 
     report.write(SEPARATOR)
     report.write(f"[{index:02d}/{len(MUTATIONS)}] {mutation.test_name}")
@@ -1131,7 +1184,10 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     report.write("restaurado: test en verde")
 
     killed = mutated_result.returncode != 0
-    return killed
+    reason = invalid_reason(mutated_result.stdout + mutated_result.stderr) if killed else None
+    if reason:
+        report.write(f"INVALIDA: {reason}")
+    return killed, reason
 
 
 def parse_mutations_txt() -> list[tuple[str, str, str, str, str]]:
@@ -1228,6 +1284,7 @@ def main() -> int:
     sha_before = tree_sha256()
     killed: list[str] = []
     survived: list[str] = []
+    invalid: list[str] = []
     with OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
         report = Report(stream)
         report.write("Salida generada por docs/evidencias/mutaciones-C-23.py. No editar a mano.")
@@ -1240,7 +1297,11 @@ def main() -> int:
 
         for index, mutation in enumerate(MUTATIONS, start=1):
             print(f"[{index:02d}/{len(MUTATIONS)}] {mutation.test_name}", flush=True)
-            if run_mutation(mutation, index, report):
+            was_killed, reason = run_mutation(mutation, index, report)
+            if reason:
+                invalid.append(f"{mutation.test_name}: {reason}")
+                print(f"    INVALIDA: {reason}", flush=True)
+            elif was_killed:
                 killed.append(mutation.test_name)
             else:
                 survived.append(mutation.test_name)
@@ -1254,6 +1315,8 @@ def main() -> int:
             f"mutaciones que hicieron fallar su test: {len(killed)}",
             f"mutaciones que NO lo hicieron fallar: {len(survived)}",
             *[f"  - {name}" for name in survived],
+            f"mutaciones inválidas: {len(invalid)}",
+            *[f"  - {entry}" for entry in invalid],
             f"SHA-256 de backend/app despues: {sha_after}",
             f"SHA-256 sin cambios: {'si' if same else 'NO'}",
         ]
@@ -1261,7 +1324,7 @@ def main() -> int:
 
     print("\n".join(summary))
     update_verify_table()
-    return 0 if same and not survived else 1
+    return 0 if same and not survived and not invalid else 1
 
 
 if __name__ == "__main__":
