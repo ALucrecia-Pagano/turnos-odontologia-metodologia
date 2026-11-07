@@ -75,9 +75,19 @@ def test_compose_defines_services_without_literal_secrets() -> None:
     assert "turnos_pgdata:" in content
     assert "pg_isready" in content
     assert "redis-cli" in content
-    assert "frontend:" not in content
     assert "turnos_local_dev" not in content
     assert _literal_secrets(content) == []
+
+    frontend = _as_mapping(_services(content)["frontend"])
+    ports = frontend.get("ports")
+    assert isinstance(ports, list)
+    assert "5173:5173" in [str(port) for port in ports]
+    assert "env_file" not in frontend
+    frontend_environment = set(_environment(frontend))
+    assert frontend_environment.isdisjoint(
+        {"JWT_SECRET", "POSTGRES_PASSWORD", "POSTGRES_USER", "DATABASE_URL", "SEED_USER_PASSWORD"}
+    )
+    assert frontend_environment <= {"VITE_API_URL", "CHOKIDAR_USEPOLLING"}
 
 
 @pytest.mark.parametrize(

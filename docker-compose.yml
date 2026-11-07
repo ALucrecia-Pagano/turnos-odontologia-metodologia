@@ -45,5 +45,22 @@ services:
       retries: 5
       start_period: 15s
 
+  frontend:
+    build: ./frontend
+    # No recibe el .env completo (secretos): Compose interpola VITE_API_URL
+    # desde el .env de la raíz y le pasa solo esa variable.
+    environment:
+      # El navegador del host no resuelve el hostname "backend": la API se llama por localhost.
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
+      # Docker Desktop en Windows no propaga los eventos del bind mount: polling para el HMR.
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
 volumes:
   turnos_pgdata:
