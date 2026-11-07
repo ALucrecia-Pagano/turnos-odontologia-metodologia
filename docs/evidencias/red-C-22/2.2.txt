@@ -1,0 +1,55 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 8 items / 4 deselected / 4 selected
+
+tests\integration\test_api_appointments.py F...                          [100%]
+
+================================== FAILURES ===================================
+____________ test_explicit_duration_min_overrides_service_default _____________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002427E982E40>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_explicit_duration_min_overrides_service_default(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        lundi = get_future_monday()
+        start_dt = datetime(lundi.year, lundi.month, lundi.day, 10, 0, tzinfo=TZ_BA)
+        payload = {
+            "patientId": str(PATIENT_1_ID),
+            "professionalId": str(P1_ID),
+            "chairId": str(CHAIR_1_ID),
+            "serviceId": str(SERVICE_CONTROL_ID),  # default 30 min
+            "startAt": start_dt.isoformat(),
+            "durationMin": 45,
+        }
+        headers = token_for(auth_client, "recepcion")
+        res = auth_client.post("/api/appointments", json=payload, headers=headers)
+        assert res.status_code == 201, res.text
+        data = res.json()
+        end_dt = start_dt + timedelta(minutes=45)
+        expected_end_utc = end_dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+>       assert data["endAt"] == expected_end_utc
+E       AssertionError: assert '2026-11-16T13:30:00Z' == '2026-11-16T13:45:00Z'
+E         
+E         - 2026-11-16T13:45:00Z
+E         ?               ^^
+E         + 2026-11-16T13:30:00Z
+E         ?               ^^
+
+tests\integration\test_api_appointments.py:262: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointments.py::test_explicit_duration_min_overrides_service_default
+============ 1 failed, 3 passed, 4 deselected, 1 warning in 3.14s =============

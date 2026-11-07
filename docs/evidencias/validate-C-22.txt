@@ -1,0 +1,4 @@
+Change 'api-dar-turno' is valid
+warning: in the working copy of 'backend/app/api/schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/api-dar-turno/tasks.md', LF will be replaced by CRLF the next time Git touches it

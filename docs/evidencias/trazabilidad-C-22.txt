@@ -1,0 +1,6 @@
+Salida generada por docs/evidencias/trazabilidad-C-22.py. No editar a mano.
+tests recolectados por pytest: 20
+escenarios en la spec delta: 20
+escenarios con test recolectado: 20
+problemas: 0
+20 escenarios, 0 problemas
