@@ -1,5 +1,5 @@
 Salida generada por docs/evidencias/trazabilidad-C-19.py. No editar a mano.
-tests recolectados por pytest: 1070
+tests recolectados por pytest: 1349
 escenarios en las dos specs delta: 135
 escenarios con test recolectado: 135
 problemas: 0

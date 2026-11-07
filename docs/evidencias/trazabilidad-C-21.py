@@ -22,7 +22,14 @@ BACKEND = REPO / "backend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-21.txt"
 VERIFY = EVIDENCE / "verify-C-21.md"
-SPECS = REPO / "openspec" / "changes" / "api-horarios-y-bloqueos" / "specs"
+SPECS = (
+    REPO
+    / "openspec"
+    / "changes"
+    / "archive"
+    / "2026-11-06-api-horarios-y-bloqueos"
+    / "specs"
+)
 APPOINTMENT_SCHEDULING_SPEC = SPECS / "appointment-scheduling" / "spec.md"
 WORKING_HOURS_SPEC = SPECS / "working-hours-and-blocks-api" / "spec.md"
 TABLE_START = "<!-- trazabilidad:inicio -->"

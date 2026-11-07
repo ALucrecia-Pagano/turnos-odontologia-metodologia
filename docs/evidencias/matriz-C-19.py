@@ -15,7 +15,14 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 BACKEND = REPO / "backend"
-DESIGN = REPO / "openspec" / "changes" / "autenticacion-jwt-y-roles" / "design.md"
+DESIGN = (
+    REPO
+    / "openspec"
+    / "changes"
+    / "archive"
+    / "2026-11-06-autenticacion-jwt-y-roles"
+    / "design.md"
+)
 OUTPUT = Path(__file__).resolve().with_name("matriz-C-19.txt")
 HEADING = "#### Matriz RBAC"
 EXPECTED_ROWS = 34

@@ -22,7 +22,14 @@ BACKEND = REPO / "backend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-19.txt"
 VERIFY = EVIDENCE / "verify-C-19.md"
-SPECS = REPO / "openspec" / "changes" / "autenticacion-jwt-y-roles" / "specs"
+SPECS = (
+    REPO
+    / "openspec"
+    / "changes"
+    / "archive"
+    / "2026-11-06-autenticacion-jwt-y-roles"
+    / "specs"
+)
 AUTH_SPEC = SPECS / "authentication-and-rbac" / "spec.md"
 INFRA_SPEC = SPECS / "database-infrastructure" / "spec.md"
 TABLE_START = "<!-- trazabilidad:inicio -->"

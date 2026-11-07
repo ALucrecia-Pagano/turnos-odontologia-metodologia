@@ -22,7 +22,14 @@ BACKEND = REPO / "backend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-23.txt"
 VERIFY = EVIDENCE / "verify-C-23.md"
-SPECS = REPO / "openspec" / "changes" / "api-ciclo-de-vida-del-turno" / "specs"
+SPECS = (
+    REPO
+    / "openspec"
+    / "changes"
+    / "archive"
+    / "2026-11-07-api-ciclo-de-vida-del-turno"
+    / "specs"
+)
 APPOINTMENTS_SPEC = SPECS / "appointments-api" / "spec.md"
 TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
