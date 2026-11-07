@@ -1,0 +1,282 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 10 items
+
+tests\integration\test_api_appointment_status.py FFFFFFFFFF              [100%]
+
+================================== FAILURES ===================================
+______________________ test_confirm_reserved_appointment ______________________
+
+auth_client = <starlette.testclient.TestClient object at 0x000002019093EF90>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_confirm_reserved_appointment(auth_client: TestClient, test_engine: Engine) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "confirmado"},
+        )
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:197: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+__________ test_mark_attended_confirmed_appointment_with_past_start ___________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000201910B34D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_mark_attended_confirmed_appointment_with_past_start(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        app_id = create_past_appointment(
+            test_engine,
+            "confirmado",
+            professional_id=P1_ID,
+            patient_id=PATIENT_1_ID,
+            chair_id=CHAIR_1_ID,
+            service_id=SERVICE_CONTROL_ID,
+            hours_ago=2,
+        )
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "atendido"},
+        )
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:229: AssertionError
+___________ test_mark_absent_confirmed_appointment_with_past_start ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x00000201912D7890>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_mark_absent_confirmed_appointment_with_past_start(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "administrador")
+        app_id = create_past_appointment(
+            test_engine,
+            "confirmado",
+            professional_id=P2_ID,
+            patient_id=PATIENT_2_ID,
+            chair_id=CHAIR_2_ID,
+            service_id=SERVICE_CONTROL_ID,
+            hours_ago=2,
+        )
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "ausente"},
+        )
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:261: AssertionError
+_________________ test_mark_attended_before_start_returns_422 _________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020190F609D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_mark_attended_before_start_returns_422(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        # Primero confirmarlo
+        res_conf = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "confirmado"},
+        )
+>       assert res_conf.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:287: AssertionError
+__________ test_double_sequential_transition_leaves_single_new_entry __________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020190F61BA0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_double_sequential_transition_leaves_single_new_entry(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        res1 = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "confirmado"},
+        )
+>       assert res1.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:311: AssertionError
+_______________ test_confirm_cancelled_appointment_returns_422 ________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020191784DD0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_confirm_cancelled_appointment_returns_422(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        cancel_res = auth_client.post(f"/api/appointments/{app_id}/cancel", headers=headers)
+        assert cancel_res.status_code == 200
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "confirmado"},
+        )
+>       assert res.status_code == 422, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:345: AssertionError
+____________________ test_to_status_cancelado_returns_400 _____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020191B6A140>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_to_status_cancelado_returns_400(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "cancelado"},
+        )
+>       assert res.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:362: AssertionError
+____________________ test_to_status_reservado_returns_400 _____________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020191D6D9D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_to_status_reservado_returns_400(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=headers,
+            json={"toStatus": "reservado"},
+        )
+>       assert res.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:377: AssertionError
+___________ test_change_status_nonexistent_appointment_returns_404 ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020191CAFE50>
+
+    def test_change_status_nonexistent_appointment_returns_404(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "administrador")
+        res = auth_client.post(
+            "/api/appointments/00000000-0000-0000-0000-000000000999/status",
+            headers=headers,
+            json={"toStatus": "confirmado"},
+        )
+        assert res.status_code == 404
+>       assert res.json() == {"code": "NOT_FOUND", "message": "Turno no encontrado."}
+E       AssertionError: assert {'detail': 'Not Found'} == {'code': 'NOT... encontrado.'}
+E         
+E         Left contains 1 more item:
+E         {'detail': 'Not Found'}
+E         Right contains 2 more items:
+E         {'code': 'NOT_FOUND', 'message': 'Turno no encontrado.'}
+E         Use -v to get more diff
+
+tests\integration\test_api_appointment_status.py:388: AssertionError
+__ test_dentist_changes_status_of_other_professional_returns_403_from_domain __
+
+auth_client = <starlette.testclient.TestClient object at 0x0000020192F6AA50>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_dentist_changes_status_of_other_professional_returns_403_from_domain(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        reception_headers = token_for(auth_client, "recepcion")
+        dentist_headers = token_for(auth_client, "odontologo")
+        monday = get_future_monday()
+        # Turno de P2 (Dr. Martín Sosa)
+        app_id = create_future_appointment(
+            auth_client,
+            reception_headers,
+            monday,
+            start_hour=10,
+            prof_id=P2_ID,
+            chair_id=CHAIR_2_ID,
+            pat_id=PATIENT_2_ID,
+        )
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/status",
+            headers=dentist_headers,
+            json={"toStatus": "confirmado"},
+        )
+>       assert res.status_code == 403, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 403
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_status.py:413: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_status.py::test_confirm_reserved_appointment
+FAILED tests/integration/test_api_appointment_status.py::test_mark_attended_confirmed_appointment_with_past_start
+FAILED tests/integration/test_api_appointment_status.py::test_mark_absent_confirmed_appointment_with_past_start
+FAILED tests/integration/test_api_appointment_status.py::test_mark_attended_before_start_returns_422
+FAILED tests/integration/test_api_appointment_status.py::test_double_sequential_transition_leaves_single_new_entry
+FAILED tests/integration/test_api_appointment_status.py::test_confirm_cancelled_appointment_returns_422
+FAILED tests/integration/test_api_appointment_status.py::test_to_status_cancelado_returns_400
+FAILED tests/integration/test_api_appointment_status.py::test_to_status_reservado_returns_400
+FAILED tests/integration/test_api_appointment_status.py::test_change_status_nonexistent_appointment_returns_404
+FAILED tests/integration/test_api_appointment_status.py::test_dentist_changes_status_of_other_professional_returns_403_from_domain
+======================== 10 failed, 1 warning in 5.84s ========================

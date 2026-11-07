@@ -1,0 +1,364 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 12 items
+
+tests\integration\test_api_appointment_reschedule.py FFFFFFFFFFFF        [100%]
+
+================================== FAILURES ===================================
+_ test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado _
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE581EE40>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10, duration_min=45)
+    
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={"startAt": new_start_dt.isoformat()},
+        )
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:148: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+________ test_reschedule_with_explicit_professional_chair_and_duration ________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE5F82E90>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_with_explicit_professional_chair_and_duration(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "administrador")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10, duration_min=30)
+    
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={
+                "startAt": new_start_dt.isoformat(),
+                "professionalId": str(P2_ID),
+                "chairId": str(CHAIR_2_ID),
+                "durationMin": 60,
+            },
+        )
+>       assert res.status_code == 200, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:178: AssertionError
+______________ test_reschedule_professional_overlap_returns_409 _______________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE61F0190>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_professional_overlap_returns_409(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        # Turno 1 con P1 de 10:00 a 10:30
+        _app1 = create_future_appointment(auth_client, headers, monday, start_hour=10, prof_id=P1_ID, chair_id=CHAIR_1_ID)
+        # Turno 2 con P2 de 10:00 a 10:30
+        app2 = create_future_appointment(
+            auth_client, headers, monday, start_hour=10, prof_id=P2_ID, chair_id=CHAIR_2_ID, pat_id=PATIENT_2_ID
+        )
+    
+        # Intento de reprogramar Turno 2 a las 10:00 con P1
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 10, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app2}/reschedule",
+            headers=headers,
+            json={
+                "startAt": new_start_dt.isoformat(),
+                "professionalId": str(P1_ID),
+            },
+        )
+>       assert res.status_code == 409, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:209: AssertionError
+__________________ test_reschedule_chair_overlap_returns_409 __________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE5DA2EA0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_chair_overlap_returns_409(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        # Turno 1 en CHAIR 1 de 10:00 a 10:30
+        _app1 = create_future_appointment(auth_client, headers, monday, start_hour=10, prof_id=P1_ID, chair_id=CHAIR_1_ID)
+        # Turno 2 en CHAIR 2 de 10:00 a 10:30
+        app2 = create_future_appointment(
+            auth_client, headers, monday, start_hour=10, prof_id=P2_ID, chair_id=CHAIR_2_ID, pat_id=PATIENT_2_ID
+        )
+    
+        # Intento de reprogramar Turno 2 a las 10:00 en CHAIR 1
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 10, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app2}/reschedule",
+            headers=headers,
+            json={
+                "startAt": new_start_dt.isoformat(),
+                "chairId": str(CHAIR_1_ID),
+            },
+        )
+>       assert res.status_code == 409, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:236: AssertionError
+__________________ test_reschedule_inside_block_returns_409 ___________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE5DA09D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_inside_block_returns_409(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        # Bloqueo para P1 de 09:00 a 13:00
+        block_start = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=TZ_BA)
+        block_end = datetime(monday.year, monday.month, monday.day, 13, 0, tzinfo=TZ_BA)
+        with test_engine.begin() as conn:
+            conn.execute(
+                text(
+                    "INSERT INTO block (id, professional_id, start_at, end_at, reason) "
+                    "VALUES (:id, :p, :start, :end, 'Capacitación')"
+                ),
+                {"id": uuid4(), "p": P1_ID, "start": block_start, "end": block_end},
+            )
+    
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={"startAt": new_start_dt.isoformat()},
+        )
+>       assert res.status_code == 409, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:266: AssertionError
+______________ test_reschedule_outside_working_hours_returns_409 ______________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE6780830>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_outside_working_hours_returns_409(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        outside_dt = datetime(monday.year, monday.month, monday.day, 18, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={"startAt": outside_dt.isoformat()},
+        )
+>       assert res.status_code == 409, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:284: AssertionError
+___________________ test_reschedule_in_the_past_returns_422 ___________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE6981BF0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_in_the_past_returns_422(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        now = datetime.now(timezone.utc)
+        yesterday = now - timedelta(days=1)
+        yesterday_min = (yesterday.minute // 5) * 5
+        past_dt = yesterday.replace(minute=yesterday_min, second=0, microsecond=0)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={"startAt": past_dt.isoformat()},
+        )
+>       assert res.status_code == 422, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:305: AssertionError
+____________ test_reschedule_start_at_without_timezone_returns_400 ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE6B5BAC0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_start_at_without_timezone_returns_400(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={"startAt": f"{monday.year:04d}-{monday.month:02d}-{monday.day:02d}T11:00:00"},
+        )
+>       assert res.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:322: AssertionError
+___________________ test_reschedule_extra_field_returns_400 ___________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE6BA3450>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_extra_field_returns_400(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, headers, monday, start_hour=10)
+    
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=headers,
+            json={
+                "startAt": new_start_dt.isoformat(),
+                "status": "cancelado",
+            },
+        )
+>       assert res.status_code == 400
+E       assert 404 == 400
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:341: AssertionError
+_____________ test_reschedule_nonexistent_appointment_returns_404 _____________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE6DABA50>
+
+    def test_reschedule_nonexistent_appointment_returns_404(auth_client: TestClient) -> None:
+        headers = token_for(auth_client, "recepcion")
+        monday = get_future_monday()
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            "/api/appointments/00000000-0000-0000-0000-000000000999/reschedule",
+            headers=headers,
+            json={"startAt": new_start_dt.isoformat()},
+        )
+        assert res.status_code == 404
+>       assert res.json() == {"code": "NOT_FOUND", "message": "Turno no encontrado."}
+E       AssertionError: assert {'detail': 'Not Found'} == {'code': 'NOT... encontrado.'}
+E         
+E         Left contains 1 more item:
+E         {'detail': 'Not Found'}
+E         Right contains 2 more items:
+E         {'code': 'NOT_FOUND', 'message': 'Turno no encontrado.'}
+E         Use -v to get more diff
+
+tests\integration\test_api_appointment_reschedule.py:354: AssertionError
+_________________ test_dentist_cannot_reschedule_returns_403 __________________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE63FF020>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_dentist_cannot_reschedule_returns_403(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        reception_headers = token_for(auth_client, "recepcion")
+        dentist_headers = token_for(auth_client, "odontologo")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, reception_headers, monday, prof_id=PROFESSIONAL_ID)
+    
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=dentist_headers,
+            json={"startAt": new_start_dt.isoformat()},
+        )
+>       assert res.status_code == 403, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 403
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:371: AssertionError
+___________ test_reschedule_terminal_state_appointment_returns_422 ____________
+
+auth_client = <starlette.testclient.TestClient object at 0x0000028EE67E34D0>
+test_engine = Engine(postgresql+psycopg://turnos:***@localhost:5432/turnos_test)
+
+    def test_reschedule_terminal_state_appointment_returns_422(
+        auth_client: TestClient, test_engine: Engine
+    ) -> None:
+        admin_headers = token_for(auth_client, "administrador")
+        monday = get_future_monday()
+        app_id = create_future_appointment(auth_client, admin_headers, monday, start_hour=10)
+    
+        # Cancelar el turno
+        cancel_res = auth_client.post(f"/api/appointments/{app_id}/cancel", headers=admin_headers)
+        assert cancel_res.status_code == 200
+    
+        new_start_dt = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=TZ_BA)
+        res = auth_client.post(
+            f"/api/appointments/{app_id}/reschedule",
+            headers=admin_headers,
+            json={"startAt": new_start_dt.isoformat()},
+        )
+>       assert res.status_code == 422, res.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\integration\test_api_appointment_reschedule.py:396: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_start_only_preserves_real_duration_and_returns_to_reservado
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_with_explicit_professional_chair_and_duration
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_professional_overlap_returns_409
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_chair_overlap_returns_409
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_inside_block_returns_409
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_outside_working_hours_returns_409
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_in_the_past_returns_422
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_start_at_without_timezone_returns_400
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_extra_field_returns_400
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_nonexistent_appointment_returns_404
+FAILED tests/integration/test_api_appointment_reschedule.py::test_dentist_cannot_reschedule_returns_403
+FAILED tests/integration/test_api_appointment_reschedule.py::test_reschedule_terminal_state_appointment_returns_422
+======================== 12 failed, 1 warning in 6.94s ========================

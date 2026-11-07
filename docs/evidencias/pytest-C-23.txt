@@ -1,0 +1,82 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collected 1349 items / 467 deselected / 882 selected
+
+tests\api\test_app.py ...                                                [  0%]
+tests\api\test_appointment_lifecycle_schemas.py ..........               [  1%]
+tests\api\test_appointment_openapi.py .                                  [  1%]
+tests\api\test_appointment_schemas.py .....                              [  2%]
+tests\api\test_auth_openapi.py ......                                    [  2%]
+tests\api\test_availability_openapi.py .                                 [  2%]
+tests\api\test_availability_schemas.py ......                            [  3%]
+tests\api\test_catalog_openapi.py .                                      [  3%]
+tests\api\test_catalog_schemas.py .....                                  [  4%]
+tests\api\test_cors.py ...                                               [  4%]
+tests\api\test_domain_rejection.py .....................                 [  7%]
+tests\api\test_error_mapping.py ....                                     [  7%]
+tests\api\test_health.py .                                               [  7%]
+tests\api\test_login_input.py ......                                     [  8%]
+tests\api\test_malformed_request.py ....                                 [  8%]
+tests\api\test_not_found_error.py .                                      [  8%]
+tests\api\test_openapi.py .......                                        [  9%]
+tests\api\test_own_professional_guard.py ...                             [  9%]
+tests\api\test_route_guards.py ....                                      [ 10%]
+tests\api\test_token_rejection.py ...................                    [ 12%]
+tests\api\test_violation_body.py ....                                    [ 13%]
+tests\auth\test_model.py .                                               [ 13%]
+tests\auth\test_passwords.py .........                                   [ 14%]
+tests\auth\test_permissions.py ....                                      [ 14%]
+tests\auth\test_rbac_domain_parity.py ............                       [ 15%]
+tests\auth\test_tokens.py ..                                             [ 16%]
+tests\domain\test_blocks.py ..........                                   [ 17%]
+tests\domain\test_catalog.py ........................................... [ 22%]
+.....................................                                    [ 26%]
+tests\domain\test_catalog_agenda.py .......                              [ 27%]
+tests\domain\test_catalog_dependencies.py ...                            [ 27%]
+tests\domain\test_catalog_update.py .................                    [ 29%]
+tests\domain\test_clock_guard.py .....................                   [ 31%]
+tests\domain\test_domain_dependencies.py ..                              [ 32%]
+tests\domain\test_duration.py .....                                      [ 32%]
+tests\domain\test_import_guard.py ................................       [ 36%]
+tests\domain\test_intervals.py ......................................    [ 40%]
+tests\domain\test_lifecycle.py ......................................... [ 45%]
+..............................                                           [ 48%]
+tests\domain\test_lifecycle_agenda.py .......                            [ 49%]
+tests\domain\test_model.py ......................................        [ 53%]
+tests\domain\test_names.py ........                                      [ 54%]
+tests\domain\test_past.py .........                                      [ 55%]
+tests\domain\test_reschedule.py .............................            [ 58%]
+tests\domain\test_smoke.py ..                                            [ 59%]
+tests\domain\test_status_history.py ................                     [ 60%]
+tests\domain\test_transitions.py .................................       [ 64%]
+tests\domain\test_validate_new_appointment.py .......................... [ 67%]
+........................................................................ [ 75%]
+........................................................................ [ 84%]
+..............                                                           [ 85%]
+tests\domain\test_violations.py ....................................     [ 89%]
+tests\domain\test_working_hours.py ...........................           [ 92%]
+tests\test_alembic_configuration.py .                                    [ 92%]
+tests\test_api_dependencies.py ....                                      [ 93%]
+tests\test_auth_docs.py ......                                           [ 93%]
+tests\test_compose.py ........................                           [ 96%]
+tests\test_config.py .............                                       [ 98%]
+tests\test_demo_data.py ......                                           [ 98%]
+tests\test_persistence_metadata.py .....                                 [ 99%]
+tests\test_repository_contracts.py ...                                   [ 99%]
+tests\test_transition_types.py ..                                        [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/api/test_token_rejection.py::test_rejected_token[other_algorithm]
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\jwt\api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 32 bytes long, which is below the minimum recommended length of 64 bytes for SHA512. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============== 882 passed, 467 deselected, 2 warnings in 16.52s ===============

@@ -1,0 +1,97 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 3 items / 2 deselected / 1 selected
+
+tests\integration\test_appointment_lifecycle_services.py F               [100%]
+
+================================== FAILURES ===================================
+____ test_get_appointment_history_unknown_user_leaves_changed_by_name_null ____
+
+connection = <sqlalchemy.engine.base.Connection object at 0x000002113200EB10>
+
+    def test_get_appointment_history_unknown_user_leaves_changed_by_name_null(connection: Connection) -> None:
+        session = Session(bind=connection)
+        _seed_catalogs_and_users(session)
+    
+        app_id = uuid4()
+        patient_id = PATIENTS[0].id
+        prof_id = PROFESSIONALS[0].id
+        chair_id = CHAIRS[0].id
+        service_id = SERVICES[0].id
+        unknown_user_id = UUID("00000000-0000-0000-0000-000000000888")
+    
+        dt = datetime(2026, 11, 16, 10, 0, tzinfo=timezone.utc)
+        appointment_row = AppointmentModel(
+            id=app_id,
+            patient_id=patient_id,
+            professional_id=prof_id,
+            chair_id=chair_id,
+            service_id=service_id,
+            start_at=dt,
+            end_at=datetime(2026, 11, 16, 10, 30, tzinfo=timezone.utc),
+            status="reservado",
+            created_at=dt,
+            updated_at=dt,
+        )
+        session.add(appointment_row)
+    
+        change = AppointmentStatusChangeModel(
+            id=uuid4(),
+            appointment_id=app_id,
+            from_status=None,
+            to_status="reservado",
+            changed_by=unknown_user_id,
+            changed_at=dt,
+            note=None,
+        )
+        session.add(change)
+        session.flush()
+    
+>       history = get_appointment_history(session, app_id)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_appointment_lifecycle_services.py:226: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+session = <sqlalchemy.orm.session.Session object at 0x00000211320C1400>
+appointment_id = UUID('51ae12d7-9116-40ef-93b1-259ff3d6a068')
+
+    def get_appointment_history(
+        session: Session,
+        appointment_id: UUID,
+    ) -> list[HistoryEntryResponse] | None:
+        app_repo = AppointmentRepository(session)
+        appointment = app_repo.get_by_id(appointment_id)
+        if appointment is None:
+            return None
+    
+        status_repo = AppointmentStatusChangeRepository(session)
+        changes = status_repo.list_by_appointment_id(appointment_id)
+    
+        user_ids = {c.changed_by for c in changes}
+        names_by_id = UserRepository(session).get_display_names(user_ids)
+    
+        result: list[HistoryEntryResponse] = []
+        for c in changes:
+            from_val = c.from_status.value if c.from_status is not None else None
+            to_val = c.to_status.value
+>           changed_name = names_by_id[c.changed_by]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: UUID('00000000-0000-0000-0000-000000000888')
+
+app\services\appointments.py:468: KeyError
+---------------------------- Captured stderr setup ----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_appointment_lifecycle_services.py::test_get_appointment_history_unknown_user_leaves_changed_by_name_null
+================= 1 failed, 2 deselected, 1 warning in 0.64s ==================

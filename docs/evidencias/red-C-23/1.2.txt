@@ -1,0 +1,22 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collected 0 items / 1 error
+
+=================================== ERRORS ====================================
+______ ERROR collecting tests/api/test_appointment_lifecycle_schemas.py _______
+ImportError while importing test module 'C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\tests\api\test_appointment_lifecycle_schemas.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\api\test_appointment_lifecycle_schemas.py:6: in <module>
+    from app.api.schemas import (
+E   ImportError: cannot import name 'HistoryEntryResponse' from 'app.api.schemas' (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\app\api\schemas.py)
+=========================== short test summary info ===========================
+ERROR tests/api/test_appointment_lifecycle_schemas.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+============================== 1 error in 0.64s ===============================

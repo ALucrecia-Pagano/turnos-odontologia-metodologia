@@ -1,0 +1,6 @@
+Salida generada por docs/evidencias/trazabilidad-C-23.py. No editar a mano.
+tests recolectados por pytest: 36
+escenarios en la spec delta: 36
+escenarios con test recolectado: 36
+problemas: 0
+36 escenarios, 0 problemas
