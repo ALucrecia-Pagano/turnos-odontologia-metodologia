@@ -591,7 +591,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/02_descripcion_general.md` §Stack tecnológico
 
 ### [C-26] `ui-login-y-sesion`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-07)
 - **Scope**:
   - Pantalla de login (usuario y contraseña) contra `POST /api/auth/login`; error genérico ante credenciales inválidas.
   - El cliente de API envía `Authorization: Bearer <token>`; ante `401` se descarta el token y se vuelve al login; cierre de sesión que descarta el token.

@@ -4,7 +4,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 18/18 en [tasks.md](../../openspec/changes/ui-login-y-sesion/tasks.md).
+- Tareas: 18/18 en [tasks.md](../../openspec/changes/archive/2026-11-07-ui-login-y-sesion/tasks.md).
 - Vitest: 23 archivos, 85 tests en verde (47 de C-25 + 38 nuevos de C-26); `tsc` y ESLint sin errores ni warnings.
 - Mutaciones: 38/38 hicieron fallar su test (una por cada test nuevo de C-26); mutaciones inválidas: 0; SHA-256 de producción intacto.
 - Trazabilidad: 29 escenarios, 0 problemas.
@@ -50,19 +50,41 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 
 ### Confirmación de alcance e inmutabilidad fuera del front
 
-- No se modificó ningún archivo de `backend/`, migraciones, `openspec/specs/`, `knowledge-base/`, `CHANGES.md`, `.env` ni `docker-compose.yml`.
+- No se modificó ningún archivo de `backend/`, migraciones, `openspec/specs/`, `knowledge-base/`, `CHANGES.md`, `.env` ni `docker-compose.yml` durante el apply (en el archive se sincronizó `openspec/specs/frontend-auth-session/spec.md` y se actualizaron `CHANGES.md`, `README.md` y `knowledge-base/06_funcionalidades.md`).
+
+## Verificación manual en el navegador (2026-11-07)
+
+Con Docker Compose levantado (`VITE_API_URL=http://localhost:8000/api`), se verificó por HTTP ([http-C-26.txt](http-C-26.txt) / [manual-C-26.txt](manual-C-26.txt)) y la autora probó el flujo en el navegador en `http://localhost:5173`, tomando las siguientes capturas en `docs/evidencias/capturas/`:
+
+- **Credenciales inválidas (mensaje genérico)**: [capturas/C-26-error.png](capturas/C-26-error.png) — muestra exactamente `"Usuario o contraseña incorrectos."` en el alerta, vacía el campo de contraseña y no revela qué credencial falló.
+- **Menú de administración (6 ítems)**: [capturas/C-26-administrador.png](capturas/C-26-administrador.png) — sesión iniciada como `administrador` (`Administración Demo`), con los 6 ítems (`Agenda`, `Turnos`, `Horarios y bloqueos`, `Catálogos`, `Pacientes`, `Usuarios y roles`) deshabilitados con `"Próximamente"` y botón `"Cerrar sesión"`.
+- **Menú de recepción (5 ítems)**: [capturas/C-26-recepcion.png](capturas/C-26-recepcion.png) — sesión iniciada como `recepcion` (`Recepción Demo`), con los 5 ítems de su rol (sin `Usuarios y roles`).
+- **Menú de la odontóloga (4 ítems)**: [capturas/C-26-odontologo.png](capturas/C-26-odontologo.png) — sesión iniciada como `odontologo` (`Dra. Laura Quiroga`), con los 4 ítems de su rol (sin `Turnos` ni `Usuarios y roles`).
+- **Token adulterado + recarga (`/me` responde `401`)**: [capturas/C-26-sesion-vencida.png](capturas/C-26-sesion-vencida.png) — al adulterar el token en `sessionStorage` y recargar la página, `GET /api/auth/me` responde `401`, se descarta el token y la aplicación vuelve a `/login` sin mensaje de sesión vencida, tal como exige el escenario `"/me responde 401 y limpia la sesión"`.
+
+> **Nota sobre el mensaje de sesión vencida durante el uso:** el mensaje `"La sesión venció. Iniciá sesión de nuevo."` cuando una petición protegida responde `401` con la sesión ya iniciada se verificará a mano en el navegador en **C-27**, porque C-26 todavía no tiene pantallas de negocio que disparen peticiones protegidas tras el arranque; en C-26 su comportamiento está cubierto por tests automatizados (`src/App.test.tsx > token vencido en una request protegida` y `src/features/auth/AuthContext.test.tsx > lastEvent registra expired ante 401 protegido y manual ante logout`).
+
+![Credenciales inválidas: mensaje genérico](capturas/C-26-error.png)
+
+![Menú de administración (6 ítems)](capturas/C-26-administrador.png)
+
+![Menú de recepción (5 ítems)](capturas/C-26-recepcion.png)
+
+![Menú de la odontóloga (4 ítems)](capturas/C-26-odontologo.png)
+
+![Token adulterado + recarga: vuelve a /login sin mensaje](capturas/C-26-sesion-vencida.png)
 
 ## Desvíos
 
-- **Alineación de `AbortController` y `AbortSignal` en `frontend/src/test/setup.ts`**: jsdom 31 instala su propio `window.AbortController`/`AbortSignal`, mientras que Node 24 provee el `Request` nativo de `undici`, cuyo constructor valida que `RequestInit.signal` sea una instancia del `AbortSignal` nativo de Node. Al ejecutar navegaciones declarativas (`<Navigate />` / `router.navigate`) en React Router 6 dentro de Vitest, `@remix-run/router` construye `new Request(url, { signal })` y fallaba con `TypeError: RequestInit: Expected signal ("AbortSignal {}") to be an instance of AbortSignal`. Se resolvió en `frontend/src/test/setup.ts` asignando `window.AbortController` y `window.AbortSignal` a los constructores nativos de Node obtenidos mediante `transferableAbortController()` de `node:util` (sin mocks ni reemplazos de Vitest).
-- **`eslint-disable-next-line react-refresh/only-export-components` en dos exportaciones no-componente**: `eslint . --max-warnings 0` activa la regla `react-refresh/only-export-components` como warning cuando un archivo `.tsx` exporta además de un componente una función o constante auxiliar. Como `design.md` (D4 y D8) indica exportar `useAuth` desde `AuthContext.tsx` y `routes` desde `App.tsx`, se colocó el comentario puntual en esas líneas para mantener 0 warnings en ESLint.
+- **`AbortController` y `AbortSignal` nativos de Node en `frontend/src/test/setup.ts` (no es un mock)**: jsdom 31 instala su propia implementación de `window.AbortController`/`AbortSignal`, mientras que Node 24 provee el `Request` nativo de `undici`, cuyo constructor exige que `RequestInit.signal` sea una instancia del `AbortSignal` nativo de Node. Al ejecutar navegaciones (`<Navigate />` / `navigate`) en React Router 6 dentro de Vitest, `@remix-run/router` construye `new Request(url, { signal })` y fallaba con `TypeError: RequestInit: Expected signal ("AbortSignal {}") to be an instance of AbortSignal`. Se resolvió en `frontend/src/test/setup.ts` reemplazando el `AbortController`/`AbortSignal` de jsdom por la implementación real nativa de Node 24 obtenida con `transferableAbortController()` de `node:util` (no es un mock ni un espía: sustituye la clase de jsdom por la implementación real del runtime por una incompatibilidad entre jsdom 31 y Node 24).
+- **Dos `eslint-disable-next-line react-refresh/only-export-components` puntuales**: `eslint . --max-warnings 0` activa la regla `react-refresh/only-export-components` como warning cuando un archivo `.tsx` exporta además de un componente una función o constante auxiliar. Como `design.md` (D4 y D8) indica exportar `useAuth` desde `AuthContext.tsx` y `routes` desde `App.tsx`, se colocaron esos dos `eslint-disable` puntuales para mantener 0 warnings en ESLint.
 
 ## Artefactos
 
-- [proposal.md](../../openspec/changes/ui-login-y-sesion/proposal.md)
-- [design.md](../../openspec/changes/ui-login-y-sesion/design.md)
-- [tasks.md](../../openspec/changes/ui-login-y-sesion/tasks.md)
-- [spec.md (frontend-auth-session)](../../openspec/changes/ui-login-y-sesion/specs/frontend-auth-session/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-07-ui-login-y-sesion/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-07-ui-login-y-sesion/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-07-ui-login-y-sesion/tasks.md)
+- [spec.md (frontend-auth-session)](../../openspec/changes/archive/2026-11-07-ui-login-y-sesion/specs/frontend-auth-session/spec.md)
 
 ## Mutaciones
 

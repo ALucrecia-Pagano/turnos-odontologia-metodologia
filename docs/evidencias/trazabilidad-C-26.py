@@ -22,11 +22,9 @@ FRONTEND = REPO / "frontend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-26.txt"
 VERIFY = EVIDENCE / "verify-C-26.md"
-SPEC_ACTIVE = REPO / "openspec" / "changes" / "ui-login-y-sesion" / "specs" / "frontend-auth-session" / "spec.md"
-SPEC_ARCHIVED = (
+SPEC = (
     REPO / "openspec" / "changes" / "archive" / "2026-11-07-ui-login-y-sesion" / "specs" / "frontend-auth-session" / "spec.md"
 )
-SPEC = SPEC_ACTIVE if SPEC_ACTIVE.exists() else SPEC_ARCHIVED
 TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str(FRONTEND / "node_modules" / "vitest" / "vitest.mjs")]
