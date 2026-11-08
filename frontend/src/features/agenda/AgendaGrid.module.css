@@ -83,6 +83,7 @@
   position: relative;
   border-right: 1px solid var(--color-border);
   background-color: var(--agenda-offhours-bg, var(--color-background));
+  container: agenda-column / inline-size;
 }
 
 .emptyColumnNote {
@@ -187,4 +188,60 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+}
+
+/* Carriles divididos: menos relleno para dejar lugar a la hora y al paciente. */
+.appointmentSplit {
+  padding-inline: var(--space-1);
+}
+
+.statusBadgeWrap {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/*
+ * Formato en dos líneas de la tarjeta compacta (carriles divididos y columnas angostas):
+ * línea 1 "HH:MM · Paciente" con ellipsis, línea 2 la etiqueta de estado con texto visible
+ * en tamaño reducido. La etiqueta nunca comparte la línea del paciente.
+ * Alto en un turno de 30 min (56 px): 4 + 4 de relleno + 2 de borde, línea 1 = 12 × 1,5 = 18,
+ * separación 4, etiqueta = 12 × 1,2 + 2 + 2 = 18,4; total 50,4 px <= 56 px.
+ */
+.cardCompactStacked {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.cardCompactStacked .cardCompactText {
+  flex: 0 0 auto;
+}
+
+.cardCompactStacked .statusBadgeWrap > span {
+  font-size: var(--font-size-xs);
+  padding: 1px var(--space-1);
+}
+
+/*
+ * Columnas angostas sin superposición: por debajo de 260 px la tarjeta compacta pasa al
+ * mismo formato en dos líneas. Justificación del umbral en docs/evidencias/verify-C-27.md
+ * (Hallazgo de la revisión visual 2).
+ */
+@container agenda-column (width < 260px) {
+  .cardCompactRow {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .cardCompactText {
+    flex: 0 0 auto;
+  }
+
+  .statusBadgeWrap > span {
+    font-size: var(--font-size-xs);
+    padding: 1px var(--space-1);
+  }
 }

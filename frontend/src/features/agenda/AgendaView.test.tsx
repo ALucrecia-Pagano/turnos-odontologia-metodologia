@@ -421,6 +421,107 @@ describe("AgendaView", () => {
     expect(label).toContain("Reservado");
   });
 
+  it("en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible", () => {
+    const sosaBase = MONDAY_AGENDA.appointments[0]!;
+    const agendaWithOverlap: AgendaResponse = {
+      ...MONDAY_AGENDA,
+      appointments: [
+        { ...sosaBase, status: "cancelado" },
+        {
+          ...sosaBase,
+          id: "00000000-0000-0000-0000-000000000aa3",
+          patientId: "00000000-0000-0000-0000-0000000000c1",
+          patientName: "Ana Pérez",
+          status: "reservado",
+        },
+      ],
+    };
+
+    render(
+      <AgendaView
+        date="2026-11-16"
+        timezone={MONDAY_AGENDA.timezone}
+        agenda={agendaWithOverlap}
+        professionals={PROFESSIONALS_ORDER_A}
+      />,
+    );
+
+    const cases = [
+      {
+        id: "00000000-0000-0000-0000-000000000aa2",
+        patient: "Bruno Acosta",
+        status: "cancelado",
+        label: "Cancelado",
+      },
+      {
+        id: "00000000-0000-0000-0000-000000000aa3",
+        patient: "Ana Pérez",
+        status: "reservado",
+        label: "Reservado",
+      },
+    ] as const;
+
+    for (const c of cases) {
+      const card = screen.queryByTestId(`agenda-appointment-${c.id}`);
+      expect(card).not.toBeNull();
+      expect(card).toHaveAttribute("data-lane-count", "2");
+
+      const patientLine = within(card!).queryByText(`09:00 · ${c.patient}`);
+      expect(patientLine).not.toBeNull();
+      const compactRow = patientLine?.parentElement ?? null;
+      expect(compactRow?.className).toContain("cardCompactStacked");
+
+      const textBadges = within(card!)
+        .queryAllByText(c.label)
+        .filter((el) => el.hasAttribute("data-status"));
+      expect(textBadges).toHaveLength(1);
+      expect(textBadges[0]).toHaveStyle({
+        color: APPOINTMENT_STATUS_TOKENS[c.status].text,
+        backgroundColor: APPOINTMENT_STATUS_TOKENS[c.status].background,
+      });
+      expect(patientLine?.contains(textBadges[0] ?? null)).toBe(false);
+      expect(compactRow?.contains(textBadges[0] ?? null)).toBe(true);
+      expect(within(card!).queryByTestId("agenda-status-dot")).toBeNull();
+
+      expect(card?.getAttribute("aria-label")).toBe(
+        `09:00–09:30, ${c.patient}, Control, Dr. Martín Sosa, Sillón 2, ${c.label}`,
+      );
+    }
+  });
+
+  it("un turno de un solo carril conserva el formato de una línea con la etiqueta de estado", () => {
+    render(
+      <AgendaView
+        date="2026-11-16"
+        timezone={MONDAY_AGENDA.timezone}
+        agenda={MONDAY_AGENDA}
+        professionals={PROFESSIONALS_ORDER_A}
+      />,
+    );
+
+    const card = screen.queryByTestId(
+      "agenda-appointment-00000000-0000-0000-0000-000000000aa1",
+    );
+    expect(card).not.toBeNull();
+    expect(card).toHaveAttribute("data-lane-count", "1");
+
+    const patientLine = within(card!).queryByText("10:00 · Ana Pérez");
+    expect(patientLine).not.toBeNull();
+    const compactRow = patientLine?.parentElement ?? null;
+    expect(compactRow?.className).toContain("cardCompactRow");
+    expect(compactRow?.className).not.toContain("cardCompactStacked");
+
+    const textBadges = within(card!)
+      .queryAllByText("Reservado")
+      .filter((el) => el.hasAttribute("data-status"));
+    expect(textBadges).toHaveLength(1);
+    expect(textBadges[0]).toHaveStyle({
+      color: APPOINTMENT_STATUS_TOKENS.reservado.text,
+      backgroundColor: APPOINTMENT_STATUS_TOKENS.reservado.background,
+    });
+    expect(within(card!).queryByTestId("agenda-status-dot")).toBeNull();
+  });
+
   it("la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada", () => {
     const agendaWith60Min: AgendaResponse = {
       ...MONDAY_AGENDA,

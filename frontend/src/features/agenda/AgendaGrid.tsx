@@ -172,18 +172,22 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
                   const isCancelled = appt.status === "cancelado";
                   const statusLabel = STATUS_LABELS[appt.status];
                   const isCompact = item.durationMinutes < 45;
+                  const isSplitLane = item.laneCount > 1;
                   const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
+                  const cardClassName = [
+                    styles.appointmentCard,
+                    isCancelled ? styles.appointmentCancelled : null,
+                    isSplitLane ? styles.appointmentSplit : null,
+                  ]
+                    .filter((name): name is string => name !== null && name !== undefined)
+                    .join(" ");
 
                   return (
                     <article
                       key={appt.id}
                       aria-label={cardAriaLabel}
                       title={isCompact ? appt.serviceName : undefined}
-                      className={
-                        isCancelled
-                          ? `${styles.appointmentCard} ${styles.appointmentCancelled}`
-                          : styles.appointmentCard
-                      }
+                      className={cardClassName}
                       data-testid={`agenda-appointment-${appt.id}`}
                       data-status={appt.status}
                       data-offset-minutes={item.offsetMinutes}
@@ -199,11 +203,23 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
                       }}
                     >
                       {isCompact ? (
-                        <div className={styles.cardCompactRow} title={appt.serviceName}>
+                        // La hora y el paciente tienen prioridad: en carriles divididos (y en
+                        // columnas de menos de 260 px, por container query) la etiqueta de
+                        // estado baja a una segunda línea en tamaño reducido.
+                        <div
+                          className={
+                            isSplitLane
+                              ? `${styles.cardCompactRow} ${styles.cardCompactStacked}`
+                              : styles.cardCompactRow
+                          }
+                          title={appt.serviceName}
+                        >
                           <span className={styles.cardCompactText}>
                             {`${startLabel} · ${appt.patientName}`}
                           </span>
-                          <StatusBadge status={appt.status} />
+                          <span className={styles.statusBadgeWrap}>
+                            <StatusBadge status={appt.status} />
+                          </span>
                         </div>
                       ) : (
                         <>

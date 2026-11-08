@@ -59,4 +59,23 @@ describe("agendaStyles y responsive de escritorio/tablet (D12, D13)", () => {
     }
     expect(hexOffenders).toEqual([]);
   });
+
+  it("la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida", () => {
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8").replace(/\r\n/g, "\n");
+    const columnRule = /\.columnTrack \{[^}]*\}/.exec(gridCss)?.[0] ?? "";
+    expect(columnRule).toContain("container: agenda-column / inline-size;");
+
+    const stackedRule = /\.cardCompactStacked \{[^}]*\}/.exec(gridCss)?.[0] ?? "";
+    expect(stackedRule).toContain("flex-direction: column;");
+
+    const queryStart = gridCss.indexOf("@container agenda-column (width < 260px) {");
+    expect(queryStart).toBeGreaterThan(-1);
+    const queryBlock = gridCss.slice(queryStart);
+    expect(queryBlock).toMatch(/\.cardCompactRow \{[^}]*flex-direction: column;/);
+    expect(queryBlock).toMatch(
+      /\.statusBadgeWrap > span \{[^}]*font-size: var\(--font-size-xs\);/,
+    );
+    expect(gridCss).not.toContain(".statusDot");
+    expect(gridCss).not.toContain(".visuallyHidden");
+  });
 });
