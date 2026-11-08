@@ -190,8 +190,8 @@ Comprobación por mutación sobre código de producción para verificar sensibil
 | 5 | `test_update_professional_responds_200` | `backend/app/repositories/catalog.py` | `- return Ok(result.entity)`<br>`+ return None` | `assert 404 == 200` |
 | 6 | `test_search_patients_by_name_part` | `backend/app/repositories/patients.py` | `- clauses: list[ColumnElement[bool]] = [PatientModel.full_name.ilike(f"%{escaped}%", escape="\\")]`<br>`+ clauses: list[ColumnElement[bool]] = [PatientModel.full_name.ilike(f"{escaped}%", escape="\\")]` | `assert False` |
 | 7 | `test_search_patients_by_dni_prefix` | `backend/app/repositories/patients.py` | `- if digits:`<br>`+ if False:` | `assert False` |
-| 8 | `test_detail_professional_nonexistent_responds_404` | `backend/app/services/catalog.py` | `- if record is None:`<br>`+ if False:` | `AttributeError: 'NoneType' object has no attribute 'entity'` |
-| 9 | `test_detail_patient_nonexistent_responds_404` | `backend/app/services/patients.py` | `- if row is None:`<br>`+ if False:` | `AttributeError: 'NoneType' object has no attribute 'id'` |
+| 8 | `test_detail_professional_nonexistent_responds_404` | `backend/app/services/catalog.py` | `- raise NotFoundError("Profesional no encontrado.")`<br>`+ raise NotFoundError("Profesional inexistente.")` | `AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}` |
+| 9 | `test_detail_patient_nonexistent_responds_404` | `backend/app/services/patients.py` | `- raise NotFoundError("Paciente no encontrado.")`<br>`+ raise NotFoundError("Paciente inexistente.")` | `AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}` |
 | 10 | `test_create_professional_malformed_body_responds_400` | `backend/app/api/schemas.py` | `- model_config = ConfigDict(populate_by_name=True, extra="forbid")`<br>`+ model_config = ConfigDict(populate_by_name=True, extra="ignore")` | `assert 201 == 400` |
 | 11 | `test_detail_chair_nonexistent_responds_404` | `backend/app/api/errors.py` | `- status_code=404,`<br>`+ status_code=400,` | `assert 400 == 404` |
 | 12 | `test_create_professional_with_license_responds_201` | `backend/app/api/professionals.py` | `- status_code=status.HTTP_201_CREATED,`<br>`+ status_code=status.HTTP_200_OK,` | `assert 200 == 201` |
@@ -199,3 +199,7 @@ Comprobación por mutación sobre código de producción para verificar sensibil
 | 14 | `test_create_patient_by_reception_responds_201` | `backend/app/api/patients.py` | `- Depends(require_permission(Resource.PATIENT, Action.CREATE)),`<br>`+ Depends(require_permission(Resource.PROFESSIONAL, Action.CREATE)),` | `assert 403 == 201` |
 | 15 | `test_deactivate_chair_rejected_for_reception_403` | `backend/app/api/chairs.py` | `- Depends(require_permission(Resource.CHAIR, Action.DELETE)),`<br>`+ Depends(require_permission(Resource.CHAIR, Action.READ)),` | `assert 200 == 403` |
 <!-- mutaciones:fin -->
+
+## Desvíos
+
+- **Mutaciones reescritas**: tenía 2 mutaciones inválidas (la 8 y la 9: quitaban el `raise NotFoundError` y la API fallaba con un `AttributeError` sobre `None` antes de cualquier assert); se reescribieron para cambiar el mensaje del `NotFoundError`, que detecta el `assert res.json() == {...}` del test, y el script ahora tiene el arreglo de CRLF y el detector de C-23. El SHA-256 es `1f58d…` porque hoy se hashea el código actual de `backend/app`.

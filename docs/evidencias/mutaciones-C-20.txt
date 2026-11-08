@@ -1,5 +1,5 @@
 Salida generada por docs/evidencias/mutaciones-C-20.py. No editar a mano.
-SHA-256 de backend/app antes: 5a47e5969bf235bc5238628fd6b6ff4032f2bb1c6f547e408eecf0ee535febb6
+SHA-256 de backend/app antes: 1f58d8cc5bee3b65bd08488c89e54fd580f263f2bef403af128650d3d4911199
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -28,7 +28,7 @@ tests\integration\test_api_deactivation.py .                             [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 15 passed, 1 warning in 2.53s ========================
+======================== 15 passed, 1 warning in 4.89s ========================
 ================================================================================
 MUTACION 01/15
 test: tests/integration/test_api_chairs.py::test_update_chair_conserving_own_name_responds_200
@@ -73,7 +73,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_chairs.py::test_update_chair_conserving_own_name_responds_200
-======================== 1 failed, 1 warning in 0.61s =========================
+======================== 1 failed, 1 warning in 1.22s =========================
 resultado: FALLO
 primera linea del fallo: assert 409 == 200
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -92,7 +92,7 @@ tests\integration\test_api_chairs.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.48s =========================
+======================== 1 passed, 1 warning in 0.56s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 02/15
@@ -122,7 +122,7 @@ E    +  where Ok(entity=Service(id=UUID('00000000-0000-0000-0000-0000000000c1'),
 E    +  and   Rejected(violations=(Violation(code=<ViolationCode.INVALID_DURATION: 'INVALID_DURATION'>, message='La duración de la p...nutos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) = Rejected((Violation(code=<ViolationCode.INVALID_DURATION: 'INVALID_DURATION'>, message='La duración de la prestación no es váli...inutos.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),))
 =========================== short test summary info ===========================
 FAILED tests/domain/test_catalog_update.py::test_update_service_invalid_duration
-============================== 1 failed in 0.13s ==============================
+============================== 1 failed in 0.21s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert Ok(entity=Service(id=UUID('00000000-0000-0000-0000-0000000000c1'), name='Consulta General', default_duration_min=0, active=True)) == Rejected(violations=(Violation(code=<Violati
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -135,7 +135,7 @@ collected 1 item
 
 tests\domain\test_catalog_update.py .                                    [100%]
 
-============================== 1 passed in 0.07s ==============================
+============================== 1 passed in 0.09s ==============================
 restaurado: test en verde
 ================================================================================
 MUTACION 03/15
@@ -173,7 +173,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_patients.py::test_update_patient_conserving_own_dni_responds_200
-======================== 1 failed, 1 warning in 0.59s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 resultado: FALLO
 primera linea del fallo: assert 409 == 200
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -192,7 +192,7 @@ tests\integration\test_api_patients.py .                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.47s =========================
+======================== 1 passed, 1 warning in 0.62s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 04/15
@@ -232,7 +232,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_professionals.py::test_detail_professional_existing_responds_200
-======================== 1 failed, 1 warning in 0.57s =========================
+======================== 1 failed, 1 warning in 0.82s =========================
 resultado: FALLO
 primera linea del fallo: assert 404 == 200
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -251,7 +251,7 @@ tests\integration\test_api_professionals.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.37s =========================
+======================== 1 passed, 1 warning in 0.65s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 05/15
@@ -293,7 +293,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_professionals.py::test_update_professional_responds_200
-======================== 1 failed, 1 warning in 0.72s =========================
+======================== 1 failed, 1 warning in 0.89s =========================
 resultado: FALLO
 primera linea del fallo: assert 404 == 200
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -312,7 +312,7 @@ tests\integration\test_api_professionals.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.39s =========================
+======================== 1 passed, 1 warning in 0.53s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 06/15
@@ -338,7 +338,7 @@ ______________________ test_search_patients_by_name_part ______________________
 tests\integration\test_api_patients.py:124: in test_search_patients_by_name_part
     assert any(p["id"] == created["id"] for p in res.json())
 E   assert False
-E    +  where False = any(<generator object test_search_patients_by_name_part.<locals>.<genexpr> at 0x000001E565738AC0>)
+E    +  where False = any(<generator object test_search_patients_by_name_part.<locals>.<genexpr> at 0x0000021177E4A7A0>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -350,7 +350,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_patients.py::test_search_patients_by_name_part
-======================== 1 failed, 1 warning in 0.53s =========================
+======================== 1 failed, 1 warning in 1.37s =========================
 resultado: FALLO
 primera linea del fallo: assert False
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -369,7 +369,7 @@ tests\integration\test_api_patients.py .                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.43s =========================
+======================== 1 passed, 1 warning in 0.80s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 07/15
@@ -397,7 +397,7 @@ _____________________ test_search_patients_by_dni_prefix ______________________
 tests\integration\test_api_patients.py:150: in test_search_patients_by_dni_prefix
     assert any(p["id"] == created["id"] for p in res.json())
 E   assert False
-E    +  where False = any(<generator object test_search_patients_by_dni_prefix.<locals>.<genexpr> at 0x0000024AAA0289E0>)
+E    +  where False = any(<generator object test_search_patients_by_dni_prefix.<locals>.<genexpr> at 0x000001718572A7A0>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -409,7 +409,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_patients.py::test_search_patients_by_dni_prefix
-======================== 1 failed, 1 warning in 0.58s =========================
+======================== 1 failed, 1 warning in 0.84s =========================
 resultado: FALLO
 primera linea del fallo: assert False
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -428,7 +428,7 @@ tests\integration\test_api_patients.py .                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.38s =========================
+======================== 1 passed, 1 warning in 0.63s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 08/15
@@ -438,8 +438,8 @@ archivo: backend/app/services/catalog.py
     if record is None:
         raise NotFoundError("Profesional no encontrado.")
 --- texto mutado ---
-    if False:
-        raise NotFoundError("Profesional no encontrado.")
+    if record is None:
+        raise NotFoundError("Profesional inexistente.")
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -453,125 +453,14 @@ tests\integration\test_api_professionals.py F                            [100%]
 
 ================================== FAILURES ===================================
 ______________ test_detail_professional_nonexistent_responds_404 ______________
-tests\integration\test_api_professionals.py:157: in test_detail_professional_nonexistent_responds_404
-    res = auth_client.get(f"/api/professionals/{FAKE_ID}", headers=admin_h)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:1053: in get
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\professionals.py:93: in get_professional_endpoint
-    id=record.entity.id,
-       ^^^^^^^^^^^^^
-E   AttributeError: 'NoneType' object has no attribute 'entity'
+tests\integration\test_api_professionals.py:159: in test_detail_professional_nonexistent_responds_404
+    assert res.json() == {"code": "NOT_FOUND", "message": "Profesional no encontrado."}
+E   AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'message': 'Profesional inexistente.'} != {'message': 'Profesional no encontrado.'}
+E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -583,9 +472,9 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_professionals.py::test_detail_professional_nonexistent_responds_404
-======================== 1 failed, 1 warning in 1.25s =========================
+======================== 1 failed, 1 warning in 0.73s =========================
 resultado: FALLO
-primera linea del fallo: AttributeError: 'NoneType' object has no attribute 'entity'
+primera linea del fallo: AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -602,18 +491,20 @@ tests\integration\test_api_professionals.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.37s =========================
+======================== 1 passed, 1 warning in 0.48s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 09/15
 test: tests/integration/test_api_patients.py::test_detail_patient_nonexistent_responds_404
 archivo: backend/app/services/patients.py
 --- texto original ---
+    row = repo.get_by_id(identifier)
     if row is None:
         raise NotFoundError("Paciente no encontrado.")
 --- texto mutado ---
-    if False:
-        raise NotFoundError("Paciente no encontrado.")
+    row = repo.get_by_id(identifier)
+    if row is None:
+        raise NotFoundError("Paciente inexistente.")
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
@@ -627,125 +518,14 @@ tests\integration\test_api_patients.py F                                 [100%]
 
 ================================== FAILURES ===================================
 ________________ test_detail_patient_nonexistent_responds_404 _________________
-tests\integration\test_api_patients.py:175: in test_detail_patient_nonexistent_responds_404
-    res = auth_client.get(f"/api/patients/{FAKE_ID}", headers=rec_h)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:1053: in get
-    return self.request(
-.venv\Lib\site-packages\starlette\testclient.py:518: in request
-    return super().request(
-.venv\Lib\site-packages\httpx\_client.py:825: in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:928: in send
-    raise exc
-.venv\Lib\site-packages\httpx\_client.py:922: in send
-    response.read()
-.venv\Lib\site-packages\httpx\_models.py:881: in read
-    self._content = b"".join(self.iter_bytes())
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:897: in iter_bytes
-    for raw_bytes in self.iter_raw():
-                     ^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_models.py:951: in iter_raw
-    for raw_stream_bytes in self.stream:
-                            ^^^^^^^^^^^
-.venv\Lib\site-packages\httpx\_client.py:153: in __iter__
-    for chunk in self._stream:
-                 ^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:384: in iter_body
-    exit_stack.close()
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:627: in close
-    self.__exit__(None, None, None)
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:619: in __exit__
-    raise exc
-..\..\..\AppData\Local\Programs\Python\Python313\Lib\contextlib.py:604: in __exit__
-    if cb(*exc_details):
-       ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:399: in close_app
-    raise exception
-.venv\Lib\site-packages\anyio\from_thread.py:272: in _call_func
-    retval = await retval_or_awaitable
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\starlette\testclient.py:366: in run_app
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\applications.py:1194: in __call__
-    await super().__call__(scope, receive, send)
-.venv\Lib\site-packages\starlette\applications.py:96: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
-    raise exc
-.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
-    await self.app(scope, receive, _send)
-.venv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\cors.py:91: in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-.venv\Lib\site-packages\starlette\middleware\cors.py:149: in simple_response
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
-    await self.app(scope, receive, send)
-.venv\Lib\site-packages\starlette\routing.py:683: in __call__
-    await self.middleware_stack(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2811: in app
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1850: in _handle_selected
-    await route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1839: in handle
-    await self.original_router.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:2894: in handle
-    await included_router._handle_selected(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1865: in _handle_selected
-    await original_route.handle(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:1328: in handle
-    await effective_context.app(scope, receive, send)
-.venv\Lib\site-packages\fastapi\routing.py:166: in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
-    raise exc
-.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
-    await app(scope, receive, sender)
-.venv\Lib\site-packages\fastapi\routing.py:152: in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\routing.py:745: in app
-    raw_response = await run_endpoint_function(
-.venv\Lib\site-packages\fastapi\routing.py:374: in run_endpoint_function
-    return await run_in_threadpool(
-.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
-    return await anyio.to_thread.run_sync(func)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2779: in run_sync_in_worker_thread
-    return await future
-           ^^^^^^^^^^^^
-.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
-    result = context.run(func, *args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
-    return function(**arguments)
-           ^^^^^^^^^^^^^^^^^^^^^
-app\api\patients.py:94: in get_patient_endpoint
-    id=patient.id,
-       ^^^^^^^^^^
-E   AttributeError: 'NoneType' object has no attribute 'id'
+tests\integration\test_api_patients.py:177: in test_detail_patient_nonexistent_responds_404
+    assert res.json() == {"code": "NOT_FOUND", "message": "Paciente no encontrado."}
+E   AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'message': 'Paciente inexistente.'} != {'message': 'Paciente no encontrado.'}
+E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -757,9 +537,9 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_patients.py::test_detail_patient_nonexistent_responds_404
-======================== 1 failed, 1 warning in 1.18s =========================
+======================== 1 failed, 1 warning in 0.77s =========================
 resultado: FALLO
-primera linea del fallo: AttributeError: 'NoneType' object has no attribute 'id'
+primera linea del fallo: AssertionError: assert {'code': 'NOT...inexistente.'} == {'code': 'NOT... encontrado.'}
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -776,7 +556,7 @@ tests\integration\test_api_patients.py .                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.40s =========================
+======================== 1 passed, 1 warning in 0.72s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 10/15
@@ -822,7 +602,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_professionals.py::test_create_professional_malformed_body_responds_400
-======================== 1 failed, 1 warning in 0.63s =========================
+======================== 1 failed, 1 warning in 0.80s =========================
 resultado: FALLO
 primera linea del fallo: assert 201 == 400
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -841,7 +621,7 @@ tests\integration\test_api_professionals.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.40s =========================
+======================== 1 passed, 1 warning in 0.48s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 11/15
@@ -885,7 +665,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_chairs.py::test_detail_chair_nonexistent_responds_404
-======================== 1 failed, 1 warning in 0.45s =========================
+======================== 1 failed, 1 warning in 0.86s =========================
 resultado: FALLO
 primera linea del fallo: assert 400 == 404
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -904,7 +684,7 @@ tests\integration\test_api_chairs.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.40s =========================
+======================== 1 passed, 1 warning in 0.53s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 12/15
@@ -946,7 +726,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_professionals.py::test_create_professional_with_license_responds_201
-======================== 1 failed, 1 warning in 0.55s =========================
+======================== 1 failed, 1 warning in 0.92s =========================
 resultado: FALLO
 primera linea del fallo: assert 200 == 201
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -965,7 +745,7 @@ tests\integration\test_api_professionals.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.37s =========================
+======================== 1 passed, 1 warning in 0.46s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 13/15
@@ -991,7 +771,7 @@ ______ test_list_services_without_filter_includes_inactive_alphabetical _______
 tests\integration\test_api_services.py:136: in test_list_services_without_filter_includes_inactive_alphabetical
     assert any(s["id"] == s1["id"] for s in res.json())
 E   assert False
-E    +  where False = any(<generator object test_list_services_without_filter_includes_inactive_alphabetical.<locals>.<genexpr> at 0x000001416E87FAE0>)
+E    +  where False = any(<generator object test_list_services_without_filter_includes_inactive_alphabetical.<locals>.<genexpr> at 0x0000026E0E12D460>)
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -1003,7 +783,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_services.py::test_list_services_without_filter_includes_inactive_alphabetical
-======================== 1 failed, 1 warning in 0.56s =========================
+======================== 1 failed, 1 warning in 0.91s =========================
 resultado: FALLO
 primera linea del fallo: assert False
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1022,7 +802,7 @@ tests\integration\test_api_services.py .                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.41s =========================
+======================== 1 passed, 1 warning in 0.66s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 14/15
@@ -1060,7 +840,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_patients.py::test_create_patient_by_reception_responds_201
-======================== 1 failed, 1 warning in 0.58s =========================
+======================== 1 failed, 1 warning in 0.78s =========================
 resultado: FALLO
 primera linea del fallo: assert 403 == 201
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1079,7 +859,7 @@ tests\integration\test_api_patients.py .                                 [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.54s =========================
+======================== 1 passed, 1 warning in 0.57s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 15/15
@@ -1117,7 +897,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_api_deactivation.py::test_deactivate_chair_rejected_for_reception_403
-======================== 1 failed, 1 warning in 0.59s =========================
+======================== 1 failed, 1 warning in 1.02s =========================
 resultado: FALLO
 primera linea del fallo: assert 200 == 403
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1136,11 +916,12 @@ tests\integration\test_api_deactivation.py .                             [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.41s =========================
+======================== 1 passed, 1 warning in 0.56s =========================
 restaurado: test en verde
 ================================================================================
 RESUMEN
 mutaciones que hicieron fallar su test: 15
 mutaciones que NO lo hicieron fallar: 0
-SHA-256 de backend/app despues: 5a47e5969bf235bc5238628fd6b6ff4032f2bb1c6f547e408eecf0ee535febb6
+mutaciones inválidas: 0
+SHA-256 de backend/app despues: 1f58d8cc5bee3b65bd08488c89e54fd580f263f2bef403af128650d3d4911199
 SHA-256 sin cambios: si

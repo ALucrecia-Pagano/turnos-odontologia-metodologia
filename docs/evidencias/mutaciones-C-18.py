@@ -2,12 +2,28 @@
 
 Uso, desde backend/:
 
-    python ../docs/evidencias/mutaciones-C-18.py
+    python ../docs/evidencias/mutaciones-C-18.py [--check]
+
+Cada mutacion es (archivo, texto_original, texto_mutado). Por cada una: comprueba que el
+original aparezca exactamente una vez, aplica la mutacion, corre solo su test, restaura el
+archivo en un finally y vuelve a correr el test.
+
+Con --check solo ejecuta check_definition sobre todas las mutaciones.
+Genera mutaciones-C-18.txt y regenera la tabla de verify-C-18.md leyendo ese .txt.
+Termina con codigo 0 solo si todas las mutaciones hicieron fallar su test, ninguna es
+INVALIDA y el SHA-256 de backend/app y de los archivos mutados no cambio.
+
+Una mutacion es INVALIDA si su test no la detecta con una afirmacion propia: la salida
+contiene NameError o ImportError, o el primer "E" no tiene su frame en tests/, o no es
+assert/AssertionError. Dentro de tests/ tambien valen pytest.raises sin excepcion
+("Failed: DID NOT RAISE"), un ValidationError del esquema que el test valida directamente
+y un KeyError/IndexError sobre un campo que el propio test lee.
 """
 
 from __future__ import annotations
 
 import difflib
+import hashlib
 import os
 import re
 import subprocess
@@ -28,6 +44,14 @@ SEPARATOR = "=" * 80
 TIMEOUT_SECONDS = 60
 WRITE_ATTEMPTS = 10
 WRITE_RETRY_SECONDS = 1.0
+
+INVALID_NAME_ERROR = re.compile(r"\b(NameError|ImportError|ModuleNotFoundError)\b")
+FRAME_LINE = re.compile(r"^(\S+\.py):\d+: ")
+TEST_DETECTION = re.compile(
+    r"""^(assert\b|AssertionError\b|Failed: DID NOT RAISE\b"""
+    r"""|pydantic_core\._pydantic_core\.ValidationError\b"""
+    r"""|KeyError: ['"]|IndexError\b)"""
+)
 
 VENV_PYTHON = BACKEND / ".venv" / "Scripts" / "python.exe"
 PYTHON = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
@@ -71,6 +95,10 @@ class Mutation:
     @property
     def node_id(self) -> str:
         return f"{self.test_file}::{self.test_name}"
+
+    @property
+    def function_name(self) -> str:
+        return self.test_name.split("[", 1)[0]
 
 
 MUTATIONS: tuple[Mutation, ...] = (
@@ -205,7 +233,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         "test_committed_write_persists",
         DEPS,
         "        try:\n            yield session",
-        "        try:\n            yield None",
+        "        session.commit = session.flush  # type: ignore[method-assign]\n"
+        "        try:\n            yield session",
     ),
     Mutation(
         TEST_SESSION,
@@ -396,18 +425,22 @@ class MutationAbort(Exception):
     pass
 
 
+def redact(text: str) -> str:
+    return re.sub(r"(postgresql(?:\+\w+)?://[^:/\s]+:)[^@\s]+@", r"\1***@", text)
+
+
 class Report:
     def __init__(self, stream: TextIO) -> None:
         self.stream = stream
 
     def write(self, text: str) -> None:
-        lines = (line.rstrip() for line in text.splitlines())
+        lines = (line.rstrip() for line in redact(text).splitlines())
         self.stream.write("\n".join(lines) + "\n")
         self.stream.flush()
 
 
 def run_pytest(node_ids: list[str]) -> subprocess.CompletedProcess[str]:
-    cmd = [PYTHON, "-m", "pytest", *node_ids, "-o", "addopts="]
+    cmd = [PYTHON, "-m", "pytest", *node_ids, "-o", "addopts=", "--tb=short"]
     return subprocess.run(
         cmd,
         cwd=BACKEND,
@@ -434,23 +467,57 @@ def read_source(mutation: Mutation) -> str:
     return (REPO / mutation.file).read_bytes().decode("utf-8")
 
 
-def check_definition(mutation: Mutation) -> None:
-    occurrences = read_source(mutation).count(mutation.original)
+def apply_mutation(mutation: Mutation, content: str) -> str:
+    """Aplica la mutacion respetando el final de linea del archivo (LF o CRLF)."""
+    newline = "\r\n" if "\r\n" in content else "\n"
+    original = mutation.original.replace("\n", newline)
+    mutated = mutation.mutated.replace("\n", newline)
+    occurrences = content.count(original)
     if occurrences != 1:
         raise MutationAbort(
             f"{mutation.test_name}: el texto original aparece {occurrences} veces "
             f"en {mutation.file}; debe aparecer exactamente una"
         )
+    return content.replace(original, mutated, 1)
+
+
+def check_definition(mutation: Mutation) -> None:
+    source = read_source(mutation)
+    if apply_mutation(mutation, source) == source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
     test_source = (BACKEND / mutation.test_file).read_text(encoding="utf-8")
-    if test_source.count(f"def {mutation.test_name}(") != 1:
+    if test_source.count(f"def {mutation.function_name}(") != 1:
         raise MutationAbort(f"No existe el test {mutation.node_id}")
 
 
 def first_failure_line(output: str) -> str:
     for line in output.splitlines():
         if line.startswith("E  "):
-            return line[1:].strip()
+            return redact(line[1:].strip())
     return "(sin linea E)"
+
+
+def invalid_reason(output: str) -> str | None:
+    """Devuelve el motivo si el test no detecto la mutacion con una afirmacion propia."""
+    name_error = INVALID_NAME_ERROR.search(output)
+    if name_error:
+        return f"la salida contiene {name_error.group(1)}"
+
+    frame = ""
+    for line in output.splitlines():
+        frame_match = FRAME_LINE.match(line)
+        if frame_match:
+            frame = frame_match.group(1).replace("\\", "/")
+            continue
+        if not line.startswith("E   "):
+            continue
+        first_error = line.removeprefix("E   ").strip()
+        if not frame.startswith("tests/"):
+            return f"primer E fuera de tests/ ({frame}): {first_error}"
+        if not TEST_DETECTION.match(first_error):
+            return f"primer E no es una afirmacion del test: {first_error}"
+        return None
+    return "la salida no tiene ninguna linea E"
 
 
 def classify(result: subprocess.CompletedProcess[str]) -> str:
@@ -467,7 +534,7 @@ def classify(result: subprocess.CompletedProcess[str]) -> str:
     raise MutationAbort(f"Salida inesperada de pytest: {summary or result.stderr}")
 
 
-def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
+def run_mutation(mutation: Mutation, index: int, report: Report) -> tuple[bool, str | None]:
     check_definition(mutation)
     report.write(SEPARATOR)
     report.write(f"MUTACION {index:02d}/{len(MUTATIONS)}")
@@ -482,14 +549,13 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     path = REPO / mutation.file
     original_bytes = path.read_bytes()
     original_stat = path.stat()
+    original_source = original_bytes.decode("utf-8")
+    mutated_source = apply_mutation(mutation, original_source)
+    if mutated_source == original_source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
 
     try:
-        write_with_retry(
-            path,
-            read_source(mutation)
-            .replace(mutation.original, mutation.mutated, 1)
-            .encode("utf-8"),
-        )
+        write_with_retry(path, mutated_source.encode("utf-8"))
         mutated_run = run_pytest([mutation.node_id])
     finally:
         write_with_retry(path, original_bytes)
@@ -510,7 +576,26 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     if restored_run.returncode != 0:
         raise MutationAbort(f"{mutation.test_name} no pasa con el codigo restaurado")
     report.write("restaurado: test en verde")
-    return outcome == "FALLO"
+    killed = outcome == "FALLO"
+    reason = invalid_reason(mutated_run.stdout + mutated_run.stderr) if killed else None
+    if reason:
+        report.write(f"INVALIDA: {reason}")
+    return killed, reason
+
+
+def tree_sha256() -> str:
+    """SHA-256 de backend/app y de cada archivo mutado que esta fuera de backend/app."""
+    paths = {
+        path
+        for path in (BACKEND / "app").rglob("*")
+        if path.is_file() and "__pycache__" not in path.parts
+    }
+    paths.update(REPO / mutation.file for mutation in MUTATIONS)
+    digest = hashlib.sha256()
+    for path in sorted(paths):
+        digest.update(path.relative_to(REPO).as_posix().encode("utf-8"))
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
 
 
 def code_span(text: str) -> str:
@@ -573,12 +658,18 @@ def main() -> int:
 
     for mutation in MUTATIONS:
         check_definition(mutation)
+    if "--check" in sys.argv[1:]:
+        print(f"check_definition: {len(MUTATIONS)} mutaciones correctas")
+        return 0
 
+    sha_before = tree_sha256()
     killed: list[str] = []
     survived: list[str] = []
+    invalid: list[str] = []
     with OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
         report = Report(stream)
         report.write("Salida generada por docs/evidencias/mutaciones-C-18.py. No editar a mano.")
+        report.write(f"SHA-256 de backend/app y de los archivos mutados antes: {sha_before}")
         baseline = run_pytest([mutation.node_id for mutation in MUTATIONS])
         report.write(f"--- linea de base, sin mutaciones (codigo de salida {baseline.returncode}) ---")
         report.write(baseline.stdout + baseline.stderr)
@@ -587,24 +678,34 @@ def main() -> int:
 
         for index, mutation in enumerate(MUTATIONS, start=1):
             print(f"[{index:02d}/{len(MUTATIONS)}] {mutation.test_name}", flush=True)
-            if run_mutation(mutation, index, report):
+            was_killed, reason = run_mutation(mutation, index, report)
+            if reason:
+                invalid.append(f"{mutation.test_name}: {reason}")
+                print(f"    INVALIDA: {reason}", flush=True)
+            elif was_killed:
                 killed.append(mutation.test_name)
             else:
                 survived.append(mutation.test_name)
                 print("    NO hizo fallar su test", flush=True)
 
+        sha_after = tree_sha256()
+        same = sha_before == sha_after
         summary = [
             SEPARATOR,
             "RESUMEN",
             f"mutaciones que hicieron fallar su test: {len(killed)}",
             f"mutaciones que NO lo hicieron fallar: {len(survived)}",
             *[f"  - {name}" for name in survived],
+            f"mutaciones inválidas: {len(invalid)}",
+            *[f"  - {entry}" for entry in invalid],
+            f"SHA-256 de backend/app y de los archivos mutados despues: {sha_after}",
+            f"SHA-256 sin cambios: {'si' if same else 'NO'}",
         ]
         report.write("\n".join(summary))
 
     print("\n".join(summary))
     update_verify_table()
-    return 0 if not survived else 1
+    return 0 if same and not survived and not invalid else 1
 
 
 if __name__ == "__main__":

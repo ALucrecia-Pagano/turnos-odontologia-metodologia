@@ -1,5 +1,5 @@
 Salida generada por docs/evidencias/mutaciones-C-19.py. No editar a mano.
-SHA-256 de backend/app y backend/alembic antes: aa0bf0f9afaadbf5a740ce2ab9ea014dc30de2358103de0b0a0b8c65e7e5c092
+SHA-256 de backend/app y backend/alembic antes: f79aa3715ede8e6412bd90aa8d5f3a0c14012a44ce3f18707fc53ae989d291ad
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -33,7 +33,7 @@ tests/api/test_token_rejection.py::test_rejected_token[other_algorithm]
     return self._jws.encode(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 21 passed, 2 warnings in 2.51s ========================
+======================= 21 passed, 2 warnings in 3.84s ========================
 ================================================================================
 MUTACION 01/21
 test: tests/integration/test_user_persistence.py::test_doctor_without_professional_is_rejected
@@ -92,7 +92,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_persistence.py::test_doctor_without_professional_is_rejected
-======================== 1 failed, 1 warning in 0.50s =========================
+======================== 1 failed, 1 warning in 0.45s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -111,7 +111,7 @@ tests\integration\test_user_persistence.py .                             [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.22s =========================
+======================== 1 passed, 1 warning in 0.20s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 02/21
@@ -171,7 +171,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_persistence.py::test_reception_with_professional_is_rejected
-======================== 1 failed, 1 warning in 0.53s =========================
+======================== 1 failed, 1 warning in 0.36s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -190,7 +190,7 @@ tests\integration\test_user_persistence.py .                             [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.21s =========================
+======================== 1 passed, 1 warning in 0.16s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 03/21
@@ -252,7 +252,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_persistence.py::test_two_users_for_same_professional_are_rejected
-======================== 1 failed, 1 warning in 0.48s =========================
+======================== 1 failed, 1 warning in 0.49s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -271,7 +271,7 @@ tests\integration\test_user_persistence.py .                             [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.23s =========================
+======================== 1 passed, 1 warning in 0.18s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 04/21
@@ -324,7 +324,7 @@ tests\integration\test_database_infrastructure.py F                      [100%]
 ________________ test_user_migration_explicit_downgrade_cycle _________________
 tests\integration\test_database_infrastructure.py:285: in test_user_migration_explicit_downgrade_cycle
     assert "app_user" not in table_names
-E   AssertionError: assert 'app_user' not in ['alembic_version', 'patient', 'service', 'appointment_status_change', 'professional', 'chair', ...]
+E   AssertionError: assert 'app_user' not in ['alembic_version', 'appointment_status_change', 'appointment', 'professional', 'chair', 'patient', ...]
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
@@ -342,9 +342,9 @@ INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 2026
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_database_infrastructure.py::test_user_migration_explicit_downgrade_cycle
-======================== 1 failed, 1 warning in 0.59s =========================
+======================== 1 failed, 1 warning in 0.55s =========================
 resultado: FALLO
-primera linea del fallo: AssertionError: assert 'app_user' not in ['alembic_version', 'patient', 'service', 'appointment_status_change', 'professional', 'chair', ...]
+primera linea del fallo: AssertionError: assert 'app_user' not in ['alembic_version', 'appointment_status_change', 'appointment', 'professional', 'chair', 'patient', ...]
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -361,7 +361,7 @@ tests\integration\test_database_infrastructure.py .                      [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.49s =========================
+======================== 1 passed, 1 warning in 0.47s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 05/21
@@ -387,12 +387,12 @@ _______________________ test_hash_uses_fixed_parameters _______________________
 tests\auth\test_passwords.py:15: in test_hash_uses_fixed_parameters
     assert hash_password("clave-ficticia").startswith(PRODUCTION_PREFIX)
 E   AssertionError: assert False
-E    +  where False = <built-in method startswith of str object at 0x000002C5833A8C90>('$argon2id$v=19$m=65536,t=3,p=4$')
-E    +    where <built-in method startswith of str object at 0x000002C5833A8C90> = '$argon2id$v=19$m=65536,t=1,p=4$gU0/BLiuM01RtUOb2/TCdg$rWjiVeTSlUcjc74hNYcmfLnis0S1FwHb4kVy2ZS2wDE'.startswith
-E    +      where '$argon2id$v=19$m=65536,t=1,p=4$gU0/BLiuM01RtUOb2/TCdg$rWjiVeTSlUcjc74hNYcmfLnis0S1FwHb4kVy2ZS2wDE' = hash_password('clave-ficticia')
+E    +  where False = <built-in method startswith of str object at 0x00000284CF9F8C90>('$argon2id$v=19$m=65536,t=3,p=4$')
+E    +    where <built-in method startswith of str object at 0x00000284CF9F8C90> = '$argon2id$v=19$m=65536,t=1,p=4$iHJVPYbFOK3MNvvN2x9CiQ$PwawrglqnHr4zqu9HLAlpFZls3HeXjuRhYAUEMnalRE'.startswith
+E    +      where '$argon2id$v=19$m=65536,t=1,p=4$iHJVPYbFOK3MNvvN2x9CiQ$PwawrglqnHr4zqu9HLAlpFZls3HeXjuRhYAUEMnalRE' = hash_password('clave-ficticia')
 =========================== short test summary info ===========================
 FAILED tests/auth/test_passwords.py::test_hash_uses_fixed_parameters - Assert...
-============================== 1 failed in 0.37s ==============================
+============================== 1 failed in 0.36s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert False
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -405,7 +405,7 @@ collected 1 item
 
 tests\auth\test_passwords.py .                                           [100%]
 
-============================== 1 passed in 0.28s ==============================
+============================== 1 passed in 0.26s ==============================
 restaurado: test en verde
 ================================================================================
 MUTACION 06/21
@@ -430,15 +430,15 @@ tests\auth\test_passwords.py F                                           [100%]
 ______________________ test_missing_user_uses_dummy_hash ______________________
 tests\auth\test_passwords.py:59: in test_missing_user_uses_dummy_hash
     assert chosen == dummy_password_hash()
-E   AssertionError: assert '$argon2id$v=...Q$aGFzaGhhc2g' == '$argon2id$v=...B5TWGLO9ymkN4'
+E   AssertionError: assert '$argon2id$v=...Q$aGFzaGhhc2g' == '$argon2id$v=...UaX4wY0N1l4eE'
 E     
-E     - $argon2id$v=19$m=65536,t=3,p=4$hT1XR0wp5uKqsct47N7Wbg$gR/fT5XutuGdqCoCsP8raT0VpgGoZBB5TWGLO9ymkN4
+E     - $argon2id$v=19$m=65536,t=3,p=4$FF+WVQ/u9F3FcZbI9unOkw$Y0Of7zWVPzL/n3wvTDWZp3HqniQskKUaX4wY0N1l4eE
 E     + $argon2id$v=19$m=8,t=1,p=1$c2FsdHNhbHQ$aGFzaGhhc2g
 =========================== short test summary info ===========================
 FAILED tests/auth/test_passwords.py::test_missing_user_uses_dummy_hash - Asse...
-============================== 1 failed in 0.38s ==============================
+============================== 1 failed in 0.32s ==============================
 resultado: FALLO
-primera linea del fallo: AssertionError: assert '$argon2id$v=...Q$aGFzaGhhc2g' == '$argon2id$v=...B5TWGLO9ymkN4'
+primera linea del fallo: AssertionError: assert '$argon2id$v=...Q$aGFzaGhhc2g' == '$argon2id$v=...UaX4wY0N1l4eE'
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -449,7 +449,7 @@ collected 1 item
 
 tests\auth\test_passwords.py .                                           [100%]
 
-============================== 1 passed in 0.23s ==============================
+============================== 1 passed in 0.22s ==============================
 restaurado: test en verde
 ================================================================================
 MUTACION 07/21
@@ -487,7 +487,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_auth_login.py::test_inactive_user_with_correct_password_is_rejected
-======================== 1 failed, 1 warning in 0.54s =========================
+======================== 1 failed, 1 warning in 0.77s =========================
 resultado: FALLO
 primera linea del fallo: assert 200 == 401
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -506,7 +506,7 @@ tests\integration\test_auth_login.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.39s =========================
+======================== 1 passed, 1 warning in 0.53s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 08/21
@@ -677,10 +677,10 @@ tests\api\test_token_rejection.py:181: in test_rejected_token
 .venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
     result = context.run(func, *args)
              ^^^^^^^^^^^^^^^^^^^^^^^^
-app\api\deps.py:49: in get_current_user
+app\api\deps.py:50: in get_current_user
     stored = UserRepository(session).get_by_id(claims.user_id)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-app\repositories\users.py:48: in get_by_id
+app\repositories\users.py:49: in get_by_id
     row = self._session.get(
 .venv\Lib\site-packages\sqlalchemy\orm\session.py:3852: in get
     return self._get_impl(
@@ -774,9 +774,9 @@ tests/api/test_token_rejection.py::test_rejected_token[other_algorithm]
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_token_rejection.py::test_rejected_token[other_algorithm]
-======================== 1 failed, 3 warnings in 6.01s ========================
+======================== 1 failed, 3 warnings in 6.74s ========================
 resultado: FALLO
-primera linea del fallo: psycopg.errors.ConnectionTimeout: connection timeout expired
+primera linea del fallo: detectada por centinela de base: psycopg.errors.ConnectionTimeout: connection timeout expired
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -797,8 +797,9 @@ tests/api/test_token_rejection.py::test_rejected_token[other_algorithm]
     return self._jws.encode(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 2 warnings in 1.69s ========================
+======================== 1 passed, 2 warnings in 2.13s ========================
 restaurado: test en verde
+detectada por centinela de base
 ================================================================================
 MUTACION 09/21
 test: tests/api/test_token_rejection.py::test_rejected_token[missing_exp]
@@ -968,10 +969,10 @@ tests\api\test_token_rejection.py:181: in test_rejected_token
 .venv\Lib\site-packages\anyio\_backends\_asyncio.py:1124: in run
     result = context.run(func, *args)
              ^^^^^^^^^^^^^^^^^^^^^^^^
-app\api\deps.py:49: in get_current_user
+app\api\deps.py:50: in get_current_user
     stored = UserRepository(session).get_by_id(claims.user_id)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-app\repositories\users.py:48: in get_by_id
+app\repositories\users.py:49: in get_by_id
     row = self._session.get(
 .venv\Lib\site-packages\sqlalchemy\orm\session.py:3852: in get
     return self._get_impl(
@@ -1057,9 +1058,9 @@ E   (Background on this error at: https://sqlalche.me/e/21/e3q8)
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/api/test_token_rejection.py::test_rejected_token[missing_exp] - ...
-======================== 1 failed, 1 warning in 6.27s =========================
+======================== 1 failed, 1 warning in 6.85s =========================
 resultado: FALLO
-primera linea del fallo: psycopg.errors.ConnectionTimeout: connection timeout expired
+primera linea del fallo: detectada por centinela de base: psycopg.errors.ConnectionTimeout: connection timeout expired
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
@@ -1076,8 +1077,9 @@ tests\api\test_token_rejection.py .                                      [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 1.77s =========================
+======================== 1 passed, 1 warning in 2.11s =========================
 restaurado: test en verde
+detectada por centinela de base
 ================================================================================
 MUTACION 10/21
 test: tests/integration/test_auth_current_user.py::test_deactivated_user_with_valid_token_is_rejected
@@ -1115,7 +1117,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_auth_current_user.py::test_deactivated_user_with_valid_token_is_rejected
-======================== 1 failed, 1 warning in 0.72s =========================
+======================== 1 failed, 1 warning in 0.94s =========================
 resultado: FALLO
 primera linea del fallo: assert 200 == 401
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1134,7 +1136,7 @@ tests\integration\test_auth_current_user.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.49s =========================
+======================== 1 passed, 1 warning in 0.52s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 11/21
@@ -1173,7 +1175,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_auth_current_user.py::test_role_changed_user_with_valid_token_is_rejected
-======================== 1 failed, 1 warning in 0.63s =========================
+======================== 1 failed, 1 warning in 0.71s =========================
 resultado: FALLO
 primera linea del fallo: assert 200 == 401
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1192,7 +1194,7 @@ tests\integration\test_auth_current_user.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.50s =========================
+======================== 1 passed, 1 warning in 0.52s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 12/21
@@ -1223,7 +1225,7 @@ E     Left contains one more item: 'fila 15, recepcion: Scope.ALL != None'
 E     Use -v to get more diff
 =========================== short test summary info ===========================
 FAILED tests/auth/test_permissions.py::test_permissions_match_literal_matrix
-============================== 1 failed in 0.18s ==============================
+============================== 1 failed in 0.15s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert ['fila 15, re....ALL != None'] == []
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1236,7 +1238,7 @@ collected 1 item
 
 tests\auth\test_permissions.py .                                         [100%]
 
-============================== 1 passed in 0.11s ==============================
+============================== 1 passed in 0.08s ==============================
 restaurado: test en verde
 ================================================================================
 MUTACION 13/21
@@ -1275,7 +1277,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_rbac_matrix.py::test_matrix_cell_over_http[PATIENT-DELETE-administrador]
-======================== 1 failed, 1 warning in 0.62s =========================
+======================== 1 failed, 1 warning in 1.22s =========================
 resultado: FALLO
 primera linea del fallo: assert 200 == 403
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1294,7 +1296,7 @@ tests\integration\test_rbac_matrix.py .                                  [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.44s =========================
+======================== 1 passed, 1 warning in 0.70s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 14/21
@@ -1335,7 +1337,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_seed_users.py::test_seed_rejects_short_password
-======================== 1 failed, 1 warning in 1.18s =========================
+======================== 1 failed, 1 warning in 1.17s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'app.db.seed.SeedConfigurationError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1354,7 +1356,7 @@ tests\integration\test_seed_users.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.33s =========================
+======================== 1 passed, 1 warning in 0.41s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 15/21
@@ -1392,7 +1394,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_seed_users.py::test_seed_refuses_production - F...
-======================== 1 failed, 1 warning in 1.31s =========================
+======================== 1 failed, 1 warning in 1.29s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'app.db.seed.SeedConfigurationError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1411,7 +1413,7 @@ tests\integration\test_seed_users.py .                                   [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.39s =========================
+======================== 1 passed, 1 warning in 0.35s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 16/21
@@ -1434,7 +1436,7 @@ tests\integration\test_user_repository.py F                              [100%]
 
 ================================== FAILURES ===================================
 __________________ test_duplicate_username_error_hides_hash ___________________
-tests\integration\test_user_repository.py:100: in test_duplicate_username_error_hides_hash
+tests\integration\test_user_repository.py:101: in test_duplicate_username_error_hides_hash
     assert RECOGNIZABLE_HASH not in full_error_text(raw_error.value)
 E   AssertionError: assert 'hash-ficticio-reconocible' not in 'Traceback (...e/21/gkpj)\n'
 E     
@@ -1453,7 +1455,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_repository.py::test_duplicate_username_error_hides_hash
-======================== 1 failed, 1 warning in 0.48s =========================
+======================== 1 failed, 1 warning in 0.43s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'hash-ficticio-reconocible' not in 'Traceback (...e/21/gkpj)\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1472,7 +1474,7 @@ tests\integration\test_user_repository.py .                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.25s =========================
+======================== 1 passed, 1 warning in 0.21s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 17/21
@@ -1495,7 +1497,7 @@ tests\integration\test_user_repository.py F                              [100%]
 
 ================================== FAILURES ===================================
 _______________________ test_role_rule_error_hides_hash _______________________
-tests\integration\test_user_repository.py:123: in test_role_rule_error_hides_hash
+tests\integration\test_user_repository.py:124: in test_role_rule_error_hides_hash
     assert RECOGNIZABLE_HASH not in full_error_text(error.value)
 E   AssertionError: assert 'hash-ficticio-reconocible' not in 'Traceback (...e/21/gkpj)\n'
 E     
@@ -1518,7 +1520,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_user_repository.py::test_role_rule_error_hides_hash
-======================== 1 failed, 1 warning in 0.37s =========================
+======================== 1 failed, 1 warning in 0.43s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'hash-ficticio-reconocible' not in 'Traceback (...e/21/gkpj)\n'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1537,7 +1539,7 @@ tests\integration\test_user_repository.py .                              [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.24s =========================
+======================== 1 passed, 1 warning in 0.25s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 18/21
@@ -1581,7 +1583,7 @@ collected 1 item
 
 tests\auth\test_model.py .                                               [100%]
 
-============================== 1 passed in 0.10s ==============================
+============================== 1 passed in 0.08s ==============================
 restaurado: test en verde
 ================================================================================
 MUTACION 19/21
@@ -1614,7 +1616,7 @@ E     ?           +++++++++++++++++
 E           For further information visit https://errors.pydantic.dev/2.14/v/value_error
 =========================== short test summary info ===========================
 FAILED tests/test_config.py::test_short_secret_error_hides_value - AssertionE...
-============================== 1 failed in 0.47s ==============================
+============================== 1 failed in 0.37s ==============================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'MARCA-RECONOCIBLE' not in '1 validatio.../value_error'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1627,7 +1629,7 @@ collected 1 item
 
 tests\test_config.py .                                                   [100%]
 
-============================== 1 passed in 0.29s ==============================
+============================== 1 passed in 0.27s ==============================
 restaurado: test en verde
 ================================================================================
 MUTACION 20/21
@@ -1665,7 +1667,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_auth_current_user.py::test_valid_token_is_accepted
-======================== 1 failed, 1 warning in 0.47s =========================
+======================== 1 failed, 1 warning in 0.84s =========================
 resultado: FALLO
 primera linea del fallo: assert 401 == 200
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1684,7 +1686,7 @@ tests\integration\test_auth_current_user.py .                            [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.38s =========================
+======================== 1 passed, 1 warning in 0.48s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 21/21
@@ -1757,7 +1759,7 @@ INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_tr
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_database_infrastructure.py::test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle
-======================== 1 failed, 1 warning in 0.75s =========================
+======================== 1 failed, 1 warning in 0.57s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'tr_appointment_status_change_no_truncate' not in ['tr_appointment_status_change_append_only', 'tr_appointment_status_change_no_truncate']
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1776,11 +1778,15 @@ tests\integration\test_database_infrastructure.py .                      [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 1 passed, 1 warning in 0.59s =========================
+======================== 1 passed, 1 warning in 0.54s =========================
 restaurado: test en verde
 ================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 21
+mutaciones que hicieron fallar su test: 19
 mutaciones que NO lo hicieron fallar: 0
-SHA-256 de backend/app y backend/alembic despues: aa0bf0f9afaadbf5a740ce2ab9ea014dc30de2358103de0b0a0b8c65e7e5c092
+mutaciones inválidas: 0
+mutaciones detectadas por centinela de base: 2
+  - test_rejected_token[other_algorithm]
+  - test_rejected_token[missing_exp]
+SHA-256 de backend/app y backend/alembic despues: f79aa3715ede8e6412bd90aa8d5f3a0c14012a44ce3f18707fc53ae989d291ad
 SHA-256 sin cambios: si

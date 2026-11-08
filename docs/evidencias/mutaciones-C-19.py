@@ -18,11 +18,25 @@ Mismo formato que mutaciones-C-17.py, con tres diferencias (D20 de C-19):
 Con --check solo ejecuta check_definition sobre todas las mutaciones.
 Solo toca la base <POSTGRES_DB>_test. Genera mutaciones-C-19.txt y regenera la tabla de
 verify-C-19.md leyendo ese .txt. Termina con codigo 0 solo si todas las mutaciones
-hicieron fallar su test y el SHA-256 no cambio.
+hicieron fallar su test, ninguna es INVALIDA y el SHA-256 no cambio.
+
+Una mutacion es INVALIDA si su test no la detecta con una afirmacion propia: la salida
+contiene NameError o ImportError, o el primer "E" no tiene su frame en tests/, o no es
+assert/AssertionError. Dentro de tests/ tambien valen pytest.raises sin excepcion
+("Failed: DID NOT RAISE"), un ValidationError del esquema que el test valida directamente
+y un KeyError/IndexError sobre un campo que el propio test lee.
+
+Unica excepcion: los tests de DB_SENTINEL_TESTS corren contra una base en un puerto
+cerrado, y ese puerto es parte de su oraculo ("rechazar antes de tocar la base"). Para
+ellos, un primer "E" que sea un error de conexion de psycopg (ConnectionTimeout u
+OperationalError de conexion) se informa como "detectada por centinela de base", solo si
+el test realmente usa esa base (se verifica leyendo sus fixtures con ast). --check aborta
+si alguno deja de usarla. Cualquier otro caso sigue siendo INVALIDA.
 """
 
 from __future__ import annotations
 
+import ast
 import difflib
 import hashlib
 import os
@@ -43,6 +57,25 @@ TABLE_END = "<!-- mutaciones:fin -->"
 SEPARATOR = "=" * 80
 RECREATE_REVISION = "20261105_05_historial_sin_truncate"
 TIMEOUT_SECONDS = 180
+
+INVALID_NAME_ERROR = re.compile(r"\b(NameError|ImportError|ModuleNotFoundError)\b")
+FRAME_LINE = re.compile(r"^(\S+\.py):\d+: ")
+TEST_DETECTION = re.compile(
+    r"""^(assert\b|AssertionError\b|Failed: DID NOT RAISE\b"""
+    r"""|pydantic_core\._pydantic_core\.ValidationError\b"""
+    r"""|KeyError: ['"]|IndexError\b)"""
+)
+DB_SENTINEL_TESTS = frozenset(
+    {
+        "test_rejected_token[other_algorithm]",
+        "test_rejected_token[missing_exp]",
+    }
+)
+DB_SENTINEL_LABEL = "detectada por centinela de base"
+DB_SENTINEL_ERROR = re.compile(
+    r"^(psycopg\.errors\.ConnectionTimeout\b"
+    r"|(sqlalchemy\.exc\.|psycopg\.)OperationalError\b.*\bconnection\b)"
+)
 
 VENV_PYTHON = BACKEND / ".venv" / "Scripts" / "python.exe"
 PYTHON = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
@@ -355,13 +388,24 @@ def read_source(mutation: Mutation) -> str:
     return (REPO / mutation.file).read_bytes().decode("utf-8")
 
 
-def check_definition(mutation: Mutation) -> None:
-    occurrences = read_source(mutation).count(mutation.original)
+def apply_mutation(mutation: Mutation, content: str) -> str:
+    """Aplica la mutacion respetando el final de linea del archivo (LF o CRLF)."""
+    newline = "\r\n" if "\r\n" in content else "\n"
+    original = mutation.original.replace("\n", newline)
+    mutated = mutation.mutated.replace("\n", newline)
+    occurrences = content.count(original)
     if occurrences != 1:
         raise MutationAbort(
             f"{mutation.test_name}: el texto original aparece {occurrences} veces "
             f"en {mutation.file}; debe aparecer exactamente una"
         )
+    return content.replace(original, mutated, 1)
+
+
+def check_definition(mutation: Mutation) -> None:
+    source = read_source(mutation)
+    if apply_mutation(mutation, source) == source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
     test_source = (BACKEND / mutation.test_file).read_text(encoding="utf-8")
     if test_source.count(f"def {mutation.function_name}(") != 1:
         raise MutationAbort(f"No existe el test {mutation.node_id}")
@@ -385,7 +429,130 @@ def classify(result: subprocess.CompletedProcess[str]) -> str:
     raise MutationAbort(f"Salida inesperada de pytest: {summary or result.stderr}")
 
 
-def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
+def first_error_with_frame(output: str) -> tuple[str, str] | None:
+    """Devuelve el frame y el texto del primer "E" de la salida."""
+    frame = ""
+    for line in output.splitlines():
+        frame_match = FRAME_LINE.match(line)
+        if frame_match:
+            frame = frame_match.group(1).replace("\\", "/")
+            continue
+        if line.startswith("E   "):
+            return frame, line.removeprefix("E   ").strip()
+    return None
+
+
+def _functions(tree: ast.Module) -> dict[str, ast.FunctionDef]:
+    return {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+
+
+def _is_fixture(function: ast.FunctionDef) -> bool:
+    return any("fixture" in ast.unparse(decorator) for decorator in function.decorator_list)
+
+
+def _closed_port_helper(function: ast.FunctionDef) -> bool:
+    """La funcion reserva un puerto con bind() y nunca escucha en el (sin listen())."""
+    calls = {
+        node.func.attr
+        for node in ast.walk(function)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+    }
+    return "bind" in calls and "listen" not in calls
+
+
+def _sets_closed_port_url(function: ast.FunctionDef, closed_ports: set[str]) -> bool:
+    """La fixture arma database_url con un f-string que llama a un helper de puerto cerrado."""
+    for node in ast.walk(function):
+        if not isinstance(node, ast.Dict):
+            continue
+        for key, value in zip(node.keys, node.values):
+            if not (isinstance(key, ast.Constant) and key.value == "database_url"):
+                continue
+            for inner in ast.walk(value):
+                if (
+                    isinstance(inner, ast.Call)
+                    and isinstance(inner.func, ast.Name)
+                    and inner.func.id in closed_ports
+                ):
+                    return True
+    return False
+
+
+def uses_closed_port_database(mutation: Mutation) -> bool:
+    """Lee el archivo de test: el test depende, por fixtures, de una base en puerto cerrado."""
+    source = (BACKEND / mutation.test_file).read_bytes().decode("utf-8")
+    functions = _functions(ast.parse(source))
+    test = functions.get(mutation.function_name)
+    if test is None:
+        raise MutationAbort(f"No existe el test {mutation.node_id}")
+    closed_ports = {name for name, fn in functions.items() if _closed_port_helper(fn)}
+    pending = [arg.arg for arg in test.args.args]
+    seen: set[str] = set()
+    while pending:
+        name = pending.pop()
+        if name in seen:
+            continue
+        seen.add(name)
+        fixture = functions.get(name)
+        if fixture is None or not _is_fixture(fixture):
+            continue
+        if _sets_closed_port_url(fixture, closed_ports):
+            return True
+        pending.extend(arg.arg for arg in fixture.args.args)
+    return False
+
+
+def accepted_by_db_sentinel(mutation: Mutation, output: str) -> bool:
+    """Error de conexion a la base de puerto cerrado en un test de DB_SENTINEL_TESTS."""
+    if mutation.test_name not in DB_SENTINEL_TESTS:
+        return False
+    if INVALID_NAME_ERROR.search(output):
+        return False
+    first = first_error_with_frame(output)
+    if first is None:
+        return False
+    _, first_error = first
+    if not DB_SENTINEL_ERROR.match(first_error):
+        return False
+    return uses_closed_port_database(mutation)
+
+
+def check_db_sentinel_tests() -> None:
+    """Aborta si la lista quedo desalineada con las mutaciones o si un test dejo el puerto cerrado."""
+    by_name = {mutation.test_name: mutation for mutation in MUTATIONS}
+    for name in sorted(DB_SENTINEL_TESTS):
+        if name not in by_name:
+            raise MutationAbort(f"DB_SENTINEL_TESTS: {name} no tiene mutacion")
+        if not uses_closed_port_database(by_name[name]):
+            raise MutationAbort(f"DB_SENTINEL_TESTS: {name} ya no usa la base en puerto cerrado")
+
+
+def invalid_reason(output: str) -> str | None:
+    """Devuelve el motivo si el test no detecto la mutacion con una afirmacion propia."""
+    name_error = INVALID_NAME_ERROR.search(output)
+    if name_error:
+        return f"la salida contiene {name_error.group(1)}"
+
+    frame = ""
+    for line in output.splitlines():
+        frame_match = FRAME_LINE.match(line)
+        if frame_match:
+            frame = frame_match.group(1).replace("\\", "/")
+            continue
+        if not line.startswith("E   "):
+            continue
+        first_error = line.removeprefix("E   ").strip()
+        if not frame.startswith("tests/"):
+            return f"primer E fuera de tests/ ({frame}): {first_error}"
+        if not TEST_DETECTION.match(first_error):
+            return f"primer E no es una afirmacion del test: {first_error}"
+        return None
+    return "la salida no tiene ninguna linea E"
+
+
+def run_mutation(
+    mutation: Mutation, index: int, report: Report
+) -> tuple[bool, str | None, bool]:
     check_definition(mutation)
     report.write(SEPARATOR)
     report.write(f"MUTACION {index:02d}/{len(MUTATIONS)}")
@@ -400,16 +567,16 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     path = REPO / mutation.file
     original_bytes = path.read_bytes()
     original_stat = path.stat()
+    original_source = original_bytes.decode("utf-8")
+    mutated_source = apply_mutation(mutation, original_source)
+    if mutated_source == original_source:
+        raise MutationAbort(f"{mutation.test_name}: la mutacion no cambia {mutation.file}")
 
     if mutation.is_migration and mutation.repair_sql is not None:
         recreate_test_database(report, "base de test recreada antes de aplicar la mutacion")
 
     try:
-        path.write_bytes(
-            read_source(mutation)
-            .replace(mutation.original, mutation.mutated)
-            .encode("utf-8")
-        )
+        path.write_bytes(mutated_source.encode("utf-8"))
         if mutation.is_migration and mutation.repair_sql is None:
             recreate_test_database(report, "base de test recreada con la migracion mutada")
         mutated_run = run_pytest([mutation.node_id])
@@ -429,8 +596,18 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     report.write(f"--- pytest con la mutacion (codigo de salida {mutated_run.returncode}) ---")
     report.write(mutated_run.stdout + mutated_run.stderr)
     outcome = classify(mutated_run)
+    killed = outcome == "FALLO"
+    mutated_output = mutated_run.stdout + mutated_run.stderr
+    reason = invalid_reason(mutated_output) if killed else None
+    by_sentinel = bool(reason) and accepted_by_db_sentinel(mutation, mutated_output)
+    if by_sentinel:
+        reason = None
     report.write(f"resultado: {outcome}")
-    if outcome == "FALLO":
+    if by_sentinel:
+        report.write(
+            f"primera linea del fallo: {DB_SENTINEL_LABEL}: {first_failure_line(mutated_run.stdout)}"
+        )
+    elif killed:
         report.write(f"primera linea del fallo: {first_failure_line(mutated_run.stdout)}")
     else:
         report.write("primera linea del fallo: (el test no fallo)")
@@ -441,7 +618,11 @@ def run_mutation(mutation: Mutation, index: int, report: Report) -> bool:
     if restored_run.returncode != 0:
         raise MutationAbort(f"{mutation.test_name} no pasa con el codigo restaurado")
     report.write("restaurado: test en verde")
-    return outcome == "FALLO"
+    if reason:
+        report.write(f"INVALIDA: {reason}")
+    if by_sentinel:
+        report.write(DB_SENTINEL_LABEL)
+    return killed, reason, by_sentinel
 
 
 def tree_sha256() -> str:
@@ -515,6 +696,7 @@ def main() -> int:
 
     for mutation in MUTATIONS:
         check_definition(mutation)
+    check_db_sentinel_tests()
     if "--check" in sys.argv[1:]:
         print(f"check_definition: {len(MUTATIONS)} mutaciones correctas")
         return 0
@@ -522,6 +704,8 @@ def main() -> int:
     sha_before = tree_sha256()
     killed: list[str] = []
     survived: list[str] = []
+    invalid: list[str] = []
+    by_sentinel: list[str] = []
     with OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
         report = Report(stream)
         report.write("Salida generada por docs/evidencias/mutaciones-C-19.py. No editar a mano.")
@@ -534,7 +718,14 @@ def main() -> int:
 
         for index, mutation in enumerate(MUTATIONS, start=1):
             print(f"[{index:02d}/{len(MUTATIONS)}] {mutation.test_name}", flush=True)
-            if run_mutation(mutation, index, report):
+            was_killed, reason, sentinel = run_mutation(mutation, index, report)
+            if reason:
+                invalid.append(f"{mutation.test_name}: {reason}")
+                print(f"    INVALIDA: {reason}", flush=True)
+            elif sentinel:
+                by_sentinel.append(mutation.test_name)
+                print(f"    {DB_SENTINEL_LABEL}", flush=True)
+            elif was_killed:
                 killed.append(mutation.test_name)
             else:
                 survived.append(mutation.test_name)
@@ -548,6 +739,10 @@ def main() -> int:
             f"mutaciones que hicieron fallar su test: {len(killed)}",
             f"mutaciones que NO lo hicieron fallar: {len(survived)}",
             *[f"  - {name}" for name in survived],
+            f"mutaciones inválidas: {len(invalid)}",
+            *[f"  - {entry}" for entry in invalid],
+            f"mutaciones detectadas por centinela de base: {len(by_sentinel)}",
+            *[f"  - {name}" for name in by_sentinel],
             f"SHA-256 de backend/app y backend/alembic despues: {sha_after}",
             f"SHA-256 sin cambios: {'si' if same else 'NO'}",
         ]
@@ -555,7 +750,7 @@ def main() -> int:
 
     print("\n".join(summary))
     update_verify_table()
-    return 0 if same and not survived else 1
+    return 0 if same and not survived and not invalid else 1
 
 
 if __name__ == "__main__":

@@ -1,16 +1,24 @@
 Salida generada por docs/evidencias/mutaciones-C-17.py. No editar a mano.
+SHA-256 de backend/app y backend/alembic antes: f79aa3715ede8e6412bd90aa8d5f3a0c14012a44ce3f18707fc53ae989d291ad
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 22 items
 
 tests\integration\test_appointment_persistence.py .................      [ 77%]
 tests\integration\test_appointment_concurrency.py ...                    [ 90%]
 tests\integration\test_database_infrastructure.py ..                     [100%]
 
-============================= 22 passed in 7.44s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 22 passed, 1 warning in 6.80s ========================
 ================================================================================
 MUTACION 01/22
 test: tests/integration/test_appointment_persistence.py::test_appointment_status_check_rejects_invalid_direct_insert
@@ -21,28 +29,37 @@ archivo: backend/alembic/versions/20261105_04_turnos_e_historial.py
 "status IN ('reservado', 'confirmado', 'atendido', 'ausente', 'cancelado', 'en_espera')",
 --- fin de textos ---
 --- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -56,9 +73,15 @@ E   Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_appointment_status_check_rejects_invalid_direct_insert
-============================== 1 failed in 0.84s ==============================
+======================== 1 failed, 1 warning in 0.57s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -66,11 +89,18 @@ primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityE
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.54s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.37s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 02/22
@@ -82,28 +112,37 @@ archivo: backend/alembic/versions/20261105_04_turnos_e_historial.py
 "start_at <> end_at",
 --- fin de textos ---
 --- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -117,9 +156,15 @@ E   Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_appointment_interval_check_rejects_direct_insert
-============================== 1 failed in 0.92s ==============================
+======================== 1 failed, 1 warning in 0.49s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -127,11 +172,18 @@ primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityE
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.50s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.30s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 03/22
@@ -143,28 +195,37 @@ archivo: backend/alembic/versions/20261105_04_turnos_e_historial.py
 "OR reschedule_previous_start_at IS NOT NULL OR "
 --- fin de textos ---
 --- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -178,9 +239,15 @@ E   Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_appointment_status_change_reschedule_all_or_none_check_rejects_partial
-============================== 1 failed in 0.83s ==============================
+======================== 1 failed, 1 warning in 0.71s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -188,11 +255,18 @@ primera linea del fallo: Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityE
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.51s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.34s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 04/22
@@ -204,28 +278,37 @@ BEFORE UPDATE OR DELETE ON appointment_status_change
 BEFORE DELETE ON appointment_status_change
 --- fin de textos ---
 --- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -239,9 +322,15 @@ E   Failed: DID NOT RAISE <class 'Exception'>
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_appointment_status_change_trigger_rejects_direct_update
-============================== 1 failed in 0.83s ==============================
+======================== 1 failed, 1 warning in 0.66s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'Exception'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -249,11 +338,18 @@ primera linea del fallo: Failed: DID NOT RAISE <class 'Exception'>
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.51s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.45s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 05/22
@@ -265,28 +361,37 @@ BEFORE UPDATE OR DELETE ON appointment_status_change
 BEFORE UPDATE ON appointment_status_change
 --- fin de textos ---
 --- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -300,9 +405,15 @@ E   Failed: DID NOT RAISE <class 'Exception'>
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_appointment_status_change_trigger_rejects_direct_delete
-============================== 1 failed in 0.87s ==============================
+======================== 1 failed, 1 warning in 0.53s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'Exception'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -310,11 +421,18 @@ primera linea del fallo: Failed: DID NOT RAISE <class 'Exception'>
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.55s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.39s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 06/22
@@ -326,28 +444,37 @@ BEFORE TRUNCATE ON appointment_status_change
 BEFORE UPDATE ON appointment_status_change
 --- fin de textos ---
 --- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -361,9 +488,15 @@ E   Failed: DID NOT RAISE <class 'Exception'>
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_appointment_status_change_trigger_rejects_truncate
-============================== 1 failed in 0.84s ==============================
+======================== 1 failed, 1 warning in 0.68s =========================
 resultado: FALLO
 primera linea del fallo: Failed: DID NOT RAISE <class 'Exception'>
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -371,11 +504,18 @@ primera linea del fallo: Failed: DID NOT RAISE <class 'Exception'>
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.45s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.36s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 07/22
@@ -391,6 +531,7 @@ AppointmentModel.professional_id.is_not(None),
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -404,9 +545,15 @@ E    +  where 3 = len((Appointment(id=UUID('00000000-0000-0000-0000-000000000a11
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_sql_appointment_reader_filters_and_orders_in_range
-============================== 1 failed in 1.12s ==============================
+======================== 1 failed, 1 warning in 0.60s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 3 == 2
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -414,11 +561,18 @@ primera linea del fallo: AssertionError: assert 3 == 2
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.62s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 1.26s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 08/22
@@ -436,6 +590,7 @@ AppointmentModel.professional_id == professional_id,
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -449,9 +604,15 @@ E    +  where 0 = len(())
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_block_repository_uses_sql_appointment_reader_with_real_rows
-============================== 1 failed in 1.08s ==============================
+======================== 1 failed, 1 warning in 0.65s =========================
 resultado: FALLO
 primera linea del fallo: assert 0 == 1
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -459,11 +620,18 @@ primera linea del fallo: assert 0 == 1
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.70s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.37s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 09/22
@@ -479,6 +647,7 @@ created_at=appointment_entity.start_at,
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -488,13 +657,19 @@ ___ test_book_appointment_success_persists_appointment_and_initial_history ____
 tests\integration\test_appointment_persistence.py:447: in test_book_appointment_success_persists_appointment_and_initial_history
     assert app_row.created_at == now
 E   assert datetime.datetime(2026, 11, 9, 13, 0, tzinfo=datetime.timezone.utc) == datetime.datetime(2026, 11, 5, 12, 0, tzinfo=datetime.timezone.utc)
-E    +  where datetime.datetime(2026, 11, 9, 13, 0, tzinfo=datetime.timezone.utc) = <app.db.models.AppointmentModel object at 0x0000023FB6510F50>.created_at
+E    +  where datetime.datetime(2026, 11, 9, 13, 0, tzinfo=datetime.timezone.utc) = <app.db.models.AppointmentModel object at 0x000001BEEEBCDE50>.created_at
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_book_appointment_success_persists_appointment_and_initial_history
-============================== 1 failed in 1.02s ==============================
+======================== 1 failed, 1 warning in 0.61s =========================
 resultado: FALLO
 primera linea del fallo: assert datetime.datetime(2026, 11, 9, 13, 0, tzinfo=datetime.timezone.utc) == datetime.datetime(2026, 11, 5, 12, 0, tzinfo=datetime.timezone.utc)
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -502,11 +677,18 @@ primera linea del fallo: assert datetime.datetime(2026, 11, 9, 13, 0, tzinfo=dat
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.63s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.35s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 10/22
@@ -539,6 +721,7 @@ def change_appointment_status(
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -551,9 +734,15 @@ E   assert 2 == 1
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_book_appointment_rejected_overlap_does_not_persist
-============================== 1 failed in 1.02s ==============================
+======================== 1 failed, 1 warning in 0.63s =========================
 resultado: FALLO
 primera linea del fallo: assert 2 == 1
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -561,11 +750,18 @@ primera linea del fallo: assert 2 == 1
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.76s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.39s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 11/22
@@ -582,6 +778,7 @@ archivo: backend/app/services/appointments.py
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -590,27 +787,40 @@ tests\integration\test_appointment_persistence.py F                      [100%]
 __________ test_book_appointment_atomic_rollback_on_history_failure ___________
 tests\integration\test_appointment_persistence.py:595: in test_book_appointment_atomic_rollback_on_history_failure
     assert check_session.get(AppointmentModel, app2_id) is None
-E   AssertionError: assert <app.db.models.AppointmentModel object at 0x00000173840360D0> is None
-E    +  where <app.db.models.AppointmentModel object at 0x00000173840360D0> = get(AppointmentModel, UUID('00000000-0000-0000-0000-000000000a02'))
-E    +    where get = <sqlalchemy.orm.session.Session object at 0x00000173840BFD90>.get
+E   AssertionError: assert <app.db.models.AppointmentModel object at 0x0000020FEFE12210> is None
+E    +  where <app.db.models.AppointmentModel object at 0x0000020FEFE12210> = get(AppointmentModel, UUID('00000000-0000-0000-0000-000000000a02'))
+E    +    where get = <sqlalchemy.orm.session.Session object at 0x0000020FEFE10550>.get
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_book_appointment_atomic_rollback_on_history_failure
-============================== 1 failed in 1.20s ==============================
+======================== 1 failed, 1 warning in 0.60s =========================
 resultado: FALLO
-primera linea del fallo: AssertionError: assert <app.db.models.AppointmentModel object at 0x00000173840360D0> is None
+primera linea del fallo: AssertionError: assert <app.db.models.AppointmentModel object at 0x0000020FEFE12210> is None
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.74s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.38s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 12/22
@@ -626,6 +836,7 @@ for prof_id in sorted(set(professional_ids), reverse=True):
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -641,9 +852,15 @@ E     Use -v to get more diff
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_book_appointment_acquires_resource_locks_ordered_by_uuid
-============================== 1 failed in 1.02s ==============================
+======================== 1 failed, 1 warning in 0.59s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert [[UUID('00000...0000000001')]] == [[UUID('00000...0000000002')]]
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -651,11 +868,18 @@ primera linea del fallo: AssertionError: assert [[UUID('00000...0000000001')]] =
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.65s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.48s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 13/22
@@ -686,6 +910,7 @@ archivo: backend/app/services/appointments.py
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -701,9 +926,15 @@ E     + reservado
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_change_appointment_status_confirmed_updates_status_and_history
-============================== 1 failed in 0.93s ==============================
+======================== 1 failed, 1 warning in 0.72s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'reservado' == 'confirmado'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -711,11 +942,18 @@ primera linea del fallo: AssertionError: assert 'reservado' == 'confirmado'
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.59s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.41s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 14/22
@@ -748,6 +986,7 @@ archivo: backend/app/services/appointments.py
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -763,9 +1002,15 @@ E     + reservado
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_cancel_appointment_updates_status_and_history
-============================== 1 failed in 0.95s ==============================
+======================== 1 failed, 1 warning in 0.75s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'reservado' == 'cancelado'
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -773,11 +1018,18 @@ primera linea del fallo: AssertionError: assert 'reservado' == 'cancelado'
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.62s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.37s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 15/22
@@ -814,42 +1066,58 @@ archivo: backend/app/services/appointments.py
             .with_for_update()
         ).first()
         if row is None:
-            raise RuntimeError("Turno inexistente")
+            from app.domain.violations import Violation, ViolationCode
+
+            return Rejected(
+                (Violation(ViolationCode.UNKNOWN_REFERENCE, "Turno inexistente."),)
+            )
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
 
 ================================== FAILURES ===================================
 ________ test_status_operations_on_nonexistent_appointment_return_none ________
-tests\integration\test_appointment_persistence.py:877: in test_status_operations_on_nonexistent_appointment_return_none
-    res1 = change_appointment_status(
-app\services\appointments.py:186: in change_appointment_status
-    raise RuntimeError("Turno inexistente")
-E   RuntimeError: Turno inexistente
+tests\integration\test_appointment_persistence.py:886: in test_status_operations_on_nonexistent_appointment_return_none
+    assert res1 is None
+E   AssertionError: assert Rejected(violations=(Violation(code=<ViolationCode.UNKNOWN_REFERENCE: 'UNKNOWN_REFERENCE'>, message='Turno inexistente.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) is None
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_status_operations_on_nonexistent_appointment_return_none
-============================== 1 failed in 0.94s ==============================
+======================== 1 failed, 1 warning in 0.69s =========================
 resultado: FALLO
-primera linea del fallo: RuntimeError: Turno inexistente
+primera linea del fallo: AssertionError: assert Rejected(violations=(Violation(code=<ViolationCode.UNKNOWN_REFERENCE: 'UNKNOWN_REFERENCE'>, message='Turno inexistente.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) is None
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.57s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.30s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 16/22
@@ -865,6 +1133,7 @@ reschedule_new_chair_id=reschedule_detail.previous_chair_id,
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
@@ -874,13 +1143,19 @@ ______ test_reschedule_appointment_success_persists_eight_detail_columns ______
 tests\integration\test_appointment_persistence.py:1006: in test_reschedule_appointment_success_persists_eight_detail_columns
     assert h.reschedule_new_chair_id == c2
 E   AssertionError: assert UUID('00000000-0000-0000-0000-0000000000b1') == UUID('00000000-0000-0000-0000-0000000000b2')
-E    +  where UUID('00000000-0000-0000-0000-0000000000b1') = <app.db.models.AppointmentStatusChangeModel object at 0x000001B5970B20D0>.reschedule_new_chair_id
+E    +  where UUID('00000000-0000-0000-0000-0000000000b1') = <app.db.models.AppointmentStatusChangeModel object at 0x000002D68D37E210>.reschedule_new_chair_id
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_reschedule_appointment_success_persists_eight_detail_columns
-============================== 1 failed in 1.07s ==============================
+======================== 1 failed, 1 warning in 0.63s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert UUID('00000000-0000-0000-0000-0000000000b1') == UUID('00000000-0000-0000-0000-0000000000b2')
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -888,11 +1163,18 @@ primera linea del fallo: AssertionError: assert UUID('00000000-0000-0000-0000-00
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.72s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.38s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 17/22
@@ -929,42 +1211,58 @@ archivo: backend/app/services/appointments.py
             .with_for_update()
         ).first()
         if row is None:
-            raise ValueError("Turno inexistente")
+            from app.domain.violations import Violation, ViolationCode
+
+            return Rejected(
+                (Violation(ViolationCode.UNKNOWN_REFERENCE, "Turno inexistente."),)
+            )
 --- fin de textos ---
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py F                      [100%]
 
 ================================== FAILURES ===================================
 ____________ test_reschedule_nonexistent_appointment_returns_none _____________
-tests\integration\test_appointment_persistence.py:1023: in test_reschedule_nonexistent_appointment_returns_none
-    res = reschedule_appointment(
-app\services\appointments.py:334: in reschedule_appointment
-    raise ValueError("Turno inexistente")
-E   ValueError: Turno inexistente
+tests\integration\test_appointment_persistence.py:1032: in test_reschedule_nonexistent_appointment_returns_none
+    assert res is None
+E   AssertionError: assert Rejected(violations=(Violation(code=<ViolationCode.UNKNOWN_REFERENCE: 'UNKNOWN_REFERENCE'>, message='Turno inexistente.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) is None
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_persistence.py::test_reschedule_nonexistent_appointment_returns_none
-============================== 1 failed in 0.90s ==============================
+======================== 1 failed, 1 warning in 0.52s =========================
 resultado: FALLO
-primera linea del fallo: ValueError: Turno inexistente
+primera linea del fallo: AssertionError: assert Rejected(violations=(Violation(code=<ViolationCode.UNKNOWN_REFERENCE: 'UNKNOWN_REFERENCE'>, message='Turno inexistente.', conflicting_appointment_id=None, reference_kind=None, conflicting_block_id=None, conflicting_interval=None),)) is None
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_persistence.py .                      [100%]
 
-============================== 1 passed in 0.55s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.32s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 18/22
@@ -981,6 +1279,7 @@ archivo: backend/app/services/appointments.py
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_concurrency.py F                      [100%]
@@ -994,9 +1293,15 @@ E   assert False
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_professional_serialized
-============================== 1 failed in 3.02s ==============================
+======================== 1 failed, 1 warning in 2.92s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: La conexión B debía quedar bloqueada esperando en pg_locks
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1004,11 +1309,18 @@ primera linea del fallo: AssertionError: La conexión B debía quedar bloqueada 
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_concurrency.py .                      [100%]
 
-============================== 1 passed in 0.81s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.58s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 19/22
@@ -1025,6 +1337,7 @@ archivo: backend/app/services/appointments.py
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_concurrency.py F                      [100%]
@@ -1038,9 +1351,15 @@ E   assert False
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_concurrency.py::test_concurrent_booking_same_chair_serialized
-============================== 1 failed in 3.03s ==============================
+======================== 1 failed, 1 warning in 2.81s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: La conexión B debía quedar bloqueada esperando el lock de sillón en pg_locks
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1048,11 +1367,18 @@ primera linea del fallo: AssertionError: La conexión B debía quedar bloqueada 
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_concurrency.py .                      [100%]
 
-============================== 1 passed in 0.78s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.61s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 20/22
@@ -1091,6 +1417,7 @@ archivo: backend/app/services/appointments.py
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_concurrency.py F                      [100%]
@@ -1104,9 +1431,15 @@ E    +  where False = isinstance(Ok(appointment=Appointment(id=UUID('00000000-00
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_appointment_concurrency.py::test_concurrent_transition_same_appointment_serialized
-============================== 1 failed in 1.02s ==============================
+======================== 1 failed, 1 warning in 0.74s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert False
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1114,172 +1447,109 @@ primera linea del fallo: AssertionError: assert False
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_appointment_concurrency.py .                      [100%]
 
-============================== 1 passed in 0.85s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.46s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 21/22
 test: tests/integration/test_database_infrastructure.py::test_appointment_migration_downgrade_minus_one_cycle
 archivo: backend/alembic/versions/20261105_04_turnos_e_historial.py
 --- texto original ---
-    op.drop_table("appointment")
+        CREATE TRIGGER tr_appointment_status_change_append_only
+        BEFORE UPDATE OR DELETE ON appointment_status_change
+        FOR EACH ROW EXECUTE FUNCTION prevent_appointment_status_change_modification();
 --- texto mutado ---
-    pass
+
 --- fin de textos ---
---- base de test recreada antes de aplicar la mutacion (codigo de salida 0) ---
+--- base de test recreada con la migracion mutada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
---- restos del downgrade mutado quitados: DROP TABLE IF EXISTS appointment CASCADE (codigo de salida 0) ---
-
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_database_infrastructure.py F                      [100%]
 
 ================================== FAILURES ===================================
 ____________ test_appointment_migration_downgrade_minus_one_cycle _____________
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:1958: in _exec_single_context
-    self.dialect.do_execute(
-.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: in do_execute
-    cursor.execute(statement, parameters)
-.venv\Lib\site-packages\psycopg\cursor.py:117: in execute
-    raise ex.with_traceback(None)
-E   psycopg.errors.DuplicateTable: relation "appointment" already exists
-
-The above exception was the direct cause of the following exception:
-tests\integration\test_database_infrastructure.py:156: in test_appointment_migration_downgrade_minus_one_cycle
-    command.upgrade(config, "20261105_04_turnos_e_historial")
-.venv\Lib\site-packages\alembic\command.py:487: in upgrade
-    script.run_env()
-.venv\Lib\site-packages\alembic\script\base.py:550: in run_env
-    util.load_python_file(self.dir, "env.py")
-.venv\Lib\site-packages\alembic\util\pyfiles.py:114: in load_python_file
-    module = load_module_py(module_id, path)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\alembic\util\pyfiles.py:132: in load_module_py
-    spec.loader.exec_module(module)  # type: ignore
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-<frozen importlib._bootstrap_external>:1026: in exec_module
-    ???
-<frozen importlib._bootstrap>:488: in _call_with_frames_removed
-    ???
-alembic\env.py:55: in <module>
-    run_migrations_online()
-alembic\env.py:47: in run_migrations_online
-    context.run_migrations()
-<string>:8: in run_migrations
-    ???
-.venv\Lib\site-packages\alembic\runtime\environment.py:970: in run_migrations
-    self.get_context().run_migrations(**kw)
-.venv\Lib\site-packages\alembic\runtime\migration.py:616: in run_migrations
-    step.migration_fn(**kw)
-alembic\versions\20261105_04_turnos_e_historial.py:21: in upgrade
-    op.create_table(
-<string>:8: in create_table
-    ???
-<string>:3: in create_table
-    ???
-.venv\Lib\site-packages\alembic\operations\ops.py:1323: in create_table
-    return operations.invoke(op)
-           ^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\alembic\operations\base.py:448: in invoke
-    return fn(self, operation)
-           ^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\alembic\operations\toimpl.py:139: in create_table
-    operations.impl.create_table(table, **kw)
-.venv\Lib\site-packages\alembic\ddl\impl.py:434: in create_table
-    self._exec(schema.CreateTable(table, **kw))
-.venv\Lib\site-packages\alembic\ddl\impl.py:252: in _exec
-    return conn.execute(construct, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:1463: in execute
-    return meth(
-.venv\Lib\site-packages\sqlalchemy\sql\ddl.py:203: in _execute_on_connection
-    return connection._execute_ddl(
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:1572: in _execute_ddl
-    ret = self._execute_context(
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:1837: in _execute_context
-    return self._exec_single_context(
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
-    self._handle_dbapi_exception(
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:2347: in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-.venv\Lib\site-packages\sqlalchemy\engine\base.py:1958: in _exec_single_context
-    self.dialect.do_execute(
-.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: in do_execute
-    cursor.execute(statement, parameters)
-.venv\Lib\site-packages\psycopg\cursor.py:117: in execute
-    raise ex.with_traceback(None)
-E   sqlalchemy.exc.ProgrammingError: (psycopg.errors.DuplicateTable) relation "appointment" already exists
-E   [SQL: 
-E   CREATE TABLE appointment (
-E   	id UUID NOT NULL, 
-E   	patient_id UUID NOT NULL, 
-E   	professional_id UUID NOT NULL, 
-E   	chair_id UUID NOT NULL, 
-E   	service_id UUID NOT NULL, 
-E   	start_at TIMESTAMP WITH TIME ZONE NOT NULL, 
-E   	end_at TIMESTAMP WITH TIME ZONE NOT NULL, 
-E   	status VARCHAR(20) NOT NULL, 
-E   	created_at TIMESTAMP WITH TIME ZONE NOT NULL, 
-E   	updated_at TIMESTAMP WITH TIME ZONE NOT NULL, 
-E   	CONSTRAINT pk_appointment PRIMARY KEY (id), 
-E   	CONSTRAINT ck_appointment_status CHECK (status IN ('reservado', 'confirmado', 'atendido', 'ausente', 'cancelado')), 
-E   	CONSTRAINT ck_appointment_interval_order CHECK (start_at < end_at), 
-E   	CONSTRAINT fk_appointment_chair_id_chair FOREIGN KEY(chair_id) REFERENCES chair (id) ON DELETE RESTRICT, 
-E   	CONSTRAINT fk_appointment_patient_id_patient FOREIGN KEY(patient_id) REFERENCES patient (id) ON DELETE RESTRICT, 
-E   	CONSTRAINT fk_appointment_professional_id_professional FOREIGN KEY(professional_id) REFERENCES professional (id) ON DELETE RESTRICT, 
-E   	CONSTRAINT fk_appointment_service_id_service FOREIGN KEY(service_id) REFERENCES service (id) ON DELETE RESTRICT
-E   )
-E   
-E   ]
-E   (Background on this error at: https://sqlalche.me/e/21/f405)
+tests\integration\test_database_infrastructure.py:179: in test_appointment_migration_downgrade_minus_one_cycle
+    assert trigger_count == 1
+E   assert 0 == 1
 ---------------------------- Captured stderr setup ----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 ---------------------------- Captured stderr call -----------------------------
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_database_infrastructure.py::test_appointment_migration_downgrade_minus_one_cycle
-============================== 1 failed in 1.23s ==============================
+======================== 1 failed, 1 warning in 0.82s =========================
 resultado: FALLO
-primera linea del fallo: psycopg.errors.DuplicateTable: relation "appointment" already exists
+primera linea del fallo: assert 0 == 1
 --- pytest tras restaurar (codigo de salida 0) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_database_infrastructure.py .                      [100%]
 
-============================== 1 passed in 0.94s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.57s =========================
 restaurado: test en verde
 ================================================================================
 MUTACION 22/22
@@ -1291,17 +1561,24 @@ DROP TRIGGER IF EXISTS tr_appointment_status_change_no_truncate ON appointment_s
 SELECT 1;
 --- fin de textos ---
 --- base de test recreada antes de aplicar la mutacion (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- restos del downgrade mutado quitados: DROP TRIGGER IF EXISTS tr_appointment_status_change_no_truncate ON appointment_status_change (codigo de salida 0) ---
-
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 --- base de test recreada con la migracion restaurada (codigo de salida 0) ---
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_04_turnos_e_historial -> 20261104_03_horarios_y_bloqueos, Persist appointments and appointment status change history.
@@ -1309,18 +1586,20 @@ INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 20261104_03_horarios_y_bloqueos -> 20261105_04_turnos_e_historial, Persist appointments and appointment status change history.
 INFO  [alembic.runtime.migration] Running upgrade 20261105_04_turnos_e_historial -> 20261105_05_historial_sin_truncate, Add truncate protection trigger on appointment_status_change.
+INFO  [alembic.runtime.migration] Running upgrade 20261105_05_historial_sin_truncate -> 20261106_06_usuarios, Add app_user table for authentication and roles.
 --- pytest con la mutacion (codigo de salida 1) ---
 ============================= test session starts =============================
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_database_infrastructure.py F                      [100%]
 
 ================================== FAILURES ===================================
 __ test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle ___
-tests\integration\test_database_infrastructure.py:238: in test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle
+tests\integration\test_database_infrastructure.py:262: in test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle
     assert "tr_appointment_status_change_no_truncate" not in triggers
 E   AssertionError: assert 'tr_appointment_status_change_no_truncate' not in ['tr_appointment_status_change_append_only', 'tr_appointment_status_change_no_truncate']
 ---------------------------- Captured stderr setup ----------------------------
@@ -1331,10 +1610,19 @@ INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261106_06_usuarios -> 20261105_05_historial_sin_truncate, Add app_user table for authentication and roles.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running downgrade 20261105_05_historial_sin_truncate -> 20261105_04_turnos_e_historial, Add truncate protection trigger on appointment_status_change.
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
 FAILED tests/integration/test_database_infrastructure.py::test_appointment_history_no_truncate_migration_downgrade_minus_one_cycle
-============================== 1 failed in 0.82s ==============================
+======================== 1 failed, 1 warning in 0.70s =========================
 resultado: FALLO
 primera linea del fallo: AssertionError: assert 'tr_appointment_status_change_no_truncate' not in ['tr_appointment_status_change_append_only', 'tr_appointment_status_change_no_truncate']
 --- pytest tras restaurar (codigo de salida 0) ---
@@ -1342,14 +1630,23 @@ primera linea del fallo: AssertionError: assert 'tr_appointment_status_change_no
 platform win32 -- Python 3.13.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend
 configfile: pyproject.toml
+plugins: anyio-4.16.0
 collected 1 item
 
 tests\integration\test_database_infrastructure.py .                      [100%]
 
-============================== 1 passed in 0.60s ==============================
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 1 warning in 0.57s =========================
 restaurado: test en verde
 ================================================================================
 RESUMEN
 mutaciones que hicieron fallar su test: 22
 mutaciones que NO lo hicieron fallar: 0
-git diff backend/app backend/alembic vacio: si
+mutaciones inválidas: 0
+SHA-256 de backend/app y backend/alembic despues: f79aa3715ede8e6412bd90aa8d5f3a0c14012a44ce3f18707fc53ae989d291ad
+SHA-256 sin cambios: si
