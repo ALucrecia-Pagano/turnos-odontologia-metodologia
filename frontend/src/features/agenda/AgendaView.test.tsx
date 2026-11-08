@@ -165,10 +165,8 @@ describe("AgendaView", () => {
     expect(quirogaCard).toHaveAttribute("data-duration-minutes", "30");
     expect(quirogaCard).toHaveAttribute("data-lane", "0");
     expect(quirogaCard).toHaveAttribute("data-lane-count", "1");
-    expect(quirogaCard).toHaveTextContent("10:00–10:30");
-    expect(quirogaCard).toHaveTextContent("Ana Pérez");
-    expect(quirogaCard).toHaveTextContent("Control");
-    expect(quirogaCard).toHaveTextContent("Sillón 1");
+    expect(quirogaCard).toHaveTextContent("10:00 · Ana Pérez");
+    expect(quirogaCard).toHaveTextContent("Reservado");
   });
 
   it("reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos", () => {
@@ -249,7 +247,7 @@ describe("AgendaView", () => {
     expect(shortCard).toHaveAttribute("data-duration-minutes", "5");
     expect(shortCard).toHaveAttribute("data-effective-minutes", "15");
     expect(shortCard?.getAttribute("aria-label")).toContain("09:00–09:05");
-    expect(shortCard).toHaveTextContent("09:00–09:05");
+    expect(shortCard).toHaveTextContent("09:00 · Ana Pérez");
   });
 
   it("dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado", () => {
@@ -365,7 +363,7 @@ describe("AgendaView", () => {
     expect(accessibleName).toContain("Reservado");
   });
 
-  it("muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío", () => {
+  it("en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista", () => {
     const emptyDayAgenda: AgendaResponse = {
       ...MONDAY_AGENDA,
       appointments: [],
@@ -380,11 +378,87 @@ describe("AgendaView", () => {
       />,
     );
 
-    expect(screen.queryByText("No hay turnos para este día")).toBeInTheDocument();
-    expect(screen.queryAllByTestId("agenda-column-header")).toHaveLength(3);
     expect(
-      screen.queryByLabelText("Horario de atención: 09:00 a 13:00"),
-    ).toBeInTheDocument();
+      screen.queryByRole("heading", { name: "No hay turnos para este día" }),
+    ).not.toBeNull();
+    expect(screen.queryByTestId("agenda-grid-scroll")).not.toBeInTheDocument();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+
+    const toggleBtn = screen.queryByRole("button", { name: "Ver como lista" });
+    expect(toggleBtn).not.toBeNull();
+    fireEvent.click(toggleBtn!);
+
+    expect(
+      screen.queryByRole("heading", { name: "No hay turnos para este día" }),
+    ).not.toBeNull();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("agenda-grid-scroll")).not.toBeInTheDocument();
+  });
+
+  it("la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo", () => {
+    render(
+      <AgendaView
+        date="2026-11-16"
+        timezone={MONDAY_AGENDA.timezone}
+        agenda={MONDAY_AGENDA}
+        professionals={PROFESSIONALS_ORDER_A}
+      />,
+    );
+
+    const quirogaCard = screen.queryByTestId(
+      "agenda-appointment-00000000-0000-0000-0000-000000000aa1",
+    );
+    expect(quirogaCard).not.toBeNull();
+    expect(quirogaCard).toHaveTextContent("10:00 · Ana Pérez");
+    expect(quirogaCard?.textContent).not.toContain("Control");
+    expect(quirogaCard).toHaveAttribute("title", "Control");
+    const label = quirogaCard?.getAttribute("aria-label") ?? "";
+    expect(label).toContain("10:00–10:30");
+    expect(label).toContain("Ana Pérez");
+    expect(label).toContain("Control");
+    expect(label).toContain("Dra. Laura Quiroga");
+    expect(label).toContain("Sillón 1");
+    expect(label).toContain("Reservado");
+  });
+
+  it("la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada", () => {
+    const agendaWith60Min: AgendaResponse = {
+      ...MONDAY_AGENDA,
+      appointments: [
+        {
+          id: "00000000-0000-0000-0000-000000000060",
+          patientId: "00000000-0000-0000-0000-0000000000c1",
+          patientName: "Carlos Gómez",
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          professionalName: "Dra. Laura Quiroga",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000d4",
+          serviceName: "Tratamiento de conducto",
+          startAt: "2026-11-16T14:00:00Z",
+          endAt: "2026-11-16T15:00:00Z",
+          status: "confirmado",
+        },
+      ],
+    };
+
+    render(
+      <AgendaView
+        date="2026-11-16"
+        timezone={MONDAY_AGENDA.timezone}
+        agenda={agendaWith60Min}
+        professionals={PROFESSIONALS_ORDER_A}
+      />,
+    );
+
+    const card = screen.queryByTestId(
+      "agenda-appointment-00000000-0000-0000-0000-000000000060",
+    );
+    expect(card).not.toBeNull();
+    expect(card).toHaveTextContent("11:00–12:00");
+    expect(card).toHaveTextContent("Carlos Gómez");
+    expect(card).toHaveTextContent("Tratamiento de conducto");
+    expect(card).toHaveTextContent("Confirmado");
   });
 
   it("anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista", () => {

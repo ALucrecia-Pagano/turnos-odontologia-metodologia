@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EmptyState } from "../../shared/components/EmptyState";
 import type { AgendaResponse, Professional } from "./agendaApi";
 import { AgendaGrid } from "./AgendaGrid";
 import { computeAxis, groupByProfessional } from "./agendaLayout";
@@ -81,19 +82,31 @@ export function AgendaView({
       {catalogWarning !== null && (
         <div className={styles.bannerNote}>{catalogWarning}</div>
       )}
-      {agenda.appointments.length === 0 && (
-        <div className={styles.bannerNote}>
-          {hasActiveFilter ? "Sin turnos para este filtro" : "No hay turnos para este día"}
-        </div>
-      )}
-      {viewMode === "list" ? (
-        <AgendaTable
-          date={date}
-          timezone={timezone}
-          appointments={agenda.appointments}
+      {agenda.appointments.length === 0 && !hasActiveFilter ? (
+        <EmptyState
+          title="No hay turnos para este día"
+          description="No se registraron turnos en la agenda para esta fecha."
         />
+      ) : viewMode === "list" ? (
+        agenda.appointments.length === 0 ? (
+          <EmptyState
+            title="Sin turnos para este filtro"
+            description="Probá cambiando la fecha o quitando los filtros."
+          />
+        ) : (
+          <AgendaTable
+            date={date}
+            timezone={timezone}
+            appointments={agenda.appointments}
+          />
+        )
       ) : (
-        <AgendaGrid date={date} timezone={timezone} axis={axis} columns={columns} />
+        <>
+          {agenda.appointments.length === 0 && (
+            <div className={styles.bannerNote}>Sin turnos para este filtro</div>
+          )}
+          <AgendaGrid date={date} timezone={timezone} axis={axis} columns={columns} />
+        </>
       )}
     </section>
   );

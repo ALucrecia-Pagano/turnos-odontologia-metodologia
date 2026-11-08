@@ -13,7 +13,7 @@ describe("agendaStyles y responsive de escritorio/tablet (D12, D13)", () => {
   it("define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX", () => {
     const tokensCss = readFileSync(TOKENS_PATH, "utf-8");
     const requiredTokens = [
-      "--agenda-hour-height: 64px;",
+      "--agenda-hour-height: 112px;",
       "--agenda-time-gutter-width: 64px;",
       "--agenda-column-min-width: 220px;",
       "--agenda-column-header-height: 48px;",

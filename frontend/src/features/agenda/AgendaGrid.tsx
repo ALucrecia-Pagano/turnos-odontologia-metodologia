@@ -171,12 +171,14 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
                   const leftPercent = item.lane * widthPercent;
                   const isCancelled = appt.status === "cancelado";
                   const statusLabel = STATUS_LABELS[appt.status];
-                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.professionalName}, ${appt.chairName}, ${appt.serviceName}, ${statusLabel}`;
+                  const isCompact = item.durationMinutes < 45;
+                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
 
                   return (
                     <article
                       key={appt.id}
                       aria-label={cardAriaLabel}
+                      title={isCompact ? appt.serviceName : undefined}
                       className={
                         isCancelled
                           ? `${styles.appointmentCard} ${styles.appointmentCancelled}`
@@ -196,14 +198,23 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
                         width: `${widthPercent}%`,
                       }}
                     >
-                      <div className={styles.cardTopRow}>
-                        <span className={styles.cardTime}>{timeLabel}</span>
-                        <StatusBadge status={appt.status} />
-                      </div>
-                      <div className={styles.cardPatient}>{appt.patientName}</div>
-                      <div className={styles.cardMeta}>
-                        {appt.serviceName} · {appt.chairName}
-                      </div>
+                      {isCompact ? (
+                        <div className={styles.cardCompactRow} title={appt.serviceName}>
+                          <span className={styles.cardCompactText}>
+                            {`${startLabel} · ${appt.patientName}`}
+                          </span>
+                          <StatusBadge status={appt.status} />
+                        </div>
+                      ) : (
+                        <>
+                          <div className={styles.cardTopRow}>
+                            <span className={styles.cardTime}>{timeLabel}</span>
+                            <StatusBadge status={appt.status} />
+                          </div>
+                          <div className={styles.cardPatient}>{appt.patientName}</div>
+                          <div className={styles.cardMeta}>{appt.serviceName}</div>
+                        </>
+                      )}
                     </article>
                   );
                 })}

@@ -42,7 +42,7 @@
   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
 
   /* Agenda diaria */
-  --agenda-hour-height: 64px;
+  --agenda-hour-height: 112px;
   --agenda-time-gutter-width: 64px;
   --agenda-column-min-width: 220px;
   --agenda-column-header-height: 48px;
