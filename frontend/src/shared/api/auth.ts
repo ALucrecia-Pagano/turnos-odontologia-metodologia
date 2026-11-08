@@ -4,6 +4,7 @@
  */
 export interface AuthProvider {
   getToken: () => string | null;
+  onUnauthorized?: () => void;
 }
 
 let currentProvider: AuthProvider | null = null;
@@ -14,4 +15,8 @@ export function setAuthProvider(provider: AuthProvider | null): void {
 
 export function getAuthToken(): string | null {
   return currentProvider?.getToken() ?? null;
+}
+
+export function notifyUnauthorized(): void {
+  currentProvider?.onUnauthorized?.();
 }

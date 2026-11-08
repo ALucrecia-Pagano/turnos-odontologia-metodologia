@@ -1,13 +1,16 @@
-import { getAuthToken } from "./auth";
+import { getAuthToken, notifyUnauthorized } from "./auth";
 import type { ApiErrorPayload, ApiResult, FieldError, Json, Violation } from "./types";
 
 export type FetchFn = (url: string, init?: RequestInit) => Promise<Response>;
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
+export type RequestAuthMode = "auto" | "omit";
+
 export interface RequestOptions {
   method?: HttpMethod;
   body?: Json;
+  auth?: RequestAuthMode;
 }
 
 export interface ApiClientOptions {
@@ -93,9 +96,12 @@ function toErrorPayload(status: number, rawText: string): ApiErrorPayload {
 }
 
 export function createApiClient({ baseUrl = API_BASE_URL, fetchFn = browserFetch }: ApiClientOptions = {}): ApiClient {
-  async function request(path: string, { method = "GET", body }: RequestOptions = {}): Promise<ApiResult> {
+  async function request(
+    path: string,
+    { method = "GET", body, auth = "auto" }: RequestOptions = {},
+  ): Promise<ApiResult> {
     const headers = new Headers({ Accept: "application/json" });
-    const token = getAuthToken();
+    const token = auth === "omit" ? null : getAuthToken();
     if (token !== null) {
       headers.set("Authorization", `Bearer ${token}`);
     }
@@ -117,7 +123,11 @@ export function createApiClient({ baseUrl = API_BASE_URL, fetchFn = browserFetch
     if (response.ok) {
       return { ok: true, status: response.status, data: parseJson(text) ?? null };
     }
-    return { ok: false, status: response.status, error: toErrorPayload(response.status, text) };
+    const error = toErrorPayload(response.status, text);
+    if (response.status === 401 && auth !== "omit") {
+      notifyUnauthorized();
+    }
+    return { ok: false, status: response.status, error };
   }
 
   return { request };

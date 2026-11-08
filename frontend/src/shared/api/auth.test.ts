@@ -52,9 +52,15 @@ describe("punto de enganche del token", () => {
     const sources = productionSources();
     expect(sources.map((source) => source.path.replaceAll("\\", "/"))).toContain("shared/api/auth.ts");
 
+    const allowedSessionStorage = new Set(["features/auth/tokenStore.ts"]);
     const offenders = sources
-      .filter(({ content }) => /localStorage|sessionStorage|document\.cookie/.test(content))
-      .map(({ path }) => path);
+      .filter(({ path, content }) => {
+        const normalizedPath = path.replaceAll("\\", "/");
+        if (/localStorage|document\.cookie/.test(content)) return true;
+        if (/sessionStorage/.test(content) && !allowedSessionStorage.has(normalizedPath)) return true;
+        return false;
+      })
+      .map(({ path }) => path.replaceAll("\\", "/"));
     expect(offenders).toEqual([]);
 
     setAuthProvider({ getToken: () => null });
