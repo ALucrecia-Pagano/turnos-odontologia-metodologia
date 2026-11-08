@@ -131,9 +131,9 @@ Los tests de UI de este repo siguen la regla C1. **No uses** `vi.mock`,
 `vi.spyOn`, `vi.stubGlobal`, fake timers (`vi.useFakeTimers`,
 `vi.setSystemTime`) ni MSW. En su lugar:
 
-- **Inyección de `fetch`**: pasá un `FetchFn` por parámetro a
-  `createApiClient`/`createAgendaClient`. Cada test define su `fetchFn` y
-  devuelve respuestas literales tomadas del spec.
+- **Inyección de `fetch`**: creá el cliente con `createApiClient({ fetchFn })`
+  y pasalo a `fetchAgenda`, `fetchProfessionals` o `fetchChairs`. Cada test
+  define su `fetchFn` y devuelve respuestas literales tomadas del spec.
 - **Inyección de `Clock`**: usá `createFixedClock("2026-11-16T12:00:00Z")` en vez
   de fake timers. El componente recibe el `Clock`; `systemClock` solo en
   producción.
