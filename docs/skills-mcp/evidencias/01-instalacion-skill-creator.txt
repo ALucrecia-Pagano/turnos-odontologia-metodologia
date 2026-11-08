@@ -1,0 +1,183 @@
+# Evidencia 01 — Instalación de skill-creator (Anthropic) con copia versionada
+
+Fecha: 2026-11-08
+Repo: turnos-odontologia
+Objetivo: instalar la skill oficial `skill-creator` a nivel proyecto, versionarla en `.agents/skills/` y verificar que las copias son idénticas.
+
+---
+
+## 1. Instalación a nivel proyecto
+
+Comando solicitado:
+
+```
+npx skills add anthropics/skills --skill skill-creator -a claude-code --copy
+```
+
+Nota: sin `--yes`, el CLI queda esperando el prompt interactivo "Installation scope" y no instala en un entorno sin TTY. Se reejecutó con `--yes` (opción recomendada por el propio CLI: "use the --yes (-y) ... flags to install without prompts"):
+
+```
+npx skills add anthropics/skills --skill skill-creator -a claude-code --copy --yes
+```
+
+Salida de la instalación (códigos ANSI y frames de spinner eliminados):
+
+```
+███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
+██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝
+███████╗█████╔╝ ██║██║     ██║     ███████╗
+╚════██║██╔═██╗ ██║██║     ██║     ╚════██║
+███████║██║  ██╗██║███████╗███████╗███████║
+╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
+
+┌   skills 
+│
+│  Tip: use the --yes (-y) and --global (-g) flags to install without prompts.
+│
+◇  Source: https://github.com/anthropics/skills.git
+│
+●  Selected 1 skill: skill-creator
+
+│
+◇  Installation Summary ──────────────────────────────────────────────╮
+│  Example Skills                                                     │
+│  ~\METODOLOGIA_TPS\turnos-odontologia\.agents\skills\skill-creator  │
+│    copy → Claude Code                                               │
+│    overwrites: Claude Code                                          │
+├─────────────────────────────────────────────────────────────────────╯
+│
+◇  Security Risk Assessments ───────────────────────────────────╮
+│                 Gen               Socket            Snyk      │
+│  skill-creator  Safe              1 alert           Low Risk  │
+│  Details: https://skills.sh/anthropics/skills                 │
+├───────────────────────────────────────────────────────────────╯
+│
+◇  Installation complete
+
+│
+◇  Installed 1 skill ─────────────────────────────────────────────────────╮
+│  Example Skills                                                         │
+│  ✓ skill-creator (copied)                                               │
+│    → ~\METODOLOGIA_TPS\turnos-odontologia\.claude\skills\skill-creator  │
+├─────────────────────────────────────────────────────────────────────────╯
+│
+└  Done!  Review skills before use; they run with full agent permissions.
+```
+
+Resultado: EXIT=0, "Installed 1 skill".
+
+---
+
+## 2. Verificación de la instalación
+
+```
+$ ls -la .claude/skills/skill-creator/SKILL.md
+-rw-r--r-- 1 hp 197121 33653 Nov  8 17:12 .claude/skills/skill-creator/SKILL.md
+```
+
+Archivos instalados en `.claude/skills/skill-creator/` (18 archivos):
+
+```
+agents/analyzer.md
+agents/comparator.md
+agents/grader.md
+assets/eval_review.html
+eval-viewer/generate_review.py
+eval-viewer/viewer.html
+LICENSE.txt
+references/schemas.md
+scripts/__init__.py
+scripts/aggregate_benchmark.py
+scripts/generate_report.py
+scripts/improve_description.py
+scripts/package_skill.py
+scripts/quick_validate.py
+scripts/run_eval.py
+scripts/run_loop.py
+scripts/utils.py
+SKILL.md
+```
+
+---
+
+## 3. Copia versionada a `.agents/skills/skill-creator/`
+
+```
+$ cp -R .claude/skills/skill-creator .agents/skills/skill-creator
+```
+
+### Comparación de carpetas (`diff -r`)
+
+```
+$ diff -r .claude/skills/skill-creator .agents/skills/skill-creator
+exit=0 (0 = sin diferencias)
+```
+
+### Comparación archivo por archivo (`cmp`)
+
+```
+$ cmp -s <cada archivo>
+IDENTICAL: agents/analyzer.md
+IDENTICAL: agents/comparator.md
+IDENTICAL: agents/grader.md
+IDENTICAL: assets/eval_review.html
+IDENTICAL: eval-viewer/generate_review.py
+IDENTICAL: eval-viewer/viewer.html
+IDENTICAL: LICENSE.txt
+IDENTICAL: references/schemas.md
+IDENTICAL: scripts/__init__.py
+IDENTICAL: scripts/aggregate_benchmark.py
+IDENTICAL: scripts/generate_report.py
+IDENTICAL: scripts/improve_description.py
+IDENTICAL: scripts/package_skill.py
+IDENTICAL: scripts/quick_validate.py
+IDENTICAL: scripts/run_eval.py
+IDENTICAL: scripts/run_loop.py
+IDENTICAL: scripts/utils.py
+IDENTICAL: SKILL.md
+RESULT: CMP_ALL_IDENTICAL
+```
+
+Conclusión: `.claude/skills/skill-creator/` y `.agents/skills/skill-creator/` son idénticas (18/18 archivos).
+
+---
+
+## 4. Comparación con la skill instalada por Active Stack a nivel usuario
+
+La skill de usuario figura en `.atl/skill-registry.md` como:
+
+```
+| Create / improve skills | skill-creator | ~/.claude/skills/skill-creator/SKILL.md |
+```
+
+Comparación de la versión oficial recién instalada contra `~/.claude/skills/skill-creator/`:
+
+```
+$ diff -r .claude/skills/skill-creator C:/Users/hp/.claude/skills/skill-creator
+exit=0 (0 = sin diferencias)
+```
+
+Archivos de la versión de usuario (Active Stack) — misma estructura, 18 archivos:
+
+```
+agents/analyzer.md
+agents/comparator.md
+agents/grader.md
+assets/eval_review.html
+eval-viewer/generate_review.py
+eval-viewer/viewer.html
+LICENSE.txt
+references/schemas.md
+scripts/__init__.py
+scripts/aggregate_benchmark.py
+scripts/generate_report.py
+scripts/improve_description.py
+scripts/package_skill.py
+scripts/quick_validate.py
+scripts/run_eval.py
+scripts/run_loop.py
+scripts/utils.py
+SKILL.md
+```
+
+Conclusión: ¿son iguales? **Sí.** La skill oficial instalada a nivel proyecto es idéntica a la que Active Stack instaló a nivel usuario (`~/.claude/skills/skill-creator`): `diff -r` sin diferencias y los 18 archivos coinciden.
