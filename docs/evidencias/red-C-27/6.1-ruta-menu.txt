@@ -1,0 +1,123 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/App.test.tsx src/features/auth/menuFor.test.ts src/shared/components/AppShell.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[32m 28[2mms[22m[39m
+[31m   [31m×[31m menuFor[2m > [22mmenú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente[39m[32m 21[2mms[22m[39m
+[31m     → expected { id: 'agenda', label: 'Agenda', …(3) } to deeply equal { id: 'agenda', label: 'Agenda', …(3) }[39m
+[31m   [31m×[31m menuFor[2m > [22mmenú de recepción habilita Agenda y no incluye Usuarios y roles[39m[32m 3[2mms[22m[39m
+[31m     → expected true to be false // Object.is equality[39m
+[31m   [31m×[31m menuFor[2m > [22mmenú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles[39m[32m 1[2mms[22m[39m
+[31m     → expected true to be false // Object.is equality[39m
+ [31m❯[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 208[2mms[22m[39m
+[31m   [31m×[31m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente[39m[32m 127[2mms[22m[39m
+[31m     → expected null not to be null[39m
+   [32m✓[39m AppShell[2m > [22mmuestra en un alerta del shell la violación de un 403 sin cerrar la sesión[32m 79[2mms[22m[39m
+ [31m❯[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 262[2mms[22m[39m
+[31m   [31m×[31m App con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage[39m[32m 7[2mms[22m[39m
+[31m     → createAppRoutes is not a function[39m
+   [32m✓[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada[32m 115[2mms[22m[39m
+   [32m✓[39m App con router y guards de sesión[2m > [22mruta protegida sin sesión conserva el destino[32m 32[2mms[22m[39m
+   [32m✓[39m App con router y guards de sesión[2m > [22mlogin con sesión vuelve al destino válido[32m 14[2mms[22m[39m
+   [32m✓[39m App con router y guards de sesión[2m > [22msin parpadeo de login a home[32m 5[2mms[22m[39m
+   [32m✓[39m App con router y guards de sesión[2m > [22mtoken vencido en una request protegida[32m 88[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 5 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage
+[31m[1mTypeError[22m: createAppRoutes is not a function[39m
+[36m [2m❯[22m src/App.test.tsx:[2m78:39[22m[39m
+    [90m 76| [39m  it("la ruta raíz redirige con replace a /agenda según el Clock y no …
+    [90m 77| [39m    [35mconst[39m tokenStore [33m=[39m [34mcreateMemoryTokenStore[39m([32m"token-ficticio-123"[39m)[33m;[39m
+    [90m 78| [39m    [35mconst[39m router [33m=[39m [34mcreateMemoryRouter[39m([34mcreateAppRoutes[39m([33mFIXED_CLOCK[39m)[33m,[39m {
+    [90m   | [39m                                      [31m^[39m
+    [90m 79| [39m      initialEntries[33m:[39m [[32m"/"[39m][33m,[39m
+    [90m 80| [39m    })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
+[31m[1mAssertionError[22m: expected { id: 'agenda', label: 'Agenda', …(3) } to deeply equal { id: 'agenda', label: 'Agenda', …(3) }[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "badge": null,[39m
+[32m-   "disabled": false,[39m
+[31m+   "badge": "Próximamente",[39m
+[31m+   "disabled": true,[39m
+[2m    "id": "agenda",[22m
+[2m    "label": "Agenda",[22m
+[2m    "path": "/agenda",[22m
+[2m  }[22m
+
+[36m [2m❯[22m src/features/auth/menuFor.test.ts:[2m15:22[22m[39m
+    [90m 13| [39m      [32m"Usuarios y roles"[39m[33m,[39m
+    [90m 14| [39m    ])[33m;[39m
+    [90m 15| [39m    [34mexpect[39m(items[[34m0[39m])[33m.[39m[34mtoEqual[39m({
+    [90m   | [39m                     [31m^[39m
+    [90m 16| [39m      id[33m:[39m [32m"agenda"[39m[33m,[39m
+    [90m 17| [39m      label[33m:[39m [32m"Agenda"[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú de recepción habilita Agenda y no incluye Usuarios y roles
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m src/features/auth/menuFor.test.ts:[2m36:32[22m[39m
+    [90m 34| [39m    ])[33m;[39m
+    [90m 35| [39m    expect(items.some((item) => item.label === "Usuarios y roles")).to…
+    [90m 36| [39m    [34mexpect[39m(items[[34m0[39m][33m?.[39mdisabled)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m   | [39m                               [31m^[39m
+    [90m 37| [39m    [34mexpect[39m(items[[34m0[39m][33m?.[39mbadge)[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m 38| [39m    expect(items.slice(1).every((item) => item.disabled && item.badge …
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m src/features/auth/menuFor.test.ts:[2m53:32[22m[39m
+    [90m 51| [39m    [34mexpect[39m(items[33m.[39m[34msome[39m((item) [33m=>[39m item[33m.[39mlabel [33m===[39m [32m"Turnos"[39m))[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 52| [39m    expect(items.some((item) => item.label === "Usuarios y roles")).to…
+    [90m 53| [39m    [34mexpect[39m(items[[34m0[39m][33m?.[39mdisabled)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m   | [39m                               [31m^[39m
+    [90m 54| [39m    [34mexpect[39m(items[[34m0[39m][33m?.[39mbadge)[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m 55| [39m    expect(items.slice(1).every((item) => item.disabled && item.badge …
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShell.test.tsx[2m > [22mAppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/shared/components/AppShell.test.tsx:[2m63:28[22m[39m
+    [90m 61| [39m    const nav = screen.getByRole("navigation", { name: "Menú principal…
+    [90m 62| [39m    const agendaLink = within(nav).queryByRole("link", { name: "Agenda…
+    [90m 63| [39m    [34mexpect[39m(agendaLink)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                           [31m^[39m
+    [90m 64| [39m    [34mexpect[39m(agendaLink)[33m.[39m[34mtoHaveAttribute[39m([32m"href"[39m[33m,[39m [32m"/agenda"[39m)[33m;[39m
+    [90m 65| [39m    [34mexpect[39m(agendaLink)[33m.[39m[34mtoHaveAttribute[39m([32m"aria-current"[39m[33m,[39m [32m"page"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m5 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (11)[39m
+[2m   Start at [22m 01:22:19
+[2m   Duration [22m 8.52s[2m (transform 1.95s, setup 1.54s, collect 8.61s, tests 499ms, environment 7.26s, prepare 1.15s)[22m
+

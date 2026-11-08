@@ -1,0 +1,49 @@
+$ openspec list 
+Changes:
+  ui-agenda-diaria     0/28 tasks    9m ago
+ 
+$ openspec list --specs 
+Specs:
+  agenda-api                       requirements 7
+  api-foundation                   requirements 11
+  appointment-lifecycle            requirements 25
+  appointment-scheduling           requirements 34
+  appointments-api                 requirements 13
+  authentication-and-rbac          requirements 21
+  backend-toolchain                requirements 6
+  catalog-and-patients             requirements 19
+  database-infrastructure          requirements 42
+  domain-dependency-guard          requirements 7
+  frontend-auth-session            requirements 9
+  frontend-foundation              requirements 7
+  working-hours-and-blocks-api     requirements 8
+ 
+$ ls openspec/changes/archive 
+.gitkeep
+2026-10-08-crear-turno-sin-solapamientos
+2026-10-08-fundacion-backend-y-dominio
+2026-10-22-validar-duracion-y-referencias
+2026-10-23-hora-local-y-turno-en-un-dia
+2026-10-26-horario-de-atencion
+2026-10-28-bloqueos-de-agenda
+2026-10-29-no-turnos-en-el-pasado
+2026-11-01-catalogo-y-pacientes-dominio
+2026-11-01-mensajes-de-conflicto-en-espanol
+2026-11-02-docker-compose-y-postgres
+2026-11-02-transiciones-de-estado-del-turno
+2026-11-03-migraciones-alembic
+2026-11-03-reprogramar-turno
+2026-11-04-historial-de-transiciones
+2026-11-04-persistencia-catalogos-y-pacientes
+2026-11-05-persistencia-horarios-y-bloqueos
+2026-11-05-persistencia-turnos-e-historial
+2026-11-06-api-base-fastapi
+2026-11-06-api-catalogos-y-pacientes
+2026-11-06-api-dar-turno
+2026-11-06-api-horarios-y-bloqueos
+2026-11-06-autenticacion-jwt-y-roles
+2026-11-07-api-ciclo-de-vida-del-turno
+2026-11-07-api-consulta-de-agenda
+2026-11-07-frontend-base-react-vite
+2026-11-07-specs-requisitos-concisos
+2026-11-07-ui-login-y-sesion

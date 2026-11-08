@@ -1,0 +1,81 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/agendaStyles.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 21[2mms[22m[39m
+[31m   [31m×[31m agendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[39m[32m 19[2mms[22m[39m
+[31m     → expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-hour-height: 64px;'[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
+[31m[1mAssertionError[22m: expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-hour-height: 64px;'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- --agenda-hour-height: 64px;[39m
+[31m+ :root {[39m
+[31m+   /* Espaciado */[39m
+[31m+   --space-1: 4px;[39m
+[31m+   --space-2: 8px;[39m
+[31m+   --space-3: 12px;[39m
+[31m+   --space-4: 16px;[39m
+[31m+   --space-5: 24px;[39m
+[31m+   --space-6: 32px;[39m
+[31m+   --space-7: 48px;[39m
+[31m+[39m
+[31m+   /* Tipografía */[39m
+[31m+   --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;[39m
+[31m+   --font-size-xs: 12px;[39m
+[31m+   --font-size-sm: 14px;[39m
+[31m+   --font-size-md: 16px;[39m
+[31m+   --font-size-lg: 20px;[39m
+[31m+   --font-size-xl: 24px;[39m
+[31m+   --font-size-2xl: 32px;[39m
+[31m+   --font-weight-regular: 400;[39m
+[31m+   --font-weight-medium: 500;[39m
+[31m+   --font-weight-bold: 700;[39m
+[31m+   --line-height-base: 1.5;[39m
+[31m+[39m
+[31m+   /* Color */[39m
+[31m+   --color-text: #111827;[39m
+[31m+   --color-text-muted: #4B5563;[39m
+[31m+   --color-background: #F9FAFB;[39m
+[31m+   --color-surface: #FFFFFF;[39m
+[31m+   --color-border: #D1D5DB;[39m
+[31m+   --color-primary: #1D4ED8;[39m
+[31m+   --color-primary-contrast: #FFFFFF;[39m
+[31m+   --color-danger-text: #B91C1C;[39m
+[31m+   --color-danger-background: #FEE2E2;[39m
+[31m+   --color-danger-border: #FCA5A5;[39m
+[31m+   --color-focus: #2563EB;[39m
+[31m+[39m
+[31m+   /* Radios y sombras */[39m
+[31m+   --radius-sm: 4px;[39m
+[31m+   --radius-md: 8px;[39m
+[31m+   --radius-pill: 999px;[39m
+[31m+   --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.08);[39m
+[31m+   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);[39m
+[31m+ }[39m
+[31m+[39m
+
+[36m [2m❯[22m src/features/agenda/agendaStyles.test.ts:[2m30:25[22m[39m
+    [90m 28| [39m    ][33m;[39m
+    [90m 29| [39m    [35mfor[39m ([35mconst[39m token [35mof[39m requiredTokens) {
+    [90m 30| [39m      [34mexpect[39m(tokensCss)[33m.[39m[34mtoContain[39m(token)[33m;[39m
+    [90m   | [39m                        [31m^[39m
+    [90m 31| [39m    }
+    [90m 32| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 01:51:14
+[2m   Duration [22m 2.80s[2m (transform 75ms, setup 346ms, collect 89ms, tests 21ms, environment 1.58s, prepare 242ms)[22m
+

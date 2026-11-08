@@ -1,0 +1,40 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/agendaTimeGuard.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 41[2mms[22m[39m
+[31m   [31m×[31m guardián de zona horaria y reloj en agenda[2m > [22mprohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts[39m[32m 39[2mms[22m[39m
+[31m     → expected [ 'agendaTime.ts' ] to deeply equal [][39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaTimeGuard.test.ts[2m > [22mguardián de zona horaria y reloj en agenda[2m > [22mprohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts
+[31m[1mAssertionError[22m: expected [ 'agendaTime.ts' ] to deeply equal [][39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "agendaTime.ts",[39m
+[31m+ ][39m
+
+[36m [2m❯[22m src/features/agenda/agendaTimeGuard.test.ts:[2m27:33[22m[39m
+    [90m 25| [39m      [33m.[39m[34mfilter[39m(({ content }) [33m=>[39m [33mFORBIDDEN_LOCAL_GETTERS[39m[33m.[39m[34mtest[39m(content))
+    [90m 26| [39m      [33m.[39m[34mmap[39m(({ path }) [33m=>[39m path)[33m;[39m
+    [90m 27| [39m    [34mexpect[39m(forbiddenLocalFiles)[33m.[39m[34mtoEqual[39m([])[33m;[39m
+    [90m   | [39m                                [31m^[39m
+    [90m 28| [39m
+    [90m 29| [39m    [35mconst[39m filesWithNewDateNoArgs [33m=[39m sources
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 00:41:21
+[2m   Duration [22m 3.75s[2m (transform 105ms, setup 473ms, collect 94ms, tests 41ms, environment 2.29s, prepare 368ms)[22m
+

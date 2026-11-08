@@ -1,0 +1,578 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaToolbar.test.tsx src/features/agenda/AgendaPage.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 2075[2mms[22m[39m
+[31m   [31m×[31m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible[39m[33m 1065[2mms[22m[39m
+[31m     → expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33maria-current[31m=[32m"page"[31m
+                  [33mclass[31m=[32m"menuLink menuLinkActive"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mCatálogos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mPacientes[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mRecepción Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"agenda-page-root"[31m
+          [36m/>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[31m   [31m×[31m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha[39m[33m 1009[2mms[22m[39m
+[31m     → expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33maria-current[31m=[32m"page"[31m
+                  [33mclass[31m=[32m"menuLink menuLinkActive"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mCatálogos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mPacientes[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mRecepción Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"agenda-page-root"[31m
+          [36m/>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaToolbar.test.tsx[2m [ src/features/agenda/AgendaToolbar.test.tsx ][22m
+[31m[1mError[22m: Failed to resolve import "./AgendaToolbar" from "src/features/agenda/AgendaToolbar.test.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaToolbar.test.tsx[39m:4:30
+[33m  2  |  import { fireEvent, render, screen, within } from "@testing-library/react";
+  3  |  import { describe, expect, it } from "vitest";
+  4  |  import { AgendaToolbar } from "./AgendaToolbar";
+     |                                 ^
+  5  |  const PROFESSIONALS = [
+  6  |    {[39m
+[90m [2m❯[22m TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49258:41[22m[39m
+[90m [2m❯[22m TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49253:16[22m[39m
+[90m [2m❯[22m normalizeUrl node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64307:23[22m[39m
+[90m [2m❯[22m node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64439:39[22m[39m
+[90m [2m❯[22m TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64366:7[22m[39m
+[90m [2m❯[22m PluginContainer.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49099:18[22m[39m
+[90m [2m❯[22m loadAndTransform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m51978:27[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
+[31m[1mAssertionError[22m: expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33maria-current[31m=[32m"page"[31m
+                  [33mclass[31m=[32m"menuLink menuLinkActive"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mCatálogos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mPacientes[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mRecepción Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"agenda-page-root"[31m
+          [36m/>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[36m [2m❯[22m src/features/agenda/AgendaPage.test.tsx:[2m194:13[22m[39m
+    [90m192| [39m      [34mexpect[39m(
+    [90m193| [39m        screen.queryByTestId("agenda-appointment-00000000-0000-0000-00…
+    [90m194| [39m      )[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m            [31m^[39m
+    [90m195| [39m    })[33m;[39m
+    [90m196| [39m
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
+[31m[1mAssertionError[22m: expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33maria-current[31m=[32m"page"[31m
+                  [33mclass[31m=[32m"menuLink menuLinkActive"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mCatálogos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mPacientes[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mRecepción Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"agenda-page-root"[31m
+          [36m/>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[36m [2m❯[22m src/features/agenda/AgendaPage.test.tsx:[2m254:13[22m[39m
+    [90m252| [39m      [34mexpect[39m(
+    [90m253| [39m        screen.queryByTestId("agenda-appointment-00000000-0000-0000-00…
+    [90m254| [39m      )[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m            [31m^[39m
+    [90m255| [39m    })[33m;[39m
+    [90m256| [39m
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 01:36:34
+[2m   Duration [22m 6.98s[2m (transform 492ms, setup 967ms, collect 846ms, tests 2.08s, environment 4.28s, prepare 924ms)[22m
+

@@ -1,0 +1,11 @@
+Change 'ui-agenda-diaria' is valid
+warning: in the working copy of 'frontend/src/App.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/auth/menuFor.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/auth/menuFor.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/client.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/AppShell.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/AppShell.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/AppShell.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/styles/tokens.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/ui-agenda-diaria/tasks.md', LF will be replaced by CRLF the next time Git touches it

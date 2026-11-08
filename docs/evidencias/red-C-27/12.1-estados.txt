@@ -1,0 +1,572 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaView.test.tsx src/features/agenda/AgendaPage.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 406[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[32m 218[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 22[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 23[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 23[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 93[2mms[22m[39m
+[31m   [31m×[31m AgendaView[2m > [22mmuestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío[39m[32m 24[2mms[22m[39m
+[31m     → [2mexpect([22m[31mreceived[31m[2m).toBeInTheDocument()[22m
+
+[31mreceived[31m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[31m[39m
+ [31m❯[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 1863[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 318[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha[32m 241[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL[32m 177[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mrespeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso[32m 76[2mms[22m[39m
+[31m   [31m×[31m AgendaPage[2m > [22mmuestra Cargando... con role=status en la carga inicial sin mostrar error[39m[32m 24[2mms[22m[39m
+[31m     → [2mexpect([22m[31mreceived[31m[2m).toHaveTextContent()[22m
+
+[31mreceived[31m value must be a Node.
+Received has type:  Null
+Received has value: [31mnull[31m[39m
+[31m   [31m×[31m AgendaPage[2m > [22mmuestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente[39m[33m 1023[2mms[22m[39m
+[31m     → expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33maria-current[31m=[32m"page"[31m
+                  [33mclass[31m=[32m"menuLink menuLinkActive"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mCatálogos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mPacientes[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mRecepción Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"shell"[31m
+          [36m>[31m
+            [36m<header[31m
+              [33mclass[31m=[32m"header"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"brand"[31m
+              [36m>[31m
+                [0mAgenda diaria[0m
+              [36m</span>[31m
+            [36m</header>[31m
+            [36m<main[31m
+              [33mclass[31m=[32m"main"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33maria-label[31m=[32m"Controles de agenda"[31m
+                [33mclass[31m=[32m"toolbar"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"controlsRow"[31m
+                [36m>[31m
+                  [36m<div[31m
+                    [33mclass[31m=[32m"navGroup"[31m
+                  [36m>[31m
+                    [36m<button[31m
+                      [33mclass[31m=[32m"actionButton"[31m
+                      [33mtype[31m=[32m"button"[31m
+                    [36m>[31m
+                      [0mAnterior[0m
+                    [36m</button>[31m
+                    [36m<button[31m
+                      [33mclass[31m=[32m"actionButton"[31m
+                      [33mtype[31m=[32m"button"[31m
+                    [36m>[31m
+                      [0mHoy[0m
+                    [36m</button>[31m
+                    [36m<button[31m
+                      [33mclass[31m=[32m"actionButton"[31m
+                      [33mtype[31m=[32m"button"[31m
+                    [36m>[31m
+                      [0mSiguiente[0m
+                    [36m</button>[31m
+                    [36m<div[31m
+                      [33mclass[31m=[32m"field"[31m
+                    [36m>[31m
+                      [36m<label[31m
+                        [33mclass[31m=[32m"label"[31m
+                        [33mfor[31m=[32m"agenda-date-input"[31m
+                      [36m>[31m
+                        [0mFecha[0m
+                      [36m</label>[31m
+                      [36m<input[31m
+                        [33mclass[31m=[32m"dateInput"[31m
+                        [33mid[31m=[32m"agenda-date-input"[31m
+                        [33mtype[31m=[32m"date"[31m
+                        [33mvalue[31m=[32m"2026-11-16"[31m
+                      [36m/>[31m
+                    [36m</div>[31m
+                  [36m</div>[31m
+                  [36m<div[31m
+                    [33mclass[31m=[32m"filterGroup"[31m
+                  [36m>[31m
+                    [36m<div[31m
+                      [33mclass[31m=[32m"field"[31m
+                    [36m>[31m
+                      [36m<label[31m
+                        [33mclass[31m=[32m"label"[31m
+                        [33mfor[31m=[32m"agenda-filter-professional"[31m
+                      [36m>[31m
+                        [0mProfesional[0m
+                      [36m</label>[31m
+                      [36m<select[31m
+                        [33mclass[31m=[32m"select"[31m
+                        [33mid[31m=[32m"agenda-filter-professional"[31m
+                      [36m>[31m
+                        [36m<option[31m
+                          [33mvalue[31m=[32m""[31m
+                        [36m>[31m
+                          [0mTodos[0m
+                        [36m</option>[31m
+                      [36m</select>[31m
+                    [36m</div>[31m
+                    [36m<div[31m
+                      [33mclass[31m=[32m"field"[31m
+                    [36m>[31m
+                      [36m<label[31m
+                        [33mclass[31m=[32m"label"[31m
+                        [33mfor[31m=[32m"agenda-filter-chair"[31m
+                      [36m>[31m
+                        [0mSillón[0m
+                      [36m</label>[31m
+                      [36m<select[31m
+                        [33mclass[31m=[32m"select"[31m
+                        [33mid[31m=[32m"agenda-filter-chair"[31m
+                      [36m>[31m
+                        [36m<option[31m
+                          [33mvalue[31m=[32m""[31m
+                        [36m>[31m
+                          [0mTodos[0m
+                        [36m</option>[31m
+                      [36m</select>[31m
+                    [36m</div>[31m
+                    [36m<button[31m
+                      [33mclass[31m=[32m"actionButton"[31m
+                      [33mtype[31m=[32m"button"[31m
+                    [36m>[31m
+                      [0mLimpiar filtros[0m
+                    [36m</button>[31m
+                  [36m</div>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</main>[31m
+            [36m<footer[31m
+              [33mclass[31m=[32m"footer"[31m
+            [36m>[31m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra Cargando... con role=status en la carga inicial sin mostrar error
+[31m[1mError[22m: [2mexpect([22m[31mreceived[31m[2m).toHaveTextContent()[22m
+
+[31mreceived[31m value must be a Node.
+Received has type:  Null
+Received has value: [31mnull[31m[39m
+[36m [2m❯[22m src/features/agenda/AgendaPage.test.tsx:[2m432:42[22m[39m
+    [90m430| [39m      [34mexpect[39m(screen[33m.[39m[34mqueryByText[39m([32m"Recepción Demo"[39m))[33m.[39m[34mtoBeInTheDocument[39m()[33m;[39m
+    [90m431| [39m    })[33m;[39m
+    [90m432| [39m    expect(screen.queryByRole("status")).toHaveTextContent("Cargando..…
+    [90m   | [39m                                         [31m^[39m
+    [90m433| [39m    [34mexpect[39m(screen[33m.[39m[34mqueryByRole[39m([32m"alert"[39m))[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m434| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
+[31m[1mAssertionError[22m[39m: expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"menuLink menuLinkActive"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mRecepción Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m>[39m
+                [0mAgenda diaria[0m
+              [36m</span>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Controles de agenda"[39m
+                [33mclass[39m=[32m"toolbar"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"controlsRow"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"navGroup"[39m
+                  [36m>[39m
+                    [36m<button[39m
+                      [33mclass[39m=[32m"actionButton"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [0mAnterior[0m
+                    [36m</button>[39m
+                    [36m<button[39m
+                      [33mclass[39m=[32m"actionButton"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [0mHoy[0m
+                    [36m</button>[39m
+                    [36m<button[39m
+                      [33mclass[39m=[32m"actionButton"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [0mSiguiente[0m
+                    [36m</button>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"field"[39m
+                    [36m>[39m
+                      [36m<label[39m
+                        [33mclass[39m=[32m"label"[39m
+                        [33mfor[39m=[32m"agenda-date-input"[39m
+                      [36m>[39m
+                        [0mFecha[0m
+                      [36m</label>[39m
+                      [36m<input[39m
+                        [33mclass[39m=[32m"dateInput"[39m
+                        [33mid[39m=[32m"agenda-date-input"[39m
+                        [33mtype[39m=[32m"date"[39m
+                        [33mvalue[39m=[32m"2026-11-16"[39m
+                      [36m/>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"filterGroup"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"field"[39m
+                    [36m>[39m
+                      [36m<label[39m
+                        [33mclass[39m=[32m"label"[39m
+                        [33mfor[39m=[32m"agenda-filter-professional"[39m
+                      [36m>[39m
+                        [0mProfesional[0m
+                      [36m</label>[39m
+                      [36m<select[39m
+                        [33mclass[39m=[32m"select"[39m
+                        [33mid[39m=[32m"agenda-filter-professional"[39m
+                      [36m>[39m
+                        [36m<option[39m
+                          [33mvalue[39m=[32m""[39m
+                        [36m>[39m
+                          [0mTodos[0m
+                        [36m</option>[39m
+                      [36m</select>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"field"[39m
+                    [36m>[39m
+                      [36m<label[39m
+                        [33mclass[39m=[32m"label"[39m
+                        [33mfor[39m=[32m"agenda-filter-chair"[39m
+                      [36m>[39m
+                        [0mSillón[0m
+                      [36m</label>[39m
+                      [36m<select[39m
+                        [33mclass[39m=[32m"select"[39m
+                        [33mid[39m=[32m"agenda-filter-chair"[39m
+                      [36m>[39m
+                        [36m<option[39m
+                          [33mvalue[39m=[32m""[39m
+                        [36m>[39m
+                          [0mTodos[0m
+                        [36m</option>[39m
+                      [36m</select>[39m
+                    [36m</div>[39m
+                    [36m<button[39m
+                      [33mclass[39m=[32m"actionButton"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [0mLimpiar filtros[0m
+                    [36m</button>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+[36m [2m❯[22m src/features/agenda/AgendaPage.test.tsx:[2m453:47[22m[39m
+    [90m451| [39m
+    [90m452| [39m    [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m453| [39m      [34mexpect[39m(screen[33m.[39m[34mqueryByRole[39m([32m"alert"[39m))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                                              [31m^[39m
+    [90m454| [39m    })[33m;[39m
+    [90m455| [39m    const retryBtn = screen.queryByRole("button", { name: "Reintentar"…
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mmuestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+[31m[1mError[22m: [2mexpect([22m[31mreceived[31m[2m).toBeInTheDocument()[22m
+
+[31mreceived[31m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[31m[39m
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m383:63[22m[39m
+    [90m381| [39m    )[33m;[39m
+    [90m382| [39m
+    [90m383| [39m    expect(screen.queryByText("No hay turnos para este día")).toBeInTh…
+    [90m   | [39m                                                              [31m^[39m
+    [90m384| [39m    expect(screen.queryAllByTestId("agenda-column-header")).toHaveLeng…
+    [90m385| [39m    [34mexpect[39m(
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m9 passed[39m[22m[90m (12)[39m
+[2m   Start at [22m 01:43:38
+[2m   Duration [22m 6.06s[2m (transform 762ms, setup 883ms, collect 1.48s, tests 2.27s, environment 3.89s, prepare 744ms)[22m
+

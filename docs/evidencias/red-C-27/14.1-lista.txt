@@ -1,0 +1,60 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaTable.test.tsx src/features/agenda/AgendaView.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 343[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[32m 135[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 26[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 24[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 18[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 92[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mmuestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío[32m 18[2mms[22m[39m
+[31m   [31m×[31m AgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista[39m[32m 27[2mms[22m[39m
+[31m     → expected null not to be null[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaTable.test.tsx[2m [ src/features/agenda/AgendaTable.test.tsx ][22m
+[31m[1mError[22m: Failed to resolve import "./AgendaTable" from "src/features/agenda/AgendaTable.test.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaTable.test.tsx[39m:4:28
+[33m  2  |  import { render, screen, within } from "@testing-library/react";
+  3  |  import { describe, expect, it } from "vitest";
+  4  |  import { AgendaTable } from "./AgendaTable";
+     |                               ^
+  5  |  const APPOINTMENTS = [
+  6  |    {[39m
+[90m [2m❯[22m TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49258:41[22m[39m
+[90m [2m❯[22m TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49253:16[22m[39m
+[90m [2m❯[22m normalizeUrl node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64307:23[22m[39m
+[90m [2m❯[22m node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64439:39[22m[39m
+[90m [2m❯[22m TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64366:7[22m[39m
+[90m [2m❯[22m PluginContainer.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49099:18[22m[39m
+[90m [2m❯[22m loadAndTransform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m51978:27[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m401:28[22m[39m
+    [90m399| [39m
+    [90m400| [39m    [35mconst[39m liveRegion [33m=[39m screen[33m.[39m[34mqueryByTestId[39m([32m"agenda-live-count"[39m)[33m;[39m
+    [90m401| [39m    [34mexpect[39m(liveRegion)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                           [31m^[39m
+    [90m402| [39m    [34mexpect[39m(liveRegion)[33m.[39m[34mtoHaveAttribute[39m([32m"aria-live"[39m[33m,[39m [32m"polite"[39m)[33m;[39m
+    [90m403| [39m    expect(liveRegion).toHaveTextContent("Turnos del lunes 16 de novie…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 01:48:26
+[2m   Duration [22m 3.81s[2m (transform 304ms, setup 823ms, collect 448ms, tests 343ms, environment 3.56s, prepare 572ms)[22m
+

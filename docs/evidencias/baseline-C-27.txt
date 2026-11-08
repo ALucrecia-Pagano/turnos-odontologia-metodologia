@@ -1,0 +1,65 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 422[2mms[22m[39m
+   [33m[2m✓[22m[39m PageShell[2m > [22menvuelve header, main y footer y renderiza sus hijos [33m 418[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 545[2mms[22m[39m
+   [33m[2m✓[22m[39m StatusBadge[2m > [22mel estado reservado muestra su variante [33m 323[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 698[2mms[22m[39m
+   [33m[2m✓[22m[39m EmptyState[2m > [22mcon acción muestra el botón [33m 657[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 767[2mms[22m[39m
+   [33m[2m✓[22m[39m ErrorState[2m > [22mmuestra uno y varios mensajes [33m 521[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1404[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente [33m 1007[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mmuestra en un alerta del shell la violación de un 403 sin cerrar la sesión [33m 392[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 449[2mms[22m[39m
+   [33m[2m✓[22m[39m smoke del andamiaje[2m > [22mmonta App y muestra el título [33m 422[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1709[2mms[22m[39m
+   [33m[2m✓[22m[39m AuthContext[2m > [22merror de red en /me conserva el token y permite reintentar [33m 571[2mms[22m[39m
+   [33m[2m✓[22m[39m AuthContext[2m > [22mlastEvent registra expired ante 401 protegido y manual ante logout [33m 443[2mms[22m[39m
+ [32m✓[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 1233[2mms[22m[39m
+   [33m[2m✓[22m[39m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace [33m 1227[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 2088[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mla ruta raíz renderiza el HomePage de bienvenida [33m 985[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 356[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mtoken vencido en una request protegida [33m 421[2mms[22m[39m
+ [32m✓[39m src/shared/api/auth.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 93[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 109[2mms[22m[39m
+ [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 242[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m src/features/auth/storageGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 8309[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 2684[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 2489[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 1137[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 845[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 751[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 394[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/test/tooling.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 15105[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido [33m 11262[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run lint detecta una violación [33m 3823[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m23 passed[39m[22m[90m (23)[39m
+[2m      Tests [22m [1m[32m85 passed[39m[22m[90m (85)[39m
+[2m   Start at [22m 00:30:34
+[2m   Duration [22m 21.43s[2m (transform 4.90s, setup 24.06s, collect 17.05s, tests 33.40s, environment 75.76s, prepare 8.54s)[22m
+
+
+> turnos-odontologia-frontend@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json
+
+
+> turnos-odontologia-frontend@0.1.0 lint
+> eslint . --max-warnings 0
+

@@ -1,0 +1,49 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/agendaLayout.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 79[2mms[22m[39m
+   [32m✓[39m agendaLayout — eje de horas (R4)[2m > [22mcalcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos[32m 66[2mms[22m[39m
+   [32m✓[39m agendaLayout — eje de horas (R4)[2m > [22musa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440][32m 2[2mms[22m[39m
+   [32m✓[39m agendaLayout — columnas por profesional (R5)[2m > [22mordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda[32m 3[2mms[22m[39m
+   [32m✓[39m agendaLayout — columnas por profesional (R5)[2m > [22mmarca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna[32m 0[2mms[22m[39m
+[31m   [31m×[31m agendaLayout — posición, alto y carriles (R6)[2m > [22masigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena[39m[32m 6[2mms[22m[39m
+[31m     → assignLanes is not a function[39m
+[31m   [31m×[31m agendaLayout — posición, alto y carriles (R6)[2m > [22maplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00[39m[32m 1[2mms[22m[39m
+[31m     → assignLanes is not a function[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22masigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena
+[31m[1mTypeError[22m: assignLanes is not a function[39m
+[36m [2m❯[22m src/features/agenda/agendaLayout.test.ts:[2m227:20[22m[39m
+    [90m225| [39m[34mdescribe[39m([32m"agendaLayout — posición, alto y carriles (R6)"[39m[33m,[39m () [33m=>[39m {
+    [90m226| [39m  it("asigna carriles a turnos sin solape, a un cancelado y un activo …
+    [90m227| [39m    [35mconst[39m single [33m=[39m [34massignLanes[39m(
+    [90m   | [39m                   [31m^[39m
+    [90m228| [39m      [
+    [90m229| [39m        {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22maplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00
+[31m[1mTypeError[22m: assignLanes is not a function[39m
+[36m [2m❯[22m src/features/agenda/agendaLayout.test.ts:[2m304:21[22m[39m
+    [90m302| [39m
+    [90m303| [39m  it("aplica alto mínimo a un turno de 5 minutos, clampea el inicio al…
+    [90m304| [39m    [35mconst[39m fiveMin [33m=[39m [34massignLanes[39m(
+    [90m   | [39m                    [31m^[39m
+    [90m305| [39m      [
+    [90m306| [39m        {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 00:50:48
+[2m   Duration [22m 3.39s[2m (transform 126ms, setup 392ms, collect 188ms, tests 79ms, environment 2.01s, prepare 365ms)[22m
+

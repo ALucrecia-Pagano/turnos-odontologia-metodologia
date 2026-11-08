@@ -1,0 +1,35 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaView.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 222[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[32m 138[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 20[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 19[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 16[2mms[22m[39m
+[31m   [31m×[31m AgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[39m[32m 25[2mms[22m[39m
+[31m     → expected null not to be null[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m343:32[22m[39m
+    [90m341| [39m    const reservadoBadge = within(quirogaCard!).queryByText("Reservado…
+    [90m342| [39m    [35mconst[39m canceladoBadge [33m=[39m [34mwithin[39m(sosaCard[33m![39m)[33m.[39m[34mqueryByText[39m([32m"Cancelado"[39m)[33m;[39m
+    [90m343| [39m    [34mexpect[39m(reservadoBadge)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                               [31m^[39m
+    [90m344| [39m    [34mexpect[39m(canceladoBadge)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m345| [39m    [34mexpect[39m(reservadoBadge)[33m.[39m[34mtoHaveAttribute[39m([32m"data-status"[39m[33m,[39m [32m"reservado"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 01:33:18
+[2m   Duration [22m 3.29s[2m (transform 240ms, setup 367ms, collect 336ms, tests 222ms, environment 1.62s, prepare 305ms)[22m
+

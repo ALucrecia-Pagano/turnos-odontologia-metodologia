@@ -1,0 +1,46 @@
+=== Verificacion Manual C-27 — Agenda Diaria ===
+
+Fecha objetivo para capturas: 2026-11-16 (Lunes futuro)
+Fecha complementaria para vacio: 2026-11-15 (Domingo)
+
+Estado de servicios:
+- Backend: http://localhost:8000/api (OK)
+- Frontend: http://localhost:5173 (OK)
+- Base de datos PostgreSQL con migraciones y seeds aplicados.
+
+Datos creados en la agenda del 2026-11-16:
+1. Dra. Laura Quiroga:
+   - Horarios de atencion: 09:00-13:00 y 15:00-19:00
+   - Turno: 10:00 a 10:30, Paciente Ana Perez, Sillon 1, Prestacion Control, Estado Reservado
+   - Bloqueo: 12:00 a 13:00, Motivo Congreso
+2. Dr. Martin Sosa:
+   - Horarios de atencion: 09:00-13:00
+   - Turno cancelado: 09:00 a 09:30, Paciente Bruno Acosta, Sillon 2, Prestacion Control, Estado Cancelado
+   - Turno activo: 09:00 a 09:30, Paciente Bruno Acosta, Sillon 2, Prestacion Control, Estado Reservado
+   - Visualizacion: ambos turnos se muestran lado a lado en dos carriles sin taparse; el cancelado permanece visible con estilo atenuado y badge 'Cancelado'.
+3. Dra. Paula Benitez:
+   - Profesional inactiva (Dra. Paula Benitez (inactivo)), columna visible sin turnos.
+
+Verificaciones en la UI realizadas:
+- [x] Columnas y orden alfabetico estable: Dr. Martin Sosa, Dra. Laura Quiroga, Dra. Paula Benitez (inactivo).
+- [x] Eje de horas dinamico: 08:00 a 20:00.
+- [x] Hora local de la respuesta: turnos mostrados a las 09:00 y 10:00 respetando America/Argentina/Buenos_Aires.
+- [x] Filtro de profesional: al seleccionar Quiroga, se muestra solo su columna y se filtran turnos, horarios y bloqueos (URL ?date=2026-11-16&professionalId=...).
+- [x] Filtro de sillon: al seleccionar Sillon 2, se filtran solo los turnos y se muestra el mensaje de ayuda aclarando que horarios y bloqueos permanecen visibles (URL ?date=2026-11-16&chairId=...).
+- [x] Filtros combinados sin turnos: mensaje 'Sin turnos para este filtro'.
+- [x] Limpiar filtros: restablece a Todos conservando la fecha seleccionada.
+- [x] Navegacion: Anterior (2026-11-15), Siguiente (2026-11-16), Hoy y selector de fecha.
+- [x] Domingo 2026-11-15 vacio: grilla 08:00-20:00 con aviso 'No hay turnos para este día'.
+- [x] Vista en lista: boton 'Ver como lista' despliega tabla accesible con caption, encabezados y anuncio aria-live.
+- [x] Responsive tablet (768x1024): barra en multiples lineas, grilla con scroll horizontal y encabezados sticky.
+- [x] Cierre de pendiente de 401 de C-26: alterando el token en sessionStorage y pulsando 'Actualizar agenda', la API responde 401 INVALID_TOKEN, se limpia la sesion y se redirige a /login con el mensaje 'La sesión venció. Iniciá sesión de nuevo.'.
+- [x] Limitacion de 403: documentada en verify-C-27.md (los tres roles tienen permiso de lectura sobre la agenda).
+
+Capturas a registrar por la autora:
+- docs/evidencias/capturas/C-27-agenda-dia.png
+- docs/evidencias/capturas/C-27-filtro-profesional.png
+- docs/evidencias/capturas/C-27-filtro-sillon.png
+- docs/evidencias/capturas/C-27-solapamiento-cancelado.png
+- docs/evidencias/capturas/C-27-vacio.png
+- docs/evidencias/capturas/C-27-sesion-vencida.png
+- docs/evidencias/capturas/C-27-tablet.png

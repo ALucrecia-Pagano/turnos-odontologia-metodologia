@@ -1,0 +1,45 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaPage.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m8 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1040[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 315[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha[32m 281[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL[32m 203[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mrespeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso[32m 66[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mmuestra Cargando... con role=status en la carga inicial sin mostrar error[32m 16[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mmuestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente[32m 94[2mms[22m[39m
+   [32m✓[39m AgendaPage[2m > [22mdelega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local[32m 30[2mms[22m[39m
+[31m   [31m×[31m AgendaPage[2m > [22mmuestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global[39m[32m 32[2mms[22m[39m
+[31m     → expected [ …(2) ] to have a length of 1 but got 2[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
+[31m[1mAssertionError[22m: expected [ …(2) ] to have a length of 1 but got 2[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 2[39m
+
+[36m [2m❯[22m src/features/agenda/AgendaPage.test.tsx:[2m539:20[22m[39m
+    [90m537| [39m    [34mexpect[39m(tokenStore[33m.[39m[34mgetToken[39m())[33m.[39m[34mtoBe[39m([32m"token-recepcion-123"[39m)[33m;[39m
+    [90m538| [39m    [35mconst[39m alerts [33m=[39m screen[33m.[39m[34mqueryAllByRole[39m([32m"alert"[39m)[33m;[39m
+    [90m539| [39m    [34mexpect[39m(alerts)[33m.[39m[34mtoHaveLength[39m([34m1[39m)[33m;[39m
+    [90m   | [39m                   [31m^[39m
+    [90m540| [39m    expect(alerts[0]).toHaveTextContent("No tiene permiso para leer la…
+    [90m541| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m7 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 01:45:54
+[2m   Duration [22m 4.67s[2m (transform 525ms, setup 387ms, collect 1.06s, tests 1.04s, environment 1.39s, prepare 270ms)[22m
+

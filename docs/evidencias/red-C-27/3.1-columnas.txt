@@ -1,0 +1,47 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/agendaLayout.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 108[2mms[22m[39m
+   [32m✓[39m agendaLayout — eje de horas (R4)[2m > [22mcalcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos[32m 91[2mms[22m[39m
+   [32m✓[39m agendaLayout — eje de horas (R4)[2m > [22musa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440][32m 4[2mms[22m[39m
+[31m   [31m×[31m agendaLayout — columnas por profesional (R5)[2m > [22mordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda[39m[32m 10[2mms[22m[39m
+[31m     → groupByProfessional is not a function[39m
+[31m   [31m×[31m agendaLayout — columnas por profesional (R5)[2m > [22mmarca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna[39m[32m 1[2mms[22m[39m
+[31m     → groupByProfessional is not a function[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — columnas por profesional (R5)[2m > [22mordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
+[31m[1mTypeError[22m: groupByProfessional is not a function[39m
+[36m [2m❯[22m src/features/agenda/agendaLayout.test.ts:[2m139:19[22m[39m
+    [90m137| [39m
+    [90m138| [39m  it("ordena las columnas de forma alfabética estable con desempate po…
+    [90m139| [39m    [35mconst[39m colsA [33m=[39m [34mgroupByProfessional[39m({
+    [90m   | [39m                  [31m^[39m
+    [90m140| [39m      professionals[33m:[39m [33mCATALOG_A[39m[33m,[39m
+    [90m141| [39m      workingHours[33m:[39m [][33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — columnas por profesional (R5)[2m > [22mmarca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
+[31m[1mTypeError[22m: groupByProfessional is not a function[39m
+[36m [2m❯[22m src/features/agenda/agendaLayout.test.ts:[2m196:26[22m[39m
+    [90m194| [39m
+    [90m195| [39m  it("marca profesionales inactivos con (inactivo) y el filtro profess…
+    [90m196| [39m    [35mconst[39m withInactive [33m=[39m [34mgroupByProfessional[39m({
+    [90m   | [39m                         [31m^[39m
+    [90m197| [39m      professionals[33m:[39m [
+    [90m198| [39m        { id: QUIROGA_ID, fullName: "Dra. Laura Quiroga", active: true…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 00:47:57
+[2m   Duration [22m 3.70s[2m (transform 138ms, setup 442ms, collect 186ms, tests 108ms, environment 2.16s, prepare 382ms)[22m
+

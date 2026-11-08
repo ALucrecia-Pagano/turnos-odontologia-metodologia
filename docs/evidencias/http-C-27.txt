@@ -1,0 +1,15 @@
+=== Verificacion HTTP C-27 contra backend real (VITE_API_URL=http://localhost:8000/api) ===
+POST /api/auth/login (recepcion) -> HTTP 200 {"tokenType": "bearer", "accessTokenPresent": true}
+GET /api/auth/me (recepcion) -> HTTP 200 {"id": "00000000-0000-0000-0000-0000000000e2", "username": "recepcion", "displayName": "Recepci\u00f3n Demo", "role": "recepcion", "professionalId": null}
+POST /api/appointments (Quiroga 10:00 Control Sillon 1) -> ya existía
+POST /api/appointments (Sosa 09:00 cancelado) -> ya existía
+POST /api/appointments (Sosa 09:00 activo coexistente) -> ya existía
+POST /api/professionals/00000000-0000-0000-0000-000000000001/blocks (12:00-13:00 Congreso) -> HTTP 201 id=None
+GET /api/agenda?from=2026-11-16&to=2026-11-16 -> HTTP 200 {"timezone": "America/Argentina/Buenos_Aires", "appointmentsCount": 3, "workingHoursCount": 25, "blocksCount": 1}
+GET /api/agenda?professionalId=00000000-0000-0000-0000-000000000001 -> HTTP 200 {"appointments": 1}
+GET /api/agenda?chairId=00000000-0000-0000-0000-0000000000b2 -> HTTP 200 {"appointments": 2, "blocks": 1, "workingHours": 25}
+GET /api/agenda?from=2026-11-15&to=2026-11-15 (domingo vacio) -> HTTP 200 {"appointments": 0}
+GET /api/professionals -> HTTP 200 total=3
+GET /api/chairs -> HTTP 200 total=3
+GET /api/agenda (token invalido) -> HTTP 401 {"code": "INVALID_TOKEN", "message": "La sesi\u00f3n venci\u00f3 o no es v\u00e1lida. Inicie sesi\u00f3n de nuevo."}
+GET http://localhost:5173/agenda (frontend SPA) -> HTTP 200
