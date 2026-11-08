@@ -1,155 +1,157 @@
 
 [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
 
- [32m✓[39m src/shared/components/EmptyState.test.tsx[2m > [22mEmptyState[2m > [22mcon acción muestra el botón[33m 371[2mms[22m[39m
- [32m✓[39m src/shared/components/EmptyState.test.tsx[2m > [22mEmptyState[2m > [22msin acción no muestra botón[32m 55[2mms[22m[39m
- [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22mmuestra uno y varios mensajes[33m 397[2mms[22m[39m
- [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22mmuestra el mensaje de un 409 textual[32m 24[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mestado checking mientras se verifica la sesión[32m 254[2mms[22m[39m
- [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22mcon reintento muestra el botón y lo ejecuta[32m 168[2mms[22m[39m
- [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22msin reintento no muestra botón[32m 11[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22msesión autenticada con el usuario de /me[32m 121[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22m/me responde 401 y limpia la sesión[32m 82[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaTable.test.tsx[2m > [22mAgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda[33m 893[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22merror de red en /me conserva el token y permite reintentar[33m 619[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mlastEvent registra expired ante 401 protegido y manual ante logout[33m 389[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mrol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me[32m 157[2mms[22m[39m
- [32m✓[39m src/shared/components/AppShell.test.tsx[2m > [22mAppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente[33m 1326[2mms[22m[39m
- [32m✓[39m src/shared/components/AppShell.test.tsx[2m > [22mAppShell[2m > [22mmuestra en un alerta del shell la violación de un 403 sin cerrar la sesión[33m 493[2mms[22m[39m
- [32m✓[39m src/test/smoke.test.tsx[2m > [22msmoke del andamiaje[2m > [22mmonta App y muestra el título[33m 1324[2mms[22m[39m
- [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage[33m 851[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible[33m 1335[2mms[22m[39m
- [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada[33m 678[2mms[22m[39m
- [32m✓[39m src/features/auth/Logout.test.tsx[2m > [22mLogout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace[33m 1804[2mms[22m[39m
- [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mruta protegida sin sesión conserva el destino[32m 129[2mms[22m[39m
- [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mlogin con sesión vuelve al destino válido[32m 71[2mms[22m[39m
- [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22msin parpadeo de login a home[32m 106[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mlogin correcto del administrador[33m 3612[2mms[22m[39m
- [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mtoken vencido en una request protegida[33m 829[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha[33m 1684[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL[33m 451[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mrespeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso[33m 368[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra Cargando... con role=status en la carga inicial sin mostrar error[32m 186[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mlogin correcto de recepción y del odontólogo[33m 2066[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente[33m 537[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mdelega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local[32m 149[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global[32m 122[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22malterna de día a semana conservando fecha y filtros[32m 293[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mcredenciales inválidas con mensaje genérico[33m 908[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22malterna de semana a día conservando el día exacto de anclaje y filtros[32m 217[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mun view desconocido o ausente cae a vista diaria con botón Día seleccionado[32m 106[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselecciona automáticamente por rol odontólogo su propio professionalId[32m 69[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector[32m 110[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mel 401 del login no es sesión vencida[33m 664[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mnavegación semanal avanza y retrocede 7 días cruzando mes y año[33m 341[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mbotón Hoy en vista semanal navega a la fecha actual del Clock[32m 163[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos[32m 215[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mvista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador[32m 129[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22menvío en curso y doble submit[33m 726[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22maccesibilidad del formulario[33m 552[2mms[22m[39m
- [32m✓[39m src/shared/components/LoadingState.test.tsx[2m > [22mLoadingState[2m > [22mrenderiza su rol y su texto[33m 301[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaConfig.test.ts[2m > [22magendaConfig[2m > [22mDEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta[32m 290[2mms[22m[39m
- [32m✓[39m src/shared/api/auth.test.ts[2m > [22mpunto de enganche del token[2m > [22msin provider no se envía Authorization[32m 14[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx[2m > [22mEmptyState[2m > [22mcon acción muestra el botón[32m 286[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx[2m > [22mEmptyState[2m > [22msin acción no muestra botón[32m 15[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mestado checking mientras se verifica la sesión[32m 191[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22msesión autenticada con el usuario de /me[32m 53[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22m/me responde 401 y limpia la sesión[32m 50[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.test.tsx[2m > [22mAgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda[33m 594[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[33m 478[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 69[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx[2m > [22mAgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros[33m 487[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx[2m > [22mAgendaToolbar[2m > [22mrenderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente[32m 205[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22merror de red en /me conserva el token y permite reintentar[32m 204[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 98[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 77[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mlastEvent registra expired ante 401 protegido y manual ante logout[32m 290[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mrol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me[32m 67[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 165[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx[2m > [22mAppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente[33m 571[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista[32m 210[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo[32m 58[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible[32m 79[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mun turno de un solo carril conserva el formato de una línea con la etiqueta de estado[32m 63[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx[2m > [22mAppShell[2m > [22mmuestra en un alerta del shell la violación de un 403 sin cerrar la sesión[32m 256[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada[32m 50[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista[32m 121[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mrenderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles[32m 78[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mmuestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional[32m 20[2mms[22m[39m
+ [32m✓[39m src/features/auth/Logout.test.tsx[2m > [22mLogout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace[33m 558[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage[33m 344[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada[32m 260[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mruta protegida sin sesión conserva el destino[32m 82[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mmuestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo[32m 35[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico[32m 180[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible[33m 630[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mlogin con sesión vuelve al destino válido[32m 22[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22msin parpadeo de login a home[32m 25[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx[2m > [22mApp con router y guards de sesión[2m > [22mtoken vencido en una request protegida[32m 139[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha[33m 713[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mlogin correcto del administrador[33m 1872[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL[33m 541[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mrespeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso[32m 123[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra Cargando... con role=status en la carga inicial sin mostrar error[32m 79[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente[32m 130[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mdelega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local[32m 74[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global[32m 73[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22malterna de día a semana conservando fecha y filtros[32m 134[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22malterna de semana a día conservando el día exacto de anclaje y filtros[32m 117[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mun view desconocido o ausente cae a vista diaria con botón Día seleccionado[32m 85[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselecciona automáticamente por rol odontólogo su propio professionalId[32m 63[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector[32m 117[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mnavegación semanal avanza y retrocede 7 días cruzando mes y año[32m 203[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mbotón Hoy en vista semanal navega a la fecha actual del Clock[32m 179[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos[32m 129[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mvista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador[32m 133[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mlogin correcto de recepción y del odontólogo[33m 1793[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mcredenciales inválidas con mensaje genérico[33m 937[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22mel 401 del login no es sesión vencida[33m 1020[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22menvío en curso y doble submit[33m 785[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx[2m > [22mLoginPage[2m > [22maccesibilidad del formulario[33m 721[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx[2m > [22msmoke del andamiaje[2m > [22mmonta App y muestra el título[33m 496[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx[2m > [22museAgenda[2m > [22mdispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled[33m 540[2mms[22m[39m
+ [32m✓[39m src/shared/components/PageShell.test.tsx[2m > [22mPageShell[2m > [22menvuelve header, main y footer y renderiza sus hijos[33m 337[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx[2m > [22museAgenda[2m > [22maborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda[32m 131[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx[2m > [22museAgenda[2m > [22mpide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate[32m 66[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22mmuestra uno y varios mensajes[33m 481[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22mmuestra el mensaje de un 409 textual[32m 45[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22mcon reintento muestra el botón y lo ejecuta[32m 180[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx[2m > [22mErrorState[2m > [22msin reintento no muestra botón[32m 8[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado reservado muestra su variante[32m 180[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado confirmado muestra su variante[32m 12[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado atendido muestra su variante[32m 9[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado ausente muestra su variante[32m 28[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado cancelado muestra su variante[32m 19[2mms[22m[39m
+ [32m✓[39m src/shared/components/LoadingState.test.tsx[2m > [22mLoadingState[2m > [22mrenderiza su rol y su texto[32m 155[2mms[22m[39m
+ [32m✓[39m src/shared/api/auth.test.ts[2m > [22mpunto de enganche del token[2m > [22msin provider no se envía Authorization[32m 16[2mms[22m[39m
  [32m✓[39m src/shared/api/auth.test.ts[2m > [22mpunto de enganche del token[2m > [22mcon provider se agrega el Bearer[32m 2[2mms[22m[39m
- [32m✓[39m src/shared/api/auth.test.ts[2m > [22mpunto de enganche del token[2m > [22mC-25 no persiste el token[33m 310[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado reservado muestra su variante[33m 410[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado confirmado muestra su variante[32m 32[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado atendido muestra su variante[32m 34[2mms[22m[39m
- [32m✓[39m src/features/agenda/clock.test.ts[2m > [22mclock[2m > [22msystemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts[32m 290[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado ausente muestra su variante[32m 26[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx[2m > [22mStatusBadge[2m > [22mel estado cancelado muestra su variante[32m 26[2mms[22m[39m
- [32m✓[39m src/shared/components/PageShell.test.tsx[2m > [22mPageShell[2m > [22menvuelve header, main y footer y renderiza sus hijos[33m 519[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx[2m > [22mAgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros[33m 693[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx[2m > [22mAgendaToolbar[2m > [22mrenderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente[32m 115[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[33m 740[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 61[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 189[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 72[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 244[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista[32m 296[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo[32m 71[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible[32m 101[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mun turno de un solo carril conserva el formato de una línea con la etiqueta de estado[32m 49[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada[32m 49[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista[32m 179[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mrenderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles[32m 86[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mmuestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional[32m 23[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mmuestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo[32m 18[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico[32m 142[2mms[22m[39m
- [32m✓[39m src/features/auth/storageGuard.test.ts[2m > [22mconfinamiento del storage de sesión[2m > [22mel storage está confinado a un solo archivo[32m 172[2mms[22m[39m
- [32m✓[39m src/features/agenda/useAgenda.test.tsx[2m > [22museAgenda[2m > [22mdispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled[33m 763[2mms[22m[39m
- [32m✓[39m src/features/agenda/useAgenda.test.tsx[2m > [22museAgenda[2m > [22maborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda[32m 209[2mms[22m[39m
- [32m✓[39m src/features/agenda/useAgenda.test.tsx[2m > [22museAgenda[2m > [22mpide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate[32m 60[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts[2m > [22mguardián de zona horaria y reloj en agenda[2m > [22mprohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts[32m 84[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaApi.test.ts[2m > [22magendaApi[2m > [22mfetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo[32m 46[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaApi.test.ts[2m > [22magendaApi[2m > [22mfetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida[32m 14[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaApi.test.ts[2m > [22magendaApi[2m > [22mfetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta[32m 5[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22muna respuesta 200 devuelve ok con los datos[32m 42[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mserializa el cuerpo como JSON y envía los headers de contenido[32m 6[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 400 con errors se modela como validation[32m 4[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 401 con code y message se modela como auth[32m 21[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 403 con violations se modela como forbidden[32m 11[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto[32m 2[2mms[22m[39m
+ [32m✓[39m src/shared/api/auth.test.ts[2m > [22mpunto de enganche del token[2m > [22mC-25 no persiste el token[32m 87[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — eje de horas (R4)[2m > [22mcalcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos[32m 56[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — eje de horas (R4)[2m > [22musa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440][32m 17[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — columnas por profesional (R5)[2m > [22mordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda[32m 5[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — columnas por profesional (R5)[2m > [22mmarca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22masigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena[32m 10[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22maplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00[32m 16[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22mgroupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday[32m 30[2mms[22m[39m
+ [32m✓[39m src/features/auth/storageGuard.test.ts[2m > [22mconfinamiento del storage de sesión[2m > [22mel storage está confinado a un solo archivo[32m 70[2mms[22m[39m
+ [32m✓[39m src/features/agenda/clock.test.ts[2m > [22mclock[2m > [22msystemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts[32m 79[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22m13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día[32m 49[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22mrespeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires[32m 3[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22maddDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22mparseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche[32m 5[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22muna zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso[32m 4[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22mweekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mlogin envía POST /api/auth/login y devuelve el accessToken con 200[32m 17[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mlogin devuelve error auth ante 401 INVALID_CREDENTIALS[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mlogin devuelve error validation ante 400 con errors[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mel login no manda un token viejo[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mpetición autenticada con Bearer[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22msin token no se envía Authorization[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mfetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts[2m > [22magendaConfig[2m > [22mDEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta[32m 72[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22muna respuesta 200 devuelve ok con los datos[32m 15[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mserializa el cuerpo como JSON y envía los headers de contenido[32m 3[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 400 con errors se modela como validation[32m 2[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 401 con code y message se modela como auth[32m 1[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 403 con violations se modela como forbidden[32m 1[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto[32m 1[2mms[22m[39m
  [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 422 con violations se modela como unprocessable[32m 1[2mms[22m[39m
  [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun 404 con code y message se modela como not_found[32m 1[2mms[22m[39m
  [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22muna respuesta desconocida se modela como unknown[32m 1[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun fallo de red se modela como unknown con status 0 sin lanzar[32m 2[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — eje de horas (R4)[2m > [22mcalcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos[32m 72[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — eje de horas (R4)[2m > [22musa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440][32m 26[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — columnas por profesional (R5)[2m > [22mordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda[32m 9[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — columnas por profesional (R5)[2m > [22mmarca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna[32m 2[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22masigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena[32m 13[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22maplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00[32m 6[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts[2m > [22magendaLayout — posición, alto y carriles (R6)[2m > [22mgroupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday[32m 32[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mlogin envía POST /api/auth/login y devuelve el accessToken con 200[32m 25[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mlogin devuelve error auth ante 401 INVALID_CREDENTIALS[32m 3[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mlogin devuelve error validation ante 400 con errors[32m 10[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mel login no manda un token viejo[32m 4[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mpetición autenticada con Bearer[32m 4[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22msin token no se envía Authorization[32m 2[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts[2m > [22mauthApi[2m > [22mfetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx[32m 4[2mms[22m[39m
- [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve errors[].message de un 400 en orden y tal cual[32m 17[2mms[22m[39m
- [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve message de un 401 tal cual[32m 2[2mms[22m[39m
- [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular[32m 9[2mms[22m[39m
- [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve violations[].message de un 403 y de un 422[32m 3[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts[2m > [22mcliente de API[2m > [22mun fallo de red se modela como unknown con status 0 sin lanzar[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts[2m > [22mguardián de zona horaria y reloj en agenda[2m > [22mprohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts[32m 45[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts[2m > [22magendaApi[2m > [22mfetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo[32m 19[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts[2m > [22magendaApi[2m > [22mfetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida[32m 6[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts[2m > [22magendaApi[2m > [22mfetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta[32m 2[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve errors[].message de un 400 en orden y tal cual[32m 13[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve message de un 401 tal cual[32m 3[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular[32m 1[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve violations[].message de un 403 y de un 422[32m 2[2mms[22m[39m
  [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mdevuelve message de un 404 tal cual[32m 1[2mms[22m[39m
  [32m✓[39m src/shared/api/errors.test.ts[2m > [22mgetApiErrorMessages[2m > [22mun error unknown devuelve un mensaje genérico con el status, sin el texto crudo[32m 1[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[32m 30[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[32m 12[2mms[22m[39m
  [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mla columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida[32m 2[2mms[22m[39m
  [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mverifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)[32m 1[2mms[22m[39m
  [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mlas columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal[32m 2[2mms[22m[39m
- [32m✓[39m src/test/docker.test.ts[2m > [22mservicio frontend en Docker Compose[2m > [22mdocker compose up levanta el frontend en 5173[32m 30[2mms[22m[39m
- [32m✓[39m src/test/docker.test.ts[2m > [22mservicio frontend en Docker Compose[2m > [22mun cambio de archivo se refleja por HMR en Windows[32m 13[2mms[22m[39m
- [32m✓[39m src/test/docker.test.ts[2m > [22mservicio frontend en Docker Compose[2m > [22mVITE_API_URL del navegador apunta a localhost[32m 10[2mms[22m[39m
- [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts[2m > [22mAPPOINTMENT_STATUS_TOKENS[2m > [22mel mapa cubre los cinco estados sin undefined[32m 6[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22men carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22men columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)[32m 1[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts[2m > [22mservicio frontend en Docker Compose[2m > [22mdocker compose up levanta el frontend en 5173[32m 8[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts[2m > [22mservicio frontend en Docker Compose[2m > [22mun cambio de archivo se refleja por HMR en Windows[32m 2[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts[2m > [22mservicio frontend en Docker Compose[2m > [22mVITE_API_URL del navegador apunta a localhost[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mguardar y leer el token de la pestaña[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mlimpiar el token[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mfallback a memoria si el almacenamiento falla[32m 0[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mcreateMemoryTokenStore aísla cada instancia sin tocar sessionStorage[32m 0[2mms[22m[39m
+ [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts[2m > [22mAPPOINTMENT_STATUS_TOKENS[2m > [22mel mapa cubre los cinco estados sin undefined[32m 5[2mms[22m[39m
  [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts[2m > [22mAPPOINTMENT_STATUS_TOKENS[2m > [22mcada par texto y fondo cumple contraste AA[32m 2[2mms[22m[39m
- [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22mdefine la escala de espaciado 4/8/12/16/24/32/48 px[32m 17[2mms[22m[39m
- [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22mdefine la tipografía 12/14/16/20/24/32 px[32m 2[2mms[22m[39m
- [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22musa el system font stack en el reset[32m 3[2mms[22m[39m
- [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22mel foco es visible[32m 2[2mms[22m[39m
- [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mguardar y leer el token de la pestaña[32m 5[2mms[22m[39m
- [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mlimpiar el token[32m 2[2mms[22m[39m
- [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mfallback a memoria si el almacenamiento falla[32m 1[2mms[22m[39m
- [32m✓[39m src/features/auth/tokenStore.test.ts[2m > [22mTokenStore[2m > [22mcreateMemoryTokenStore aísla cada instancia sin tocar sessionStorage[32m 1[2mms[22m[39m
- [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22macepta una ruta interna con query string como /agenda?date=2026-11-07[32m 4[2mms[22m[39m
- [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22mse rechaza una ruta protocol-relative[32m 1[2mms[22m[39m
- [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22mse rechaza una URL absoluta[32m 1[2mms[22m[39m
- [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22mse rechaza volver al propio login[32m 0[2mms[22m[39m
- [32m✓[39m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente[32m 6[2mms[22m[39m
- [32m✓[39m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú de recepción habilita Agenda y no incluye Usuarios y roles[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente[32m 5[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú de recepción habilita Agenda y no incluye Usuarios y roles[32m 1[2mms[22m[39m
  [32m✓[39m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles[32m 1[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22m13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día[32m 59[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22mrespeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires[32m 5[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22maddDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7[32m 3[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22mparseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche[32m 11[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22muna zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso[32m 11[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts[2m > [22magendaTime[2m > [22mweekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año[32m 2[2mms[22m[39m
- [32m✓[39m src/test/tooling.test.ts[2m > [22mtooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido[33m 17214[2mms[22m[39m
- [32m✓[39m src/test/tooling.test.ts[2m > [22mtooling del frontend[2m > [22mnpm run lint detecta una violación[33m 21493[2mms[22m[39m
- [32m✓[39m src/test/tooling.test.ts[2m > [22mtooling del frontend[2m > [22mla estructura de carpetas y los scripts están presentes[32m 17[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22mdefine la escala de espaciado 4/8/12/16/24/32/48 px[32m 3[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22mdefine la tipografía 12/14/16/20/24/32 px[32m 1[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22musa el system font stack en el reset[32m 1[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts[2m > [22mtokens.css[2m > [22mel foco es visible[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22macepta una ruta interna con query string como /agenda?date=2026-11-07[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22mse rechaza una ruta protocol-relative[32m 0[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22mse rechaza una URL absoluta[32m 0[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts[2m > [22msafeInternalPath[2m > [22mse rechaza volver al propio login[32m 0[2mms[22m[39m
+ [32m✓[39m src/test/tooling.test.ts[2m > [22mtooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido[33m 12836[2mms[22m[39m
+ [32m✓[39m src/test/tooling.test.ts[2m > [22mtooling del frontend[2m > [22mnpm run lint detecta una violación[33m 9850[2mms[22m[39m
+ [32m✓[39m src/test/tooling.test.ts[2m > [22mtooling del frontend[2m > [22mla estructura de carpetas y los scripts están presentes[32m 5[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m35 passed[39m[22m[90m (35)[39m
-[2m      Tests [22m [1m[32m146 passed[39m[22m[90m (146)[39m
-[2m   Start at [22m 20:24:21
-[2m   Duration [22m 53.08s[2m (transform 10.51s, setup 78.78s, collect 36.11s, tests 72.43s, environment 262.99s, prepare 21.13s)[22m
+[2m      Tests [22m [1m[32m148 passed[39m[22m[90m (148)[39m
+[2m   Start at [22m 20:53:21
+[2m   Duration [22m 31.88s[2m (transform 7.34s, setup 41.42s, collect 20.60s, tests 43.40s, environment 158.95s, prepare 18.07s)[22m
 

@@ -5,8 +5,8 @@
 Todos los números salen de los archivos enlazados, generados por redirección.
 
 - Tareas: 22/23 en [tasks.md](../../openspec/changes/ui-agenda-semanal/tasks.md) (tarea 5.3 de capturas manuales pendiente para la autora).
-- Vitest: 35 archivos, 146 tests en verde (127 preexistentes de C-27 + 19 nuevos de C-28); `tsc` y ESLint sin errores ni warnings.
-- Mutaciones: 19/19 hicieron fallar su test (una por cada test nuevo de C-28); mutaciones inválidas: 0; SHA-256 de producción intacto.
+- Vitest: 35 archivos, 148 tests en verde (127 preexistentes de C-27 + 21 nuevos de C-28); `tsc` y ESLint sin errores ni warnings.
+- Mutaciones: 21/21 hicieron fallar su test (una por cada test nuevo de C-28); mutaciones inválidas: 0; SHA-256 de producción intacto.
 - Trazabilidad: 19 escenarios, 0 problemas.
 - Línea de base desde `frontend/`: [baseline-C-28.txt](baseline-C-28.txt) (127 passed, 35 archivos).
 - `tsc --noEmit` (strict): [tsc-C-28.txt](tsc-C-28.txt).
@@ -15,11 +15,11 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Mutaciones: [mutaciones-C-28.txt](mutaciones-C-28.txt), generado por [mutaciones-C-28.py](mutaciones-C-28.py).
 - Trazabilidad: [trazabilidad-C-28.txt](trazabilidad-C-28.txt), generado por [trazabilidad-C-28.py](trazabilidad-C-28.py).
 - Validación OpenSpec y `git diff --check`: [validate-C-28.txt](validate-C-28.txt).
-- Rojos (TDD): carpeta [red-C-28/](red-C-28/), incluyendo [revision-visual.txt](red-C-28/revision-visual.txt).
+- Rojos (TDD): carpeta [red-C-28/](red-C-28/), incluyendo [revision-visual.txt](red-C-28/revision-visual.txt) y [revision-visual-2.txt](red-C-28/revision-visual-2.txt).
 
 ## Hallazgos de la revisión visual
 
-Tras la inspección en pantalla con datos reales en escritorio (1440 px) y tablet (768 px), se identificaron cuatro hallazgos que no habían sido advertidos por la suite inicial de tests:
+Tras la inspección en pantalla con datos reales en escritorio (1440 px) y tablet (768 px), se identificaron hallazgos que no habían sido advertidos por la suite inicial de tests:
 
 1. **H1 — Preselección automática sin professionalId en la llamada a la API**:
    - *Hallazgo*: Al ingresar a la vista semanal sin `professionalId` en la URL, la llamada a `GET /api/agenda` se ejecutaba sin `professionalId`. Aunque la grilla semanal filtraba al profesional preseleccionado, el contador anunciaba turnos de todos los profesionales y la vista de lista mezclaba turnos de otros profesionales.
@@ -40,6 +40,16 @@ Tras la inspección en pantalla con datos reales en escritorio (1440 px) y table
    - *Hallazgo*: A 1440 px solo se visualizaban de lunes a viernes, quedando sábado y domingo ocultos tras un scroll horizontal innecesario y cortando la tarjeta del viernes. Si hoy caía en fin de semana, la marca "Hoy" no se visualizaba.
    - *Causa*: `jsdom` no calcula medidas de layout ni renderiza anchos reales, por lo que los tests de componentes no detectaron que `min-width: 220px` por 7 columnas requería más de 1540 px de espacio.
    - *Arreglo*: Se creó el token semántico `--agenda-week-column-min-width: 140px;` en `tokens.css`. Se añadieron las clases `.weekColumnHeader` y `.weekColumnTrack` en `AgendaGrid.module.css` con `flex: 1 1 var(--agenda-week-column-min-width, 140px); min-width: var(--agenda-week-column-min-width, 140px);` sin el límite de 220 px de la vista diaria. Con esto, en pantallas de escritorio (≥ 1280 px) las 7 columnas se muestran visibles simultáneamente sin scroll, mientras que en tablet (< 1044 px / 768 px) se preserva el scroll horizontal con columna de horas sticky y las tarjetas adaptadas en dos líneas mediante la container query existente.
+
+5. **H5 — Desborde de la etiqueta de estado en carriles divididos (~70 px)**:
+   - *Hallazgo*: En carriles divididos (~70 px de ancho) de la vista semanal, la etiqueta de estado de los turnos cancelados ("Cancelado") desbordaba el borde lateral de la tarjeta.
+   - *Causa*: La etiqueta de estado en `.cardCompactStacked .statusBadgeWrap > span` no tenía acotado su ancho máximo ni recorte de desborde.
+   - *Arreglo*: Se añadieron `max-width: 100%; overflow: hidden; text-overflow: ellipsis; box-sizing: border-box;` a `.cardCompactStacked .statusBadgeWrap > span` y a `.appointmentSplit .cardTopRow > span:last-child, .appointmentSplit .statusBadgeWrap > span` en `AgendaGrid.module.css`.
+
+6. **H6 — Tamaño de etiqueta y recorte de líneas en tarjetas no compactas dentro de columnas angostas (< 260 px)**:
+   - *Hallazgo*: En tarjetas no compactas (45 y 60 min) en columnas de menos de 260 px (~145 px en vista semanal), la etiqueta de estado quedaba en tamaño normal en su propio renglón y empujaba la línea de prestación fuera de la tarjeta, cortándola verticalmente a mitad de las letras.
+   - *Causa*: La container query `@container agenda-column (width < 260px)` solo contemplaba las tarjetas compactas (< 45 min), sin reducir la etiqueta ni fijar el alto de línea en las tarjetas de 45–60 min.
+   - *Arreglo*: Dentro de la container query `@container agenda-column (width < 260px)` en `AgendaGrid.module.css`, se configuró `.cardTopRow > span:last-child` para usar el tamaño reducido (`font-size: var(--font-size-xs); padding: 1px var(--space-1); max-width: 100%; overflow: hidden; text-overflow: ellipsis;`), y se estableció `line-height: 1.2` con `white-space: nowrap` y `text-overflow: ellipsis` en `.cardPatient` y `.cardMeta`. Con ello, las tarjetas no compactas conservan espacio para todas las líneas y recortan horizontalmente con puntos suspensivos en un solo renglón sin cortarse verticalmente.
 
 ## Regla C1 y diseño accesible (D1 a D6)
 
@@ -69,7 +79,7 @@ Se confirma expresamente que:
 
 ## Desvíos
 
-Ninguno.
+- **Limitación de legibilidad del nombre del paciente en carriles divididos (~70 px)**: en carriles divididos dentro de la vista semanal (~70 px de ancho), el nombre del paciente no entra en su totalidad en la tarjeta gráfica y se trunca tempranamente con ellipsis debido a la extrema estrechez del carril disponible. Esta limitación se acepta como desvío visual documentado, dado que el nombre y los datos completos del turno están garantizados tanto en el `aria-label` accesible de la tarjeta como en la vista de lista ("Ver como lista").
 
 ## Mutaciones
 
@@ -95,6 +105,8 @@ Ninguno.
 | 17 | `vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador` | `frontend/src/features/agenda/AgendaPage.tsx` | `-    <PageShell title={isWeek ? "Agenda semanal" : "Agenda diaria"}> +    <PageShell title` | `AssertionError: expected null not to be null` |
 | 18 | `ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico` | `frontend/src/features/agenda/AgendaTable.tsx` | `-  const isWeek = view === "week"; +  const isWeek = false;` | `AssertionError: expected null not to be null` |
 | 19 | `las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal` | `frontend/src/shared/styles/tokens.css` | `-  --agenda-week-column-min-width: 140px; +  --agenda-week-min-width: 140px;` | `AssertionError: expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-wee` |
+| 20 | `en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)` | `frontend/src/features/agenda/AgendaGrid.module.css` | `-  max-width: 100%; +  max-width: 200%;` | `AssertionError: expected '\n  font-size: var(--font-size-xs);\n…' to contain 'max-width: 1` |
+| 21 | `en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)` | `frontend/src/features/agenda/AgendaGrid.module.css` | `-    font-size: var(--font-size-xs); +    font-size: var(--font-size-sm);` | `AssertionError: expected '@container agenda-column (width < 260…' to match /\.cardTopRow >` |
 <!-- mutaciones:fin -->
 
 ## Trazabilidad

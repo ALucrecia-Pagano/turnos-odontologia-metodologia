@@ -246,6 +246,20 @@ MUTATIONS: tuple[Mutation, ...] = (
         "  --agenda-week-column-min-width: 140px;",
         "  --agenda-week-min-width: 140px;",
     ),
+    Mutation(
+        T_AGENDA_STYLES,
+        "en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)",
+        P_AGENDA_GRID_CSS,
+        ".cardCompactStacked .statusBadgeWrap > span {\n  font-size: var(--font-size-xs);\n  padding: 1px var(--space-1);\n  max-width: 100%;",
+        ".cardCompactStacked .statusBadgeWrap > span {\n  font-size: var(--font-size-xs);\n  padding: 1px var(--space-1);\n  max-width: 200%;",
+    ),
+    Mutation(
+        T_AGENDA_STYLES,
+        "en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)",
+        P_AGENDA_GRID_CSS,
+        "  .cardTopRow > span:last-child {\n    font-size: var(--font-size-xs);",
+        "  .cardTopRow > span:last-child {\n    font-size: var(--font-size-sm);",
+    ),
 )
 
 

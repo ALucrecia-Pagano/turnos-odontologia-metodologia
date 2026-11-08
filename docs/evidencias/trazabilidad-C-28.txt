@@ -1,5 +1,5 @@
 Salida generada por docs/evidencias/trazabilidad-C-28.py. No editar a mano.
-tests listados por vitest: 146
+tests listados por vitest: 148
 escenarios en la spec delta: 19
 escenarios con test listado: 19
 problemas: 0

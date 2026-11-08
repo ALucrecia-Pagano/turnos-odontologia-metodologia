@@ -1,0 +1,77 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia[39m
+
+ [32m✓[39m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[32m 5[2mms[22m[39m
+ [32m✓[39m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mla columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida[32m 1[2mms[22m[39m
+ [32m✓[39m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mverifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)[32m 0[2mms[22m[39m
+ [32m✓[39m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mlas columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal[32m 1[2mms[22m[39m
+ [31m×[39m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22men carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)[32m 7[2mms[22m[39m
+[31m   → expected '\n  font-size: var(--font-size-xs);\n…' to contain 'max-width: 100%;'[39m
+ [31m×[39m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22men columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)[32m 2[2mms[22m[39m
+[31m   → expected '@container agenda-column (width < 260…' to match /\.cardTopRow > span:last-child \{[^}]…/[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 20:45:43
+[2m   Duration [22m 926ms[2m (transform 89ms, setup 0ms, collect 97ms, tests 17ms, environment 0ms, prepare 390ms)[22m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22men carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+[31m[1mAssertionError[22m: expected '\n  font-size: var(--font-size-xs);\n…' to contain 'max-width: 100%;'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- max-width: 100%;[39m
+[31m+[39m
+[31m+   font-size: var(--font-size-xs);[39m
+[31m+   padding: 1px var(--space-1);[39m
+[31m+[39m
+
+[36m [2m❯[22m frontend/src/features/agenda/agendaStyles.test.ts:[2m115:31[22m[39m
+    [90m113| [39m    const stackedBadgeMatch = /\.cardCompactStacked \.statusBadgeWrap …
+    [90m114| [39m    [35mconst[39m stackedBadgeRules [33m=[39m stackedBadgeMatch[33m?.[39m[[34m1[39m] [33m??[39m [32m""[39m[33m;[39m
+    [90m115| [39m    [34mexpect[39m(stackedBadgeRules)[33m.[39m[34mtoContain[39m([32m"max-width: 100%;"[39m)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m116| [39m    [34mexpect[39m(stackedBadgeRules)[33m.[39m[34mtoContain[39m([32m"overflow: hidden;"[39m)[33m;[39m
+    [90m117| [39m    [34mexpect[39m(stackedBadgeRules)[33m.[39m[34mtoContain[39m([32m"text-overflow: ellipsis;"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m frontend/src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22men columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
+[31m[1mAssertionError[22m: expected '@container agenda-column (width < 260…' to match /\.cardTopRow > span:last-child \{[^}]…/[39m
+
+[32m- Expected:[39m 
+/\.cardTopRow > span:last-child \{[^}]*font-size: var\(--font-size-xs\);/
+
+[31m+ Received:[39m 
+"@container agenda-column (width < 260px) {
+  .cardCompactRow {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .cardCompactText {
+    flex: 0 0 auto;
+  }
+
+  .statusBadgeWrap > span {
+    font-size: var(--font-size-xs);
+    padding: 1px var(--space-1);
+  }
+}
+"
+
+[36m [2m❯[22m frontend/src/features/agenda/agendaStyles.test.ts:[2m126:24[22m[39m
+    [90m124| [39m    [35mconst[39m queryBlock [33m=[39m gridCss[33m.[39m[34mslice[39m(queryStart)[33m;[39m
+    [90m125| [39m
+    [90m126| [39m    [34mexpect[39m(queryBlock)[33m.[39m[34mtoMatch[39m(
+    [90m   | [39m                       [31m^[39m
+    [90m127| [39m      /\.cardTopRow > span:last-child \{[^}]*font-size: var\(--font-si…
+    [90m128| [39m    )[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+

@@ -217,6 +217,14 @@
   padding-inline: var(--space-1);
 }
 
+.appointmentSplit .cardTopRow > span:last-child,
+.appointmentSplit .statusBadgeWrap > span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
 .statusBadgeWrap {
   display: flex;
   flex: 0 0 auto;
@@ -244,6 +252,10 @@
 .cardCompactStacked .statusBadgeWrap > span {
   font-size: var(--font-size-xs);
   padding: 1px var(--space-1);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 
 /*
@@ -265,5 +277,37 @@
   .statusBadgeWrap > span {
     font-size: var(--font-size-xs);
     padding: 1px var(--space-1);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+
+  /*
+   * H6: en tarjetas no compactas dentro de columnas angostas (< 260px), la etiqueta
+   * adopta el tamaño reducido (--font-size-xs) y paciente y prestación se recortan
+   * con ellipsis en una sola línea sin desbordar ni cortarse a mitad de un renglón.
+   */
+  .cardTopRow > span:last-child {
+    font-size: var(--font-size-xs);
+    padding: 1px var(--space-1);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+
+  .cardPatient {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .cardMeta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
   }
 }

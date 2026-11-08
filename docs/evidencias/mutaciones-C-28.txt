@@ -1,29 +1,27 @@
 Salida generada por docs/evidencias/mutaciones-C-28.py. No editar a mano.
-tests nuevos de C-28 listados por vitest: 19; mutaciones: 19 (una por test)
-SHA-256 de produccion antes: 92e3f3fec1094f39e113e775b3db73f216ac1a2ccc03c8783e9eeb6c3b5425f5
+tests nuevos de C-28 listados por vitest: 21; mutaciones: 21 (una por test)
+SHA-256 de produccion antes: 2e8ad3dcc6674456d869508c65991772cdc700a93218d90ed9f8ba992d4277cc
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ✓ src/features/agenda/agendaStyles.test.ts (4 tests) 24ms
- ✓ src/features/agenda/agendaTime.test.ts (6 tests) 141ms
- ✓ src/features/agenda/agendaLayout.test.ts (7 tests) 197ms
- ✓ src/features/agenda/AgendaToolbar.test.tsx (2 tests) 441ms
-   ✓ AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros  346ms
- ✓ src/features/agenda/useAgenda.test.tsx (3 tests) 371ms
- ✓ src/features/agenda/AgendaView.test.tsx (15 tests) 890ms
- ✓ src/features/agenda/AgendaPage.test.tsx (17 tests) 1441ms
-   ✓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible  310ms
+ ✓ src/features/agenda/agendaStyles.test.ts (6 tests) 25ms
+ ✓ src/features/agenda/agendaTime.test.ts (6 tests) 112ms
+ ✓ src/features/agenda/agendaLayout.test.ts (7 tests) 136ms
+ ✓ src/features/agenda/AgendaToolbar.test.tsx (2 tests) 295ms
+ ✓ src/features/agenda/useAgenda.test.tsx (3 tests) 261ms
+ ✓ src/features/agenda/AgendaView.test.tsx (15 tests) 582ms
+ ✓ src/features/agenda/AgendaPage.test.tsx (17 tests) 993ms
 
  Test Files  7 passed (7)
-      Tests  54 passed (54)
-   Start at  20:28:41
-   Duration  9.18s (transform 2.23s, setup 7.58s, collect 4.74s, tests 3.51s, environment 27.82s, prepare 3.30s)
+      Tests  56 passed (56)
+   Start at  20:48:29
+   Duration  7.03s (transform 1.62s, setup 5.83s, collect 3.62s, tests 2.40s, environment 21.93s, prepare 3.06s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvc83pcch/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4c236nrc/vitest.json
 
 ================================================================================
-[01/19] weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año
+[01/21] weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año
 test: src/features/agenda/agendaTime.test.ts > weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
@@ -38,21 +36,21 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTime.test.ts (6 tests | 1 failed | 5 skipped) 18ms
+ ❯ src/features/agenda/agendaTime.test.ts (6 tests | 1 failed | 5 skipped) 14ms
    ↓ agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
    ↓ agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
    ↓ agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
    ↓ agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
    ↓ agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
-   × agendaTime > weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año 16ms
+   × agendaTime > weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año 13ms
      → expected { monday: '2026-11-16', …(1) } to deeply equal { monday: '2026-11-16', …(1) }
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  20:28:52
-   Duration  3.58s (transform 103ms, setup 465ms, collect 106ms, tests 18ms, environment 2.01s, prepare 441ms)
+   Start at  20:48:37
+   Duration  3.04s (transform 75ms, setup 379ms, collect 71ms, tests 14ms, environment 1.80s, prepare 334ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpm3j3w4if/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmu51e4ib/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -81,7 +79,7 @@ AssertionError: expected { monday: '2026-11-16', …(1) } to deeply equal { mond
 
 restaurado: test en verde
 ================================================================================
-[02/19] groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday
+[02/21] groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday
 test: src/features/agenda/agendaLayout.test.ts > groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
@@ -96,22 +94,22 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaLayout.test.ts (7 tests | 1 failed | 6 skipped) 60ms
+ ❯ src/features/agenda/agendaLayout.test.ts (7 tests | 1 failed | 6 skipped) 64ms
    ↓ agendaLayout — eje de horas (R4) > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
    ↓ agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
    ↓ agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
    ↓ agendaLayout — columnas por profesional (R5) > marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
    ↓ agendaLayout — posición, alto y carriles (R6) > asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena
    ↓ agendaLayout — posición, alto y carriles (R6) > aplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00
-   × agendaLayout — posición, alto y carriles (R6) > groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday 57ms
+   × agendaLayout — posición, alto y carriles (R6) > groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday 62ms
      → expected [ 2, 3, 4, 5, 6, 7, 8 ] to deeply equal [ 1, 2, 3, 4, 5, 6, 7 ]
 
  Test Files  1 failed (1)
       Tests  1 failed | 6 skipped (7)
-   Start at  20:29:02
-   Duration  4.20s (transform 146ms, setup 584ms, collect 163ms, tests 60ms, environment 2.43s, prepare 474ms)
+   Start at  20:48:45
+   Duration  3.25s (transform 94ms, setup 396ms, collect 128ms, tests 64ms, environment 1.93s, prepare 323ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpl3g0h5ad/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpcdte5y8w/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -145,7 +143,7 @@ AssertionError: expected [ 2, 3, 4, 5, 6, 7, 8 ] to deeply equal [ 1, 2, 3, 4, 5
 
 restaurado: test en verde
 ================================================================================
-[03/19] pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate
+[03/21] pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate
 test: src/features/agenda/useAgenda.test.tsx > pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate
 diff:
 --- a/frontend/src/features/agenda/useAgenda.ts
@@ -160,18 +158,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/useAgenda.test.tsx (3 tests | 1 failed | 2 skipped) 76ms
+ ❯ src/features/agenda/useAgenda.test.tsx (3 tests | 1 failed | 2 skipped) 48ms
    ↓ useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled
    ↓ useAgenda > aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda
-   × useAgenda > pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate 74ms
+   × useAgenda > pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate 47ms
      → expected '/api/agenda?from=2026-11-16&to=2026-1…' to contain 'to=2026-11-22'
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  20:29:12
-   Duration  3.78s (transform 201ms, setup 470ms, collect 371ms, tests 76ms, environment 1.86s, prepare 472ms)
+   Start at  20:48:53
+   Duration  3.02s (transform 146ms, setup 325ms, collect 256ms, tests 48ms, environment 1.55s, prepare 430ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc841jeao/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp89wt0pvk/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -194,7 +192,7 @@ Received: "/api/agenda?from=2026-11-16&to=2026-11-16&professionalId=00000000-000
 
 restaurado: test en verde
 ================================================================================
-[04/19] renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente
+[04/21] renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente
 test: src/features/agenda/AgendaToolbar.test.tsx > renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente
 diff:
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
@@ -209,17 +207,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaToolbar.test.tsx (2 tests | 1 failed | 1 skipped) 134ms
+ ❯ src/features/agenda/AgendaToolbar.test.tsx (2 tests | 1 failed | 1 skipped) 189ms
    ↓ AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros
-   × AgendaToolbar > renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente 132ms
+   × AgendaToolbar > renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente 188ms
      → expected null not to be null
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  20:29:22
-   Duration  3.68s (transform 200ms, setup 577ms, collect 278ms, tests 134ms, environment 1.85s, prepare 337ms)
+   Start at  20:49:02
+   Duration  3.18s (transform 186ms, setup 329ms, collect 246ms, tests 189ms, environment 1.65s, prepare 320ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvyczawko/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6xv_h8j2/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -238,7 +236,7 @@ AssertionError: expected null not to be null
 
 restaurado: test en verde
 ================================================================================
-[05/19] verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)
+[05/21] verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)
 test: src/features/agenda/agendaStyles.test.ts > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.module.css
@@ -253,19 +251,21 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaStyles.test.ts (4 tests | 1 failed | 3 skipped) 26ms
+ ❯ src/features/agenda/agendaStyles.test.ts (6 tests | 1 failed | 5 skipped) 17ms
    ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
    ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
-   × agendaStyles y responsive de escritorio/tablet (D12, D13) > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28) 24ms
+   × agendaStyles y responsive de escritorio/tablet (D12, D13) > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28) 15ms
      → expected '.gridScrollContainer {\n  overflow-x:…' to contain 'border-radius: var(--radius-pill)'
    ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
 
  Test Files  1 failed (1)
-      Tests  1 failed | 3 skipped (4)
-   Start at  20:29:31
-   Duration  3.60s (transform 74ms, setup 630ms, collect 55ms, tests 26ms, environment 1.99s, prepare 332ms)
+      Tests  1 failed | 5 skipped (6)
+   Start at  20:49:10
+   Duration  2.95s (transform 76ms, setup 408ms, collect 56ms, tests 17ms, environment 1.72s, prepare 388ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9j82oxuv/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgzyb8bdj/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -495,6 +495,14 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 +   padding-inline: var(--space-1);
 + }
 +
++ .appointmentSplit .cardTopRow > span:last-child,
++ .appointmentSplit .statusBadgeWrap > span {
++   max-width: 100%;
++   overflow: hidden;
++   text-overflow: ellipsis;
++   box-sizing: border-box;
++ }
++
 + .statusBadgeWrap {
 +   display: flex;
 +   flex: 0 0 auto;
@@ -522,6 +530,10 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 + .cardCompactStacked .statusBadgeWrap > span {
 +   font-size: var(--font-size-xs);
 +   padding: 1px var(--space-1);
++   max-width: 100%;
++   overflow: hidden;
++   text-overflow: ellipsis;
++   box-sizing: border-box;
 + }
 +
 + /*
@@ -543,6 +555,38 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 +   .statusBadgeWrap > span {
 +     font-size: var(--font-size-xs);
 +     padding: 1px var(--space-1);
++     max-width: 100%;
++     overflow: hidden;
++     text-overflow: ellipsis;
++     box-sizing: border-box;
++   }
++
++   /*
++    * H6: en tarjetas no compactas dentro de columnas angostas (< 260px), la etiqueta
++    * adopta el tamaño reducido (--font-size-xs) y paciente y prestación se recortan
++    * con ellipsis en una sola línea sin desbordar ni cortarse a mitad de un renglón.
++    */
++   .cardTopRow > span:last-child {
++     font-size: var(--font-size-xs);
++     padding: 1px var(--space-1);
++     max-width: 100%;
++     overflow: hidden;
++     text-overflow: ellipsis;
++     box-sizing: border-box;
++   }
++
++   .cardPatient {
++     overflow: hidden;
++     text-overflow: ellipsis;
++     white-space: nowrap;
++     line-height: 1.2;
++   }
++
++   .cardMeta {
++     overflow: hidden;
++     text-overflow: ellipsis;
++     white-space: nowrap;
++     line-height: 1.2;
 +   }
 + }
 +
@@ -560,7 +604,7 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 
 restaurado: test en verde
 ================================================================================
-[06/19] renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles
+[06/21] renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles
 test: src/features/agenda/AgendaView.test.tsx > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
@@ -575,7 +619,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 203ms
+ ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 141ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
@@ -587,7 +631,7 @@ diff:
    ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
    ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
-   × AgendaView > AgendaView - Vista Semanal (C-28) > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles 201ms
+   × AgendaView > AgendaView - Vista Semanal (C-28) > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles 138ms
      → expect(element).toHaveAttribute("aria-current", "date") // element.getAttribute("aria-current") === "date"
 
 Expected the element to have attribute:
@@ -600,10 +644,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 14 skipped (15)
-   Start at  20:29:40
-   Duration  3.59s (transform 257ms, setup 344ms, collect 404ms, tests 203ms, environment 1.64s, prepare 411ms)
+   Start at  20:49:18
+   Duration  3.66s (transform 258ms, setup 402ms, collect 386ms, tests 141ms, environment 1.82s, prepare 455ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkqx5ue3f/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpk06ecwqd/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -627,7 +671,7 @@ Received:
 
 restaurado: test en verde
 ================================================================================
-[07/19] muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional
+[07/21] muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional
 test: src/features/agenda/AgendaView.test.tsx > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional
 diff:
 --- a/frontend/src/features/agenda/AgendaView.tsx
@@ -642,7 +686,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 74ms
+ ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 69ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
@@ -655,17 +699,17 @@ diff:
    ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles
-   × AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional 72ms
+   × AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional 66ms
      → expected null not to be null
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico
 
  Test Files  1 failed (1)
       Tests  1 failed | 14 skipped (15)
-   Start at  20:29:50
-   Duration  3.89s (transform 317ms, setup 511ms, collect 484ms, tests 74ms, environment 1.87s, prepare 469ms)
+   Start at  20:49:27
+   Duration  3.27s (transform 259ms, setup 385ms, collect 432ms, tests 69ms, environment 1.58s, prepare 386ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmprl1o333m/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpxh_c3xng/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -684,7 +728,7 @@ AssertionError: expected null not to be null
 
 restaurado: test en verde
 ================================================================================
-[08/19] muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo
+[08/21] muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo
 test: src/features/agenda/AgendaView.test.tsx > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo
 diff:
 --- a/frontend/src/features/agenda/AgendaView.tsx
@@ -699,7 +743,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 84ms
+ ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 90ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
@@ -713,16 +757,16 @@ diff:
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional
-   × AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo 82ms
+   × AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo 88ms
      → expected null not to be null
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico
 
  Test Files  1 failed (1)
       Tests  1 failed | 14 skipped (15)
-   Start at  20:30:00
-   Duration  3.86s (transform 335ms, setup 518ms, collect 519ms, tests 84ms, environment 1.85s, prepare 421ms)
+   Start at  20:49:36
+   Duration  4.03s (transform 294ms, setup 458ms, collect 459ms, tests 90ms, environment 2.17s, prepare 336ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpfypgjeuv/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg1k4k6qr/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -741,7 +785,7 @@ AssertionError: expected null not to be null
 
 restaurado: test en verde
 ================================================================================
-[09/19] alterna de día a semana conservando fecha y filtros
+[09/21] alterna de día a semana conservando fecha y filtros
 test: src/features/agenda/AgendaPage.test.tsx > alterna de día a semana conservando fecha y filtros
 diff:
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
@@ -756,7 +800,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1274ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1188ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -765,7 +809,7 @@ diff:
    ↓ AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
    ↓ AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
    ↓ AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros 1272ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros 1187ms
      → expected '?date=2026-11-18&professionalId=00000…' to contain 'view=week'
 
 Ignored nodes: comments, script, style
@@ -1238,10 +1282,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:30:09
-   Duration  6.01s (transform 651ms, setup 597ms, collect 1.32s, tests 1.27s, environment 1.92s, prepare 395ms)
+   Start at  20:49:46
+   Duration  5.00s (transform 486ms, setup 456ms, collect 1.03s, tests 1.19s, environment 1.57s, prepare 346ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmppvgh0p8i/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmps219lt7d/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1727,7 +1771,7 @@ Received: "?date=2026-11-18&professionalId=00000000-0000-0000-0000-000000000001&
 
 restaurado: test en verde
 ================================================================================
-[10/19] alterna de semana a día conservando el día exacto de anclaje y filtros
+[10/21] alterna de semana a día conservando el día exacto de anclaje y filtros
 test: src/features/agenda/AgendaPage.test.tsx > alterna de semana a día conservando el día exacto de anclaje y filtros
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -1742,7 +1786,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1203ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1151ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -1752,7 +1796,7 @@ diff:
    ↓ AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
    ↓ AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros 1201ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros 1150ms
      → expected '?date=2026-11-18&view=week&profession…' not to contain 'view=week'
 
 Ignored nodes: comments, script, style
@@ -1943,10 +1987,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:30:22
-   Duration  5.60s (transform 414ms, setup 515ms, collect 835ms, tests 1.20s, environment 2.13s, prepare 441ms)
+   Start at  20:49:57
+   Duration  5.20s (transform 418ms, setup 383ms, collect 865ms, tests 1.15s, environment 1.84s, prepare 472ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpcrog8tpf/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmplt4ugofh/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2151,7 +2195,7 @@ Received: "?date=2026-11-18&view=week&professionalId=00000000-0000-0000-0000-000
 
 restaurado: test en verde
 ================================================================================
-[11/19] un view desconocido o ausente cae a vista diaria con botón Día seleccionado
+[11/21] un view desconocido o ausente cae a vista diaria con botón Día seleccionado
 test: src/features/agenda/AgendaPage.test.tsx > un view desconocido o ausente cae a vista diaria con botón Día seleccionado
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -2166,7 +2210,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1058ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1044ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -2177,7 +2221,7 @@ diff:
    ↓ AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > un view desconocido o ausente cae a vista diaria con botón Día seleccionado 1056ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > un view desconocido o ausente cae a vista diaria con botón Día seleccionado 1042ms
      → expect(element).toHaveAttribute("aria-pressed", "true") // element.getAttribute("aria-pressed") === "true"
 
 Expected the element to have attribute:
@@ -2372,10 +2416,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:30:36
-   Duration  6.07s (transform 557ms, setup 451ms, collect 1.19s, tests 1.06s, environment 2.41s, prepare 407ms)
+   Start at  20:50:08
+   Duration  4.89s (transform 433ms, setup 442ms, collect 931ms, tests 1.04s, environment 1.66s, prepare 336ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjjmpbg2j/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1nym3uyq/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2581,7 +2625,7 @@ Ignored nodes: comments, script, style
 
 restaurado: test en verde
 ================================================================================
-[12/19] preselecciona automáticamente por rol odontólogo su propio professionalId
+[12/21] preselecciona automáticamente por rol odontólogo su propio professionalId
 test: src/features/agenda/AgendaPage.test.tsx > preselecciona automáticamente por rol odontólogo su propio professionalId
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -2596,7 +2640,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1071ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1074ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -2608,7 +2652,7 @@ diff:
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > un view desconocido o ausente cae a vista diaria con botón Día seleccionado
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol odontólogo su propio professionalId 1069ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol odontólogo su propio professionalId 1072ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -3183,10 +3227,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:30:49
-   Duration  5.99s (transform 557ms, setup 566ms, collect 1.24s, tests 1.07s, environment 2.13s, prepare 363ms)
+   Start at  20:50:19
+   Duration  4.83s (transform 439ms, setup 399ms, collect 948ms, tests 1.07s, environment 1.60s, prepare 346ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvc73lnc_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppy85c1c9/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3773,7 +3817,7 @@ Ignored nodes: comments, script, style
 
 restaurado: test en verde
 ================================================================================
-[13/19] preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector
+[13/21] preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector
 test: src/features/agenda/AgendaPage.test.tsx > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -3788,7 +3832,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1049ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1063ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -3801,7 +3845,7 @@ diff:
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > un view desconocido o ausente cae a vista diaria con botón Día seleccionado
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol odontólogo su propio professionalId
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector 1048ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector 1061ms
      → expected '00000000-0000-0000-0000-000000000001' to be '00000000-0000-0000-0000-000000000002' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -4399,10 +4443,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:31:02
-   Duration  5.27s (transform 551ms, setup 443ms, collect 1.12s, tests 1.05s, environment 1.83s, prepare 408ms)
+   Start at  20:50:30
+   Duration  5.15s (transform 432ms, setup 546ms, collect 918ms, tests 1.06s, environment 1.79s, prepare 305ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmposj93u6a/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp72l4flbl/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5017,7 +5061,7 @@ Received: "00000000-0000-0000-0000-000000000001"
 
 restaurado: test en verde
 ================================================================================
-[14/19] navegación semanal avanza y retrocede 7 días cruzando mes y año
+[14/21] navegación semanal avanza y retrocede 7 días cruzando mes y año
 test: src/features/agenda/AgendaPage.test.tsx > navegación semanal avanza y retrocede 7 días cruzando mes y año
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -5034,7 +5078,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1234ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1194ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -5048,7 +5092,7 @@ diff:
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > un view desconocido o ausente cae a vista diaria con botón Día seleccionado
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol odontólogo su propio professionalId
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > navegación semanal avanza y retrocede 7 días cruzando mes y año 1233ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > navegación semanal avanza y retrocede 7 días cruzando mes y año 1192ms
      → expected '?date=2026-12-29&view=week&profession…' to contain 'date=2027-01-04'
 
 Ignored nodes: comments, script, style
@@ -5633,10 +5677,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:31:14
-   Duration  5.45s (transform 444ms, setup 521ms, collect 934ms, tests 1.23s, environment 1.86s, prepare 335ms)
+   Start at  20:50:41
+   Duration  4.94s (transform 479ms, setup 437ms, collect 978ms, tests 1.19s, environment 1.51s, prepare 382ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6l19e5rr/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc0m6trt0/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6239,7 +6283,7 @@ Received: "?date=2026-12-29&view=week&professionalId=00000000-0000-0000-0000-000
 
 restaurado: test en verde
 ================================================================================
-[15/19] botón Hoy en vista semanal navega a la fecha actual del Clock
+[15/21] botón Hoy en vista semanal navega a la fecha actual del Clock
 test: src/features/agenda/AgendaPage.test.tsx > botón Hoy en vista semanal navega a la fecha actual del Clock
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -6254,7 +6298,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1235ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 1220ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -6269,7 +6313,7 @@ diff:
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol odontólogo su propio professionalId
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > navegación semanal avanza y retrocede 7 días cruzando mes y año
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > botón Hoy en vista semanal navega a la fecha actual del Clock 1233ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > botón Hoy en vista semanal navega a la fecha actual del Clock 1218ms
      → expected '?date=2026-11-19&view=week' to contain 'date=2026-11-18'
 
 Ignored nodes: comments, script, style
@@ -6455,10 +6499,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:31:26
-   Duration  5.35s (transform 497ms, setup 413ms, collect 1.05s, tests 1.23s, environment 1.65s, prepare 457ms)
+   Start at  20:50:52
+   Duration  4.87s (transform 431ms, setup 437ms, collect 898ms, tests 1.22s, environment 1.54s, prepare 313ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7iizvyun/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmposrqarb0/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6663,7 +6707,7 @@ Received: "?date=2026-11-19&view=week"
 
 restaurado: test en verde
 ================================================================================
-[16/19] preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos
+[16/21] preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos
 test: src/features/agenda/AgendaPage.test.tsx > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos
 diff:
 --- a/frontend/src/features/agenda/useAgenda.ts
@@ -6679,7 +6723,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 135ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 151ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -6695,16 +6739,16 @@ diff:
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > navegación semanal avanza y retrocede 7 días cruzando mes y año
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > botón Hoy en vista semanal navega a la fecha actual del Clock
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos 134ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos 148ms
      → expected 'http://localhost:8000/api/agenda?from…' to contain 'professionalId=00000000-0000-0000-000…'
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:31:38
-   Duration  4.30s (transform 466ms, setup 571ms, collect 1.01s, tests 135ms, environment 1.75s, prepare 347ms)
+   Start at  20:51:03
+   Duration  4.27s (transform 444ms, setup 398ms, collect 942ms, tests 151ms, environment 2.01s, prepare 335ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6h2pp2s8/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp206z61z4/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6727,7 +6771,7 @@ Received: "http://localhost:8000/api/agenda?from=2026-11-16&to=2026-11-22"
 
 restaurado: test en verde
 ================================================================================
-[17/19] vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador
+[17/21] vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador
 test: src/features/agenda/AgendaPage.test.tsx > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -6742,7 +6786,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 116ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (17 tests | 1 failed | 16 skipped) 119ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -6759,15 +6803,15 @@ diff:
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > navegación semanal avanza y retrocede 7 días cruzando mes y año
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > botón Hoy en vista semanal navega a la fecha actual del Clock
    ↓ AgendaPage > AgendaPage - Vista Semanal (C-28) > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos
-   × AgendaPage > AgendaPage - Vista Semanal (C-28) > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador 114ms
+   × AgendaPage > AgendaPage - Vista Semanal (C-28) > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador 117ms
      → expected null not to be null
 
  Test Files  1 failed (1)
       Tests  1 failed | 16 skipped (17)
-   Start at  20:31:49
-   Duration  4.02s (transform 419ms, setup 414ms, collect 865ms, tests 116ms, environment 1.80s, prepare 354ms)
+   Start at  20:51:13
+   Duration  3.75s (transform 402ms, setup 384ms, collect 864ms, tests 119ms, environment 1.64s, prepare 316ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpr4qxavk3/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdt_ewtfj/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6786,7 +6830,7 @@ AssertionError: expected null not to be null
 
 restaurado: test en verde
 ================================================================================
-[18/19] ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico
+[18/21] ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico
 test: src/features/agenda/AgendaView.test.tsx > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico
 diff:
 --- a/frontend/src/features/agenda/AgendaTable.tsx
@@ -6801,7 +6845,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 256ms
+ ❯ src/features/agenda/AgendaView.test.tsx (15 tests | 1 failed | 14 skipped) 184ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
@@ -6816,15 +6860,15 @@ diff:
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional
    ↓ AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo
-   × AgendaView > AgendaView - Vista Semanal (C-28) > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico 254ms
+   × AgendaView > AgendaView - Vista Semanal (C-28) > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico 183ms
      → expected null not to be null
 
  Test Files  1 failed (1)
       Tests  1 failed | 14 skipped (15)
-   Start at  20:32:00
-   Duration  4.13s (transform 286ms, setup 446ms, collect 482ms, tests 256ms, environment 2.07s, prepare 412ms)
+   Start at  20:51:23
+   Duration  3.32s (transform 239ms, setup 477ms, collect 387ms, tests 184ms, environment 1.50s, prepare 314ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpaznd97_w/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc_mmukh7/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6843,7 +6887,7 @@ AssertionError: expected null not to be null
 
 restaurado: test en verde
 ================================================================================
-[19/19] las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal
+[19/21] las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal
 test: src/features/agenda/agendaStyles.test.ts > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal
 diff:
 --- a/frontend/src/shared/styles/tokens.css
@@ -6858,19 +6902,21 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaStyles.test.ts (4 tests | 1 failed | 3 skipped) 21ms
+ ❯ src/features/agenda/agendaStyles.test.ts (6 tests | 1 failed | 5 skipped) 15ms
    ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
    ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
    ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)
-   × agendaStyles y responsive de escritorio/tablet (D12, D13) > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal 18ms
+   × agendaStyles y responsive de escritorio/tablet (D12, D13) > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal 13ms
      → expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-week-column-min-width:'
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
 
  Test Files  1 failed (1)
-      Tests  1 failed | 3 skipped (4)
-   Start at  20:32:10
-   Duration  3.23s (transform 66ms, setup 471ms, collect 63ms, tests 21ms, environment 1.87s, prepare 345ms)
+      Tests  1 failed | 5 skipped (6)
+   Start at  20:51:31
+   Duration  2.78s (transform 74ms, setup 361ms, collect 51ms, tests 15ms, environment 1.48s, prepare 388ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpk5wvonkv/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpeugg2gts/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6960,9 +7006,174 @@ AssertionError: expected ':root {\n  /* Espaciado */\n  --space…' to contain '
 
 restaurado: test en verde
 ================================================================================
+[20/21] en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+test: src/features/agenda/agendaStyles.test.ts > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -254,3 +254,3 @@
+   padding: 1px var(--space-1);
+-  max-width: 100%;
++  max-width: 200%;
+   overflow: hidden;
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/agendaStyles.test.ts (6 tests | 1 failed | 5 skipped) 20ms
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal
+   × agendaStyles y responsive de escritorio/tablet (D12, D13) > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5) 19ms
+     → expected '\n  font-size: var(--font-size-xs);\n…' to contain 'max-width: 100%;'
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  20:51:39
+   Duration  2.84s (transform 68ms, setup 382ms, collect 42ms, tests 20ms, environment 1.62s, prepare 373ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpf604b7b3/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/agendaStyles.test.ts > agendaStyles y responsive de escritorio/tablet (D12, D13) > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+AssertionError: expected '\n  font-size: var(--font-size-xs);\n…' to contain 'max-width: 100%;'
+
+- Expected
++ Received
+
+- max-width: 100%;
++
++   font-size: var(--font-size-xs);
++   padding: 1px var(--space-1);
++   max-width: 200%;
++   overflow: hidden;
++   text-overflow: ellipsis;
++   box-sizing: border-box;
++
+
+ ❯ src/features/agenda/agendaStyles.test.ts:115:31
+    113|     const stackedBadgeMatch = /\.cardCompactStacked \.statusBadgeWrap …
+    114|     const stackedBadgeRules = stackedBadgeMatch?.[1] ?? "";
+    115|     expect(stackedBadgeRules).toContain("max-width: 100%;");
+       |                               ^
+    116|     expect(stackedBadgeRules).toContain("overflow: hidden;");
+    117|     expect(stackedBadgeRules).toContain("text-overflow: ellipsis;");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[21/21] en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
+test: src/features/agenda/agendaStyles.test.ts > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -291,3 +291,3 @@
+   .cardTopRow > span:last-child {
+-    font-size: var(--font-size-xs);
++    font-size: var(--font-size-sm);
+     padding: 1px var(--space-1);
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/agendaStyles.test.ts (6 tests | 1 failed | 5 skipped) 19ms
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)
+   × agendaStyles y responsive de escritorio/tablet (D12, D13) > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6) 18ms
+     → expected '@container agenda-column (width < 260…' to match /\.cardTopRow > span:last-child \{[^}]…/
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  20:51:46
+   Duration  2.81s (transform 62ms, setup 401ms, collect 48ms, tests 19ms, environment 1.61s, prepare 287ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvz7yqe1y/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/agendaStyles.test.ts > agendaStyles y responsive de escritorio/tablet (D12, D13) > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)
+AssertionError: expected '@container agenda-column (width < 260…' to match /\.cardTopRow > span:last-child \{[^}]…/
+
+- Expected: 
+/\.cardTopRow > span:last-child \{[^}]*font-size: var\(--font-size-xs\);/
+
++ Received: 
+"@container agenda-column (width < 260px) {
+  .cardCompactRow {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .cardCompactText {
+    flex: 0 0 auto;
+  }
+
+  .statusBadgeWrap > span {
+    font-size: var(--font-size-xs);
+    padding: 1px var(--space-1);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+
+  /*
+   * H6: en tarjetas no compactas dentro de columnas angostas (< 260px), la etiqueta
+   * adopta el tamaño reducido (--font-size-xs) y paciente y prestación se recortan
+   * con ellipsis en una sola línea sin desbordar ni cortarse a mitad de un renglón.
+   */
+  .cardTopRow > span:last-child {
+    font-size: var(--font-size-sm);
+    padding: 1px var(--space-1);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+
+  .cardPatient {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .cardMeta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+}
+"
+
+ ❯ src/features/agenda/agendaStyles.test.ts:126:24
+    124|     const queryBlock = gridCss.slice(queryStart);
+    125| 
+    126|     expect(queryBlock).toMatch(
+       |                        ^
+    127|       /\.cardTopRow > span:last-child \{[^}]*font-size: var\(--font-si…
+    128|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 19
+mutaciones que hicieron fallar su test: 21
 mutaciones que NO lo hicieron fallar: 0
 mutaciones inválidas: 0
-SHA-256 de produccion despues: 92e3f3fec1094f39e113e775b3db73f216ac1a2ccc03c8783e9eeb6c3b5425f5
+SHA-256 de produccion despues: 2e8ad3dcc6674456d869508c65991772cdc700a93218d90ed9f8ba992d4277cc
 SHA-256 sin cambios: si

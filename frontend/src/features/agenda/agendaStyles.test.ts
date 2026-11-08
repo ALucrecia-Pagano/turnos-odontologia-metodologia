@@ -107,4 +107,30 @@ describe("agendaStyles y responsive de escritorio/tablet (D12, D13)", () => {
 
     expect(gridCss).toContain("overflow-x: auto;");
   });
+
+  it("en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)", () => {
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8").replace(/\r\n/g, "\n");
+    const stackedBadgeMatch = /\.cardCompactStacked \.statusBadgeWrap > span \{([^}]*)\}/.exec(gridCss);
+    const stackedBadgeRules = stackedBadgeMatch?.[1] ?? "";
+    expect(stackedBadgeRules).toContain("max-width: 100%;");
+    expect(stackedBadgeRules).toContain("overflow: hidden;");
+    expect(stackedBadgeRules).toContain("text-overflow: ellipsis;");
+  });
+
+  it("en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)", () => {
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8").replace(/\r\n/g, "\n");
+    const queryStart = gridCss.indexOf("@container agenda-column (width < 260px) {");
+    expect(queryStart).toBeGreaterThan(-1);
+    const queryBlock = gridCss.slice(queryStart);
+
+    expect(queryBlock).toMatch(
+      /\.cardTopRow > span:last-child \{[^}]*font-size: var\(--font-size-xs\);/,
+    );
+    expect(queryBlock).toMatch(
+      /\.cardPatient \{[^}]*text-overflow: ellipsis;/,
+    );
+    expect(queryBlock).toMatch(
+      /\.cardMeta \{[^}]*text-overflow: ellipsis;/,
+    );
+  });
 });
