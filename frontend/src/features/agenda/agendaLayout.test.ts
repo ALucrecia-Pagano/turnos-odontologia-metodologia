@@ -5,6 +5,7 @@ import {
   clampRange,
   compareProfessionals,
   computeAxis,
+  groupByDayForProfessional,
   groupByProfessional,
 } from "./agendaLayout";
 
@@ -337,6 +338,69 @@ describe("agendaLayout — posición, alto y carriles (R6)", () => {
       BUENOS_AIRES_TZ,
     );
     expect(endsAtMidnight).toEqual({ startMinute: 1410, endMinute: 1440 });
+  });
+
+  it("groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday", () => {
+    const columns = groupByDayForProfessional({
+      professionalId: QUIROGA_ID,
+      mondayDate: "2026-11-16",
+      timezone: BUENOS_AIRES_TZ,
+      todayDate: "2026-11-18",
+      workingHours: [
+        { professionalId: QUIROGA_ID, weekday: 1, start: "09:00", end: "13:00" },
+        { professionalId: QUIROGA_ID, weekday: 3, start: "15:00", end: "19:00" },
+        { professionalId: SOSA_ID, weekday: 1, start: "09:00", end: "13:00" },
+      ],
+      blocks: [
+        {
+          id: "00000000-0000-0000-0000-0000000000f1",
+          professionalId: QUIROGA_ID,
+          startAt: "2026-11-17T17:00:00Z",
+          endAt: "2026-11-17T19:00:00Z",
+          reason: "Guardia",
+        },
+      ],
+      appointments: [
+        {
+          id: "00000000-0000-0000-0000-0000000000a1",
+          professionalId: QUIROGA_ID,
+          startAt: "2026-11-17T01:30:00Z",
+          endAt: "2026-11-17T02:00:00Z",
+        },
+        {
+          id: "00000000-0000-0000-0000-0000000000a2",
+          professionalId: QUIROGA_ID,
+          startAt: "2026-11-18T19:00:00Z",
+          endAt: "2026-11-18T19:30:00Z",
+        },
+        {
+          id: "00000000-0000-0000-0000-0000000000a3",
+          professionalId: SOSA_ID,
+          startAt: "2026-11-16T13:00:00Z",
+          endAt: "2026-11-16T13:30:00Z",
+        },
+      ],
+    });
+
+    expect(columns).toHaveLength(7);
+    expect(columns.map((c) => c.date)).toEqual([
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+    ]);
+    expect(columns.map((c) => c.weekday)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(columns[0]?.appointments).toHaveLength(1);
+    expect(columns[0]?.appointments[0]?.id).toBe("00000000-0000-0000-0000-0000000000a1");
+    expect(columns[0]?.workingHours).toHaveLength(1);
+    expect(columns[1]?.blocks).toHaveLength(1);
+    expect(columns[2]?.appointments).toHaveLength(1);
+    expect(columns[2]?.appointments[0]?.id).toBe("00000000-0000-0000-0000-0000000000a2");
+    expect(columns[2]?.isToday).toBe(true);
+    expect(columns[0]?.isToday).toBe(false);
   });
 });
 

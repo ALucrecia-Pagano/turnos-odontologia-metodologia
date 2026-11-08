@@ -538,4 +538,248 @@ describe("AgendaPage", () => {
     expect(router.state.location.pathname).toBe("/agenda");
     expect(tokenStore.getToken()).toBe("token-recepcion-123");
   });
+
+  describe("AgendaPage - Vista Semanal (C-28)", () => {
+    it("alterna de día a semana conservando fecha y filtros", async () => {
+      const requestedUrls: string[] = [];
+      const { router } = renderAgendaPage(
+        "/agenda?date=2026-11-18&professionalId=00000000-0000-0000-0000-000000000001&chairId=00000000-0000-0000-0000-0000000000b1",
+        createAgendaFetchFn(requestedUrls),
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByTestId("agenda-view-toggle")).not.toBeNull();
+      });
+
+      const semanaBtn = screen.getByRole("button", { name: "Semana" });
+      fireEvent.click(semanaBtn);
+
+      await waitFor(() => {
+        expect(router.state.location.search).toContain("view=week");
+      });
+      expect(router.state.location.search).toContain("date=2026-11-18");
+      expect(router.state.location.search).toContain(
+        "professionalId=00000000-0000-0000-0000-000000000001",
+      );
+      expect(router.state.location.search).toContain(
+        "chairId=00000000-0000-0000-0000-0000000000b1",
+      );
+
+      // Muestra la grilla semanal con los 7 días
+      await waitFor(() => {
+        const headers = screen.getAllByTestId("agenda-column-header");
+        expect(headers).toHaveLength(7);
+      });
+    });
+
+    it("alterna de semana a día conservando el día exacto de anclaje y filtros", async () => {
+      const requestedUrls: string[] = [];
+      const { router } = renderAgendaPage(
+        "/agenda?date=2026-11-18&view=week&professionalId=00000000-0000-0000-0000-000000000001&chairId=00000000-0000-0000-0000-0000000000b1",
+        createAgendaFetchFn(requestedUrls),
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByTestId("agenda-view-toggle")).not.toBeNull();
+      });
+
+      const diaBtn = screen.getByRole("button", { name: "Día" });
+      fireEvent.click(diaBtn);
+
+      await waitFor(() => {
+        const search = router.state.location.search;
+        expect(search).not.toContain("view=week");
+      });
+      expect(router.state.location.search).toContain("date=2026-11-18");
+      expect(router.state.location.search).toContain(
+        "professionalId=00000000-0000-0000-0000-000000000001",
+      );
+      expect(router.state.location.search).toContain(
+        "chairId=00000000-0000-0000-0000-0000000000b1",
+      );
+
+      // Vista diaria de 18 de noviembre de 2026
+      await waitFor(() => {
+        expect(screen.queryByText("miércoles 18 de noviembre de 2026")).not.toBeNull();
+      });
+    });
+
+    it("un view desconocido o ausente cae a vista diaria con botón Día seleccionado", async () => {
+      const requestedUrls: string[] = [];
+      renderAgendaPage(
+        "/agenda?date=2026-11-16&view=invalido",
+        createAgendaFetchFn(requestedUrls),
+      );
+
+      await waitFor(() => {
+        const diaBtn = screen.getByRole("button", { name: "Día" });
+        expect(diaBtn).toHaveAttribute("aria-pressed", "true");
+      });
+
+      // Vista diaria activa con columnas por profesional
+      await waitFor(() => {
+        const headers = screen.getAllByTestId("agenda-column-header");
+        expect(headers).toHaveLength(3); // Dra. Laura Quiroga, Dr. Martín Sosa y Dra. Paula Benítez (inactiva)
+      });
+    });
+
+    it("preselecciona automáticamente por rol odontólogo su propio professionalId", async () => {
+      const odontologoUser = {
+        id: "00000000-0000-0000-0000-0000000000e1",
+        username: "odontologo_laura",
+        displayName: "Dra. Laura Quiroga",
+        role: "odontologo" as const,
+        professionalId: "00000000-0000-0000-0000-000000000001",
+      };
+
+      const requestedUrls: string[] = [];
+      const fetchFn: FetchFn = async (input) => {
+        const url = String(input);
+        requestedUrls.push(url);
+        if (url.endsWith("/auth/me")) {
+          return jsonResponse(odontologoUser);
+        }
+        if (url.endsWith("/professionals")) {
+          return jsonResponse(PROFESSIONALS);
+        }
+        if (url.endsWith("/chairs")) {
+          return jsonResponse(CHAIRS);
+        }
+        if (url.includes("/agenda?")) {
+          return jsonResponse({
+            from: "2026-11-16",
+            to: "2026-11-22",
+            timezone: "America/Argentina/Buenos_Aires",
+            appointments: [
+              {
+                id: "00000000-0000-0000-0000-000000000aa1",
+                patientId: "00000000-0000-0000-0000-0000000000c1",
+                patientName: "Ana Pérez",
+                professionalId: "00000000-0000-0000-0000-000000000001",
+                professionalName: "Dra. Laura Quiroga",
+                chairId: "00000000-0000-0000-0000-0000000000b1",
+                chairName: "Sillón 1",
+                serviceId: "00000000-0000-0000-0000-0000000000d4",
+                serviceName: "Control",
+                startAt: "2026-11-16T13:00:00Z",
+                endAt: "2026-11-16T13:30:00Z",
+                status: "reservado",
+              },
+            ],
+            workingHours: ALL_WORKING_HOURS,
+            blocks: [],
+          });
+        }
+        return jsonResponse([]);
+      };
+
+      renderAgendaPage("/agenda?date=2026-11-16&view=week", fetchFn);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/Ana Pérez/)).not.toBeNull();
+      });
+
+      const select = screen.getByLabelText("Profesional") as HTMLSelectElement;
+      expect(select.value).toBe("00000000-0000-0000-0000-000000000001");
+    });
+
+    it("preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector", async () => {
+      const requestedUrls: string[] = [];
+      const fetchFn: FetchFn = async (input) => {
+        const url = String(input);
+        requestedUrls.push(url);
+        if (url.endsWith("/auth/me")) {
+          return jsonResponse(RECEPCION_USER);
+        }
+        if (url.endsWith("/professionals")) {
+          return jsonResponse(PROFESSIONALS);
+        }
+        if (url.endsWith("/chairs")) {
+          return jsonResponse(CHAIRS);
+        }
+        if (url.includes("/agenda?")) {
+          return jsonResponse({
+            from: "2026-11-16",
+            to: "2026-11-22",
+            timezone: "America/Argentina/Buenos_Aires",
+            appointments: [],
+            workingHours: ALL_WORKING_HOURS,
+            blocks: [],
+          });
+        }
+        return jsonResponse([]);
+      };
+
+      const { router } = renderAgendaPage("/agenda?date=2026-11-16&view=week", fetchFn);
+
+      await waitFor(() => {
+        const select = screen.getByLabelText("Profesional") as HTMLSelectElement;
+        // Dr. Martín Sosa es el primero según compareProfessionals ("Dr." < "Dra.")
+        expect(select.value).toBe("00000000-0000-0000-0000-000000000002");
+      });
+
+      // El selector sigue habilitado para cambiar a cualquier otro profesional
+      const select = screen.getByLabelText("Profesional") as HTMLSelectElement;
+      fireEvent.change(select, {
+        target: { value: "00000000-0000-0000-0000-000000000001" },
+      });
+
+      await waitFor(() => {
+        expect(router.state.location.search).toContain(
+          "professionalId=00000000-0000-0000-0000-000000000001",
+        );
+      });
+    });
+
+    it("navegación semanal avanza y retrocede 7 días cruzando mes y año", async () => {
+      const requestedUrls: string[] = [];
+      const { router } = renderAgendaPage(
+        "/agenda?date=2026-12-28&view=week&professionalId=00000000-0000-0000-0000-000000000001",
+        createAgendaFetchFn(requestedUrls),
+      );
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: "Semana siguiente" })).toBeInTheDocument();
+      });
+
+      const nextBtn = screen.getByRole("button", { name: "Semana siguiente" });
+      fireEvent.click(nextBtn);
+
+      await waitFor(() => {
+        expect(router.state.location.search).toContain("date=2027-01-04");
+      });
+      expect(router.state.location.search).toContain("view=week");
+
+      const prevBtn = screen.getByRole("button", { name: "Semana anterior" });
+      fireEvent.click(prevBtn);
+
+      await waitFor(() => {
+        expect(router.state.location.search).toContain("date=2026-12-28");
+      });
+    });
+
+    it("botón Hoy en vista semanal navega a la fecha actual del Clock", async () => {
+      const clock: Clock = {
+        now: () => new Date("2026-11-18T12:00:00Z"),
+      };
+      const requestedUrls: string[] = [];
+      const { router } = renderAgendaPage(
+        "/agenda?date=2026-12-15&view=week",
+        createAgendaFetchFn(requestedUrls),
+        clock,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: "Hoy" })).toBeInTheDocument();
+      });
+
+      const todayBtn = screen.getByRole("button", { name: "Hoy" });
+      fireEvent.click(todayBtn);
+
+      await waitFor(() => {
+        expect(router.state.location.search).toContain("date=2026-11-18");
+      });
+      expect(router.state.location.search).toContain("view=week");
+    });
+  });
 });

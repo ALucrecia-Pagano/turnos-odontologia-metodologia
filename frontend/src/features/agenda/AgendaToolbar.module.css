@@ -63,9 +63,44 @@
 
 .select:focus-visible,
 .dateInput:focus-visible,
-.actionButton:focus-visible {
+.actionButton:focus-visible,
+.viewToggleButton:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+.viewToggleGroup {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.viewToggleButton {
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+.viewToggleButton:hover {
+  background-color: var(--agenda-offhours-bg, #F3F4F6);
+}
+
+.viewToggleButtonActive {
+  composes: viewToggleButton;
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.viewToggleButtonActive:hover {
+  background-color: var(--color-primary);
 }
 
 .helpText {

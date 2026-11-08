@@ -78,4 +78,18 @@ describe("agendaStyles y responsive de escritorio/tablet (D12, D13)", () => {
     expect(gridCss).not.toContain(".statusDot");
     expect(gridCss).not.toContain(".visuallyHidden");
   });
+
+  it("verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)", () => {
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8");
+    expect(gridCss).toContain(".todayTag");
+    expect(gridCss).toContain("border-radius: var(--radius-pill)");
+    expect(gridCss).toContain("background-color: var(--color-primary)");
+    expect(gridCss).toContain("color: var(--color-primary-contrast)");
+
+    expect(gridCss).toContain(".gridScrollContainer");
+    expect(gridCss).toContain("overflow-x: auto;");
+    expect(gridCss).toContain(".timeGutter");
+    expect(gridCss).toContain("position: sticky;");
+    expect(gridCss).toContain("left: 0;");
+  });
 });

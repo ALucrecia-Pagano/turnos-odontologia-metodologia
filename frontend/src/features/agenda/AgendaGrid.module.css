@@ -51,6 +51,18 @@
   color: var(--color-text);
 }
 
+.todayTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
 .bodyRow {
   display: flex;
   position: relative;

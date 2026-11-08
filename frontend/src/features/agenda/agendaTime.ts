@@ -111,6 +111,19 @@ export function formatDayLabel(dateStr: string): string {
   return `${weekday} ${parsed.day} de ${month} de ${parsed.year}`;
 }
 
+export function formatWeekdayHeader(dateStr: string): string {
+  const parsed = parseLocalDate(dateStr);
+  if (parsed === null) {
+    return dateStr;
+  }
+  const names = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+  const w = weekdayOf(dateStr);
+  const name = names[w - 1] ?? "";
+  const day = pad2(parsed.day);
+  const month = pad2(parsed.month);
+  return `${name} ${day}/${month}`;
+}
+
 export function addDays(dateStr: string, delta: number): string {
   const parsed = parseLocalDate(dateStr);
   if (parsed === null) {
@@ -184,4 +197,24 @@ export function appointmentRange(
   const startMinute = Math.max(0, Math.min(1440, rawStart));
   const endMinute = Math.max(0, Math.min(1440, rawEnd));
   return { startMinute, endMinute };
+}
+
+export interface WeekRange {
+  readonly monday: string;
+  readonly sunday: string;
+}
+
+export function weekRangeOf(dateStr: string): WeekRange {
+  const weekday = weekdayOf(dateStr);
+  const monday = addDays(dateStr, 1 - weekday);
+  const sunday = addDays(monday, 6);
+  return { monday, sunday };
+}
+
+export function getWeekDates(mondayDateStr: string): readonly string[] {
+  const dates: string[] = [];
+  for (let i = 0; i < 7; i++) {
+    dates.push(addDays(mondayDateStr, i));
+  }
+  return dates;
 }

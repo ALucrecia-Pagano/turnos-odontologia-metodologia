@@ -5,7 +5,8 @@ import { ErrorState } from "../../shared/components/ErrorState";
 import { LoadingState } from "../../shared/components/LoadingState";
 import { PageShell } from "../../shared/components/PageShell";
 import { DEFAULT_AGENDA_TIMEZONE } from "./agendaConfig";
-import { addDays, isValidLocalDate, todayInTimeZone } from "./agendaTime";
+import { compareProfessionals } from "./agendaLayout";
+import { addDays, isValidLocalDate, todayInTimeZone, weekRangeOf } from "./agendaTime";
 import { AgendaToolbar } from "./AgendaToolbar";
 import { AgendaView } from "./AgendaView";
 import { systemClock, type Clock } from "./clock";
@@ -26,7 +27,7 @@ export interface AgendaPageProps {
 }
 
 export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
-  const { client, clearActionErrors } = useAuth();
+  const { client, clearActionErrors, user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const rawDate = searchParams.get("date");
@@ -34,34 +35,63 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
   const hasValidDate = isValidLocalDate(rawDate);
   const effectiveDate = hasValidDate ? rawDate : fallbackToday;
 
+  const rawView = searchParams.get("view");
+  const view: "day" | "week" = rawView === "week" ? "week" : "day";
+  const isWeek = view === "week";
+
   const [invalidDateNotice, setInvalidDateNotice] = useState<string | null>(() =>
     rawDate !== null && !hasValidDate ? INVALID_DATE_NOTICE : null,
   );
 
   const rawProfessionalId = searchParams.get("professionalId");
   const rawChairId = searchParams.get("chairId");
-  const professionalId = sanitizeUuidParam(rawProfessionalId);
+  const explicitProfessionalId = sanitizeUuidParam(rawProfessionalId);
   const chairId = sanitizeUuidParam(rawChairId);
+
+  const initialProfessionalId =
+    explicitProfessionalId ??
+    (isWeek && user?.role === "odontologo" ? user.professionalId : null);
+
+  const week = isWeek ? weekRangeOf(effectiveDate) : null;
+  const queryFrom = isWeek && week !== null ? week.monday : effectiveDate;
+  const queryTo = isWeek && week !== null ? week.sunday : undefined;
 
   const state = useAgenda({
     client,
-    date: effectiveDate,
-    professionalId,
+    date: queryFrom,
+    toDate: queryTo,
+    professionalId: initialProfessionalId,
     chairId,
     onForbidden: clearActionErrors,
   });
 
+  const effectiveProfessionalId =
+    initialProfessionalId ??
+    (() => {
+      if (!isWeek) {
+        return null;
+      }
+      const sorted = [...state.professionals]
+        .filter((p) => p.active)
+        .sort(compareProfessionals);
+      const first = sorted[0];
+      return first !== undefined ? first.id : null;
+    })();
+
   useEffect(() => {
     const needsDateNorm = rawDate === null || !hasValidDate;
-    const needsProfNorm = rawProfessionalId !== null && professionalId === null;
+    const needsProfNorm = rawProfessionalId !== null && explicitProfessionalId === null;
     const needsChairNorm = rawChairId !== null && chairId === null;
     if (!needsDateNorm && !needsProfNorm && !needsChairNorm) {
       return;
     }
     const normalized = new URLSearchParams();
     normalized.set("date", effectiveDate);
-    if (professionalId !== null) {
-      normalized.set("professionalId", professionalId);
+    if (view === "week") {
+      normalized.set("view", "week");
+    }
+    if (explicitProfessionalId !== null) {
+      normalized.set("professionalId", explicitProfessionalId);
     }
     if (chairId !== null) {
       normalized.set("chairId", chairId);
@@ -72,20 +102,27 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     hasValidDate,
     effectiveDate,
     rawProfessionalId,
-    professionalId,
+    explicitProfessionalId,
     rawChairId,
     chairId,
+    view,
     setSearchParams,
   ]);
 
   const buildParams = (next: {
     readonly date?: string;
+    readonly view?: "day" | "week";
     readonly professionalId?: string | null;
     readonly chairId?: string | null;
   }): URLSearchParams => {
     const params = new URLSearchParams();
     params.set("date", next.date ?? effectiveDate);
-    const nextProf = next.professionalId !== undefined ? next.professionalId : professionalId;
+    const nextView = next.view !== undefined ? next.view : view;
+    if (nextView === "week") {
+      params.set("view", "week");
+    }
+    const nextProf =
+      next.professionalId !== undefined ? next.professionalId : explicitProfessionalId;
     const nextChair = next.chairId !== undefined ? next.chairId : chairId;
     if (nextProf !== null && nextProf !== "") {
       params.set("professionalId", nextProf);
@@ -104,6 +141,10 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     setSearchParams(buildParams({ date: nextDate }), { replace: false });
   };
 
+  const handleSelectView = (nextView: "day" | "week") => {
+    setSearchParams(buildParams({ view: nextView }), { replace: false });
+  };
+
   const handleSelectProfessional = (nextProfId: string | null) => {
     setSearchParams(buildParams({ professionalId: nextProfId }), { replace: false });
   };
@@ -120,18 +161,20 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     <PageShell title="Agenda diaria">
       <AgendaToolbar
         date={effectiveDate}
-        professionalId={professionalId}
+        view={view}
+        professionalId={effectiveProfessionalId}
         chairId={chairId}
         professionals={state.professionals}
         chairs={state.chairs}
         onSelectProfessional={handleSelectProfessional}
         onSelectChair={handleSelectChair}
         onClearFilters={handleClearFilters}
-        onPrevDay={() => navigateToDate(addDays(effectiveDate, -1))}
-        onNextDay={() => navigateToDate(addDays(effectiveDate, 1))}
+        onPrevDay={() => navigateToDate(addDays(effectiveDate, isWeek ? -7 : -1))}
+        onNextDay={() => navigateToDate(addDays(effectiveDate, isWeek ? 7 : 1))}
         onToday={() => navigateToDate(todayInTimeZone(clock.now(), state.timezone))}
         onSelectDate={navigateToDate}
         onRefresh={state.refresh}
+        onSelectView={handleSelectView}
         invalidDateNotice={invalidDateNotice}
       />
 
@@ -144,10 +187,12 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
       {state.agenda !== null && state.phase !== "error" && (
         <AgendaView
           date={effectiveDate}
+          view={view}
+          todayDate={todayInTimeZone(clock.now(), state.timezone)}
           timezone={state.timezone}
           agenda={state.agenda}
           professionals={state.professionals}
-          filterProfessionalId={professionalId}
+          filterProfessionalId={effectiveProfessionalId}
           filterChairId={chairId}
           isRefreshing={state.phase === "refreshing"}
           catalogWarning={state.catalogWarning}

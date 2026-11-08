@@ -20,6 +20,7 @@ export const CATALOG_FALLBACK_WARNING =
 export interface UseAgendaParams {
   readonly client: ApiClient;
   readonly date: string;
+  readonly toDate?: string;
   readonly professionalId?: string | null;
   readonly chairId?: string | null;
   readonly onForbidden?: () => void;
@@ -50,12 +51,14 @@ interface InternalState {
 export function useAgenda({
   client,
   date,
+  toDate,
   professionalId = null,
   chairId = null,
   onForbidden,
 }: UseAgendaParams): UseAgendaState {
   const [reloadTick, setReloadTick] = useState(0);
-  const queryKey = `${date}|${professionalId ?? ""}|${chairId ?? ""}|${reloadTick}`;
+  const effectiveTo = toDate ?? date;
+  const queryKey = `${date}|${effectiveTo}|${professionalId ?? ""}|${chairId ?? ""}|${reloadTick}`;
 
   const [state, setState] = useState<InternalState>({
     settledKey: null,
@@ -87,7 +90,7 @@ export function useAgenda({
     void Promise.allSettled([
       fetchAgenda(client, {
         from: date,
-        to: date,
+        to: effectiveTo,
         professionalId,
         chairId,
         signal: controller.signal,
@@ -168,7 +171,7 @@ export function useAgenda({
     return () => {
       controller.abort();
     };
-  }, [client, date, professionalId, chairId, reloadTick, queryKey]);
+  }, [client, date, effectiveTo, professionalId, chairId, reloadTick, queryKey]);
 
   const isPending = state.settledKey !== queryKey;
   const phase: AgendaLoadPhase = isPending

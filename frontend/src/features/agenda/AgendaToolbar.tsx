@@ -7,6 +7,7 @@ export const CHAIR_FILTER_HELP_TEXT =
 
 export interface AgendaToolbarProps {
   readonly date: string;
+  readonly view?: "day" | "week";
   readonly professionalId: string | null;
   readonly chairId: string | null;
   readonly professionals: readonly Professional[];
@@ -19,6 +20,7 @@ export interface AgendaToolbarProps {
   readonly onToday?: () => void;
   readonly onSelectDate?: (nextDate: string) => void;
   readonly onRefresh?: () => void;
+  readonly onSelectView?: (view: "day" | "week") => void;
   readonly invalidDateNotice?: string | null;
 }
 
@@ -32,6 +34,7 @@ function compareChairs(a: Chair, b: Chair): number {
 
 export function AgendaToolbar({
   date,
+  view = "day",
   professionalId,
   chairId,
   professionals,
@@ -44,22 +47,50 @@ export function AgendaToolbar({
   onToday,
   onSelectDate,
   onRefresh,
+  onSelectView,
   invalidDateNotice = null,
 }: AgendaToolbarProps) {
   const sortedProfessionals = [...professionals].sort(compareProfessionals);
   const sortedChairs = [...chairs].sort(compareChairs);
   const hasChairFilter = chairId !== null && chairId !== "";
+  const isWeekView = view === "week";
+  const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
+  const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
 
   return (
     <div className={styles.toolbar} aria-label="Controles de agenda">
       <div className={styles.controlsRow}>
         <div className={styles.navGroup}>
+          <div
+            className={styles.viewToggleGroup}
+            role="group"
+            aria-label="Modo de vista"
+            data-testid="agenda-view-toggle"
+          >
+            <button
+              type="button"
+              className={isWeekView ? styles.viewToggleButton : styles.viewToggleButtonActive}
+              aria-pressed={!isWeekView}
+              onClick={() => onSelectView?.("day")}
+            >
+              Día
+            </button>
+            <button
+              type="button"
+              className={isWeekView ? styles.viewToggleButtonActive : styles.viewToggleButton}
+              aria-pressed={isWeekView}
+              onClick={() => onSelectView?.("week")}
+            >
+              Semana
+            </button>
+          </div>
+
           <button
             type="button"
             className={styles.actionButton}
             onClick={onPrevDay}
           >
-            Anterior
+            {prevLabel}
           </button>
           <button
             type="button"
@@ -73,7 +104,7 @@ export function AgendaToolbar({
             className={styles.actionButton}
             onClick={onNextDay}
           >
-            Siguiente
+            {nextLabel}
           </button>
 
           <div className={styles.field}>

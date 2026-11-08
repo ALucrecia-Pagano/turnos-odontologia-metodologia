@@ -1,6 +1,8 @@
 import {
+  addDays,
   appointmentRange,
   formatMinutesToHHMM,
+  formatWeekdayHeader,
   parseHHMM,
   weekdayOf,
   type MinuteRange,
@@ -51,9 +53,96 @@ export interface ProfessionalColumn<
   readonly fullName: string;
   readonly active: boolean;
   readonly displayLabel: string;
+  readonly date?: string;
+  readonly isToday?: boolean;
   readonly workingHours: readonly TWh[];
   readonly blocks: readonly TBlock[];
   readonly appointments: readonly TAppt[];
+}
+
+export interface DayColumn<
+  TAppt extends AxisAppointmentInput = AxisAppointmentInput,
+  TWh extends AxisWorkingHourInput = AxisWorkingHourInput,
+  TBlock extends AxisBlockInput = AxisBlockInput,
+> {
+  readonly id: string;
+  readonly date: string;
+  readonly weekday: number;
+  readonly fullName: string;
+  readonly active: boolean;
+  readonly displayLabel: string;
+  readonly isToday?: boolean;
+  readonly workingHours: readonly TWh[];
+  readonly blocks: readonly TBlock[];
+  readonly appointments: readonly TAppt[];
+}
+
+export interface GroupByDayInput<
+  TAppt extends AxisAppointmentInput = AxisAppointmentInput,
+  TWh extends AxisWorkingHourInput = AxisWorkingHourInput,
+  TBlock extends AxisBlockInput = AxisBlockInput,
+> {
+  readonly professionalId: string;
+  readonly mondayDate: string;
+  readonly timezone: string;
+  readonly todayDate?: string;
+  readonly workingHours: readonly TWh[];
+  readonly blocks: readonly TBlock[];
+  readonly appointments: readonly TAppt[];
+}
+
+export function groupByDayForProfessional<
+  TAppt extends AxisAppointmentInput = AxisAppointmentInput,
+  TWh extends AxisWorkingHourInput = AxisWorkingHourInput,
+  TBlock extends AxisBlockInput = AxisBlockInput,
+>({
+  professionalId,
+  mondayDate,
+  timezone,
+  todayDate,
+  workingHours,
+  blocks,
+  appointments,
+}: GroupByDayInput<TAppt, TWh, TBlock>): DayColumn<TAppt, TWh, TBlock>[] {
+  const columns: DayColumn<TAppt, TWh, TBlock>[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    const date = addDays(mondayDate, i);
+    const weekday = i + 1;
+    const displayLabel = formatWeekdayHeader(date);
+    const isToday = todayDate !== undefined && date === todayDate;
+
+    const dayWorkingHours = workingHours.filter(
+      (wh) => wh.professionalId === professionalId && wh.weekday === weekday,
+    );
+
+    const dayBlocks = blocks.filter(
+      (b) =>
+        b.professionalId === professionalId &&
+        appointmentRange(b.startAt, b.endAt, date, timezone) !== null,
+    );
+
+    const dayAppointments = appointments.filter(
+      (appt) =>
+        appt.professionalId === professionalId &&
+        appointmentRange(appt.startAt, appt.endAt, date, timezone) !== null,
+    );
+
+    columns.push({
+      id: date,
+      date,
+      weekday,
+      fullName: displayLabel,
+      active: true,
+      displayLabel,
+      isToday,
+      workingHours: dayWorkingHours,
+      blocks: dayBlocks,
+      appointments: dayAppointments,
+    });
+  }
+
+  return columns;
 }
 
 export interface GroupByProfessionalInput<
@@ -155,6 +244,40 @@ export function computeAxis({
     startMinute,
     endMinute,
     hours: buildHoursList(startMinute, endMinute),
+  };
+}
+
+export function computeWeekAxis({
+  mondayDate,
+  timezone,
+  workingHours,
+  blocks,
+  appointments,
+}: {
+  readonly mondayDate: string;
+  readonly timezone: string;
+  readonly workingHours: readonly AxisWorkingHourInput[];
+  readonly blocks: readonly AxisBlockInput[];
+  readonly appointments: readonly AxisAppointmentInput[];
+}): AgendaAxis {
+  let minStart = 1440;
+  let maxEnd = 0;
+  for (let i = 0; i < 7; i++) {
+    const day = addDays(mondayDate, i);
+    const dayAxis = computeAxis({
+      date: day,
+      timezone,
+      workingHours,
+      blocks,
+      appointments,
+    });
+    minStart = Math.min(minStart, dayAxis.startMinute);
+    maxEnd = Math.max(maxEnd, dayAxis.endMinute);
+  }
+  return {
+    startMinute: minStart,
+    endMinute: maxEnd,
+    hours: buildHoursList(minStart, maxEnd),
   };
 }
 

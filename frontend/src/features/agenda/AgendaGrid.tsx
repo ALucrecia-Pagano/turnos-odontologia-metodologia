@@ -41,15 +41,20 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
       <div className={styles.gridTable}>
         <div className={styles.headerRow}>
           <div className={styles.cornerCell}>Hora</div>
-          {columns.map((col) => (
-            <div
-              key={col.id}
-              className={styles.columnHeader}
-              data-testid="agenda-column-header"
-            >
-              <span>{col.displayLabel}</span>
-            </div>
-          ))}
+          {columns.map((col) => {
+            const isToday = Boolean(col.isToday);
+            return (
+              <div
+                key={col.id}
+                className={styles.columnHeader}
+                data-testid="agenda-column-header"
+                aria-current={isToday ? "date" : undefined}
+              >
+                <span>{col.displayLabel}</span>
+                {isToday && <span className={styles.todayTag}>Hoy</span>}
+              </div>
+            );
+          })}
         </div>
 
         <div className={styles.bodyRow}>
@@ -66,8 +71,9 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
           </div>
 
           {columns.map((col) => {
+            const columnDate = col.date ?? date;
             const positioned = assignLanes(col.appointments, {
-              date,
+              date: columnDate,
               timezone,
               axisStartMinute: axis.startMinute,
               axisEndMinute: axis.endMinute,
@@ -116,7 +122,7 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
                 })}
 
                 {col.blocks.map((block) => {
-                  const range = appointmentRange(block.startAt, block.endAt, date, timezone);
+                  const range = appointmentRange(block.startAt, block.endAt, columnDate, timezone);
                   if (range === null) {
                     return null;
                   }

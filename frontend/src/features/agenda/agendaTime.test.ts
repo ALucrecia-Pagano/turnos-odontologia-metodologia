@@ -6,10 +6,12 @@ import {
   formatLocalDate,
   formatLocalTime,
   formatTimeRange,
+  getWeekDates,
   isValidLocalDate,
   parseHHMM,
   todayInTimeZone,
   weekdayOf,
+  weekRangeOf,
 } from "./agendaTime";
 
 const BUENOS_AIRES_TZ = "America/Argentina/Buenos_Aires";
@@ -64,5 +66,51 @@ describe("agendaTime", () => {
     expect(formatLocalDate("2026-11-16T13:00:00Z", BUENOS_AIRES_TZ)).toBe("2026-11-16");
     expect(isValidLocalDate("2026-11-16")).toBe(true);
     expect(isValidLocalDate("2026-02-30")).toBe(false);
+  });
+
+  it("weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año", () => {
+    expect(weekRangeOf("2026-11-18")).toEqual({
+      monday: "2026-11-16",
+      sunday: "2026-11-22",
+    });
+    expect(weekRangeOf("2026-11-16")).toEqual({
+      monday: "2026-11-16",
+      sunday: "2026-11-22",
+    });
+    expect(weekRangeOf("2026-11-22")).toEqual({
+      monday: "2026-11-16",
+      sunday: "2026-11-22",
+    });
+    expect(weekRangeOf("2026-12-02")).toEqual({
+      monday: "2026-11-30",
+      sunday: "2026-12-06",
+    });
+    expect(weekRangeOf("2026-12-31")).toEqual({
+      monday: "2026-12-28",
+      sunday: "2027-01-03",
+    });
+    expect(weekRangeOf("2027-01-01")).toEqual({
+      monday: "2026-12-28",
+      sunday: "2027-01-03",
+    });
+
+    expect(getWeekDates("2026-11-16")).toEqual([
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+    ]);
+    expect(getWeekDates("2026-12-28")).toEqual([
+      "2026-12-28",
+      "2026-12-29",
+      "2026-12-30",
+      "2026-12-31",
+      "2027-01-01",
+      "2027-01-02",
+      "2027-01-03",
+    ]);
   });
 });

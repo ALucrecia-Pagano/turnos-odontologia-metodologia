@@ -252,4 +252,57 @@ describe("useAgenda", () => {
       "Ocurrió un error inesperado (HTTP 500).",
     );
   });
+
+  it("pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate", async () => {
+    const agendaCalls: string[] = [];
+
+    const fetchFn: FetchFn = (input) => {
+      const url = String(input);
+      if (url.includes("/agenda?")) {
+        agendaCalls.push(url);
+        return Promise.resolve(
+          jsonResponse({
+            from: "2026-11-16",
+            to: "2026-11-22",
+            timezone: "America/Argentina/Buenos_Aires",
+            appointments: [],
+            workingHours: [],
+            blocks: [],
+          }),
+        );
+      }
+      if (url === "/api/professionals") {
+        return Promise.resolve(jsonResponse(PROFESSIONALS));
+      }
+      return Promise.resolve(jsonResponse(CHAIRS));
+    };
+
+    function WeekHarness() {
+      const [client] = useState(() => createApiClient({ baseUrl: "/api", fetchFn }));
+      const state = useAgenda({
+        client,
+        date: "2026-11-16",
+        toDate: "2026-11-22",
+        professionalId: "00000000-0000-0000-0000-000000000001",
+      });
+      return (
+        <div>
+          <span data-testid="phase">{state.phase}</span>
+          <span data-testid="from">{state.agenda?.from ?? ""}</span>
+          <span data-testid="to">{state.agenda?.to ?? ""}</span>
+        </div>
+      );
+    }
+
+    render(<WeekHarness />);
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("phase")).toHaveTextContent("success");
+    });
+
+    expect(agendaCalls).toHaveLength(1);
+    expect(agendaCalls[0]).toContain("from=2026-11-16");
+    expect(agendaCalls[0]).toContain("to=2026-11-22");
+    expect(agendaCalls[0]).toContain("professionalId=00000000-0000-0000-0000-000000000001");
+  });
 });

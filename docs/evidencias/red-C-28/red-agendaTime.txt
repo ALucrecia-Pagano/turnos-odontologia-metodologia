@@ -1,0 +1,37 @@
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/agendaTime.test.ts (6 tests | 1 failed) 75ms
+   ✓ agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
+   ✓ agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
+   ✓ agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
+   ✓ agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
+   ✓ agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
+   × agendaTime > weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/features/agenda/agendaTime.test.ts > agendaTime > weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año
+AssertionError: expected { monday: '', sunday: '' } to deeply equal { monday: '2026-11-16', sunday: '2026-11-22' }
+
+- Expected
++ Received
+
+  Object {
+-   "monday": "2026-11-16",
+-   "sunday": "2026-11-22",
++   "monday": "",
++   "sunday": "",
+  }
+
+ ❯ src/features/agenda/agendaTime.test.ts:71:36
+     69| 
+     70|   it("weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año", () => {
+     71|     expect(weekRangeOf("2026-11-18")).toEqual({
+       |                                    ^
+     72|       monday: "2026-11-16",
+     73|       sunday: "2026-11-22",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  18:12:20
+   Duration  412ms

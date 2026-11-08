@@ -607,4 +607,168 @@ describe("AgendaView", () => {
       "Reservado",
     ]);
   });
+
+  describe("AgendaView - Vista Semanal (C-28)", () => {
+    const WEEK_AGENDA: AgendaResponse = {
+      from: "2026-11-16",
+      to: "2026-11-22",
+      timezone: "America/Argentina/Buenos_Aires",
+      appointments: [
+        {
+          id: "00000000-0000-0000-0000-000000000aa1",
+          patientId: "00000000-0000-0000-0000-0000000000c1",
+          patientName: "Ana Pérez",
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          professionalName: "Dra. Laura Quiroga",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000d4",
+          serviceName: "Control",
+          startAt: "2026-11-17T01:30:00Z", // 2026-11-16 22:30 en America/Argentina/Buenos_Aires (-03:00)
+          endAt: "2026-11-17T02:00:00Z",
+          status: "reservado",
+        },
+        {
+          id: "00000000-0000-0000-0000-000000000aa3",
+          patientId: "00000000-0000-0000-0000-0000000000c3",
+          patientName: "Carlos Gómez",
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          professionalName: "Dra. Laura Quiroga",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000d1",
+          serviceName: "Limpieza",
+          startAt: "2026-11-18T13:00:00Z", // 10:00 local miércoles 18
+          endAt: "2026-11-18T13:30:00Z",
+          status: "cancelado",
+        },
+      ],
+      workingHours: [
+        {
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          weekday: 1,
+          start: "09:00",
+          end: "23:00",
+        },
+        {
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          weekday: 3,
+          start: "09:00",
+          end: "18:00",
+        },
+      ],
+      blocks: [],
+    };
+
+    it("renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles", () => {
+      render(
+        <AgendaView
+          date="2026-11-18"
+          view="week"
+          filterProfessionalId="00000000-0000-0000-0000-000000000001"
+          todayDate="2026-11-18"
+          timezone={WEEK_AGENDA.timezone}
+          agenda={WEEK_AGENDA}
+          professionals={PROFESSIONALS_ORDER_A}
+        />,
+      );
+
+      const headers = screen.getAllByTestId("agenda-column-header");
+      expect(headers).toHaveLength(7);
+      expect(headers.map((h) => h.querySelector("span")?.textContent)).toEqual([
+        "Lunes 16/11",
+        "Martes 17/11",
+        "Miércoles 18/11",
+        "Jueves 19/11",
+        "Viernes 20/11",
+        "Sábado 21/11",
+        "Domingo 22/11",
+      ]);
+
+      // Marca Hoy con texto visible y aria-current="date"
+      const wedHeader = headers[2]!;
+      expect(wedHeader).toHaveAttribute("aria-current", "date");
+      expect(within(wedHeader).getByText("Hoy")).toBeInTheDocument();
+
+      // Turno en el día local correcto según timezone: lunes 2026-11-16, NO martes 2026-11-17
+      const mondayCol = screen.getByTestId("agenda-column-2026-11-16");
+      const tuesdayCol = screen.getByTestId("agenda-column-2026-11-17");
+      expect(
+        within(mondayCol).queryByTestId("agenda-appointment-00000000-0000-0000-0000-000000000aa1"),
+      ).not.toBeNull();
+      expect(
+        within(tuesdayCol).queryByTestId("agenda-appointment-00000000-0000-0000-0000-000000000aa1"),
+      ).toBeNull();
+
+      // Turno cancelado visible con texto "Cancelado"
+      const wedCol = screen.getByTestId("agenda-column-2026-11-18");
+      const cancelledCard = within(wedCol).getByTestId(
+        "agenda-appointment-00000000-0000-0000-0000-000000000aa3",
+      );
+      expect(cancelledCard).toHaveAttribute("data-status", "cancelado");
+      expect(within(cancelledCard).getByText("Cancelado")).toBeInTheDocument();
+    });
+
+    it("muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional", () => {
+      const emptyAgenda: AgendaResponse = {
+        from: "2026-11-16",
+        to: "2026-11-22",
+        timezone: "America/Argentina/Buenos_Aires",
+        appointments: [],
+        workingHours: WEEK_AGENDA.workingHours,
+        blocks: [],
+      };
+
+      render(
+        <AgendaView
+          date="2026-11-18"
+          view="week"
+          filterProfessionalId="00000000-0000-0000-0000-000000000001"
+          todayDate="2026-11-18"
+          timezone={emptyAgenda.timezone}
+          agenda={emptyAgenda}
+          professionals={PROFESSIONALS_ORDER_A}
+        />,
+      );
+
+      // Grilla de 7 columnas se muestra igual
+      expect(screen.getAllByTestId("agenda-column-header")).toHaveLength(7);
+      // Aviso informativo de semana vacía
+      expect(
+        screen.queryByText("No hay turnos esta semana para Dra. Laura Quiroga"),
+      ).not.toBeNull();
+      // No debe decir el aviso de filtro
+      expect(screen.queryByText("Sin turnos para este filtro")).not.toBeInTheDocument();
+    });
+
+    it("muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo", () => {
+      const emptyAgenda: AgendaResponse = {
+        from: "2026-11-16",
+        to: "2026-11-22",
+        timezone: "America/Argentina/Buenos_Aires",
+        appointments: [],
+        workingHours: WEEK_AGENDA.workingHours,
+        blocks: [],
+      };
+
+      render(
+        <AgendaView
+          date="2026-11-18"
+          view="week"
+          filterProfessionalId="00000000-0000-0000-0000-000000000001"
+          filterChairId="00000000-0000-0000-0000-0000000000b1"
+          todayDate="2026-11-18"
+          timezone={emptyAgenda.timezone}
+          agenda={emptyAgenda}
+          professionals={PROFESSIONALS_ORDER_A}
+        />,
+      );
+
+      expect(screen.getAllByTestId("agenda-column-header")).toHaveLength(7);
+      expect(screen.queryByText("Sin turnos para este filtro")).not.toBeNull();
+      expect(
+        screen.queryByText("No hay turnos esta semana para Dra. Laura Quiroga"),
+      ).not.toBeInTheDocument();
+    });
+  });
 });

@@ -96,3 +96,54 @@ resultado sirve, con ese ajuste de import. No se detectó nada incorrecto. Detal
   servidor desde Claude Code en esta sesión.
 
 ## 5. Uso en C-28
+
+En el change `ui-agenda-semanal` (C-28) se aplicaron tanto la skill propia `appointment-frontend-ux` como la evidencia obtenida con el MCP Context7 (`04-uso-context7.md`), guiando el diseño, la implementación y los tests de la vista semanal.
+
+### 5.1. Aplicación de la skill `appointment-frontend-ux`
+
+La skill se cargó como referencia obligatoria antes de escribir código y se ejecutó su checklist paso a paso:
+
+1. **Stack y versiones**:
+   - Se respetó el stack del proyecto (React 18.3.1, TypeScript strict, Vite 5, React Router 6.30.6, Vitest 3.2.7) sin añadir dependencias externas ni recurrir a sintaxis de versiones posteriores.
+
+2. **Tokens de diseño**:
+   - Todo el diseño visual reutilizó las variables semánticas de `tokens.css`: `--color-surface`, `--color-surface-hover`, `--color-border-subtle`, `--color-primary-subtle`, `--space-sm`, `--space-md`, radios y tipografías.
+   - En `AgendaToolbar.module.css` y `AgendaGrid.module.css` no se introdujo ningún valor hardcodeado ni color arbitrario.
+
+3. **Accesibilidad (a11y)**:
+   - **Estado del turno visible con texto**: los turnos cancelados en la grilla semanal muestran explícitamente la etiqueta de texto `"Cancelado"`, nunca dependiendo exclusivamente del color atenuado.
+   - **Indicador de día actual ("Hoy")**: la cabecera de la columna correspondiente a la fecha de hoy muestra el texto visible `"Hoy"` junto al día y número, acompañado del atributo semántico `aria-current="date"`. No se confía únicamente en un borde o fondo coloreado.
+   - **Etiquetas accesibles en navegación**: los botones de navegación anterior/siguiente de `AgendaToolbar` adaptan dinámicamente su texto visible y `aria-label` a `"Semana anterior"` y `"Semana siguiente"` cuando `view=week`, facilitando la navegación por tecnologías asistivas y teclado.
+   - **Selector segmentado accesible**: el control `[ Día | Semana ]` en la barra de herramientas utiliza botones semánticos con estados de foco visibles y claros.
+
+4. **Zona horaria y hora local**:
+   - En la vista semanal de 7 columnas (lunes a domingo), los turnos y los horarios de atención se distribuyen según la fecha local determinada por el `timezone` devuelto por la API REST (`America/Argentina/Buenos_Aires`). La conversión se realiza de forma pura en `agendaLayout.ts` reutilizando las funciones de `agendaTime.ts`, garantizando que turnos guardados en UTC caigan en el día local correcto.
+
+5. **Confinamiento del token de sesión**:
+   - La preselección automática por rol en la vista semanal (odontólogo preselecciona su propio `professionalId`; recepción y administrador preseleccionan al primer profesional activo) consume los datos del usuario autenticado a través del hook `useSession` y `tokenStore.ts`, sin exponer ni almacenar credenciales en componentes de presentación.
+
+6. **Regla C1 de tests (sin mocks globales)**:
+   - Los 15 nuevos tests (unitarios en `agendaTime.test.ts`, `agendaLayout.test.ts`, hooks en `useAgenda.test.tsx`, componentes en `AgendaToolbar.test.tsx`, `AgendaView.test.tsx`, `AgendaPage.test.tsx` y verificación de estilos en `agendaStyles.test.ts`) se escribieron bajo la regla C1:
+     - Cero uso de `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, `vi.useFakeTimers`, `vi.setSystemTime` o MSW.
+     - Pruebas con `createApiClient({ fetchFn })` inyectando respuestas controladas.
+     - Pruebas temporales con `createFixedClock` de `clock.ts`.
+     - Enrutamiento y URL simulados con `createMemoryRouter` y `RouterProvider` de `react-router-dom`.
+   - Se preservó intacta la suite de 127 tests preexistentes de C-27 sin modificar una sola línea de código previo.
+
+7. **Layout responsive para tablet (768 px)**:
+   - Se configuró la grilla semanal con contenedor de desplazamiento horizontal (`overflow-x: auto`), cabeceras sticky y columna horaria con `position: sticky; left: 0; z-index: 2` para mantener la referencia horaria visible mientras se hace scroll en pantallas medianas.
+   - Se aplicó el formato en dos líneas para tarjetas de turno en columnas angostas (< 260 px), priorizando hora y paciente conforme lo estipulado en la skill.
+
+---
+
+### 5.2. Aplicación de la evidencia 04 de Context7
+
+La evidencia documentada en `docs/skills-mcp/evidencias/04-uso-context7.md` sirvió de base directa para la implementación de los parámetros de búsqueda en la URL:
+
+1. **Ajuste de import (v6 vs v7)**:
+   - La consulta a Context7 alertó en su evaluación crítica que los ejemplos de la documentación indexada importaban desde `"react-router"` (estilo v7). En `AgendaPage.tsx` se aplicó la recomendación estricta de importar `useSearchParams` desde `"react-router-dom"` para garantizar compatibilidad total con la versión instalada (`react-router-dom@6.30.6`).
+
+2. **Lectura y sincronización funcional de URL**:
+   - Siguiendo las directrices obtenidas sobre la API del hook:
+     - Se extrajeron `date` y `view` mediante `searchParams.get("date")` y `searchParams.get("view")`.
+     - Las transiciones de vista (alternar entre día y semana) y la navegación temporal se realizaron actualizando los parámetros de búsqueda mediante el callback de `setSearchParams(prev => ...)` o instanciando nuevos `URLSearchParams`, asegurando la preservación de los filtros activos (`date`, `professionalId`, `chairId`) y evitando desincronizaciones del historial del navegador.

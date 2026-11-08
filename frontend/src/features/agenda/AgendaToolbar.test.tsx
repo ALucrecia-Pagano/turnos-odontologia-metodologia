@@ -104,4 +104,62 @@ describe("AgendaToolbar", () => {
       "clear",
     ]);
   });
+
+  it("renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente", () => {
+    const events: string[] = [];
+
+    const { rerender } = render(
+      <AgendaToolbar
+        date="2026-11-16"
+        view="day"
+        professionalId={null}
+        chairId={null}
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        onSelectProfessional={() => {}}
+        onSelectChair={() => {}}
+        onClearFilters={() => {}}
+        onPrevDay={() => events.push("prev")}
+        onNextDay={() => events.push("next")}
+        onToday={() => events.push("today")}
+        onSelectView={(v) => events.push(`view:${v}`)}
+      />,
+    );
+
+    const dayBtn = screen.queryByRole("button", { name: "Día" });
+    const weekBtn = screen.queryByRole("button", { name: "Semana" });
+    expect(dayBtn).not.toBeNull();
+    expect(weekBtn).not.toBeNull();
+    expect(dayBtn).toHaveAttribute("aria-pressed", "true");
+    expect(weekBtn).toHaveAttribute("aria-pressed", "false");
+
+    expect(screen.queryByRole("button", { name: "Anterior" })).not.toBeNull();
+    expect(screen.queryByRole("button", { name: "Siguiente" })).not.toBeNull();
+
+    fireEvent.click(weekBtn!);
+    expect(events).toEqual(["view:week"]);
+
+    rerender(
+      <AgendaToolbar
+        date="2026-11-16"
+        view="week"
+        professionalId={null}
+        chairId={null}
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        onSelectProfessional={() => {}}
+        onSelectChair={() => {}}
+        onClearFilters={() => {}}
+        onPrevDay={() => events.push("prev")}
+        onNextDay={() => events.push("next")}
+        onToday={() => events.push("today")}
+        onSelectView={(v) => events.push(`view:${v}`)}
+      />,
+    );
+
+    expect(screen.queryByRole("button", { name: "Semana anterior" })).not.toBeNull();
+    expect(screen.queryByRole("button", { name: "Semana siguiente" })).not.toBeNull();
+    expect(screen.queryByRole("button", { name: "Anterior" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Siguiente" })).toBeNull();
+  });
 });
