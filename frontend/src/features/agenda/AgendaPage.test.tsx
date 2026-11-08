@@ -781,5 +781,72 @@ describe("AgendaPage", () => {
       });
       expect(router.state.location.search).toContain("view=week");
     });
+
+    it("preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos", async () => {
+      const requestedUrls: string[] = [];
+      renderAgendaPage(
+        "/agenda?date=2026-11-18&view=week",
+        createAgendaFetchFn(requestedUrls),
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId("agenda-appointment-00000000-0000-0000-0000-000000000aa2"),
+        ).not.toBeNull();
+      });
+
+      const agendaCalls = requestedUrls.filter((u) => u.includes("/agenda?"));
+      expect(agendaCalls).toHaveLength(1);
+      expect(agendaCalls[0]).toContain(
+        "professionalId=00000000-0000-0000-0000-000000000002",
+      );
+
+      const liveRegion = screen.getByTestId("agenda-live-count");
+      expect(liveRegion).toHaveTextContent("Turnos de la semana: 1");
+
+      const toggleBtn = screen.getByRole("button", { name: "Ver como lista" });
+      fireEvent.click(toggleBtn);
+
+      await waitFor(() => {
+        expect(screen.getByRole("table")).toBeInTheDocument();
+      });
+      expect(screen.getByText("Bruno Acosta")).toBeInTheDocument();
+      expect(screen.queryByText("Ana Pérez")).toBeNull();
+    });
+
+    it("vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador", async () => {
+      const requestedUrls: string[] = [];
+      renderAgendaPage(
+        "/agenda?date=2026-11-18&view=week&professionalId=00000000-0000-0000-0000-000000000002",
+        createAgendaFetchFn(requestedUrls),
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId("agenda-appointment-00000000-0000-0000-0000-000000000aa2"),
+        ).not.toBeNull();
+      });
+
+      expect(screen.queryByText("Agenda semanal")).not.toBeNull();
+
+      const titleHeading = screen.getByRole("heading", { level: 2 });
+      expect(titleHeading).toHaveTextContent("Semana del 16 al 22 de noviembre de 2026");
+
+      const liveRegion = screen.getByTestId("agenda-live-count");
+      expect(liveRegion).toHaveTextContent("Turnos de la semana: 1");
+
+      renderAgendaPage(
+        "/agenda?date=2026-12-28&view=week&professionalId=00000000-0000-0000-0000-000000000002",
+        createAgendaFetchFn([]),
+      );
+
+      await waitFor(() => {
+        const headings = screen.getAllByRole("heading", { level: 2 });
+        const crossHeading = headings.find((h) =>
+          h.textContent?.includes("Semana del 28 de diciembre de 2026 al 3 de enero de 2027"),
+        );
+        expect(crossHeading).toBeDefined();
+      });
+    });
   });
 });

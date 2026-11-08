@@ -9,7 +9,7 @@ import {
   groupByProfessional,
 } from "./agendaLayout";
 import { AgendaTable } from "./AgendaTable";
-import { formatDayLabel, weekdayOf, weekRangeOf } from "./agendaTime";
+import { formatDayLabel, formatWeekLabel, weekdayOf, weekRangeOf } from "./agendaTime";
 import styles from "./AgendaView.module.css";
 
 export interface AgendaViewProps {
@@ -42,6 +42,7 @@ export function AgendaView({
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const isWeekView = view === "week";
   const dayLabel = formatDayLabel(date);
+  const weekLabel = isWeekView ? formatWeekLabel(date) : "";
   const weekday = weekdayOf(date);
 
   const effectiveProfessionalId = filterProfessionalId ?? selectedProfessionalId;
@@ -49,6 +50,14 @@ export function AgendaView({
   const professionalName = currentProfessional ? currentProfessional.fullName : "";
 
   const week = isWeekView ? weekRangeOf(date) : null;
+
+  const filteredAppointments = isWeekView
+    ? agenda.appointments.filter(
+        (a) =>
+          (!effectiveProfessionalId || a.professionalId === effectiveProfessionalId) &&
+          (!filterChairId || a.chairId === filterChairId),
+      )
+    : agenda.appointments;
 
   const axis =
     isWeekView && week !== null
@@ -102,14 +111,16 @@ export function AgendaView({
       aria-busy={isRefreshing}
     >
       <div className={styles.headerBar}>
-        <h2 className={styles.dayTitle}>{dayLabel}</h2>
+        <h2 className={styles.dayTitle}>{isWeekView ? weekLabel : dayLabel}</h2>
         <div className={styles.controlsRow}>
           <span
             className={styles.liveRegion}
             aria-live="polite"
             data-testid="agenda-live-count"
           >
-            {`Turnos del ${dayLabel}: ${agenda.appointments.length}`}
+            {isWeekView
+              ? `Turnos de la semana: ${filteredAppointments.length}`
+              : `Turnos del ${dayLabel}: ${agenda.appointments.length}`}
           </span>
           {isRefreshing && <span className={styles.liveRegion}>Actualizando…</span>}
           <button
@@ -133,7 +144,7 @@ export function AgendaView({
           description="No se registraron turnos en la agenda para esta fecha."
         />
       ) : viewMode === "list" ? (
-        agenda.appointments.length === 0 ? (
+        filteredAppointments.length === 0 ? (
           <EmptyState
             title="Sin turnos para este filtro"
             description="Probá cambiando la fecha o quitando los filtros."
@@ -142,7 +153,9 @@ export function AgendaView({
           <AgendaTable
             date={date}
             timezone={timezone}
-            appointments={agenda.appointments}
+            appointments={filteredAppointments}
+            view={view}
+            caption={isWeekView ? weekLabel : undefined}
           />
         )
       ) : (
@@ -150,14 +163,20 @@ export function AgendaView({
           {!isWeekView && agenda.appointments.length === 0 && (
             <div className={styles.bannerNote}>Sin turnos para este filtro</div>
           )}
-          {isWeekView && agenda.appointments.length === 0 && (
+          {isWeekView && filteredAppointments.length === 0 && (
             <div className={styles.bannerNote}>
               {hasActiveChairFilter
                 ? "Sin turnos para este filtro"
                 : `No hay turnos esta semana para ${professionalName}`}
             </div>
           )}
-          <AgendaGrid date={date} timezone={timezone} axis={axis} columns={columns} />
+          <AgendaGrid
+            date={date}
+            timezone={timezone}
+            axis={axis}
+            columns={columns}
+            view={view}
+          />
         </>
       )}
     </section>

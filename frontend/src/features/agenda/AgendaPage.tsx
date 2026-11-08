@@ -158,7 +158,7 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
   };
 
   return (
-    <PageShell title="Agenda diaria">
+    <PageShell title={isWeek ? "Agenda semanal" : "Agenda diaria"}>
       <AgendaToolbar
         date={effectiveDate}
         view={view}

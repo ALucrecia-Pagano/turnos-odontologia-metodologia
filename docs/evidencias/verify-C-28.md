@@ -5,9 +5,9 @@
 Todos los números salen de los archivos enlazados, generados por redirección.
 
 - Tareas: 22/23 en [tasks.md](../../openspec/changes/ui-agenda-semanal/tasks.md) (tarea 5.3 de capturas manuales pendiente para la autora).
-- Vitest: 35 archivos, 142 tests en verde (127 preexistentes de C-27 + 15 nuevos de C-28); `tsc` y ESLint sin errores ni warnings.
-- Mutaciones: 15/15 hicieron fallar su test (una por cada test nuevo de C-28); mutaciones inválidas: 0; SHA-256 de producción intacto.
-- Trazabilidad: 15 escenarios, 0 problemas.
+- Vitest: 35 archivos, 146 tests en verde (127 preexistentes de C-27 + 19 nuevos de C-28); `tsc` y ESLint sin errores ni warnings.
+- Mutaciones: 19/19 hicieron fallar su test (una por cada test nuevo de C-28); mutaciones inválidas: 0; SHA-256 de producción intacto.
+- Trazabilidad: 19 escenarios, 0 problemas.
 - Línea de base desde `frontend/`: [baseline-C-28.txt](baseline-C-28.txt) (127 passed, 35 archivos).
 - `tsc --noEmit` (strict): [tsc-C-28.txt](tsc-C-28.txt).
 - ESLint (`--max-warnings 0`): [eslint-C-28.txt](eslint-C-28.txt).
@@ -15,7 +15,31 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Mutaciones: [mutaciones-C-28.txt](mutaciones-C-28.txt), generado por [mutaciones-C-28.py](mutaciones-C-28.py).
 - Trazabilidad: [trazabilidad-C-28.txt](trazabilidad-C-28.txt), generado por [trazabilidad-C-28.py](trazabilidad-C-28.py).
 - Validación OpenSpec y `git diff --check`: [validate-C-28.txt](validate-C-28.txt).
-- Rojos (TDD): carpeta [red-C-28/](red-C-28/).
+- Rojos (TDD): carpeta [red-C-28/](red-C-28/), incluyendo [revision-visual.txt](red-C-28/revision-visual.txt).
+
+## Hallazgos de la revisión visual
+
+Tras la inspección en pantalla con datos reales en escritorio (1440 px) y tablet (768 px), se identificaron cuatro hallazgos que no habían sido advertidos por la suite inicial de tests:
+
+1. **H1 — Preselección automática sin professionalId en la llamada a la API**:
+   - *Hallazgo*: Al ingresar a la vista semanal sin `professionalId` en la URL, la llamada a `GET /api/agenda` se ejecutaba sin `professionalId`. Aunque la grilla semanal filtraba al profesional preseleccionado, el contador anunciaba turnos de todos los profesionales y la vista de lista mezclaba turnos de otros profesionales.
+   - *Causa*: Los tests iniciales pasaban `professionalId` explícito en los parámetros o la URL. Además, en `AgendaPage.tsx` y `useAgenda.ts` las solicitudes se disparaban antes de que el catálogo de profesionales estuviera cargado, enviando `professionalId: null`.
+   - *Arreglo*: Se refactorizó `useAgenda.ts` para que, en vista semanal sin `professionalId`, cargue primero los catálogos (`fetchProfessionals`), preseleccione al primer profesional activo (`sorted[0].id` según `compareProfessionals`) y recién entonces dispare la única llamada a `fetchAgenda` enviando dicho `professionalId`. El contador y la vista de lista filtran exclusivamente los turnos del profesional.
+
+2. **H2 — Textos y encabezados en vista semanal**:
+   - *Hallazgo*: En vista semanal, el encabezado mostraba un día único ("miércoles 18 de noviembre de 2026"), el contador decía "Turnos del miércoles 18...: N" y el título de la página mostraba "Agenda diaria".
+   - *Causa*: Los componentes reutilizaban directamente `dayLabel` y `PageShell title="Agenda diaria"` sin alternancia condicional según `view`.
+   - *Arreglo*: Se implementó la función pura `formatWeekLabel` en `agendaTime.ts`, soportando rango semanal dentro del mismo mes ("Semana del 16 al 22 de noviembre de 2026"), con cruce de mes ("Semana del 30 de noviembre al 6 de diciembre de 2026") y con cruce de año ("Semana del 28 de diciembre de 2026 al 3 de enero de 2027"). Se actualizó el título de `PageShell` a "Agenda semanal" y el contador a "Turnos de la semana: N".
+
+3. **H3 — "Ver como lista" en vista semanal**:
+   - *Hallazgo*: Al alternar a lista en vista semanal, el caption decía "Turnos del [día]", no existía columna de fecha para saber a qué día correspondía cada turno y los turnos aparecían sin orden cronológico de la semana.
+   - *Causa*: `AgendaTable.tsx` estaba diseñado únicamente para la vista diaria, asumiendo que todos los turnos pertenecían a una misma fecha.
+   - *Arreglo*: Se extendió `AgendaTable.tsx` para aceptar `view="week"`, mostrando el caption con el rango semanal, incorporando la columna "Fecha" con formato abreviado (ej. "lun 16/11") y ordenando los turnos cronológicamente por fecha y hora de inicio.
+
+4. **H4 — Ancho de columnas en escritorio y scroll en tablet**:
+   - *Hallazgo*: A 1440 px solo se visualizaban de lunes a viernes, quedando sábado y domingo ocultos tras un scroll horizontal innecesario y cortando la tarjeta del viernes. Si hoy caía en fin de semana, la marca "Hoy" no se visualizaba.
+   - *Causa*: `jsdom` no calcula medidas de layout ni renderiza anchos reales, por lo que los tests de componentes no detectaron que `min-width: 220px` por 7 columnas requería más de 1540 px de espacio.
+   - *Arreglo*: Se creó el token semántico `--agenda-week-column-min-width: 140px;` en `tokens.css`. Se añadieron las clases `.weekColumnHeader` y `.weekColumnTrack` en `AgendaGrid.module.css` con `flex: 1 1 var(--agenda-week-column-min-width, 140px); min-width: var(--agenda-week-column-min-width, 140px);` sin el límite de 220 px de la vista diaria. Con esto, en pantallas de escritorio (≥ 1280 px) las 7 columnas se muestran visibles simultáneamente sin scroll, mientras que en tablet (< 1044 px / 768 px) se preserva el scroll horizontal con columna de horas sticky y las tarjetas adaptadas en dos líneas mediante la container query existente.
 
 ## Regla C1 y diseño accesible (D1 a D6)
 
@@ -67,6 +91,10 @@ Ninguno.
 | 13 | `preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector` | `frontend/src/features/agenda/AgendaPage.tsx` | `-      const first = sorted[0]; +      const first = sorted[1];` | `AssertionError: expected '00000000-0000-0000-0000-000000000001' to be '00000000-0000-0000-` |
 | 14 | `navegación semanal avanza y retrocede 7 días cruzando mes y año` | `frontend/src/features/agenda/AgendaPage.tsx` | `-        onPrevDay={() => navigateToDate(addDays(effectiveDate, isWeek ? -7 : -1))} -     ` | `AssertionError: expected '?date=2026-12-29&view=week&profession…' to contain 'date=2027-01` |
 | 15 | `botón Hoy en vista semanal navega a la fecha actual del Clock` | `frontend/src/features/agenda/AgendaPage.tsx` | `-        onToday={() => navigateToDate(todayInTimeZone(clock.now(), state.timezone))} +   ` | `AssertionError: expected '?date=2026-11-19&view=week' to contain 'date=2026-11-18'` |
+| 16 | `preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos` | `frontend/src/features/agenda/useAgenda.ts` | `-    const needsPreselectedProfessional = -      isWeekly && (professionalId === null \|\| p` | `AssertionError: expected 'http://localhost:8000/api/agenda?from…' to contain 'professional` |
+| 17 | `vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador` | `frontend/src/features/agenda/AgendaPage.tsx` | `-    <PageShell title={isWeek ? "Agenda semanal" : "Agenda diaria"}> +    <PageShell title` | `AssertionError: expected null not to be null` |
+| 18 | `ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico` | `frontend/src/features/agenda/AgendaTable.tsx` | `-  const isWeek = view === "week"; +  const isWeek = false;` | `AssertionError: expected null not to be null` |
+| 19 | `las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal` | `frontend/src/shared/styles/tokens.css` | `-  --agenda-week-column-min-width: 140px; +  --agenda-week-min-width: 140px;` | `AssertionError: expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-wee` |
 <!-- mutaciones:fin -->
 
 ## Trazabilidad
@@ -89,4 +117,8 @@ Ninguno.
 | 13 | Estado vacío y visualización en tablet para vista semanal | Semana vacía con grilla y aviso informativo | `src/features/agenda/AgendaView.test.tsx > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional` |
 | 14 | Estado vacío y visualización en tablet para vista semanal | Semana vacía con filtro de sillón | `src/features/agenda/AgendaView.test.tsx > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo` |
 | 15 | Estado vacío y visualización en tablet para vista semanal | Tarjetas en dos líneas en tablet | `src/features/agenda/agendaStyles.test.ts > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)` |
+| 16 | Llamada semanal con profesional preseleccionado y alcance de turnos | Preselección automática envía professionalId en la única llamada semanal | `src/features/agenda/AgendaPage.test.tsx > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos` |
+| 17 | Encabezado, título y contador en vista semanal | Textos y encabezados en vista semanal con cruce de año | `src/features/agenda/AgendaPage.test.tsx > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador` |
+| 18 | Vista de lista en modo semanal | Tabla de turnos semanal con columna de fecha y orden cronológico | `src/features/agenda/AgendaView.test.tsx > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico` |
+| 19 | Ancho de columnas semanales en escritorio y tablet | Columnas semanales visibles en escritorio y adaptables en tablet | `src/features/agenda/agendaStyles.test.ts > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal` |
 <!-- trazabilidad:fin -->

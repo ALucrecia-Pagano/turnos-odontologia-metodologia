@@ -88,6 +88,8 @@ P_AGENDA_GRID_CSS = "frontend/src/features/agenda/AgendaGrid.module.css"
 P_AGENDA_GRID = "frontend/src/features/agenda/AgendaGrid.tsx"
 P_AGENDA_VIEW = "frontend/src/features/agenda/AgendaView.tsx"
 P_AGENDA_PAGE = "frontend/src/features/agenda/AgendaPage.tsx"
+P_AGENDA_TABLE = "frontend/src/features/agenda/AgendaTable.tsx"
+P_TOKENS_CSS = "frontend/src/shared/styles/tokens.css"
 
 
 @dataclass(frozen=True)
@@ -214,6 +216,35 @@ MUTATIONS: tuple[Mutation, ...] = (
         P_AGENDA_PAGE,
         "        onToday={() => navigateToDate(todayInTimeZone(clock.now(), state.timezone))}",
         "        onToday={() => navigateToDate(addDays(todayInTimeZone(clock.now(), state.timezone), 1))}",
+    ),
+    # --- 6. Revisión visual (H1 a H4) ---
+    Mutation(
+        T_AGENDA_PAGE,
+        "preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos",
+        P_USE_AGENDA,
+        '    const isWeekly = toDate !== undefined && toDate !== date;\n    const needsPreselectedProfessional =\n      isWeekly && (professionalId === null || professionalId === "");',
+        '    const isWeekly = toDate !== undefined && toDate !== date;\n    const needsPreselectedProfessional = false;',
+    ),
+    Mutation(
+        T_AGENDA_PAGE,
+        "vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador",
+        P_AGENDA_PAGE,
+        '    <PageShell title={isWeek ? "Agenda semanal" : "Agenda diaria"}>',
+        '    <PageShell title={isWeek ? "Agenda diaria" : "Agenda diaria"}>',
+    ),
+    Mutation(
+        T_AGENDA_VIEW,
+        "ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico",
+        P_AGENDA_TABLE,
+        '  const isWeek = view === "week";',
+        '  const isWeek = false;',
+    ),
+    Mutation(
+        T_AGENDA_STYLES,
+        "las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal",
+        P_TOKENS_CSS,
+        "  --agenda-week-column-min-width: 140px;",
+        "  --agenda-week-min-width: 140px;",
     ),
 )
 

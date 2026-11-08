@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ApiClient } from "../../shared/api/client";
 import { getApiErrorMessages } from "../../shared/api/errors";
 import { DEFAULT_AGENDA_TIMEZONE } from "./agendaConfig";
+import { compareProfessionals } from "./agendaLayout";
 import {
   fetchAgenda,
   fetchChairs,
@@ -87,17 +88,15 @@ export function useAgenda({
     const requestId = activeRequestIdRef.current + 1;
     activeRequestIdRef.current = requestId;
 
-    void Promise.allSettled([
-      fetchAgenda(client, {
-        from: date,
-        to: effectiveTo,
-        professionalId,
-        chairId,
-        signal: controller.signal,
-      }),
-      fetchProfessionals(client, { signal: controller.signal }),
-      fetchChairs(client, { signal: controller.signal }),
-    ]).then(([agendaSettled, professionalsSettled, chairsSettled]) => {
+    const isWeekly = toDate !== undefined && toDate !== date;
+    const needsPreselectedProfessional =
+      isWeekly && (professionalId === null || professionalId === "");
+
+    const handleSettled = (
+      agendaSettled: PromiseSettledResult<Awaited<ReturnType<typeof fetchAgenda>>>,
+      professionalsSettled: PromiseSettledResult<Awaited<ReturnType<typeof fetchProfessionals>>>,
+      chairsSettled: PromiseSettledResult<Awaited<ReturnType<typeof fetchChairs>>>,
+    ) => {
       if (controller.signal.aborted || activeRequestIdRef.current !== requestId) {
         return;
       }
@@ -166,12 +165,61 @@ export function useAgenda({
         catalogWarning:
           professionalsOk && chairsOk ? null : CATALOG_FALLBACK_WARNING,
       }));
-    });
+    };
+
+    if (needsPreselectedProfessional) {
+      void Promise.allSettled([
+        fetchProfessionals(client, { signal: controller.signal }),
+        fetchChairs(client, { signal: controller.signal }),
+      ]).then(async ([professionalsSettled, chairsSettled]) => {
+        if (controller.signal.aborted || activeRequestIdRef.current !== requestId) {
+          return;
+        }
+
+        let preselectedProfId: string | null = null;
+        if (professionalsSettled.status === "fulfilled" && professionalsSettled.value.ok) {
+          const sorted = [...professionalsSettled.value.data]
+            .filter((p) => p.active)
+            .sort(compareProfessionals);
+          preselectedProfId = sorted[0]?.id ?? null;
+        }
+
+        let agendaSettled: PromiseSettledResult<Awaited<ReturnType<typeof fetchAgenda>>>;
+        try {
+          const res = await fetchAgenda(client, {
+            from: date,
+            to: effectiveTo,
+            professionalId: preselectedProfId,
+            chairId,
+            signal: controller.signal,
+          });
+          agendaSettled = { status: "fulfilled", value: res };
+        } catch (err) {
+          agendaSettled = { status: "rejected", reason: err };
+        }
+
+        handleSettled(agendaSettled, professionalsSettled, chairsSettled);
+      });
+    } else {
+      void Promise.allSettled([
+        fetchAgenda(client, {
+          from: date,
+          to: effectiveTo,
+          professionalId,
+          chairId,
+          signal: controller.signal,
+        }),
+        fetchProfessionals(client, { signal: controller.signal }),
+        fetchChairs(client, { signal: controller.signal }),
+      ]).then(([agendaSettled, professionalsSettled, chairsSettled]) => {
+        handleSettled(agendaSettled, professionalsSettled, chairsSettled);
+      });
+    }
 
     return () => {
       controller.abort();
     };
-  }, [client, date, effectiveTo, professionalId, chairId, reloadTick, queryKey]);
+  }, [client, date, toDate, effectiveTo, professionalId, chairId, reloadTick, queryKey]);
 
   const isPending = state.settledKey !== queryKey;
   const phase: AgendaLoadPhase = isPending

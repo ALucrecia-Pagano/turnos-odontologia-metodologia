@@ -51,6 +51,11 @@
   color: var(--color-text);
 }
 
+.weekColumnHeader {
+  flex: 1 1 var(--agenda-week-column-min-width, 140px);
+  min-width: var(--agenda-week-column-min-width, 140px);
+}
+
 .todayTag {
   display: inline-flex;
   align-items: center;
@@ -96,6 +101,11 @@
   border-right: 1px solid var(--color-border);
   background-color: var(--agenda-offhours-bg, var(--color-background));
   container: agenda-column / inline-size;
+}
+
+.weekColumnTrack {
+  flex: 1 1 var(--agenda-week-column-min-width, 140px);
+  min-width: var(--agenda-week-column-min-width, 140px);
 }
 
 .emptyColumnNote {

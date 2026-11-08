@@ -23,6 +23,8 @@ export interface AgendaGridProps {
     AgendaWorkingHours,
     AgendaBlock
   >[];
+  readonly view?: "day" | "week";
+  readonly isWeek?: boolean;
 }
 
 const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
@@ -33,7 +35,8 @@ const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
   cancelado: "Cancelado",
 };
 
-export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
+export function AgendaGrid({ date, timezone, axis, columns, view, isWeek }: AgendaGridProps) {
+  const isWeekView = isWeek ?? view === "week";
   const axisSpan = Math.max(1, axis.endMinute - axis.startMinute);
 
   return (
@@ -46,7 +49,7 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
             return (
               <div
                 key={col.id}
-                className={styles.columnHeader}
+                className={`${styles.columnHeader} ${isWeekView ? styles.weekColumnHeader : ""}`}
                 data-testid="agenda-column-header"
                 aria-current={isToday ? "date" : undefined}
               >
@@ -82,7 +85,7 @@ export function AgendaGrid({ date, timezone, axis, columns }: AgendaGridProps) {
             return (
               <div
                 key={col.id}
-                className={styles.columnTrack}
+                className={`${styles.columnTrack} ${isWeekView ? styles.weekColumnTrack : ""}`}
                 data-testid={`agenda-column-${col.id}`}
               >
                 {col.appointments.length === 0 && (

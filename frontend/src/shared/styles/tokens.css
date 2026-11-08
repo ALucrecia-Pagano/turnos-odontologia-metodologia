@@ -45,6 +45,7 @@
   --agenda-hour-height: 112px;
   --agenda-time-gutter-width: 64px;
   --agenda-column-min-width: 220px;
+  --agenda-week-column-min-width: 140px;
   --agenda-column-header-height: 48px;
   --agenda-grid-line: #E5E7EB;
   --agenda-working-bg: #FFFFFF;

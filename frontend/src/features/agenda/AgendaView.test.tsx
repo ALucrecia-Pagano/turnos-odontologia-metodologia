@@ -770,5 +770,79 @@ describe("AgendaView", () => {
         screen.queryByText("No hay turnos esta semana para Dra. Laura Quiroga"),
       ).not.toBeInTheDocument();
     });
+
+    it("ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico", () => {
+      const appointments = [
+        {
+          id: "00000000-0000-0000-0000-000000000aa2",
+          patientId: "00000000-0000-0000-0000-0000000000c2",
+          patientName: "Bruno Acosta",
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          professionalName: "Dra. Laura Quiroga",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000d4",
+          serviceName: "Control",
+          startAt: "2026-11-18T12:00:00Z",
+          endAt: "2026-11-18T12:30:00Z",
+          status: "reservado" as const,
+        },
+        {
+          id: "00000000-0000-0000-0000-000000000aa1",
+          patientId: "00000000-0000-0000-0000-0000000000c1",
+          patientName: "Ana Pérez",
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          professionalName: "Dra. Laura Quiroga",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000d4",
+          serviceName: "Control",
+          startAt: "2026-11-16T13:00:00Z",
+          endAt: "2026-11-16T13:30:00Z",
+          status: "reservado" as const,
+        },
+      ];
+
+      render(
+        <AgendaView
+          date="2026-11-18"
+          timezone="America/Argentina/Buenos_Aires"
+          agenda={{
+            from: "2026-11-16",
+            to: "2026-11-22",
+            timezone: "America/Argentina/Buenos_Aires",
+            appointments,
+            workingHours: [],
+            blocks: [],
+          }}
+          professionals={[
+            {
+              id: "00000000-0000-0000-0000-000000000001",
+              fullName: "Dra. Laura Quiroga",
+              licenseNumber: "MP-1001",
+              active: true,
+            },
+          ]}
+          view="week"
+          filterProfessionalId="00000000-0000-0000-0000-000000000001"
+        />,
+      );
+
+      const listBtn = screen.getByRole("button", { name: "Ver como lista" });
+      fireEvent.click(listBtn);
+
+      const table = screen.getByRole("table");
+      const caption = within(table).queryByText("Semana del 16 al 22 de noviembre de 2026");
+      expect(caption).not.toBeNull();
+
+      const dateHeader = screen.queryByRole("columnheader", { name: "Fecha" });
+      expect(dateHeader).not.toBeNull();
+
+      const rows = screen.getAllByRole("row");
+      expect(rows[1]).toHaveTextContent("lun 16/11");
+      expect(rows[1]).toHaveTextContent("Ana Pérez");
+      expect(rows[2]).toHaveTextContent("mié 18/11");
+      expect(rows[2]).toHaveTextContent("Bruno Acosta");
+    });
   });
 });

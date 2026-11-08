@@ -111,6 +111,39 @@ export function formatDayLabel(dateStr: string): string {
   return `${weekday} ${parsed.day} de ${month} de ${parsed.year}`;
 }
 
+export function formatWeekLabel(dateStr: string): string {
+  const week = weekRangeOf(dateStr);
+  const start = parseLocalDate(week.monday);
+  const end = parseLocalDate(week.sunday);
+  if (start === null || end === null) {
+    return dateStr;
+  }
+  const startUtc = new Date(Date.UTC(start.year, start.month - 1, start.day, 12));
+  const endUtc = new Date(Date.UTC(end.year, end.month - 1, end.day, 12));
+
+  const startMonth = new Intl.DateTimeFormat("es-AR", {
+    timeZone: "UTC",
+    month: "long",
+  })
+    .format(startUtc)
+    .toLowerCase();
+
+  const endMonth = new Intl.DateTimeFormat("es-AR", {
+    timeZone: "UTC",
+    month: "long",
+  })
+    .format(endUtc)
+    .toLowerCase();
+
+  if (start.year !== end.year) {
+    return `Semana del ${start.day} de ${startMonth} de ${start.year} al ${end.day} de ${endMonth} de ${end.year}`;
+  }
+  if (start.month !== end.month) {
+    return `Semana del ${start.day} de ${startMonth} al ${end.day} de ${endMonth} de ${end.year}`;
+  }
+  return `Semana del ${start.day} al ${end.day} de ${endMonth} de ${end.year}`;
+}
+
 export function formatWeekdayHeader(dateStr: string): string {
   const parsed = parseLocalDate(dateStr);
   if (parsed === null) {

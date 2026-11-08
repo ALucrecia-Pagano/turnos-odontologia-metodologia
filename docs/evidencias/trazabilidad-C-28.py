@@ -99,6 +99,26 @@ TRACE: dict[str, dict[str, str]] = {
             f"{T_AGENDA_STYLES} > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)"
         ),
     },
+    "Llamada semanal con profesional preseleccionado y alcance de turnos": {
+        "Preselección automática envía professionalId en la única llamada semanal": (
+            f"{T_AGENDA_PAGE} > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos"
+        ),
+    },
+    "Encabezado, título y contador en vista semanal": {
+        "Textos y encabezados en vista semanal con cruce de año": (
+            f"{T_AGENDA_PAGE} > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador"
+        ),
+    },
+    "Vista de lista en modo semanal": {
+        "Tabla de turnos semanal con columna de fecha y orden cronológico": (
+            f"{T_AGENDA_VIEW} > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico"
+        ),
+    },
+    "Ancho de columnas semanales en escritorio y tablet": {
+        "Columnas semanales visibles en escritorio y adaptables en tablet": (
+            f"{T_AGENDA_STYLES} > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal"
+        ),
+    },
 }
 
 

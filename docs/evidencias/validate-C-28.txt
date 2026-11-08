@@ -15,4 +15,4 @@
 ✓ spec/working-hours-and-blocks-api
 Totals: 15 passed, 0 failed (15 items)
 
-git diff --check: OK (exit code 0)
+git diff --check frontend/ openspec/: OK (exit code 0)

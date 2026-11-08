@@ -1,0 +1,49 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[32m 11[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mla columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida[32m 1[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mverifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)[32m 1[2mms[22m[39m
+ [31m×[39m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mlas columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal[32m 14[2mms[22m[39m
+[31m   → expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-week-column-min-width:'[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[32m 181[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 17[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 20[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 23[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 75[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista[32m 44[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo[32m 16[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible[32m 22[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mun turno de un solo carril conserva el formato de una línea con la etiqueta de estado[32m 22[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada[32m 12[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista[32m 30[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mrenderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles[32m 24[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mmuestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional[32m 7[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mmuestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo[32m 7[2mms[22m[39m
+ [31m×[39m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mAgendaView - Vista Semanal (C-28)[2m > [22mver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico[32m 51[2mms[22m[39m
+[31m   → expected null not to be null[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible[32m 240[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha[32m 233[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL[32m 124[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mrespeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso[32m 60[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra Cargando... con role=status en la carga inicial sin mostrar error[32m 17[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente[32m 46[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mdelega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local[32m 24[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mmuestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global[32m 14[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22malterna de día a semana conservando fecha y filtros[32m 71[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22malterna de semana a día conservando el día exacto de anclaje y filtros[32m 46[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mun view desconocido o ausente cae a vista diaria con botón Día seleccionado[32m 31[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselecciona automáticamente por rol odontólogo su propio professionalId[32m 33[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector[32m 22[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mnavegación semanal avanza y retrocede 7 días cruzando mes y año[32m 46[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mbotón Hoy en vista semanal navega a la fecha actual del Clock[32m 33[2mms[22m[39m
+ [31m×[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mpreselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos[32m 31[2mms[22m[39m
+[31m   → expected 'http://localhost:8000/api/agenda?from…' to contain 'professionalId=00000000-0000-0000-000…'[39m
+ [31m×[39m src/features/agenda/AgendaPage.test.tsx[2m > [22mAgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mvista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador[32m 26[2mms[22m[39m
+[31m   → expected null not to be null[39m
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m32 passed[39m[22m[90m (36)[39m
+[2m   Start at [22m 20:09:27
+[2m   Duration [22m 5.99s[2m (transform 872ms, setup 1.82s, collect 1.94s, tests 1.68s, environment 6.65s, prepare 1.32s)[22m
+

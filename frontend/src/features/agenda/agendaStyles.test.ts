@@ -92,4 +92,19 @@ describe("agendaStyles y responsive de escritorio/tablet (D12, D13)", () => {
     expect(gridCss).toContain("position: sticky;");
     expect(gridCss).toContain("left: 0;");
   });
+
+  it("las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal", () => {
+    const tokensCss = readFileSync(TOKENS_PATH, "utf-8");
+    expect(tokensCss).toContain("--agenda-week-column-min-width:");
+
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8");
+    expect(gridCss).toContain("var(--agenda-week-column-min-width");
+    const weekHeaderMatch = /\.weekColumnHeader[^{]*\{([^}]*)\}/.exec(gridCss);
+    const weekTrackMatch = /\.weekColumnTrack[^{]*\{([^}]*)\}/.exec(gridCss);
+    const weekRules = (weekHeaderMatch?.[1] ?? "") + (weekTrackMatch?.[1] ?? "");
+    expect(weekRules).not.toContain("220px");
+    expect(weekRules).toContain("var(--agenda-week-column-min-width");
+
+    expect(gridCss).toContain("overflow-x: auto;");
+  });
 });

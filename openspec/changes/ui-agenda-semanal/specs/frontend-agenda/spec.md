@@ -107,3 +107,43 @@ En vista semanal, una semana sin turnos para el profesional SHALL mantener la gr
 - **WHEN** se renderiza la columna del día
 - **THEN** la estructura CSS del contenedor provee `overflow-x: auto` con la columna de horas sticky, verificado estáticamente y con captura visual a 768 px
 - **AND** la tarjeta del turno presenta dos líneas: hora y paciente en la primera y badge de estado visible en la segunda
+
+### Requirement: Llamada semanal con profesional preseleccionado y alcance de turnos
+En vista semanal con preselección automática por omisión de `professionalId`, la aplicación SHALL enviar el identificador del profesional preseleccionado en la única llamada a `GET /api/agenda`. El contador de turnos anunciados y la vista de lista MUST incluir exclusivamente los turnos pertenecientes al profesional seleccionado.
+
+#### Scenario: Preselección automática envía professionalId en la única llamada semanal
+- **GIVEN** una sesión de `recepcion` en `/agenda?date=2026-11-18&view=week` sin `professionalId` en la URL y profesionales activos con turnos registrados
+- **WHEN** se carga la vista semanal
+- **THEN** se realiza una única llamada a `GET /api/agenda` incluyendo el `professionalId` del "Dr. Martín Sosa" (primer profesional activo)
+- **AND** el contador anuncia únicamente la cantidad de turnos de ese profesional
+- **AND** la vista de lista muestra exclusivamente sus turnos
+
+### Requirement: Encabezado, título y contador en vista semanal
+En vista semanal, la aplicación SHALL titular la página como "Agenda semanal" y el contador accesible MUST anunciar "Turnos de la semana: N". El encabezado principal SHALL mostrar el rango semanal con el formato "Semana del [D] al [D] de [mes] de [año]", y en caso de cruce de mes o de año MUST incluir el mes o año respectivo en cada extremo.
+
+#### Scenario: Textos y encabezados en vista semanal con cruce de año
+- **GIVEN** la vista semanal en `/agenda?date=2026-11-18&view=week` con turnos registrados
+- **WHEN** se renderiza la página
+- **THEN** el título de la página es "Agenda semanal"
+- **AND** el encabezado principal muestra "Semana del 16 al 22 de noviembre de 2026"
+- **AND** el contador anuncia "Turnos de la semana: N"
+- **AND** al navegar al 28 de diciembre de 2026 el encabezado muestra "Semana del 28 de diciembre de 2026 al 3 de enero de 2027"
+
+### Requirement: Vista de lista en modo semanal
+Al activar "Ver como lista" en vista semanal, la tabla SHALL presentar un caption descriptivo con el rango de la semana. La tabla MUST incorporar una columna "Fecha" con el día y fecha local formateados (ej. "lun 16/11") y las filas MUST presentarse ordenadas cronológicamente por fecha y hora de inicio.
+
+#### Scenario: Tabla de turnos semanal con columna de fecha y orden cronológico
+- **GIVEN** la vista semanal con turnos distribuidos en diferentes días de la semana
+- **WHEN** el usuario pulsa "Ver como lista"
+- **THEN** el caption de la tabla describe el rango de la semana
+- **AND** la tabla incluye la columna "Fecha" con el formato "lun 16/11"
+- **AND** los turnos aparecen ordenados por fecha y hora cronológica
+
+### Requirement: Ancho de columnas semanales en escritorio y tablet
+En vista semanal sobre pantallas de escritorio (≥ 1280 px), las siete columnas de lunes a domingo SHALL mostrarse simultáneamente visibles sin requerir scroll horizontal. El ancho de las columnas semanales SHALL definirse mediante un token CSS semántico sin un mínimo de 220 px. En viewport de tablet, el contenedor MUST conservar `overflow-x: auto` y columna de horas sticky.
+
+#### Scenario: Columnas semanales visibles en escritorio y adaptables en tablet
+- **GIVEN** los estilos de la grilla semanal
+- **WHEN** se evalúa la definición de columnas
+- **THEN** el contenedor define columnas semanales con ancho regulado por token semántico sin min-width de 220 px
+- **AND** en tablet el contenedor preserva scroll horizontal y columna de horas sticky
