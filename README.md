@@ -21,6 +21,50 @@ Fijado por la cátedra:
 | Frontend | React + TypeScript (`strict`) + Vite |
 | Contenedores | Docker / Docker Compose |
 
+## Skill y MCP
+
+El repo trae una skill propia, `appointment-frontend-ux`, y usa el MCP `context7` para consultar
+documentación actualizada del frontend.
+
+### Requisitos
+
+- Node.js 20+ (para el frontend).
+- Una API key gratuita de Context7, creada en `https://context7.com/dashboard`. La key **nunca** se
+  guarda en el repo: vive solo como variable de entorno `CONTEXT7_API_KEY`.
+
+### Definir la variable `CONTEXT7_API_KEY` (sin escribir el valor en el repo)
+
+Definí la key en el entorno de tu máquina, no en un archivo del repo:
+
+- **Windows (PowerShell o CMD):** `setx CONTEXT7_API_KEY "tu-clave"`. Después **cerrá y reabrí la
+  terminal** para que la variable quede disponible en las sesiones nuevas.
+- **Linux / macOS (bash/zsh):** `export CONTEXT7_API_KEY="tu-clave"` (agregalo a `~/.bashrc` o
+  `~/.zshrc` si querés que persista) y **reabrí la terminal**.
+
+No escribas la key en archivos del repo. `.env` está en `.gitignore`; `.env.example` lista solo los
+nombres, sin valores.
+
+### Configuración
+
+- `opencode.json`: servidor MCP `context7` remoto (`https://mcp.context7.com/mcp`) con el header
+  `Authorization: Bearer {env:CONTEXT7_API_KEY}`.
+- `.mcp.json` (Claude Code): el mismo servidor con el header
+  `Authorization: Bearer ${CONTEXT7_API_KEY}`.
+
+Ambos archivos referencian la variable de entorno; ninguno contiene la key.
+
+### Verificar
+
+- **OpenCode:** `opencode mcp list` (tiene que mostrar `context7` conectado). En la sesión, las
+  herramientas son `context7_resolve-library-id` y `context7_query-docs`.
+- **Claude Code:** `claude mcp list` (tiene que mostrar `context7` con `✔ Connected`). La primera
+  vez, Claude Code pide aprobación para el servidor de `.mcp.json`.
+
+### Nota de seguridad
+
+La clave `CONTEXT7_API_KEY` **nunca** se escribe en el repo, en un comando versionado ni en la salida
+de un comando. Solo se define en el entorno de la máquina.
+
 ## Estado actual
 
 - **Implementado:** el dominio de C-01 (fundación del backend y guardia de

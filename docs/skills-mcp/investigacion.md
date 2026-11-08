@@ -10,7 +10,7 @@ Los changes de interfaz tienen que cumplir lineamientos que hoy están repartido
 
 **C-28 `ui-agenda-semanal`**: vista semanal por profesional, con los turnos en el día correcto en hora local y alternancia día/semana (US-040 CA-2).
 
-**Dependencia:** C-28 depende de C-27 (agenda diaria), que todavía está pendiente, igual que la base del front y la API (C-25, C-26, C-22 a C-24). Por eso en este TP solo se **prepara** el change (explore, proposal, design, specs y tasks), sin implementarlo. La implementación queda para cuando el roadmap llegue a C-28, con sus dependencias terminadas. **Pendiente:** confirmar con el docente que esta elección es válida.
+**Dependencia:** C-28 depende de C-27 (agenda diaria), que todavía está pendiente, igual que la base del front y la API (C-25, C-26, C-22 a C-24). Por eso en este TP solo se **prepara** el change (explore, proposal, design, specs y tasks), sin implementarlo. La implementación queda para cuando el roadmap llegue a C-28, con sus dependencias terminadas. **El docente aprobó C-28 como change elegido.**
 
 ## 3. Skill creadora
 
@@ -18,7 +18,7 @@ Los changes de interfaz tienen que cumplir lineamientos que hoy están repartido
 
 - **Instalación prevista** (a nivel proyecto, con copia versionada, como las demás skills del repo): `npx skills add anthropics/skills --skill skill-creator -a claude-code --copy`. El CLI `skills` requiere Node.js 22.20 o superior.
 - **Comprobación:** que exista `.claude/skills/skill-creator/SKILL.md` y que el agente la reconozca en una sesión nueva.
-- **Pendiente:** Active Stack ya instaló una `skill-creator` a nivel usuario (`~/.claude/skills/`, figura en `.atl/skill-registry.md`). Falta comparar si es igual a la oficial.
+- **Comparadas:** la `skill-creator` instalada a nivel proyecto es **idéntica** a la que Active Stack instaló a nivel usuario (`~/.claude/skills/skill-creator`): `diff -r` sin diferencias y los 18 archivos coinciden (ver [evidencias/01-instalacion-skill-creator.txt](evidencias/01-instalacion-skill-creator.txt)).
 
 ## 4. Skill propia: `appointment-frontend-ux`
 
@@ -38,7 +38,7 @@ Los changes de interfaz tienen que cumplir lineamientos que hoy están repartido
 | Claude Code | `.claude/skills/` | Sesión nueva: pedirle que liste sus skills | PENDIENTE de prueba |
 | Codex | `.agents/skills/` | Ídem | PENDIENTE de prueba |
 | GitHub Copilot | `.agents/skills/` | Ídem | PENDIENTE de prueba |
-| OpenCode | `.agents/skills/` | Ídem | PENDIENTE de prueba |
+| OpenCode | `.agents/skills/` | Ídem | **Verificado** (ver [evidencias/02-opencode-mcp-list.png](evidencias/02-opencode-mcp-list.png) y [evidencias/03-creacion-skill.md](evidencias/03-creacion-skill.md)) |
 | Google Antigravity | `.agents/skills/` | Ídem | PENDIENTE de prueba |
 
 ## 5. Comparación de MCP
@@ -66,6 +66,8 @@ Los changes de interfaz tienen que cumplir lineamientos que hoy están repartido
 4. **Herramienta real:** `resolve-library-id` para "react" y `query-docs` sobre el formateo de fechas por zona horaria.
 
 **Límites:** solo lectura de documentación pública; nunca se envían datos de pacientes ni código con secretos en las consultas.
+
+> **Nota (2026-11-08):** la integración y las pruebas se hicieron con **OpenCode 1.19** en lugar de Claude Code, por el límite de uso semanal de Claude Code. `.mcp.json` queda configurado para Claude Code (con la sintaxis `${CONTEXT7_API_KEY}`) y `opencode.json` para OpenCode (con `{env:CONTEXT7_API_KEY}`).
 
 ## 7. Archivos de la fundación que se prevé actualizar
 

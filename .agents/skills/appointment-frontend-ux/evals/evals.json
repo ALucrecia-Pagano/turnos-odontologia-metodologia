@@ -1,0 +1,35 @@
+{
+  "skill_name": "appointment-frontend-ux",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Prepará la vista semanal de la agenda (C-28): 7 días por profesional, con los turnos en el día correcto en hora local y alternancia día/semana. Revisá qué escenarios faltan antes de implementar.",
+      "expected_output": "Tabla de hallazgos con respaldo en la KB, escenarios GIVEN/WHEN/THEN propuestos para los 7 días, hora local desde el timezone de la API (fallback solo en agendaConfig.ts), selector de profesional y alternancia día/semana; sin reglas de dominio duplicadas.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "En la agenda diaria, en tablet (768 px) el badge de estado tapa el nombre del paciente y la hora. Corregí las tarjetas angostas sin perder accesibilidad.",
+      "expected_output": "Formato compacto en dos líneas: hora y paciente primero, estado con texto visible en la segunda línea; se mantienen los tokens y el aria-label completo; se agrega un test que falla antes del cambio; verificación visual a 1440 y 768.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Implementá el formulario de dar turno (C-29): paciente, profesional, sillón, prestación, inicio y duración, mostrando los mensajes del dominio tal cual y navegable por teclado.",
+      "expected_output": "Formulario accesible con foco visible y aria-label completos; duración sugerida por la prestación; violaciones del dominio mostradas sin reescribir el mensaje; tests con fetch inyectado y MemoryRouter, sin vi.mock ni fake timers.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Agregá el filtro por sillón en la URL de la agenda y asegurate de que se mantenga al navegar los días. Consultá la documentación de React Router 6 si hace falta.",
+      "expected_output": "Uso de useSearchParams de React Router 6.30 (confirmado con Context7 si hay dudas), estado en la URL, conservación del filtro al cambiar de día, test con createMemoryRouter, sin tocar el token fuera de tokenStore.ts.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Revisá la accesibilidad de la agenda: el estado del turno no puede depender solo del color y las tarjetas tienen que tener nombre accesible completo.",
+      "expected_output": "Estado con texto visible además del color, aria-label completo con hora/paciente/prestación/profesional/sillón/estado, foco visible y contraste AA; hallazgos citando KB 08 y verify-C-27; sin editar la spec sin aprobación.",
+      "files": []
+    }
+  ]
+}

@@ -22,6 +22,8 @@ Domain skills, PROJECT level (copies versioned in the repo; mirrored in `.agents
 | Writing/reviewing React components, performance patterns | vercel-react-best-practices | .claude/skills/vercel-react-best-practices/SKILL.md |
 | Review UI for accessibility / UX / Web Interface Guidelines | web-design-guidelines | .claude/skills/web-design-guidelines/SKILL.md |
 | Writing frontend tests, mocking, coverage (Vitest) | vitest | .claude/skills/vitest/SKILL.md |
+| Prepare/review/implement UI changes of the agenda (C-25..C-33): tokens, accessibility, timezone, token confinement, C1 tests, visual check | appointment-frontend-ux | .claude/skills/appointment-frontend-ux/SKILL.md |
+| Create/improve skills, write evals, benchmark, optimize descriptions | skill-creator | .claude/skills/skill-creator/SKILL.md |
 
 Foundation / workflow skills (user level, NOT in the project; not for domain code):
 
@@ -36,7 +38,6 @@ Foundation / workflow skills (user level, NOT in the project; not for domain cod
 | Find / install skills (alias) | find-skills | ~/.claude/skills/find-skills/SKILL.md |
 | Create knowledge-base/ | kb-creator | ~/.claude/skills/kb-creator/SKILL.md |
 | Generate CHANGES.md roadmap | roadmap-generator | ~/.claude/skills/roadmap-generator/SKILL.md |
-| Create / improve skills | skill-creator | ~/.claude/skills/skill-creator/SKILL.md |
 | Research a competitor from a URL | web-scraper | ~/.claude/skills/web-scraper/SKILL.md |
 
 Project-level OPSX command skills (`.agents/skills/`): source-command-opsx-apply, -archive, -explore, -propose, -sync, -update.
@@ -161,6 +162,25 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 - Type-level tests with `expectTypeOf` / `assertType`; multi-package setups via `projects`.
 - Skill is based on Vitest 5.x: check `references/*.md` under the skill dir for details when a rule above is not enough.
 
+### appointment-frontend-ux
+> Applies to FRONTEND UI of the agenda (`frontend/`, C-25..C-33). Project-specific: built from the real C-25/C-26/C-27 code and specs.
+- Stack exact versions: React 18.3.1, react-router-dom 6.30.6 (v6 API), Vite 5.4.21, Vitest 3.2.7, TypeScript 5.9.3, jsdom 31. Consult Context7 (`resolve-library-id` + `query-docs`) before using a version-sensitive API (React Router v6, React 18 hooks, Vite/Vitest 3); ask for the v6 of React Router.
+- Tokens only: colors/spacing/type/radii/shadows live in `frontend/src/shared/styles/tokens.css`; use `var(--token)` and `APPOINTMENT_STATUS_TOKENS`/`StatusBadge`. Never hardcode HEX/rgb/fixed sizes in TSX or CSS Modules.
+- Accessibility: appointment state MUST be visible text, never color-only (C-27 visual review 2 lesson); visible focus; complete `aria-label` (time, patient, service, professional, chair, status); controls >= 44x44 px.
+- Narrow cards: time and patient take priority over status; on split lanes or columns < 260 px use the two-line compact format (line 1 `HH:MM · Patient`, line 2 `StatusBadge`).
+- Timezone: always from the API response; the only fallback (`America/Argentina/Buenos_Aires`) is in `features/agenda/agendaConfig.ts`; format with `Intl.DateTimeFormat` + explicit `timeZone`.
+- Token confinement: read/write the access token ONLY through `features/auth/tokenStore.ts`; never touch `sessionStorage`/`localStorage` elsewhere.
+- C1 test rule: NO `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, fake timers or MSW. Inject `fetch` (FetchFn) and `Clock` (`createFixedClock`); use `createMemoryRouter`/`MemoryRouter`. Literal fictional data from the spec.
+- Before archiving: mandatory visual check with screenshots at desktop (1440) and tablet (768) because jsdom does not measure widths; save them in `docs/evidencias/capturas/`.
+
+### skill-creator
+> Workflow skill (Anthropic, Apache 2.0), versioned at project level. Use to create/improve skills.
+- Process: capture intent -> interview/research -> write `SKILL.md` (frontmatter `name` + `description`) -> test cases in `evals/evals.json` -> run/evaluate -> iterate.
+- Description is the primary trigger: include what it does AND when to use it; make it slightly "pushy" to avoid undertriggering.
+- Keep `SKILL.md` under ~500 lines; use `references/`, `scripts/`, `assets/` for bundled resources (progressive disclosure).
+- Evals: JSON with `id`, `prompt`, `expected_output`, `files`; add assertions later. Objective outputs get evals; subjective ones get qualitative review.
+- Automated eval/benchmark scripts require Claude Code (`claude -p`); from OpenCode they cannot run — document as a limitation, do not simulate.
+
 ## Project Conventions
 
 | File | Path | Notes |
@@ -196,7 +216,7 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 | Dominio | `backend/app/domain` | tdd, python-testing-patterns, python-pro (with no-mock override) |
 | Backend API | `backend/app` | tdd, python-testing-patterns, python-pro, fastapi, auth-implementation-patterns, sqlalchemy-alembic-expert-best-practices-code-review, supabase-postgres-best-practices |
 | Infraestructura | `docker-compose.yml`, Dockerfiles, Alembic (C-13/C-14) | docker-patterns, sqlalchemy-alembic-expert-best-practices-code-review, supabase-postgres-best-practices |
-| Frontend | `frontend/` (from C-25) | vitest, frontend-design, vercel-react-best-practices, web-design-guidelines |
+| Frontend | `frontend/` (from C-25) | vitest, frontend-design, vercel-react-best-practices, web-design-guidelines, appointment-frontend-ux |
 | Orquestacion | OPSX + foundation | active-orchestrator, kb-creator, roadmap-generator, agent-instruction, discovery-research, web-scraper, find-skill, skill-creator |
 
 Read the convention files listed above for project-specific patterns and rules. All referenced paths have been extracted; no need to read index files to discover more.

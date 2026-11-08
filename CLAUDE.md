@@ -63,14 +63,19 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 | **Dominio** | `backend/app/domain`: reglas de agenda en Python puro, Strict TDD con pytest | `tdd`, `python-testing-patterns`, `python-pro` (sin mocks en el dominio: la regla dura prevalece) |
 | **Backend API** | `backend/app`: FastAPI, Pydantic, JWT, repositorios SQLAlchemy, Alembic | `tdd`, `python-testing-patterns`, `python-pro`, `fastapi`, `auth-implementation-patterns`, `sqlalchemy-alembic-expert-best-practices-code-review`, `supabase-postgres-best-practices` |
 | **Infraestructura** | `docker-compose.yml`, Dockerfiles, Alembic (C-13/C-14) | `docker-patterns`, `sqlalchemy-alembic-expert-best-practices-code-review`, `supabase-postgres-best-practices` |
-| **Frontend** | `frontend/`: React + TypeScript + Vite (desde C-25) | `vitest`, `frontend-design`, `vercel-react-best-practices`, `web-design-guidelines` |
+| **Frontend** | `frontend/`: React + TypeScript + Vite (desde C-25) | `vitest`, `frontend-design`, `vercel-react-best-practices`, `web-design-guidelines`, `appointment-frontend-ux` |
 | **Orquestación** | OPSX + fundación del proyecto | `active-orchestrator`, `kb-creator`, `roadmap-generator`, `agent-instruction`, `discovery-research`, `web-scraper`, `find-skill`, `skill-creator` |
 
 Cargá la skill correspondiente al contexto ANTES de escribir código.
 
-> Las 12 skills de Dominio, Backend API, Infraestructura y Frontend están instaladas **en el proyecto** (`.claude/skills/`, espejadas en `.agents/skills/`; origen en `skills-lock.json`), así que vienen con el clon. Las de Orquestación son de **Active Stack** y viven en el usuario (`~/.claude/skills/`): requieren tener Active Stack instalado.
+> Las skills de Dominio, Backend API, Infraestructura y Frontend, más `skill-creator` y la propia `appointment-frontend-ux`, están instaladas **en el proyecto** (`.claude/skills/`, espejadas en `.agents/skills/`; origen en `skills-lock.json`), así que vienen con el clon. Las de Orquestación son de **Active Stack** y viven en el usuario (`~/.claude/skills/`): requieren tener Active Stack instalado.
 
 > Los compact rules de cada skill los resuelve el orquestador desde `.atl/skill-registry.md` (generado por `skill-registry`; versionado en el repo).
+
+### Skill propia y MCP Context7
+
+- **`appointment-frontend-ux`** (`.claude/skills/appointment-frontend-ux/`, espejo en `.agents/skills/`): cargala **antes de preparar, revisar o implementar cualquier change de UI de la agenda (C-25 a C-33)**. Fija el stack y las versiones exactas, los tokens de diseño en `tokens.css`, la accesibilidad (estado con texto visible, nunca solo color), la prioridad hora/paciente en tarjetas angostas, la zona horaria desde la respuesta de la API, el token solo en `tokenStore.ts`, la regla C1 de tests y la verificación visual (1440 y 768) antes de archivar.
+- **MCP `context7`**: consultalo **antes de usar una API sensible a la versión** (React Router v6, hooks de React 18, configuración de Vite 5 / Vitest 3) en vez de confiar en memoria. Primero `resolve-library-id`, después `query-docs` con el ID obtenido y, cuando importe, la versión (pedí explícitamente la v6 de React Router). Solo documentación pública: nunca datos de pacientes, tokens ni secretos. Configuración en `opencode.json` y `.mcp.json`; la clave `CONTEXT7_API_KEY` vive solo en el entorno (ver README §Skill y MCP).
 
 ---
 

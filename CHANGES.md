@@ -625,6 +625,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - Tests de componentes: 7 días, turnos en el día correcto en hora local, filtro por profesional.
 - **Dependencias**: `C-27`
 - **Governance**: BAJO
+- **Preparación**: se prepara con la skill `appointment-frontend-ux` (lineamientos de UI de la agenda) y el MCP `context7` (documentación de React Router v6, `useSearchParams`, para llevar la semana en la URL).
 - **Leer antes**:
   - `knowledge-base/06_funcionalidades.md` §US-040 (CA-2)
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado, §Plan de contingencia de plazo

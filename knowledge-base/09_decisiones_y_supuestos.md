@@ -72,6 +72,20 @@
 **Trade-offs aceptados**: hay que manejar secretos (`JWT_SECRET`, contraseñas del seed) solo por `.env`; sin refresh tokens ni revocación en el MVP (**Suposición:** un token de acceso con vencimiento corto alcanza, SU-06).
 **Origen**: decisión de la cátedra (2026-10-08).
 
+### DD-12 — Context7 como MCP para documentación del frontend (2026-11-08)
+**Decisión**: usar el MCP **Context7** (Upstash, licencia MIT) como fuente de documentación actualizada del frontend, configurado a nivel proyecto en `.mcp.json` (Claude Code) y `opencode.json` (OpenCode). Las herramientas son `resolve-library-id` y `query-docs`. La API key vive **solo** en la variable de entorno `CONTEXT7_API_KEY`; nunca se escribe en el repo ni en la salida de un comando.
+**Contexto**: el agente necesita documentación vigente de React 18, React Router 6, Vite 5 y Vitest 3 para no proponer APIs viejas o inventadas al preparar e implementar los changes de UI (por ejemplo, C-28 usa `useSearchParams`). Alternativa evaluada: Figma MCP, descartada porque el proyecto no tiene diseños en Figma y el plan gratuito permite muy pocas llamadas.
+**Justificación**: solo lectura de documentación pública, sin enviar datos de pacientes ni secretos; sirve ya, antes de que exista el front. Consultar la versión real evita errores de API.
+**Trade-offs aceptados**: requiere una key y conexión; el contenido puede estar redactado para la versión 7 de React Router (hay que ajustar el import a `react-router-dom` para la v6 del repo); el plan gratuito tiene límites de uso.
+**Origen**: decisión de la autora (2026-11-08), a partir de `docs/skills-mcp/investigacion.md`.
+
+### DD-13 — Skill propia `appointment-frontend-ux` (2026-11-08)
+**Decisión**: crear y versionar una skill propia, `appointment-frontend-ux`, en `.agents/skills/` (fuente canónica) y espejarla en `.claude/skills/`, usando `skill-creator`. La skill guía el trabajo de UI de la agenda (C-25 a C-33) y fija el stack y las versiones, los tokens de `tokens.css`, la accesibilidad (estado con texto visible, nunca solo color), la prioridad hora/paciente en tarjetas angostas, la zona horaria desde la API, el confinamiento del token en `tokenStore.ts`, la regla C1 de tests y la verificación visual (1440 y 768) antes de archivar.
+**Contexto**: los lineamientos de UI estaban repartidos en la KB y en las specs de C-25 a C-27, y la revisión se repetía en cada change; la revisión visual 2 de C-27 dejó una lección concreta (el estado nunca tapa al paciente ni depende solo del color).
+**Justificación**: reduce omisiones, es portable (formato Agent Skills, un único `SKILL.md` para los cinco agentes) y se mantiene junto al código y sus tests.
+**Trade-offs aceptados**: hay que mantener las dos copias idénticas (se verifica con `diff -r` y `cmp`); los evals automáticos de `skill-creator` requieren Claude Code (`claude -p`) y no se pueden correr desde OpenCode (se documenta como limitación y no se simulan).
+**Origen**: decisión de la autora (2026-11-08), a partir de `docs/skills-mcp/investigacion.md`.
+
 ## Supuestos inferidos
 
 Los marcados **Suposición:** son defaults propuestos para el MVP; se confirman en [10_preguntas_abiertas.md](10_preguntas_abiertas.md).
