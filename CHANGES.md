@@ -606,7 +606,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/08_arquitectura_propuesta.md` §Seguridad
 
 ### [C-27] `ui-agenda-diaria`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-08)
 - **Scope**:
   - Vista diaria con una columna por profesional, turnos coloreados por estado, horarios de atención y bloqueos visibles; filtros por profesional y por sillón (US-040 CA-1, CA-3, CA-4).
   - Navegación de día anterior/siguiente; consume `GET /api/agenda`.

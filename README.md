@@ -108,8 +108,20 @@ Fijado por la cátedra:
   header `Authorization: Bearer <token>`, cierre automático con mensaje de
   sesión vencida ante `401` protegido, preservación de sesión ante `403`,
   menú por rol derivado de `/me` con ítems futuros deshabilitados bajo
-  `"Próximamente"` y cierre de sesión directo en `AppShell`).
-- **Planificado:** las pantallas del frontend (C-27 a C-33). La persistencia de
+  `"Próximamente"` y cierre de sesión directo en `AppShell`) y
+  C-27 (agenda diaria de solo lectura sobre `GET /api/agenda` con gobernanza
+  BAJO: ruta `/agenda` protegida para los tres roles y `/` redirigiendo a
+  `/agenda`, carga inyectable de turnos, profesionales y sillones con `Clock`
+  inyectado, formateo en hora local según el `timezone` de la respuesta del
+  servidor, grilla diaria con eje de horas y minutos proporcionales, bandas de
+  horarios de atención y bloqueos rayados, tarjetas coloreadas por estado con
+  cancelados atenuados pero visibles y formato compacto en dos líneas ante
+  carriles divididos o columnas angostas, filtros combinables por profesional y
+  sillón en la URL con ayuda informativa, navegación por días con
+  `Anterior`/`Siguiente`/`Hoy`/selector, estados de carga, vacío y error con
+  reintento, delegación de `401` en C-26 y `403` visible sin cerrar sesión, y
+  alternancia a tabla semántica accesible con anuncio `aria-live`).
+- **Planificado:** el resto de las pantallas del frontend (C-28 a C-33). La persistencia de
   entidades y la API REST ya están implementadas. El plan completo
   está en [CHANGES.md](CHANGES.md).
 
@@ -255,6 +267,7 @@ está en el repositorio.
 | Change archivado de mantenimiento: specs-requisitos-concisos | [openspec/changes/archive/2026-11-07-specs-requisitos-concisos/](openspec/changes/archive/2026-11-07-specs-requisitos-concisos/) |
 | Change archivado de C-25 | [openspec/changes/archive/2026-11-07-frontend-base-react-vite/](openspec/changes/archive/2026-11-07-frontend-base-react-vite/) |
 | Change archivado de C-26 | [openspec/changes/archive/2026-11-07-ui-login-y-sesion/](openspec/changes/archive/2026-11-07-ui-login-y-sesion/) |
+| Change archivado de C-27 | [openspec/changes/archive/2026-11-08-ui-agenda-diaria/](openspec/changes/archive/2026-11-08-ui-agenda-diaria/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -283,6 +296,7 @@ está en el repositorio.
 | Evidencias de specs-requisitos-concisos (verify, validate antes y después, simulación del archive, escenarios, pytest, integración y mypy) | [verify-specs-requisitos-concisos.md](docs/evidencias/verify-specs-requisitos-concisos.md), [validate-antes-specs.txt](docs/evidencias/validate-antes-specs.txt), [validate-despues-specs.txt](docs/evidencias/validate-despues-specs.txt), [validate-simulacion-archive-specs.txt](docs/evidencias/validate-simulacion-archive-specs.txt), [escenarios-specs.py](docs/evidencias/escenarios-specs.py), [escenarios-specs.txt](docs/evidencias/escenarios-specs.txt), [pytest-specs.txt](docs/evidencias/pytest-specs.txt), [pytest-integration-specs.txt](docs/evidencias/pytest-integration-specs.txt) y [mypy-specs.txt](docs/evidencias/mypy-specs.txt) |
 | Evidencias de C-25 (explore, verify, precondición, versiones, tsc, eslint, vitest, mutaciones, trazabilidad, docker, backend, validate, captura y RED) | [explore-C-25.md](docs/evidencias/explore-C-25.md), [verify-C-25.md](docs/evidencias/verify-C-25.md), [precondicion-C-25.txt](docs/evidencias/precondicion-C-25.txt), [versiones-C-25.txt](docs/evidencias/versiones-C-25.txt), [tsc-C-25.txt](docs/evidencias/tsc-C-25.txt), [eslint-C-25.txt](docs/evidencias/eslint-C-25.txt), [vitest-C-25.txt](docs/evidencias/vitest-C-25.txt), [mutaciones-C-25.py](docs/evidencias/mutaciones-C-25.py), [mutaciones-C-25.txt](docs/evidencias/mutaciones-C-25.txt), [trazabilidad-C-25.py](docs/evidencias/trazabilidad-C-25.py), [trazabilidad-C-25.txt](docs/evidencias/trazabilidad-C-25.txt), [docker-C-25.sh](docs/evidencias/docker-C-25.sh), [docker-C-25.txt](docs/evidencias/docker-C-25.txt), [backend-C-25.txt](docs/evidencias/backend-C-25.txt), [validate-C-25.txt](docs/evidencias/validate-C-25.txt), [capturas/C-25-home.png](docs/evidencias/capturas/C-25-home.png), [red-C-25/](docs/evidencias/red-C-25/) |
 | Evidencias de C-26 (explore, verify, precondición, baseline, tsc, eslint, vitest, mutaciones, trazabilidad, verificación HTTP y manual, validate, capturas y RED) | [explore-C-26.md](docs/evidencias/explore-C-26.md), [verify-C-26.md](docs/evidencias/verify-C-26.md), [precondicion-C-26.txt](docs/evidencias/precondicion-C-26.txt), [baseline-C-26.txt](docs/evidencias/baseline-C-26.txt), [tsc-C-26.txt](docs/evidencias/tsc-C-26.txt), [eslint-C-26.txt](docs/evidencias/eslint-C-26.txt), [vitest-C-26.txt](docs/evidencias/vitest-C-26.txt), [mutaciones-C-26.py](docs/evidencias/mutaciones-C-26.py), [mutaciones-C-26.txt](docs/evidencias/mutaciones-C-26.txt), [trazabilidad-C-26.py](docs/evidencias/trazabilidad-C-26.py), [trazabilidad-C-26.txt](docs/evidencias/trazabilidad-C-26.txt), [http-C-26.txt](docs/evidencias/http-C-26.txt), [manual-C-26.txt](docs/evidencias/manual-C-26.txt), [validate-C-26.txt](docs/evidencias/validate-C-26.txt), [capturas/C-26-error.png](docs/evidencias/capturas/C-26-error.png), [capturas/C-26-administrador.png](docs/evidencias/capturas/C-26-administrador.png), [capturas/C-26-odontologo.png](docs/evidencias/capturas/C-26-odontologo.png), [capturas/C-26-recepcion.png](docs/evidencias/capturas/C-26-recepcion.png), [capturas/C-26-sesion-vencida.png](docs/evidencias/capturas/C-26-sesion-vencida.png), [red-C-26/](docs/evidencias/red-C-26/) |
+| Evidencias de C-27 (explore, verify, precondición, baseline, tsc, eslint, vitest, mutaciones, trazabilidad, verificación HTTP y manual, validate, capturas y RED) | [explore-C-27.md](docs/evidencias/explore-C-27.md), [verify-C-27.md](docs/evidencias/verify-C-27.md), [precondicion-C-27.txt](docs/evidencias/precondicion-C-27.txt), [baseline-C-27.txt](docs/evidencias/baseline-C-27.txt), [tsc-C-27.txt](docs/evidencias/tsc-C-27.txt), [eslint-C-27.txt](docs/evidencias/eslint-C-27.txt), [vitest-C-27.txt](docs/evidencias/vitest-C-27.txt), [mutaciones-C-27.py](docs/evidencias/mutaciones-C-27.py), [mutaciones-C-27.txt](docs/evidencias/mutaciones-C-27.txt), [trazabilidad-C-27.py](docs/evidencias/trazabilidad-C-27.py), [trazabilidad-C-27.txt](docs/evidencias/trazabilidad-C-27.txt), [http-C-27.txt](docs/evidencias/http-C-27.txt), [manual-C-27.py](docs/evidencias/manual-C-27.py), [manual-C-27.txt](docs/evidencias/manual-C-27.txt), [validate-C-27.txt](docs/evidencias/validate-C-27.txt), [validate-C-27-archive.txt](docs/evidencias/validate-C-27-archive.txt), [capturas/C-27-agenda-dia.png](docs/evidencias/capturas/C-27-agenda-dia.png), [capturas/C-27-filtro-profesional.png](docs/evidencias/capturas/C-27-filtro-profesional.png), [capturas/C-27-filtro-sillon.png](docs/evidencias/capturas/C-27-filtro-sillon.png), [capturas/C-27-solapamiento-cancelado.png](docs/evidencias/capturas/C-27-solapamiento-cancelado.png), [capturas/C-27-sesion-vencida.png](docs/evidencias/capturas/C-27-sesion-vencida.png), [capturas/C-27-tablet.png](docs/evidencias/capturas/C-27-tablet.png), [capturas/C-27-vacio.png](docs/evidencias/capturas/C-27-vacio.png), [capturas/C-27-lista.png](docs/evidencias/capturas/C-27-lista.png), [red-C-27/](docs/evidencias/red-C-27/) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

@@ -14,7 +14,7 @@ Organizadas por épica e historia de usuario (US-NNN). Cada criterio de aceptaci
 | C-13 a C-14 | `docker-compose-y-postgres`, `migraciones-alembic` | — (infraestructura) | Docker Compose (PostgreSQL + Redis sin uso) y Alembic |
 | C-15 a C-17 | `persistencia-catalogos-y-pacientes`, `persistencia-horarios-y-bloqueos`, `persistencia-turnos-e-historial` | 1–5 | Persistencia PostgreSQL + SQLAlchemy |
 | C-18 a C-24 | `api-base-fastapi`, `autenticacion-jwt-y-roles` (6) a `api-consulta-de-agenda` | 1–6 | API REST FastAPI (C-19: autenticación JWT) |
-| C-25 a C-33 | `frontend-base-react-vite`, `ui-login-y-sesion` (6) a `ui-catalogos-y-pacientes` | 5, 6 | React + TypeScript + Vite (C-26: login) |
+| C-25 a C-33 | `frontend-base-react-vite`, `ui-login-y-sesion` (6) a `ui-catalogos-y-pacientes` | 5, 6 | React + TypeScript + Vite (C-26: login; C-27: agenda diaria) |
 
 **Decisión de la autora (Q-13, 2026-10-07):** US-005 (no dar turnos en el pasado), US-006 (mensajes de conflicto completos) y el resto de US-007 (granularidad, referencias, medianoche) van a C-03 a C-08, porque "no en el pasado" y los mensajes en hora local necesitan la zona horaria, que vive en C-04. De C-02 solo entra el criterio de duración positiva de US-007. No se renumera ninguna historia.
 
@@ -187,7 +187,7 @@ C-02 es **solo** la regla de no solapamiento por profesional y por sillón, con 
 
 ### US-040 — Agenda diaria y semanal
 **Como** recepción u odontólogo, **quiero** ver la agenda por día y por semana, filtrable por profesional y por sillón, **para** operar el consultorio.
-- [x] CA-1: vista diaria con columna por profesional (API lista en C-24). [x] CA-2: vista semanal por profesional (API lista en C-24). [ ] CA-3: los turnos se colorean por estado. [ ] CA-4: usable en pantallas de escritorio y tablet; responsive básico.
+- [x] CA-1: vista diaria con columna por profesional (API lista en C-24; UI lista en C-27). [x] CA-2: vista semanal por profesional (API lista en C-24). [x] CA-3: los turnos se colorean por estado (UI lista en C-27). [x] CA-4: usable en pantallas de escritorio y tablet; responsive básico (UI lista en C-27).
 
 ### US-041 — Vista de recepción por sillón (diferenciador)
 **Como** recepción, **quiero** ver la agenda con una columna por sillón, **para** saber qué sillón está libre.

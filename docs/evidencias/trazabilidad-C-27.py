@@ -23,7 +23,14 @@ EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-27.txt"
 VERIFY = EVIDENCE / "verify-C-27.md"
 SPEC = (
-    REPO / "openspec" / "changes" / "ui-agenda-diaria" / "specs" / "frontend-agenda" / "spec.md"
+    REPO
+    / "openspec"
+    / "changes"
+    / "archive"
+    / "2026-11-08-ui-agenda-diaria"
+    / "specs"
+    / "frontend-agenda"
+    / "spec.md"
 )
 TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"

@@ -4,7 +4,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 28/28 en [tasks.md](../../openspec/changes/ui-agenda-diaria/tasks.md).
+- Tareas: 28/28 en [tasks.md](../../openspec/changes/archive/2026-11-08-ui-agenda-diaria/tasks.md).
 - Vitest: 35 archivos, 127 tests en verde (85 preexistentes + 42 nuevos de C-27); `tsc` y ESLint sin errores ni warnings.
 - Mutaciones: 47/47 hicieron fallar su test (una por cada test nuevo o actualizado de C-27); mutaciones inválidas: 0; SHA-256 de producción intacto.
 - Trazabilidad: 32 escenarios, 0 problemas.
@@ -16,7 +16,7 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Mutaciones: [mutaciones-C-27.txt](mutaciones-C-27.txt), generado por [mutaciones-C-27.py](mutaciones-C-27.py).
 - Trazabilidad: [trazabilidad-C-27.txt](trazabilidad-C-27.txt), generado por [trazabilidad-C-27.py](trazabilidad-C-27.py).
 - Verificación manual y HTTP contra backend real: [manual-C-27.txt](manual-C-27.txt) y [http-C-27.txt](http-C-27.txt).
-- Validación OpenSpec y `git diff --check`: [validate-C-27.txt](validate-C-27.txt).
+- Validación OpenSpec y `git diff --check`: [validate-C-27.txt](validate-C-27.txt) y [validate-C-27-archive.txt](validate-C-27-archive.txt).
 - Rojos (TDD): carpeta [red-C-27/](red-C-27/).
 
 ## Regla C1 y zona horaria (D1, D2, D17)
@@ -42,13 +42,30 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 Con backend y frontend levantados con Docker Compose, se ejecutó [manual-C-27.py](manual-C-27.py), generando datos ficticios del seed para el lunes futuro `2026-11-16` y registrando las respuestas HTTP en [http-C-27.txt](http-C-27.txt) y el resumen en [manual-C-27.txt](manual-C-27.txt).
 
 Capturas tomadas por la autora en `docs/evidencias/capturas/`:
-- `C-27-agenda-dia.png`: vista general de la agenda del lunes 2026-11-16 con Quiroga y Sosa, horarios laborales y bloqueos.
-- `C-27-filtro-profesional.png`: filtro aplicado a Dra. Laura Quiroga mostrando solo su columna y colecciones.
-- `C-27-filtro-sillon.png`: filtro por Sillón 2 mostrando la ayuda informativa y preservando horarios y bloqueos.
-- `C-27-solapamiento-cancelado.png`: carril compartido de 09:00 a 09:30 con turno activo y turno cancelado sin solaparse.
-- `C-27-vacio.png`: domingo 2026-11-15 sin turnos con el mensaje "No hay turnos para este día" y grilla 08:00–20:00.
-- `C-27-sesion-vencida.png`: redirección a `/login` con mensaje de sesión vencida tras token alterado y actualización manual.
-- `C-27-tablet.png`: vista responsive en viewport tablet (768×1024) con scroll horizontal y encabezados sticky.
+- [C-27-agenda-dia.png](capturas/C-27-agenda-dia.png): vista general de la agenda del lunes 2026-11-16 con Quiroga y Sosa, horarios laborales y bloqueos.
+- [C-27-filtro-profesional.png](capturas/C-27-filtro-profesional.png): filtro aplicado a Dra. Laura Quiroga mostrando solo su columna y colecciones.
+- [C-27-filtro-sillon.png](capturas/C-27-filtro-sillon.png): filtro por Sillón 2 mostrando la ayuda informativa y preservando horarios y bloqueos.
+- [C-27-solapamiento-cancelado.png](capturas/C-27-solapamiento-cancelado.png): carril compartido de 09:00 a 09:30 con turno activo y turno cancelado sin solaparse.
+- [C-27-sesion-vencida.png](capturas/C-27-sesion-vencida.png): redirección a `/login` con mensaje de sesión vencida tras token alterado y actualización manual.
+- [C-27-tablet.png](capturas/C-27-tablet.png): vista responsive en viewport tablet (768×1024) con scroll horizontal y encabezados sticky.
+- [C-27-vacio.png](capturas/C-27-vacio.png): domingo 2026-11-15 sin turnos con el mensaje "No hay turnos para este día" y grilla 08:00–20:00.
+- [C-27-lista.png](capturas/C-27-lista.png): vista alternativa en tabla semántica accesible con anuncio `aria-live` y toggle a "Ver como lista".
+
+![C-27-agenda-dia](capturas/C-27-agenda-dia.png)
+
+![C-27-filtro-profesional](capturas/C-27-filtro-profesional.png)
+
+![C-27-filtro-sillon](capturas/C-27-filtro-sillon.png)
+
+![C-27-solapamiento-cancelado](capturas/C-27-solapamiento-cancelado.png)
+
+![C-27-sesion-vencida](capturas/C-27-sesion-vencida.png)
+
+![C-27-tablet](capturas/C-27-tablet.png)
+
+![C-27-vacio](capturas/C-27-vacio.png)
+
+![C-27-lista](capturas/C-27-lista.png)
 
 ## Inmutabilidad fuera de frontend/
 
@@ -141,10 +158,10 @@ Ninguno usa `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, fake timers ni MSW (regla C1
 
 ## Artefactos
 
-- [proposal.md](../../openspec/changes/ui-agenda-diaria/proposal.md)
-- [design.md](../../openspec/changes/ui-agenda-diaria/design.md)
-- [tasks.md](../../openspec/changes/ui-agenda-diaria/tasks.md)
-- [spec.md (frontend-agenda)](../../openspec/changes/ui-agenda-diaria/specs/frontend-agenda/spec.md)
+- [proposal.md](../../openspec/changes/archive/2026-11-08-ui-agenda-diaria/proposal.md)
+- [design.md](../../openspec/changes/archive/2026-11-08-ui-agenda-diaria/design.md)
+- [tasks.md](../../openspec/changes/archive/2026-11-08-ui-agenda-diaria/tasks.md)
+- [spec.md (frontend-agenda)](../../openspec/changes/archive/2026-11-08-ui-agenda-diaria/specs/frontend-agenda/spec.md)
 
 ## Mutaciones
 
@@ -238,3 +255,11 @@ Ninguno usa `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, fake timers ni MSW (regla C1
 | 31 | Vista en lista accesible | Anuncio de la cantidad de turnos | `src/features/agenda/AgendaView.test.tsx > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista` |
 | 32 | Responsive para escritorio y tablet | Tablet de 768 por 1024 | `src/features/agenda/agendaStyles.test.ts > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX` |
 <!-- trazabilidad:fin -->
+
+## Archive
+
+- **Fecha de archive**: 2026-11-08.
+- **Ruta del change archivado**: [openspec/changes/archive/2026-11-08-ui-agenda-diaria/](../../openspec/changes/archive/2026-11-08-ui-agenda-diaria/).
+- **Especificación principal creada**: [openspec/specs/frontend-agenda/spec.md](../../openspec/specs/frontend-agenda/spec.md) con 14 requisitos y 32 escenarios (100% de paridad con la spec del change archivado).
+- **Validación final**: `openspec validate --all --strict` exitosa (14/14 passed, 0 failed), registrada en [validate-C-27-archive.txt](validate-C-27-archive.txt).
+- **Corrección de rutas en scripts de evidencia**: se actualizó la constante `SPEC` en [trazabilidad-C-27.py](trazabilidad-C-27.py) para apuntar a la ruta del change archivado (`openspec/changes/archive/2026-11-08-ui-agenda-diaria/specs/frontend-agenda/spec.md`), regenerando [trazabilidad-C-27.txt](trazabilidad-C-27.txt) con 32 escenarios y 0 problemas.
