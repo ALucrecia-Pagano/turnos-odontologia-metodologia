@@ -1,0 +1,39 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/auth/Logout.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 195[2mms[22m[39m
+[31m   [31m×[31m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace[39m[32m 193[2mms[22m[39m
+[31m     → [2mexpect([22m[31mreceived[31m[2m).toBeInTheDocument()[22m
+
+[31mreceived[31m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/Logout.test.tsx[2m > [22mLogout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace
+[31m[1mError[22m: [2mexpect([22m[31mreceived[31m[2m).toBeInTheDocument()[22m
+
+[31mreceived[31m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[31m[39m
+[36m [2m❯[22m src/features/auth/Logout.test.tsx:[2m64:26[22m[39m
+    [90m 62| [39m
+    [90m 63| [39m    const logoutButton = screen.queryByRole("button", { name: "Cerrar …
+    [90m 64| [39m    [34mexpect[39m(logoutButton)[33m.[39m[34mtoBeInTheDocument[39m()[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m 65| [39m    [35mif[39m (logoutButton [33m!==[39m [35mnull[39m) {
+    [90m 66| [39m      [35mawait[39m user[33m.[39m[34mclick[39m(logoutButton)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 21:49:21
+[2m   Duration [22m 4.38s[2m (transform 393ms, setup 427ms, collect 925ms, tests 195ms, environment 1.85s, prepare 385ms)[22m
+

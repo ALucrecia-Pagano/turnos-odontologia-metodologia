@@ -1,0 +1,10 @@
+=== Verificacion HTTP C-26 contra backend real (VITE_API_URL=http://localhost:8000/api) ===
+POST /api/auth/login (administrador) -> HTTP 200 {"tokenType": "bearer", "accessTokenPresent": true}
+GET /api/auth/me (administrador) -> HTTP 200 {"id": "00000000-0000-0000-0000-0000000000e1", "username": "administrador", "displayName": "Administración Demo", "role": "administrador", "professionalId": null}
+POST /api/auth/login (recepcion) -> HTTP 200 {"tokenType": "bearer", "accessTokenPresent": true}
+GET /api/auth/me (recepcion) -> HTTP 200 {"id": "00000000-0000-0000-0000-0000000000e2", "username": "recepcion", "displayName": "Recepción Demo", "role": "recepcion", "professionalId": null}
+POST /api/auth/login (odontologo) -> HTTP 200 {"tokenType": "bearer", "accessTokenPresent": true}
+GET /api/auth/me (odontologo) -> HTTP 200 {"id": "00000000-0000-0000-0000-0000000000e3", "username": "odontologo", "displayName": "Dra. Laura Quiroga", "role": "odontologo", "professionalId": "00000000-0000-0000-0000-000000000001"}
+POST /api/auth/login (credenciales invalidas) -> HTTP 401 {"code":"INVALID_CREDENTIALS","message":"Usuario o contraseña incorrectos."}
+GET /api/auth/me (token vencido/invalido) -> HTTP 401 {"code":"INVALID_TOKEN","message":"La sesión venció o no es válida. Inicie sesión de nuevo."}
+GET http://localhost:5173/login (frontend SPA) -> HTTP 200

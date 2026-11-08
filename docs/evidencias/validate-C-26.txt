@@ -1,0 +1,8 @@
+Change 'ui-login-y-sesion' is valid
+warning: in the working copy of 'frontend/src/App.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/auth.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/auth.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/api/client.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/test/setup.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'openspec/changes/ui-login-y-sesion/tasks.md', LF will be replaced by CRLF the next time Git touches it

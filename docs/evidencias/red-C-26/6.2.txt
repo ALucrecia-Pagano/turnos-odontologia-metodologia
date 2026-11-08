@@ -1,0 +1,162 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/shared/components/AppShell.test.tsx src/features/auth/AuthContext.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1730[2mms[22m[39m
+   [32m✓[39m AuthContext[2m > [22mestado checking mientras se verifica la sesión[32m 152[2mms[22m[39m
+   [32m✓[39m AuthContext[2m > [22msesión autenticada con el usuario de /me[32m 96[2mms[22m[39m
+   [32m✓[39m AuthContext[2m > [22m/me responde 401 y limpia la sesión[32m 30[2mms[22m[39m
+   [32m✓[39m AuthContext[2m > [22merror de red en /me conserva el token y permite reintentar[32m 177[2mms[22m[39m
+   [32m✓[39m AuthContext[2m > [22mlastEvent registra expired ante 401 protegido y manual ante logout[32m 145[2mms[22m[39m
+[31m   [31m×[31m AuthContext[2m > [22mrol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me[39m[33m 1126[2mms[22m[39m
+[31m     → [2mexpect([22m[31mreceived[31m[2m).toHaveTextContent()[22m
+
+[31mreceived[31m value must be a Node.
+Received has type:  Null
+Received has value: [31mnull[31m
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"status"[31m
+        [36m>[31m
+          [0mauthenticated[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"display-name"[31m
+        [36m>[31m
+          [0mDra. Laura Quiroga[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"role"[31m
+        [36m>[31m
+          [0modontologo[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"professional-id"[31m
+        [36m>[31m
+          [0m00000000-0000-0000-0000-000000000001[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"last-event"[31m
+        [36m>[31m
+          [0mninguno[0m
+        [36m</p>[31m
+        [36m<button[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPetición protegida[0m
+        [36m</button>[31m
+        [36m<button[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mSalir[0m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShell.test.tsx[2m [ src/shared/components/AppShell.test.tsx ][22m
+[31m[1mError[22m: Failed to resolve import "./AppShell" from "src/shared/components/AppShell.test.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/AppShell.test.tsx[39m:8:25
+[33m  6  |  import { createMemoryTokenStore } from "../../features/auth/tokenStore";
+  7  |  import { createApiClient } from "../api/client";
+  8  |  import { AppShell } from "./AppShell";
+     |                            ^
+  9  |  function renderAppShellForUser(currentUser) {
+  10 |    const tokenStore = createMemoryTokenStore("token-ficticio-123");[39m
+[90m [2m❯[22m TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49258:41[22m[39m
+[90m [2m❯[22m TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49253:16[22m[39m
+[90m [2m❯[22m normalizeUrl node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64307:23[22m[39m
+[90m [2m❯[22m node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64439:39[22m[39m
+[90m [2m❯[22m TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m64366:7[22m[39m
+[90m [2m❯[22m PluginContainer.transform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m49099:18[22m[39m
+[90m [2m❯[22m loadAndTransform node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:[2m51978:27[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/AuthContext.test.tsx[2m > [22mAuthContext[2m > [22mrol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+[31m[1mError[22m: [2mexpect([22m[31mreceived[31m[2m).toHaveTextContent()[22m
+
+[31mreceived[31m value must be a Node.
+Received has type:  Null
+Received has value: [31mnull[31m
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"status"[31m
+        [36m>[31m
+          [0mauthenticated[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"display-name"[31m
+        [36m>[31m
+          [0mDra. Laura Quiroga[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"role"[31m
+        [36m>[31m
+          [0modontologo[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"professional-id"[31m
+        [36m>[31m
+          [0m00000000-0000-0000-0000-000000000001[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mdata-testid[31m=[32m"last-event"[31m
+        [36m>[31m
+          [0mninguno[0m
+        [36m</p>[31m
+        [36m<button[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPetición protegida[0m
+        [36m</button>[31m
+        [36m<button[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mSalir[0m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[36m [2m❯[22m src/features/auth/AuthContext.test.tsx:[2m249:43[22m[39m
+    [90m247| [39m
+    [90m248| [39m    [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m249| [39m      expect(screen.queryByRole("alert")).toHaveTextContent("No tiene …
+    [90m   | [39m                                          [31m^[39m
+    [90m250| [39m    })[33m;[39m
+    [90m251| [39m    [34mexpect[39m(tokenStore[33m.[39m[34mgetToken[39m())[33m.[39m[34mtoBe[39m([32m"token-odontologo-123"[39m)[33m;[39m
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 21:42:23
+[2m   Duration [22m 8.93s[2m (transform 1.36s, setup 1.39s, collect 2.23s, tests 1.73s, environment 6.75s, prepare 708ms)[22m
+

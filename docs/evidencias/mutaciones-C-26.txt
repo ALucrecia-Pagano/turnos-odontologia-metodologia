@@ -1,0 +1,3510 @@
+Salida generada por docs/evidencias/mutaciones-C-26.py. No editar a mano.
+tests nuevos de C-26 listados por vitest: 38; mutaciones: 38 (una por test)
+SHA-256 de produccion antes: a8b2072e08004ef8503abb009a6aa525e4d95715d77b109e135ee19278403463
+--- linea de base, sin mutaciones (codigo de salida 0) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/auth/menuFor.test.ts (3 tests) 14ms
+ ✓ src/features/auth/storageGuard.test.ts (1 test) 37ms
+ ✓ src/features/auth/tokenStore.test.ts (4 tests) 15ms
+ ✓ src/features/auth/safeInternalPath.test.ts (4 tests) 12ms
+ ✓ src/features/auth/authApi.test.ts (7 tests) 48ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 809ms
+   ✓ AppShell > renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente  612ms
+ ✓ src/features/auth/AuthContext.test.tsx (6 tests) 980ms
+   ✓ AuthContext > error de red en /me conserva el token y permite reintentar  309ms
+ ✓ src/features/auth/Logout.test.tsx (1 test) 644ms
+   ✓ Logout > cerrar sesión desde el shell descarta token y usuario y navega a /login con replace  638ms
+ ✓ src/App.test.tsx (6 tests) 797ms
+   ✓ App con router y guards de sesión > la ruta raíz renderiza el HomePage de bienvenida  503ms
+ ✓ src/features/login/LoginPage.test.tsx (6 tests) 4107ms
+   ✓ LoginPage > login correcto del administrador  1146ms
+   ✓ LoginPage > login correcto de recepción y del odontólogo  944ms
+   ✓ LoginPage > credenciales inválidas con mensaje genérico  519ms
+   ✓ LoginPage > el 401 del login no es sesión vencida  511ms
+   ✓ LoginPage > envío en curso y doble submit  527ms
+   ✓ LoginPage > accesibilidad del formulario  454ms
+
+ Test Files  10 passed (10)
+      Tests  40 passed (40)
+   Start at  22:17:37
+   Duration  14.41s (transform 5.19s, setup 12.78s, collect 12.25s, tests 7.46s, environment 56.68s, prepare 6.41s)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmput_7j3j0/vitest.json
+================================================================================
+[01/38] guardar y leer el token de la pestaña
+test: src/features/auth/tokenStore.test.ts > guardar y leer el token de la pestaña
+diff:
+--- a/frontend/src/features/auth/tokenStore.ts
++++ b/frontend/src/features/auth/tokenStore.ts
+@@ -1,2 +1,2 @@
+-export const ACCESS_TOKEN_STORAGE_KEY = "turnos.auth.accessToken";
++export const ACCESS_TOKEN_STORAGE_KEY = "turnos.auth.otroToken";
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/tokenStore.test.ts (4 tests | 1 failed | 3 skipped) 22ms
+   × TokenStore > guardar y leer el token de la pestaña 18ms
+     → expected 'turnos.auth.otroToken' to be 'turnos.auth.accessToken' // Object.is equality
+   ↓ TokenStore > limpiar el token
+   ↓ TokenStore > fallback a memoria si el almacenamiento falla
+   ↓ TokenStore > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:17:53
+   Duration  3.74s (transform 135ms, setup 430ms, collect 118ms, tests 22ms, environment 2.28s, prepare 299ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpji6g14la/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/tokenStore.test.ts > TokenStore > guardar y leer el token de la pestaña
+AssertionError: expected 'turnos.auth.otroToken' to be 'turnos.auth.accessToken' // Object.is equality
+
+Expected: "turnos.auth.accessToken"
+Received: "turnos.auth.otroToken"
+
+ ❯ src/features/auth/tokenStore.test.ts:24:38
+     22|     expect(store.getToken()).toBe("token-ficticio-123");
+     23|     expect(window.sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)).to…
+     24|     expect(ACCESS_TOKEN_STORAGE_KEY).toBe("turnos.auth.accessToken");
+       |                                      ^
+     25| 
+     26|     const reloadedStore = createSessionTokenStore();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[02/38] limpiar el token
+test: src/features/auth/tokenStore.test.ts > limpiar el token
+diff:
+--- a/frontend/src/features/auth/tokenStore.ts
++++ b/frontend/src/features/auth/tokenStore.ts
+@@ -50,3 +50,3 @@
+     try {
+-      storage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
++      storage.setItem(ACCESS_TOKEN_STORAGE_KEY, "sin-borrar");
+     } catch {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/tokenStore.test.ts (4 tests | 1 failed | 3 skipped) 26ms
+   ↓ TokenStore > guardar y leer el token de la pestaña
+   × TokenStore > limpiar el token 23ms
+     → expected 'sin-borrar' to be null
+   ↓ TokenStore > fallback a memoria si el almacenamiento falla
+   ↓ TokenStore > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:18:03
+   Duration  4.73s (transform 202ms, setup 813ms, collect 158ms, tests 26ms, environment 2.63s, prepare 522ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpj3wy5vol/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/tokenStore.test.ts > TokenStore > limpiar el token
+AssertionError: expected 'sin-borrar' to be null
+
+- Expected: 
+null
+
++ Received: 
+"sin-borrar"
+
+ ❯ src/features/auth/tokenStore.test.ts:37:30
+     35|     store.clear();
+     36| 
+     37|     expect(store.getToken()).toBeNull();
+       |                              ^
+     38|     expect(window.sessionStorage.getItem("turnos.auth.accessToken")).t…
+     39|     expect(window.sessionStorage.getItem("otra.clave.ajena")).toBe("co…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[03/38] fallback a memoria si el almacenamiento falla
+test: src/features/auth/tokenStore.test.ts > fallback a memoria si el almacenamiento falla
+diff:
+--- a/frontend/src/features/auth/tokenStore.ts
++++ b/frontend/src/features/auth/tokenStore.ts
+@@ -37,3 +37,3 @@
+   function setToken(token: string): void {
+-    memoryToken = token;
++    memoryToken = null;
+     if (storage === undefined) return;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/tokenStore.test.ts (4 tests | 1 failed | 3 skipped) 33ms
+   ↓ TokenStore > guardar y leer el token de la pestaña
+   ↓ TokenStore > limpiar el token
+   × TokenStore > fallback a memoria si el almacenamiento falla 28ms
+     → expected null to be 'token-ficticio-123' // Object.is equality
+   ↓ TokenStore > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:18:16
+   Duration  4.60s (transform 249ms, setup 562ms, collect 185ms, tests 33ms, environment 2.64s, prepare 500ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkm_6k9dv/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/tokenStore.test.ts > TokenStore > fallback a memoria si el almacenamiento falla
+AssertionError: expected null to be 'token-ficticio-123' // Object.is equality
+
+- Expected: 
+"token-ficticio-123"
+
++ Received: 
+null
+
+ ❯ src/features/auth/tokenStore.test.ts:58:30
+     56|     store.setToken("token-ficticio-123");
+     57| 
+     58|     expect(store.getToken()).toBe("token-ficticio-123");
+       |                              ^
+     59|     store.clear();
+     60|     expect(store.getToken()).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[04/38] createMemoryTokenStore aísla cada instancia sin tocar sessionStorage
+test: src/features/auth/tokenStore.test.ts > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage
+diff:
+--- a/frontend/src/features/auth/tokenStore.ts
++++ b/frontend/src/features/auth/tokenStore.ts
+@@ -60,3 +60,3 @@
+ export function createMemoryTokenStore(initialToken: string | null = null): TokenStore {
+-  let currentToken: string | null = initialToken;
++  let currentToken: string | null = null;
+   return {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/tokenStore.test.ts (4 tests | 1 failed | 3 skipped) 20ms
+   ↓ TokenStore > guardar y leer el token de la pestaña
+   ↓ TokenStore > limpiar el token
+   ↓ TokenStore > fallback a memoria si el almacenamiento falla
+   × TokenStore > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage 17ms
+     → expected null to be 'token-inicial' // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:18:28
+   Duration  3.53s (transform 138ms, setup 424ms, collect 114ms, tests 20ms, environment 2.00s, prepare 320ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuuxsa8p7/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/tokenStore.test.ts > TokenStore > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage
+AssertionError: expected null to be 'token-inicial' // Object.is equality
+
+- Expected: 
+"token-inicial"
+
++ Received: 
+null
+
+ ❯ src/features/auth/tokenStore.test.ts:70:31
+     68| 
+     69|     expect(first.getToken()).toBe("token-uno");
+     70|     expect(second.getToken()).toBe("token-inicial");
+       |                               ^
+     71|     expect(window.sessionStorage.getItem("turnos.auth.accessToken")).t…
+     72| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[05/38] el storage está confinado a un solo archivo
+test: src/features/auth/storageGuard.test.ts > el storage está confinado a un solo archivo
+diff:
+--- a/frontend/src/features/auth/tokenStore.ts
++++ b/frontend/src/features/auth/tokenStore.ts
+@@ -24,3 +24,3 @@
+ export function createSessionTokenStore(
+-  storage: StorageLike | undefined = typeof window !== "undefined" ? window.sessionStorage : undefined,
++  storage: StorageLike | undefined = typeof window !== "undefined" ? window.localStorage : undefined,
+ ): TokenStore {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/storageGuard.test.ts (1 test | 1 failed) 83ms
+   × confinamiento del storage de sesión > el storage está confinado a un solo archivo 79ms
+     → expected [ 'features/auth/tokenStore.ts' ] to deeply equal []
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  22:18:39
+   Duration  3.82s (transform 109ms, setup 474ms, collect 40ms, tests 83ms, environment 2.26s, prepare 287ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6p0bdirb/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/storageGuard.test.ts > confinamiento del storage de sesión > el storage está confinado a un solo archivo
+AssertionError: expected [ 'features/auth/tokenStore.ts' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "features/auth/tokenStore.ts",
++ ]
+
+ ❯ src/features/auth/storageGuard.test.ts:27:35
+     25|       .filter(({ content }) => /\blocalStorage\b|document\.cookie/.tes…
+     26|       .map(({ path }) => path);
+     27|     expect(forbiddenStorageFiles).toEqual([]);
+       |                                   ^
+     28| 
+     29|     const clientSource = sources.find(({ path }) => path === "shared/a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[06/38] login envía POST /api/auth/login y devuelve el accessToken con 200
+test: src/features/auth/authApi.test.ts > login envía POST /api/auth/login y devuelve el accessToken con 200
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -8,3 +8,3 @@
+ 
+-const LOGIN_PATH = "/auth/login";
++const LOGIN_PATH = "/auth/signin";
+ const ME_PATH = "/auth/me";
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 44ms
+   × authApi > login envía POST /api/auth/login y devuelve el accessToken con 200 41ms
+     → expected 'http://localhost:8000/api/auth/signin' to be 'http://localhost:8000/api/auth/login' // Object.is equality
+   ↓ authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+   ↓ authApi > login devuelve error validation ante 400 con errors
+   ↓ authApi > el login no manda un token viejo
+   ↓ authApi > petición autenticada con Bearer
+   ↓ authApi > sin token no se envía Authorization
+   ↓ authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:18:50
+   Duration  4.54s (transform 274ms, setup 551ms, collect 360ms, tests 44ms, environment 2.48s, prepare 436ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpz183b0b9/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+AssertionError: expected 'http://localhost:8000/api/auth/signin' to be 'http://localhost:8000/api/auth/login' // Object.is equality
+
+Expected: "http://localhost:8000/api/auth/login"
+Received: "http://localhost:8000/api/auth/signin"
+
+ ❯ src/features/auth/authApi.test.ts:41:25
+     39| 
+     40|     expect(log).toHaveLength(1);
+     41|     expect(log[0]?.url).toBe("http://localhost:8000/api/auth/login");
+       |                         ^
+     42|     expect(log[0]?.method).toBe("POST");
+     43|     expect(log[0]?.bodyText).toBe(JSON.stringify({ username: "recepcio…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[07/38] login devuelve error auth ante 401 INVALID_CREDENTIALS
+test: src/features/auth/authApi.test.ts > login devuelve error auth ante 401 INVALID_CREDENTIALS
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -45,3 +45,3 @@
+   if (error.kind === "auth") {
+-    return { kind: "auth", status: error.status, code: error.code, message: error.message };
++    return { kind: "auth", status: error.status, code: "OTRO", message: error.message };
+   }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 57ms
+   ↓ authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+   × authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS 52ms
+     → expected { ok: false, status: 401, …(1) } to deeply equal { ok: false, status: 401, …(1) }
+   ↓ authApi > login devuelve error validation ante 400 con errors
+   ↓ authApi > el login no manda un token viejo
+   ↓ authApi > petición autenticada con Bearer
+   ↓ authApi > sin token no se envía Authorization
+   ↓ authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:19:02
+   Duration  4.55s (transform 292ms, setup 456ms, collect 314ms, tests 57ms, environment 2.49s, prepare 541ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp5zpx7z9k/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+AssertionError: expected { ok: false, status: 401, …(1) } to deeply equal { ok: false, status: 401, …(1) }
+
+- Expected
++ Received
+
+@@ -1,8 +1,8 @@
+  {
+    "error": {
+-     "code": "INVALID_CREDENTIALS",
++     "code": "OTRO",
+      "kind": "auth",
+      "message": "Usuario o contraseña incorrectos.",
+      "status": 401,
+    },
+    "ok": false,
+
+ ❯ src/features/auth/authApi.test.ts:64:20
+     62|     const result = await login(client, { username: "recepcion", passwo…
+     63| 
+     64|     expect(result).toEqual({
+       |                    ^
+     65|       ok: false,
+     66|       status: 401,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[08/38] login devuelve error validation ante 400 con errors
+test: src/features/auth/authApi.test.ts > login devuelve error validation ante 400 con errors
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -48,3 +48,3 @@
+   if (error.kind === "validation") {
+-    return { kind: "validation", status: error.status, errors: error.errors };
++    return { kind: "validation", status: error.status, errors: [] };
+   }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 35ms
+   ↓ authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+   ↓ authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+   × authApi > login devuelve error validation ante 400 con errors 32ms
+     → expected { ok: false, status: 400, …(1) } to deeply equal { ok: false, status: 400, …(1) }
+   ↓ authApi > el login no manda un token viejo
+   ↓ authApi > petición autenticada con Bearer
+   ↓ authApi > sin token no se envía Authorization
+   ↓ authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:19:14
+   Duration  4.39s (transform 290ms, setup 777ms, collect 331ms, tests 35ms, environment 2.24s, prepare 339ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjslblers/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > login devuelve error validation ante 400 con errors
+AssertionError: expected { ok: false, status: 400, …(1) } to deeply equal { ok: false, status: 400, …(1) }
+
+- Expected
++ Received
+
+@@ -1,14 +1,8 @@
+  {
+    "error": {
+-     "errors": [
+-       {
+-         "field": "username",
+-         "message": "El usuario es obligatorio.",
+-         "type": "string_too_short",
+-       },
+-     ],
++     "errors": [],
+      "kind": "validation",
+      "status": 400,
+    },
+    "ok": false,
+    "status": 400,
+
+ ❯ src/features/auth/authApi.test.ts:88:20
+     86|     const result = await login(client, { username: "", password: "<con…
+     87| 
+     88|     expect(result).toEqual({
+       |                    ^
+     89|       ok: false,
+     90|       status: 400,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[09/38] el login no manda un token viejo
+test: src/features/auth/authApi.test.ts > el login no manda un token viejo
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -64,3 +64,3 @@
+     body: { username: credentials.username, password: credentials.password },
+-    auth: "omit",
++    auth: "auto",
+   });
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 32ms
+   ↓ authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+   ↓ authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+   ↓ authApi > login devuelve error validation ante 400 con errors
+   × authApi > el login no manda un token viejo 29ms
+     → expected true to be false // Object.is equality
+   ↓ authApi > petición autenticada con Bearer
+   ↓ authApi > sin token no se envía Authorization
+   ↓ authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:19:27
+   Duration  3.76s (transform 240ms, setup 465ms, collect 308ms, tests 32ms, environment 1.99s, prepare 341ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_ryb9km1/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > el login no manda un token viejo
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/features/auth/authApi.test.ts:115:50
+    113| 
+    114|     expect(log).toHaveLength(1);
+    115|     expect(log[0]?.headers.has("Authorization")).toBe(false);
+       |                                                  ^
+    116|   });
+    117| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[10/38] petición autenticada con Bearer
+test: src/features/auth/authApi.test.ts > petición autenticada con Bearer
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -9,3 +9,3 @@
+ const LOGIN_PATH = "/auth/login";
+-const ME_PATH = "/auth/me";
++const ME_PATH = "/auth/current";
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 37ms
+   ↓ authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+   ↓ authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+   ↓ authApi > login devuelve error validation ante 400 con errors
+   ↓ authApi > el login no manda un token viejo
+   × authApi > petición autenticada con Bearer 33ms
+     → expected 'http://localhost:8000/api/auth/current' to be 'http://localhost:8000/api/auth/me' // Object.is equality
+   ↓ authApi > sin token no se envía Authorization
+   ↓ authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:19:37
+   Duration  4.28s (transform 280ms, setup 588ms, collect 293ms, tests 37ms, environment 2.18s, prepare 483ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpwih0becu/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > petición autenticada con Bearer
+AssertionError: expected 'http://localhost:8000/api/auth/current' to be 'http://localhost:8000/api/auth/me' // Object.is equality
+
+Expected: "http://localhost:8000/api/auth/me"
+Received: "http://localhost:8000/api/auth/current"
+
+ ❯ src/features/auth/authApi.test.ts:140:25
+    138| 
+    139|     expect(log).toHaveLength(1);
+    140|     expect(log[0]?.url).toBe("http://localhost:8000/api/auth/me");
+       |                         ^
+    141|     expect(log[0]?.headers.get("Authorization")).toBe("Bearer token-fi…
+    142|     expect(result).toEqual({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[11/38] sin token no se envía Authorization
+test: src/features/auth/authApi.test.ts > sin token no se envía Authorization
+diff:
+--- a/frontend/src/shared/api/client.ts
++++ b/frontend/src/shared/api/client.ts
+@@ -104,3 +104,3 @@
+     const token = auth === "omit" ? null : getAuthToken();
+-    if (token !== null) {
++    if (token !== undefined) {
+       headers.set("Authorization", `Bearer ${token}`);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 46ms
+   ↓ authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+   ↓ authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+   ↓ authApi > login devuelve error validation ante 400 con errors
+   ↓ authApi > el login no manda un token viejo
+   ↓ authApi > petición autenticada con Bearer
+   × authApi > sin token no se envía Authorization 41ms
+     → expected true to be false // Object.is equality
+   ↓ authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:19:52
+   Duration  4.98s (transform 263ms, setup 627ms, collect 299ms, tests 46ms, environment 2.80s, prepare 437ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpn1ydnk0t/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > sin token no se envía Authorization
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/features/auth/authApi.test.ts:174:50
+    172| 
+    173|     expect(log).toHaveLength(1);
+    174|     expect(log[0]?.headers.has("Authorization")).toBe(false);
+       |                                                  ^
+    175|     expect(result.ok).toBe(false);
+    176|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[12/38] fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+test: src/features/auth/authApi.test.ts > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -55,3 +55,3 @@
+   if (error.kind === "auth") {
+-    return { kind: "auth", status: error.status, code: error.code, message: error.message };
++    return { kind: "auth", status: error.status, code: "OTRO", message: error.message };
+   }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/authApi.test.ts (7 tests | 1 failed | 6 skipped) 58ms
+   ↓ authApi > login envía POST /api/auth/login y devuelve el accessToken con 200
+   ↓ authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS
+   ↓ authApi > login devuelve error validation ante 400 con errors
+   ↓ authApi > el login no manda un token viejo
+   ↓ authApi > petición autenticada con Bearer
+   ↓ authApi > sin token no se envía Authorization
+   × authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx 54ms
+     → expected { ok: false, status: 401, …(1) } to deeply equal { ok: false, status: 401, …(1) }
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  22:20:06
+   Duration  4.63s (transform 275ms, setup 436ms, collect 352ms, tests 58ms, environment 2.61s, prepare 479ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd9cl35d_/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/authApi.test.ts > authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx
+AssertionError: expected { ok: false, status: 401, …(1) } to deeply equal { ok: false, status: 401, …(1) }
+
+- Expected
++ Received
+
+@@ -1,8 +1,8 @@
+  {
+    "error": {
+-     "code": "INVALID_TOKEN",
++     "code": "OTRO",
+      "kind": "auth",
+      "message": "La sesión venció o no es válida. Inicie sesión de nuevo.",
+      "status": 401,
+    },
+    "ok": false,
+
+ ❯ src/features/auth/authApi.test.ts:194:20
+    192|     });
+    193|     const res401 = await fetchMe(client401);
+    194|     expect(res401).toEqual({
+       |                    ^
+    195|       ok: false,
+    196|       status: 401,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[13/38] estado checking mientras se verifica la sesión
+test: src/features/auth/AuthContext.test.tsx > estado checking mientras se verifica la sesión
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -52,3 +52,3 @@
+   const [status, setStatus] = useState<AuthStatus>(() =>
+-    store.getToken() !== null ? "checking" : "anonymous",
++    store.getToken() !== null ? "anonymous" : "anonymous",
+   );
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/AuthContext.test.tsx (6 tests | 1 failed | 5 skipped) 72ms
+   × AuthContext > estado checking mientras se verifica la sesión 69ms
+     → expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+   ↓ AuthContext > sesión autenticada con el usuario de /me
+   ↓ AuthContext > /me responde 401 y limpia la sesión
+   ↓ AuthContext > error de red en /me conserva el token y permite reintentar
+   ↓ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout
+   ↓ AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:20:19
+   Duration  4.93s (transform 444ms, setup 508ms, collect 845ms, tests 72ms, environment 2.48s, prepare 403ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpe0a5_4z1/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/AuthContext.test.tsx > AuthContext > estado checking mientras se verifica la sesión
+Error: expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+ ❯ src/features/auth/AuthContext.test.tsx:59:42
+     57|     );
+     58| 
+     59|     expect(screen.queryByRole("status")).toHaveTextContent("Cargando..…
+       |                                          ^
+     60|     expect(screen.queryByTestId("status")).not.toBeInTheDocument();
+     61|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[14/38] sesión autenticada con el usuario de /me
+test: src/features/auth/AuthContext.test.tsx > sesión autenticada con el usuario de /me
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -87,3 +87,3 @@
+         statusRef.current = "authenticated";
+-        setUser(result.data);
++        setUser(null);
+         setBootstrapError(null);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/AuthContext.test.tsx (6 tests | 1 failed | 5 skipped) 98ms
+   ↓ AuthContext > estado checking mientras se verifica la sesión
+   × AuthContext > sesión autenticada con el usuario de /me 94ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Dra. Laura Quiroga
+Received:
+  sin-usuario
+   ↓ AuthContext > /me responde 401 y limpia la sesión
+   ↓ AuthContext > error de red en /me conserva el token y permite reintentar
+   ↓ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout
+   ↓ AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:20:32
+   Duration  4.22s (transform 433ms, setup 480ms, collect 752ms, tests 98ms, environment 1.82s, prepare 370ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp374ven_t/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/AuthContext.test.tsx > AuthContext > sesión autenticada con el usuario de /me
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Dra. Laura Quiroga
+Received:
+  sin-usuario
+ ❯ src/features/auth/AuthContext.test.tsx:81:50
+     79|       expect(screen.queryByTestId("status")).toHaveTextContent("authen…
+     80|     });
+     81|     expect(screen.queryByTestId("display-name")).toHaveTextContent("Dr…
+       |                                                  ^
+     82|     expect(screen.queryByTestId("role")).toHaveTextContent("odontologo…
+     83|     expect(screen.queryByTestId("professional-id")).toHaveTextContent(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[15/38] /me responde 401 y limpia la sesión
+test: src/features/auth/AuthContext.test.tsx > /me responde 401 y limpia la sesión
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -94,3 +94,3 @@
+       if (result.status === 401) {
+-        store.clear();
++        void store;
+         setAuthProvider(null);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/AuthContext.test.tsx (6 tests | 1 failed | 5 skipped) 94ms
+   ↓ AuthContext > estado checking mientras se verifica la sesión
+   ↓ AuthContext > sesión autenticada con el usuario de /me
+   × AuthContext > /me responde 401 y limpia la sesión 89ms
+     → expected 'token-vencido' to be null
+   ↓ AuthContext > error de red en /me conserva el token y permite reintentar
+   ↓ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout
+   ↓ AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:20:44
+   Duration  8.02s (transform 554ms, setup 720ms, collect 1.03s, tests 94ms, environment 3.70s, prepare 615ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpainutukw/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/AuthContext.test.tsx > AuthContext > /me responde 401 y limpia la sesión
+AssertionError: expected 'token-vencido' to be null
+
+- Expected: 
+null
+
++ Received: 
+"token-vencido"
+
+ ❯ src/features/auth/AuthContext.test.tsx:107:35
+    105|       expect(screen.queryByTestId("status")).toHaveTextContent("anonym…
+    106|     });
+    107|     expect(tokenStore.getToken()).toBeNull();
+       |                                   ^
+    108|     expect(screen.queryByTestId("last-event")).toHaveTextContent("ning…
+    109|     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[16/38] error de red en /me conserva el token y permite reintentar
+test: src/features/auth/AuthContext.test.tsx > error de red en /me conserva el token y permite reintentar
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -104,3 +104,3 @@
+ 
+-      setBootstrapError([NETWORK_ERROR_MESSAGE]);
++      setBootstrapError(["Error distinto"]);
+     },
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/AuthContext.test.tsx (6 tests | 1 failed | 5 skipped) 222ms
+   ↓ AuthContext > estado checking mientras se verifica la sesión
+   ↓ AuthContext > sesión autenticada con el usuario de /me
+   ↓ AuthContext > /me responde 401 y limpia la sesión
+   × AuthContext > error de red en /me conserva el token y permite reintentar 217ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  No se pudo conectar con el servidor. Intentá de nuevo.
+Received:
+  No se pudo verificar la sesiónError distintoReintentar
+   ↓ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout
+   ↓ AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:21:00
+   Duration  6.48s (transform 512ms, setup 601ms, collect 892ms, tests 222ms, environment 3.22s, prepare 643ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpokfj7gk9/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/AuthContext.test.tsx > AuthContext > error de red en /me conserva el token y permite reintentar
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  No se pudo conectar con el servidor. Intentá de nuevo.
+Received:
+  No se pudo verificar la sesiónError distintoReintentar
+ ❯ src/features/auth/AuthContext.test.tsx:138:41
+    136|     });
+    137|     expect(tokenStore.getToken()).toBe("token-ficticio-123");
+    138|     expect(screen.queryByRole("alert")).toHaveTextContent("No se pudo …
+       |                                         ^
+    139| 
+    140|     const retryButton = screen.queryByRole("button", { name: "Reintent…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[17/38] lastEvent registra expired ante 401 protegido y manual ante logout
+test: src/features/auth/AuthContext.test.tsx > lastEvent registra expired ante 401 protegido y manual ante logout
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -68,3 +68,3 @@
+     setBootstrapError(null);
+-    setLastEvent("expired");
++    setLastEvent(null);
+     setStatus("anonymous");
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/AuthContext.test.tsx (6 tests | 1 failed | 5 skipped) 413ms
+   ↓ AuthContext > estado checking mientras se verifica la sesión
+   ↓ AuthContext > sesión autenticada con el usuario de /me
+   ↓ AuthContext > /me responde 401 y limpia la sesión
+   ↓ AuthContext > error de red en /me conserva el token y permite reintentar
+   × AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout 409ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  expired
+Received:
+  ninguno
+   ↓ AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:21:15
+   Duration  9.20s (transform 1.01s, setup 1.28s, collect 1.09s, tests 413ms, environment 4.78s, prepare 656ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpee6bl5ah/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/AuthContext.test.tsx > AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  expired
+Received:
+  ninguno
+ ❯ src/features/auth/AuthContext.test.tsx:188:48
+    186|     });
+    187|     expect(tokenStore.getToken()).toBeNull();
+    188|     expect(screen.queryByTestId("last-event")).toHaveTextContent("expi…
+       |                                                ^
+    189|     expect(screen.queryByRole("alert")).toHaveTextContent("La sesión v…
+    190| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[18/38] rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+test: src/features/auth/AuthContext.test.tsx > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -186,3 +186,3 @@
+           } else if (result.error.kind === "forbidden") {
+-            setActionErrors(getApiErrorMessages(result.error));
++            setActionErrors([]);
+           }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/AuthContext.test.tsx (6 tests | 1 failed | 5 skipped) 1349ms
+   ↓ AuthContext > estado checking mientras se verifica la sesión
+   ↓ AuthContext > sesión autenticada con el usuario de /me
+   ↓ AuthContext > /me responde 401 y limpia la sesión
+   ↓ AuthContext > error de red en /me conserva el token y permite reintentar
+   ↓ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout
+   × AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me 1345ms
+     → expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"status"[39m
+        [36m>[39m
+          [0mauthenticated[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"display-name"[39m
+        [36m>[39m
+          [0mDra. Laura Quiroga[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"role"[39m
+        [36m>[39m
+          [0modontologo[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"professional-id"[39m
+        [36m>[39m
+          [0m00000000-0000-0000-0000-000000000001[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"last-event"[39m
+        [36m>[39m
+          [0mninguno[0m
+        [36m</p>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mPetición protegida[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mSalir[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:21:34
+   Duration  6.05s (transform 442ms, setup 661ms, collect 815ms, tests 1.35s, environment 2.31s, prepare 352ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdc8inf2o/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/AuthContext.test.tsx > AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me
+Error: expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"status"[39m
+        [36m>[39m
+          [0mauthenticated[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"display-name"[39m
+        [36m>[39m
+          [0mDra. Laura Quiroga[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"role"[39m
+        [36m>[39m
+          [0modontologo[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"professional-id"[39m
+        [36m>[39m
+          [0m00000000-0000-0000-0000-000000000001[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mdata-testid[39m=[32m"last-event"[39m
+        [36m>[39m
+          [0mninguno[0m
+        [36m</p>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mPetición protegida[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mSalir[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/auth/AuthContext.test.tsx:249:43
+    247| 
+    248|     await waitFor(() => {
+    249|       expect(screen.queryByRole("alert")).toHaveTextContent("No tiene …
+       |                                           ^
+    250|     });
+    251|     expect(tokenStore.getToken()).toBe("token-odontologo-123");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[19/38] acepta una ruta interna con query string como /agenda?date=2026-11-07
+test: src/features/auth/safeInternalPath.test.ts > acepta una ruta interna con query string como /agenda?date=2026-11-07
+diff:
+--- a/frontend/src/features/auth/safeInternalPath.ts
++++ b/frontend/src/features/auth/safeInternalPath.ts
+@@ -10,3 +10,3 @@
+   }
+-  return candidate;
++  return "/";
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/safeInternalPath.test.ts (4 tests | 1 failed | 3 skipped) 22ms
+   × safeInternalPath > acepta una ruta interna con query string como /agenda?date=2026-11-07 18ms
+     → expected '/' to be '/agenda?date=2026-11-07' // Object.is equality
+   ↓ safeInternalPath > se rechaza una ruta protocol-relative
+   ↓ safeInternalPath > se rechaza una URL absoluta
+   ↓ safeInternalPath > se rechaza volver al propio login
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:21:52
+   Duration  4.08s (transform 140ms, setup 451ms, collect 116ms, tests 22ms, environment 2.32s, prepare 389ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsh2aobzk/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/safeInternalPath.test.ts > safeInternalPath > acepta una ruta interna con query string como /agenda?date=2026-11-07
+AssertionError: expected '/' to be '/agenda?date=2026-11-07' // Object.is equality
+
+Expected: "/agenda?date=2026-11-07"
+Received: "/"
+
+ ❯ src/features/auth/safeInternalPath.test.ts:5:57
+      3| describe("safeInternalPath", () => {
+      4|   it("acepta una ruta interna con query string como /agenda?date=2026-…
+      5|     expect(safeInternalPath("/agenda?date=2026-11-07")).toBe("/agenda?…
+       |                                                         ^
+      6|   });
+      7| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[20/38] se rechaza una ruta protocol-relative
+test: src/features/auth/safeInternalPath.test.ts > se rechaza una ruta protocol-relative
+diff:
+--- a/frontend/src/features/auth/safeInternalPath.ts
++++ b/frontend/src/features/auth/safeInternalPath.ts
+@@ -4,3 +4,3 @@
+   }
+-  if (candidate.startsWith("//")) {
++  if (candidate.startsWith("///")) {
+     return "/";
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/safeInternalPath.test.ts (4 tests | 1 failed | 3 skipped) 49ms
+   ↓ safeInternalPath > acepta una ruta interna con query string como /agenda?date=2026-11-07
+   × safeInternalPath > se rechaza una ruta protocol-relative 43ms
+     → expected '//evil.com' to be '/' // Object.is equality
+   ↓ safeInternalPath > se rechaza una URL absoluta
+   ↓ safeInternalPath > se rechaza volver al propio login
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:22:04
+   Duration  10.30s (transform 762ms, setup 2.19s, collect 1.32s, tests 49ms, environment 5.14s, prepare 520ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1m_hqsas/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/safeInternalPath.test.ts > safeInternalPath > se rechaza una ruta protocol-relative
+AssertionError: expected '//evil.com' to be '/' // Object.is equality
+
+Expected: "/"
+Received: "//evil.com"
+
+ ❯ src/features/auth/safeInternalPath.test.ts:9:44
+      7| 
+      8|   it("se rechaza una ruta protocol-relative", () => {
+      9|     expect(safeInternalPath("//evil.com")).toBe("/");
+       |                                            ^
+     10|   });
+     11| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[21/38] se rechaza una URL absoluta
+test: src/features/auth/safeInternalPath.test.ts > se rechaza una URL absoluta
+diff:
+--- a/frontend/src/features/auth/safeInternalPath.ts
++++ b/frontend/src/features/auth/safeInternalPath.ts
+@@ -1,3 +1,3 @@
+ export function safeInternalPath(candidate: unknown): string {
+-  if (typeof candidate !== "string" || candidate === "" || !candidate.startsWith("/")) {
++  if (typeof candidate !== "string" || candidate === "") {
+     return "/";
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/safeInternalPath.test.ts (4 tests | 1 failed | 3 skipped) 34ms
+   ↓ safeInternalPath > acepta una ruta interna con query string como /agenda?date=2026-11-07
+   ↓ safeInternalPath > se rechaza una ruta protocol-relative
+   × safeInternalPath > se rechaza una URL absoluta 29ms
+     → expected 'https://evil.example' to be '/' // Object.is equality
+   ↓ safeInternalPath > se rechaza volver al propio login
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:22:38
+   Duration  7.09s (transform 592ms, setup 1.33s, collect 511ms, tests 34ms, environment 3.85s, prepare 457ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2sqmb0g9/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/safeInternalPath.test.ts > safeInternalPath > se rechaza una URL absoluta
+AssertionError: expected 'https://evil.example' to be '/' // Object.is equality
+
+Expected: "/"
+Received: "https://evil.example"
+
+ ❯ src/features/auth/safeInternalPath.test.ts:13:54
+     11| 
+     12|   it("se rechaza una URL absoluta", () => {
+     13|     expect(safeInternalPath("https://evil.example")).toBe("/");
+       |                                                      ^
+     14|     expect(safeInternalPath("http://evil.example/agenda")).toBe("/");
+     15|     expect(safeInternalPath(undefined)).toBe("/");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[22/38] se rechaza volver al propio login
+test: src/features/auth/safeInternalPath.test.ts > se rechaza volver al propio login
+diff:
+--- a/frontend/src/features/auth/safeInternalPath.ts
++++ b/frontend/src/features/auth/safeInternalPath.ts
+@@ -7,3 +7,3 @@
+   }
+-  if (candidate === "/login" || candidate.startsWith("/login?") || candidate.startsWith("/login/")) {
++  if (candidate.startsWith("/login/")) {
+     return "/";
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/safeInternalPath.test.ts (4 tests | 1 failed | 3 skipped) 19ms
+   ↓ safeInternalPath > acepta una ruta interna con query string como /agenda?date=2026-11-07
+   ↓ safeInternalPath > se rechaza una ruta protocol-relative
+   ↓ safeInternalPath > se rechaza una URL absoluta
+   × safeInternalPath > se rechaza volver al propio login 16ms
+     → expected '/login' to be '/' // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:22:59
+   Duration  4.07s (transform 122ms, setup 457ms, collect 71ms, tests 19ms, environment 2.27s, prepare 501ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdh0l9oyk/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/safeInternalPath.test.ts > safeInternalPath > se rechaza volver al propio login
+AssertionError: expected '/login' to be '/' // Object.is equality
+
+Expected: "/"
+Received: "/login"
+
+ ❯ src/features/auth/safeInternalPath.test.ts:19:40
+     17| 
+     18|   it("se rechaza volver al propio login", () => {
+     19|     expect(safeInternalPath("/login")).toBe("/");
+       |                                        ^
+     20|     expect(safeInternalPath("/login?next=/agenda")).toBe("/");
+     21|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[23/38] ruta protegida sin sesión conserva el destino
+test: src/App.test.tsx > ruta protegida sin sesión conserva el destino
+diff:
+--- a/frontend/src/features/auth/RequireAuth.tsx
++++ b/frontend/src/features/auth/RequireAuth.tsx
+@@ -21,3 +21,3 @@
+         state={{
+-          from: `${location.pathname}${location.search}`,
++          from: location.pathname,
+           expired: lastEvent === "expired",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (6 tests | 1 failed | 5 skipped) 217ms
+   ↓ App con router y guards de sesión > la ruta raíz renderiza el HomePage de bienvenida
+   ↓ App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada
+   × App con router y guards de sesión > ruta protegida sin sesión conserva el destino 213ms
+     → expected { from: '/agenda', expired: false } to deeply equal { …(2) }
+   ↓ App con router y guards de sesión > login con sesión vuelve al destino válido
+   ↓ App con router y guards de sesión > sin parpadeo de login a home
+   ↓ App con router y guards de sesión > token vencido en una request protegida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:23:10
+   Duration  4.57s (transform 554ms, setup 412ms, collect 1.29s, tests 217ms, environment 1.82s, prepare 351ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0j5uc7wq/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router y guards de sesión > ruta protegida sin sesión conserva el destino
+AssertionError: expected { from: '/agenda', expired: false } to deeply equal { …(2) }
+
+- Expected
++ Received
+
+  {
+    "expired": false,
+-   "from": "/agenda?date=2026-11-07",
++   "from": "/agenda",
+  }
+
+ ❯ src/App.test.tsx:95:41
+     93|     });
+     94|     expect(router.state.historyAction).toBe("REPLACE");
+     95|     expect(router.state.location.state).toEqual({
+       |                                         ^
+     96|       from: "/agenda?date=2026-11-07",
+     97|       expired: false,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[24/38] login con sesión vuelve al destino válido
+test: src/App.test.tsx > login con sesión vuelve al destino válido
+diff:
+--- a/frontend/src/features/auth/PublicOnlyRoute.tsx
++++ b/frontend/src/features/auth/PublicOnlyRoute.tsx
+@@ -21,3 +21,3 @@
+   if (status === "authenticated") {
+-    const destination = safeInternalPath(extractFromPath(location.state));
++    const destination = safeInternalPath(undefined);
+     return <Navigate to={destination} replace />;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (6 tests | 1 failed | 5 skipped) 1224ms
+   ↓ App con router y guards de sesión > la ruta raíz renderiza el HomePage de bienvenida
+   ↓ App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada
+   ↓ App con router y guards de sesión > ruta protegida sin sesión conserva el destino
+   × App con router y guards de sesión > login con sesión vuelve al destino válido 1219ms
+     → expected '/' to be '/agenda?date=2026-11-07' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mAgenda[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mRecepción Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</span>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33mclass[39m=[32m"hero"[39m
+              [36m>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"title"[39m
+                [36m>[39m
+                  [0mTurnos Odontología[0m
+                [36m</h1>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"lead"[39m
+                [36m>[39m
+                  [0mBienvenida a la agenda del consultorio. Pronto vas a poder ingresar y gestionar los turnos desde acá.[0m
+                [36m</p>[39m
+              [36m</section>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"estados-titulo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"estados-titulo"[39m
+                [36m>[39m
+                  [0mEstados de un turno[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33maria-label[39m=[32m"Estados de un turno"[39m
+                  [33mclass[39m=[32m"statuses"[39m
+                [36m>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge reservado"[39m
+                      [33mdata-status[39m=[32m"reservado"[39m
+                      [33mstyle[39m=[32m"color: rgb(29, 78, 216); background-color: rgb(219, 234, 254); border-color: rgb(147, 197, 253);"[39m
+                    [36m>[39m
+                      [0mReservado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge confirmado"[39m
+                      [33mdata-status[39m=[32m"confirmado"[39m
+                      [33mstyle[39m=[32m"color: rgb(21, 128, 61); background-color: rgb(220, 252, 231); border-color: rgb(134, 239, 172);"[39m
+                    [36m>[39m
+                      [0mConfirmado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge atendido"[39m
+                      [33mdata-status[39m=[32m"atendido"[39m
+                      [33mstyle[39m=[32m"color: rgb(55, 65, 81); background-color: rgb(229, 231, 235); border-color: rgb(156, 163, 175);"[39m
+                    [36m>[39m
+                      [0mAtendido[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge ausente"[39m
+                      [33mdata-status[39m=[32m"ausente"[39m
+                      [33mstyle[39m=[32m"color: rgb(180, 83, 9); background-color: rgb(254, 243, 199); border-color: rgb(252, 211, 77);"[39m
+                    [36m>[39m
+                      [0mAusente[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge cancelado"[39m
+                      [33mdata-status[39m=[32m"cancelado"[39m
+                      [33mstyle[39m=[32m"color: rgb(185, 28, 28); background-color: rgb(254, 226, 226); border-color: rgb(252, 165, 165);"[39m
+                    [36m>[39m
+                      [0mCancelado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ↓ App con router y guards de sesión > sin parpadeo de login a home
+   ↓ App con router y guards de sesión > token vencido en una request protegida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:23:22
+   Duration  8.63s (transform 1.65s, setup 862ms, collect 2.62s, tests 1.22s, environment 2.73s, prepare 324ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppcduhvle/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router y guards de sesión > login con sesión vuelve al destino válido
+AssertionError: expected '/' to be '/agenda?date=2026-11-07' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mAgenda[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mRecepción Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</span>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33mclass[39m=[32m"hero"[39m
+              [36m>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"title"[39m
+                [36m>[39m
+                  [0mTurnos Odontología[0m
+                [36m</h1>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"lead"[39m
+                [36m>[39m
+                  [0mBienvenida a la agenda del consultorio. Pronto vas a poder ingresar y gestionar los turnos desde acá.[0m
+                [36m</p>[39m
+              [36m</section>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"estados-titulo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"estados-titulo"[39m
+                [36m>[39m
+                  [0mEstados de un turno[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33maria-label[39m=[32m"Estados de un turno"[39m
+                  [33mclass[39m=[32m"statuses"[39m
+                [36m>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge reservado"[39m
+                      [33mdata-status[39m=[32m"reservado"[39m
+                      [33mstyle[39m=[32m"color: rgb(29, 78, 216); background-color: rgb(219, 234, 254); border-color: rgb(147, 197, 253);"[39m
+                    [36m>[39m
+                      [0mReservado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge confirmado"[39m
+                      [33mdata-status[39m=[32m"confirmado"[39m
+                      [33mstyle[39m=[32m"color: rgb(21, 128, 61); background-color: rgb(220, 252, 231); border-color: rgb(134, 239, 172);"[39m
+                    [36m>[39m
+                      [0mConfirmado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge atendido"[39m
+                      [33mdata-status[39m=[32m"atendido"[39m
+                      [33mstyle[39m=[32m"color: rgb(55, 65, 81); background-color: rgb(229, 231, 235); border-color: rgb(156, 163, 175);"[39m
+                    [36m>[39m
+                      [0mAtendido[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge ausente"[39m
+                      [33mdata-status[39m=[32m"ausente"[39m
+                      [33mstyle[39m=[32m"color: rgb(180, 83, 9); background-color: rgb(254, 243, 199); border-color: rgb(252, 211, 77);"[39m
+                    [36m>[39m
+                      [0mAusente[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge cancelado"[39m
+                      [33mdata-status[39m=[32m"cancelado"[39m
+                      [33mstyle[39m=[32m"color: rgb(185, 28, 28); background-color: rgb(254, 226, 226); border-color: rgb(252, 165, 165);"[39m
+                    [36m>[39m
+                      [0mCancelado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+Expected: "/agenda?date=2026-11-07"
+Received: "/"
+
+ ❯ src/App.test.tsx:114:82
+    112| 
+    113|     await waitFor(() => {
+    114|       expect(`${router.state.location.pathname}${router.state.location…
+       |                                                                                  ^
+    115|     });
+    116|     expect(screen.queryByRole("form", { name: "Iniciar sesión" })).not…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[25/38] sin parpadeo de login a home
+test: src/App.test.tsx > sin parpadeo de login a home
+diff:
+--- a/frontend/src/features/auth/PublicOnlyRoute.tsx
++++ b/frontend/src/features/auth/PublicOnlyRoute.tsx
+@@ -17,3 +17,3 @@
+   if (status === "checking") {
+-    return <LoadingState />;
++    return <Outlet />;
+   }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (6 tests | 1 failed | 5 skipped) 173ms
+   ↓ App con router y guards de sesión > la ruta raíz renderiza el HomePage de bienvenida
+   ↓ App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada
+   ↓ App con router y guards de sesión > ruta protegida sin sesión conserva el destino
+   ↓ App con router y guards de sesión > login con sesión vuelve al destino válido
+   × App con router y guards de sesión > sin parpadeo de login a home 168ms
+     → expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+   ↓ App con router y guards de sesión > token vencido en una request protegida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:23:41
+   Duration  5.11s (transform 485ms, setup 455ms, collect 1.05s, tests 173ms, environment 2.45s, prepare 384ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0qmrnliu/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router y guards de sesión > sin parpadeo de login a home
+Error: expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+ ❯ src/App.test.tsx:133:42
+    131|     );
+    132| 
+    133|     expect(screen.queryByRole("status")).toHaveTextContent("Cargando..…
+       |                                          ^
+    134|     expect(screen.queryByRole("form", { name: "Iniciar sesión" })).not…
+    135|     expect(router.state.location.pathname).toBe("/login");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[26/38] token vencido en una request protegida
+test: src/App.test.tsx > token vencido en una request protegida
+diff:
+--- a/frontend/src/features/auth/RequireAuth.tsx
++++ b/frontend/src/features/auth/RequireAuth.tsx
+@@ -22,3 +22,3 @@
+           from: `${location.pathname}${location.search}`,
+-          expired: lastEvent === "expired",
++          expired: false,
+         }}
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/App.test.tsx (6 tests | 1 failed | 5 skipped) 427ms
+   ↓ App con router y guards de sesión > la ruta raíz renderiza el HomePage de bienvenida
+   ↓ App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada
+   ↓ App con router y guards de sesión > ruta protegida sin sesión conserva el destino
+   ↓ App con router y guards de sesión > login con sesión vuelve al destino válido
+   ↓ App con router y guards de sesión > sin parpadeo de login a home
+   × App con router y guards de sesión > token vencido en una request protegida 423ms
+     → expected { …(2) } to deeply equal { …(2) }
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:23:58
+   Duration  5.35s (transform 600ms, setup 494ms, collect 1.28s, tests 427ms, environment 2.17s, prepare 324ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpy_if9hbt/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > App con router y guards de sesión > token vencido en una request protegida
+AssertionError: expected { …(2) } to deeply equal { …(2) }
+
+- Expected
++ Received
+
+  {
+-   "expired": true,
++   "expired": false,
+    "from": "/agenda?date=2026-11-07",
+  }
+
+ ❯ src/App.test.tsx:186:41
+    184|     expect(tokenStore.getToken()).toBeNull();
+    185|     expect(router.state.historyAction).toBe("REPLACE");
+    186|     expect(router.state.location.state).toEqual({
+       |                                         ^
+    187|       from: "/agenda?date=2026-11-07",
+    188|       expired: true,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[27/38] login correcto del administrador
+test: src/features/login/LoginPage.test.tsx > login correcto del administrador
+diff:
+--- a/frontend/src/features/auth/AuthContext.tsx
++++ b/frontend/src/features/auth/AuthContext.tsx
+@@ -137,3 +137,3 @@
+ 
+-      store.setToken(loginResult.data.accessToken);
++      store.setToken("");
+       registerActiveAuthProvider();
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.test.tsx (6 tests | 1 failed | 5 skipped) 827ms
+   × LoginPage > login correcto del administrador 823ms
+     → expected '' to be 'token-admin-123' // Object.is equality
+   ↓ LoginPage > login correcto de recepción y del odontólogo
+   ↓ LoginPage > credenciales inválidas con mensaje genérico
+   ↓ LoginPage > el 401 del login no es sesión vencida
+   ↓ LoginPage > envío en curso y doble submit
+   ↓ LoginPage > accesibilidad del formulario
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:24:13
+   Duration  5.42s (transform 378ms, setup 438ms, collect 758ms, tests 827ms, environment 2.28s, prepare 366ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp37l6mch0/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.test.tsx > LoginPage > login correcto del administrador
+AssertionError: expected '' to be 'token-admin-123' // Object.is equality
+
+- Expected
++ Received
+
+- token-admin-123
+
+ ❯ src/features/login/LoginPage.test.tsx:113:35
+    111|     });
+    112|     expect(calls[1]?.url).toBe("http://localhost:8000/api/auth/me");
+    113|     expect(tokenStore.getToken()).toBe("token-admin-123");
+       |                                   ^
+    114|     expect(screen.queryByTestId("authenticated-name")).toHaveTextConte…
+    115|     expect(screen.queryByTestId("authenticated-role")).toHaveTextConte…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[28/38] login correcto de recepción y del odontólogo
+test: src/features/login/LoginPage.test.tsx > login correcto de recepción y del odontólogo
+diff:
+--- a/frontend/src/features/auth/authApi.ts
++++ b/frontend/src/features/auth/authApi.ts
+@@ -40,3 +40,3 @@
+   }
+-  return { id, username, displayName, role, professionalId };
++  return { id, username, displayName, role, professionalId: null };
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.test.tsx (6 tests | 1 failed | 5 skipped) 1244ms
+   ↓ LoginPage > login correcto del administrador
+   × LoginPage > login correcto de recepción y del odontólogo 1239ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  00000000-0000-0000-0000-000000000001
+Received:
+  null
+   ↓ LoginPage > credenciales inválidas con mensaje genérico
+   ↓ LoginPage > el 401 del login no es sesión vencida
+   ↓ LoginPage > envío en curso y doble submit
+   ↓ LoginPage > accesibilidad del formulario
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:24:27
+   Duration  5.71s (transform 411ms, setup 505ms, collect 909ms, tests 1.24s, environment 2.01s, prepare 360ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpl8f87glr/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.test.tsx > LoginPage > login correcto de recepción y del odontólogo
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  00000000-0000-0000-0000-000000000001
+Received:
+  null
+ ❯ src/features/login/LoginPage.test.tsx:171:64
+    169|     });
+    170|     expect(screen.queryByTestId("authenticated-role")).toHaveTextConte…
+    171|     expect(screen.queryByTestId("authenticated-professional")).toHaveT…
+       |                                                                ^
+    172|       "00000000-0000-0000-0000-000000000001",
+    173|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[29/38] credenciales inválidas con mensaje genérico
+test: src/features/login/LoginPage.test.tsx > credenciales inválidas con mensaje genérico
+diff:
+--- a/frontend/src/features/login/LoginForm.tsx
++++ b/frontend/src/features/login/LoginForm.tsx
+@@ -37,3 +37,2 @@
+     const result = await onSubmit({ username: trimmedUsername, password });
+-    setPassword("");
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.test.tsx (6 tests | 1 failed | 5 skipped) 726ms
+   ↓ LoginPage > login correcto del administrador
+   ↓ LoginPage > login correcto de recepción y del odontólogo
+   × LoginPage > credenciales inválidas con mensaje genérico 721ms
+     → expected '<contraseña de prueba>' to be '' // Object.is equality
+   ↓ LoginPage > el 401 del login no es sesión vencida
+   ↓ LoginPage > envío en curso y doble submit
+   ↓ LoginPage > accesibilidad del formulario
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:24:41
+   Duration  5.18s (transform 416ms, setup 494ms, collect 860ms, tests 726ms, environment 2.10s, prepare 342ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6v5zyij8/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.test.tsx > LoginPage > credenciales inválidas con mensaje genérico
+AssertionError: expected '<contraseña de prueba>' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ <contraseña de prueba>
+
+ ❯ src/features/login/LoginPage.test.tsx:202:33
+    200|     expect(tokenStore.getToken()).toBeNull();
+    201|     expect(router.state.location.pathname).toBe("/login");
+    202|     expect(passwordInput.value).toBe("");
+       |                                 ^
+    203|     expect(usernameInput.value).toBe("recepcion");
+    204|     expect(usernameInput).not.toHaveAttribute("aria-invalid", "true");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[30/38] el 401 del login no es sesión vencida
+test: src/features/login/LoginPage.test.tsx > el 401 del login no es sesión vencida
+diff:
+--- a/frontend/src/features/login/LoginForm.tsx
++++ b/frontend/src/features/login/LoginForm.tsx
+@@ -43,3 +43,3 @@
+       } else {
+-        setErrorMessage(getApiErrorMessages(result.error).join(" "));
++        setErrorMessage("La sesión venció. Iniciá sesión de nuevo.");
+       }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.test.tsx (6 tests | 1 failed | 5 skipped) 1767ms
+   ↓ LoginPage > login correcto del administrador
+   ↓ LoginPage > login correcto de recepción y del odontólogo
+   ↓ LoginPage > credenciales inválidas con mensaje genérico
+   × LoginPage > el 401 del login no es sesión vencida 1764ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Usuario o contraseña incorrectos.
+Received:
+  La sesión venció. Iniciá sesión de nuevo.
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"login-heading"[39m
+          [33mclass[39m=[32m"card"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"header"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"login-heading"[39m
+            [36m>[39m
+              [0mTurnos Odontología[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+            [36m</p>[39m
+          [36m</header>[39m
+          [36m<form[39m
+            [33maria-describedby[39m=[32m"login-alert"[39m
+            [33maria-label[39m=[32m"Iniciar sesión"[39m
+            [33mclass[39m=[32m"form"[39m
+            [33mnovalidate[39m=[32m""[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-live[39m=[32m"polite"[39m
+              [33mclass[39m=[32m"alert"[39m
+              [33mid[39m=[32m"login-alert"[39m
+              [33mrole[39m=[32m"alert"[39m
+            [36m>[39m
+              [0mLa sesión venció. Iniciá sesión de nuevo.[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"login-username"[39m
+              [36m>[39m
+                [0mUsuario[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mautocomplete[39m=[32m"username"[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"login-username"[39m
+                [33mmaxlength[39m=[32m"150"[39m
+                [33mname[39m=[32m"username"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"text"[39m
+                [33mvalue[39m=[32m"recepcion"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"login-password"[39m
+              [36m>[39m
+                [0mContraseña[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mautocomplete[39m=[32m"current-password"[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"login-password"[39m
+                [33mmaxlength[39m=[32m"128"[39m
+                [33mname[39m=[32m"password"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"password"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33maria-busy[39m=[32m"false"[39m
+              [33mclass[39m=[32m"submit"[39m
+              [33mtype[39m=[32m"submit"[39m
+            [36m>[39m
+              [0mIngresar[0m
+            [36m</button>[39m
+          [36m</form>[39m
+        [36m</section>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ↓ LoginPage > envío en curso y doble submit
+   ↓ LoginPage > accesibilidad del formulario
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:24:55
+   Duration  6.03s (transform 384ms, setup 439ms, collect 831ms, tests 1.77s, environment 2.00s, prepare 364ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp83qa_54w/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.test.tsx > LoginPage > el 401 del login no es sesión vencida
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Usuario o contraseña incorrectos.
+Received:
+  La sesión venció. Iniciá sesión de nuevo.
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"login-heading"[39m
+          [33mclass[39m=[32m"card"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"header"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"login-heading"[39m
+            [36m>[39m
+              [0mTurnos Odontología[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+            [36m</p>[39m
+          [36m</header>[39m
+          [36m<form[39m
+            [33maria-describedby[39m=[32m"login-alert"[39m
+            [33maria-label[39m=[32m"Iniciar sesión"[39m
+            [33mclass[39m=[32m"form"[39m
+            [33mnovalidate[39m=[32m""[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-live[39m=[32m"polite"[39m
+              [33mclass[39m=[32m"alert"[39m
+              [33mid[39m=[32m"login-alert"[39m
+              [33mrole[39m=[32m"alert"[39m
+            [36m>[39m
+              [0mLa sesión venció. Iniciá sesión de nuevo.[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"login-username"[39m
+              [36m>[39m
+                [0mUsuario[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mautocomplete[39m=[32m"username"[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"login-username"[39m
+                [33mmaxlength[39m=[32m"150"[39m
+                [33mname[39m=[32m"username"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"text"[39m
+                [33mvalue[39m=[32m"recepcion"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"login-password"[39m
+              [36m>[39m
+                [0mContraseña[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mautocomplete[39m=[32m"current-password"[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"login-password"[39m
+                [33mmaxlength[39m=[32m"128"[39m
+                [33mname[39m=[32m"password"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"password"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33maria-busy[39m=[32m"false"[39m
+              [33mclass[39m=[32m"submit"[39m
+              [33mtype[39m=[32m"submit"[39m
+            [36m>[39m
+              [0mIngresar[0m
+            [36m</button>[39m
+          [36m</form>[39m
+        [36m</section>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/login/LoginPage.test.tsx:227:43
+    225| 
+    226|     await waitFor(() => {
+    227|       expect(screen.queryByRole("alert")).toHaveTextContent("Usuario o…
+       |                                           ^
+    228|     });
+    229|     expect(router.state.location.pathname).toBe("/login");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[31/38] envío en curso y doble submit
+test: src/features/login/LoginPage.test.tsx > envío en curso y doble submit
+diff:
+--- a/frontend/src/features/login/LoginForm.tsx
++++ b/frontend/src/features/login/LoginForm.tsx
+@@ -110,3 +110,3 @@
+       >
+-        {isSubmitting ? "Ingresando…" : "Ingresar"}
++        {isSubmitting ? "Enviando" : "Ingresar"}
+       </button>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.test.tsx (6 tests | 1 failed | 5 skipped) 781ms
+   ↓ LoginPage > login correcto del administrador
+   ↓ LoginPage > login correcto de recepción y del odontólogo
+   ↓ LoginPage > credenciales inválidas con mensaje genérico
+   ↓ LoginPage > el 401 del login no es sesión vencida
+   × LoginPage > envío en curso y doble submit 775ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+   ↓ LoginPage > accesibilidad del formulario
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:25:13
+   Duration  6.96s (transform 527ms, setup 679ms, collect 953ms, tests 781ms, environment 2.89s, prepare 703ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpn3p9ixx4/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.test.tsx > LoginPage > envío en curso y doble submit
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/features/login/LoginPage.test.tsx:263:24
+    261| 
+    262|     const busyButton = screen.queryByRole("button", { name: "Ingresand…
+    263|     expect(busyButton).toBeInTheDocument();
+       |                        ^
+    264|     expect(busyButton).toBeDisabled();
+    265|     expect(busyButton).toHaveAttribute("aria-busy", "true");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[32/38] accesibilidad del formulario
+test: src/features/login/LoginPage.test.tsx > accesibilidad del formulario
+diff:
+--- a/frontend/src/features/login/LoginForm.tsx
++++ b/frontend/src/features/login/LoginForm.tsx
+@@ -94,3 +94,3 @@
+           className={styles.input}
+-          autoComplete="current-password"
++          autoComplete="off"
+           maxLength={128}
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.test.tsx (6 tests | 1 failed | 5 skipped) 239ms
+   ↓ LoginPage > login correcto del administrador
+   ↓ LoginPage > login correcto de recepción y del odontólogo
+   ↓ LoginPage > credenciales inválidas con mensaje genérico
+   ↓ LoginPage > el 401 del login no es sesión vencida
+   ↓ LoginPage > envío en curso y doble submit
+   × LoginPage > accesibilidad del formulario 232ms
+     → expect(element).toHaveAttribute("autocomplete", "current-password") // element.getAttribute("autocomplete") === "current-password"
+
+Expected the element to have attribute:
+  autocomplete="current-password"
+Received:
+  autocomplete="off"
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  22:25:29
+   Duration  5.13s (transform 479ms, setup 510ms, collect 977ms, tests 239ms, environment 2.43s, prepare 439ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd1q11h38/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.test.tsx > LoginPage > accesibilidad del formulario
+Error: expect(element).toHaveAttribute("autocomplete", "current-password") // element.getAttribute("autocomplete") === "current-password"
+
+Expected the element to have attribute:
+  autocomplete="current-password"
+Received:
+  autocomplete="off"
+ ❯ src/features/login/LoginPage.test.tsx:308:27
+    306|     expect(usernameInput).toHaveAttribute("maxlength", "150");
+    307|     expect(usernameInput).toBeRequired();
+    308|     expect(passwordInput).toHaveAttribute("autocomplete", "current-pas…
+       |                           ^
+    309|     expect(passwordInput).toHaveAttribute("type", "password");
+    310|     expect(passwordInput).toHaveAttribute("maxlength", "128");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[33/38] menú del administrador incluye los 6 ítems deshabilitados con Próximamente
+test: src/features/auth/menuFor.test.ts > menú del administrador incluye los 6 ítems deshabilitados con Próximamente
+diff:
+--- a/frontend/src/features/auth/menuFor.ts
++++ b/frontend/src/features/auth/menuFor.ts
+@@ -52,3 +52,3 @@
+     path: "/usuarios-y-roles",
+-    roles: ["administrador"],
++    roles: [],
+   },
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 28ms
+   × menuFor > menú del administrador incluye los 6 ítems deshabilitados con Próximamente 24ms
+     → expected [ 'Agenda', 'Turnos', …(3) ] to deeply equal [ 'Agenda', 'Turnos', …(4) ]
+   ↓ menuFor > menú de recepción no incluye Usuarios y roles
+   ↓ menuFor > menú del odontólogo no incluye Turnos ni Usuarios y roles
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  22:25:43
+   Duration  3.46s (transform 115ms, setup 490ms, collect 98ms, tests 28ms, environment 1.95s, prepare 308ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp73adn6ot/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/menuFor.test.ts > menuFor > menú del administrador incluye los 6 ítems deshabilitados con Próximamente
+AssertionError: expected [ 'Agenda', 'Turnos', …(3) ] to deeply equal [ 'Agenda', 'Turnos', …(4) ]
+
+- Expected
++ Received
+
+@@ -2,7 +2,6 @@
+    "Agenda",
+    "Turnos",
+    "Horarios y bloqueos",
+    "Catálogos",
+    "Pacientes",
+-   "Usuarios y roles",
+  ]
+
+ ❯ src/features/auth/menuFor.test.ts:7:45
+      5|   it("menú del administrador incluye los 6 ítems deshabilitados con Pr…
+      6|     const items = menuFor("administrador");
+      7|     expect(items.map((item) => item.label)).toEqual([
+       |                                             ^
+      8|       "Agenda",
+      9|       "Turnos",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[34/38] menú de recepción no incluye Usuarios y roles
+test: src/features/auth/menuFor.test.ts > menú de recepción no incluye Usuarios y roles
+diff:
+--- a/frontend/src/features/auth/menuFor.ts
++++ b/frontend/src/features/auth/menuFor.ts
+@@ -28,3 +28,3 @@
+     path: "/turnos",
+-    roles: ["administrador", "recepcion"],
++    roles: ["administrador"],
+   },
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 26ms
+   ↓ menuFor > menú del administrador incluye los 6 ítems deshabilitados con Próximamente
+   × menuFor > menú de recepción no incluye Usuarios y roles 22ms
+     → expected [ 'Agenda', …(3) ] to deeply equal [ 'Agenda', 'Turnos', …(3) ]
+   ↓ menuFor > menú del odontólogo no incluye Turnos ni Usuarios y roles
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  22:25:54
+   Duration  3.87s (transform 123ms, setup 528ms, collect 91ms, tests 26ms, environment 2.24s, prepare 338ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp191s7red/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/menuFor.test.ts > menuFor > menú de recepción no incluye Usuarios y roles
+AssertionError: expected [ 'Agenda', …(3) ] to deeply equal [ 'Agenda', 'Turnos', …(3) ]
+
+- Expected
++ Received
+
+  [
+    "Agenda",
+-   "Turnos",
+    "Horarios y bloqueos",
+    "Catálogos",
+    "Pacientes",
+  ]
+
+ ❯ src/features/auth/menuFor.test.ts:21:45
+     19|   it("menú de recepción no incluye Usuarios y roles", () => {
+     20|     const items = menuFor("recepcion");
+     21|     expect(items.map((item) => item.label)).toEqual([
+       |                                             ^
+     22|       "Agenda",
+     23|       "Turnos",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[35/38] menú del odontólogo no incluye Turnos ni Usuarios y roles
+test: src/features/auth/menuFor.test.ts > menú del odontólogo no incluye Turnos ni Usuarios y roles
+diff:
+--- a/frontend/src/features/auth/menuFor.ts
++++ b/frontend/src/features/auth/menuFor.ts
+@@ -46,3 +46,3 @@
+     path: "/pacientes",
+-    roles: ["administrador", "recepcion", "odontologo"],
++    roles: ["administrador", "recepcion"],
+   },
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 32ms
+   ↓ menuFor > menú del administrador incluye los 6 ítems deshabilitados con Próximamente
+   ↓ menuFor > menú de recepción no incluye Usuarios y roles
+   × menuFor > menú del odontólogo no incluye Turnos ni Usuarios y roles 28ms
+     → expected [ 'Agenda', …(2) ] to deeply equal [ 'Agenda', …(3) ]
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  22:26:05
+   Duration  4.47s (transform 148ms, setup 525ms, collect 86ms, tests 32ms, environment 2.38s, prepare 620ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmxz_jgii/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/menuFor.test.ts > menuFor > menú del odontólogo no incluye Turnos ni Usuarios y roles
+AssertionError: expected [ 'Agenda', …(2) ] to deeply equal [ 'Agenda', …(3) ]
+
+- Expected
++ Received
+
+  [
+    "Agenda",
+    "Horarios y bloqueos",
+    "Catálogos",
+-   "Pacientes",
+  ]
+
+ ❯ src/features/auth/menuFor.test.ts:34:45
+     32|   it("menú del odontólogo no incluye Turnos ni Usuarios y roles", () =…
+     33|     const items = menuFor("odontologo");
+     34|     expect(items.map((item) => item.label)).toEqual([
+       |                                             ^
+     35|       "Agenda",
+     36|       "Horarios y bloqueos",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[36/38] renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente
+test: src/shared/components/AppShell.test.tsx > renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente
+diff:
+--- a/frontend/src/shared/components/AppShell.tsx
++++ b/frontend/src/shared/components/AppShell.tsx
+@@ -29,3 +29,3 @@
+                   type="button"
+-                  disabled={item.disabled}
++                  disabled={false}
+                   data-menu-item={item.label}
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/AppShell.test.tsx (2 tests | 1 failed | 1 skipped) 272ms
+   × AppShell > renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente 269ms
+     → expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <button
+  class="menuButton"
+  data-menu-item="Agenda"
+  type="button"
+/>
+   ↓ AppShell > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  22:26:17
+   Duration  4.61s (transform 419ms, setup 504ms, collect 886ms, tests 272ms, environment 2.10s, prepare 307ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpwoauqtpq/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/AppShell.test.tsx > AppShell > renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <button
+  class="menuButton"
+  data-menu-item="Agenda"
+  type="button"
+/>
+ ❯ src/shared/components/AppShell.test.tsx:70:22
+     68|     ]);
+     69|     for (const button of adminButtons) {
+     70|       expect(button).toBeDisabled();
+       |                      ^
+     71|       expect(button).toHaveTextContent("Próximamente");
+     72|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[37/38] muestra en un alerta del shell la violación de un 403 sin cerrar la sesión
+test: src/shared/components/AppShell.test.tsx > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión
+diff:
+--- a/frontend/src/shared/components/AppShell.tsx
++++ b/frontend/src/shared/components/AppShell.tsx
+@@ -49,3 +49,3 @@
+       </div>
+-      {actionErrors !== null && actionErrors.length > 0 && (
++      {actionErrors !== null && actionErrors.length > 99 && (
+         <div role="alert" aria-live="polite" className={styles.alertBanner}>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/AppShell.test.tsx (2 tests | 1 failed | 1 skipped) 1394ms
+   ↓ AppShell > renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente
+   × AppShell > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión 1388ms
+     → expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mAgenda[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mDra. Laura Quiroga[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mDar turno[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  22:26:30
+   Duration  5.90s (transform 402ms, setup 531ms, collect 816ms, tests 1.39s, environment 2.11s, prepare 369ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdfv57hcn/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/AppShell.test.tsx > AppShell > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión
+Error: expect(received).toHaveTextContent()
+
+received value must be a Node.
+Received has type:  Null
+Received has value: null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mAgenda[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mDra. Laura Quiroga[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mDar turno[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/shared/components/AppShell.test.tsx:167:43
+    165| 
+    166|     await waitFor(() => {
+    167|       expect(screen.queryByRole("alert")).toHaveTextContent("No tiene …
+       |                                           ^
+    168|     });
+    169|     expect(tokenStore.getToken()).toBe("token-odontologo-123");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[38/38] cerrar sesión desde el shell descarta token y usuario y navega a /login con replace
+test: src/features/auth/Logout.test.tsx > cerrar sesión desde el shell descarta token y usuario y navega a /login con replace
+diff:
+--- a/frontend/src/shared/components/AppShell.tsx
++++ b/frontend/src/shared/components/AppShell.tsx
+@@ -16,4 +16,3 @@
+   const handleLogout = () => {
+-    logout();
+-    navigate("/login", { replace: true });
++    navigate("/login", { replace: false });
+   };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/Logout.test.tsx (1 test | 1 failed) 1462ms
+   × Logout > cerrar sesión desde el shell descarta token y usuario y navega a /login con replace 1458ms
+     → expected '/' to be '/login' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mhidden[39m=[32m""[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mdata-testid[39m=[32m"probe-status"[39m
+        [36m>[39m
+          [0mauthenticated[0m
+        [36m</span>[39m
+        [36m<span[39m
+          [33mdata-testid[39m=[32m"probe-user"[39m
+        [36m>[39m
+          [0mrecepcion[0m
+        [36m</span>[39m
+        [36m<span[39m
+          [33mdata-testid[39m=[32m"probe-last-event"[39m
+        [36m>[39m
+          [0mnull[0m
+        [36m</span>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mAgenda[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mRecepción Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</span>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33mclass[39m=[32m"hero"[39m
+              [36m>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"title"[39m
+                [36m>[39m
+                  [0mTurnos Odontología[0m
+                [36m</h1>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"lead"[39m
+                [36m>[39m
+                  [0mBienvenida a la agenda del consultorio. Pronto vas a poder ingresar y gestionar los turnos desde acá.[0m
+                [36m</p>[39m
+              [36m</section>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"estados-titulo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"estados-titulo"[39m
+                [36m>[39m
+                  [0mEstados de un turno[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33maria-label[39m=[32m"Estados de un turno"[39m
+                  [33mclass[39m=[32m"statuses"[39m
+                [36m>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge reservado"[39m
+                      [33mdata-status[39m=[32m"reservado"[39m
+                      [33mstyle[39m=[32m"color: rgb(29, 78, 216); background-color: rgb(219, 234, 254); border-color: rgb(147, 197, 253);"[39m
+                    [36m>[39m
+                      [0mReservado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge confirmado"[39m
+                      [33mdata-status[39m=[32m"confirmado"[39m
+                      [33mstyle[39m=[32m"color: rgb(21, 128, 61); background-color: rgb(220, 252, 231); border-color: rgb(134, 239, 172);"[39m
+                    [36m>[39m
+                      [0mConfirmado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge atendido"[39m
+                      [33mdata-status[39m=[32m"atendido"[39m
+                      [33mstyle[39m=[32m"color: rgb(55, 65, 81); background-color: rgb(229, 231, 235); border-color: rgb(156, 163, 175);"[39m
+                    [36m>[39m
+                      [0mAtendido[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge ausente"[39m
+                      [33mdata-status[39m=[32m"ausente"[39m
+                      [33mstyle[39m=[32m"color: rgb(180, 83, 9); background-color: rgb(254, 243, 199); border-color: rgb(252, 211, 77);"[39m
+                    [36m>[39m
+                      [0mAusente[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge cancelado"[39m
+                      [33mdata-status[39m=[32m"cancelado"[39m
+                      [33mstyle[39m=[32m"color: rgb(185, 28, 28); background-color: rgb(254, 226, 226); border-color: rgb(252, 165, 165);"[39m
+                    [36m>[39m
+                      [0mCancelado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  22:26:43
+   Duration  6.15s (transform 522ms, setup 523ms, collect 1.18s, tests 1.46s, environment 2.00s, prepare 255ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkrxydziz/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/Logout.test.tsx > Logout > cerrar sesión desde el shell descarta token y usuario y navega a /login con replace
+AssertionError: expected '/' to be '/login' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mhidden[39m=[32m""[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mdata-testid[39m=[32m"probe-status"[39m
+        [36m>[39m
+          [0mauthenticated[0m
+        [36m</span>[39m
+        [36m<span[39m
+          [33mdata-testid[39m=[32m"probe-user"[39m
+        [36m>[39m
+          [0mrecepcion[0m
+        [36m</span>[39m
+        [36m<span[39m
+          [33mdata-testid[39m=[32m"probe-last-event"[39m
+        [36m>[39m
+          [0mnull[0m
+        [36m</span>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mAgenda[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mRecepción Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</span>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33mclass[39m=[32m"hero"[39m
+              [36m>[39m
+                [36m<h1[39m
+                  [33mclass[39m=[32m"title"[39m
+                [36m>[39m
+                  [0mTurnos Odontología[0m
+                [36m</h1>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"lead"[39m
+                [36m>[39m
+                  [0mBienvenida a la agenda del consultorio. Pronto vas a poder ingresar y gestionar los turnos desde acá.[0m
+                [36m</p>[39m
+              [36m</section>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"estados-titulo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"estados-titulo"[39m
+                [36m>[39m
+                  [0mEstados de un turno[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33maria-label[39m=[32m"Estados de un turno"[39m
+                  [33mclass[39m=[32m"statuses"[39m
+                [36m>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge reservado"[39m
+                      [33mdata-status[39m=[32m"reservado"[39m
+                      [33mstyle[39m=[32m"color: rgb(29, 78, 216); background-color: rgb(219, 234, 254); border-color: rgb(147, 197, 253);"[39m
+                    [36m>[39m
+                      [0mReservado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge confirmado"[39m
+                      [33mdata-status[39m=[32m"confirmado"[39m
+                      [33mstyle[39m=[32m"color: rgb(21, 128, 61); background-color: rgb(220, 252, 231); border-color: rgb(134, 239, 172);"[39m
+                    [36m>[39m
+                      [0mConfirmado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge atendido"[39m
+                      [33mdata-status[39m=[32m"atendido"[39m
+                      [33mstyle[39m=[32m"color: rgb(55, 65, 81); background-color: rgb(229, 231, 235); border-color: rgb(156, 163, 175);"[39m
+                    [36m>[39m
+                      [0mAtendido[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge ausente"[39m
+                      [33mdata-status[39m=[32m"ausente"[39m
+                      [33mstyle[39m=[32m"color: rgb(180, 83, 9); background-color: rgb(254, 243, 199); border-color: rgb(252, 211, 77);"[39m
+                    [36m>[39m
+                      [0mAusente[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"badge cancelado"[39m
+                      [33mdata-status[39m=[32m"cancelado"[39m
+                      [33mstyle[39m=[32m"color: rgb(185, 28, 28); background-color: rgb(254, 226, 226); border-color: rgb(252, 165, 165);"[39m
+                    [36m>[39m
+                      [0mCancelado[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+Expected: "/login"
+Received: "/"
+
+ ❯ src/features/auth/Logout.test.tsx:70:46
+     68| 
+     69|     await waitFor(() => {
+     70|       expect(router.state.location.pathname).toBe("/login");
+       |                                              ^
+     71|     });
+     72|     expect(router.state.historyAction).toBe("REPLACE");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+RESUMEN
+mutaciones que hicieron fallar su test: 38
+mutaciones que NO lo hicieron fallar: 0
+mutaciones inválidas: 0
+SHA-256 de produccion despues: a8b2072e08004ef8503abb009a6aa525e4d95715d77b109e135ee19278403463
+SHA-256 sin cambios: si

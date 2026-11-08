@@ -1,0 +1,32 @@
+$ openspec list
+Changes:
+  ui-login-y-sesion     0/20 tasks    5h ago
+
+$ ls openspec/changes/archive
+.gitkeep
+2026-10-08-crear-turno-sin-solapamientos
+2026-10-08-fundacion-backend-y-dominio
+2026-10-22-validar-duracion-y-referencias
+2026-10-23-hora-local-y-turno-en-un-dia
+2026-10-26-horario-de-atencion
+2026-10-28-bloqueos-de-agenda
+2026-10-29-no-turnos-en-el-pasado
+2026-11-01-catalogo-y-pacientes-dominio
+2026-11-01-mensajes-de-conflicto-en-espanol
+2026-11-02-docker-compose-y-postgres
+2026-11-02-transiciones-de-estado-del-turno
+2026-11-03-migraciones-alembic
+2026-11-03-reprogramar-turno
+2026-11-04-historial-de-transiciones
+2026-11-04-persistencia-catalogos-y-pacientes
+2026-11-05-persistencia-horarios-y-bloqueos
+2026-11-05-persistencia-turnos-e-historial
+2026-11-06-api-base-fastapi
+2026-11-06-api-catalogos-y-pacientes
+2026-11-06-api-dar-turno
+2026-11-06-api-horarios-y-bloqueos
+2026-11-06-autenticacion-jwt-y-roles
+2026-11-07-api-ciclo-de-vida-del-turno
+2026-11-07-api-consulta-de-agenda
+2026-11-07-frontend-base-react-vite
+2026-11-07-specs-requisitos-concisos
