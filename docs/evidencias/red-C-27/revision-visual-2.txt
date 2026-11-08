@@ -1,0 +1,88 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 18[2mms[22m[39m
+   [32m✓[39m agendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[32m 8[2mms[22m[39m
+[31m   [31m×[31m agendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mla columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida[39m[32m 8[2mms[22m[39m
+[31m     → expected '' to contain 'flex-direction: column;'[39m
+ [31m❯[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m11 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 300[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[32m 115[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[32m 12[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 12[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 12[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 43[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista[32m 35[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mla tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo[32m 10[2mms[22m[39m
+[31m   [31m×[31m AgendaView[2m > [22men un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible[39m[32m 17[2mms[22m[39m
+[31m     → expected 'cardCompactRow' to contain 'cardCompactStacked'[39m
+[31m   [31m×[31m AgendaView[2m > [22mun turno de un solo carril conserva el formato de una línea con la etiqueta de estado[39m[32m 12[2mms[22m[39m
+[31m     → expected <span aria-hidden="true" …(3)></span> to be null[39m
+   [32m✓[39m AgendaView[2m > [22mla tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada[32m 8[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista[32m 21[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mla columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
+[31m[1mAssertionError[22m: expected '' to contain 'flex-direction: column;'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- flex-direction: column;[39m
+
+[36m [2m❯[22m src/features/agenda/agendaStyles.test.ts:[2m69:25[22m[39m
+    [90m 67| [39m
+    [90m 68| [39m    const stackedRule = /\.cardCompactStacked \{[^}]*\}/.exec(gridCss)…
+    [90m 69| [39m    [34mexpect[39m(stackedRule)[33m.[39m[34mtoContain[39m([32m"flex-direction: column;"[39m)[33m;[39m
+    [90m   | [39m                        [31m^[39m
+    [90m 70| [39m
+    [90m 71| [39m    const queryStart = gridCss.indexOf("@container agenda-column (widt…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+[31m[1mAssertionError[22m: expected 'cardCompactRow' to contain 'cardCompactStacked'[39m
+
+Expected: [32m"cardCompact[7mStacked[27m"[39m
+Received: [31m"cardCompact[7mRow[27m"[39m
+
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m472:37[22m[39m
+    [90m470| [39m      [34mexpect[39m(patientLine)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m471| [39m      [35mconst[39m compactRow [33m=[39m patientLine[33m?.[39mparentElement [33m??[39m [35mnull[39m[33m;[39m
+    [90m472| [39m      [34mexpect[39m(compactRow[33m?.[39mclassName)[33m.[39m[34mtoContain[39m([32m"cardCompactStacked"[39m)[33m;[39m
+    [90m   | [39m                                    [31m^[39m
+    [90m473| [39m
+    [90m474| [39m      [35mconst[39m textBadges [33m=[39m [34mwithin[39m(card[33m![39m)
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mun turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+[31m[1mAssertionError[22m: expected <span aria-hidden="true" …(3)></span> to be null[39m
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+<span
+  aria-hidden="true"
+  class="statusDot"
+  data-testid="agenda-status-dot"
+  style="background-color: rgb(29, 78, 216); border-color: rgb(147, 197, 253);"
+/>
+
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m522:62[22m[39m
+    [90m520| [39m      backgroundColor[33m:[39m [33mAPPOINTMENT_STATUS_TOKENS[39m[33m.[39mreservado[33m.[39mbackground[33m,[39m
+    [90m521| [39m    })[33m;[39m
+    [90m522| [39m    expect(within(card!).queryByTestId("agenda-status-dot")).toBeNull(…
+    [90m   | [39m                                                             [31m^[39m
+    [90m523| [39m  })[33m;[39m
+    [90m524| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m10 passed[39m[22m[90m (13)[39m
+[2m   Start at [22m 16:47:42
+[2m   Duration [22m 3.12s[2m (transform 304ms, setup 899ms, collect 507ms, tests 318ms, environment 2.68s, prepare 437ms)[22m
+

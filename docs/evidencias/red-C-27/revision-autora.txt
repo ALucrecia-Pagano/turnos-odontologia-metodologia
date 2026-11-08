@@ -1,0 +1,694 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaView.test.tsx src/features/agenda/agendaStyles.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 21[2mms[22m[39m
+[31m   [31m×[31m agendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX[39m[32m 19[2mms[22m[39m
+[31m     → expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-hour-height: 112px;'[39m
+ [31m❯[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m9 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 380[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía[32m 155[2mms[22m[39m
+[31m   [31m×[31m AgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local[39m[32m 34[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  10:00 · Ana Pérez[31m
+Received:
+[31m  10:00–10:30ReservadoAna PérezControl · Sillón 1[31m[39m
+   [32m✓[39m AgendaView[2m > [22mreparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos[32m 18[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mdibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado[32m 21[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta[32m 52[2mms[22m[39m
+[31m   [31m×[31m AgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista[39m[32m 44[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "heading" and name "No hay turnos para este día"
+
+Here are the accessible roles:
+
+  region:
+
+  Name "Vista de agenda diaria":
+  [36m<section[31m
+    [33maria-busy[31m=[32m"false"[31m
+    [33maria-label[31m=[32m"Vista de agenda diaria"[31m
+    [33mclass[31m=[32m"agendaView"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "lunes 16 de noviembre de 2026":
+  [36m<h2[31m
+    [33mclass[31m=[32m"dayTitle"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Ver como lista":
+  [36m<button[31m
+    [33maria-pressed[31m=[32m"false"[31m
+    [33mclass[31m=[32m"toggleButton"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<section[31m
+      [33maria-busy[31m=[32m"false"[31m
+      [33maria-label[31m=[32m"Vista de agenda diaria"[31m
+      [33mclass[31m=[32m"agendaView"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"headerBar"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mclass[31m=[32m"dayTitle"[31m
+        [36m>[31m
+          [0mlunes 16 de noviembre de 2026[0m
+        [36m</h2>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"controlsRow"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33maria-live[31m=[32m"polite"[31m
+            [33mclass[31m=[32m"liveRegion"[31m
+            [33mdata-testid[31m=[32m"agenda-live-count"[31m
+          [36m>[31m
+            [0mTurnos del lunes 16 de noviembre de 2026: 0[0m
+          [36m</span>[31m
+          [36m<button[31m
+            [33maria-pressed[31m=[32m"false"[31m
+            [33mclass[31m=[32m"toggleButton"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [0mVer como lista[0m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"bannerNote"[31m
+      [36m>[31m
+        [0mNo hay turnos para este día[0m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"gridScrollContainer"[31m
+        [33mdata-testid[31m=[32m"agenda-grid-scroll"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"gridTable"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"headerRow"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"cornerCell"[31m
+            [36m>[31m
+              [0mHora[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"columnHeader"[31m
+              [33mdata-testid[31m=[32m"agenda-column-header"[31m
+            [36m>[31m
+              [36m<span>[31m
+                [0mDr. Martín Sosa[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"columnHeader"[31m
+              [33mdata-testid[31m=[32m"agenda-column-header"[31m
+            [36m>[31m
+              [36m<span>[31m
+                [0mDra. Laura Quiroga[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"columnHeader"[31m
+              [33mdata-testid[31m=[32m"agenda-column-header"[31m
+            [36m>[31m
+              [36m<span>[31m
+                [0mDra. Paula Benítez (inactivo)[0m
+              [36m</span>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bodyRow"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"timeGutter"[31m
+              [33mdata-testid[31m=[32m"agenda-time-gutter"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m08:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m09:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m10:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m11:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m12:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m13:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m14:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m15:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m16:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m17:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m18:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m19:00[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"hourTick"[31m
+                [33mdata-testid[31m=[32m"agenda-axis-hour"[31m
+              [36m>[31m
+                [0m20:00[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"columnTrack"[31m
+              [33mdata-testid[31m=[32m"agenda-column-00000000-0000-0000-0000-000000000002"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"emptyColumnNote"[31m
+              [36m>[31m
+                [0mSin turnos[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"columnTrack"[31m
+              [33mdata-testid[31m=[32m"agenda-column-00000000-0000-0000-0000-000000000001"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"emptyColumnNote"[31m
+              [36m>[31m
+                [0mSin turnos[0m
+              [36m</div>[31m
+              [36m<div[31m
+                [33maria-label[31m=[32m"Horario de atención: 09:00 a 13:00"[31m
+                [33mclass[31m=[32m"workingHourBand"[31m
+                [33mdata-duration-minutes[31m=[32m"240"[31m
+                [33mdata-offset-minutes[31m=[32m"60"[31m
+                [33mstyle[31m=[32m"top: 8.33333%; height: 33.3333%;"[31m
+              [36m/>[31m
+              [36m<div[31m
+                [33maria-label[31m=[32m"Horario de atención: 15:00 a 19:00"[31m
+                [33mclass[31m=[32m"workingHourBand"[31m
+                [33mdata-duration-minutes[31m=[32m"240"[31m
+                [33mdata-offset-minutes[31m=[32m"420"[31m
+                [33mstyle[31m=[32m"top: 58.3333%; height: 33.3333%;"[31m
+              [36m/>[31m
+              [36m<div[31m
+                [33maria-label[31m=[32m"Bloqueo: Congreso, de 12:00 a 13:00"[31m
+                [33mclass[31m=[32m"blockBand"[31m
+                [33mdata-duration-minutes[31m=[32m"60"[31m
+                [33mdata-offset-minutes[31m=[32m"240"[31m
+                [33mdata-testid[31m=[32m"agenda-block-00000000-0000-0000-0000-000000000bb1"[31m
+                [33mstyle[31m=[32m"top: 33.3333%; height: 8.33333%;"[31m
+              [36m>[31m
+                [36m<span>[31m
+                  [0mCongreso[0m
+                [36m</span>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"columnTrack"[31m
+              [33mdata-testid[31m=[32m"agenda-column-00000000-0000-0000-0000-000000000003"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"emptyColumnNote"[31m
+              [36m>[31m
+                [0mSin turnos[0m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</section>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[31m   [31m×[31m AgendaView[2m > [22mla tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo[39m[32m 10[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  10:00 · Ana Pérez[31m
+Received:
+[31m  10:00–10:30ReservadoAna PérezControl · Sillón 1[31m[39m
+   [32m✓[39m AgendaView[2m > [22mla tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada[32m 9[2mms[22m[39m
+   [32m✓[39m AgendaView[2m > [22manuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista[32m 35[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 4 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaStyles.test.ts[2m > [22magendaStyles y responsive de escritorio/tablet (D12, D13)[2m > [22mdefine los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
+[31m[1mAssertionError[22m: expected ':root {\n  /* Espaciado */\n  --space…' to contain '--agenda-hour-height: 112px;'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- --agenda-hour-height: 112px;[39m
+[31m+ :root {[39m
+[31m+   /* Espaciado */[39m
+[31m+   --space-1: 4px;[39m
+[31m+   --space-2: 8px;[39m
+[31m+   --space-3: 12px;[39m
+[31m+   --space-4: 16px;[39m
+[31m+   --space-5: 24px;[39m
+[31m+   --space-6: 32px;[39m
+[31m+   --space-7: 48px;[39m
+[31m+[39m
+[31m+   /* Tipografía */[39m
+[31m+   --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;[39m
+[31m+   --font-size-xs: 12px;[39m
+[31m+   --font-size-sm: 14px;[39m
+[31m+   --font-size-md: 16px;[39m
+[31m+   --font-size-lg: 20px;[39m
+[31m+   --font-size-xl: 24px;[39m
+[31m+   --font-size-2xl: 32px;[39m
+[31m+   --font-weight-regular: 400;[39m
+[31m+   --font-weight-medium: 500;[39m
+[31m+   --font-weight-bold: 700;[39m
+[31m+   --line-height-base: 1.5;[39m
+[31m+[39m
+[31m+   /* Color */[39m
+[31m+   --color-text: #111827;[39m
+[31m+   --color-text-muted: #4B5563;[39m
+[31m+   --color-background: #F9FAFB;[39m
+[31m+   --color-surface: #FFFFFF;[39m
+[31m+   --color-border: #D1D5DB;[39m
+[31m+   --color-primary: #1D4ED8;[39m
+[31m+   --color-primary-contrast: #FFFFFF;[39m
+[31m+   --color-danger-text: #B91C1C;[39m
+[31m+   --color-danger-background: #FEE2E2;[39m
+[31m+   --color-danger-border: #FCA5A5;[39m
+[31m+   --color-focus: #2563EB;[39m
+[31m+[39m
+[31m+   /* Radios y sombras */[39m
+[31m+   --radius-sm: 4px;[39m
+[31m+   --radius-md: 8px;[39m
+[31m+   --radius-pill: 999px;[39m
+[31m+   --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.08);[39m
+[31m+   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);[39m
+[31m+[39m
+[31m+   /* Agenda diaria */[39m
+[31m+   --agenda-hour-height: 64px;[39m
+[31m+   --agenda-time-gutter-width: 64px;[39m
+[31m+   --agenda-column-min-width: 220px;[39m
+[31m+   --agenda-column-header-height: 48px;[39m
+[31m+   --agenda-grid-line: #E5E7EB;[39m
+[31m+   --agenda-working-bg: #FFFFFF;[39m
+[31m+   --agenda-offhours-bg: #F3F4F6;[39m
+[31m+   --agenda-block-bg: repeating-linear-gradient([39m
+[31m+     -45deg,[39m
+[31m+     #FEF3C7,[39m
+[31m+     #FEF3C7 8px,[39m
+[31m+     #FDE68A 8px,[39m
+[31m+     #FDE68A 16px[39m
+[31m+   );[39m
+[31m+   --agenda-block-border: #D97706;[39m
+[31m+   --agenda-card-radius: 6px;[39m
+[31m+   --agenda-card-min-height: 24px;[39m
+[31m+   --agenda-cancelled-bg: #F9FAFB;[39m
+[31m+ }[39m
+[31m+[39m
+
+[36m [2m❯[22m src/features/agenda/agendaStyles.test.ts:[2m30:25[22m[39m
+    [90m 28| [39m    ][33m;[39m
+    [90m 29| [39m    [35mfor[39m ([35mconst[39m token [35mof[39m requiredTokens) {
+    [90m 30| [39m      [34mexpect[39m(tokensCss)[33m.[39m[34mtoContain[39m(token)[33m;[39m
+    [90m   | [39m                        [31m^[39m
+    [90m 31| [39m    }
+    [90m 32| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mposiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  10:00 · Ana Pérez[31m
+Received:
+[31m  10:00–10:30ReservadoAna PérezControl · Sillón 1[31m[39m
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m168:25[22m[39m
+    [90m166| [39m    [34mexpect[39m(quirogaCard)[33m.[39m[34mtoHaveAttribute[39m([32m"data-lane"[39m[33m,[39m [32m"0"[39m)[33m;[39m
+    [90m167| [39m    [34mexpect[39m(quirogaCard)[33m.[39m[34mtoHaveAttribute[39m([32m"data-lane-count"[39m[33m,[39m [32m"1"[39m)[33m;[39m
+    [90m168| [39m    [34mexpect[39m(quirogaCard)[33m.[39m[34mtoHaveTextContent[39m([32m"10:00 · Ana Pérez"[39m)[33m;[39m
+    [90m   | [39m                        [31m^[39m
+    [90m169| [39m    [34mexpect[39m(quirogaCard)[33m.[39m[34mtoHaveTextContent[39m([32m"Reservado"[39m)[33m;[39m
+    [90m170| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an accessible element with the role "heading" and name "No hay turnos para este día"
+
+Here are the accessible roles:
+
+  region:
+
+  Name "Vista de agenda diaria":
+  [36m<section[39m
+    [33maria-busy[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"Vista de agenda diaria"[39m
+    [33mclass[39m=[32m"agendaView"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "lunes 16 de noviembre de 2026":
+  [36m<h2[39m
+    [33mclass[39m=[32m"dayTitle"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Ver como lista":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mclass[39m=[32m"toggleButton"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33maria-busy[39m=[32m"false"[39m
+      [33maria-label[39m=[32m"Vista de agenda diaria"[39m
+      [33mclass[39m=[32m"agendaView"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"headerBar"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"dayTitle"[39m
+        [36m>[39m
+          [0mlunes 16 de noviembre de 2026[0m
+        [36m</h2>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"controlsRow"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33maria-live[39m=[32m"polite"[39m
+            [33mclass[39m=[32m"liveRegion"[39m
+            [33mdata-testid[39m=[32m"agenda-live-count"[39m
+          [36m>[39m
+            [0mTurnos del lunes 16 de noviembre de 2026: 0[0m
+          [36m</span>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mclass[39m=[32m"toggleButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mVer como lista[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bannerNote"[39m
+      [36m>[39m
+        [0mNo hay turnos para este día[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"gridScrollContainer"[39m
+        [33mdata-testid[39m=[32m"agenda-grid-scroll"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"gridTable"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"headerRow"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"cornerCell"[39m
+            [36m>[39m
+              [0mHora[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"columnHeader"[39m
+              [33mdata-testid[39m=[32m"agenda-column-header"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mDr. Martín Sosa[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"columnHeader"[39m
+              [33mdata-testid[39m=[32m"agenda-column-header"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mDra. Laura Quiroga[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"columnHeader"[39m
+              [33mdata-testid[39m=[32m"agenda-column-header"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mDra. Paula Benítez (inactivo)[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"bodyRow"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"timeGutter"[39m
+              [33mdata-testid[39m=[32m"agenda-time-gutter"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m08:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m09:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m10:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m11:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m12:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m13:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m14:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m15:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m16:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m17:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m18:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m19:00[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"hourTick"[39m
+                [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
+              [36m>[39m
+                [0m20:00[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"columnTrack"[39m
+              [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000002"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"emptyColumnNote"[39m
+              [36m>[39m
+                [0mSin turnos[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"columnTrack"[39m
+              [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000001"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"emptyColumnNote"[39m
+              [36m>[39m
+                [0mSin turnos[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Horario de atención: 09:00 a 13:00"[39m
+                [33mclass[39m=[32m"workingHourBand"[39m
+                [33mdata-duration-minutes[39m=[32m"240"[39m
+                [33mdata-offset-minutes[39m=[32m"60"[39m
+                [33mstyle[39m=[32m"top: 8.33333%; height: 33.3333%;"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Horario de atención: 15:00 a 19:00"[39m
+                [33mclass[39m=[32m"workingHourBand"[39m
+                [33mdata-duration-minutes[39m=[32m"240"[39m
+                [33mdata-offset-minutes[39m=[32m"420"[39m
+                [33mstyle[39m=[32m"top: 58.3333%; height: 33.3333%;"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Bloqueo: Congreso, de 12:00 a 13:00"[39m
+                [33mclass[39m=[32m"blockBand"[39m
+                [33mdata-duration-minutes[39m=[32m"60"[39m
+                [33mdata-offset-minutes[39m=[32m"240"[39m
+                [33mdata-testid[39m=[32m"agenda-block-00000000-0000-0000-0000-000000000bb1"[39m
+                [33mstyle[39m=[32m"top: 33.3333%; height: 8.33333%;"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mCongreso[0m
+                [36m</span>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"columnTrack"[39m
+              [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000003"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"emptyColumnNote"[39m
+              [36m>[39m
+                [0mSin turnos[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m382:14[22m[39m
+    [90m380| [39m
+    [90m381| [39m    [34mexpect[39m(
+    [90m382| [39m      screen.getByRole("heading", { name: "No hay turnos para este día…
+    [90m   | [39m             [31m^[39m
+    [90m383| [39m    )[33m.[39m[34mtoBeInTheDocument[39m()[33m;[39m
+    [90m384| [39m    expect(screen.queryByTestId("agenda-grid-scroll")).not.toBeInTheDo…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaView.test.tsx[2m > [22mAgendaView[2m > [22mla tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  10:00 · Ana Pérez[31m
+Received:
+[31m  10:00–10:30ReservadoAna PérezControl · Sillón 1[31m[39m
+[36m [2m❯[22m src/features/agenda/AgendaView.test.tsx:[2m411:25[22m[39m
+    [90m409| [39m    )[33m;[39m
+    [90m410| [39m    [34mexpect[39m(quirogaCard)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m411| [39m    [34mexpect[39m(quirogaCard)[33m.[39m[34mtoHaveTextContent[39m([32m"10:00 · Ana Pérez"[39m)[33m;[39m
+    [90m   | [39m                        [31m^[39m
+    [90m412| [39m    [34mexpect[39m(quirogaCard[33m?.[39mtextContent)[33m.[39mnot[33m.[39m[34mtoContain[39m([32m"Control"[39m)[33m;[39m
+    [90m413| [39m    [34mexpect[39m(quirogaCard)[33m.[39m[34mtoHaveAttribute[39m([32m"title"[39m[33m,[39m [32m"Control"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (10)[39m
+[2m   Start at [22m 15:50:49
+[2m   Duration [22m 5.83s[2m (transform 401ms, setup 1.57s, collect 659ms, tests 400ms, environment 6.27s, prepare 814ms)[22m
+

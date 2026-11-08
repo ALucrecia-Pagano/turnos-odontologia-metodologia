@@ -95,7 +95,7 @@ TRACE: dict[str, dict[str, str]] = {
     },
     "Estados de carga, vacío y error": {
         "Carga inicial": f"{T_AGENDA_PAGE} > muestra Cargando... con role=status en la carga inicial sin mostrar error",
-        "Día sin turnos": f"{T_AGENDA_VIEW} > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío",
+        "Día sin turnos": f"{T_AGENDA_VIEW} > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista",
         "Error de red con reintento": f"{T_AGENDA_PAGE} > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente",
     },
     "401 delegado en C-26 y 403 visible": {

@@ -342,15 +342,44 @@ MUTATIONS: tuple[Mutation, ...] = (
         T_AGENDA_VIEW,
         "muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta",
         P_AGENDA_GRID,
-        "                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.professionalName}, ${appt.chairName}, ${appt.serviceName}, ${statusLabel}`;",
+        "                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;",
         "                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}`;",
     ),
     Mutation(
         T_AGENDA_VIEW,
-        "muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío",
+        "en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista",
         P_AGENDA_VIEW,
-        '          {hasActiveFilter ? "Sin turnos para este filtro" : "No hay turnos para este día"}',
-        '          {hasActiveFilter ? "Sin turnos para este filtro" : "Agenda sin registros"}',
+        '          title="No hay turnos para este día"',
+        '          title="Agenda sin registros"',
+    ),
+    Mutation(
+        T_AGENDA_VIEW,
+        "la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo",
+        P_AGENDA_GRID,
+        "                  const isCompact = item.durationMinutes < 45;",
+        "                  const isCompact = item.durationMinutes < 0;",
+    ),
+    Mutation(
+        T_AGENDA_VIEW,
+        "la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada",
+        P_AGENDA_GRID,
+        "                          <div className={styles.cardMeta}>{appt.serviceName}</div>",
+        '                          <div className={styles.cardMeta}>{"Sin prestación"}</div>',
+    ),
+    # --- Revisión visual 2: el estado nunca tapa al paciente ---
+    Mutation(
+        T_AGENDA_VIEW,
+        "en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible",
+        P_AGENDA_GRID,
+        "                  const isSplitLane = item.laneCount > 1;",
+        "                  const isSplitLane = item.laneCount > 2;",
+    ),
+    Mutation(
+        T_AGENDA_VIEW,
+        "un turno de un solo carril conserva el formato de una línea con la etiqueta de estado",
+        P_AGENDA_GRID,
+        "                  const isSplitLane = item.laneCount > 1;",
+        "                  const isSplitLane = item.laneCount > 0;",
     ),
     Mutation(
         T_AGENDA_VIEW,
@@ -438,6 +467,13 @@ MUTATIONS: tuple[Mutation, ...] = (
         "  overflow-x: auto;",
         "  overflow-x: hidden;",
     ),
+    Mutation(
+        T_AGENDA_STYLES,
+        "la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida",
+        P_AGENDA_GRID_CSS,
+        "  .cardCompactRow {\n    flex-direction: column;",
+        "  .cardCompactRow {\n    flex-direction: row;",
+    ),
 )
 
 
@@ -450,7 +486,8 @@ class Report:
         self.stream = stream
 
     def write(self, text: str) -> None:
-        self.stream.write(text.rstrip() + "\n")
+        # rstrip por linea: los code frames de Vitest traen espacios finales que git diff --check rechaza.
+        self.stream.write("\n".join(line.rstrip() for line in text.rstrip().splitlines()) + "\n")
         self.stream.flush()
 
 

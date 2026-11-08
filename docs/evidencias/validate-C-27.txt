@@ -1,11 +1,40 @@
 Change 'ui-agenda-diaria' is valid
-warning: in the working copy of 'frontend/src/App.test.tsx', LF will be replaced by CRLF the next time Git touches it
+✓ spec/agenda-api
+✓ spec/api-foundation
+✓ spec/appointment-lifecycle
+✓ spec/appointment-scheduling
+✓ spec/appointments-api
+✓ spec/authentication-and-rbac
+✓ spec/backend-toolchain
+✓ spec/catalog-and-patients
+✓ spec/database-infrastructure
+✓ spec/domain-dependency-guard
+✓ spec/frontend-auth-session
+✓ spec/frontend-foundation
+✓ change/ui-agenda-diaria
+✓ spec/working-hours-and-blocks-api
+Totals: 14 passed, 0 failed (14 items)
+warning: in the working copy of 'docs/evidencias/mutaciones-C-27.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/mutaciones-C-27.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/trazabilidad-C-27.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/trazabilidad-C-27.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/validate-C-27.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/verify-C-27.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/evidencias/vitest-C-27.txt', LF will be replaced by CRLF the next time Git touches it
 warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'frontend/src/features/auth/menuFor.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaGrid.module.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaGrid.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaPage.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaTable.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaToolbar.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaView.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/AgendaView.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/agendaApi.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/agendaConfig.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/agendaLayout.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/agendaStyles.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/agendaTime.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/clock.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/features/agenda/useAgenda.ts', LF will be replaced by CRLF the next time Git touches it
 warning: in the working copy of 'frontend/src/features/auth/menuFor.ts', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'frontend/src/shared/api/client.ts', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'frontend/src/shared/components/AppShell.module.css', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'frontend/src/shared/components/AppShell.test.tsx', LF will be replaced by CRLF the next time Git touches it
 warning: in the working copy of 'frontend/src/shared/components/AppShell.tsx', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'frontend/src/shared/styles/tokens.css', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'openspec/changes/ui-agenda-diaria/tasks.md', LF will be replaced by CRLF the next time Git touches it

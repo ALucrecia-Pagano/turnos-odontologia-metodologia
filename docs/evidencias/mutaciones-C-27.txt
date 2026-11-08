@@ -1,40 +1,41 @@
 Salida generada por docs/evidencias/mutaciones-C-27.py. No editar a mano.
-tests nuevos de C-27 listados por vitest: 42; mutaciones: 42 (una por test)
-SHA-256 de produccion antes: 5fb7539337741e4cf9cfb9226dee983239e4f5909bd2df7d41cae12118922fd0
+tests nuevos de C-27 listados por vitest: 47; mutaciones: 47 (una por test)
+SHA-256 de produccion antes: f05a8087b4f8e4f07a08edb3ea8c4934fdfc67504a8f1065a4358d5085360de0
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ✓ src/features/agenda/agendaTimeGuard.test.ts (1 test) 29ms
- ✓ src/features/agenda/agendaTime.test.ts (5 tests) 68ms
- ✓ src/features/agenda/agendaLayout.test.ts (6 tests) 63ms
- ✓ src/features/agenda/clock.test.ts (1 test) 21ms
- ✓ src/features/agenda/AgendaToolbar.test.tsx (1 test) 261ms
- ✓ src/features/agenda/AgendaTable.test.tsx (1 test) 349ms
-   ✓ AgendaTable > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda  346ms
- ✓ src/features/agenda/AgendaView.test.tsx (7 tests) 853ms
-   ✓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía  301ms
- ✓ src/features/agenda/useAgenda.test.tsx (2 tests) 419ms
-   ✓ useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled  351ms
- ✓ src/shared/components/AppShell.test.tsx (2 tests) 581ms
-   ✓ AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente  434ms
+ ✓ src/features/agenda/agendaTimeGuard.test.ts (1 test) 69ms
+ ✓ src/features/agenda/agendaTime.test.ts (5 tests) 162ms
+ ✓ src/features/agenda/agendaLayout.test.ts (6 tests) 80ms
+ ✓ src/features/agenda/agendaApi.test.ts (3 tests) 30ms
+ ✓ src/features/agenda/AgendaTable.test.tsx (1 test) 425ms
+   ✓ AgendaTable > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda  419ms
+ ✓ src/features/agenda/AgendaToolbar.test.tsx (1 test) 495ms
+   ✓ AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros  491ms
+ ✓ src/features/agenda/useAgenda.test.tsx (2 tests) 613ms
+   ✓ useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled  504ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 718ms
+   ✓ AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente  491ms
+ ✓ src/features/agenda/AgendaView.test.tsx (11 tests) 922ms
  ✓ src/App.test.tsx (6 tests) 744ms
- ✓ src/features/agenda/agendaConfig.test.ts (1 test) 21ms
- ✓ src/features/agenda/agendaStyles.test.ts (1 test) 8ms
- ✓ src/features/auth/menuFor.test.ts (3 tests) 8ms
- ✓ src/features/agenda/AgendaPage.test.tsx (8 tests) 1450ms
-   ✓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible  473ms
-   ✓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha  536ms
- ✓ src/features/agenda/agendaApi.test.ts (3 tests) 19ms
+   ✓ App con router y guards de sesión > la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage  331ms
+ ✓ src/features/agenda/AgendaPage.test.tsx (8 tests) 1628ms
+   ✓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible  606ms
+   ✓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha  413ms
+ ✓ src/features/agenda/agendaConfig.test.ts (1 test) 27ms
+ ✓ src/features/agenda/clock.test.ts (1 test) 26ms
+ ✓ src/features/auth/menuFor.test.ts (3 tests) 9ms
+ ✓ src/features/agenda/agendaStyles.test.ts (2 tests) 12ms
 
  Test Files  15 passed (15)
-      Tests  48 passed (48)
-   Start at  14:30:38
-   Duration  6.22s (transform 4.52s, setup 5.58s, collect 9.76s, tests 4.89s, environment 26.85s, prepare 3.34s)
+      Tests  53 passed (53)
+   Start at  16:50:48
+   Duration  7.71s (transform 4.63s, setup 7.66s, collect 9.46s, tests 5.96s, environment 32.91s, prepare 4.19s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpn9q6lpn5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvs4wvcr2/vitest.json
 ================================================================================
-[01/42] 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
+[01/47] 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
 test: src/features/agenda/agendaTime.test.ts > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
@@ -48,8 +49,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 32ms
-   × agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día 31ms
+ ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 28ms
+   × agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día 27ms
      → expected '10:00-10:30' to be '10:00–10:30' // Object.is equality
    ↓ agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
    ↓ agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
@@ -58,10 +59,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  14:30:45
-   Duration  1.64s (transform 61ms, setup 230ms, collect 68ms, tests 32ms, environment 857ms, prepare 139ms)
+   Start at  16:50:57
+   Duration  2.11s (transform 61ms, setup 191ms, collect 62ms, tests 28ms, environment 1.14s, prepare 194ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpwswsilch/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4vpn5sxf/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -82,7 +83,7 @@ Received: "10:00-10:30"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[02/42] respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
+[02/47] respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
 test: src/features/agenda/agendaTime.test.ts > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
@@ -97,9 +98,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 42ms
+ ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 114ms
    ↓ agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
-   × agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires 39ms
+   × agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires 110ms
      → expected '2026-11-16' to be '2026-11-15' // Object.is equality
    ↓ agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
    ↓ agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
@@ -107,10 +108,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  14:30:50
-   Duration  1.77s (transform 65ms, setup 272ms, collect 69ms, tests 42ms, environment 954ms, prepare 147ms)
+   Start at  16:51:03
+   Duration  2.84s (transform 107ms, setup 396ms, collect 115ms, tests 114ms, environment 1.53s, prepare 263ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqled3wv_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpw5915ln6/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -125,13 +126,13 @@ Received: "2026-11-16"
      27|     expect(formatLocalTime("2026-11-16T02:30:00Z", BUENOS_AIRES_TZ)).t…
      28|     expect(todayInTimeZone(new Date(Date.UTC(2026, 10, 16, 2, 30, 0)),…
        |                                                                                          ^
-     29| 
+     29|
      30|     expect(formatLocalDate("2026-11-16T03:30:00Z", BUENOS_AIRES_TZ)).t…
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[03/42] addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
+[03/47] addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
 test: src/features/agenda/agendaTime.test.ts > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
@@ -145,20 +146,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 14ms
+ ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 18ms
    ↓ agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
    ↓ agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
-   × agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7 13ms
+   × agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7 16ms
      → expected +0 to be 7 // Object.is equality
    ↓ agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
    ↓ agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  14:30:55
-   Duration  1.62s (transform 60ms, setup 217ms, collect 65ms, tests 14ms, environment 850ms, prepare 158ms)
+   Start at  16:51:10
+   Duration  2.16s (transform 98ms, setup 307ms, collect 109ms, tests 18ms, environment 1.11s, prepare 256ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpm2tl20uh/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0k_lz7rf/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -177,12 +178,12 @@ AssertionError: expected +0 to be 7 // Object.is equality
      40|     expect(weekdayOf("2026-11-15")).toBe(7);
        |                                     ^
      41|   });
-     42| 
+     42|
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[04/42] parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
+[04/47] parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
 test: src/features/agenda/agendaTime.test.ts > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
@@ -196,20 +197,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 13ms
+ ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 16ms
    ↓ agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
    ↓ agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
    ↓ agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
-   × agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche 11ms
+   × agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche 13ms
      → expected +0 to be 1440 // Object.is equality
    ↓ agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  14:30:59
-   Duration  1.63s (transform 70ms, setup 232ms, collect 65ms, tests 13ms, environment 843ms, prepare 184ms)
+   Start at  16:51:16
+   Duration  1.79s (transform 71ms, setup 285ms, collect 83ms, tests 16ms, environment 876ms, prepare 176ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpq2pd6uv8/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpknnqdr83/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -223,7 +224,7 @@ AssertionError: expected +0 to be 1440 // Object.is equality
 + 0
 
  ❯ src/features/agenda/agendaTime.test.ts:44:32
-     42| 
+     42|
      43|   it("parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cr…
      44|     expect(parseHHMM("24:00")).toBe(1440);
        |                                ^
@@ -233,7 +234,7 @@ AssertionError: expected +0 to be 1440 // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[05/42] una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
+[05/47] una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
 test: src/features/agenda/agendaTime.test.ts > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
@@ -247,20 +248,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 41ms
+ ❯ src/features/agenda/agendaTime.test.ts (5 tests | 1 failed | 4 skipped) 31ms
    ↓ agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día
    ↓ agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires
    ↓ agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7
    ↓ agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche
-   × agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso 39ms
+   × agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso 29ms
      → expected false to be true // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  14:31:04
-   Duration  1.62s (transform 61ms, setup 228ms, collect 69ms, tests 41ms, environment 848ms, prepare 136ms)
+   Start at  16:51:21
+   Duration  2.04s (transform 65ms, setup 259ms, collect 60ms, tests 31ms, environment 950ms, prepare 226ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpy2kr3qk5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpp31t3f5v/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -284,7 +285,7 @@ AssertionError: expected false to be true // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[06/42] systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts
+[06/47] systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts
 test: src/features/agenda/clock.test.ts > systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts
 diff:
 --- a/frontend/src/features/agenda/clock.ts
@@ -298,16 +299,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/clock.test.ts (1 test | 1 failed) 14ms
-   × clock > systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts 12ms
+ ❯ src/features/agenda/clock.test.ts (1 test | 1 failed) 10ms
+   × clock > systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts 9ms
      → expected '2026-11-16T12:00:01.000Z' to be '2026-11-16T12:00:00.000Z' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  14:31:09
-   Duration  1.56s (transform 80ms, setup 226ms, collect 51ms, tests 14ms, environment 833ms, prepare 154ms)
+   Start at  16:51:26
+   Duration  1.63s (transform 66ms, setup 226ms, collect 29ms, tests 10ms, environment 845ms, prepare 220ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpupdjxbiv/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmwmp6581/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -318,17 +319,17 @@ Expected: "2026-11-16T12:00:00.000Z"
 Received: "2026-11-16T12:00:01.000Z"
 
  ❯ src/features/agenda/clock.test.ts:27:39
-     25| 
+     25|
      26|     const fixed: Clock = createFixedClock("2026-11-16T12:00:00Z");
      27|     expect(fixed.now().toISOString()).toBe("2026-11-16T12:00:00.000Z");
        |                                       ^
-     28| 
+     28|
      29|     const filesWithNewDateNoArgs = productionSources()
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[07/42] DEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta
+[07/47] DEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta
 test: src/features/agenda/agendaConfig.test.ts > DEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta
 diff:
 --- a/frontend/src/features/agenda/agendaConfig.ts
@@ -340,16 +341,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaConfig.test.ts (1 test | 1 failed) 10ms
-   × agendaConfig > DEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta 8ms
+ ❯ src/features/agenda/agendaConfig.test.ts (1 test | 1 failed) 13ms
+   × agendaConfig > DEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta 11ms
      → expected 'UTC' to be 'America/Argentina/Buenos_Aires' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  14:31:14
-   Duration  1.60s (transform 55ms, setup 222ms, collect 66ms, tests 10ms, environment 848ms, prepare 160ms)
+   Start at  16:51:31
+   Duration  2.19s (transform 92ms, setup 317ms, collect 39ms, tests 13ms, environment 1.13s, prepare 273ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1kcic_4f/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppdlvwgbg/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -370,13 +371,13 @@ Received: "UTC"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[08/42] prohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts
+[08/47] prohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts
 test: src/features/agenda/agendaTimeGuard.test.ts > prohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts
 diff:
 --- a/frontend/src/features/agenda/agendaTime.ts
 +++ b/frontend/src/features/agenda/agendaTime.ts
 @@ -15,3 +15,3 @@
- 
+
 -function toDate(instant: Date | string): Date {
 +function toDate(instant: Date | string): Date { /* getHours */
    return typeof instant === "string" ? new Date(instant) : instant;
@@ -384,16 +385,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaTimeGuard.test.ts (1 test | 1 failed) 25ms
-   × guardián de zona horaria y reloj en agenda > prohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts 24ms
+ ❯ src/features/agenda/agendaTimeGuard.test.ts (1 test | 1 failed) 39ms
+   × guardián de zona horaria y reloj en agenda > prohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts 37ms
      → expected [ 'agendaTime.ts' ] to deeply equal []
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  14:31:19
-   Duration  1.60s (transform 44ms, setup 273ms, collect 18ms, tests 25ms, environment 843ms, prepare 129ms)
+   Start at  16:51:37
+   Duration  1.59s (transform 52ms, setup 217ms, collect 16ms, tests 39ms, environment 804ms, prepare 227ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmps6l_ohcn/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpoexh8on7/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -413,19 +414,19 @@ AssertionError: expected [ 'agendaTime.ts' ] to deeply equal []
      26|       .map(({ path }) => path);
      27|     expect(forbiddenLocalFiles).toEqual([]);
        |                                 ^
-     28| 
+     28|
      29|     const filesWithNewDateNoArgs = sources
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[09/42] calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
+[09/47] calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
 test: src/features/agenda/agendaLayout.test.ts > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
 +++ b/frontend/src/features/agenda/agendaLayout.ts
 @@ -143,3 +143,3 @@
- 
+
 -  let startMinute = Math.max(0, Math.floor(minStart / 60) * 60 - 60);
 +  let startMinute = Math.max(0, Math.floor(minStart / 60) * 60);
    let endMinute = Math.min(1440, Math.ceil(maxEnd / 60) * 60 + 60);
@@ -444,10 +445,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:31:23
-   Duration  1.67s (transform 86ms, setup 217ms, collect 116ms, tests 37ms, environment 839ms, prepare 152ms)
+   Start at  16:51:41
+   Duration  2.40s (transform 125ms, setup 312ms, collect 166ms, tests 37ms, environment 1.21s, prepare 243ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1eyxpyp5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4ddjn1r_/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -462,7 +463,7 @@ AssertionError: expected 540 to be 480 // Object.is equality
 
  ❯ src/features/agenda/agendaLayout.test.ts:51:30
      49|     });
-     50| 
+     50|
      51|     expect(axis.startMinute).toBe(480);
        |                              ^
      52|     expect(axis.endMinute).toBe(1200);
@@ -471,13 +472,13 @@ AssertionError: expected 540 to be 480 // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[10/42] usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
+[10/47] usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
 test: src/features/agenda/agendaLayout.test.ts > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
 +++ b/frontend/src/features/agenda/agendaLayout.ts
 @@ -10,3 +10,3 @@
- 
+
 -export const AGENDA_DEFAULT_START_MINUTE = 480;
 +export const AGENDA_DEFAULT_START_MINUTE = 540;
  export const AGENDA_DEFAULT_END_MINUTE = 1200;
@@ -485,9 +486,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 12ms
+ ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 22ms
    ↓ agendaLayout — eje de horas (R4) > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
-   × agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440] 11ms
+   × agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440] 18ms
      → expected 540 to be 480 // Object.is equality
    ↓ agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
    ↓ agendaLayout — columnas por profesional (R5) > marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
@@ -496,10 +497,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:31:28
-   Duration  1.64s (transform 123ms, setup 263ms, collect 103ms, tests 12ms, environment 833ms, prepare 141ms)
+   Start at  16:51:47
+   Duration  1.79s (transform 74ms, setup 222ms, collect 105ms, tests 22ms, environment 890ms, prepare 199ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpne4mgktd/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpymncxxhp/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -518,12 +519,12 @@ AssertionError: expected 540 to be 480 // Object.is equality
      80|     expect(emptyAxis.startMinute).toBe(480);
        |                                   ^
      81|     expect(emptyAxis.endMinute).toBe(1200);
-     82| 
+     82|
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[11/42] ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
+[11/47] ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
 test: src/features/agenda/agendaLayout.test.ts > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
@@ -537,10 +538,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 20ms
+ ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 33ms
    ↓ agendaLayout — eje de horas (R4) > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
    ↓ agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
-   × agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda 19ms
+   × agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda 30ms
      → expected -1 to be greater than 0
    ↓ agendaLayout — columnas por profesional (R5) > marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
    ↓ agendaLayout — posición, alto y carriles (R6) > asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena
@@ -548,10 +549,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:31:33
-   Duration  1.66s (transform 120ms, setup 257ms, collect 111ms, tests 20ms, environment 839ms, prepare 147ms)
+   Start at  16:51:53
+   Duration  1.93s (transform 99ms, setup 250ms, collect 148ms, tests 33ms, environment 905ms, prepare 245ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmptipj541n/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpq_kqiyzg/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -562,13 +563,13 @@ AssertionError: expected -1 to be greater than 0
     176|       ),
     177|     ).toBeGreaterThan(0);
        |       ^
-    178| 
+    178|
     179|     const fallbackCols = groupByProfessional({
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[12/42] marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
+[12/47] marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
 test: src/features/agenda/agendaLayout.test.ts > marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
@@ -582,7 +583,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 34ms
+ ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 33ms
    ↓ agendaLayout — eje de horas (R4) > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
    ↓ agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
    ↓ agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
@@ -593,10 +594,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:31:38
-   Duration  1.75s (transform 125ms, setup 247ms, collect 163ms, tests 34ms, environment 848ms, prepare 148ms)
+   Start at  16:51:58
+   Duration  2.08s (transform 114ms, setup 252ms, collect 149ms, tests 33ms, environment 1.08s, prepare 222ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9aipw36m/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1rhv1kz9/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -623,13 +624,13 @@ AssertionError: expected [ 'Dra. Laura Quiroga', …(1) ] to deeply equal [ 'Dra
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[13/42] asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena
+[13/47] asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena
 test: src/features/agenda/agendaLayout.test.ts > asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
 +++ b/frontend/src/features/agenda/agendaLayout.ts
 @@ -360,3 +360,3 @@
- 
+
 -    const laneCount = Math.max(1, laneEnds.length);
 +    const laneCount = Math.max(2, laneEnds.length);
      for (const { item, lane } of assigned) {
@@ -642,16 +643,16 @@ diff:
    ↓ agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
    ↓ agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
    ↓ agendaLayout — columnas por profesional (R5) > marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna
-   × agendaLayout — posición, alto y carriles (R6) > asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena 33ms
+   × agendaLayout — posición, alto y carriles (R6) > asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena 34ms
      → expected [ …(2) ] to deeply equal [ …(2) ]
    ↓ agendaLayout — posición, alto y carriles (R6) > aplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:31:43
-   Duration  1.80s (transform 84ms, setup 266ms, collect 153ms, tests 35ms, environment 872ms, prepare 172ms)
+   Start at  16:52:04
+   Duration  1.82s (transform 80ms, setup 225ms, collect 106ms, tests 35ms, environment 898ms, prepare 215ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0x2zjxfn/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmphforxgzq/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -687,7 +688,7 @@ AssertionError: expected [ …(2) ] to deeply equal [ …(2) ]
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[14/42] aplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00
+[14/47] aplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00
 test: src/features/agenda/agendaLayout.test.ts > aplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00
 diff:
 --- a/frontend/src/features/agenda/agendaLayout.ts
@@ -700,7 +701,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 35ms
+ ❯ src/features/agenda/agendaLayout.test.ts (6 tests | 1 failed | 5 skipped) 34ms
    ↓ agendaLayout — eje de horas (R4) > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos
    ↓ agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]
    ↓ agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda
@@ -711,10 +712,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:31:48
-   Duration  1.78s (transform 79ms, setup 223ms, collect 150ms, tests 35ms, environment 864ms, prepare 153ms)
+   Start at  16:52:09
+   Duration  1.87s (transform 93ms, setup 210ms, collect 104ms, tests 34ms, environment 931ms, prepare 223ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp49mvy_f3/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9gvv56lj/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -732,13 +733,13 @@ AssertionError: expected 5 to be 15 // Object.is equality
     315|     expect(fiveMin[0]?.durationMinutes).toBe(5);
     316|     expect(fiveMin[0]?.effectiveMinutes).toBe(15);
        |                                          ^
-    317| 
+    317|
     318|     const clampedBeforeAxis = assignLanes(
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[15/42] fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo
+[15/47] fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo
 test: src/features/agenda/agendaApi.test.ts > fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo
 diff:
 --- a/frontend/src/features/agenda/agendaApi.ts
@@ -752,7 +753,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaApi.test.ts (3 tests | 1 failed | 2 skipped) 16ms
+ ❯ src/features/agenda/agendaApi.test.ts (3 tests | 1 failed | 2 skipped) 17ms
    × agendaApi > fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo 15ms
      → expected 'http://localhost:8000/api/agenda?from…' to be 'http://localhost:8000/api/agenda?from…' // Object.is equality
    ↓ agendaApi > fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida
@@ -760,10 +761,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  14:31:53
-   Duration  1.76s (transform 100ms, setup 218ms, collect 142ms, tests 16ms, environment 911ms, prepare 171ms)
+   Start at  16:52:15
+   Duration  1.77s (transform 104ms, setup 208ms, collect 153ms, tests 17ms, environment 859ms, prepare 184ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp63lnq_ul/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpf4o77gtr/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -774,7 +775,7 @@ Expected: "http://localhost:8000/api/agenda?from=2026-11-16&to=2026-11-16"
 Received: "http://localhost:8000/api/agenda?from=2026-11-16Z&to=2026-11-16"
 
  ❯ src/features/agenda/agendaApi.test.ts:91:27
-     89| 
+     89|
      90|     expect(first).toEqual({ ok: true, status: 200, data: SAMPLE_AGENDA…
      91|     expect(calls[0]?.url).toBe("http://localhost:8000/api/agenda?from=…
        |                           ^
@@ -784,7 +785,7 @@ Received: "http://localhost:8000/api/agenda?from=2026-11-16Z&to=2026-11-16"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[16/42] fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida
+[16/47] fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida
 test: src/features/agenda/agendaApi.test.ts > fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida
 diff:
 --- a/frontend/src/features/agenda/agendaApi.ts
@@ -798,18 +799,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaApi.test.ts (3 tests | 1 failed | 2 skipped) 22ms
+ ❯ src/features/agenda/agendaApi.test.ts (3 tests | 1 failed | 2 skipped) 28ms
    ↓ agendaApi > fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo
-   × agendaApi > fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida 20ms
+   × agendaApi > fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida 25ms
      → expected { ok: false, status: 200, …(1) } to deeply equal { ok: false, status: 200, …(1) }
    ↓ agendaApi > fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  14:31:58
-   Duration  1.80s (transform 100ms, setup 224ms, collect 177ms, tests 22ms, environment 921ms, prepare 139ms)
+   Start at  16:52:20
+   Duration  1.69s (transform 87ms, setup 216ms, collect 132ms, tests 28ms, environment 784ms, prepare 166ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpfjpke49p/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpa9_x7d3i/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -841,7 +842,7 @@ AssertionError: expected { ok: false, status: 200, …(1) } to deeply equal { ok
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[17/42] fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta
+[17/47] fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta
 test: src/features/agenda/agendaApi.test.ts > fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta
 diff:
 --- a/frontend/src/features/agenda/agendaApi.ts
@@ -855,18 +856,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaApi.test.ts (3 tests | 1 failed | 2 skipped) 18ms
+ ❯ src/features/agenda/agendaApi.test.ts (3 tests | 1 failed | 2 skipped) 21ms
    ↓ agendaApi > fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo
    ↓ agendaApi > fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida
-   × agendaApi > fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta 16ms
+   × agendaApi > fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta 19ms
      → expected [ …(2) ] to deeply equal [ …(2) ]
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  14:32:03
-   Duration  1.74s (transform 93ms, setup 208ms, collect 172ms, tests 18ms, environment 886ms, prepare 160ms)
+   Start at  16:52:25
+   Duration  1.86s (transform 118ms, setup 248ms, collect 165ms, tests 21ms, environment 847ms, prepare 227ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp23d4tyas/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0c5ywcac/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -884,7 +885,7 @@ AssertionError: expected [ …(2) ] to deeply equal [ …(2) ]
 
  ❯ src/features/agenda/agendaApi.test.ts:213:18
     211|     const chairRes = await fetchChairs(client);
-    212| 
+    212|
     213|     expect(urls).toEqual([
        |                  ^
     214|       "http://localhost:8000/api/professionals",
@@ -893,7 +894,7 @@ AssertionError: expected [ …(2) ] to deeply equal [ …(2) ]
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[18/42] dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled
+[18/47] dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled
 test: src/features/agenda/useAgenda.test.tsx > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled
 diff:
 --- a/frontend/src/features/agenda/useAgenda.ts
@@ -906,8 +907,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/useAgenda.test.tsx (2 tests | 1 failed | 1 skipped) 1141ms
-   × useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled 1139ms
+ ❯ src/features/agenda/useAgenda.test.tsx (2 tests | 1 failed | 1 skipped) 1128ms
+   × useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled 1126ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -984,10 +985,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  14:32:08
-   Duration  2.87s (transform 165ms, setup 237ms, collect 231ms, tests 1.14s, environment 853ms, prepare 144ms)
+   Start at  16:52:30
+   Duration  3.04s (transform 141ms, setup 247ms, collect 238ms, tests 1.13s, environment 919ms, prepare 200ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdwqpf1or/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp5fulecre/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1065,7 +1066,7 @@ Ignored nodes: comments, script, style
   [36m</body>[39m
 [36m</html>[39m
  ❯ src/features/agenda/useAgenda.test.tsx:190:47
-    188| 
+    188|
     189|     await waitFor(() => {
     190|       expect(screen.queryByTestId("warning")).toHaveTextContent(
        |                                               ^
@@ -1078,7 +1079,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[19/42] aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda
+[19/47] aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda
 test: src/features/agenda/useAgenda.test.tsx > aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda
 diff:
 --- a/frontend/src/features/agenda/useAgenda.ts
@@ -1092,17 +1093,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/useAgenda.test.tsx (2 tests | 1 failed | 1 skipped) 115ms
+ ❯ src/features/agenda/useAgenda.test.tsx (2 tests | 1 failed | 1 skipped) 179ms
    ↓ useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled
-   × useAgenda > aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda 114ms
+   × useAgenda > aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda 176ms
      → expected false to be true // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  14:32:14
-   Duration  2.00s (transform 114ms, setup 212ms, collect 218ms, tests 115ms, environment 867ms, prepare 147ms)
+   Start at  16:52:36
+   Duration  2.41s (transform 173ms, setup 286ms, collect 313ms, tests 179ms, environment 1.08s, prepare 206ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7lyx05l1/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpljeox7f1/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1117,16 +1118,16 @@ AssertionError: expected false to be true // Object.is equality
 
  ❯ src/features/agenda/useAgenda.test.tsx:230:84
     228|     fireEvent.click(sundayBtn!);
-    229| 
+    229|
     230|     expect(signalsByUrl.get("/api/agenda?from=2026-11-16&to=2026-11-16…
        |                                                                                    ^
-    231| 
+    231|
     232|     await waitFor(() => {
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[20/42] la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage
+[20/47] la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage
 test: src/App.test.tsx > la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage
 diff:
 --- a/frontend/src/App.tsx
@@ -1140,8 +1141,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/App.test.tsx (6 tests | 1 failed | 5 skipped) 95ms
-   × App con router y guards de sesión > la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage 94ms
+ ❯ src/App.test.tsx (6 tests | 1 failed | 5 skipped) 135ms
+   × App con router y guards de sesión > la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage 134ms
      → expected 'PUSH' to be 'REPLACE' // Object.is equality
    ↓ App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada
    ↓ App con router y guards de sesión > ruta protegida sin sesión conserva el destino
@@ -1151,10 +1152,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  14:32:20
-   Duration  2.48s (transform 324ms, setup 261ms, collect 809ms, tests 95ms, environment 838ms, prepare 197ms)
+   Start at  16:52:43
+   Duration  3.42s (transform 372ms, setup 286ms, collect 962ms, tests 135ms, environment 1.21s, prepare 227ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpaibjlxcj/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpf23r7u05/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1175,7 +1176,7 @@ Received: "PUSH"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[21/42] menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
+[21/47] menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
 test: src/features/auth/menuFor.test.ts > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
 diff:
 --- a/frontend/src/features/auth/menuFor.ts
@@ -1189,18 +1190,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 16ms
-   × menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente 14ms
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 22ms
+   × menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente 19ms
      → expected { id: 'agenda', label: 'Agenda', …(3) } to deeply equal { id: 'agenda', label: 'Agenda', …(3) }
    ↓ menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles
    ↓ menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  14:32:26
-   Duration  1.60s (transform 55ms, setup 228ms, collect 64ms, tests 16ms, environment 809ms, prepare 151ms)
+   Start at  16:52:52
+   Duration  2.03s (transform 82ms, setup 395ms, collect 70ms, tests 22ms, environment 938ms, prepare 171ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp40dz6w35/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsukcu85b/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1231,7 +1232,7 @@ AssertionError: expected { id: 'agenda', label: 'Agenda', …(3) } to deeply equ
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[22/42] menú de recepción habilita Agenda y no incluye Usuarios y roles
+[22/47] menú de recepción habilita Agenda y no incluye Usuarios y roles
 test: src/features/auth/menuFor.test.ts > menú de recepción habilita Agenda y no incluye Usuarios y roles
 diff:
 --- a/frontend/src/features/auth/menuFor.ts
@@ -1245,28 +1246,28 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 10ms
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 15ms
    ↓ menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
-   × menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles 8ms
+   × menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles 13ms
      → expected 'Próximamente' to be null
    ↓ menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  14:32:31
-   Duration  1.59s (transform 54ms, setup 208ms, collect 65ms, tests 10ms, environment 842ms, prepare 157ms)
+   Start at  16:52:57
+   Duration  1.97s (transform 92ms, setup 377ms, collect 37ms, tests 15ms, environment 979ms, prepare 229ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9pnsxzhh/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp5vfnkux0/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/features/auth/menuFor.test.ts > menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles
 AssertionError: expected 'Próximamente' to be null
 
-- Expected: 
+- Expected:
 null
 
-+ Received: 
++ Received:
 "Próximamente"
 
  ❯ src/features/auth/menuFor.test.ts:37:29
@@ -1280,7 +1281,7 @@ null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[23/42] menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
+[23/47] menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
 test: src/features/auth/menuFor.test.ts > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
 diff:
 --- a/frontend/src/features/auth/menuFor.ts
@@ -1294,18 +1295,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 12ms
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 1 failed | 2 skipped) 14ms
    ↓ menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
    ↓ menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles
-   × menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles 10ms
+   × menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles 12ms
      → expected true to be false // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  14:32:36
-   Duration  1.61s (transform 54ms, setup 221ms, collect 67ms, tests 12ms, environment 836ms, prepare 160ms)
+   Start at  16:53:03
+   Duration  2.64s (transform 83ms, setup 380ms, collect 35ms, tests 14ms, environment 1.56s, prepare 195ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuvpniak9/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3kyzopx3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1329,7 +1330,7 @@ AssertionError: expected true to be false // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[24/42] renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente
+[24/47] renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente
 test: src/shared/components/AppShell.test.tsx > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente
 diff:
 --- a/frontend/src/shared/components/AppShell.tsx
@@ -1343,8 +1344,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/AppShell.test.tsx (2 tests | 1 failed | 1 skipped) 100ms
-   × AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente 98ms
+ ❯ src/shared/components/AppShell.test.tsx (2 tests | 1 failed | 1 skipped) 196ms
+   × AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente 193ms
      → expect(element).toHaveAttribute("href", "/agenda") // element.getAttribute("href") === "/agenda"
 
 Expected the element to have attribute:
@@ -1355,10 +1356,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  14:32:40
-   Duration  2.14s (transform 215ms, setup 233ms, collect 434ms, tests 100ms, environment 850ms, prepare 151ms)
+   Start at  16:53:09
+   Duration  2.52s (transform 232ms, setup 250ms, collect 443ms, tests 196ms, environment 1.02s, prepare 233ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpipzyi_ra/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_tdyana3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1375,12 +1376,12 @@ Received:
      64|     expect(agendaLink).toHaveAttribute("href", "/agenda");
        |                        ^
      65|     expect(agendaLink).toHaveAttribute("aria-current", "page");
-     66| 
+     66|
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[25/42] dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
+[25/47] dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
 test: src/features/agenda/AgendaView.test.tsx > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
@@ -1394,8 +1395,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 91ms
-   × AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía 89ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 133ms
+   × AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía 132ms
      → expect(received).toBeInTheDocument()
 
 received value must be an HTMLElement or an SVGElement.
@@ -1405,15 +1406,19 @@ Received has value: null
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
    ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
    ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
-   ↓ AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:32:46
-   Duration  1.88s (transform 164ms, setup 203ms, collect 283ms, tests 91ms, environment 837ms, prepare 150ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:16
+   Duration  2.19s (transform 224ms, setup 242ms, collect 357ms, tests 133ms, environment 883ms, prepare 179ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmppmm13lnc/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmput77ymxd/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1428,18 +1433,18 @@ Received has value: null
     131|     expect(benitezCol).not.toBeNull();
     132|     expect(within(benitezCol!).queryByText("Sin turnos")).toBeInTheDoc…
        |                                                           ^
-    133| 
+    133|
     134|     viewA.unmount();
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[26/42] posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
+[26/47] posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
 test: src/features/agenda/AgendaView.test.tsx > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
 +++ b/frontend/src/features/agenda/AgendaGrid.tsx
-@@ -186,3 +186,3 @@
+@@ -192,3 +192,3 @@
                        data-status={appt.status}
 -                      data-offset-minutes={item.offsetMinutes}
 +                      data-offset-minutes={0}
@@ -1448,9 +1453,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 83ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 114ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
-   × AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local 81ms
+   × AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local 112ms
      → expect(element).toHaveAttribute("data-offset-minutes", "120") // element.getAttribute("data-offset-minutes") === "120"
 
 Expected the element to have attribute:
@@ -1460,15 +1465,19 @@ Received:
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
    ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
    ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
-   ↓ AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:32:52
-   Duration  1.93s (transform 175ms, setup 212ms, collect 327ms, tests 83ms, environment 838ms, prepare 203ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:21
+   Duration  2.42s (transform 264ms, setup 258ms, collect 422ms, tests 114ms, environment 1.01s, prepare 271ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmps4ytqzx0/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsrh136uy/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1490,12 +1499,12 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[27/42] reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
+[27/47] reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
 test: src/features/agenda/AgendaView.test.tsx > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
 +++ b/frontend/src/features/agenda/AgendaGrid.tsx
-@@ -190,3 +190,3 @@
+@@ -196,3 +196,3 @@
                        data-lane={item.lane}
 -                      data-lane-count={item.laneCount}
 +                      data-lane-count={1}
@@ -1504,10 +1513,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 89ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 88ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
-   × AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos 87ms
+   × AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos 85ms
      → expect(element).toHaveAttribute("data-lane-count", "2") // element.getAttribute("data-lane-count") === "2"
 
 Expected the element to have attribute:
@@ -1516,15 +1525,19 @@ Received:
   data-lane-count="1"
    ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
    ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
-   ↓ AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:32:57
-   Duration  1.87s (transform 171ms, setup 209ms, collect 288ms, tests 89ms, environment 837ms, prepare 146ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:28
+   Duration  2.09s (transform 222ms, setup 265ms, collect 377ms, tests 88ms, environment 822ms, prepare 241ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpivty4cvb/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpp3o6epby/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1535,18 +1548,18 @@ Expected the element to have attribute:
   data-lane-count="2"
 Received:
   data-lane-count="1"
- ❯ src/features/agenda/AgendaView.test.tsx:241:27
-    239|     expect(activeCard).not.toBeNull();
-    240|     expect(cancelledCard).toHaveAttribute("data-lane", "0");
-    241|     expect(cancelledCard).toHaveAttribute("data-lane-count", "2");
+ ❯ src/features/agenda/AgendaView.test.tsx:239:27
+    237|     expect(activeCard).not.toBeNull();
+    238|     expect(cancelledCard).toHaveAttribute("data-lane", "0");
+    239|     expect(cancelledCard).toHaveAttribute("data-lane-count", "2");
        |                           ^
-    242|     expect(activeCard).toHaveAttribute("data-lane", "1");
-    243|     expect(activeCard).toHaveAttribute("data-lane-count", "2");
+    240|     expect(activeCard).toHaveAttribute("data-lane", "1");
+    241|     expect(activeCard).toHaveAttribute("data-lane-count", "2");
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[28/42] dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
+[28/47] dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
 test: src/features/agenda/AgendaView.test.tsx > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
@@ -1560,67 +1573,76 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 101ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 90ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
-   × AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado 99ms
+   × AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado 88ms
      → expected null not to be null
    ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
-   ↓ AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:33:02
-   Duration  1.97s (transform 167ms, setup 214ms, collect 313ms, tests 101ms, environment 850ms, prepare 141ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:33
+   Duration  2.10s (transform 209ms, setup 199ms, collect 351ms, tests 90ms, environment 880ms, prepare 162ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7tq4t00l/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpubob164g/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
 AssertionError: expected null not to be null
- ❯ src/features/agenda/AgendaView.test.tsx:298:25
-    296|       "Bloqueo: Congreso, de 12:00 a 13:00",
-    297|     );
-    298|     expect(blockEl).not.toBeNull();
+ ❯ src/features/agenda/AgendaView.test.tsx:296:25
+    294|       "Bloqueo: Congreso, de 12:00 a 13:00",
+    295|     );
+    296|     expect(blockEl).not.toBeNull();
        |                         ^
-    299|     expect(blockEl).toHaveAttribute("data-offset-minutes", "240");
-    300|     expect(blockEl).toHaveAttribute("data-duration-minutes", "60");
+    297|     expect(blockEl).toHaveAttribute("data-offset-minutes", "240");
+    298|     expect(blockEl).toHaveAttribute("data-duration-minutes", "60");
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[29/42] muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
+[29/47] muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
 test: src/features/agenda/AgendaView.test.tsx > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
 +++ b/frontend/src/features/agenda/AgendaGrid.tsx
-@@ -173,3 +173,3 @@
-                   const statusLabel = STATUS_LABELS[appt.status];
--                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.professionalName}, ${appt.chairName}, ${appt.serviceName}, ${statusLabel}`;
+@@ -175,3 +175,3 @@
+                   const isSplitLane = item.laneCount > 1;
+-                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
 +                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}`;
+                   const cardClassName = [
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 133ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 143ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
    ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
-   × AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta 131ms
+   × AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta 141ms
      → expected '10:00–10:30, Ana Pérez' to contain 'Dra. Laura Quiroga'
-   ↓ AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:33:08
-   Duration  1.93s (transform 166ms, setup 215ms, collect 288ms, tests 133ms, environment 851ms, prepare 153ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:39
+   Duration  2.26s (transform 236ms, setup 303ms, collect 378ms, tests 143ms, environment 841ms, prepare 176ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp24qk38pu/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpa5qhf50r/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1630,77 +1652,301 @@ AssertionError: expected '10:00–10:30, Ana Pérez' to contain 'Dra. Laura Quir
 Expected: "Dra. Laura Quiroga"
 Received: "10:00–10:30, Ana Pérez"
 
- ❯ src/features/agenda/AgendaView.test.tsx:362:28
-    360|     expect(accessibleName).toContain("10:00–10:30");
-    361|     expect(accessibleName).toContain("Ana Pérez");
-    362|     expect(accessibleName).toContain("Dra. Laura Quiroga");
+ ❯ src/features/agenda/AgendaView.test.tsx:360:28
+    358|     expect(accessibleName).toContain("10:00–10:30");
+    359|     expect(accessibleName).toContain("Ana Pérez");
+    360|     expect(accessibleName).toContain("Dra. Laura Quiroga");
        |                            ^
-    363|     expect(accessibleName).toContain("Sillón 1");
-    364|     expect(accessibleName).toContain("Control");
+    361|     expect(accessibleName).toContain("Sillón 1");
+    362|     expect(accessibleName).toContain("Control");
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[30/42] muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
-test: src/features/agenda/AgendaView.test.tsx > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
+[30/47] en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+test: src/features/agenda/AgendaView.test.tsx > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
 diff:
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -85,3 +85,3 @@
-         <div className={styles.bannerNote}>
--          {hasActiveFilter ? "Sin turnos para este filtro" : "No hay turnos para este día"}
-+          {hasActiveFilter ? "Sin turnos para este filtro" : "Agenda sin registros"}
-         </div>
+@@ -86,3 +86,3 @@
+         <EmptyState
+-          title="No hay turnos para este día"
++          title="Agenda sin registros"
+           description="No se registraron turnos en la agenda para esta fecha."
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 76ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 97ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
    ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
    ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
-   × AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío 75ms
-     → expect(received).toBeInTheDocument()
-
-received value must be an HTMLElement or an SVGElement.
-Received has type:  Null
-Received has value: null
+   × AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista 95ms
+     → expected null not to be null
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
    ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:33:13
-   Duration  1.91s (transform 173ms, setup 214ms, collect 327ms, tests 76ms, environment 855ms, prepare 157ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:46
+   Duration  2.51s (transform 259ms, setup 330ms, collect 386ms, tests 97ms, environment 1.04s, prepare 267ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpz6m9v2_y/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpw_fg6i57/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
-Error: expect(received).toBeInTheDocument()
-
-received value must be an HTMLElement or an SVGElement.
-Received has type:  Null
-Received has value: null
- ❯ src/features/agenda/AgendaView.test.tsx:383:63
-    381|     );
-    382| 
-    383|     expect(screen.queryByText("No hay turnos para este día")).toBeInTh…
-       |                                                               ^
-    384|     expect(screen.queryAllByTestId("agenda-column-header")).toHaveLeng…
-    385|     expect(
+ FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+AssertionError: expected null not to be null
+ ❯ src/features/agenda/AgendaView.test.tsx:383:11
+    381|     expect(
+    382|       screen.queryByRole("heading", { name: "No hay turnos para este d…
+    383|     ).not.toBeNull();
+       |           ^
+    384|     expect(screen.queryByTestId("agenda-grid-scroll")).not.toBeInTheDo…
+    385|     expect(screen.queryByRole("table")).not.toBeInTheDocument();
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[31/42] anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
+[31/47] la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+test: src/features/agenda/AgendaView.test.tsx > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -173,3 +173,3 @@
+                   const statusLabel = STATUS_LABELS[appt.status];
+-                  const isCompact = item.durationMinutes < 45;
++                  const isCompact = item.durationMinutes < 0;
+                   const isSplitLane = item.laneCount > 1;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 79ms
+   ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
+   ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
+   ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
+   ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
+   ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   × AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo 78ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  10:00 · Ana Pérez
+Received:
+  10:00–10:30ReservadoAna PérezControl
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+   ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:52
+   Duration  2.51s (transform 218ms, setup 265ms, collect 367ms, tests 79ms, environment 1.12s, prepare 180ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuwcswbmq/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  10:00 · Ana Pérez
+Received:
+  10:00–10:30ReservadoAna PérezControl
+ ❯ src/features/agenda/AgendaView.test.tsx:412:25
+    410|     );
+    411|     expect(quirogaCard).not.toBeNull();
+    412|     expect(quirogaCard).toHaveTextContent("10:00 · Ana Pérez");
+       |                         ^
+    413|     expect(quirogaCard?.textContent).not.toContain("Control");
+    414|     expect(quirogaCard).toHaveAttribute("title", "Control");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[32/47] la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+test: src/features/agenda/AgendaView.test.tsx > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -230,3 +230,3 @@
+                           <div className={styles.cardPatient}>{appt.patientName}</div>
+-                          <div className={styles.cardMeta}>{appt.serviceName}</div>
++                          <div className={styles.cardMeta}>{"Sin prestación"}</div>
+                         </>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 77ms
+   ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
+   ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
+   ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
+   ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
+   ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   × AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada 75ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Tratamiento de conducto
+Received:
+  11:00–12:00ConfirmadoCarlos GómezSin prestación
+   ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:53:57
+   Duration  2.17s (transform 229ms, setup 257ms, collect 381ms, tests 77ms, environment 907ms, prepare 218ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpq2_p4upx/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Tratamiento de conducto
+Received:
+  11:00–12:00ConfirmadoCarlos GómezSin prestación
+ ❯ src/features/agenda/AgendaView.test.tsx:561:18
+    559|     expect(card).toHaveTextContent("11:00–12:00");
+    560|     expect(card).toHaveTextContent("Carlos Gómez");
+    561|     expect(card).toHaveTextContent("Tratamiento de conducto");
+       |                  ^
+    562|     expect(card).toHaveTextContent("Confirmado");
+    563|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[33/47] en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+test: src/features/agenda/AgendaView.test.tsx > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -174,3 +174,3 @@
+                   const isCompact = item.durationMinutes < 45;
+-                  const isSplitLane = item.laneCount > 1;
++                  const isSplitLane = item.laneCount > 2;
+                   const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 94ms
+   ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
+   ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
+   ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
+   ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
+   ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   × AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible 91ms
+     → expected 'cardCompactRow' to contain 'cardCompactStacked'
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+   ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:54:03
+   Duration  1.98s (transform 208ms, setup 181ms, collect 340ms, tests 94ms, environment 782ms, prepare 212ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyl55fw_z/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+AssertionError: expected 'cardCompactRow' to contain 'cardCompactStacked'
+
+Expected: "cardCompactStacked"
+Received: "cardCompactRow"
+
+ ❯ src/features/agenda/AgendaView.test.tsx:472:37
+    470|       expect(patientLine).not.toBeNull();
+    471|       const compactRow = patientLine?.parentElement ?? null;
+    472|       expect(compactRow?.className).toContain("cardCompactStacked");
+       |                                     ^
+    473|
+    474|       const textBadges = within(card!)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[34/47] un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+test: src/features/agenda/AgendaView.test.tsx > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -174,3 +174,3 @@
+                   const isCompact = item.durationMinutes < 45;
+-                  const isSplitLane = item.laneCount > 1;
++                  const isSplitLane = item.laneCount > 0;
+                   const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 86ms
+   ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
+   ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
+   ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
+   ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
+   ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   × AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado 85ms
+     → expected 'cardCompactRow cardCompactStacked' not to contain 'cardCompactStacked'
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+   ↓ AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:54:09
+   Duration  2.04s (transform 213ms, setup 225ms, collect 348ms, tests 86ms, environment 833ms, prepare 213ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp16rwro8e/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaView.test.tsx > AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+AssertionError: expected 'cardCompactRow cardCompactStacked' not to contain 'cardCompactStacked'
+
+Expected: "cardCompactStacked"
+Received: "cardCompactRow cardCompactStacked"
+
+ ❯ src/features/agenda/AgendaView.test.tsx:512:39
+    510|     const compactRow = patientLine?.parentElement ?? null;
+    511|     expect(compactRow?.className).toContain("cardCompactRow");
+    512|     expect(compactRow?.className).not.toContain("cardCompactStacked");
+       |                                       ^
+    513|
+    514|     const textBadges = within(card!)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[35/47] anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 test: src/features/agenda/AgendaView.test.tsx > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista
 diff:
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -65,3 +65,3 @@
+@@ -66,3 +66,3 @@
            >
 -            {`Turnos del ${dayLabel}: ${agenda.appointments.length}`}
 +            {`Turnos del ${dayLabel}: 0`}
@@ -1709,14 +1955,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaView.test.tsx (7 tests | 1 failed | 6 skipped) 80ms
+ ❯ src/features/agenda/AgendaView.test.tsx (11 tests | 1 failed | 10 skipped) 117ms
    ↓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía
    ↓ AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local
    ↓ AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos
    ↓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado
    ↓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta
-   ↓ AgendaView > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío
-   × AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista 79ms
+   ↓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista
+   ↓ AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo
+   ↓ AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible
+   ↓ AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado
+   ↓ AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada
+   × AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista 115ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -1725,11 +1975,11 @@ Received:
   Turnos del lunes 16 de noviembre de 2026: 0
 
  Test Files  1 failed (1)
-      Tests  1 failed | 6 skipped (7)
-   Start at  14:33:19
-   Duration  2.03s (transform 176ms, setup 272ms, collect 345ms, tests 80ms, environment 857ms, prepare 164ms)
+      Tests  1 failed | 10 skipped (11)
+   Start at  16:54:15
+   Duration  2.25s (transform 268ms, setup 322ms, collect 474ms, tests 117ms, environment 842ms, prepare 178ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1ucpehp8/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpr9vycn1e/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1740,18 +1990,18 @@ Expected element to have text content:
   Turnos del lunes 16 de noviembre de 2026: 2
 Received:
   Turnos del lunes 16 de noviembre de 2026: 0
- ❯ src/features/agenda/AgendaView.test.tsx:403:24
-    401|     expect(liveRegion).not.toBeNull();
-    402|     expect(liveRegion).toHaveAttribute("aria-live", "polite");
-    403|     expect(liveRegion).toHaveTextContent("Turnos del lunes 16 de novie…
+ ❯ src/features/agenda/AgendaView.test.tsx:578:24
+    576|     expect(liveRegion).not.toBeNull();
+    577|     expect(liveRegion).toHaveAttribute("aria-live", "polite");
+    578|     expect(liveRegion).toHaveTextContent("Turnos del lunes 16 de novie…
        |                        ^
-    404| 
-    405|     const toggleBtn = screen.queryByRole("button", { name: "Ver como l…
+    579|
+    580|     const toggleBtn = screen.queryByRole("button", { name: "Ver como l…
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[32/42] renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros
+[36/47] renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros
 test: src/features/agenda/AgendaToolbar.test.tsx > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros
 diff:
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
@@ -1765,16 +2015,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaToolbar.test.tsx (1 test | 1 failed) 117ms
-   × AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros 115ms
+ ❯ src/features/agenda/AgendaToolbar.test.tsx (1 test | 1 failed) 173ms
+   × AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros 171ms
      → expected [ 'Todos', 'Sillón 1', 'Sillón 2' ] to deeply equal [ 'Todos', 'Sillón 1', …(1) ]
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  14:33:24
-   Duration  1.84s (transform 124ms, setup 217ms, collect 214ms, tests 117ms, environment 843ms, prepare 172ms)
+   Start at  16:54:21
+   Duration  2.61s (transform 184ms, setup 316ms, collect 276ms, tests 173ms, environment 1.17s, prepare 269ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpi8klboms/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpu093yrqc/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1792,7 +2042,7 @@ AssertionError: expected [ 'Todos', 'Sillón 1', 'Sillón 2' ] to deeply equal [
   ]
 
  ❯ src/features/agenda/AgendaToolbar.test.tsx:63:56
-     61| 
+     61|
      62|     const chairOptions = within(chairSelect!).queryAllByRole("option");
      63|     expect(chairOptions.map((opt) => opt.textContent)).toEqual([
        |                                                        ^
@@ -1802,7 +2052,7 @@ AssertionError: expected [ 'Todos', 'Sillón 1', 'Sillón 2' ] to deeply equal [
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[33/42] carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
+[37/47] carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
 test: src/features/agenda/AgendaPage.test.tsx > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
 diff:
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
@@ -1815,8 +2065,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 208ms
-   × AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible 206ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 172ms
+   × AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible 171ms
      → expect(received).toBeInTheDocument()
 
 received value must be an HTMLElement or an SVGElement.
@@ -1832,10 +2082,10 @@ Received has value: null
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:33:29
-   Duration  2.48s (transform 328ms, setup 216ms, collect 758ms, tests 208ms, environment 868ms, prepare 142ms)
+   Start at  16:54:27
+   Duration  2.60s (transform 344ms, setup 207ms, collect 783ms, tests 172ms, environment 902ms, prepare 212ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmphr6zzzv6/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpa124doki/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1851,12 +2101,12 @@ Received has value: null
     241|     ).toBeInTheDocument();
        |       ^
     242|   });
-    243| 
+    243|
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[34/42] filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
+[38/47] filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
 test: src/features/agenda/AgendaPage.test.tsx > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -1870,9 +2120,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1282ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1286ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
-   × AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha 1281ms
+   × AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha 1284ms
      → expected '?date=2026-11-16&professionalId=00000…' to be '?date=2026-11-16' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -2348,10 +2598,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:33:36
-   Duration  3.61s (transform 342ms, setup 217ms, collect 821ms, tests 1.28s, environment 814ms, prepare 133ms)
+   Start at  16:54:34
+   Duration  4.46s (transform 460ms, setup 368ms, collect 987ms, tests 1.29s, environment 1.20s, prepare 259ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgd8vgt3l/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6e9qnmyh/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2827,7 +3077,7 @@ Expected: "?date=2026-11-16"
 Received: "?date=2026-11-16&professionalId=00000000-0000-0000-0000-000000000001&chairId=00000000-0000-0000-0000-0000000000b2"
 
  ❯ src/features/agenda/AgendaPage.test.tsx:307:44
-    305| 
+    305|
     306|     await waitFor(() => {
     307|       expect(router.state.location.search).toBe("?date=2026-11-16");
        |                                            ^
@@ -2840,7 +3090,7 @@ Received: "?date=2026-11-16&professionalId=00000000-0000-0000-0000-000000000001&
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[35/42] navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
+[39/47] navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
 test: src/features/agenda/AgendaPage.test.tsx > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -2854,10 +3104,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1218ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1333ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
-   × AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL 1217ms
+   × AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL 1331ms
      → expected '/agenda?date=2026-11-17' to be '/agenda?date=2026-11-15' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -3152,170 +3402,20 @@ Ignored nodes: comments, script, style
                     [36m</button>[39m
                   [36m</div>[39m
                 [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"bannerNote"[39m
+                [36m<section[39m
+                  [33mclass[39m=[32m"empty"[39m
                 [36m>[39m
-                  [0mNo hay turnos para este día[0m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"gridScrollContainer"[39m
-                  [33mdata-testid[39m=[32m"agenda-grid-scroll"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"gridTable"[39m
+                  [36m<h2[39m
+                    [33mclass[39m=[32m"title"[39m
                   [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"headerRow"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"cornerCell"[39m
-                      [36m>[39m
-                        [0mHora[0m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnHeader"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-header"[39m
-                      [36m>[39m
-                        [36m<span>[39m
-                          [0mDr. Martín Sosa[0m
-                        [36m</span>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnHeader"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-header"[39m
-                      [36m>[39m
-                        [36m<span>[39m
-                          [0mDra. Laura Quiroga[0m
-                        [36m</span>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnHeader"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-header"[39m
-                      [36m>[39m
-                        [36m<span>[39m
-                          [0mDra. Paula Benítez (inactivo)[0m
-                        [36m</span>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"bodyRow"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"timeGutter"[39m
-                        [33mdata-testid[39m=[32m"agenda-time-gutter"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m08:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m09:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m10:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m11:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m12:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m13:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m14:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m15:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m16:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m17:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m18:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m19:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m20:00[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnTrack"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000002"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"emptyColumnNote"[39m
-                        [36m>[39m
-                          [0mSin turnos[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnTrack"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000001"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"emptyColumnNote"[39m
-                        [36m>[39m
-                          [0mSin turnos[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnTrack"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000003"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"emptyColumnNote"[39m
-                        [36m>[39m
-                          [0mSin turnos[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
+                    [0mNo hay turnos para este día[0m
+                  [36m</h2>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"description"[39m
+                  [36m>[39m
+                    [0mNo se registraron turnos en la agenda para esta fecha.[0m
+                  [36m</p>[39m
+                [36m</section>[39m
               [36m</section>[39m
             [36m</main>[39m
             [36m<footer[39m
@@ -3337,10 +3437,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:33:44
-   Duration  3.49s (transform 352ms, setup 213ms, collect 734ms, tests 1.22s, environment 878ms, prepare 145ms)
+   Start at  16:54:43
+   Duration  4.77s (transform 565ms, setup 383ms, collect 1.21s, tests 1.33s, environment 1.18s, prepare 277ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp8ih0uago/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzmvtc5jp/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3639,170 +3739,20 @@ Ignored nodes: comments, script, style
                     [36m</button>[39m
                   [36m</div>[39m
                 [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"bannerNote"[39m
+                [36m<section[39m
+                  [33mclass[39m=[32m"empty"[39m
                 [36m>[39m
-                  [0mNo hay turnos para este día[0m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"gridScrollContainer"[39m
-                  [33mdata-testid[39m=[32m"agenda-grid-scroll"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"gridTable"[39m
+                  [36m<h2[39m
+                    [33mclass[39m=[32m"title"[39m
                   [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"headerRow"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"cornerCell"[39m
-                      [36m>[39m
-                        [0mHora[0m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnHeader"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-header"[39m
-                      [36m>[39m
-                        [36m<span>[39m
-                          [0mDr. Martín Sosa[0m
-                        [36m</span>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnHeader"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-header"[39m
-                      [36m>[39m
-                        [36m<span>[39m
-                          [0mDra. Laura Quiroga[0m
-                        [36m</span>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnHeader"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-header"[39m
-                      [36m>[39m
-                        [36m<span>[39m
-                          [0mDra. Paula Benítez (inactivo)[0m
-                        [36m</span>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"bodyRow"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"timeGutter"[39m
-                        [33mdata-testid[39m=[32m"agenda-time-gutter"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m08:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m09:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m10:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m11:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m12:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m13:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m14:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m15:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m16:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m17:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m18:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m19:00[0m
-                        [36m</div>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"hourTick"[39m
-                          [33mdata-testid[39m=[32m"agenda-axis-hour"[39m
-                        [36m>[39m
-                          [0m20:00[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnTrack"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000002"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"emptyColumnNote"[39m
-                        [36m>[39m
-                          [0mSin turnos[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnTrack"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000001"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"emptyColumnNote"[39m
-                        [36m>[39m
-                          [0mSin turnos[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div[39m
-                        [33mclass[39m=[32m"columnTrack"[39m
-                        [33mdata-testid[39m=[32m"agenda-column-00000000-0000-0000-0000-000000000003"[39m
-                      [36m>[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"emptyColumnNote"[39m
-                        [36m>[39m
-                          [0mSin turnos[0m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
+                    [0mNo hay turnos para este día[0m
+                  [36m</h2>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"description"[39m
+                  [36m>[39m
+                    [0mNo se registraron turnos en la agenda para esta fecha.[0m
+                  [36m</p>[39m
+                [36m</section>[39m
               [36m</section>[39m
             [36m</main>[39m
             [36m<footer[39m
@@ -3821,7 +3771,7 @@ Expected: "/agenda?date=2026-11-15"
 Received: "/agenda?date=2026-11-17"
 
  ❯ src/features/agenda/AgendaPage.test.tsx:332:82
-    330| 
+    330|
     331|     await waitFor(() => {
     332|       expect(`${router.state.location.pathname}${router.state.location…
        |                                                                                  ^
@@ -3834,7 +3784,7 @@ Received: "/agenda?date=2026-11-17"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[36/42] respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso
+[40/47] respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso
 test: src/features/agenda/AgendaPage.test.tsx > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -3847,11 +3797,11 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 174ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 371ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
-   × AgendaPage > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso 172ms
+   × AgendaPage > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso 368ms
      → expect(received).toBeInTheDocument()
 
 received value must be an HTMLElement or an SVGElement.
@@ -3864,10 +3814,10 @@ Received has value: null
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:33:52
-   Duration  2.37s (transform 333ms, setup 220ms, collect 730ms, tests 174ms, environment 829ms, prepare 153ms)
+   Start at  16:54:53
+   Duration  3.31s (transform 445ms, setup 257ms, collect 988ms, tests 371ms, environment 1.10s, prepare 235ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp24v26jdm/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4ml47goa/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3883,30 +3833,30 @@ Received has value: null
     415|     ).toBeInTheDocument();
        |       ^
     416|   });
-    417| 
+    417|
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[37/42] muestra Cargando... con role=status en la carga inicial sin mostrar error
+[41/47] muestra Cargando... con role=status en la carga inicial sin mostrar error
 test: src/features/agenda/AgendaPage.test.tsx > muestra Cargando... con role=status en la carga inicial sin mostrar error
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -137,3 +137,3 @@
- 
+
 -      {state.phase === "loading" && state.agenda === null && <LoadingState />}
 +      {state.phase === "loading" && state.agenda !== null && <LoadingState />}
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 85ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 82ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
    ↓ AgendaPage > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso
-   × AgendaPage > muestra Cargando... con role=status en la carga inicial sin mostrar error 84ms
+   × AgendaPage > muestra Cargando... con role=status en la carga inicial sin mostrar error 80ms
      → expect(received).toHaveTextContent()
 
 received value must be a Node.
@@ -3918,10 +3868,10 @@ Received has value: null
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:33:58
-   Duration  2.43s (transform 326ms, setup 215ms, collect 719ms, tests 85ms, environment 955ms, prepare 150ms)
+   Start at  16:55:02
+   Duration  2.97s (transform 413ms, setup 333ms, collect 904ms, tests 82ms, environment 1.10s, prepare 241ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpb65rgs89/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_6tc974w/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3942,7 +3892,7 @@ Received has value: null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[38/42] muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
+[42/47] muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
 test: src/features/agenda/AgendaPage.test.tsx > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -3956,40 +3906,40 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 194ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 182ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
    ↓ AgendaPage > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso
    ↓ AgendaPage > muestra Cargando... con role=status en la carga inicial sin mostrar error
-   × AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente 193ms
+   × AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente 180ms
      → expected null not to be null
    ↓ AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
    ↓ AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:34:04
-   Duration  2.52s (transform 324ms, setup 241ms, collect 787ms, tests 194ms, environment 823ms, prepare 151ms)
+   Start at  16:55:09
+   Duration  3.02s (transform 440ms, setup 320ms, collect 925ms, tests 182ms, environment 1.00s, prepare 208ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp83xbq731/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpn4m8xj6j/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/features/agenda/AgendaPage.test.tsx > AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
 AssertionError: expected null not to be null
  ❯ src/features/agenda/AgendaPage.test.tsx:467:28
-    465| 
+    465|
     466|     const refreshBtn = screen.queryByRole("button", { name: "Actualiza…
     467|     expect(refreshBtn).not.toBeNull();
        |                            ^
     468|     fireEvent.click(refreshBtn!);
-    469| 
+    469|
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[39/42] delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
+[43/47] delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
 test: src/features/agenda/AgendaPage.test.tsx > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
 diff:
 --- a/frontend/src/features/agenda/agendaApi.ts
@@ -4002,14 +3952,14 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1072ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1062ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
    ↓ AgendaPage > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso
    ↓ AgendaPage > muestra Cargando... con role=status en la carga inicial sin mostrar error
    ↓ AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
-   × AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local 1070ms
+   × AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local 1060ms
      → expected '/agenda' to be '/login' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -4276,10 +4226,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:34:11
-   Duration  3.35s (transform 346ms, setup 216ms, collect 803ms, tests 1.07s, environment 808ms, prepare 151ms)
+   Start at  16:55:17
+   Duration  3.76s (transform 376ms, setup 284ms, collect 801ms, tests 1.06s, environment 1.04s, prepare 216ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpq00jvitd/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpp74hxrps/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -4551,7 +4501,7 @@ Expected: "/login"
 Received: "/agenda"
 
  ❯ src/features/agenda/AgendaPage.test.tsx:496:46
-    494| 
+    494|
     495|     await waitFor(() => {
     496|       expect(router.state.location.pathname).toBe("/login");
        |                                              ^
@@ -4564,7 +4514,7 @@ Received: "/agenda"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[40/42] muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
+[44/47] muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
 test: src/features/agenda/AgendaPage.test.tsx > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -4578,7 +4528,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1055ms
+ ❯ src/features/agenda/AgendaPage.test.tsx (8 tests | 1 failed | 7 skipped) 1057ms
    ↓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible
    ↓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha
    ↓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL
@@ -4586,7 +4536,7 @@ diff:
    ↓ AgendaPage > muestra Cargando... con role=status en la carga inicial sin mostrar error
    ↓ AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente
    ↓ AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local
-   × AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global 1052ms
+   × AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global 1055ms
      → expected [ …(2) ] to have a length of 1 but got 2
 
 Ignored nodes: comments, script, style
@@ -4871,10 +4821,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 7 skipped (8)
-   Start at  14:34:19
-   Duration  3.41s (transform 323ms, setup 238ms, collect 826ms, tests 1.05s, environment 822ms, prepare 130ms)
+   Start at  16:55:25
+   Duration  3.92s (transform 386ms, setup 285ms, collect 838ms, tests 1.06s, environment 1.09s, prepare 274ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjornmnr0/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp71i1zfiq/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5181,7 +5131,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[41/42] renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda
+[45/47] renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda
 test: src/features/agenda/AgendaTable.test.tsx > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda
 diff:
 --- a/frontend/src/features/agenda/AgendaTable.tsx
@@ -5195,16 +5145,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaTable.test.tsx (1 test | 1 failed) 139ms
-   × AgendaTable > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda 137ms
+ ❯ src/features/agenda/AgendaTable.test.tsx (1 test | 1 failed) 106ms
+   × AgendaTable > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda 104ms
      → expected null not to be null
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  14:34:26
-   Duration  1.77s (transform 133ms, setup 210ms, collect 173ms, tests 139ms, environment 795ms, prepare 153ms)
+   Start at  16:55:34
+   Duration  1.89s (transform 160ms, setup 211ms, collect 208ms, tests 106ms, environment 813ms, prepare 208ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpn4i2w2l8/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsjlevxx1/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5215,13 +5165,13 @@ AssertionError: expected null not to be null
      49|     });
      50|     expect(table).not.toBeNull();
        |                       ^
-     51| 
+     51|
      52|     const headers = within(table!).queryAllByRole("columnheader");
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[42/42] define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
+[46/47] define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
 test: src/features/agenda/agendaStyles.test.ts > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.module.css
@@ -5235,16 +5185,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/agendaStyles.test.ts (1 test | 1 failed) 19ms
-   × agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX 17ms
+ ❯ src/features/agenda/agendaStyles.test.ts (2 tests | 1 failed | 1 skipped) 32ms
+   × agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX 30ms
      → expected '.gridScrollContainer {\n  overflow-x:…' to contain 'overflow-x: auto;'
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
 
  Test Files  1 failed (1)
-      Tests  1 failed (1)
-   Start at  14:34:31
-   Duration  1.57s (transform 47ms, setup 217ms, collect 42ms, tests 19ms, environment 812ms, prepare 151ms)
+      Tests  1 failed | 1 skipped (2)
+   Start at  16:55:39
+   Duration  1.94s (transform 60ms, setup 274ms, collect 58ms, tests 32ms, environment 981ms, prepare 166ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpypegllg2/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_4dbr5u3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5326,7 +5277,7 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 + }
 +
 + .hourTick {
-+   height: var(--agenda-hour-height, 64px);
++   height: var(--agenda-hour-height, 112px);
 +   padding: var(--space-1) var(--space-2);
 +   font-size: var(--font-size-xs);
 +   color: var(--color-text-muted);
@@ -5340,6 +5291,7 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 +   position: relative;
 +   border-right: 1px solid var(--color-border);
 +   background-color: var(--agenda-offhours-bg, var(--color-background));
++   container: agenda-column / inline-size;
 + }
 +
 + .emptyColumnNote {
@@ -5404,21 +5356,107 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 +   flex-wrap: wrap;
 + }
 +
++ .cardCompactRow {
++   display: flex;
++   align-items: center;
++   justify-content: space-between;
++   gap: var(--space-1);
++   width: 100%;
++   min-width: 0;
++ }
++
++ .cardCompactText {
++   font-weight: var(--font-weight-medium);
++   overflow: hidden;
++   text-overflow: ellipsis;
++   white-space: nowrap;
++   min-width: 0;
++   flex: 1 1 auto;
++ }
++
 + .cardTime {
 +   font-weight: var(--font-weight-bold);
++   overflow: hidden;
++   text-overflow: ellipsis;
++   white-space: nowrap;
++   min-width: 0;
 + }
 +
 + .cardPatient {
 +   font-weight: var(--font-weight-medium);
++   overflow: hidden;
++   text-overflow: ellipsis;
++   white-space: nowrap;
++   min-width: 0;
 + }
 +
 + .cardMeta {
 +   color: var(--color-text-muted);
++   overflow: hidden;
++   text-overflow: ellipsis;
++   white-space: nowrap;
++   min-width: 0;
++ }
++
++ /* Carriles divididos: menos relleno para dejar lugar a la hora y al paciente. */
++ .appointmentSplit {
++   padding-inline: var(--space-1);
++ }
++
++ .statusBadgeWrap {
++   display: flex;
++   flex: 0 0 auto;
++   min-width: 0;
++   max-width: 100%;
++ }
++
++ /*
++  * Formato en dos líneas de la tarjeta compacta (carriles divididos y columnas angostas):
++  * línea 1 "HH:MM · Paciente" con ellipsis, línea 2 la etiqueta de estado con texto visible
++  * en tamaño reducido. La etiqueta nunca comparte la línea del paciente.
++  * Alto en un turno de 30 min (56 px): 4 + 4 de relleno + 2 de borde, línea 1 = 12 × 1,5 = 18,
++  * separación 4, etiqueta = 12 × 1,2 + 2 + 2 = 18,4; total 50,4 px <= 56 px.
++  */
++ .cardCompactStacked {
++   flex-direction: column;
++   align-items: stretch;
++   justify-content: flex-start;
++ }
++
++ .cardCompactStacked .cardCompactText {
++   flex: 0 0 auto;
++ }
++
++ .cardCompactStacked .statusBadgeWrap > span {
++   font-size: var(--font-size-xs);
++   padding: 1px var(--space-1);
++ }
++
++ /*
++  * Columnas angostas sin superposición: por debajo de 260 px la tarjeta compacta pasa al
++  * mismo formato en dos líneas. Justificación del umbral en docs/evidencias/verify-C-27.md
++  * (Hallazgo de la revisión visual 2).
++  */
++ @container agenda-column (width < 260px) {
++   .cardCompactRow {
++     flex-direction: column;
++     align-items: stretch;
++     justify-content: flex-start;
++   }
++
++   .cardCompactText {
++     flex: 0 0 auto;
++   }
++
++   .statusBadgeWrap > span {
++     font-size: var(--font-size-xs);
++     padding: 1px var(--space-1);
++   }
 + }
 +
 
  ❯ src/features/agenda/agendaStyles.test.ts:34:21
-     32| 
+     32|
      33|     const gridCss = readFileSync(GRID_CSS_PATH, "utf-8");
      34|     expect(gridCss).toContain("overflow-x: auto;");
        |                     ^
@@ -5428,9 +5466,73 @@ AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain '
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
+[47/47] la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
+test: src/features/agenda/agendaStyles.test.ts > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
+diff:
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -233,3 +233,3 @@
+   .cardCompactRow {
+-    flex-direction: column;
++    flex-direction: row;
+     align-items: stretch;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/agendaStyles.test.ts (2 tests | 1 failed | 1 skipped) 21ms
+   ↓ agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX
+   × agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida 20ms
+     → expected '@container agenda-column (width < 260…' to match /\.cardCompactRow \{[^}]*flex-directio…/
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  16:55:45
+   Duration  1.58s (transform 54ms, setup 213ms, collect 47ms, tests 21ms, environment 790ms, prepare 173ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2bzl45ny/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/agendaStyles.test.ts > agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida
+AssertionError: expected '@container agenda-column (width < 260…' to match /\.cardCompactRow \{[^}]*flex-directio…/
+
+- Expected:
+/\.cardCompactRow \{[^}]*flex-direction: column;/
+
++ Received:
+"@container agenda-column (width < 260px) {
+  .cardCompactRow {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .cardCompactText {
+    flex: 0 0 auto;
+  }
+
+  .statusBadgeWrap > span {
+    font-size: var(--font-size-xs);
+    padding: 1px var(--space-1);
+  }
+}
+"
+
+ ❯ src/features/agenda/agendaStyles.test.ts:74:24
+     72|     expect(queryStart).toBeGreaterThan(-1);
+     73|     const queryBlock = gridCss.slice(queryStart);
+     74|     expect(queryBlock).toMatch(/\.cardCompactRow \{[^}]*flex-direction…
+       |                        ^
+     75|     expect(queryBlock).toMatch(
+     76|       /\.statusBadgeWrap > span \{[^}]*font-size: var\(--font-size-xs\…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 42
+mutaciones que hicieron fallar su test: 47
 mutaciones que NO lo hicieron fallar: 0
 mutaciones inválidas: 0
-SHA-256 de produccion despues: 5fb7539337741e4cf9cfb9226dee983239e4f5909bd2df7d41cae12118922fd0
+SHA-256 de produccion despues: f05a8087b4f8e4f07a08edb3ea8c4934fdfc67504a8f1065a4358d5085360de0
 SHA-256 sin cambios: si

@@ -5,8 +5,8 @@
 Todos los números salen de los archivos enlazados, generados por redirección.
 
 - Tareas: 28/28 en [tasks.md](../../openspec/changes/ui-agenda-diaria/tasks.md).
-- Vitest: 35 archivos, 122 tests en verde (85 preexistentes + 37 nuevos en `src/features/agenda/`); `tsc` y ESLint sin errores ni warnings.
-- Mutaciones: 42/42 hicieron fallar su test (una por cada test nuevo o actualizado de C-27); mutaciones inválidas: 0; SHA-256 de producción intacto.
+- Vitest: 35 archivos, 127 tests en verde (85 preexistentes + 42 nuevos de C-27); `tsc` y ESLint sin errores ni warnings.
+- Mutaciones: 47/47 hicieron fallar su test (una por cada test nuevo o actualizado de C-27); mutaciones inválidas: 0; SHA-256 de producción intacto.
 - Trazabilidad: 32 escenarios, 0 problemas.
 - Precondición (GATE 16): [precondicion-C-27.txt](precondicion-C-27.txt); C-26 y dependencias archivadas.
 - Línea de base desde `frontend/`: [baseline-C-27.txt](baseline-C-27.txt) (85 passed, `tsc` y ESLint limpios).
@@ -63,6 +63,81 @@ Se confirma expresamente que:
 
 - **Estilos en `tokens.css`**: Se agregaron tokens específicos de agenda (`--agenda-hour-height`, `--agenda-time-gutter-width`, `--agenda-column-min-width`, `--agenda-column-header-height`, `--agenda-grid-line`, `--agenda-working-bg`, `--agenda-offhours-bg`, `--agenda-block-bg`, `--agenda-block-border`, `--agenda-card-radius`, `--agenda-card-min-height`, `--agenda-cancelled-bg`) en `frontend/src/shared/styles/tokens.css`, tal como exigió la tarea 15.1 y D12/D13, asegurando cero valores HEX o tamaños fijos hardcodeados en los componentes TSX.
 - **Normalización de hooks para ESLint v5**: En `AgendaPage.tsx` y `useAgenda.ts` se adecuaron las llamadas a estados para cumplir estrictamente con `react-hooks/set-state-in-effect` y `react-hooks/refs` de `eslint-plugin-react-hooks` v5, derivando `isPending` durante el renderizado y sincronizando refs en `useEffect`.
+- **Revisión visual de la autora**: La revisión visual de la autora detectó tarjetas recortadas sin paciente visible y una tabla vacía duplicada; los tests pasaban porque el texto estaba en el DOM. Se corrigió y se agregaron tests.
+## Hallazgo de la revisión visual 2
+
+**Problema.** En las capturas se vieron dos casos:
+
+- Cuando dos turnos se superponen y la columna se divide en carriles, la tarjeta compacta (menos de 45 min) mostraba la etiqueta completa ("Reservado", "Cancelado"). La etiqueta ocupaba casi todo el ancho del carril: el paciente quedaba como "09:00…", y en tablet (768 px) ni siquiera se veía la hora.
+- En tablet, un turno de un solo carril también quedaba como "10:00 · Ana Pér…".
+
+La regla que tiene que cumplirse es que la hora y el paciente tienen prioridad sobre el estado, y que el estado nunca tapa al paciente.
+
+**Causa.** La fila compacta ponía `StatusBadge` en la misma línea que la hora y el paciente. La etiqueta mide 14 px, tiene 12 px de relleno por lado, `white-space: nowrap` y `flex: 0 0 auto`, así que no se achica. El único elemento que se encogía era el texto de hora y paciente. Con la mitad del ancho de la columna, la etiqueta se quedaba con casi todo el espacio.
+
+Los tests no lo detectaron porque jsdom no calcula el layout ni mide anchos. El texto del paciente estaba en el DOM y `toHaveTextContent` pasaba aunque en pantalla se viera recortado. Solo la captura lo mostró.
+
+### Iteración 1: punto de color (descartada)
+
+En carriles divididos y en columnas de menos de 260 px, la etiqueta se reemplazaba por un punto de color con los mismos tokens. El nombre del estado quedaba como texto visualmente oculto y en el `title`.
+
+Se descartó porque incumple el requisito "Color por estado más texto": el estado MUST leerse con texto visible y MUST NOT depender solo del color.
+
+- El `title` no cuenta, porque en tablet no hay `hover`.
+- El texto oculto solo sirve para lectores de pantalla.
+
+La spec no se cambió.
+
+### Iteración 2: tarjeta compacta en dos líneas (vigente)
+
+1. **Carriles divididos** (`laneCount > 1`). La fila compacta suma la clase `.cardCompactStacked` y pasa a dos líneas:
+   - línea 1: "HH:MM · Paciente", con ellipsis y todo el ancho de la tarjeta;
+   - línea 2: `StatusBadge` con texto visible, en tamaño reducido (`--font-size-xs`, 12 px, con relleno de `1px var(--space-1)`).
+
+   La etiqueta nunca comparte línea con el paciente. Los colores son los mismos tokens AA de `APPOINTMENT_STATUS_TOKENS`, y el `aria-label` completo de la tarjeta no cambia. La tarjeta dividida reduce además el relleno horizontal a `--space-1`.
+2. **Columnas angostas sin superposición.** `.columnTrack` es un contenedor (`container: agenda-column / inline-size`). Con `@container agenda-column (width < 260px)`, la fila compacta toma el mismo formato en dos líneas con la etiqueta reducida.
+3. **Umbral de 260 px.** Es el ancho mínimo en el que todo entra en una sola línea sin recortar a un paciente de largo típico:
+
+   | Elemento | Ancho |
+   |---|---|
+   | Relleno y bordes de la tarjeta (2 × 8 + 2) | 18 px |
+   | Etiqueta más ancha, "Confirmado", a 14 px con 12 px de relleno por lado | unos 96 px |
+   | Separación | 4 px |
+   | "10:00 · " a 12 px | unos 48 px |
+   | **Total fijo** | **unos 166 px** |
+
+   Quedan unos 94 px para el paciente, alrededor de 15 caracteres a 12 px. Por debajo de 260 px, un nombre típico ("Nombre Apellido") ya se recorta, y por eso la tarjeta pasa a dos líneas. En dos líneas, la línea 1 dispone de todo el ancho útil: 220 − 18 = 202 px con la columna en su mínimo (`--agenda-column-min-width`).
+
+   En tablet (768 px, columnas en el mínimo de 220 px) se usan dos líneas. En escritorio, con tres columnas de unos 300 px, se mantiene una línea. Los anchos de texto son estimaciones con la fuente del sistema.
+4. **La etiqueta reducida entra en un carril.** "Confirmado" a 12 px mide unos 62 px de texto, más 2 × 4 de relleno y 2 de borde: unos 72 px. En tablet, con dos carriles, cada uno mide 110 px, menos 4 + 4 de relleno y 2 de borde, o sea 100 px útiles. Entra.
+5. **El formato en dos líneas entra en un turno de 30 min.** Con `--agenda-hour-height: 112px`, 30 min equivalen a 56 px:
+
+   | Elemento | Alto |
+   |---|---|
+   | Relleno vertical de la tarjeta (`--space-1` × 2) | 8 px |
+   | Borde (1 × 2) | 2 px |
+   | Línea 1: 12 px × `--line-height-base` 1,5 | 18 px |
+   | Separación entre líneas (`--space-1`) | 4 px |
+   | Línea 2, etiqueta: 12 px × 1,2 + 1 × 2 de relleno + 1 × 2 de borde | 18,4 px |
+   | **Total** | **50,4 px ≤ 56 px** (sobran 5,6 px) |
+
+6. **Turnos de menos de 30 min: no se implementó el punto.** El catálogo de prestaciones ([backend/app/demo_data.py](../../backend/app/demo_data.py)) no tiene ninguna de menos de 30 min; la mínima es Control, con 30 min. Por eso no se implementó el punto con abreviatura.
+
+   **Riesgo abierto:** RN-AG-09 permite que un turno indique su propia duración (`duration_min`, de 5 a 480 min), distinta de la de su prestación. Un turno así se dibuja con el alto mínimo de 15 min (28 px), y ahí solo entra la línea 1. En carriles divididos o en columnas angostas, la etiqueta quedaría recortada.
+
+Falta confirmar los anchos y altos con una captura nueva de la autora, porque jsdom no los mide.
+
+**Tests (TDD).** Los rojos de la iteración 2 están en [red-C-27/revision-visual-2.txt](red-C-27/revision-visual-2.txt), que reemplaza al rojo de la iteración 1: 3 fallos por `AssertionError`.
+
+- `AgendaView.test.tsx > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible`
+- `AgendaView.test.tsx > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado`
+- `agendaStyles.test.ts > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida`. Es una comprobación estática del CSS, porque jsdom no evalúa container queries.
+
+Ninguno usa `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, fake timers ni MSW (regla C1). Cada uno tiene su mutación en [mutaciones-C-27.py](mutaciones-C-27.py):
+
+- `laneCount > 1` → `> 2`;
+- `laneCount > 1` → `> 0`;
+- en la container query, `.cardCompactRow { flex-direction: column` → `row`.
 
 ## Artefactos
 
@@ -104,20 +179,25 @@ Se confirma expresamente que:
 | 26 | `posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                      data-offset-minutes={item.offsetMinutes} +                      dat` | `Error: expect(element).toHaveAttribute("data-offset-minutes", "120") // element.getAttribu` |
 | 27 | `reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                      data-lane-count={item.laneCount} +                      data-lane-c` | `Error: expect(element).toHaveAttribute("data-lane-count", "2") // element.getAttribute("da` |
 | 28 | `dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                      ? 'Bloqueo: ${block.reason}, de ${startLabel} a ${endLabel}' +     ` | `AssertionError: expected null not to be null` |
-| 29 | `muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                  const cardAriaLabel = '${timeLabel}, ${appt.patientName}, ${appt.profes` | `AssertionError: expected '10:00–10:30, Ana Pérez' to contain 'Dra. Laura Quiroga'` |
-| 30 | `muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío` | `frontend/src/features/agenda/AgendaView.tsx` | `-          {hasActiveFilter ? "Sin turnos para este filtro" : "No hay turnos para este día` | `Error: expect(received).toBeInTheDocument()` |
-| 31 | `anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista` | `frontend/src/features/agenda/AgendaView.tsx` | `-            {'Turnos del ${dayLabel}: ${agenda.appointments.length}'} +            {'Turn` | `Error: expect(element).toHaveTextContent()` |
-| 32 | `renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros` | `frontend/src/features/agenda/AgendaToolbar.tsx` | `-                  {chair.active ? chair.name : '${chair.name} (inactivo)'} +             ` | `AssertionError: expected [ 'Todos', 'Sillón 1', 'Sillón 2' ] to deeply equal [ 'Todos', 'S` |
-| 33 | `carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible` | `frontend/src/features/agenda/AgendaToolbar.tsx` | `-  "El filtro por sillón solo afecta los turnos; los horarios y bloqueos se siguen mostran` | `Error: expect(received).toBeInTheDocument()` |
-| 34 | `filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha` | `frontend/src/features/agenda/AgendaPage.tsx` | `-    setSearchParams(buildParams({ professionalId: null, chairId: null }), { replace: fals` | `AssertionError: expected '?date=2026-11-16&professionalId=00000…' to be '?date=2026-11-16'` |
-| 35 | `navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL` | `frontend/src/features/agenda/AgendaPage.tsx` | `-        onPrevDay={() => navigateToDate(addDays(effectiveDate, -1))} +        onPrevDay={` | `AssertionError: expected '/agenda?date=2026-11-17' to be '/agenda?date=2026-11-15' // Obje` |
-| 36 | `respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso` | `frontend/src/features/agenda/AgendaPage.tsx` | `-export const INVALID_DATE_NOTICE = "La fecha del enlace no era válida; se muestra hoy."; ` | `Error: expect(received).toBeInTheDocument()` |
-| 37 | `muestra Cargando... con role=status en la carga inicial sin mostrar error` | `frontend/src/features/agenda/AgendaPage.tsx` | `-      {state.phase === "loading" && state.agenda === null && <LoadingState />} +      {st` | `Error: expect(received).toHaveTextContent()` |
-| 38 | `muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente` | `frontend/src/features/agenda/AgendaPage.tsx` | `-        onRefresh={state.refresh} +        onRefresh={undefined}` | `AssertionError: expected null not to be null` |
-| 39 | `delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local` | `frontend/src/features/agenda/agendaApi.ts` | `+    auth: "omit",` | `AssertionError: expected '/agenda' to be '/login' // Object.is equality` |
-| 40 | `muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global` | `frontend/src/features/agenda/AgendaPage.tsx` | `-    onForbidden: clearActionErrors, +    onForbidden: undefined,` | `AssertionError: expected [ …(2) ] to have a length of 1 but got 2` |
-| 41 | `renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda` | `frontend/src/features/agenda/AgendaTable.tsx` | `-        <caption className={styles.caption}>{'Turnos del ${dayLabel}'}</caption> +       ` | `AssertionError: expected null not to be null` |
-| 42 | `define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX` | `frontend/src/features/agenda/AgendaGrid.module.css` | `-  overflow-x: auto; +  overflow-x: hidden;` | `AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain 'overflow-x: ` |
+| 29 | `muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                  const cardAriaLabel = '${timeLabel}, ${appt.patientName}, ${appt.servic` | `AssertionError: expected '10:00–10:30, Ana Pérez' to contain 'Dra. Laura Quiroga'` |
+| 30 | `en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista` | `frontend/src/features/agenda/AgendaView.tsx` | `-          title="No hay turnos para este día" +          title="Agenda sin registros"` | `AssertionError: expected null not to be null` |
+| 31 | `la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                  const isCompact = item.durationMinutes < 45; +                  const i` | `Error: expect(element).toHaveTextContent()` |
+| 32 | `la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                          <div className={styles.cardMeta}>{appt.serviceName}</div> +    ` | `Error: expect(element).toHaveTextContent()` |
+| 33 | `en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                  const isSplitLane = item.laneCount > 1; +                  const isSpli` | `AssertionError: expected 'cardCompactRow' to contain 'cardCompactStacked'` |
+| 34 | `un turno de un solo carril conserva el formato de una línea con la etiqueta de estado` | `frontend/src/features/agenda/AgendaGrid.tsx` | `-                  const isSplitLane = item.laneCount > 1; +                  const isSpli` | `AssertionError: expected 'cardCompactRow cardCompactStacked' not to contain 'cardCompactSt` |
+| 35 | `anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista` | `frontend/src/features/agenda/AgendaView.tsx` | `-            {'Turnos del ${dayLabel}: ${agenda.appointments.length}'} +            {'Turn` | `Error: expect(element).toHaveTextContent()` |
+| 36 | `renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros` | `frontend/src/features/agenda/AgendaToolbar.tsx` | `-                  {chair.active ? chair.name : '${chair.name} (inactivo)'} +             ` | `AssertionError: expected [ 'Todos', 'Sillón 1', 'Sillón 2' ] to deeply equal [ 'Todos', 'S` |
+| 37 | `carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible` | `frontend/src/features/agenda/AgendaToolbar.tsx` | `-  "El filtro por sillón solo afecta los turnos; los horarios y bloqueos se siguen mostran` | `Error: expect(received).toBeInTheDocument()` |
+| 38 | `filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha` | `frontend/src/features/agenda/AgendaPage.tsx` | `-    setSearchParams(buildParams({ professionalId: null, chairId: null }), { replace: fals` | `AssertionError: expected '?date=2026-11-16&professionalId=00000…' to be '?date=2026-11-16'` |
+| 39 | `navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL` | `frontend/src/features/agenda/AgendaPage.tsx` | `-        onPrevDay={() => navigateToDate(addDays(effectiveDate, -1))} +        onPrevDay={` | `AssertionError: expected '/agenda?date=2026-11-17' to be '/agenda?date=2026-11-15' // Obje` |
+| 40 | `respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso` | `frontend/src/features/agenda/AgendaPage.tsx` | `-export const INVALID_DATE_NOTICE = "La fecha del enlace no era válida; se muestra hoy."; ` | `Error: expect(received).toBeInTheDocument()` |
+| 41 | `muestra Cargando... con role=status en la carga inicial sin mostrar error` | `frontend/src/features/agenda/AgendaPage.tsx` | `-      {state.phase === "loading" && state.agenda === null && <LoadingState />} +      {st` | `Error: expect(received).toHaveTextContent()` |
+| 42 | `muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente` | `frontend/src/features/agenda/AgendaPage.tsx` | `-        onRefresh={state.refresh} +        onRefresh={undefined}` | `AssertionError: expected null not to be null` |
+| 43 | `delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local` | `frontend/src/features/agenda/agendaApi.ts` | `+    auth: "omit",` | `AssertionError: expected '/agenda' to be '/login' // Object.is equality` |
+| 44 | `muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global` | `frontend/src/features/agenda/AgendaPage.tsx` | `-    onForbidden: clearActionErrors, +    onForbidden: undefined,` | `AssertionError: expected [ …(2) ] to have a length of 1 but got 2` |
+| 45 | `renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda` | `frontend/src/features/agenda/AgendaTable.tsx` | `-        <caption className={styles.caption}>{'Turnos del ${dayLabel}'}</caption> +       ` | `AssertionError: expected null not to be null` |
+| 46 | `define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX` | `frontend/src/features/agenda/AgendaGrid.module.css` | `-  overflow-x: auto; +  overflow-x: hidden;` | `AssertionError: expected '.gridScrollContainer {\n  overflow-x:…' to contain 'overflow-x: ` |
+| 47 | `la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida` | `frontend/src/features/agenda/AgendaGrid.module.css` | `-    flex-direction: column; +    flex-direction: row;` | `AssertionError: expected '@container agenda-column (width < 260…' to match /\.cardCompactR` |
 <!-- mutaciones:fin -->
 
 ## Trazabilidad
@@ -150,7 +230,7 @@ Se confirma expresamente que:
 | 23 | Navegación anterior, siguiente, Hoy y selector | Anterior y siguiente | `src/features/agenda/AgendaPage.test.tsx > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL` |
 | 24 | Navegación anterior, siguiente, Hoy y selector | Hoy y selector de fecha | `src/features/agenda/AgendaPage.test.tsx > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL` |
 | 25 | Estados de carga, vacío y error | Carga inicial | `src/features/agenda/AgendaPage.test.tsx > muestra Cargando... con role=status en la carga inicial sin mostrar error` |
-| 26 | Estados de carga, vacío y error | Día sin turnos | `src/features/agenda/AgendaView.test.tsx > muestra No hay turnos para este día conservando la grilla y las bandas de horario cuando appointments está vacío` |
+| 26 | Estados de carga, vacío y error | Día sin turnos | `src/features/agenda/AgendaView.test.tsx > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista` |
 | 27 | Estados de carga, vacío y error | Error de red con reintento | `src/features/agenda/AgendaPage.test.tsx > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente` |
 | 28 | 401 delegado en C-26 y 403 visible | 401 durante el uso | `src/features/agenda/AgendaPage.test.tsx > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local` |
 | 29 | 401 delegado en C-26 y 403 visible | 403 con la violación visible | `src/features/agenda/AgendaPage.test.tsx > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global` |
