@@ -11,6 +11,7 @@ export interface RequestOptions {
   method?: HttpMethod;
   body?: Json;
   auth?: RequestAuthMode;
+  signal?: AbortSignal;
 }
 
 export interface ApiClientOptions {
@@ -98,7 +99,7 @@ function toErrorPayload(status: number, rawText: string): ApiErrorPayload {
 export function createApiClient({ baseUrl = API_BASE_URL, fetchFn = browserFetch }: ApiClientOptions = {}): ApiClient {
   async function request(
     path: string,
-    { method = "GET", body, auth = "auto" }: RequestOptions = {},
+    { method = "GET", body, auth = "auto", signal }: RequestOptions = {},
   ): Promise<ApiResult> {
     const headers = new Headers({ Accept: "application/json" });
     const token = auth === "omit" ? null : getAuthToken();
@@ -106,6 +107,9 @@ export function createApiClient({ baseUrl = API_BASE_URL, fetchFn = browserFetch
       headers.set("Authorization", `Bearer ${token}`);
     }
     const init: RequestInit = { method, headers };
+    if (signal !== undefined) {
+      init.signal = signal;
+    }
     if (body !== undefined) {
       headers.set("Content-Type", "application/json");
       init.body = JSON.stringify(body);

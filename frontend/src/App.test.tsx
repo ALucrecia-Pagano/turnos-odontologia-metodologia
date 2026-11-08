@@ -1,7 +1,8 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider, useLocation, type RouteObject } from "react-router-dom";
-import { App, routes } from "./App";
+import { App, createAppRoutes, routes } from "./App";
+import type { Clock } from "./features/agenda/clock";
 import { AuthProvider, useAuth } from "./features/auth/AuthContext";
 import { createMemoryTokenStore } from "./features/auth/tokenStore";
 import { createApiClient, type FetchFn } from "./shared/api/client";
@@ -14,12 +15,38 @@ const RECEPCION_USER = {
   professionalId: null,
 };
 
+const EMPTY_AGENDA = {
+  from: "2026-11-16",
+  to: "2026-11-16",
+  timezone: "America/Argentina/Buenos_Aires",
+  appointments: [],
+  workingHours: [],
+  blocks: [],
+};
+
+const FIXED_CLOCK: Clock = {
+  now: () => new Date("2026-11-16T12:00:00Z"),
+};
+
 function createAuthenticatedClient(): ReturnType<typeof createApiClient> {
-  const fetchFn: FetchFn = async () =>
-    new Response(JSON.stringify(RECEPCION_USER), {
+  const fetchFn: FetchFn = async (url) => {
+    if (url.includes("/agenda")) {
+      return new Response(JSON.stringify(EMPTY_AGENDA), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    if (url.endsWith("/professionals") || url.endsWith("/chairs")) {
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    return new Response(JSON.stringify(RECEPCION_USER), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
+  };
   return createApiClient({ baseUrl: "http://localhost:8000/api", fetchFn });
 }
 
@@ -46,29 +73,31 @@ describe("App con router y guards de sesión", () => {
     window.history.pushState({}, "", "/");
   });
 
-  it("la ruta raíz renderiza el HomePage de bienvenida", async () => {
-    window.history.pushState({}, "", "/");
+  it("la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage", async () => {
     const tokenStore = createMemoryTokenStore("token-ficticio-123");
-    render(<App tokenStore={tokenStore} client={createAuthenticatedClient()} />);
+    const router = createMemoryRouter(createAppRoutes(FIXED_CLOCK), {
+      initialEntries: ["/"],
+    });
+
+    render(
+      <AuthProvider tokenStore={tokenStore} client={createAuthenticatedClient()}>
+        <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      </AuthProvider>,
+    );
 
     await waitFor(() => {
-      expect(screen.queryByRole("main")).toHaveTextContent("Bienvenida");
+      expect(`${router.state.location.pathname}${router.state.location.search}`).toBe(
+        "/agenda?date=2026-11-16",
+      );
     });
-    expect(screen.queryByRole("heading", { level: 1, name: "Turnos Odontología" })).toBeInTheDocument();
-    const statuses = within(screen.getByRole("list", { name: "Estados de un turno" })).getAllByRole("listitem");
-    expect(statuses.map((item) => item.textContent)).toEqual([
-      "Reservado",
-      "Confirmado",
-      "Atendido",
-      "Ausente",
-      "Cancelado",
-    ]);
+    expect(router.state.historyAction).toBe("REPLACE");
+    expect(screen.queryByText("Bienvenida")).not.toBeInTheDocument();
   });
 
   it("una ruta desconocida muestra la página de no encontrada", async () => {
     window.history.pushState({}, "", "/ruta-que-no-existe");
     const tokenStore = createMemoryTokenStore("token-ficticio-123");
-    render(<App tokenStore={tokenStore} client={createAuthenticatedClient()} />);
+    render(<App tokenStore={tokenStore} client={createAuthenticatedClient()} clock={FIXED_CLOCK} />);
 
     await waitFor(() => {
       expect(screen.queryByRole("heading", { level: 1, name: "Página no encontrada" })).toBeInTheDocument();
@@ -187,6 +216,8 @@ describe("App con router y guards de sesión", () => {
       from: "/agenda?date=2026-11-07",
       expired: true,
     });
-    expect(screen.queryByRole("alert")).toHaveTextContent("La sesión venció. Iniciá sesión de nuevo.");
+    await waitFor(() => {
+      expect(screen.queryByRole("alert")).toHaveTextContent("La sesión venció. Iniciá sesión de nuevo.");
+    });
   });
 });

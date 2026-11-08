@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../features/auth/AuthContext";
 import { menuFor } from "../../features/auth/menuFor";
 import styles from "./AppShell.module.css";
@@ -25,15 +25,27 @@ export function AppShell({ children }: AppShellProps) {
           <ul className={styles.menuList}>
             {menuItems.map((item) => (
               <li key={item.id}>
-                <button
-                  type="button"
-                  disabled={item.disabled}
-                  data-menu-item={item.label}
-                  className={styles.menuButton}
-                >
-                  <span>{item.label}</span>
-                  <span className={styles.badge}>{item.badge}</span>
-                </button>
+                {item.disabled ? (
+                  <button
+                    type="button"
+                    disabled
+                    data-menu-item={item.label}
+                    className={styles.menuButton}
+                  >
+                    <span>{item.label}</span>
+                    {item.badge !== null && <span className={styles.badge}>{item.badge}</span>}
+                  </button>
+                ) : (
+                  <NavLink
+                    to={item.path}
+                    data-menu-item={item.label}
+                    className={({ isActive }) =>
+                      isActive ? `${styles.menuLink} ${styles.menuLinkActive}` : styles.menuLink
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>

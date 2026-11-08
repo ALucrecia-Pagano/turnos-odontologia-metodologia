@@ -7,7 +7,7 @@ import { createApiClient, type FetchFn } from "../api/client";
 import type { CurrentUser } from "../api/types";
 import { AppShell } from "./AppShell";
 
-function renderAppShellForUser(currentUser: CurrentUser) {
+function renderAppShellForUser(currentUser: CurrentUser, initialEntry = "/agenda") {
   const tokenStore = createMemoryTokenStore("token-ficticio-123");
   const fetchFn: FetchFn = async () =>
     new Response(JSON.stringify(currentUser), {
@@ -17,7 +17,10 @@ function renderAppShellForUser(currentUser: CurrentUser) {
   const client = createApiClient({ baseUrl: "http://localhost:8000/api", fetchFn });
 
   return render(
-    <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <MemoryRouter
+      initialEntries={[initialEntry]}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <AuthProvider tokenStore={tokenStore} client={client}>
         <AppShell>
           <p>Contenido principal</p>
@@ -42,7 +45,7 @@ function ForbiddenActionButton() {
 }
 
 describe("AppShell", () => {
-  it("renderiza el menú del rol con los ítems deshabilitados y la etiqueta Próximamente", async () => {
+  it("renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente", async () => {
     const adminView = renderAppShellForUser({
       id: "00000000-0000-0000-0000-0000000000e1",
       username: "administrador",
@@ -56,10 +59,14 @@ describe("AppShell", () => {
     });
 
     const nav = screen.getByRole("navigation", { name: "Menú principal" });
+    const agendaLink = within(nav).queryByRole("link", { name: "Agenda" });
+    expect(agendaLink).not.toBeNull();
+    expect(agendaLink).toHaveAttribute("href", "/agenda");
+    expect(agendaLink).toHaveAttribute("aria-current", "page");
+
     const adminButtons = within(nav).getAllByRole("button");
-    expect(adminButtons).toHaveLength(6);
+    expect(adminButtons).toHaveLength(5);
     expect(adminButtons.map((btn) => btn.getAttribute("data-menu-item"))).toEqual([
-      "Agenda",
       "Turnos",
       "Horarios y bloqueos",
       "Catálogos",
@@ -87,11 +94,15 @@ describe("AppShell", () => {
       expect(screen.queryByRole("navigation", { name: "Menú principal" })).toBeInTheDocument();
     });
     const recepcionNav = screen.getByRole("navigation", { name: "Menú principal" });
+    expect(within(recepcionNav).queryByRole("link", { name: "Agenda" })).toHaveAttribute(
+      "href",
+      "/agenda",
+    );
     expect(
       within(recepcionNav)
         .getAllByRole("button")
         .map((btn) => btn.getAttribute("data-menu-item")),
-    ).toEqual(["Agenda", "Turnos", "Horarios y bloqueos", "Catálogos", "Pacientes"]);
+    ).toEqual(["Turnos", "Horarios y bloqueos", "Catálogos", "Pacientes"]);
 
     recepcionView.unmount();
 
@@ -107,11 +118,15 @@ describe("AppShell", () => {
       expect(screen.queryByRole("navigation", { name: "Menú principal" })).toBeInTheDocument();
     });
     const odontologoNav = screen.getByRole("navigation", { name: "Menú principal" });
+    expect(within(odontologoNav).queryByRole("link", { name: "Agenda" })).toHaveAttribute(
+      "href",
+      "/agenda",
+    );
     expect(
       within(odontologoNav)
         .getAllByRole("button")
         .map((btn) => btn.getAttribute("data-menu-item")),
-    ).toEqual(["Agenda", "Horarios y bloqueos", "Catálogos", "Pacientes"]);
+    ).toEqual(["Horarios y bloqueos", "Catálogos", "Pacientes"]);
   });
 
   it("muestra en un alerta del shell la violación de un 403 sin cerrar la sesión", async () => {

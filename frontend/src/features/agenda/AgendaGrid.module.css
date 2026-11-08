@@ -1,0 +1,160 @@
+.gridScrollContainer {
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.gridTable {
+  display: grid;
+  min-width: max-content;
+}
+
+.headerRow {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cornerCell {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  width: var(--agenda-time-gutter-width, 64px);
+  min-width: var(--agenda-time-gutter-width, 64px);
+  min-height: var(--agenda-column-header-height, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.columnHeader {
+  flex: 1 0 var(--agenda-column-min-width, 220px);
+  min-width: var(--agenda-column-min-width, 220px);
+  min-height: var(--agenda-column-header-height, 48px);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  border-right: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.bodyRow {
+  display: flex;
+  position: relative;
+}
+
+.timeGutter {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: var(--agenda-time-gutter-width, 64px);
+  min-width: var(--agenda-time-gutter-width, 64px);
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.hourTick {
+  height: var(--agenda-hour-height, 64px);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--agenda-grid-line, var(--color-border));
+  box-sizing: border-box;
+}
+
+.columnTrack {
+  flex: 1 0 var(--agenda-column-min-width, 220px);
+  min-width: var(--agenda-column-min-width, 220px);
+  position: relative;
+  border-right: 1px solid var(--color-border);
+  background-color: var(--agenda-offhours-bg, var(--color-background));
+}
+
+.emptyColumnNote {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.workingHourBand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  background-color: var(--agenda-working-bg, var(--color-surface));
+  border-top: 1px solid var(--agenda-grid-line, var(--color-border));
+  border-bottom: 1px solid var(--agenda-grid-line, var(--color-border));
+}
+
+.blockBand {
+  position: absolute;
+  left: var(--space-1);
+  right: var(--space-1);
+  z-index: 1;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--agenda-block-border, var(--color-border));
+  background: var(--agenda-block-bg, var(--color-background));
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.appointmentCard {
+  position: absolute;
+  z-index: 2;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--agenda-card-radius, var(--radius-sm));
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  min-height: var(--agenda-card-min-height, 24px);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+}
+
+.appointmentCancelled {
+  border-style: dashed;
+  background-color: var(--agenda-cancelled-bg, var(--color-background));
+}
+
+.cardTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.cardTime {
+  font-weight: var(--font-weight-bold);
+}
+
+.cardPatient {
+  font-weight: var(--font-weight-medium);
+}
+
+.cardMeta {
+  color: var(--color-text-muted);
+}

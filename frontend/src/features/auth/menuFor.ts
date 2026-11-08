@@ -5,7 +5,7 @@ export interface MenuItem {
   readonly label: string;
   readonly path: string;
   readonly disabled: boolean;
-  readonly badge: "Próximamente";
+  readonly badge: "Próximamente" | null;
 }
 
 interface MenuDefinition {
@@ -55,13 +55,14 @@ const MENU_DEFINITIONS: readonly MenuDefinition[] = [
 ];
 
 export function menuFor(role: UserRole): readonly MenuItem[] {
-  return MENU_DEFINITIONS.filter((item) => item.roles.includes(role)).map(
-    (item) => ({
+  return MENU_DEFINITIONS.filter((item) => item.roles.includes(role)).map((item) => {
+    const enabled = item.id === "agenda";
+    return {
       id: item.id,
       label: item.label,
       path: item.path,
-      disabled: true,
-      badge: "Próximamente" as const,
-    }),
-  );
+      disabled: !enabled,
+      badge: enabled ? null : ("Próximamente" as const),
+    };
+  });
 }

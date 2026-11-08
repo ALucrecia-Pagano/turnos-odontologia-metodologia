@@ -40,4 +40,24 @@
   --radius-pill: 999px;
   --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.08);
   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
+
+  /* Agenda diaria */
+  --agenda-hour-height: 64px;
+  --agenda-time-gutter-width: 64px;
+  --agenda-column-min-width: 220px;
+  --agenda-column-header-height: 48px;
+  --agenda-grid-line: #E5E7EB;
+  --agenda-working-bg: #FFFFFF;
+  --agenda-offhours-bg: #F3F4F6;
+  --agenda-block-bg: repeating-linear-gradient(
+    -45deg,
+    #FEF3C7,
+    #FEF3C7 8px,
+    #FDE68A 8px,
+    #FDE68A 16px
+  );
+  --agenda-block-border: #D97706;
+  --agenda-card-radius: 6px;
+  --agenda-card-min-height: 24px;
+  --agenda-cancelled-bg: #F9FAFB;
 }
