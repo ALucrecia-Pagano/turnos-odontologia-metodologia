@@ -42,7 +42,7 @@ Este diseño define cómo extender dicha base para soportar la vista semanal por
 ### D3 — Layout semanal y preselección de profesional
 - **Decisión**: La vista semanal despliega 7 columnas (lunes a domingo) para **un** profesional seleccionado (US-040 CA-2). Si no hay `professionalId` en la URL:
   - Rol `odontologo`: se toma automáticamente el `professionalId` del usuario autenticado en la sesión.
-  - Roles `recepcion` y `administrador`: se selecciona el primer profesional activo en orden alfabético utilizando la función existente `compareProfessionals`.
+  - Roles `recepcion` y `administrador`: se selecciona el primer profesional activo en el mismo orden del selector de profesionales (`compareProfessionals`: ej. "Dr. Martín Sosa" precede a "Dra. Laura Quiroga").
   - El selector en `AgendaToolbar` permanece siempre habilitado para todos los roles (la autorización `READ_AGENDA` no restringe lectura entre profesionales).
 - En escritorio (1440 px), las 7 columnas se renderizan simultáneamente. En tablet (768 px), se utiliza el contenedor con scroll horizontal (`overflow-x: auto`) con canal de horas y cabeceras fijas (`position: sticky`), y las tarjetas activan el formato en 2 líneas (`HH:MM · Paciente` + `StatusBadge`) mediante container query (< 260 px).
 

@@ -11,6 +11,12 @@ La aplicación SHALL ofrecer un control para alternar entre vista diaria y seman
 - **THEN** la URL pasa a `/agenda?date=2026-11-18&professionalId=00000000-0000-0000-0000-000000000001&chairId=00000000-0000-0000-0000-0000000000b1&view=week`
 - **AND** se muestra la grilla semanal con los 7 días correspondientes
 
+#### Scenario: Alternancia de semana a día conservando el día exacto
+- **GIVEN** una sesión de `recepcion` en `/agenda?date=2026-11-18&view=week&professionalId=00000000-0000-0000-0000-000000000001&chairId=00000000-0000-0000-0000-0000000000b1`
+- **WHEN** el usuario pulsa el control "Día"
+- **THEN** la URL queda sin `view` o con `view=day` conservando `date=2026-11-18`, `professionalId` y `chairId`
+- **AND** se muestra la agenda diaria del 18 de noviembre de 2026
+
 #### Scenario: Un view desconocido o ausente cae a vista diaria
 - **GIVEN** una sesión autenticada en `/agenda?date=2026-11-16&view=invalido`
 - **WHEN** se renderiza la página
@@ -18,13 +24,18 @@ La aplicación SHALL ofrecer un control para alternar entre vista diaria y seman
 - **AND** el botón "Día" del selector figura seleccionado
 
 ### Requirement: Vista semanal por profesional y grilla de siete días
-En vista semanal, la aplicación SHALL renderizar siete columnas correspondientes a los días lunes a domingo de la semana que contiene `date`. Si no se especifica `professionalId`, para rol `odontologo` SHALL seleccionarse su propio id, y para `recepcion` o `administrador` el primer profesional activo en orden alfabético. Cada turno MUST ubicarse en la columna de su día local según el `timezone` de la respuesta, con cancelados visibles con texto.
+En vista semanal, la aplicación SHALL renderizar siete columnas correspondientes a los días lunes a domingo de la semana que contiene `date`. Si no se especifica `professionalId`, para rol `odontologo` SHALL seleccionarse su propio id, y para `recepcion` o `administrador` el primer profesional activo en el mismo orden del selector de profesionales. Cada turno MUST ubicarse en la columna de su día local según el `timezone` de la respuesta, con cancelados visibles con texto.
 
 #### Scenario: Grilla de siete días de lunes a domingo
 - **GIVEN** una sesión de `recepcion` en `/agenda?date=2026-11-18&view=week&professionalId=00000000-0000-0000-0000-000000000001`
 - **WHEN** termina la carga de la agenda
 - **THEN** se renderizan 7 columnas con fechas de `2026-11-16` (lunes) a `2026-11-22` (domingo)
 - **AND** cada columna muestra su día de la semana y fecha local correspondiente
+
+#### Scenario: La semana se pide en una sola llamada
+- **GIVEN** una sesión autenticada con `fetch` inyectado y la URL `/agenda?date=2026-11-18&view=week&professionalId=00000000-0000-0000-0000-000000000001`
+- **WHEN** se monta y carga la vista semanal
+- **THEN** se realiza exactamente una llamada a `GET /api/agenda` con `from=2026-11-16`, `to=2026-11-22` y `professionalId=00000000-0000-0000-0000-000000000001`
 
 #### Scenario: Turno en el día local correcto según timezone
 - **GIVEN** un turno con `startAt` en `2026-11-17T01:30:00Z` y respuesta con `timezone` `"America/Argentina/Buenos_Aires"` (-03:00)
@@ -41,7 +52,7 @@ En vista semanal, la aplicación SHALL renderizar siete columnas correspondiente
 #### Scenario: Preselección por rol recepción o administrador
 - **GIVEN** un usuario con rol `recepcion` y profesionales activos "Dr. Martín Sosa" y "Dra. Laura Quiroga"
 - **WHEN** accede a `/agenda?date=2026-11-16&view=week` sin `professionalId`
-- **THEN** la vista selecciona por defecto a la "Dra. Laura Quiroga" por orden alfabético
+- **THEN** la vista selecciona por defecto al "Dr. Martín Sosa" en el mismo orden del selector
 - **AND** el selector de profesional permite cambiar a cualquier otro profesional
 
 #### Scenario: Turno cancelado visible con texto en vista semanal
@@ -84,8 +95,15 @@ En vista semanal, una semana sin turnos para el profesional SHALL mantener la gr
 - **THEN** se dibuja la grilla con las bandas de horario y bloqueos de los 7 días
 - **AND** se visualiza el aviso "No hay turnos esta semana para Dra. Laura Quiroga"
 
+#### Scenario: Semana vacía con filtro de sillón
+- **GIVEN** la vista semanal del `2026-11-16` al `2026-11-22` con `chairId=00000000-0000-0000-0000-0000000000b1` activo y sin turnos registrados
+- **WHEN** termina la carga de la agenda
+- **THEN** se muestra la grilla con horarios y bloqueos visibles
+- **AND** se visualiza el aviso de filtro "Sin turnos para este filtro"
+- **AND** no se visualiza el aviso "No hay turnos esta semana para [profesional]"
+
 #### Scenario: Tarjetas en dos líneas en tablet
 - **GIVEN** un viewport de 768 px con la vista semanal activa y un turno de 30 minutos de Ana Pérez
 - **WHEN** se renderiza la columna del día
-- **THEN** el contenedor permite scroll horizontal conservando la columna de horas fija
+- **THEN** la estructura CSS del contenedor provee `overflow-x: auto` con la columna de horas sticky, verificado estáticamente y con captura visual a 768 px
 - **AND** la tarjeta del turno presenta dos líneas: hora y paciente en la primera y badge de estado visible en la segunda
