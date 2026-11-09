@@ -58,6 +58,7 @@ C-22 + C-23 + C-24
       └── C-26 ui-login-y-sesion                 (también C-19)
            ├── C-27 ui-agenda-diaria
            │    ├── C-28 ui-agenda-semanal
+           │    │    └── C-34 ui-identidad-visual     (antes de C-29)
            │    ├── C-29 ui-dar-turno-con-errores
            │    │    └── C-30 ui-reprogramar-cancelar-y-estados
            │    └── C-31 ui-vista-de-recepcion-por-sillon
@@ -134,9 +135,12 @@ GATE 16: C-26 ✓                                   ← FORK
   → C-33 ui-catalogos-y-pacientes                [Agente C]
 
 GATE 17: C-27 ✓                                   ← FORK
-  → C-29 ui-dar-turno-con-errores                [Agente A]
   → C-28 ui-agenda-semanal                       [Agente B]
   → C-31 ui-vista-de-recepcion-por-sillon        [Agente C]
+
+GATE 17b: C-28 ✓
+  → C-34 ui-identidad-visual                     [Agente B]
+  → C-29 ui-dar-turno-con-errores                [Agente A — cuando C-34 ✓]
 
 GATE 18: C-29 ✓
   → C-30 ui-reprogramar-cancelar-y-estados       [Agente A]
@@ -150,7 +154,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 
 - `C-30*` cierra el camino: con ese change se puede iniciar sesión y dar, ver, reprogramar, cancelar y marcar estados de turnos desde la UI sobre la API ya probada.
 - La infraestructura (C-13, C-14, C-15, C-18, C-19, C-20) no está en el camino crítico: corre en paralelo con el dominio y termina antes de que se la necesite (GATE 12).
-- Fuera del camino crítico (se pueden hacer en paralelo o recortar en este orden si el plazo aprieta): `C-31` (vista por sillón, diferenciador), `C-28` (vista semanal), `C-32` y `C-33` (con seeds y la API alcanza para operar; la UI de configuración es lo más postergable), `C-21` (API de horarios, los horarios pueden venir de seeds).
+- Fuera del camino crítico (se pueden hacer en paralelo o recortar en este orden si el plazo aprieta): `C-31` (vista por sillón, diferenciador), `C-28` (vista semanal), `C-34` (identidad visual, se aplica antes de C-29 pero no bloquea funcionalidad), `C-32` y `C-33` (con seeds y la API alcanza para operar; la UI de configuración es lo más postergable), `C-21` (API de horarios, los horarios pueden venir de seeds).
 - **No** se recorta ningún test: la regla de contingencia de la KB es postergar vistas antes que tests (08 §Plan de contingencia).
 - Redis no tiene change propio: el MVP no tiene funcionalidades asincrónicas (SU-11). Su servicio se levanta en C-13 y no se usa hasta el backlog.
 
@@ -171,8 +175,9 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 | 11 | C-25 frontend-base-react-vite | — | — |
 | 12 | C-26 ui-login-y-sesion | — | — |
 | 13 | C-27 ui-agenda-diaria | C-32 ui-horarios-y-bloqueos | C-33 ui-catalogos-y-pacientes |
-| 14 | C-29 ui-dar-turno-con-errores | C-28 ui-agenda-semanal | C-31 ui-vista-de-recepcion-por-sillon |
-| 15 | C-30 ui-reprogramar-cancelar-y-estados | — | — |
+| 14 | — | C-28 ui-agenda-semanal → C-34 ui-identidad-visual | C-31 ui-vista-de-recepcion-por-sillon |
+| 15 | C-29 ui-dar-turno-con-errores | — | — |
+| 16 | C-30 ui-reprogramar-cancelar-y-estados | — | — |
 
 ---
 
@@ -630,6 +635,25 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/06_funcionalidades.md` §US-040 (CA-2)
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado, §Plan de contingencia de plazo
 
+### [C-34] `ui-identidad-visual`
+- **Estado**: `[ ]` pendiente
+- **Scope**:
+  - Paleta Aqua en `frontend/src/shared/styles/tokens.css` (ink, navy, primary, accent, ice, fondo, texto secundario, foco) con contraste AA ≥ 4.5:1 en todo texto real; se conservan los nombres de tokens que usan los tests de agenda.
+  - Colores de estado en `appointmentStatusTokens.ts` (texto/fondo/borde) con contraste AA ≥ 4.5:1; el estado se comunica con texto visible, no solo color.
+  - Tipografías Jost (títulos) y Manrope (texto) autoalojadas con `@fontsource-variable` 5.3.0, importadas en `main.tsx`; sin CDN ni Google Fonts.
+  - Logo en login (variante clara sobre fondo oscuro) y en la barra (variante oscura sobre fondo claro), sin detección dinámica de tema; barra única con logo + "Aqua" + "Clínica Odontológica", en tablet (≤ 768 px) solo "Aqua" y máximo dos renglones.
+  - Carrusel decorativo del login: 5 fotos, 7 s, Ken Burns 7 s ease-out reiniciado por foto, botón Pausar/Reanudar con `aria-pressed`, `prefers-reduced-motion` respetado, ticker inyectable y cancelación al desmontar.
+  - Créditos en `README.md` (fotos, logo y licencia SIL OFL de Jost y Manrope vía Fontsource).
+  - Condición dura: solo cambian valores de color en `StatusBadge.test.tsx` y `appointmentStatusTokens.test.ts`; ningún otro test se modifica. Se conservan `--font-family-base`, `--color-focus`, el heading "Turnos Odontología" y los tokens de agenda.
+- **Dependencias**: `C-28`
+- **Governance**: BAJO
+- **Preparación**: skill `appointment-frontend-ux` (tokens, accesibilidad, regla C1, verificación visual 1440/768) y MCP `context7` (Fontsource y Vite 5). Se ejecuta antes de `C-29`.
+- **Leer antes**:
+  - `docs/evidencias/explore-identidad-visual.md` §a–§f y §Uso del MCP
+  - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
+  - `knowledge-base/02_descripcion_general.md` §Stack del frontend
+  - `knowledge-base/06_funcionalidades.md` §US-040, §US-050
+
 ### [C-29] `ui-dar-turno-con-errores`
 - **Estado**: `[ ]` pendiente
 - **Scope**:
@@ -756,8 +780,9 @@ Fuera del alcance del MVP (D.3 y KB 06 §Épica 7). **No tienen C-NN y no se imp
 | C-31 | `ui-vista-de-recepcion-por-sillon` | 6 | C-27 | BAJO |
 | C-32 | `ui-horarios-y-bloqueos` | 6 | C-26, C-21 | BAJO |
 | C-33 | `ui-catalogos-y-pacientes` | 6 | C-26, C-20 | BAJO |
+| C-34 | `ui-identidad-visual` | 6 | C-28 | BAJO |
 
-**Totales**: 33 changes en 6 fases, 19 gates (GATE 0 a GATE 18), camino crítico de 15 changes.
+**Totales**: 34 changes en 6 fases, 20 gates (GATE 0 a GATE 18, con GATE 17b), camino crítico de 15 changes.
 
 **Primer change recomendado**: `C-01` (`fundacion-backend-y-dominio`), y enseguida `C-02` (`crear-turno-sin-solapamientos`, el "change 1" de la KB).
 
