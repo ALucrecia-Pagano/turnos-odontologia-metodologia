@@ -26,7 +26,8 @@ SPEC = (
     REPO
     / "openspec"
     / "changes"
-    / "ui-agenda-semanal"
+    / "archive"
+    / "2026-11-08-ui-agenda-semanal"
     / "specs"
     / "frontend-agenda"
     / "spec.md"

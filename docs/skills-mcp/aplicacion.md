@@ -147,3 +147,5 @@ La evidencia documentada en `docs/skills-mcp/evidencias/04-uso-context7.md` sirv
    - Siguiendo las directrices obtenidas sobre la API del hook:
      - Se extrajeron `date` y `view` mediante `searchParams.get("date")` y `searchParams.get("view")`.
      - Las transiciones de vista (alternar entre día y semana) y la navegación temporal se realizaron actualizando los parámetros de búsqueda mediante el callback de `setSearchParams(prev => ...)` o instanciando nuevos `URLSearchParams`, asegurando la preservación de los filtros activos (`date`, `professionalId`, `chairId`) y evitando desincronizaciones del historial del navegador.
+
+El change quedó verificado y archivado exitosamente el 2026-11-08; el reporte completo con sus métricas, trazabilidad y capturas de pantalla se encuentra en [docs/evidencias/verify-C-28.md](../evidencias/verify-C-28.md).

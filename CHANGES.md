@@ -619,7 +619,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/07_flujos_principales.md` §Flujo 5
 
 ### [C-28] `ui-agenda-semanal`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-08)
 - **Scope**:
   - Vista semanal por profesional (selector de profesional) con turnos por día; alternar día/semana desde la agenda (US-040 CA-2).
   - Tests de componentes: 7 días, turnos en el día correcto en hora local, filtro por profesional.

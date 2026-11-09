@@ -4,7 +4,7 @@
 
 Todos los números salen de los archivos enlazados, generados por redirección.
 
-- Tareas: 22/23 en [tasks.md](../../openspec/changes/ui-agenda-semanal/tasks.md) (tarea 5.3 de capturas manuales pendiente para la autora).
+- Tareas: 23/23 en [tasks.md](../../openspec/changes/archive/2026-11-08-ui-agenda-semanal/tasks.md).
 - Vitest: 35 archivos, 148 tests en verde (127 preexistentes de C-27 + 21 nuevos de C-28); `tsc` y ESLint sin errores ni warnings.
 - Mutaciones: 21/21 hicieron fallar su test (una por cada test nuevo de C-28); mutaciones inválidas: 0; SHA-256 de producción intacto.
 - Trazabilidad: 19 escenarios, 0 problemas.
@@ -14,7 +14,7 @@ Todos los números salen de los archivos enlazados, generados por redirección.
 - Vitest: [vitest-C-28.txt](vitest-C-28.txt).
 - Mutaciones: [mutaciones-C-28.txt](mutaciones-C-28.txt), generado por [mutaciones-C-28.py](mutaciones-C-28.py).
 - Trazabilidad: [trazabilidad-C-28.txt](trazabilidad-C-28.txt), generado por [trazabilidad-C-28.py](trazabilidad-C-28.py).
-- Validación OpenSpec y `git diff --check`: [validate-C-28.txt](validate-C-28.txt).
+- Validación OpenSpec y `git diff --check`: [validate-C-28.txt](validate-C-28.txt) y [validate-C-28-archive.txt](validate-C-28-archive.txt).
 - Rojos (TDD): carpeta [red-C-28/](red-C-28/), incluyendo [revision-visual.txt](red-C-28/revision-visual.txt) y [revision-visual-2.txt](red-C-28/revision-visual-2.txt).
 
 ## Hallazgos de la revisión visual
@@ -59,13 +59,16 @@ Tras la inspección en pantalla con datos reales en escritorio (1440 px) y table
 - **Accesibilidad y tokens**: "Hoy" se resalta con texto visible y atributo semántico `aria-current="date"`, nunca únicamente con color. Los turnos cancelados muestran el texto visible "Cancelado". Los botones de navegación dicen explícitamente "Semana anterior" y "Semana siguiente" con texto visible y accesible.
 - **Preselección por rol sin professionalId**: para rol `odontologo` se selecciona automáticamente su propio `professionalId`; para `recepcion` y `administrador`, el primer profesional activo según `compareProfessionals` ("Dr. Martín Sosa"), manteniendo el selector habilitado para alternar.
 
-## Capturas planificadas (5.3)
+## Capturas
 
-La tarea 5.3 se deja desmarcada en `tasks.md` para que la autora tome las capturas correspondientes en el navegador:
-- `docs/evidencias/capturas/C-28-semana-desktop.png`: vista semanal completa de 7 columnas en escritorio (1440 px).
-- `docs/evidencias/capturas/C-28-semana-tablet.png`: vista semanal en tablet (768 px) con scroll horizontal, horas sticky y tarjetas compactas.
-- `docs/evidencias/capturas/C-28-semana-vacia.png`: semana vacía con aviso informativo y grilla visible.
-- `docs/evidencias/capturas/C-28-filtro-sillon.png`: semana vacía con filtro de sillón activo y aviso de filtro.
+Capturas tomadas por la autora en `docs/evidencias/capturas/`:
+- [C-28-semana.png](capturas/C-28-semana.png): vista semanal completa de 7 columnas en escritorio (1440 px) para el Dr. Martín Sosa con horarios laborales y bloqueos.
+- [C-28-hoy.png](capturas/C-28-hoy.png): indicador accesible de día actual con texto visible "Hoy" y atributo `aria-current="date"` en la cabecera del miércoles.
+- [C-28-semana-vacia.png](capturas/C-28-semana-vacia.png): semana sin turnos para la Dra. Laura Quiroga mostrando la grilla con horarios y bloqueos y el aviso "No hay turnos esta semana para Dra. Laura Quiroga".
+- [C-28-filtro-sillon.png](capturas/C-28-filtro-sillon.png): semana vacía con filtro de sillón activo mostrando la grilla y el aviso de filtro "Sin turnos para este filtro".
+- [C-28-tablet.png](capturas/C-28-tablet.png): vista semanal en viewport de tablet (768 px) con scroll horizontal, horas sticky y tarjetas compactas en dos líneas.
+- [C-28-alternancia-dia.png](capturas/C-28-alternancia-dia.png): alternancia entre vista diaria y semanal mediante el control [ Día | Semana ], conservando fecha de anclaje y filtros.
+- [C-28-lista.png](capturas/C-28-lista.png): vista alternativa en tabla semántica accesible ("Ver como lista") con rango semanal descriptivo, columna "Fecha" y orden cronológico.
 
 ## Inmutabilidad fuera de frontend/
 
@@ -134,3 +137,11 @@ Se confirma expresamente que:
 | 18 | Vista de lista en modo semanal | Tabla de turnos semanal con columna de fecha y orden cronológico | `src/features/agenda/AgendaView.test.tsx > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico` |
 | 19 | Ancho de columnas semanales en escritorio y tablet | Columnas semanales visibles en escritorio y adaptables en tablet | `src/features/agenda/agendaStyles.test.ts > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal` |
 <!-- trazabilidad:fin -->
+
+## Archive
+
+- **Fecha de archive**: 2026-11-08.
+- **Ruta del change archivado**: [openspec/changes/archive/2026-11-08-ui-agenda-semanal/](../../openspec/changes/archive/2026-11-08-ui-agenda-semanal/).
+- **Especificación principal actualizada**: [openspec/specs/frontend-agenda/spec.md](../../openspec/specs/frontend-agenda/spec.md) actualizada de 14 requisitos y 32 escenarios a 23 requisitos y 51 escenarios (+9 requisitos y +19 escenarios agregados, idénticos letra por letra a la spec delta archivada).
+- **Validación final**: `openspec validate --all --strict` exitosa (14/14 passed, 0 failed), registrada en [validate-C-28-archive.txt](validate-C-28-archive.txt).
+- **Corrección de rutas en scripts de evidencia**: se actualizó la constante `SPEC` en [trazabilidad-C-28.py](trazabilidad-C-28.py) para apuntar a la ruta del change archivado (`openspec/changes/archive/2026-11-08-ui-agenda-semanal/specs/frontend-agenda/spec.md`), comprobando la trazabilidad con 19 escenarios y 0 problemas en [trazabilidad-C-28.txt](trazabilidad-C-28.txt).

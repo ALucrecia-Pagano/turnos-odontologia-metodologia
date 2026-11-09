@@ -47,6 +47,6 @@
 
 - [x] 5.1 Ejecutar el detector de mutaciones inválidas sobre los tests nuevos de C-28 y generar el reporte en `docs/evidencias/mutaciones-C-28.txt`
 - [x] 5.2 Generar el script de trazabilidad de escenarios de C-28 contrastando la spec delta contra los tests y registrar `docs/evidencias/trazabilidad-C-28.txt`
-- [ ] 5.3 Tomar capturas de verificación visual en escritorio (1440 px) y tablet (768 px) de la vista semanal y guardarlas en `docs/evidencias/capturas/`
+- [x] 5.3 Tomar capturas de verificación visual en escritorio (1440 px) y tablet (768 px) de la vista semanal y guardarlas en `docs/evidencias/capturas/`
 - [x] 5.4 Completar la sección "5. Uso en C-28" en `docs/skills-mcp/aplicacion.md` documentando la aplicación de la skill `appointment-frontend-ux` y la evidencia 04 de Context7
 - [x] 5.5 Redactar el informe de verificación `docs/evidencias/verify-C-28.md` y comprobar que `openspec validate --all --strict` valide en verde
