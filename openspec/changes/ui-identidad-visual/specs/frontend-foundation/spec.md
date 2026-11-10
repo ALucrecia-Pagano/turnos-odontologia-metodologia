@@ -3,7 +3,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Tokens de diseño y colores por estado
-Los estilos MUST usar CSS custom properties y CSS Modules. `tokens.css` SHALL definir espaciado (4–48 px), tipografía (12–32 px), la familia base del sistema como fallback, la paleta Aqua (ink, navy, primary, accent, ice, fondo y texto secundario) y el foco visible. `APPOINTMENT_STATUS_TOKENS` SHALL mapear los cinco estados con colores de texto, fondo y borde, con contraste AA >= 4.5:1 en cada par texto/fondo.
+Los estilos MUST usar CSS custom properties y CSS Modules. `tokens.css` SHALL definir espaciado (4–48 px), tipografía (12–32 px), la familia base del sistema como fallback, la paleta Aqua (ink, navy, primary, accent, ice, fondo y texto secundario) y el foco visible. El token de borde es no-texto. `APPOINTMENT_STATUS_TOKENS` SHALL mapear los cinco estados con colores de texto, fondo y borde, con contraste AA >= 4.5:1 en cada par texto/fondo.
 
 #### Scenario: El mapa cubre los cinco estados sin undefined
 - **GIVEN** el mapa `APPOINTMENT_STATUS_TOKENS`
@@ -15,16 +15,18 @@ Los estilos MUST usar CSS custom properties y CSS Modules. `tokens.css` SHALL de
 - **GIVEN** los pares de `APPOINTMENT_STATUS_TOKENS`
 - **WHEN** se calcula el ratio de contraste de cada par texto/fondo
 - **THEN** `reservado` `#1F5F86` sobre `#E4F2F8` es 6.04:1
-- **AND** `confirmado` `#146C43` sobre `#DDF3E4` es 5.53:1, `atendido` `#334155` sobre `#E2E8F0` es 8.40:1, `ausente` `#8A4B08` sobre `#FCEFD6` es 5.97:1 y `cancelado` `#A11D1D` sobre `#FBE3E3` es 6.35:1
+- **AND** `confirmado` `#146C43` sobre `#DDF3E7` es 5.54:1, `atendido` `#3D4A5C` sobre `#E6EBF1` es 7.51:1, `ausente` `#9A5B00` sobre `#FDF0D5` es 4.81:1 y `cancelado` `#A8242C` sobre `#FBE4E6` es 5.87:1
 - **AND** los cinco ratios son al menos 4.5:1
 
 #### Scenario: Los tokens de paleta usados como texto cumplen contraste AA
 - **GIVEN** los tokens de la paleta Aqua que se usan como texto
 - **WHEN** se calcula el contraste contra su fondo correspondiente
-- **THEN** `--color-text` `#0F2A3D` sobre `--color-background` `#F2F8FA` es 13.80:1
-- **AND** `--color-text-muted` `#4A6472` sobre `--color-background` `#F2F8FA` es 5.83:1
-- **AND** `--color-primary-contrast` `#FFFFFF` sobre `--color-primary` `#0B6E7F` es 5.91:1
-- **AND** los tokens decorativos (`--color-navy`, `--color-accent`, `--color-ice`) quedan excluidos de la exigencia de texto
+- **THEN** `--color-text` `#011C40` sobre `--color-background` `#F3F7FA` es 15.70:1
+- **AND** `--color-text-muted` `#4A5F78` sobre `--color-background` `#F3F7FA` es 6.09:1
+- **AND** `--color-primary-contrast` `#FFFFFF` sobre `--color-primary` `#26658C` es 6.32:1
+- **AND** `--color-focus` `#26658C` sobre `--color-background` `#F3F7FA` es 5.87:1
+- **AND** `--color-accent` `#54ACBF` sobre `--color-background` `#F3F7FA` es 2.43:1 y queda excluido de la exigencia de texto por ser decorativo
+- **AND** `--color-navy`, `--color-ice` y `--color-border` quedan excluidos de la exigencia de texto
 
 #### Scenario: El foco es visible
 - **GIVEN** un elemento interactivo con la clase de foco del sistema de tokens
@@ -63,7 +65,7 @@ La aplicación SHALL cargar Jost para títulos y Manrope para texto desde paquet
 - **AND** los títulos usan `var(--font-family-heading)` y el texto usa `var(--font-family-body)`
 
 ### Requirement: Barra única con la marca Aqua
-La aplicación SHALL mostrar una única barra de encabezado con el logo de Aqua, el texto "Aqua" y el texto "Clínica Odontológica". En viewport de tablet (<= 768 px) SHALL mostrar solo "Aqua" y MUST NOT superar dos renglones. La barra sobre fondo claro MUST usar la variante de logo pensada para fondo claro y MUST NOT crear una segunda barra.
+La aplicación SHALL mostrar una única barra de encabezado con el logo de Aqua, el texto "Aqua" y el texto "Clínica Odontológica". El logo de la barra MUST tener `alt=""` porque el texto "Aqua" está al lado. En viewport de tablet (<= 768 px) SHALL mostrar solo "Aqua" y MUST NOT superar dos renglones. La barra sobre fondo claro MUST usar la variante de logo pensada para fondo claro y MUST NOT crear una segunda barra.
 
 #### Scenario: Barra de escritorio con la marca completa
 - **GIVEN** una sesión autenticada en escritorio (1440 px)
@@ -83,6 +85,7 @@ La aplicación SHALL mostrar una única barra de encabezado con el logo de Aqua,
 - **GIVEN** la barra de encabezado sobre fondo claro
 - **WHEN** se inspecciona la imagen del logo
 - **THEN** se usa `frontend/src/assets/brand/logo-aqua-oscuro.png`
+- **AND** el logo tiene `alt=""` porque el texto "Aqua" está al lado
 - **AND** no se usa la variante clara en la barra
 
 ### Requirement: Créditos de assets y tipografías

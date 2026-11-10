@@ -34,19 +34,19 @@ Se mantienen los nombres de tokens actuales y se agregan `--color-navy`, `--colo
 
 | Token | Valor | Uso | Contraste |
 |-------|-------|-----|-----------|
-| `--color-text` | `#0F2A3D` | texto principal | 13.80:1 sobre `--color-background` |
-| `--color-text-muted` | `#4A6472` | texto secundario | 5.83:1 sobre fondo, 6.26:1 sobre surface |
-| `--color-background` | `#F2F8FA` | fondo de app | — |
+| `--color-text` | `#011C40` | texto principal | 15.70:1 sobre `--color-background` |
+| `--color-text-muted` | `#4A5F78` | texto secundario | 6.09:1 sobre fondo |
+| `--color-background` | `#F3F7FA` | fondo de app | — |
 | `--color-surface` | `#FFFFFF` | tarjetas | — |
-| `--color-border` | `#C9DDE4` | bordes | — |
-| `--color-primary` | `#0B6E7F` | acción | 5.91:1 con blanco |
-| `--color-primary-contrast` | `#FFFFFF` | texto sobre primary | 5.91:1 |
-| `--color-focus` | `#0B6E7F` | foco visible | — |
-| `--color-navy` | `#0B2E3F` | fondos oscuros | 14.22:1 con blanco |
-| `--color-accent` | `#1FA3B8` | acento decorativo | 4.73:1 sobre navy |
-| `--color-ice` | `#E4F2F8` | fondo suave | 12.43:1 con navy |
+| `--color-border` | `#C9DDE4` | bordes | no-texto |
+| `--color-primary` | `#26658C` | acción | 6.32:1 con blanco |
+| `--color-primary-contrast` | `#FFFFFF` | texto sobre primary | 6.32:1 |
+| `--color-focus` | `#26658C` | foco visible | 5.87:1 sobre fondo |
+| `--color-navy` | `#023859` | fondos oscuros | — |
+| `--color-accent` | `#54ACBF` | acento decorativo | 2.43:1 sobre fondo (excluido) |
+| `--color-ice` | `#A7EBF2` | fondo suave | — |
 
-`--color-accent` e `--color-ice` se usan como decoración/fondo, nunca como texto sobre blanco. Alternativa considerada: renombrar todos los tokens a una nomenclatura nueva; se descartó porque rompe `agendaStyles.test.ts` y multiplica el diff sin beneficio.
+`--color-accent` es solo decorativo y `--color-border` es no-texto; ninguno se usa como texto. Alternativa considerada: renombrar todos los tokens a una nomenclatura nueva; se descartó porque rompe `agendaStyles.test.ts` y multiplica el diff sin beneficio.
 
 ### 2. Colores de estado con contraste verificado
 Se actualizan solo los valores de `APPOINTMENT_STATUS_TOKENS`; las claves y la forma `{ text, background, border }` no cambian.
@@ -54,12 +54,12 @@ Se actualizan solo los valores de `APPOINTMENT_STATUS_TOKENS`; las claves y la f
 | Estado | text | background | border | Ratio |
 |--------|------|------------|--------|-------|
 | reservado | `#1F5F86` | `#E4F2F8` | `#9CC7D8` | 6.04:1 |
-| confirmado | `#146C43` | `#DDF3E4` | `#86EFAC` | 5.53:1 |
-| atendido | `#334155` | `#E2E8F0` | `#94A3B8` | 8.40:1 |
-| ausente | `#8A4B08` | `#FCEFD6` | `#F0C36D` | 5.97:1 |
-| cancelado | `#A11D1D` | `#FBE3E3` | `#EFA3A3` | 6.35:1 |
+| confirmado | `#146C43` | `#DDF3E7` | `#86EFAC` | 5.54:1 |
+| atendido | `#3D4A5C` | `#E6EBF1` | `#94A3B8` | 7.51:1 |
+| ausente | `#9A5B00` | `#FDF0D5` | `#F0C36D` | 4.81:1 |
+| cancelado | `#A8242C` | `#FBE4E6` | `#EFA3A3` | 5.87:1 |
 
-El estado se comunica siempre con texto visible, no solo con color (regla de `appointment-frontend-ux`). Alternativa: mantener la paleta anterior; se descartó porque no armoniza con la marca.
+Los bordes de estado quedan a criterio y se expresan en hex; no se usan como texto. El estado se comunica siempre con texto visible, no solo con color (regla de `appointment-frontend-ux`). Alternativa: mantener la paleta anterior; se descartó porque no armoniza con la marca.
 
 ### 3. Tipografías autoalojadas con `@fontsource-variable`
 Se agregan `@fontsource-variable/jost` y `@fontsource-variable/manrope` 5.3.0 (versiones confirmadas con `npm view`). Se importan una sola vez en `frontend/src/main.tsx`; Vite las empaqueta y sirve como assets locales.
@@ -74,41 +74,47 @@ Alternativas: Google Fonts por `<link>` (rechazada: dependencia de CDN y privaci
 ### 4. Logo estático por contexto, sin detección de tema
 Se decodificaron los PNG y se midió la luminancia media de los píxeles opacos (sin visor de imágenes disponible para el modelo):
 
-- `logo-aqua-claro.png` (1124x278, luminancia media 202): logo claro para fondos oscuros -> login.
-- `logo-aqua-oscuro.png` (1124x278, luminancia media 78.8): logo oscuro para fondos claros -> barra.
+- `logo-aqua-claro.png` (1124x278, luminancia media 202): logo claro para fondos oscuros -> login, informativo con `alt="Aqua — Clínica Odontológica"`.
+- `logo-aqua-oscuro.png` (1124x278, luminancia media 78.8): logo oscuro para fondos claros -> barra, decorativo con `alt=""` porque el texto "Aqua" está al lado.
 - `isotipo-aqua-claro.png` claro e `isotipo-aqua.png` oscuro; `logo-variantes.png` es una lámina de referencia, no un asset de UI.
 
 La elección es estática por componente; no hay `prefers-color-scheme` ni lógica condicional. Alternativa: un solo logo con filtro CSS; se descartó porque degrada el trazo de la marca.
+
+El login además muestra la bajada "Claridad en cada cuidado." y una tarjeta tipo vidrio sobre un overlay degradado navy; se conserva el heading "Turnos Odontología". El fondo oscuro y la tarjeta se verifican visualmente (captura), no con jsdom.
 
 ### 5. Barra única con la marca fuera de `nav`
 La barra se implementa en `AppShell`: logo (fuera de `nav`), "Aqua" y "Clínica Odontológica". El subtítulo se oculta con CSS en `max-width: 768px`; la barra usa `flex-wrap` y un máximo de dos renglones. No se agrega una segunda barra en login ni en agenda. Alternativa: dos barras (una de marca y una de navegación); se descartó por la restricción explícita de una sola barra.
 
 ### 6. Carrusel con ticker inyectado y CSS puro
-Se implementa un componente de login que recibe `ticker?: (callback: () => void) => () => void` y `prefersReducedMotion?: boolean`, con defaults `createIntervalTicker(7000)` y `false`. Esto replica el patrón de inyección de `Clock` y permite tests deterministas.
+Se implementa un componente de login que recibe `ticker?: (callback: () => void) => () => void` y `prefersReducedMotion?: boolean`, con default `createIntervalTicker(7000)` y un default de `prefersReducedMotion` que lee `window.matchMedia("(prefers-reduced-motion: reduce)").matches`; si `matchMedia` no existe (jsdom), devuelve `false` sin lanzar error. Esto replica el patrón de inyección de `Clock` y permite tests deterministas.
 
 - Estado: índice activo, empezando en `hero-1-sala-de-espera`.
 - Rotación: al llamar al callback, avanza y vuelve a 0 después de la quinta foto.
-- Ken Burns: animación CSS de 7 s `ease-out`; se reinicia al cambiar la foto activa (la imagen activa monta la animación).
+- Ken Burns: animación CSS de 7 s `ease-out`; se reinicia al cambiar la foto activa (la imagen activa monta la animación). El test de jsdom solo verifica la clase en la foto activa; la duración y el reinicio se verifican por CSS (grep del `.module.css`) o captura visual.
 - Fotos: `alt=""`, `aria-hidden="true"`, `data-slide-index`, `data-active` en la activa.
-- Pausa: botón con `aria-pressed` y texto "Pausar"/"Reanudar"; al pausar se cancela el ticker y al reanudar se recrea.
-- Reduced motion: sin rotación automática ni Ken Burns.
+- Pausa: botón con texto "Pausar animación"/"Reanudar animación", sin `aria-pressed` (WAI-ARIA APG: el estado va en el nombre o en `aria-pressed`, no en ambos); al pausar se cancela el ticker y al reanudar se recrea.
+- Reduced motion: sin rotación automática ni Ken Burns; `@media (prefers-reduced-motion: reduce)` desactiva el Ken Burns y el fundido.
 - Limpieza: `useEffect` devuelve la cancelación del ticker al desmontar.
 
 Alternativas: Swiper/Embla (rechazadas: dependencia extra para algo decorativo); `setInterval` directo en el componente (rechazada: tests con timers reales, lentos y frágiles); carrusel solo CSS (rechazada: no se puede testear la pausa ni el avance).
 
 ### 7. Evidencias y trazabilidad
-Cada test nuevo se acompaña de una mutación con el detector del repo (patrón `docs/evidencias/mutaciones-C-28.py`): una mutación por test, inválida si no falla por la aserción propia. Se generan `red-C-34/`, `mutaciones-C-34.txt`, `verify-C-34.md` y `trazabilidad-C-34.py`, todo en UTF-8. La verificación visual en 1440 y 768 px la realiza Claude con Playwright en la verificación independiente; el apply no la ejecuta.
+Cada test nuevo se acompaña de una mutación con el detector del repo (patrón `docs/evidencias/mutaciones-C-28.py`): una mutación por test, inválida si no falla por la aserción propia. Antes de tocar los tests se recalculan los ratios con la función `contrastRatio` del test existente y se registra la salida en `docs/evidencias/ratios-C-34.txt`. Se generan `red-C-34/`, `mutaciones-C-34.txt`, `verify-C-34.md` y `trazabilidad-C-34.py`, todo en UTF-8. La verificación visual en 1440 y 768 px la realiza Claude con Playwright en la verificación independiente; el apply no la ejecuta.
 
 ## Desvíos respecto del explore
 
 El explore original proponía `@fontsource`; se usa `@fontsource-variable` (5.3.0) porque los paquetes variables incluyen todos los pesos en un solo archivo, exponen las familias `"Jost Variable"` y `"Manrope Variable"` y reducen la cantidad de imports. El paquete y las familias se aplican igual en proposal, design, tasks y specs.
+
+El explore proponía un botón de pausa con `aria-pressed` y texto "Pausar"/"Reanudar"; se usa "Pausar animación"/"Reanudar animación" sin `aria-pressed`, porque WAI-ARIA APG indica que el estado va en el nombre accesible o en `aria-pressed`, no en ambos.
+
+El explore proponía `prefersReducedMotion` por defecto en `false`; se cambia a leer `window.matchMedia("(prefers-reduced-motion: reduce)").matches` con guarda para jsdom, para respetar la preferencia real del sistema en producción sin romper los tests.
 
 ## Risks / Trade-offs
 
 - **`tokens.test.ts` es sensible al texto exacto** -> Se conserva `--font-family-base` y la primera declaración de `body`; la familia nueva va en una segunda declaración y en tokens nuevos.
 - **`smoke.test.tsx` depende del heading del login** -> Se mantiene el heading "Turnos Odontología" y se agrega el logo como decoración.
 - **Contraste de estados** -> Los ratios se calcularon antes de escribir; si un ajuste visual cambia un valor, el test de contraste falla y obliga a recalcular.
-- **Ken Burns que no se reinicia** -> La animación se ata a la foto activa (montaje por índice); el test verifica la clase/animación solo en la activa.
+- **Ken Burns que no se reinicia** -> La animación se ata a la foto activa (montaje por índice); el test de jsdom verifica la clase solo en la activa y la duración/reinicio se valida por CSS (grep) o captura visual.
 - **Carrusel frágil en tests** -> Ticker y reduced motion inyectados; no se usan fake timers, `waitFor` largos ni mocks.
 - **Barra que excede dos renglones en 768** -> `flex-wrap` + ocultar subtítulo; se valida con captura visual además del test de estructura.
 - **Assets pesados** -> Las cinco fotos ya existen; se importan estáticamente y Vite las optimiza en build; no se agregan nuevas.
