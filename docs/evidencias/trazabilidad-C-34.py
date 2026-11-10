@@ -29,8 +29,8 @@ TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str(FRONTEND / "node_modules" / "vitest" / "vitest.mjs")]
 
 SPECS = (
-    REPO / "openspec" / "changes" / "ui-identidad-visual" / "specs" / "frontend-foundation" / "spec.md",
-    REPO / "openspec" / "changes" / "ui-identidad-visual" / "specs" / "frontend-auth-session" / "spec.md",
+    REPO / "openspec" / "changes" / "archive" / "2026-11-09-ui-identidad-visual" / "specs" / "frontend-foundation" / "spec.md",
+    REPO / "openspec" / "changes" / "archive" / "2026-11-09-ui-identidad-visual" / "specs" / "frontend-auth-session" / "spec.md",
 )
 
 T_STATUS = "src/shared/styles/appointmentStatusTokens.test.ts"

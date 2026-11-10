@@ -27,7 +27,7 @@ El frontend MUST vivir en `frontend/` con Vite, React 18 y TypeScript `strict`. 
 - **AND** `package.json` contiene `dev`, `build`, `preview`, `test`, `test:run`, `typecheck` y `lint`
 
 ### Requirement: Tokens de diseño y colores por estado
-Los estilos MUST usar CSS custom properties y CSS Modules. `tokens.css` SHALL definir el espaciado 4/8/12/16/24/32/48 px, la tipografía 12/14/16/20/24/32 px, el system font stack y el foco visible. `APPOINTMENT_STATUS_TOKENS` SHALL mapear los cinco estados con sus colores de texto, fondo y borde, con contraste AA >= 4.5:1 documentado.
+Los estilos MUST usar CSS custom properties y CSS Modules. `tokens.css` SHALL definir espaciado (4–48 px), tipografía (12–32 px), la familia base del sistema como fallback, la paleta Aqua (ink, navy, primary, accent, ice, fondo y texto secundario) y el foco visible. El token de borde es no-texto. `APPOINTMENT_STATUS_TOKENS` SHALL mapear los cinco estados con colores de texto, fondo y borde, con contraste AA >= 4.5:1 en cada par texto/fondo.
 
 #### Scenario: El mapa cubre los cinco estados sin undefined
 - **GIVEN** el mapa `APPOINTMENT_STATUS_TOKENS`
@@ -38,15 +38,31 @@ Los estilos MUST usar CSS custom properties y CSS Modules. `tokens.css` SHALL de
 #### Scenario: Cada par texto y fondo cumple contraste AA
 - **GIVEN** los pares de `APPOINTMENT_STATUS_TOKENS`
 - **WHEN** se calcula el ratio de contraste de cada par texto/fondo
-- **THEN** `reservado` `#1D4ED8` sobre `#DBEAFE` es 5.49:1
-- **AND** `confirmado` `#15803D` sobre `#DCFCE7` es 4.57:1, `atendido` `#374151` sobre `#E5E7EB` es 8.33:1, `ausente` `#B45309` sobre `#FEF3C7` es 4.51:1 y `cancelado` `#B91C1C` sobre `#FEE2E2` es 5.30:1
+- **THEN** `reservado` `#1F5F86` sobre `#E4F2F8` es 6.04:1
+- **AND** `confirmado` `#146C43` sobre `#DDF3E7` es 5.54:1, `atendido` `#3D4A5C` sobre `#E6EBF1` es 7.51:1, `ausente` `#9A5B00` sobre `#FDF0D5` es 4.81:1 y `cancelado` `#A8242C` sobre `#FBE4E6` es 5.87:1
 - **AND** los cinco ratios son al menos 4.5:1
+
+#### Scenario: Los tokens de paleta usados como texto cumplen contraste AA
+- **GIVEN** los tokens de la paleta Aqua que se usan como texto
+- **WHEN** se calcula el contraste contra su fondo correspondiente
+- **THEN** `--color-text` `#011C40` sobre `--color-background` `#F3F7FA` es 15.70:1
+- **AND** `--color-text-muted` `#4A5F78` sobre `--color-background` `#F3F7FA` es 6.09:1
+- **AND** `--color-primary-contrast` `#FFFFFF` sobre `--color-primary` `#26658C` es 6.32:1
+- **AND** `--color-focus` `#26658C` sobre `--color-background` `#F3F7FA` es 5.87:1
+- **AND** `--color-accent` `#54ACBF` sobre `--color-background` `#F3F7FA` es 2.43:1 y queda excluido de la exigencia de texto por ser decorativo
+- **AND** `--color-navy`, `--color-ice` y `--color-border` quedan excluidos de la exigencia de texto
 
 #### Scenario: El foco es visible
 - **GIVEN** un elemento interactivo con la clase de foco del sistema de tokens
 - **WHEN** recibe foco por teclado
 - **THEN** se aplica un `outline` de 2 px con `--color-focus`
 - **AND** el estilo usa el selector `:focus-visible`
+
+#### Scenario: La familia base del sistema se conserva como fallback
+- **GIVEN** el archivo `tokens.css` y el `reset.css`
+- **WHEN** se inspecciona `--font-family-base`
+- **THEN** su valor es el system font stack existente
+- **AND** `body` sigue declarando `font-family: var(--font-family-base)` como fallback
 
 ### Requirement: StatusBadge
 `StatusBadge` MUST ser presentacional y recibir `status`. SHALL renderizar el texto en español del estado y la variante/clase derivada de `APPOINTMENT_STATUS_TOKENS`, sin fetch ni estado propio. MUST usar solo datos ficticios en sus pruebas.
@@ -199,3 +215,66 @@ El cliente MUST exponer una costura `setAuthProvider({ getToken })` con valor po
 - **THEN** no tiene `env_file` con el `.env` completo
 - **AND** su entorno no incluye `JWT_SECRET`, `POSTGRES_PASSWORD`, `POSTGRES_USER`, `DATABASE_URL` ni `SEED_USER_PASSWORD`
 - **AND** recibe solo `VITE_API_URL` y `CHOKIDAR_USEPOLLING`
+
+### Requirement: Tipografías autoalojadas sin CDN
+La aplicación SHALL cargar Jost para títulos y Manrope para texto desde paquetes npm `@fontsource-variable` importados en el entry point del frontend. MUST NOT cargar fuentes desde un CDN, desde Google Fonts ni mediante un `<link>` remoto. Las familias MUST aplicarse a través de tokens semánticos con fallback al system font stack.
+
+#### Scenario: Las dependencias y los imports de fuentes están en el frontend
+- **GIVEN** `frontend/package.json` y `frontend/src/main.tsx`
+- **WHEN** se inspeccionan las dependencias y los imports del entry point
+- **THEN** `@fontsource-variable/jost` y `@fontsource-variable/manrope` figuran en `dependencies`
+- **AND** `main.tsx` importa ambos paquetes antes de los estilos de la aplicación
+
+#### Scenario: No hay fuentes externas ni CDN
+- **GIVEN** el código y los estilos de `frontend/src`
+- **WHEN** se busca cualquier URL de fuentes externa
+- **THEN** no aparece `fonts.googleapis.com`, `fonts.gstatic.com` ni ninguna URL de CDN de fuentes
+- **AND** las tipografías se sirven desde los archivos empaquetados por Vite
+
+#### Scenario: Las familias se aplican con tokens y fallback
+- **GIVEN** `tokens.css` y `reset.css`
+- **WHEN** se renderiza una pantalla
+- **THEN** `--font-family-heading` usa `"Jost Variable"` y `--font-family-body` usa `"Manrope Variable"`
+- **AND** ambos tokens incluyen el system font stack como fallback
+- **AND** los títulos usan `var(--font-family-heading)` y el texto usa `var(--font-family-body)`
+
+### Requirement: Barra única con la marca Aqua
+La aplicación SHALL mostrar una única barra con el isotipo oscuro de Aqua (`frontend/src/assets/brand/isotipo-aqua.png`, `alt=""`), "Aqua" y "Clínica Odontológica" (no `logo-aqua-oscuro.png` para no duplicar texto). En tablet (<= 768 px), renglón 1 SHALL mostrar marca, usuario y "Cerrar sesión", y renglón 2 la navegación en una fila con scroll horizontal (máximo dos renglones). El título de PageShell MUST NOT crear una segunda barra.
+
+#### Scenario: Barra de escritorio con la marca completa
+- **GIVEN** una sesión autenticada en escritorio (1440 px)
+- **WHEN** se renderiza el shell de la aplicación
+- **THEN** existe una sola barra de encabezado
+- **AND** la barra muestra el logo, "Aqua" y "Clínica Odontológica"
+
+#### Scenario: Barra de tablet con solo Aqua y máximo dos renglones
+- **GIVEN** un viewport de 768 px con una sesión autenticada
+- **WHEN** se renderiza el shell de la aplicación
+- **THEN** la barra muestra el logo y el texto "Aqua"
+- **AND** "Clínica Odontológica" no se muestra
+- **AND** a <= 768 px, renglón 1 muestra marca + usuario y "Cerrar sesión"
+- **AND** renglón 2 muestra la navegación en una sola fila con scroll horizontal
+- **AND** la barra ocupa como máximo dos renglones
+- **AND** esta verificación es visual (captura a 768 px), no un test de Vitest
+
+#### Scenario: La barra usa el isotipo oscuro
+- **GIVEN** la barra de encabezado sobre fondo claro
+- **WHEN** se inspecciona la imagen del logo
+- **THEN** se usa `frontend/src/assets/brand/isotipo-aqua.png`
+- **AND** el isotipo tiene `alt=""` porque el texto "Aqua" está al lado
+- **AND** no se usa `logo-aqua-oscuro.png` ni la variante clara en la barra
+
+#### Scenario: El título de página no se ve como una segunda barra
+- **GIVEN** una página envuelta en PageShell
+- **WHEN** se renderiza el título de la página
+- **THEN** el título del PageShell se muestra sin fondo ni borde propios
+- **AND** esta verificación es visual, no un test de Vitest
+
+### Requirement: Créditos de assets y tipografías
+El `README.md` SHALL incluir una sección de créditos que nombre las cinco fotografías del login, el logo de Aqua y la licencia de las tipografías Jost y Manrope distribuidas por Fontsource.
+
+#### Scenario: El README acredita fotos, logo y tipografías
+- **GIVEN** el `README.md` del repositorio
+- **WHEN** se busca la sección de créditos
+- **THEN** la sección nombra las cinco fotografías y el logo de Aqua
+- **AND** indica que Jost y Manrope se distribuyen con licencia SIL Open Font License mediante Fontsource

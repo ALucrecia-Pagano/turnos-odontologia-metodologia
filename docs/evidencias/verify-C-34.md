@@ -3,7 +3,7 @@
 ## Estado
 
 - Change: `ui-identidad-visual`
-- Tasks 8.1 a 8.4 y 8.6 a 8.9: completadas. Task 8.5: no ejecutada por decisión del alcance.
+- Tasks 8.1 a 8.9: completadas (task 8.5 con verificación visual independiente de Claude).
 - Evidencias: `docs/evidencias/red-C-34/`, `baseline-C-34.txt`, `ratios-C-34.txt`, `mutaciones-C-34.txt`, `trazabilidad-C-34.txt`, `test-C-34-final.txt`.
 - Tests existentes modificados: solo `StatusBadge.test.tsx` y `appointmentStatusTokens.test.ts`, únicamente valores de color/ratio.
 - Datos de pacientes: no se usan datos reales; las menciones a DNI de la evidencia son texto de documentación/roadmap, sin datos personales.
@@ -70,12 +70,29 @@
 
 | Escenario | Verificación |
 |---|---|
-| Barra de tablet con solo Aqua y máximo dos renglones | Captura a 768 px (task 8.5, no ejecutada) |
-| El título de página no se ve como una segunda barra | Captura a 1440/768 px (task 8.5, no ejecutada) |
+| Barra de tablet con solo Aqua y máximo dos renglones | Captura a 768 px (task 8.5, OK) |
+| El título de página no se ve como una segunda barra | Captura a 1440/768 px (task 8.5, OK) |
 | Fondo inmediato del logo oscuro | Inspección visual del login |
 | Tarjeta tipo vidrio sobre overlay navy | Inspección visual del login |
 | CSS desactiva Ken Burns y fundido con reduced motion | `grep` en `LoginPage.module.css` |
 | Duración y reinicio del Ken Burns | `grep` en `LoginPage.module.css` |
+
+## Verificación visual independiente
+
+| Verificación | 1440 px | 768 px | Resultado |
+|---|---|---|---|
+| Barra única (título de página sin aspecto de barra) | 1 renglón | 2 renglones (marca + sesión / nav con scroll) | OK tras H1–H3 |
+| Isotipo con alt="" + "Aqua" (+ "Clínica Odontológica" solo en 1440) | sí | sí, sin subtítulo | OK |
+| Login: logo claro, bajada, tarjeta vidrio sobre overlay navy | sí | sí | OK |
+| Ken Burns solo en la foto activa | sí | sí | OK |
+| prefers-reduced-motion: sin Ken Burns ni rotación | sí | sí | OK |
+| Jost Variable y Manrope Variable cargadas | sí | sí | OK |
+| Scroll horizontal de la página | no | no | OK |
+| Errores de consola | 0 | 0 | OK |
+
+- Capturas "antes": `C-34-hallazgo-dos-barras.png`, `C-34-hallazgo-barra-tablet.png`. Capturas "después": `C-34-barra.png`, `C-34-barra-tablet.png`, `C-34-login.png`, `C-34-login-tablet.png`, `C-34-login-reduced-motion.png` (todas en `docs/evidencias/capturas/`).
+- Desvío H2 bis: el primer arreglo de H2 no aplicó porque el @media quedó antes de las reglas base en AppShell.module.css (cascada). Se movió al final del archivo (commit 2a8c451).
+- En Linux, la suite da 163/164: falla Logout.test.tsx (C-26), que también falla en main. Es un problema preexistente, fuera del alcance de C-34 y pendiente como arreglo aparte.
 
 ## Desvíos
 
@@ -98,4 +115,4 @@
 | `npx eslint .` | 0 | 0 errores, 1 warning `react-refresh/only-export-components` en `LoginCarousel.tsx`; `eslint-C-34.txt` |
 | `npm run build` | 0 | `build-C-34-final.txt`; fuentes y assets empaquetados por Vite |
 | UTF-8 de evidencias C-34 | 0 | 20 archivos, 0 no UTF-8 |
-| Verificación visual 1440/768 px | no ejecutada | task 8.5, a cargo de Claude |
+| Verificación visual 1440/768 px | 0 | task 8.5 completada, verificación independiente de Claude |

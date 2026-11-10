@@ -636,7 +636,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado, §Plan de contingencia de plazo
 
 ### [C-34] `ui-identidad-visual`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-09)
 - **Scope**:
   - Paleta Aqua en `frontend/src/shared/styles/tokens.css` (ink, navy, primary, accent, ice, fondo, texto secundario, foco) con contraste AA ≥ 4.5:1 en todo texto real; se conservan los nombres de tokens que usan los tests de agenda.
   - Colores de estado en `appointmentStatusTokens.ts` (texto/fondo/borde) con contraste AA ≥ 4.5:1; el estado se comunica con texto visible, no solo color.
