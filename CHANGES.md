@@ -698,15 +698,17 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
 
 ### [C-29] `ui-dar-turno-con-errores`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[ ]` propuesto
 - **Scope**:
   - Formulario de turno: paciente, profesional, sillón, prestación, inicio, duración (sugiere la duración por defecto de la prestación; US-042 CA-2). Navegable por teclado, foco visible.
   - Muestra las violaciones del dominio tal cual (código + mensaje en español, con el turno o bloqueo que choca; US-042 CA-1); no repite las reglas en el cliente.
   - Visible solo para recepción y administrador (el odontólogo no da turnos).
   - Tests de componentes: duración sugerida, múltiples violaciones renderizadas, éxito refresca la agenda.
-- **Dependencias**: `C-27`
+- **Dependencias**: `C-27, C-35`
 - **Governance**: MEDIO
 - **Leer antes**:
+  - `docs/evidencias/explore-C-29.md`
+  - `openspec/changes/ui-dar-turno-con-errores/proposal.md` y `design.md`
   - `knowledge-base/06_funcionalidades.md` §US-042, §US-006
   - `knowledge-base/07_flujos_principales.md` §Flujo 1
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
@@ -818,7 +820,7 @@ Fuera del alcance del MVP (D.3 y KB 06 §Épica 7). **No tienen C-NN y no se imp
 | C-26 | `ui-login-y-sesion` | 6 | C-25, C-19 | ALTO |
 | C-27 | `ui-agenda-diaria` | 6 | C-26 | BAJO |
 | C-28 | `ui-agenda-semanal` | 6 | C-27 | BAJO |
-| C-29 | `ui-dar-turno-con-errores` | 6 | C-27 | MEDIO |
+| C-29 | `ui-dar-turno-con-errores` | 6 | C-27, C-35 | MEDIO |
 | C-30 | `ui-reprogramar-cancelar-y-estados` | 6 | C-29 | MEDIO |
 | C-31 | `ui-vista-de-recepcion-por-sillon` | 6 | C-27 | BAJO |
 | C-32 | `ui-horarios-y-bloqueos` | 6 | C-26, C-21 | BAJO |
