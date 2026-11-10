@@ -1,0 +1,34 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/landingContent.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 25[2mms[22m[39m
+[31m   [31m×[31m contenido de la portada[2m > [22mel equipo coincide con el seed[39m[32m 22[2mms[22m[39m
+[31m     → expected [] to have a length of 3 but got +0[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/landingContent.test.ts[2m > [22mcontenido de la portada[2m > [22mel equipo coincide con el seed
+[31m[1mAssertionError[22m: expected [] to have a length of 3 but got +0[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 3[39m
+[31m+ 0[39m
+
+[36m [2m❯[22m src/features/landing/landingContent.test.ts:[2m6:27[22m[39m
+    [90m  4| [39m[34mdescribe[39m([32m"contenido de la portada"[39m[33m,[39m () [33m=>[39m {
+    [90m  5| [39m  [34mit[39m([32m"el equipo coincide con el seed"[39m[33m,[39m () [33m=>[39m {
+    [90m  6| [39m    [34mexpect[39m(professionals)[33m.[39m[34mtoHaveLength[39m([34m3[39m)[33m;[39m
+    [90m   | [39m                          [31m^[39m
+    [90m  7| [39m    expect(professionals.map((professional) => professional.name)).toE…
+    [90m  8| [39m      [32m"Dr. Martín Sosa"[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 00:58:27
+[2m   Duration [22m 3.57s[2m (transform 118ms, setup 574ms, collect 159ms, tests 25ms, environment 2.03s, prepare 265ms)[22m
+

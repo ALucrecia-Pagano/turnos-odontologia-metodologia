@@ -1,0 +1,1762 @@
+Salida generada por docs/evidencias/mutaciones-C-35.py. No editar a mano.
+tests nuevos de C-35 listados por vitest: 24; mutaciones: 24 (una por test)
+SHA-256 de produccion antes: 13870cf163c22d17e5ca973821b22a4f432672d030fd4b8932fcc1b518dc8357
+--- linea de base, sin mutaciones (codigo de salida 0) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/landing/landingContent.test.ts (3 tests) 19ms
+ ✓ src/shared/styles/landingTokens.test.ts (3 tests) 19ms
+ ✓ src/features/landing/RevealSection.test.tsx (3 tests) 283ms
+ ✓ src/shared/components/Dialog.test.tsx (3 tests) 447ms
+   ✓ Dialog > se renderiza abierto sin depender de showModal y expone sus atributos accesibles  397ms
+ ✓ src/features/landing/LoginDialog.test.tsx (5 tests) 403ms
+   ✓ LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica  304ms
+ ✓ src/features/landing/LandingPage.test.tsx (7 tests) 616ms
+   ✓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA  335ms
+
+ Test Files  6 passed (6)
+      Tests  24 passed (24)
+   Start at  01:41:04
+   Duration  5.47s (transform 1.83s, setup 3.62s, collect 3.94s, tests 1.79s, environment 12.52s, prepare 1.65s)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpy0b6076d/vitest.json
+stderr | src/features/landing/LandingPage.test.tsx > LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+
+================================================================================
+[01/24] el equipo coincide con el seed
+test: src/features/landing/landingContent.test.ts > el equipo coincide con el seed
+diff:
+--- a/frontend/src/features/landing/landingContent.ts
++++ b/frontend/src/features/landing/landingContent.ts
+@@ -18,3 +18,3 @@
+   {
+-    name: "Dr. Martín Sosa",
++    name: "Dr. Martín Sosa ",
+     schedule: "Atiende de lunes a viernes por la mañana.",
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 17ms
+   × contenido de la portada > el equipo coincide con el seed 15ms
+     → expected [ 'Dr. Martín Sosa ', …(2) ] to deeply equal [ 'Dr. Martín Sosa', …(2) ]
+   ↓ contenido de la portada > los servicios y duraciones coinciden con el seed
+   ↓ contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:41:11
+   Duration  2.66s (transform 93ms, setup 334ms, collect 37ms, tests 17ms, environment 1.62s, prepare 252ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpt2ijjjry/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/landingContent.test.ts > contenido de la portada > el equipo coincide con el seed
+AssertionError: expected [ 'Dr. Martín Sosa ', …(2) ] to deeply equal [ 'Dr. Martín Sosa', …(2) ]
+
+- Expected
++ Received
+
+  [
+-   "Dr. Martín Sosa",
++   "Dr. Martín Sosa ",
+    "Dra. Laura Quiroga",
+    "Dra. Paula Benítez",
+  ]
+
+ ❯ src/features/landing/landingContent.test.ts:7:68
+      5|   it("el equipo coincide con el seed", () => {
+      6|     expect(professionals).toHaveLength(3);
+      7|     expect(professionals.map((professional) => professional.name)).toE…
+       |                                                                    ^
+      8|       "Dr. Martín Sosa",
+      9|       "Dra. Laura Quiroga",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[02/24] los servicios y duraciones coinciden con el seed
+test: src/features/landing/landingContent.test.ts > los servicios y duraciones coinciden con el seed
+diff:
+--- a/frontend/src/features/landing/landingContent.ts
++++ b/frontend/src/features/landing/landingContent.ts
+@@ -34,3 +34,3 @@
+     name: "Limpieza",
+-    durationMinutes: 45,
++    durationMinutes: 46,
+     description: "Profilaxis y control de sarro.",
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 20ms
+   ↓ contenido de la portada > el equipo coincide con el seed
+   × contenido de la portada > los servicios y duraciones coinciden con el seed 17ms
+     → expected [ [ 'Limpieza', 46 ], …(4) ] to deeply equal [ [ 'Limpieza', 45 ], …(4) ]
+   ↓ contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:41:17
+   Duration  2.94s (transform 79ms, setup 284ms, collect 34ms, tests 20ms, environment 1.74s, prepare 396ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpk54z7yhe/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/landingContent.test.ts > contenido de la portada > los servicios y duraciones coinciden con el seed
+AssertionError: expected [ [ 'Limpieza', 46 ], …(4) ] to deeply equal [ [ 'Limpieza', 45 ], …(4) ]
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  [
+    [
+      "Limpieza",
+-     45,
++     46,
+    ],
+    [
+      "Extracción",
+      60,
+    ],
+
+ ❯ src/features/landing/landingContent.test.ts:18:80
+     16| 
+     17|   it("los servicios y duraciones coinciden con el seed", () => {
+     18|     expect(services.map((service) => [service.name, service.durationMi…
+       |                                                                                ^
+     19|       ["Limpieza", 45],
+     20|       ["Extracción", 60],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[03/24] horarios y contacto son ficticios y coinciden con el seed
+test: src/features/landing/landingContent.test.ts > horarios y contacto son ficticios y coinciden con el seed
+diff:
+--- a/frontend/src/features/landing/landingContent.ts
++++ b/frontend/src/features/landing/landingContent.ts
+@@ -67,3 +67,3 @@
+   address: "Av. Ejemplo 1234, Ciudad Demo",
+-  phone: "(0261) 555-0101",
++  phone: "(0261) 555-0102",
+   email: "turnos@aqua-demo.example",
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 27ms
+   ↓ contenido de la portada > el equipo coincide con el seed
+   ↓ contenido de la portada > los servicios y duraciones coinciden con el seed
+   × contenido de la portada > horarios y contacto son ficticios y coinciden con el seed 24ms
+     → expected { …(3) } to deeply equal { …(3) }
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:41:27
+   Duration  3.33s (transform 95ms, setup 385ms, collect 43ms, tests 27ms, environment 1.92s, prepare 368ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9csgi80i/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/landingContent.test.ts > contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+    "address": "Av. Ejemplo 1234, Ciudad Demo",
+    "email": "turnos@aqua-demo.example",
+-   "phone": "(0261) 555-0101",
++   "phone": "(0261) 555-0102",
+  }
+
+ ❯ src/features/landing/landingContent.test.ts:33:21
+     31|       afternoon: "15:00 a 19:00",
+     32|     });
+     33|     expect(contact).toEqual({
+       |                     ^
+     34|       address: "Av. Ejemplo 1234, Ciudad Demo",
+     35|       phone: "(0261) 555-0101",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[04/24] define los dos tokens de layout
+test: src/shared/styles/landingTokens.test.ts > define los dos tokens de layout
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -70,3 +70,3 @@
+   /* Portada pública */
+-  --landing-hero-min-height: 60vh;
++  --landing-hero-min-height: 61vh;
+   --landing-content-max-width: 1120px;
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (3 tests | 1 failed | 2 skipped) 10ms
+   × tokens de layout de la portada > define los dos tokens de layout 9ms
+     → expected '61vh' to be '60vh' // Object.is equality
+   ↓ tokens de layout de la portada > la portada usa los tokens de layout
+   ↓ tokens de layout de la portada > no agrega colores nuevos
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:41:35
+   Duration  2.62s (transform 85ms, setup 344ms, collect 58ms, tests 10ms, environment 1.53s, prepare 257ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpltq82sln/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de layout de la portada > define los dos tokens de layout
+AssertionError: expected '61vh' to be '60vh' // Object.is equality
+
+Expected: "60vh"
+Received: "61vh"
+
+ ❯ src/shared/styles/landingTokens.test.ts:61:53
+     59|     const tokens = readCustomProperties(readFileSync(TOKENS_PATH, "utf…
+     60| 
+     61|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
+       |                                                     ^
+     62|     expect(tokens.get("--landing-content-max-width")).toMatch(/^\d+(\.…
+     63|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[05/24] la portada usa los tokens de layout
+test: src/shared/styles/landingTokens.test.ts > la portada usa los tokens de layout
+diff:
+--- a/frontend/src/features/landing/LandingPage.module.css
++++ b/frontend/src/features/landing/LandingPage.module.css
+@@ -10,3 +10,3 @@
+   align-items: center;
+-  min-height: var(--landing-hero-min-height);
++  min-height: 60vh;
+   overflow: hidden;
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (3 tests | 1 failed | 2 skipped) 21ms
+   ↓ tokens de layout de la portada > define los dos tokens de layout
+   × tokens de layout de la portada > la portada usa los tokens de layout 19ms
+     → expected '.page {\n  min-height: 100vh;\n  colo…' to contain 'var(--landing-hero-min-height)'
+   ↓ tokens de layout de la portada > no agrega colores nuevos
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:41:42
+   Duration  2.65s (transform 88ms, setup 354ms, collect 66ms, tests 21ms, environment 1.54s, prepare 243ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdqfpmyzs/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de layout de la portada > la portada usa los tokens de layout
+AssertionError: expected '.page {\n  min-height: 100vh;\n  colo…' to contain 'var(--landing-hero-min-height)'
+
+- Expected
++ Received
+
+- var(--landing-hero-min-height)
++ .page {
++   min-height: 100vh;
++   color: var(--color-primary-contrast);
++   background: var(--color-navy);
++ }
++
++ .hero {
++   position: relative;
++   display: flex;
++   align-items: center;
++   min-height: 60vh;
++   overflow: hidden;
++ }
++
++ .heroBackground {
++   position: absolute;
++   inset: 0;
++ }
++
++ .heroContent {
++   position: relative;
++   z-index: 1;
++   display: flex;
++   flex-direction: column;
++   align-items: flex-start;
++   gap: var(--space-4);
++   width: 100%;
++   max-width: var(--landing-content-max-width);
++   margin: 0 auto;
++   padding: var(--space-7) var(--space-5);
++ }
++
++ .heroTitle {
++   margin: 0;
++   line-height: 1;
++ }
++
++ .logo {
++   width: min(360px, 80vw);
++   height: auto;
++ }
++
++ .tagline {
++   margin: 0;
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-2xl);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-ice);
++ }
++
++ .lead {
++   max-width: 54ch;
++   margin: 0;
++   font-size: var(--font-size-lg);
++   line-height: var(--line-height-base);
++ }
++
++ .badge {
++   display: inline-flex;
++   padding: var(--space-1) var(--space-3);
++   font-size: var(--font-size-sm);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-ice);
++   background: color-mix(in srgb, var(--color-ice) 18%, transparent);
++   border: 1px solid color-mix(in srgb, var(--color-ice) 55%, transparent);
++   border-radius: var(--radius-pill);
++ }
++
++ .cta {
++   padding: var(--space-3) var(--space-5);
++   font-family: var(--font-family-body);
++   font-size: var(--font-size-md);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-primary-contrast);
++   background: var(--color-primary);
++   border: 1px solid var(--color-accent);
++   border-radius: var(--radius-sm);
++   cursor: pointer;
++ }
++
++ .cta:focus-visible {
++   outline: 2px solid var(--color-focus);
++   outline-offset: 3px;
++ }
++
++ .section {
++   width: 100%;
++   max-width: var(--landing-content-max-width);
++   margin: 0 auto;
++   padding: var(--space-6) var(--space-5);
++   color: var(--color-text);
++   background: var(--color-background);
++ }
++
++ .sectionTitle {
++   margin: 0 0 var(--space-3);
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-xl);
++   color: var(--color-primary);
++ }
++
++ .demoNote {
++   margin: 0;
++   font-size: var(--font-size-sm);
++   color: var(--color-text-muted);
++ }
++
++ .sectionText {
++   max-width: 72ch;
++   margin: 0 0 var(--space-3);
++   line-height: var(--line-height-base);
++ }
++
++ .list {
++   display: grid;
++   gap: var(--space-2);
++   margin: 0;
++   padding-left: var(--space-5);
++ }
++
++ .overlay {
++   display: flex;
++   align-items: center;
++   justify-content: center;
++   min-height: 100%;
++   padding: var(--space-5);
++   background: color-mix(in srgb, var(--color-navy) 82%, transparent);
++ }
++
++ .close {
++   align-self: flex-end;
++   padding: var(--space-2) var(--space-3);
++   font-family: var(--font-family-body);
++   font-size: var(--font-size-sm);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-primary);
++   background: transparent;
++   border: 1px solid var(--color-border);
++   border-radius: var(--radius-pill);
++   cursor: pointer;
++ }
++
++ .close:focus-visible {
++   outline: 2px solid var(--color-focus);
++   outline-offset: 2px;
++ }
++
++ .reveal {
++   opacity: 1;
++   transform: none;
++   transition:
++     opacity 500ms ease-out,
++     transform 500ms ease-out;
++ }
++
++ .reveal[data-reveal="pending"] {
++   opacity: 0;
++   transform: translateY(var(--space-4));
++ }
++
++ @media (prefers-reduced-motion: reduce) {
++   .reveal {
++     transition: none;
++   }
++
++   .reveal[data-reveal="pending"] {
++     opacity: 1;
++     transform: none;
++   }
++ }
++
+
+ ❯ src/shared/styles/landingTokens.test.ts:68:17
+     66|     const css = readLandingCss();
+     67| 
+     68|     expect(css).toContain("var(--landing-hero-min-height)");
+       |                 ^
+     69|     expect(css).toContain("var(--landing-content-max-width)");
+     70|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[06/24] no agrega colores nuevos
+test: src/shared/styles/landingTokens.test.ts > no agrega colores nuevos
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -72,2 +72,3 @@
+   --landing-content-max-width: 1120px;
++  --landing-danger: #ff0000;
+ }
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (3 tests | 1 failed | 2 skipped) 22ms
+   ↓ tokens de layout de la portada > define los dos tokens de layout
+   ↓ tokens de layout de la portada > la portada usa los tokens de layout
+   × tokens de layout de la portada > no agrega colores nuevos 19ms
+     → expected [ '--landing-danger' ] to deeply equal []
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:41:50
+   Duration  2.64s (transform 93ms, setup 368ms, collect 61ms, tests 22ms, environment 1.54s, prepare 263ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkol8aaxi/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de layout de la portada > no agrega colores nuevos
+AssertionError: expected [ '--landing-danger' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "--landing-danger",
++ ]
+
+ ❯ src/shared/styles/landingTokens.test.ts:79:24
+     77|     const unexpected = colorProperties.filter((name) => !EXISTING_COLO…
+     78| 
+     79|     expect(unexpected).toEqual([]);
+       |                        ^
+     80|     expect(tokens.get("--landing-hero-min-height")).toBeDefined();
+     81|     expect(tokens.get("--landing-content-max-width")).toBeDefined();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[07/24] muestra la marca una sola vez, la bajada, el lead y el CTA
+test: src/features/landing/LandingPage.test.tsx > muestra la marca una sola vez, la bajada, el lead y el CTA
+diff:
+--- a/frontend/src/features/landing/LandingPage.tsx
++++ b/frontend/src/features/landing/LandingPage.tsx
+@@ -47,3 +47,3 @@
+           </h1>
+-          <p className={styles.tagline}>Claridad en cada cuidado.</p>
++          <p className={styles.tagline} style={{ display: "none" }}>Claridad en cada cuidado.</p>
+           <p className={styles.lead}>{heroLead}</p>
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 264ms
+   × LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA 262ms
+     → expect(element).toBeVisible()
+
+Received element is not visible:
+  <p
+  class="tagline"
+  style="display: none;"
+/>
+   ↓ LandingPage > marca el sitio y los datos de contacto como demostración
+   ↓ LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+   ↓ LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+   ↓ LandingPage > abre el acceso al entrar y lo reabre con el CTA
+   ↓ LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+   ↓ LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:41:57
+   Duration  5.38s (transform 727ms, setup 687ms, collect 1.15s, tests 264ms, environment 2.37s, prepare 337ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdbfkgdy4/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+Error: expect(element).toBeVisible()
+
+Received element is not visible:
+  <p
+  class="tagline"
+  style="display: none;"
+/>
+ ❯ src/features/landing/LandingPage.test.tsx:24:59
+     22|     const heading = screen.getByRole("heading", { level: 1, name: "Aqu…
+     23|     expect(heading).toBeInTheDocument();
+     24|     expect(screen.getByText("Claridad en cada cuidado.")).toBeVisible(…
+       |                                                           ^
+     25|     expect(screen.getByText(heroLead)).toBeVisible();
+     26|     expect(screen.getByRole("button", { name: "Ingresar al sistema" })…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[08/24] marca el sitio y los datos de contacto como demostración
+test: src/features/landing/LandingPage.test.tsx > marca el sitio y los datos de contacto como demostración
+diff:
+--- a/frontend/src/features/landing/LandingPage.tsx
++++ b/frontend/src/features/landing/LandingPage.tsx
+@@ -120,3 +120,3 @@
+           </ul>
+-          <p className={styles.demoNote}>{demoContactNote}</p>
++          <p className={styles.demoNote} style={{ display: "none" }}>{demoContactNote}</p>
+         </section>
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 195ms
+   ↓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+   × LandingPage > marca el sitio y los datos de contacto como demostración 192ms
+     → expect(element).toBeVisible()
+
+Received element is not visible:
+  <p
+  class="demoNote"
+  style="display: none;"
+/>
+   ↓ LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+   ↓ LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+   ↓ LandingPage > abre el acceso al entrar y lo reabre con el CTA
+   ↓ LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+   ↓ LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:42:09
+   Duration  3.69s (transform 470ms, setup 399ms, collect 848ms, tests 195ms, environment 1.47s, prepare 300ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpfs2iksbo/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > marca el sitio y los datos de contacto como demostración
+Error: expect(element).toBeVisible()
+
+Received element is not visible:
+  <p
+  class="demoNote"
+  style="display: none;"
+/>
+ ❯ src/features/landing/LandingPage.test.tsx:33:47
+     31| 
+     32|     expect(screen.getByText(demoBadge)).toBeVisible();
+     33|     expect(screen.getByText(demoContactNote)).toBeVisible();
+       |                                               ^
+     34|   });
+     35| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[09/24] muestra las cuatro secciones informativas visibles sin IntersectionObserver
+test: src/features/landing/LandingPage.test.tsx > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -12,3 +12,3 @@
+   const canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined");
+-  const [revealed, setRevealed] = useState(!canAnimate);
++  const [revealed, setRevealed] = useState(false);
+   const sectionRef = useRef<HTMLDivElement>(null);
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 248ms
+   ↓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+   ↓ LandingPage > marca el sitio y los datos de contacto como demostración
+   × LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver 243ms
+     → expected …(4) to have a length of +0 but got 4
+   ↓ LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+   ↓ LandingPage > abre el acceso al entrar y lo reabre con el CTA
+   ↓ LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+   ↓ LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:42:19
+   Duration  3.82s (transform 389ms, setup 411ms, collect 710ms, tests 248ms, environment 1.72s, prepare 270ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpu4qvovuv/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+AssertionError: expected …(4) to have a length of +0 but got 4
+
+- Expected
++ Received
+
+- 0
++ 4
+
+ ❯ src/features/landing/LandingPage.test.tsx:42:67
+     40|       expect(screen.getByRole("heading", { level: 2, name })).toBeVisi…
+     41|     }
+     42|     expect(container.querySelectorAll('[data-reveal="pending"]')).toHa…
+       |                                                                   ^
+     43|   });
+     44| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[10/24] reutiliza el carrusel de cinco fotos y su botón de pausa
+test: src/features/landing/LandingPage.test.tsx > reutiliza el carrusel de cinco fotos y su botón de pausa
+diff:
+--- a/frontend/src/features/login/LoginCarousel.tsx
++++ b/frontend/src/features/login/LoginCarousel.tsx
+@@ -12,3 +12,3 @@
+ const SLIDE_INTERVAL_MS = 7000;
+-const SLIDES = [hero1, hero2, hero3, hero4, hero5];
++const SLIDES = [hero1, hero2, hero3, hero4];
+ 
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 184ms
+   ↓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+   ↓ LandingPage > marca el sitio y los datos de contacto como demostración
+   ↓ LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+   × LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa 181ms
+     → expected <img …(6)></img>
+<img …(5)></img>
+…(2) to have a length of 5 but got 4
+   ↓ LandingPage > abre el acceso al entrar y lo reabre con el CTA
+   ↓ LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+   ↓ LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:42:30
+   Duration  3.99s (transform 468ms, setup 635ms, collect 757ms, tests 184ms, environment 1.66s, prepare 299ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmptakv4wap/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+AssertionError: expected <img …(6)></img>
+<img …(5)></img>
+…(2) to have a length of 5 but got 4
+
+- Expected
++ Received
+
+- 5
++ 4
+
+ ❯ src/features/landing/LandingPage.test.tsx:48:65
+     46|     const { container } = render(<LandingPage onLogin={onLogin} />);
+     47| 
+     48|     expect(container.querySelectorAll("img[data-slide-index]")).toHave…
+       |                                                                 ^
+     49|     expect(screen.getByRole("button", { name: "Pausar animación" })).t…
+     50|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[11/24] abre el acceso al entrar y lo reabre con el CTA
+test: src/features/landing/LandingPage.test.tsx > abre el acceso al entrar y lo reabre con el CTA
+diff:
+--- a/frontend/src/features/landing/LandingPage.tsx
++++ b/frontend/src/features/landing/LandingPage.tsx
+@@ -126,3 +126,3 @@
+         onClose={() => {
+-          setIsLoginOpen(false);
++          setIsLoginOpen(true);
+         }}
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 353ms
+   ↓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+   ↓ LandingPage > marca el sitio y los datos de contacto como demostración
+   ↓ LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+   ↓ LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+   × LandingPage > abre el acceso al entrar y lo reabre con el CTA 350ms
+     → expect(element).not.toHaveAttribute("open") // element.hasAttribute("open")
+
+Expected the element not to have attribute:
+  open
+Received:
+  open=""
+   ↓ LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+   ↓ LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:42:40
+   Duration  3.84s (transform 369ms, setup 284ms, collect 745ms, tests 353ms, environment 1.75s, prepare 201ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpz8v6unq8/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > abre el acceso al entrar y lo reabre con el CTA
+Error: expect(element).not.toHaveAttribute("open") // element.hasAttribute("open")
+
+Expected the element not to have attribute:
+  open
+Received:
+  open=""
+ ❯ src/features/landing/LandingPage.test.tsx:60:24
+     58| 
+     59|     fireEvent.click(screen.getByRole("button", { name: "Ver la clínica…
+     60|     expect(dialog).not.toHaveAttribute("open");
+       |                        ^
+     61| 
+     62|     fireEvent.click(screen.getByRole("button", { name: "Ingresar al si…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[12/24] mantiene un único botón Ingresar y un CTA accesible sin ocultar
+test: src/features/landing/LandingPage.test.tsx > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+diff:
+--- a/frontend/src/features/landing/LandingPage.tsx
++++ b/frontend/src/features/landing/LandingPage.tsx
+@@ -53,2 +53,3 @@
+             type="button"
++            tabIndex={-1}
+             className={styles.cta}
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 297ms
+   ↓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+   ↓ LandingPage > marca el sitio y los datos de contacto como demostración
+   ↓ LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+   ↓ LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+   ↓ LandingPage > abre el acceso al entrar y lo reabre con el CTA
+   × LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar 293ms
+     → expect(element).not.toHaveAttribute("tabindex", "-1") // element.getAttribute("tabindex") === "-1"
+
+Expected the element not to have attribute:
+  tabindex="-1"
+Received:
+  tabindex="-1"
+   ↓ LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:42:52
+   Duration  3.84s (transform 422ms, setup 336ms, collect 846ms, tests 297ms, environment 1.61s, prepare 271ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmplktopwm6/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+Error: expect(element).not.toHaveAttribute("tabindex", "-1") // element.getAttribute("tabindex") === "-1"
+
+Expected the element not to have attribute:
+  tabindex="-1"
+Received:
+  tabindex="-1"
+ ❯ src/features/landing/LandingPage.test.tsx:72:21
+     70|     const cta = screen.getByRole("button", { name: "Ingresar al sistem…
+     71|     expect(cta).not.toHaveAttribute("aria-hidden");
+     72|     expect(cta).not.toHaveAttribute("tabindex", "-1");
+       |                     ^
+     73|   });
+     74| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[13/24] LoginPage monta la portada y conserva el aviso de sesión vencida
+test: src/features/landing/LandingPage.test.tsx > LoginPage monta la portada y conserva el aviso de sesión vencida
+diff:
+--- a/frontend/src/features/login/LoginPage.tsx
++++ b/frontend/src/features/login/LoginPage.tsx
+@@ -25,3 +25,3 @@
+       onLogin={login}
+-      initialNotice={showExpiredMessage ? SESSION_EXPIRED_MESSAGE : null}
++      initialNotice={showExpiredMessage ? "Aviso distinto" : null}
+       carouselTicker={carouselTicker}
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (7 tests | 1 failed | 6 skipped) 453ms
+   ↓ LandingPage > muestra la marca una sola vez, la bajada, el lead y el CTA
+   ↓ LandingPage > marca el sitio y los datos de contacto como demostración
+   ↓ LandingPage > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+   ↓ LandingPage > reutiliza el carrusel de cinco fotos y su botón de pausa
+   ↓ LandingPage > abre el acceso al entrar y lo reabre con el CTA
+   ↓ LandingPage > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+   × LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida 450ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  La sesión venció. Iniciá sesión de nuevo.
+Received:
+  Aviso distinto
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  01:43:04
+   Duration  3.98s (transform 418ms, setup 333ms, collect 868ms, tests 453ms, environment 1.57s, prepare 241ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6mj167t5/vitest.json
+stderr | src/features/landing/LandingPage.test.tsx > LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > LoginPage monta la portada y conserva el aviso de sesión vencida
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  La sesión venció. Iniciá sesión de nuevo.
+Received:
+  Aviso distinto
+ ❯ src/features/landing/LandingPage.test.tsx:94:39
+     92|     ).toBeVisible();
+     93|     expect(screen.getByRole("dialog")).toHaveAttribute("open");
+     94|     expect(screen.getByRole("alert")).toHaveTextContent(SESSION_EXPIRE…
+       |                                       ^
+     95|   });
+     96| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[14/24] abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+test: src/features/landing/LoginDialog.test.tsx > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+diff:
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -70,3 +70,3 @@
+       aria-modal="true"
+-      aria-labelledby={labelledBy}
++      aria-labelledby={undefined}
+       className={styles.dialog}
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LoginDialog.test.tsx (5 tests | 1 failed | 4 skipped) 96ms
+   × LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica 94ms
+     → expect(element).toHaveAttribute("aria-labelledby", "login-heading") // element.getAttribute("aria-labelledby") === "login-heading"
+
+Expected the element to have attribute:
+  aria-labelledby="login-heading"
+Received:
+  null
+   ↓ LoginDialog > cierra el diálogo con el botón Ver la clínica
+   ↓ LoginDialog > muestra el aviso de sesión vencida dentro del formulario
+   ↓ LoginDialog > enfoca Usuario al abrir
+   ↓ LoginDialog > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  01:43:14
+   Duration  2.86s (transform 297ms, setup 335ms, collect 418ms, tests 96ms, environment 1.34s, prepare 284ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp13qlv39h/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LoginDialog.test.tsx > LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+Error: expect(element).toHaveAttribute("aria-labelledby", "login-heading") // element.getAttribute("aria-labelledby") === "login-heading"
+
+Expected the element to have attribute:
+  aria-labelledby="login-heading"
+Received:
+  null
+ ❯ src/features/landing/LoginDialog.test.tsx:19:40
+     17|     render(<LoginDialog open onClose={noop} onLogin={onLogin} />);
+     18| 
+     19|     expect(screen.getByRole("dialog")).toHaveAttribute("aria-labelledb…
+       |                                        ^
+     20|     expect(screen.getByRole("heading", { name: "Turnos Odontología" })…
+     21|     expect(screen.getByRole("form", { name: "Iniciar sesión" })).toBeV…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[15/24] cierra el diálogo con el botón Ver la clínica
+test: src/features/landing/LoginDialog.test.tsx > cierra el diálogo con el botón Ver la clínica
+diff:
+--- a/frontend/src/features/landing/LoginDialog.tsx
++++ b/frontend/src/features/landing/LoginDialog.tsx
+@@ -45,3 +45,3 @@
+         <section className={loginStyles.card} aria-labelledby="login-heading">
+-          <button type="button" className={styles.close} onClick={onClose}>
++          <button type="button" className={styles.close} onClick={() => undefined}>
+             Ver la clínica
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LoginDialog.test.tsx (5 tests | 1 failed | 4 skipped) 126ms
+   ↓ LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+   × LoginDialog > cierra el diálogo con el botón Ver la clínica 124ms
+     → expected +0 to be 1 // Object.is equality
+   ↓ LoginDialog > muestra el aviso de sesión vencida dentro del formulario
+   ↓ LoginDialog > enfoca Usuario al abrir
+   ↓ LoginDialog > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  01:43:23
+   Duration  2.85s (transform 251ms, setup 459ms, collect 345ms, tests 126ms, environment 1.25s, prepare 248ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyfa6jdxq/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LoginDialog.test.tsx > LoginDialog > cierra el diálogo con el botón Ver la clínica
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/features/landing/LoginDialog.test.tsx:38:20
+     36| 
+     37|     fireEvent.click(screen.getByRole("button", { name: "Ver la clínica…
+     38|     expect(closes).toBe(1);
+       |                    ^
+     39|   });
+     40| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[16/24] muestra el aviso de sesión vencida dentro del formulario
+test: src/features/landing/LoginDialog.test.tsx > muestra el aviso de sesión vencida dentro del formulario
+diff:
+--- a/frontend/src/features/landing/LoginDialog.tsx
++++ b/frontend/src/features/landing/LoginDialog.tsx
+@@ -56,3 +56,3 @@
+           </header>
+-          <LoginForm onSubmit={onLogin} initialNotice={initialNotice} />
++          <LoginForm onSubmit={onLogin} initialNotice={initialNotice === null ? null : "Otro aviso"} />
+         </section>
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LoginDialog.test.tsx (5 tests | 1 failed | 4 skipped) 199ms
+   ↓ LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+   ↓ LoginDialog > cierra el diálogo con el botón Ver la clínica
+   × LoginDialog > muestra el aviso de sesión vencida dentro del formulario 196ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  La sesión venció. Iniciá sesión de nuevo.
+Received:
+  Otro aviso
+   ↓ LoginDialog > enfoca Usuario al abrir
+   ↓ LoginDialog > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  01:43:31
+   Duration  3.63s (transform 321ms, setup 500ms, collect 469ms, tests 199ms, environment 1.62s, prepare 238ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmoqzv9fm/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LoginDialog.test.tsx > LoginDialog > muestra el aviso de sesión vencida dentro del formulario
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  La sesión venció. Iniciá sesión de nuevo.
+Received:
+  Otro aviso
+ ❯ src/features/landing/LoginDialog.test.tsx:44:39
+     42|     render(<LoginDialog open onClose={noop} onLogin={onLogin} initialN…
+     43| 
+     44|     expect(screen.getByRole("alert")).toHaveTextContent(SESSION_EXPIRE…
+       |                                       ^
+     45|   });
+     46| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[17/24] enfoca Usuario al abrir
+test: src/features/landing/LoginDialog.test.tsx > enfoca Usuario al abrir
+diff:
+--- a/frontend/src/features/landing/LoginDialog.tsx
++++ b/frontend/src/features/landing/LoginDialog.tsx
+@@ -27,3 +27,3 @@
+     }
+-    document.getElementById("login-username")?.focus();
++    void document.getElementById("login-username");
+   }, [open]);
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LoginDialog.test.tsx (5 tests | 1 failed | 4 skipped) 150ms
+   ↓ LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+   ↓ LoginDialog > cierra el diálogo con el botón Ver la clínica
+   ↓ LoginDialog > muestra el aviso de sesión vencida dentro del formulario
+   × LoginDialog > enfoca Usuario al abrir 147ms
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <input
+  autocomplete="username"
+  class="input"
+  id="login-username"
+  maxlength="150"
+  name="username"
+  required=""
+  type="text"
+  value=""
+/>
+Received element with focus:
+  <body
+  style="overflow: hidden;"
+>
+  <div>
+    <dialog
+      aria-labelledby="login-heading"
+      aria-modal="true"
+      class="dialog"
+      open=""
+      role="dialog"
+    >
+      <div
+        class="overlay"
+      >
+        <section
+          aria-labelledby="login-heading"
+          class="card"
+        >
+          <button
+            class="close"
+            type="button"
+          >
+            Ver la clínica
+          </button>
+          <header
+            class="header"
+          >
+            <h2
+              class="title"
+              id="login-heading"
+            >
+              Turnos Odontología
+            </h2>
+            <p
+              class="subtitle"
+            >
+              Ingresá con tu usuario del consultorio para gestionar la agenda.
+            </p>
+          </header>
+          <form
+            aria-label="Iniciar sesión"
+            class="form"
+            novalidate=""
+          >
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+                for="login-username"
+              >
+                Usuario
+              </label>
+              <input
+                autocomplete="username"
+                class="input"
+                id="login-username"
+                maxlength="150"
+                name="username"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+                for="login-password"
+              >
+                Contraseña
+              </label>
+              <input
+                autocomplete="current-password"
+                class="input"
+                id="login-password"
+                maxlength="128"
+                name="password"
+                required=""
+                type="password"
+                value=""
+              />
+            </div>
+            <button
+              aria-busy="false"
+              class="submit"
+              type="submit"
+            >
+              Ingresar
+            </button>
+          </form>
+        </section>
+      </div>
+    </dialog>
+  </div>
+</body>
+   ↓ LoginDialog > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  01:43:41
+   Duration  2.95s (transform 268ms, setup 306ms, collect 436ms, tests 150ms, environment 1.32s, prepare 322ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0d6o5nlp/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LoginDialog.test.tsx > LoginDialog > enfoca Usuario al abrir
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <input
+  autocomplete="username"
+  class="input"
+  id="login-username"
+  maxlength="150"
+  name="username"
+  required=""
+  type="text"
+  value=""
+/>
+Received element with focus:
+  <body
+  style="overflow: hidden;"
+>
+  <div>
+    <dialog
+      aria-labelledby="login-heading"
+      aria-modal="true"
+      class="dialog"
+      open=""
+      role="dialog"
+    >
+      <div
+        class="overlay"
+      >
+        <section
+          aria-labelledby="login-heading"
+          class="card"
+        >
+          <button
+            class="close"
+            type="button"
+          >
+            Ver la clínica
+          </button>
+          <header
+            class="header"
+          >
+            <h2
+              class="title"
+              id="login-heading"
+            >
+              Turnos Odontología
+            </h2>
+            <p
+              class="subtitle"
+            >
+              Ingresá con tu usuario del consultorio para gestionar la agenda.
+            </p>
+          </header>
+          <form
+            aria-label="Iniciar sesión"
+            class="form"
+            novalidate=""
+          >
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+                for="login-username"
+              >
+                Usuario
+              </label>
+              <input
+                autocomplete="username"
+                class="input"
+                id="login-username"
+                maxlength="150"
+                name="username"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+                for="login-password"
+              >
+                Contraseña
+              </label>
+              <input
+                autocomplete="current-password"
+                class="input"
+                id="login-password"
+                maxlength="128"
+                name="password"
+                required=""
+                type="password"
+                value=""
+              />
+            </div>
+            <button
+              aria-busy="false"
+              class="submit"
+              type="submit"
+            >
+              Ingresar
+            </button>
+          </form>
+        </section>
+      </div>
+    </dialog>
+  </div>
+</body>
+ ❯ src/features/landing/LoginDialog.test.tsx:50:46
+     48|     render(<LoginDialog open onClose={noop} onLogin={onLogin} />);
+     49| 
+     50|     expect(screen.getByLabelText("Usuario")).toHaveFocus();
+       |                                              ^
+     51|   });
+     52| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[18/24] bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+test: src/features/landing/LoginDialog.test.tsx > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+diff:
+--- a/frontend/src/features/landing/LoginDialog.tsx
++++ b/frontend/src/features/landing/LoginDialog.tsx
+@@ -35,3 +35,3 @@
+     const previousOverflow = document.body.style.overflow;
+-    document.body.style.overflow = "hidden";
++    document.body.style.overflow = "visible";
+     return () => {
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LoginDialog.test.tsx (5 tests | 1 failed | 4 skipped) 113ms
+   ↓ LoginDialog > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+   ↓ LoginDialog > cierra el diálogo con el botón Ver la clínica
+   ↓ LoginDialog > muestra el aviso de sesión vencida dentro del formulario
+   ↓ LoginDialog > enfoca Usuario al abrir
+   × LoginDialog > bloquea el overflow del body mientras está abierto y lo restaura al cerrar 111ms
+     → expected 'visible' to be 'hidden' // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  01:43:50
+   Duration  3.16s (transform 210ms, setup 269ms, collect 359ms, tests 113ms, environment 1.52s, prepare 243ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgrltlwjy/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LoginDialog.test.tsx > LoginDialog > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+AssertionError: expected 'visible' to be 'hidden' // Object.is equality
+
+Expected: "hidden"
+Received: "visible"
+
+ ❯ src/features/landing/LoginDialog.test.tsx:56:42
+     54|     document.body.style.overflow = "";
+     55|     const { rerender } = render(<LoginDialog open onClose={noop} onLog…
+     56|     expect(document.body.style.overflow).toBe("hidden");
+       |                                          ^
+     57| 
+     58|     rerender(<LoginDialog open={false} onClose={noop} onLogin={onLogin…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[19/24] se renderiza abierto sin depender de showModal y expone sus atributos accesibles
+test: src/shared/components/Dialog.test.tsx > se renderiza abierto sin depender de showModal y expone sus atributos accesibles
+diff:
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -69,3 +69,3 @@
+       role="dialog"
+-      aria-modal="true"
++      aria-modal="false"
+       aria-labelledby={labelledBy}
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 229ms
+   × Dialog > se renderiza abierto sin depender de showModal y expone sus atributos accesibles 226ms
+     → expect(element).toHaveAttribute("aria-modal", "true") // element.getAttribute("aria-modal") === "true"
+
+Expected the element to have attribute:
+  aria-modal="true"
+Received:
+  aria-modal="false"
+   ↓ Dialog > cierra con Escape y devuelve el foco al disparador
+   ↓ Dialog > atiende cancel y refleja el cierre sin close() nativo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:43:59
+   Duration  3.60s (transform 253ms, setup 443ms, collect 280ms, tests 229ms, environment 1.86s, prepare 335ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgru0auog/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/Dialog.test.tsx > Dialog > se renderiza abierto sin depender de showModal y expone sus atributos accesibles
+Error: expect(element).toHaveAttribute("aria-modal", "true") // element.getAttribute("aria-modal") === "true"
+
+Expected the element to have attribute:
+  aria-modal="true"
+Received:
+  aria-modal="false"
+ ❯ src/shared/components/Dialog.test.tsx:18:20
+     16|     expect(dialog.tagName).toBe("DIALOG");
+     17|     expect(dialog).toHaveAttribute("open");
+     18|     expect(dialog).toHaveAttribute("aria-modal", "true");
+       |                    ^
+     19|     expect(dialog).toHaveAttribute("aria-labelledby", "dialog-title");
+     20|     expect(screen.getByRole("heading", { name: "Iniciar sesión" })).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[20/24] cierra con Escape y devuelve el foco al disparador
+test: src/shared/components/Dialog.test.tsx > cierra con Escape y devuelve el foco al disparador
+diff:
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -51,3 +51,3 @@
+   const handleKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
+-    if (event.key !== "Escape") {
++    if (event.key === "Escape") {
+       return;
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 210ms
+   ↓ Dialog > se renderiza abierto sin depender de showModal y expone sus atributos accesibles
+   × Dialog > cierra con Escape y devuelve el foco al disparador 207ms
+     → expected +0 to be 1 // Object.is equality
+   ↓ Dialog > atiende cancel y refleja el cierre sin close() nativo
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:44:11
+   Duration  4.97s (transform 229ms, setup 461ms, collect 229ms, tests 210ms, environment 3.23s, prepare 311ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpslu5xvix/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/Dialog.test.tsx > Dialog > cierra con Escape y devuelve el foco al disparador
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/shared/components/Dialog.test.tsx:52:20
+     50|     fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+     51| 
+     52|     expect(closes).toBe(1);
+       |                    ^
+     53|     expect(trigger).toHaveFocus();
+     54|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[21/24] atiende cancel y refleja el cierre sin close() nativo
+test: src/shared/components/Dialog.test.tsx > atiende cancel y refleja el cierre sin close() nativo
+diff:
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -73,3 +73,3 @@
+       onKeyDown={handleKeyDown}
+-      onCancel={handleCancel}
++      onCancel={() => undefined}
+     >
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 136ms
+   ↓ Dialog > se renderiza abierto sin depender de showModal y expone sus atributos accesibles
+   ↓ Dialog > cierra con Escape y devuelve el foco al disparador
+   × Dialog > atiende cancel y refleja el cierre sin close() nativo 134ms
+     → expected +0 to be 1 // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:44:23
+   Duration  3.23s (transform 204ms, setup 405ms, collect 157ms, tests 136ms, environment 1.75s, prepare 244ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_4g1rg8o/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/Dialog.test.tsx > Dialog > atiende cancel y refleja el cierre sin close() nativo
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/shared/components/Dialog.test.tsx:66:20
+     64|     const dialog = screen.getByRole("dialog");
+     65|     fireEvent(dialog, new Event("cancel", { cancelable: true }));
+     66|     expect(closes).toBe(1);
+       |                    ^
+     67| 
+     68|     rerender(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[22/24] sin IntersectionObserver queda revelada y su contenido es visible
+test: src/features/landing/RevealSection.test.tsx > sin IntersectionObserver queda revelada y su contenido es visible
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -12,3 +12,3 @@
+   const canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined");
+-  const [revealed, setRevealed] = useState(!canAnimate);
++  const [revealed, setRevealed] = useState(false);
+   const sectionRef = useRef<HTMLDivElement>(null);
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (3 tests | 1 failed | 2 skipped) 51ms
+   × RevealSection > sin IntersectionObserver queda revelada y su contenido es visible 49ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+   ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+   ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:44:34
+   Duration  4.19s (transform 260ms, setup 475ms, collect 286ms, tests 51ms, environment 2.19s, prepare 295ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc9002cls/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/RevealSection.test.tsx:14:54
+     12|     );
+     13| 
+     14|     expect(container.querySelector("[data-reveal]")).toHaveAttribute("…
+       |                                                      ^
+     15|     expect(screen.getByText("Contenido informativo")).toBeVisible();
+     16|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[23/24] con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+test: src/features/landing/RevealSection.test.tsx > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -34,5 +34,3 @@
+ 
+-    return instance.observe(section, () => {
+-      setRevealed(true);
+-    });
++    return instance.observe(section, () => {});
+   }, [canAnimate, observer]);
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (3 tests | 1 failed | 2 skipped) 95ms
+   ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+   × RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar 90ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+   ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:44:45
+   Duration  4.27s (transform 336ms, setup 711ms, collect 310ms, tests 95ms, environment 2.25s, prepare 342ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_b070nmn/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/RevealSection.test.tsx:43:21
+     41|       onReveal?.();
+     42|     });
+     43|     expect(section).toHaveAttribute("data-reveal", "revealed");
+       |                     ^
+     44| 
+     45|     unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+[24/24] con movimiento reducido no queda pendiente y el contenido está en el DOM
+test: src/features/landing/RevealSection.test.tsx > con movimiento reducido no queda pendiente y el contenido está en el DOM
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -12,3 +12,3 @@
+   const canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined");
+-  const [revealed, setRevealed] = useState(!canAnimate);
++  const [revealed, setRevealed] = useState(false);
+   const sectionRef = useRef<HTMLDivElement>(null);
+
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (3 tests | 1 failed | 2 skipped) 110ms
+   ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+   ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+   × RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM 101ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:44:56
+   Duration  3.59s (transform 226ms, setup 481ms, collect 240ms, tests 110ms, environment 1.89s, prepare 205ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc68w8zmq/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/RevealSection.test.tsx:61:53
+     59| 
+     60|     expect(screen.getByText("Contenido sin animación")).toBeInTheDocum…
+     61|     expect(document.querySelector("[data-reveal]")).toHaveAttribute("d…
+       |                                                     ^
+     62|   });
+     63| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restaurado: test en verde
+================================================================================
+RESUMEN
+mutaciones que hicieron fallar su test: 24
+mutaciones que NO lo hicieron fallar: 0
+mutaciones inválidas: 0
+SHA-256 de produccion despues: 13870cf163c22d17e5ca973821b22a4f432672d030fd4b8932fcc1b518dc8357
+SHA-256 sin cambios: si

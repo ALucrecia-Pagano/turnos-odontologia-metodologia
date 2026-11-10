@@ -1,0 +1,37 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/LoginDialog.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m4 skipped[39m[2m)[22m[32m 30[2mms[22m[39m
+   [2m[90m↓[39m[22m LoginDialog[2m > [22mabre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+   [2m[90m↓[39m[22m LoginDialog[2m > [22mcierra el diálogo con el botón Ver la clínica
+   [2m[90m↓[39m[22m LoginDialog[2m > [22mmuestra el aviso de sesión vencida dentro del formulario
+   [2m[90m↓[39m[22m LoginDialog[2m > [22menfoca Usuario al abrir
+[31m   [31m×[31m LoginDialog[2m > [22mbloquea el overflow del body mientras está abierto y lo restaura al cerrar[39m[32m 28[2mms[22m[39m
+[31m     → expected '' to be 'hidden' // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/LoginDialog.test.tsx[2m > [22mLoginDialog[2m > [22mbloquea el overflow del body mientras está abierto y lo restaura al cerrar
+[31m[1mAssertionError[22m: expected '' to be 'hidden' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- hidden[39m
+
+[36m [2m❯[22m src/features/landing/LoginDialog.test.tsx:[2m56:42[22m[39m
+    [90m 54| [39m    document[33m.[39mbody[33m.[39mstyle[33m.[39moverflow [33m=[39m [32m""[39m[33m;[39m
+    [90m 55| [39m    const { rerender } = render(<LoginDialog open onClose={noop} onLog…
+    [90m 56| [39m    [34mexpect[39m(document[33m.[39mbody[33m.[39mstyle[33m.[39moverflow)[33m.[39m[34mtoBe[39m([32m"hidden"[39m)[33m;[39m
+    [90m   | [39m                                         [31m^[39m
+    [90m 57| [39m
+    [90m 58| [39m    rerender(<LoginDialog open={false} onClose={noop} onLogin={onLogin…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m4 skipped[39m[90m (5)[39m
+[2m   Start at [22m 01:09:06
+[2m   Duration [22m 3.71s[2m (transform 218ms, setup 298ms, collect 271ms, tests 30ms, environment 2.13s, prepare 342ms)[22m
+

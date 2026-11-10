@@ -1,0 +1,587 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+[90mstderr[2m | src/features/landing/LandingPage.test.tsx[2m > [22m[2mLandingPage[2m > [22m[2mLoginPage monta la portada y conserva el aviso de sesión vencida
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [31m❯[39m src/features/landing/LandingPage.test.tsx [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m6 skipped[39m[2m)[22m[32m 172[2mms[22m[39m
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmuestra la marca una sola vez, la bajada, el lead y el CTA
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmarca el sitio y los datos de contacto como demostración
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmuestra las cuatro secciones informativas visibles sin IntersectionObserver
+   [2m[90m↓[39m[22m LandingPage[2m > [22mreutiliza el carrusel de cinco fotos y su botón de pausa
+   [2m[90m↓[39m[22m LandingPage[2m > [22mabre el acceso al entrar y lo reabre con el CTA
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmantiene un único botón Ingresar y un CTA accesible sin ocultar
+[31m   [31m×[31m LandingPage[2m > [22mLoginPage monta la portada y conserva el aviso de sesión vencida[39m[32m 170[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "heading" and name "Aqua — Clínica Odontológica"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"page"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Pausar animación":
+  [36m<button[31m
+    [33mclass[31m=[32m"carouselToggle"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Ingresar":
+  [36m<button[31m
+    [33maria-busy[31m=[32m"false"[31m
+    [33mclass[31m=[32m"submit"[31m
+    [33mtype[31m=[32m"submit"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  img:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<img[31m
+    [33malt[31m=[32m"Aqua — Clínica Odontológica"[31m
+    [33mclass[31m=[32m"logo"[31m
+    [33msrc[31m=[32m"/src/assets/brand/logo-aqua-claro.png"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"tagline"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"subtitle"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Turnos Odontología":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"login-heading"[31m
+    [33mclass[31m=[32m"card"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"header"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"login-heading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  form:
+
+  Name "Iniciar sesión":
+  [36m<form[31m
+    [33maria-describedby[31m=[32m"login-alert"[31m
+    [33maria-label[31m=[32m"Iniciar sesión"[31m
+    [33mclass[31m=[32m"form"[31m
+    [33mnovalidate[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  alert:
+
+  Name "":
+  [36m<div[31m
+    [33maria-live[31m=[32m"polite"[31m
+    [33mclass[31m=[32m"alert"[31m
+    [33mid[31m=[32m"login-alert"[31m
+    [33mrole[31m=[32m"alert"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Usuario":
+  [36m<input[31m
+    [33mautocomplete[31m=[32m"username"[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"login-username"[31m
+    [33mmaxlength[31m=[32m"150"[31m
+    [33mname[31m=[32m"username"[31m
+    [33mrequired[31m=[32m""[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"carousel"[31m
+      [36m>[31m
+        [36m<img[31m
+          [33malt[31m=[32m""[31m
+          [33maria-hidden[31m=[32m"true"[31m
+          [33mclass[31m=[32m"slide slideActive kenBurns"[31m
+          [33mdata-active[31m=[32m"true"[31m
+          [33mdata-slide-index[31m=[32m"0"[31m
+          [33msrc[31m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[31m
+        [36m/>[31m
+        [36m<img[31m
+          [33malt[31m=[32m""[31m
+          [33maria-hidden[31m=[32m"true"[31m
+          [33mclass[31m=[32m"slide"[31m
+          [33mdata-slide-index[31m=[32m"1"[31m
+          [33msrc[31m=[32m"/src/assets/images/hero-2-consultorio.webp"[31m
+        [36m/>[31m
+        [36m<img[31m
+          [33malt[31m=[32m""[31m
+          [33maria-hidden[31m=[32m"true"[31m
+          [33mclass[31m=[32m"slide"[31m
+          [33mdata-slide-index[31m=[32m"2"[31m
+          [33msrc[31m=[32m"/src/assets/images/hero-3-dentista.webp"[31m
+        [36m/>[31m
+        [36m<img[31m
+          [33malt[31m=[32m""[31m
+          [33maria-hidden[31m=[32m"true"[31m
+          [33mclass[31m=[32m"slide"[31m
+          [33mdata-slide-index[31m=[32m"3"[31m
+          [33msrc[31m=[32m"/src/assets/images/hero-4-instrumental.webp"[31m
+        [36m/>[31m
+        [36m<img[31m
+          [33malt[31m=[32m""[31m
+          [33maria-hidden[31m=[32m"true"[31m
+          [33mclass[31m=[32m"slide"[31m
+          [33mdata-slide-index[31m=[32m"4"[31m
+          [33msrc[31m=[32m"/src/assets/images/hero-5-sillon.webp"[31m
+        [36m/>[31m
+        [36m<div[31m
+          [33maria-hidden[31m=[32m"true"[31m
+          [33mclass[31m=[32m"overlay"[31m
+        [36m/>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"carouselToggle"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPausar animación[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"content"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+        [36m>[31m
+          [36m<img[31m
+            [33malt[31m=[32m"Aqua — Clínica Odontológica"[31m
+            [33mclass[31m=[32m"logo"[31m
+            [33msrc[31m=[32m"/src/assets/brand/logo-aqua-claro.png"[31m
+          [36m/>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"tagline"[31m
+          [36m>[31m
+            [0mClaridad en cada cuidado.[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<section[31m
+          [33maria-labelledby[31m=[32m"login-heading"[31m
+          [33mclass[31m=[32m"card"[31m
+        [36m>[31m
+          [36m<header[31m
+            [33mclass[31m=[32m"header"[31m
+          [36m>[31m
+            [36m<h1[31m
+              [33mclass[31m=[32m"title"[31m
+              [33mid[31m=[32m"login-heading"[31m
+            [36m>[31m
+              [0mTurnos Odontología[0m
+            [36m</h1>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"subtitle"[31m
+            [36m>[31m
+              [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+            [36m</p>[31m
+          [36m</header>[31m
+          [36m<form[31m
+            [33maria-describedby[31m=[32m"login-alert"[31m
+            [33maria-label[31m=[32m"Iniciar sesión"[31m
+            [33mclass[31m=[32m"form"[31m
+            [33mnovalidate[31m=[32m""[31m
+          [36m>[31m
+            [36m<div[31m
+              [33maria-live[31m=[32m"polite"[31m
+              [33mclass[31m=[32m"alert"[31m
+              [33mid[31m=[32m"login-alert"[31m
+              [33mrole[31m=[32m"alert"[31m
+            [36m>[31m
+              [0mLa sesión venció. Iniciá sesión de nuevo.[0m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"login-username"[31m
+              [36m>[31m
+                [0mUsuario[0m
+              [36m</label>[31m
+              [36m<input[31m
+                [33mautocomplete[31m=[32m"username"[31m
+                [33mclass[31m=[32m"input"[31m
+                [33mid[31m=[32m"login-username"[31m
+                [33mmaxlength[31m=[32m"150"[31m
+                [33mname[31m=[32m"username"[31m
+                [33mrequired[31m=[32m""[31m
+                [33mtype[31m=[32m"text"[31m
+                [33mvalue[31m=[32m""[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"login-password"[31m
+              [36m>[31m
+                [0mContraseña[0m
+              [36m</label>[31m
+              [36m<input[31m
+                [33mautocomplete[31m=[32m"current-password"[31m
+                [33mclass[31m=[32m"input"[31m
+                [33mid[31m=[32m"login-password"[31m
+                [33mmaxlength[31m=[32m"128"[31m
+                [33mname[31m=[32m"password"[31m
+                [33mrequired[31m=[32m""[31m
+                [33mtype[31m=[32m"password"[31m
+                [33mvalue[31m=[32m""[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [36m<button[31m
+              [33maria-busy[31m=[32m"false"[31m
+              [33mclass[31m=[32m"submit"[31m
+              [33mtype[31m=[32m"submit"[31m
+            [36m>[31m
+              [0mIngresar[0m
+            [36m</button>[31m
+          [36m</form>[31m
+        [36m</section>[31m
+      [36m</div>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/LandingPage.test.tsx[2m > [22mLandingPage[2m > [22mLoginPage monta la portada y conserva el aviso de sesión vencida
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an accessible element with the role "heading" and name "Aqua — Clínica Odontológica"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"page"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Pausar animación":
+  [36m<button[39m
+    [33mclass[39m=[32m"carouselToggle"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Ingresar":
+  [36m<button[39m
+    [33maria-busy[39m=[32m"false"[39m
+    [33mclass[39m=[32m"submit"[39m
+    [33mtype[39m=[32m"submit"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  img:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<img[39m
+    [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+    [33mclass[39m=[32m"logo"[39m
+    [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"tagline"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"subtitle"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "Turnos Odontología":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"login-heading"[39m
+    [33mclass[39m=[32m"card"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"header"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1[39m
+    [33mclass[39m=[32m"title"[39m
+    [33mid[39m=[32m"login-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  form:
+
+  Name "Iniciar sesión":
+  [36m<form[39m
+    [33maria-describedby[39m=[32m"login-alert"[39m
+    [33maria-label[39m=[32m"Iniciar sesión"[39m
+    [33mclass[39m=[32m"form"[39m
+    [33mnovalidate[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  alert:
+
+  Name "":
+  [36m<div[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"alert"[39m
+    [33mid[39m=[32m"login-alert"[39m
+    [33mrole[39m=[32m"alert"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Usuario":
+  [36m<input[39m
+    [33mautocomplete[39m=[32m"username"[39m
+    [33mclass[39m=[32m"input"[39m
+    [33mid[39m=[32m"login-username"[39m
+    [33mmaxlength[39m=[32m"150"[39m
+    [33mname[39m=[32m"username"[39m
+    [33mrequired[39m=[32m""[39m
+    [33mtype[39m=[32m"text"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<main[39m
+      [33mclass[39m=[32m"page"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"carousel"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m""[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+          [33mdata-active[39m=[32m"true"[39m
+          [33mdata-slide-index[39m=[32m"0"[39m
+          [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+        [36m/>[39m
+        [36m<img[39m
+          [33malt[39m=[32m""[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"slide"[39m
+          [33mdata-slide-index[39m=[32m"1"[39m
+          [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+        [36m/>[39m
+        [36m<img[39m
+          [33malt[39m=[32m""[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"slide"[39m
+          [33mdata-slide-index[39m=[32m"2"[39m
+          [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+        [36m/>[39m
+        [36m<img[39m
+          [33malt[39m=[32m""[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"slide"[39m
+          [33mdata-slide-index[39m=[32m"3"[39m
+          [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+        [36m/>[39m
+        [36m<img[39m
+          [33malt[39m=[32m""[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"slide"[39m
+          [33mdata-slide-index[39m=[32m"4"[39m
+          [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"overlay"[39m
+        [36m/>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"carouselToggle"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mPausar animación[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"content"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+            [33mclass[39m=[32m"logo"[39m
+            [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+          [36m/>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"tagline"[39m
+          [36m>[39m
+            [0mClaridad en cada cuidado.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"login-heading"[39m
+          [33mclass[39m=[32m"card"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"header"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"login-heading"[39m
+            [36m>[39m
+              [0mTurnos Odontología[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+            [36m</p>[39m
+          [36m</header>[39m
+          [36m<form[39m
+            [33maria-describedby[39m=[32m"login-alert"[39m
+            [33maria-label[39m=[32m"Iniciar sesión"[39m
+            [33mclass[39m=[32m"form"[39m
+            [33mnovalidate[39m=[32m""[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-live[39m=[32m"polite"[39m
+              [33mclass[39m=[32m"alert"[39m
+              [33mid[39m=[32m"login-alert"[39m
+              [33mrole[39m=[32m"alert"[39m
+            [36m>[39m
+              [0mLa sesión venció. Iniciá sesión de nuevo.[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"login-username"[39m
+              [36m>[39m
+                [0mUsuario[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mautocomplete[39m=[32m"username"[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"login-username"[39m
+                [33mmaxlength[39m=[32m"150"[39m
+                [33mname[39m=[32m"username"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"text"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"login-password"[39m
+              [36m>[39m
+                [0mContraseña[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mautocomplete[39m=[32m"current-password"[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"login-password"[39m
+                [33mmaxlength[39m=[32m"128"[39m
+                [33mname[39m=[32m"password"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"password"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33maria-busy[39m=[32m"false"[39m
+              [33mclass[39m=[32m"submit"[39m
+              [33mtype[39m=[32m"submit"[39m
+            [36m>[39m
+              [0mIngresar[0m
+            [36m</button>[39m
+          [36m</form>[39m
+        [36m</section>[39m
+      [36m</div>[39m
+    [36m</main>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/landing/LandingPage.test.tsx:[2m90:14[22m[39m
+    [90m 88| [39m
+    [90m 89| [39m    [34mexpect[39m(
+    [90m 90| [39m      screen.getByRole("heading", { level: 1, name: "Aqua — Clínica Od…
+    [90m   | [39m             [31m^[39m
+    [90m 91| [39m    )[33m.[39m[34mtoBeVisible[39m()[33m;[39m
+    [90m 92| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByRole[39m([32m"dialog"[39m))[33m.[39m[34mtoHaveAttribute[39m([32m"open"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m6 skipped[39m[90m (7)[39m
+[2m   Start at [22m 01:13:56
+[2m   Duration [22m 3.48s[2m (transform 279ms, setup 275ms, collect 571ms, tests 172ms, environment 1.74s, prepare 282ms)[22m
+

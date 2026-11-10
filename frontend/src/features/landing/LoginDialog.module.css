@@ -1,0 +1,26 @@
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--space-5);
+  background: color-mix(in srgb, var(--color-navy) 82%, transparent);
+}
+
+.close {
+  align-self: flex-end;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}

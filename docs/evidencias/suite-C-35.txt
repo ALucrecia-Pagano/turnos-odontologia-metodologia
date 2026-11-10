@@ -1,0 +1,91 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 710[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros [33m 610[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1024[2mms[22m[39m
+   [33m[2m✓[22m[39m AuthContext[2m > [22mestado checking mientras se verifica la sesión [33m 316[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 915[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 674[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 920[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada [33m 709[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 1763[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía [33m 526[2mms[22m[39m
+ [32m✓[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 972[2mms[22m[39m
+   [33m[2m✓[22m[39m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace [33m 969[2mms[22m[39m
+[90mstderr[2m | src/features/landing/LandingPage.test.tsx[2m > [22m[2mLandingPage[2m > [22m[2mLoginPage monta la portada y conserva el aviso de sesión vencida
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [32m✓[39m src/features/landing/LandingPage.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 1117[2mms[22m[39m
+   [33m[2m✓[22m[39m LandingPage[2m > [22mmuestra la marca una sola vez, la bajada, el lead y el CTA [33m 518[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1088[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage [33m 402[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 389[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 4701[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 943[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha [33m 732[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL [33m 484[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mAgendaPage - Vista Semanal (C-28)[2m > [22mbotón Hoy en vista semanal navega a la fecha actual del Clock [33m 309[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 516[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda [33m 513[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 505[2mms[22m[39m
+   [33m[2m✓[22m[39m smoke del andamiaje[2m > [22mmonta App y muestra el título [33m 501[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 572[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginCarousel[2m > [22mpausa y reanuda el avance sin aria-pressed [33m 375[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 367[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 497[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell brand[2m > [22mmuestra una sola barra con logo decorativo, Aqua y Clínica Odontológica [33m 443[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 274[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 472[2mms[22m[39m
+   [33m[2m✓[22m[39m useAgenda[2m > [22mdispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled [33m 326[2mms[22m[39m
+ [32m✓[39m src/features/landing/LoginDialog.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 562[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginDialog[2m > [22mabre con el diálogo, el heading, el formulario y el botón para recorrer la clínica [33m 382[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 8986[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 1963[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 3013[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 1571[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 805[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 829[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 802[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 224[2mms[22m[39m
+ [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 208[2mms[22m[39m
+ [32m✓[39m src/features/landing/RevealSection.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 249[2mms[22m[39m
+ [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 144[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 125[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 382[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/features/agenda/clock.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m src/shared/api/auth.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m src/features/auth/storageGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m src/shared/styles/fonts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/shared/styles/landingTokens.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/test/readmeCredits.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/features/landing/landingContent.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/shared/styles/aquaPalette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/test/tooling.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 24968[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido [33m 14726[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run lint detecta una violación [33m 10232[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m47 passed[39m[22m[90m (47)[39m
+[2m      Tests [22m [1m[32m188 passed[39m[22m[90m (188)[39m
+[2m   Start at [22m 01:51:26
+[2m   Duration [22m 31.43s[2m (transform 11.54s, setup 31.99s, collect 27.44s, tests 52.80s, environment 137.82s, prepare 16.23s)[22m
+

@@ -1,0 +1,31 @@
+[01/24] src/features/landing/landingContent.test.ts > el equipo coincide con el seed
+[02/24] src/features/landing/landingContent.test.ts > los servicios y duraciones coinciden con el seed
+[03/24] src/features/landing/landingContent.test.ts > horarios y contacto son ficticios y coinciden con el seed
+[04/24] src/shared/styles/landingTokens.test.ts > define los dos tokens de layout
+[05/24] src/shared/styles/landingTokens.test.ts > la portada usa los tokens de layout
+[06/24] src/shared/styles/landingTokens.test.ts > no agrega colores nuevos
+[07/24] src/features/landing/LandingPage.test.tsx > muestra la marca una sola vez, la bajada, el lead y el CTA
+[08/24] src/features/landing/LandingPage.test.tsx > marca el sitio y los datos de contacto como demostración
+[09/24] src/features/landing/LandingPage.test.tsx > muestra las cuatro secciones informativas visibles sin IntersectionObserver
+[10/24] src/features/landing/LandingPage.test.tsx > reutiliza el carrusel de cinco fotos y su botón de pausa
+[11/24] src/features/landing/LandingPage.test.tsx > abre el acceso al entrar y lo reabre con el CTA
+[12/24] src/features/landing/LandingPage.test.tsx > mantiene un único botón Ingresar y un CTA accesible sin ocultar
+[13/24] src/features/landing/LandingPage.test.tsx > LoginPage monta la portada y conserva el aviso de sesión vencida
+[14/24] src/features/landing/LoginDialog.test.tsx > abre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+[15/24] src/features/landing/LoginDialog.test.tsx > cierra el diálogo con el botón Ver la clínica
+[16/24] src/features/landing/LoginDialog.test.tsx > muestra el aviso de sesión vencida dentro del formulario
+[17/24] src/features/landing/LoginDialog.test.tsx > enfoca Usuario al abrir
+[18/24] src/features/landing/LoginDialog.test.tsx > bloquea el overflow del body mientras está abierto y lo restaura al cerrar
+[19/24] src/shared/components/Dialog.test.tsx > se renderiza abierto sin depender de showModal y expone sus atributos accesibles
+[20/24] src/shared/components/Dialog.test.tsx > cierra con Escape y devuelve el foco al disparador
+[21/24] src/shared/components/Dialog.test.tsx > atiende cancel y refleja el cierre sin close() nativo
+[22/24] src/features/landing/RevealSection.test.tsx > sin IntersectionObserver queda revelada y su contenido es visible
+[23/24] src/features/landing/RevealSection.test.tsx > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+[24/24] src/features/landing/RevealSection.test.tsx > con movimiento reducido no queda pendiente y el contenido está en el DOM
+================================================================================
+RESUMEN
+mutaciones que hicieron fallar su test: 24
+mutaciones que NO lo hicieron fallar: 0
+mutaciones inválidas: 0
+SHA-256 de produccion despues: 13870cf163c22d17e5ca973821b22a4f432672d030fd4b8932fcc1b518dc8357
+SHA-256 sin cambios: si

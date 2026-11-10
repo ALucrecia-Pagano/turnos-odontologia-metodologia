@@ -1,0 +1,240 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/LandingPage.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[32m 98[2mms[22m[39m
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmuestra la marca una sola vez, la bajada, el lead y el CTA
+[31m   [31m×[31m LandingPage[2m > [22mmarca el sitio y los datos de contacto como demostración[39m[32m 95[2mms[22m[39m
+[31m     → Unable to find an element with the text: Datos de contacto ficticios, solo para la demostración. No agendar turnos reales.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"hero-heading"[31m
+        [33mclass[31m=[32m"hero"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"heroBackground"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"carousel"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide slideActive kenBurns"[31m
+              [33mdata-active[31m=[32m"true"[31m
+              [33mdata-slide-index[31m=[32m"0"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"1"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-2-consultorio.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"2"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-3-dentista.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"3"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-4-instrumental.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"4"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-5-sillon.webp"[31m
+            [36m/>[31m
+            [36m<div[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"overlay"[31m
+            [36m/>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"carouselToggle"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mPausar animación[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"heroContent"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"heroTitle"[31m
+            [33mid[31m=[32m"hero-heading"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m"Aqua — Clínica Odontológica"[31m
+              [33mclass[31m=[32m"logo"[31m
+              [33msrc[31m=[32m"/src/assets/brand/logo-aqua-claro.png"[31m
+            [36m/>[31m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"tagline"[31m
+          [36m>[31m
+            [0mClaridad en cada cuidado.[0m
+          [36m</p>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"lead"[31m
+          [36m>[31m
+            [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+          [36m</p>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"badge"[31m
+          [36m>[31m
+            [0mSitio de demostración[0m
+          [36m</span>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"cta"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [0mIngresar al sistema[0m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/LandingPage.test.tsx[2m > [22mLandingPage[2m > [22mmarca el sitio y los datos de contacto como demostración
+[31m[1mTestingLibraryElementError[22m: Unable to find an element with the text: Datos de contacto ficticios, solo para la demostración. No agendar turnos reales.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"hero-heading"[31m
+        [33mclass[31m=[32m"hero"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"heroBackground"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"carousel"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide slideActive kenBurns"[31m
+              [33mdata-active[31m=[32m"true"[31m
+              [33mdata-slide-index[31m=[32m"0"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"1"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-2-consultorio.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"2"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-3-dentista.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"3"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-4-instrumental.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"4"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-5-sillon.webp"[31m
+            [36m/>[31m
+            [36m<div[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"overlay"[31m
+            [36m/>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"carouselToggle"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mPausar animación[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"heroContent"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"heroTitle"[31m
+            [33mid[31m=[32m"hero-heading"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m"Aqua — Clínica Odontológica"[31m
+              [33mclass[31m=[32m"logo"[31m
+              [33msrc[31m=[32m"/src/assets/brand/logo-aqua-claro.png"[31m
+            [36m/>[31m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"tagline"[31m
+          [36m>[31m
+            [0mClaridad en cada cuidado.[0m
+          [36m</p>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"lead"[31m
+          [36m>[31m
+            [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+          [36m</p>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"badge"[31m
+          [36m>[31m
+            [0mSitio de demostración[0m
+          [36m</span>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"cta"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [0mIngresar al sistema[0m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/landing/LandingPage.test.tsx:[2m28:19[22m[39m
+    [90m 26| [39m
+    [90m 27| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByText[39m(demoBadge))[33m.[39m[34mtoBeVisible[39m()[33m;[39m
+    [90m 28| [39m    [34mexpect[39m(screen[33m.[39m[34mgetByText[39m(demoContactNote))[33m.[39m[34mtoBeVisible[39m()[33m;[39m
+    [90m   | [39m                  [31m^[39m
+    [90m 29| [39m  })[33m;[39m
+    [90m 30| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m1 skipped[39m[90m (2)[39m
+[2m   Start at [22m 01:02:51
+[2m   Duration [22m 2.91s[2m (transform 154ms, setup 258ms, collect 240ms, tests 98ms, environment 1.58s, prepare 300ms)[22m
+

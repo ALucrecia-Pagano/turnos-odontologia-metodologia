@@ -50,4 +50,3 @@ La primitiva `Dialog` en `frontend/src/shared/components/Dialog.tsx` SHALL ser u
 - **GIVEN** `Dialog` abierto
 - **WHEN** se dispara el evento `cancel` del `<dialog>`
 - **THEN** se llama a `onClose`
-- **AND** no se produce un error de consola

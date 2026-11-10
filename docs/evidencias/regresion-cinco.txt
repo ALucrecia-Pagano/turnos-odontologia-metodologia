@@ -1,0 +1,29 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 1918[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginCarousel[2m > [22minicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta [33m 432[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginCarousel[2m > [22mpausa y reanuda el avance sin aria-pressed [33m 1201[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1676[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada [33m 1250[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage brand[2m > [22mrenderiza sin window.matchMedia, usa reduced motion falso y permite avanzar el carrusel [33m 417[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 1671[2mms[22m[39m
+   [33m[2m✓[22m[39m smoke del andamiaje[2m > [22mmonta App y muestra el título [33m 1616[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 2085[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage [33m 604[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 496[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mruta protegida sin sesión conserva el destino [33m 348[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mtoken vencido en una request protegida [33m 469[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 11134[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 3031[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 2848[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 2148[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 1304[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 1080[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 718[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m20 passed[39m[22m[90m (20)[39m
+[2m   Start at [22m 01:49:07
+[2m   Duration [22m 30.02s[2m (transform 17.26s, setup 16.39s, collect 35.12s, tests 18.48s, environment 33.84s, prepare 2.26s)[22m
+

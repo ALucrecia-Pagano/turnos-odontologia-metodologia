@@ -131,7 +131,7 @@ El diálogo de acceso SHALL abrirse al entrar a `/login`, con heading "Turnos Od
 
 - **GIVEN** un usuario que llega a `/login` con el flag de sesión vencida
 - **WHEN** el diálogo se abre
-- **THEN** el mensaje "Tu sesión venció. Volvé a ingresar." se muestra como `role="alert"`
+- **THEN** el mensaje de `SESSION_EXPIRED_MESSAGE` se muestra como `role="alert"`
 - **AND** el mensaje está dentro del formulario, no en la portada
 
 #### Scenario: Los nombres de los botones no colisionan

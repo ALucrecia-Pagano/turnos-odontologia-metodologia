@@ -1,0 +1,1032 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/LandingPage.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 483[2mms[22m[39m
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmuestra la marca una sola vez, la bajada, el lead y el CTA
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmarca el sitio y los datos de contacto como demostración
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmuestra las cuatro secciones informativas visibles sin IntersectionObserver
+   [2m[90m↓[39m[22m LandingPage[2m > [22mreutiliza el carrusel de cinco fotos y su botón de pausa
+[31m   [31m×[31m LandingPage[2m > [22mabre el acceso al entrar y lo reabre con el CTA[39m[33m 479[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "dialog"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"page"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"hero-heading"[31m
+    [33mclass[31m=[32m"hero"[31m
+  [36m/>[31m
+
+  Name "Quiénes somos":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"about-heading"[31m
+    [33mclass[31m=[32m"section"[31m
+  [36m/>[31m
+
+  Name "Servicios":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"services-heading"[31m
+    [33mclass[31m=[32m"section"[31m
+  [36m/>[31m
+
+  Name "Equipo":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"team-heading"[31m
+    [33mclass[31m=[32m"section"[31m
+  [36m/>[31m
+
+  Name "Horarios y contacto":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"contact-heading"[31m
+    [33mclass[31m=[32m"section"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Pausar animación":
+  [36m<button[31m
+    [33mclass[31m=[32m"carouselToggle"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Ingresar al sistema":
+  [36m<button[31m
+    [33mclass[31m=[32m"cta"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<h1[31m
+    [33mclass[31m=[32m"heroTitle"[31m
+    [33mid[31m=[32m"hero-heading"[31m
+  [36m/>[31m
+
+  Name "Quiénes somos":
+  [36m<h2[31m
+    [33mclass[31m=[32m"sectionTitle"[31m
+    [33mid[31m=[32m"about-heading"[31m
+  [36m/>[31m
+
+  Name "Servicios":
+  [36m<h2[31m
+    [33mclass[31m=[32m"sectionTitle"[31m
+    [33mid[31m=[32m"services-heading"[31m
+  [36m/>[31m
+
+  Name "Equipo":
+  [36m<h2[31m
+    [33mclass[31m=[32m"sectionTitle"[31m
+    [33mid[31m=[32m"team-heading"[31m
+  [36m/>[31m
+
+  Name "Horarios y contacto":
+  [36m<h2[31m
+    [33mclass[31m=[32m"sectionTitle"[31m
+    [33mid[31m=[32m"contact-heading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  img:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<img[31m
+    [33malt[31m=[32m"Aqua — Clínica Odontológica"[31m
+    [33mclass[31m=[32m"logo"[31m
+    [33msrc[31m=[32m"/src/assets/brand/logo-aqua-claro.png"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"tagline"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"lead"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"sectionText"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"sectionText"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"sectionText"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"sectionText"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"sectionText"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"demoNote"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  list:
+
+  Name "":
+  [36m<ul[31m
+    [33mclass[31m=[32m"list"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<ul[31m
+    [33mclass[31m=[32m"list"[31m
+  [36m/>[31m
+
+  Name "":
+  [36m<ul[31m
+    [33mclass[31m=[32m"list"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  Name "":
+  [36m<li />[31m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  Name "":
+  [36m<strong />[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"hero-heading"[31m
+        [33mclass[31m=[32m"hero"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"heroBackground"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"carousel"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide slideActive kenBurns"[31m
+              [33mdata-active[31m=[32m"true"[31m
+              [33mdata-slide-index[31m=[32m"0"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"1"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-2-consultorio.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"2"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-3-dentista.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"3"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-4-instrumental.webp"[31m
+            [36m/>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"slide"[31m
+              [33mdata-slide-index[31m=[32m"4"[31m
+              [33msrc[31m=[32m"/src/assets/images/hero-5-sillon.webp"[31m
+            [36m/>[31m
+            [36m<div[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"overlay"[31m
+            [36m/>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"carouselToggle"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mPausar animación[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"heroContent"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"heroTitle"[31m
+            [33mid[31m=[32m"hero-heading"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m"Aqua — Clínica Odontológica"[31m
+              [33mclass[31m=[32m"logo"[31m
+              [33msrc[31m=[32m"/src/assets/brand/logo-aqua-claro.png"[31m
+            [36m/>[31m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"tagline"[31m
+          [36m>[31m
+            [0mClaridad en cada cuidado.[0m
+          [36m</p>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"lead"[31m
+          [36m>[31m
+            [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+          [36m</p>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"badge"[31m
+          [36m>[31m
+            [0mSitio de demostración[0m
+          [36m</span>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"cta"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [0mIngresar al sistema[0m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</section>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"about-heading"[31m
+        [33mclass[31m=[32m"section"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mclass[31m=[32m"sectionTitle"[31m
+          [33mid[31m=[32m"about-heading"[31m
+        [36m>[31m
+          [0mQuiénes somos[0m
+        [36m</h2>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"sectionText"[31m
+        [36m>[31m
+          [0mAqua es una clínica odontológica de demostración. Coordinamos la agenda entre profesionales y sillones para que cada consulta tenga su tiempo y no haya superposiciones. Todos los nombres, horarios y datos de contacto de este sitio son ficticios.[0m
+        [36m</p>[31m
+      [36m</section>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"services-heading"[31m
+        [33mclass[31m=[32m"section"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mclass[31m=[32m"sectionTitle"[31m
+          [33mid[31m=[32m"services-heading"[31m
+        [36m>[31m
+          [0mServicios[0m
+        [36m</h2>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"sectionText"[31m
+        [36m>[31m
+          [0mPrestaciones de la demo, con la duración con la que el sistema reserva cada turno.[0m
+        [36m</p>[31m
+        [36m<ul[31m
+          [33mclass[31m=[32m"list"[31m
+        [36m>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mLimpieza[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0m45[0m
+            [0m min — [0m
+            [0mProfilaxis y control de sarro.[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mExtracción[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0m60[0m
+            [0m min — [0m
+            [0mExtracciones simples con indicaciones de cuidado.[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mRestauración[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0m60[0m
+            [0m min — [0m
+            [0mRecuperación de piezas dañadas.[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mControl[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0m30[0m
+            [0m min — [0m
+            [0mRevisión general y seguimiento.[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mBlanqueamiento[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0m90[0m
+            [0m min — [0m
+            [0mTratamiento estético.[0m
+          [36m</li>[31m
+        [36m</ul>[31m
+      [36m</section>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"team-heading"[31m
+        [33mclass[31m=[32m"section"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mclass[31m=[32m"sectionTitle"[31m
+          [33mid[31m=[32m"team-heading"[31m
+        [36m>[31m
+          [0mEquipo[0m
+        [36m</h2>[31m
+        [36m<ul[31m
+          [33mclass[31m=[32m"list"[31m
+        [36m>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mDr. Martín Sosa[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0mAtiende de lunes a viernes por la mañana.[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mDra. Laura Quiroga[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0mAtiende de lunes a viernes, mañana y tarde.[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [36m<strong>[31m
+              [0mDra. Paula Benítez[0m
+            [36m</strong>[31m
+            [0m — [0m
+            [0mAtiende de lunes a viernes, mañana y tarde.[0m
+          [36m</li>[31m
+        [36m</ul>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"sectionText"[31m
+        [36m>[31m
+          [0mNombres ficticios tomados de los datos de demostración.[0m
+        [36m</p>[31m
+      [36m</section>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"contact-heading"[31m
+        [33mclass[31m=[32m"section"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mclass[31m=[32m"sectionTitle"[31m
+          [33mid[31m=[32m"contact-heading"[31m
+        [36m>[31m
+          [0mHorarios y contacto[0m
+        [36m</h2>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"sectionText"[31m
+        [36m>[31m
+          [0mLunes a viernes: [0m
+          [0m9:00 a 13:00[0m
+          [0m y [0m
+          [0m15:00 a 19:00[0m
+          [0m.[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"sectionText"[31m
+        [36m>[31m
+          [0mEl Dr. Martín Sosa atiende solo por la mañana.[0m
+        [36m</p>[31m
+        [36m<ul[31m
+          [33mclass[31m=[32m"list"[31m
+        [36m>[31m
+          [36m<li>[31m
+            [0mDirección: [0m
+            [0mAv. Ejemplo 1234, Ciudad Demo[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [0mTeléfono: [0m
+            [0m(0261) 555-0101[0m
+          [36m</li>[31m
+          [36m<li>[31m
+            [0mCorreo: [0m
+            [0mturnos@aqua-demo.example[0m
+          [36m</li>[31m
+        [36m</ul>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"demoNote"[31m
+        [36m>[31m
+          [0mDatos de contacto ficticios, solo para la demostración. No agendar turnos reales.[0m
+        [36m</p>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+   [2m[90m↓[39m[22m LandingPage[2m > [22mmantiene un único botón Ingresar y un CTA accesible sin ocultar
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/LandingPage.test.tsx[2m > [22mLandingPage[2m > [22mabre el acceso al entrar y lo reabre con el CTA
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an accessible element with the role "dialog"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"page"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"hero-heading"[39m
+    [33mclass[39m=[32m"hero"[39m
+  [36m/>[39m
+
+  Name "Quiénes somos":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"about-heading"[39m
+    [33mclass[39m=[32m"section"[39m
+  [36m/>[39m
+
+  Name "Servicios":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"services-heading"[39m
+    [33mclass[39m=[32m"section"[39m
+  [36m/>[39m
+
+  Name "Equipo":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"team-heading"[39m
+    [33mclass[39m=[32m"section"[39m
+  [36m/>[39m
+
+  Name "Horarios y contacto":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"contact-heading"[39m
+    [33mclass[39m=[32m"section"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Pausar animación":
+  [36m<button[39m
+    [33mclass[39m=[32m"carouselToggle"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Ingresar al sistema":
+  [36m<button[39m
+    [33mclass[39m=[32m"cta"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<h1[39m
+    [33mclass[39m=[32m"heroTitle"[39m
+    [33mid[39m=[32m"hero-heading"[39m
+  [36m/>[39m
+
+  Name "Quiénes somos":
+  [36m<h2[39m
+    [33mclass[39m=[32m"sectionTitle"[39m
+    [33mid[39m=[32m"about-heading"[39m
+  [36m/>[39m
+
+  Name "Servicios":
+  [36m<h2[39m
+    [33mclass[39m=[32m"sectionTitle"[39m
+    [33mid[39m=[32m"services-heading"[39m
+  [36m/>[39m
+
+  Name "Equipo":
+  [36m<h2[39m
+    [33mclass[39m=[32m"sectionTitle"[39m
+    [33mid[39m=[32m"team-heading"[39m
+  [36m/>[39m
+
+  Name "Horarios y contacto":
+  [36m<h2[39m
+    [33mclass[39m=[32m"sectionTitle"[39m
+    [33mid[39m=[32m"contact-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  img:
+
+  Name "Aqua — Clínica Odontológica":
+  [36m<img[39m
+    [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+    [33mclass[39m=[32m"logo"[39m
+    [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"tagline"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"lead"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sectionText"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sectionText"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sectionText"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sectionText"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sectionText"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"demoNote"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  list:
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"list"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"list"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"list"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<main[39m
+      [33mclass[39m=[32m"page"[39m
+    [36m>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"hero-heading"[39m
+        [33mclass[39m=[32m"hero"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"heroBackground"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"carousel"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+              [33mdata-active[39m=[32m"true"[39m
+              [33mdata-slide-index[39m=[32m"0"[39m
+              [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+            [36m/>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"slide"[39m
+              [33mdata-slide-index[39m=[32m"1"[39m
+              [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+            [36m/>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"slide"[39m
+              [33mdata-slide-index[39m=[32m"2"[39m
+              [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+            [36m/>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"slide"[39m
+              [33mdata-slide-index[39m=[32m"3"[39m
+              [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+            [36m/>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"slide"[39m
+              [33mdata-slide-index[39m=[32m"4"[39m
+              [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"overlay"[39m
+            [36m/>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"carouselToggle"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mPausar animación[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"heroContent"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"heroTitle"[39m
+            [33mid[39m=[32m"hero-heading"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+              [33mclass[39m=[32m"logo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+            [36m/>[39m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"tagline"[39m
+          [36m>[39m
+            [0mClaridad en cada cuidado.[0m
+          [36m</p>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"lead"[39m
+          [36m>[39m
+            [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+          [36m</p>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"badge"[39m
+          [36m>[39m
+            [0mSitio de demostración[0m
+          [36m</span>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"cta"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mIngresar al sistema[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</section>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"about-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"sectionTitle"[39m
+          [33mid[39m=[32m"about-heading"[39m
+        [36m>[39m
+          [0mQuiénes somos[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"sectionText"[39m
+        [36m>[39m
+          [0mAqua es una clínica odontológica de demostración. Coordinamos la agenda entre profesionales y sillones para que cada consulta tenga su tiempo y no haya superposiciones. Todos los nombres, horarios y datos de contacto de este sitio son ficticios.[0m
+        [36m</p>[39m
+      [36m</section>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"services-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"sectionTitle"[39m
+          [33mid[39m=[32m"services-heading"[39m
+        [36m>[39m
+          [0mServicios[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"sectionText"[39m
+        [36m>[39m
+          [0mPrestaciones de la demo, con la duración con la que el sistema reserva cada turno.[0m
+        [36m</p>[39m
+        [36m<ul[39m
+          [33mclass[39m=[32m"list"[39m
+        [36m>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mLimpieza[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0m45[0m
+            [0m min — [0m
+            [0mProfilaxis y control de sarro.[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mExtracción[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0m60[0m
+            [0m min — [0m
+            [0mExtracciones simples con indicaciones de cuidado.[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mRestauración[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0m60[0m
+            [0m min — [0m
+            [0mRecuperación de piezas dañadas.[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mControl[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0m30[0m
+            [0m min — [0m
+            [0mRevisión general y seguimiento.[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mBlanqueamiento[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0m90[0m
+            [0m min — [0m
+            [0mTratamiento estético.[0m
+          [36m</li>[39m
+        [36m</ul>[39m
+      [36m</section>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"team-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"sectionTitle"[39m
+          [33mid[39m=[32m"team-heading"[39m
+        [36m>[39m
+          [0mEquipo[0m
+        [36m</h2>[39m
+        [36m<ul[39m
+          [33mclass[39m=[32m"list"[39m
+        [36m>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mDr. Martín Sosa[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0mAtiende de lunes a viernes por la mañana.[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mDra. Laura Quiroga[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0mAtiende de lunes a viernes, mañana y tarde.[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [36m<strong>[39m
+              [0mDra. Paula Benítez[0m
+            [36m</strong>[39m
+            [0m — [0m
+            [0mAtiende de lunes a viernes, mañana y tarde.[0m
+          [36m</li>[39m
+        [36m</ul>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"sectionText"[39m
+        [36m>[39m
+          [0mNombres ficticios tomados de los datos de demostración.[0m
+        [36m</p>[39m
+      [36m</section>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"contact-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"sectionTitle"[39m
+          [33mid[39m=[32m"contact-heading"[39m
+        [36m>[39m
+          [0mHorarios y contacto[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"sectionText"[39m
+        [36m>[39m
+          [0mLunes a viernes: [0m
+          [0m9:00 a 13:00[0m
+          [0m y [0m
+          [0m15:00 a 19:00[0m
+          [0m.[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"sectionText"[39m
+        [36m>[39m
+          [0mEl Dr. Martín Sosa atiende solo por la mañana.[0m
+        [36m</p>[39m
+        [36m<ul[39m
+          [33mclass[39m=[32m"list"[39m
+        [36m>[39m
+          [36m<li>[39m
+            [0mDirección: [0m
+            [0mAv. Ejemplo 1234, Ciudad Demo[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [0mTeléfono: [0m
+            [0m(0261) 555-0101[0m
+          [36m</li>[39m
+          [36m<li>[39m
+            [0mCorreo: [0m
+            [0mturnos@aqua-demo.example[0m
+          [36m</li>[39m
+        [36m</ul>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"demoNote"[39m
+        [36m>[39m
+          [0mDatos de contacto ficticios, solo para la demostración. No agendar turnos reales.[0m
+        [36m</p>[39m
+      [36m</section>[39m
+    [36m</main>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/landing/LandingPage.test.tsx:[2m49:27[22m[39m
+    [90m 47| [39m    [34mrender[39m([33m<[39m[33mLandingPage[39m [33monLogin[39m[33m=[39m[33m{[39monLogin[33m}[39m [33m/[39m[33m>[39m)[33m;[39m
+    [90m 48| [39m
+    [90m 49| [39m    [35mconst[39m dialog [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m"dialog"[39m)[33m;[39m
+    [90m   | [39m                          [31m^[39m
+    [90m 50| [39m    [34mexpect[39m(dialog)[33m.[39m[34mtoHaveAttribute[39m([32m"open"[39m)[33m;[39m
+    [90m 51| [39m    expect(screen.getByRole("heading", { name: "Turnos Odontología" })…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 01:10:31
+[2m   Duration [22m 3.79s[2m (transform 262ms, setup 453ms, collect 376ms, tests 483ms, environment 1.68s, prepare 289ms)[22m
+

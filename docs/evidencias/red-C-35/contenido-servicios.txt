@@ -1,0 +1,56 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/landingContent.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[32m 18[2mms[22m[39m
+   [2m[90m↓[39m[22m contenido de la portada[2m > [22mel equipo coincide con el seed
+[31m   [31m×[31m contenido de la portada[2m > [22mlos servicios y duraciones coinciden con el seed[39m[32m 15[2mms[22m[39m
+[31m     → expected [] to deeply equal [ [ 'Limpieza', 45 ], …(4) ][39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/landingContent.test.ts[2m > [22mcontenido de la portada[2m > [22mlos servicios y duraciones coinciden con el seed
+[31m[1mAssertionError[22m: expected [] to deeply equal [ [ 'Limpieza', 45 ], …(4) ][39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   [[39m
+[32m-     "Limpieza",[39m
+[32m-     45,[39m
+[32m-   ],[39m
+[32m-   [[39m
+[32m-     "Extracción",[39m
+[32m-     60,[39m
+[32m-   ],[39m
+[32m-   [[39m
+[32m-     "Restauración",[39m
+[32m-     60,[39m
+[32m-   ],[39m
+[32m-   [[39m
+[32m-     "Control",[39m
+[32m-     30,[39m
+[32m-   ],[39m
+[32m-   [[39m
+[32m-     "Blanqueamiento",[39m
+[32m-     90,[39m
+[32m-   ],[39m
+[32m- ][39m
+[31m+ [][39m
+
+[36m [2m❯[22m src/features/landing/landingContent.test.ts:[2m18:80[22m[39m
+    [90m 16| [39m
+    [90m 17| [39m  [34mit[39m([32m"los servicios y duraciones coinciden con el seed"[39m[33m,[39m () [33m=>[39m {
+    [90m 18| [39m    expect(services.map((service) => [service.name, service.durationMi…
+    [90m   | [39m                                                                               [31m^[39m
+    [90m 19| [39m      [[32m"Limpieza"[39m[33m,[39m [34m45[39m][33m,[39m
+    [90m 20| [39m      [[32m"Extracción"[39m[33m,[39m [34m60[39m][33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m1 skipped[39m[90m (2)[39m
+[2m   Start at [22m 00:59:14
+[2m   Duration [22m 3.04s[2m (transform 78ms, setup 321ms, collect 65ms, tests 18ms, environment 1.95s, prepare 266ms)[22m
+

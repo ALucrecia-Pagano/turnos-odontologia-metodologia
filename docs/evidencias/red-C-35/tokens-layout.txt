@@ -1,0 +1,68 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/styles/landingTokens.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[32m 24[2mms[22m[39m
+[31m   [31m×[31m tokens de layout de la portada[2m > [22mdefine los dos tokens de layout[39m[32m 16[2mms[22m[39m
+[31m     → expected undefined to be '60vh' // Object.is equality[39m
+[31m   [31m×[31m tokens de layout de la portada[2m > [22mla portada usa los tokens de layout[39m[32m 4[2mms[22m[39m
+[31m     → expected '' to contain 'var(--landing-hero-min-height)'[39m
+[31m   [31m×[31m tokens de layout de la portada[2m > [22mno agrega colores nuevos[39m[32m 2[2mms[22m[39m
+[31m     → expected undefined to be defined[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/landingTokens.test.ts[2m > [22mtokens de layout de la portada[2m > [22mdefine los dos tokens de layout
+[31m[1mAssertionError[22m: expected undefined to be '60vh' // Object.is equality[39m
+
+[32m- Expected:[39m 
+"60vh"
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/shared/styles/landingTokens.test.ts:[2m61:53[22m[39m
+    [90m 59| [39m    const tokens = readCustomProperties(readFileSync(TOKENS_PATH, "utf…
+    [90m 60| [39m
+    [90m 61| [39m    [34mexpect[39m(tokens[33m.[39m[35mget[39m([32m"--landing-hero-min-height"[39m))[33m.[39m[34mtoBe[39m([32m"60vh"[39m)[33m;[39m
+    [90m   | [39m                                                    [31m^[39m
+    [90m 62| [39m    expect(tokens.get("--landing-content-max-width")).toMatch(/^\d+(\.…
+    [90m 63| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/landingTokens.test.ts[2m > [22mtokens de layout de la portada[2m > [22mla portada usa los tokens de layout
+[31m[1mAssertionError[22m: expected '' to contain 'var(--landing-hero-min-height)'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- var(--landing-hero-min-height)[39m
+
+[36m [2m❯[22m src/shared/styles/landingTokens.test.ts:[2m68:17[22m[39m
+    [90m 66| [39m    [35mconst[39m css [33m=[39m [34mreadLandingCss[39m()[33m;[39m
+    [90m 67| [39m
+    [90m 68| [39m    [34mexpect[39m(css)[33m.[39m[34mtoContain[39m([32m"var(--landing-hero-min-height)"[39m)[33m;[39m
+    [90m   | [39m                [31m^[39m
+    [90m 69| [39m    [34mexpect[39m(css)[33m.[39m[34mtoContain[39m([32m"var(--landing-content-max-width)"[39m)[33m;[39m
+    [90m 70| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/landingTokens.test.ts[2m > [22mtokens de layout de la portada[2m > [22mno agrega colores nuevos
+[31m[1mAssertionError[22m: expected undefined to be defined[39m
+[36m [2m❯[22m src/shared/styles/landingTokens.test.ts:[2m80:53[22m[39m
+    [90m 78| [39m
+    [90m 79| [39m    [34mexpect[39m(unexpected)[33m.[39m[34mtoEqual[39m([])[33m;[39m
+    [90m 80| [39m    [34mexpect[39m(tokens[33m.[39m[35mget[39m([32m"--landing-hero-min-height"[39m))[33m.[39m[34mtoBeDefined[39m()[33m;[39m
+    [90m   | [39m                                                    [31m^[39m
+    [90m 81| [39m    [34mexpect[39m(tokens[33m.[39m[35mget[39m([32m"--landing-content-max-width"[39m))[33m.[39m[34mtoBeDefined[39m()[33m;[39m
+    [90m 82| [39m    expect(COLOR_VALUE.test(tokens.get("--landing-hero-min-height") ??…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m   Start at [22m 00:48:25
+[2m   Duration [22m 3.20s[2m (transform 110ms, setup 446ms, collect 73ms, tests 24ms, environment 1.75s, prepare 290ms)[22m
+

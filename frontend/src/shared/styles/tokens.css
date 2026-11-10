@@ -66,4 +66,8 @@
   --agenda-card-radius: 6px;
   --agenda-card-min-height: 24px;
   --agenda-cancelled-bg: #F9FAFB;
+
+  /* Portada pública */
+  --landing-hero-min-height: 60vh;
+  --landing-content-max-width: 1120px;
 }

@@ -1,0 +1,5 @@
+Salida generada por docs/evidencias/trazabilidad-C-35.py. No editar a mano.
+tests listados por vitest: 188
+escenarios en las specs delta: 34
+problemas: 0
+34 escenarios, 0 problemas

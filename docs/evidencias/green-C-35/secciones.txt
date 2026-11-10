@@ -1,0 +1,10 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/landing/LandingPage.test.tsx [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[32m 96[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m2 skipped[39m[90m (3)[39m
+[2m   Start at [22m 01:04:19
+[2m   Duration [22m 2.61s[2m (transform 151ms, setup 254ms, collect 203ms, tests 96ms, environment 1.36s, prepare 214ms)[22m
+

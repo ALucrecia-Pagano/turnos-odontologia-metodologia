@@ -1,0 +1,49 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/LoginDialog.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m4 skipped[39m[2m)[22m[32m 202[2mms[22m[39m
+   [2m[90m↓[39m[22m LoginDialog[2m > [22mabre con el diálogo, el heading, el formulario y el botón para recorrer la clínica
+   [2m[90m↓[39m[22m LoginDialog[2m > [22mcierra el diálogo con el botón Ver la clínica
+[31m   [31m×[31m LoginDialog[2m > [22mmuestra el aviso de sesión vencida dentro del formulario[39m[32m 199[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "alert"
+
+There are no accessible roles. But there might be some inaccessible roles. If you wish to access them, then set the `hidden` option to `true`. Learn more about this here: https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div />[31m
+[36m</body>[31m[39m
+   [2m[90m↓[39m[22m LoginDialog[2m > [22menfoca Usuario al abrir
+   [2m[90m↓[39m[22m LoginDialog[2m > [22mbloquea el overflow del body mientras está abierto y lo restaura al cerrar
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/LoginDialog.test.tsx[2m > [22mLoginDialog[2m > [22mmuestra el aviso de sesión vencida dentro del formulario
+[31m[1mTestingLibraryElementError[22m: Unable to find an accessible element with the role "alert"
+
+There are no accessible roles. But there might be some inaccessible roles. If you wish to access them, then set the `hidden` option to `true`. Learn more about this here: https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div />[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/landing/LoginDialog.test.tsx:[2m44:19[22m[39m
+    [90m 42| [39m    render(<LoginDialog open onClose={noop} onLogin={onLogin} initialN…
+    [90m 43| [39m
+    [90m 44| [39m    expect(screen.getByRole("alert")).toHaveTextContent(SESSION_EXPIRE…
+    [90m   | [39m                  [31m^[39m
+    [90m 45| [39m  })[33m;[39m
+    [90m 46| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m4 skipped[39m[90m (5)[39m
+[2m   Start at [22m 01:09:03
+[2m   Duration [22m 4.88s[2m (transform 383ms, setup 676ms, collect 581ms, tests 202ms, environment 2.53s, prepare 235ms)[22m
+

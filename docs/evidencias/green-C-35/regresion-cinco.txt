@@ -1,0 +1,21 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 369[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 537[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada [33m 429[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 285[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 727[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 4265[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 1145[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 1092[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 529[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 512[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 513[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 470[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m20 passed[39m[22m[90m (20)[39m
+[2m   Start at [22m 01:14:36
+[2m   Duration [22m 8.63s[2m (transform 1.34s, setup 2.25s, collect 6.67s, tests 6.18s, environment 10.37s, prepare 1.47s)[22m
+

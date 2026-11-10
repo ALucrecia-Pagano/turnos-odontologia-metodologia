@@ -1,0 +1,42 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/landing/landingContent.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m2 skipped[39m[2m)[22m[32m 22[2mms[22m[39m
+   [2m[90m↓[39m[22m contenido de la portada[2m > [22mel equipo coincide con el seed
+   [2m[90m↓[39m[22m contenido de la portada[2m > [22mlos servicios y duraciones coinciden con el seed
+[31m   [31m×[31m contenido de la portada[2m > [22mhorarios y contacto son ficticios y coinciden con el seed[39m[32m 20[2mms[22m[39m
+[31m     → expected { address: '', phone: '', email: '' } to deeply equal { …(3) }[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/landing/landingContent.test.ts[2m > [22mcontenido de la portada[2m > [22mhorarios y contacto son ficticios y coinciden con el seed
+[31m[1mAssertionError[22m: expected { address: '', phone: '', email: '' } to deeply equal { …(3) }[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "address": "Av. Ejemplo 1234, Ciudad Demo",[39m
+[32m-   "email": "turnos@aqua-demo.example",[39m
+[32m-   "phone": "(0261) 555-0101",[39m
+[31m+   "address": "",[39m
+[31m+   "email": "",[39m
+[31m+   "phone": "",[39m
+[2m  }[22m
+
+[36m [2m❯[22m src/features/landing/landingContent.test.ts:[2m33:21[22m[39m
+    [90m 31| [39m      afternoon[33m:[39m [32m"15:00 a 19:00"[39m[33m,[39m
+    [90m 32| [39m    })[33m;[39m
+    [90m 33| [39m    [34mexpect[39m(contact)[33m.[39m[34mtoEqual[39m({
+    [90m   | [39m                    [31m^[39m
+    [90m 34| [39m      address[33m:[39m [32m"Av. Ejemplo 1234, Ciudad Demo"[39m[33m,[39m
+    [90m 35| [39m      phone[33m:[39m [32m"(0261) 555-0101"[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m2 skipped[39m[90m (3)[39m
+[2m   Start at [22m 01:00:09
+[2m   Duration [22m 2.59s[2m (transform 79ms, setup 328ms, collect 88ms, tests 22ms, environment 1.44s, prepare 253ms)[22m
+

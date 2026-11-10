@@ -5,23 +5,12 @@ import hero3 from "../../assets/images/hero-3-dentista.webp";
 import hero4 from "../../assets/images/hero-4-instrumental.webp";
 import hero5 from "../../assets/images/hero-5-sillon.webp";
 import styles from "./LoginPage.module.css";
+import { createIntervalTicker, type CarouselTicker } from "./carouselTicker";
 
-export type CarouselTicker = (callback: () => void) => () => void;
+export type { CarouselTicker } from "./carouselTicker";
 
 const SLIDE_INTERVAL_MS = 7000;
 const SLIDES = [hero1, hero2, hero3, hero4, hero5];
-
-export function createIntervalTicker(intervalMs: number): CarouselTicker {
-  return (callback) => {
-    if (typeof window === "undefined") {
-      return () => {};
-    }
-    const intervalId = window.setInterval(callback, intervalMs);
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  };
-}
 
 const defaultTicker = createIntervalTicker(SLIDE_INTERVAL_MS);
 
