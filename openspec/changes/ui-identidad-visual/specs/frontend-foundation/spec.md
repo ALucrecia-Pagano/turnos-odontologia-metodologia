@@ -65,7 +65,7 @@ La aplicación SHALL cargar Jost para títulos y Manrope para texto desde paquet
 - **AND** los títulos usan `var(--font-family-heading)` y el texto usa `var(--font-family-body)`
 
 ### Requirement: Barra única con la marca Aqua
-La aplicación SHALL mostrar una única barra de encabezado con el logo de Aqua, el texto "Aqua" y el texto "Clínica Odontológica". El logo de la barra MUST tener `alt=""` porque el texto "Aqua" está al lado. En viewport de tablet (<= 768 px) SHALL mostrar solo "Aqua" y MUST NOT superar dos renglones. La barra sobre fondo claro MUST usar la variante de logo pensada para fondo claro y MUST NOT crear una segunda barra.
+La aplicación SHALL mostrar una única barra con el isotipo oscuro de Aqua (`frontend/src/assets/brand/isotipo-aqua.png`, `alt=""`), "Aqua" y "Clínica Odontológica" (no `logo-aqua-oscuro.png` para no duplicar texto). En tablet (<= 768 px), renglón 1 SHALL mostrar marca, usuario y "Cerrar sesión", y renglón 2 la navegación en una fila con scroll horizontal (máximo dos renglones). El título de PageShell MUST NOT crear una segunda barra.
 
 #### Scenario: Barra de escritorio con la marca completa
 - **GIVEN** una sesión autenticada en escritorio (1440 px)
@@ -78,15 +78,23 @@ La aplicación SHALL mostrar una única barra de encabezado con el logo de Aqua,
 - **WHEN** se renderiza el shell de la aplicación
 - **THEN** la barra muestra el logo y el texto "Aqua"
 - **AND** "Clínica Odontológica" no se muestra
+- **AND** a <= 768 px, renglón 1 muestra marca + usuario y "Cerrar sesión"
+- **AND** renglón 2 muestra la navegación en una sola fila con scroll horizontal
 - **AND** la barra ocupa como máximo dos renglones
 - **AND** esta verificación es visual (captura a 768 px), no un test de Vitest
 
-#### Scenario: La barra clara usa la variante de logo oscura
+#### Scenario: La barra usa el isotipo oscuro
 - **GIVEN** la barra de encabezado sobre fondo claro
 - **WHEN** se inspecciona la imagen del logo
-- **THEN** se usa `frontend/src/assets/brand/logo-aqua-oscuro.png`
-- **AND** el logo tiene `alt=""` porque el texto "Aqua" está al lado
-- **AND** no se usa la variante clara en la barra
+- **THEN** se usa `frontend/src/assets/brand/isotipo-aqua.png`
+- **AND** el isotipo tiene `alt=""` porque el texto "Aqua" está al lado
+- **AND** no se usa `logo-aqua-oscuro.png` ni la variante clara en la barra
+
+#### Scenario: El título de página no se ve como una segunda barra
+- **GIVEN** una página envuelta en PageShell
+- **WHEN** se renderiza el título de la página
+- **THEN** el título del PageShell se muestra sin fondo ni borde propios
+- **AND** esta verificación es visual, no un test de Vitest
 
 ### Requirement: Créditos de assets y tipografías
 El `README.md` SHALL incluir una sección de créditos que nombre las cinco fotografías del login, el logo de Aqua y la licencia de las tipografías Jost y Manrope distribuidas por Fontsource.

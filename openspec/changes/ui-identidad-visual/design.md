@@ -75,7 +75,7 @@ Alternativas: Google Fonts por `<link>` (rechazada: dependencia de CDN y privaci
 Se decodificaron los PNG y se midió la luminancia media de los píxeles opacos (sin visor de imágenes disponible para el modelo):
 
 - `logo-aqua-claro.png` (1124x278, luminancia media 202): logo claro para fondos oscuros -> login, informativo con `alt="Aqua — Clínica Odontológica"`.
-- `logo-aqua-oscuro.png` (1124x278, luminancia media 78.8): logo oscuro para fondos claros -> barra, decorativo con `alt=""` porque el texto "Aqua" está al lado.
+- `isotipo-aqua.png` (variante oscura del isotipo): para la barra sobre fondo claro, decorativo con `alt=""` porque el texto "Aqua" está al lado. El PNG completo `logo-aqua-oscuro.png` no se usa en la barra porque ya incluye el texto de la marca y quedaba duplicado e ilegible.
 - `isotipo-aqua-claro.png` claro e `isotipo-aqua.png` oscuro; `logo-variantes.png` es una lámina de referencia, no un asset de UI.
 
 La elección es estática por componente; no hay `prefers-color-scheme` ni lógica condicional. Alternativa: un solo logo con filtro CSS; se descartó porque degrada el trazo de la marca.
@@ -108,6 +108,14 @@ El explore original proponía `@fontsource`; se usa `@fontsource-variable` (5.3.
 El explore proponía un botón de pausa con `aria-pressed` y texto "Pausar"/"Reanudar"; se usa "Pausar animación"/"Reanudar animación" sin `aria-pressed`, porque WAI-ARIA APG indica que el estado va en el nombre accesible o en `aria-pressed`, no en ambos.
 
 El explore proponía `prefersReducedMotion` por defecto en `false`; se cambia a leer `window.matchMedia("(prefers-reduced-motion: reduce)").matches` con guarda para jsdom, para respetar la preferencia real del sistema en producción sin romper los tests.
+
+### Hallazgos de la verificación visual (H1-H3) y su corrección
+
+La verificación visual independiente de Claude (capturas a 1440 px y 768 px) detectó 3 hallazgos visuales que motivaron correcciones sobre la implementación inicial:
+
+- **H1 (PageShell como segunda barra)**: El encabezado (`<header>`) de `PageShell` presentaba fondo blanco de superficie (`var(--color-surface)`), borde inferior (`var(--color-border)`) y sombra (`var(--shadow-sm)`), dando la apariencia visual de una segunda barra redundante debajo de la barra principal (`AppShell`). Se corrigió en `PageShell.module.css` eliminando fondo, borde y sombra, dejando únicamente el título con tipografía de encabezado (`var(--font-family-heading)`) y el espaciado adecuado. `PageShell.tsx` y su test unitario se mantienen intactos.
+- **H2 (Distribución en tablet <= 768 px)**: En viewport móvil/tablet de 768 px, la barra no ordenaba adecuadamente los renglones generando solapamiento o salto indeseado. Se corrigió en `AppShell.module.css` mediante `@media (max-width: 768px)`: la marca (`order: 1`) y los controles de sesión del usuario (`order: 2`) comparten el primer renglón con `justify-content: space-between`, y la navegación (`nav`, `order: 3`) pasa a ocupar el segundo renglón completo (`width: 100%`) en una sola fila con scroll horizontal accesible (`flex-wrap: nowrap; overflow-x: auto`), asegurando que no haya scroll horizontal a nivel de página ni más de dos renglones en la barra.
+- **H3 (Isotipo en barra en lugar de logo completo)**: El archivo `logo-aqua-oscuro.png` incluye integrado el texto de la marca ("Aqua Clínica Odontológica"), por lo que al renderizarse junto a los textos `<span className={styles.brandName}>Aqua</span>` y `<span className={styles.brandSubtitle}>Clínica Odontológica</span>` el texto quedaba duplicado e ilegible en tamaños reducidos. Se corrigió reemplazando el asset de la barra por el isotipo `frontend/src/assets/brand/isotipo-aqua.png` con `alt=""` decorativo, preservando los textos tipográficos limpios y estilizados por CSS.
 
 ## Risks / Trade-offs
 

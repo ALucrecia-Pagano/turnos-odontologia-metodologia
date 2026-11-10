@@ -89,9 +89,13 @@ TRACE: dict[tuple[str, str], tuple[str, str]] = {
         VISUAL,
         "—",
     ),
-    ("Barra única con la marca Aqua", "La barra clara usa la variante de logo oscura"): (
+    ("Barra única con la marca Aqua", "La barra usa el isotipo oscuro"): (
         f"{T_APP_SHELL_BRAND} > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica",
         "7",
+    ),
+    ("Barra única con la marca Aqua", "El título de página no se ve como una segunda barra"): (
+        VISUAL,
+        "—",
     ),
     ("Créditos de assets y tipografías", "El README acredita fotos, logo y tipografías"): (
         f"{T_README} > documenta las fotografías, el logo y la licencia de las tipografías",

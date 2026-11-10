@@ -29,8 +29,8 @@
 
 ## 5. Barra única con marca
 
-- [x] 5.1 Agregar el test de `AppShell` que verifique una sola barra, el logo con `alt=""`, "Aqua" y "Clínica Odontológica" en escritorio; verificar que falla (RED).
-- [x] 5.2 Integrar el logo `logo-aqua-oscuro.png` con `alt=""` y los textos de marca en `AppShell.tsx`, fuera de `nav`; verificar que el test de 5.1 y `AppShell.test.tsx` pasan (GREEN).
+- [x] 5.1 Agregar el test de `AppShell` que verifique una sola barra, el isotipo con `alt=""`, "Aqua" y "Clínica Odontológica" en escritorio; verificar que falla (RED).
+- [x] 5.2 Integrar el isotipo `isotipo-aqua.png` con `alt=""` y los textos de marca en `AppShell.tsx`, fuera de `nav`; verificar que el test de 5.1 y `AppShell.test.tsx` pasan (GREEN).
 - [x] 5.3 Agregar el test de estructura de la barra que verifique que renderiza el logo, "Aqua" y el subtítulo "Clínica Odontológica" dentro de un elemento con la clase que el CSS oculta en `max-width: 768px`; el test no afirma anchos, renglones ni visibilidad responsive (eso es verificación visual). Verificar que falla antes del CSS y pasa después.
 - [x] 5.4 Ajustar `AppShell.module.css` con `flex-wrap`, la clase del subtítulo oculto en `max-width: 768px` y el máximo de dos renglones; verificar con el test de estructura 5.3. La captura a 768 px queda a cargo de Claude en la verificación independiente (task 8.5), no se ejecuta en apply.
 

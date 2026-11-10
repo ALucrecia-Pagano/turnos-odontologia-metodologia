@@ -54,7 +54,8 @@ describe("AppShell brand", () => {
 
     const logo = bar.querySelector('img[alt=""]');
     expect(logo).not.toBeNull();
-    expect(logo?.getAttribute("src")).toContain("logo-aqua-oscuro");
+    expect(logo?.getAttribute("src")).toContain("isotipo-aqua");
+    expect(logo?.getAttribute("src")).not.toContain("logo-aqua-oscuro");
     expect(within(bar).getByText("Aqua")).toBeInTheDocument();
     expect(within(bar).getByText("Clínica Odontológica")).toBeInTheDocument();
 

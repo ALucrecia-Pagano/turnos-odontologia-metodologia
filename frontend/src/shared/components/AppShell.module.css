@@ -54,8 +54,33 @@
 }
 
 @media (max-width: 768px) {
+  .topBar {
+    justify-content: space-between;
+  }
+
+  .brand {
+    order: 1;
+  }
+
   .brandSubtitle {
     display: none;
+  }
+
+  .sessionControls {
+    order: 2;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .menuList {
+    flex-wrap: nowrap;
   }
 }
 

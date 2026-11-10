@@ -1,23 +1,26 @@
 Salida generada por docs/evidencias/mutaciones-C-34.py. No editar a mano.
 tests nuevos de C-34 listados por vitest: 16; mutaciones: 16 (una por test)
-SHA-256 de produccion antes: 0b57fc0ea8de7c6ec464789936a2ea0cf81856bb1486fbda108c9a03438f7771
+SHA-256 de produccion antes: c8c01906c75c72f86507f1cde2891da9aa557e1d74ac55e13d703767f35c34a6
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
  ✓ src/test/readmeCredits.test.ts (1 test) 7ms
- ✓ src/shared/styles/fonts.test.ts (4 tests) 39ms
- ✓ src/shared/styles/aquaPalette.test.ts (2 tests) 9ms
- ✓ src/shared/components/AppShellBrand.test.tsx (2 tests) 167ms
- ✓ src/features/login/LoginCarousel.test.tsx (5 tests) 249ms
- ✓ src/features/login/LoginBrand.test.tsx (2 tests) 147ms
+ ✓ src/shared/styles/aquaPalette.test.ts (2 tests) 10ms
+ ✓ src/shared/styles/fonts.test.ts (4 tests) 135ms
+ ✓ src/shared/components/AppShellBrand.test.tsx (2 tests) 412ms
+   ✓ AppShell brand > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica  360ms
+ ✓ src/features/login/LoginCarousel.test.tsx (5 tests) 646ms
+   ✓ LoginCarousel > pausa y reanuda el avance sin aria-pressed  494ms
+ ✓ src/features/login/LoginBrand.test.tsx (2 tests) 500ms
+   ✓ LoginPage brand > muestra el logo claro, el heading accesible y la bajada  427ms
 
  Test Files  6 passed (6)
       Tests  16 passed (16)
-   Start at  22:21:12
-   Duration  3.72s (transform 488ms, setup 2.69s, collect 1.54s, tests 618ms, environment 11.64s, prepare 1.61s)
+   Start at  22:48:40
+   Duration  8.10s (transform 1.72s, setup 7.61s, collect 4.24s, tests 1.71s, environment 22.75s, prepare 3.30s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpeics16i5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsoc3dynx/vitest.json
 
 ================================================================================
 [01/16] define los tokens semánticos con los valores del design
@@ -35,17 +38,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/aquaPalette.test.ts (2 tests | 1 failed | 1 skipped) 23ms
-   × paleta Aqua > define los tokens semánticos con los valores del design 19ms
+ ❯ src/shared/styles/aquaPalette.test.ts (2 tests | 1 failed | 1 skipped) 9ms
+   × paleta Aqua > define los tokens semánticos con los valores del design 8ms
      → expected '#26658D' to be '#26658C' // Object.is equality
    ↓ paleta Aqua > mantiene los contrastes de texto del design
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  22:21:16
-   Duration  2.05s (transform 70ms, setup 310ms, collect 51ms, tests 23ms, environment 1.04s, prepare 216ms)
+   Start at  22:48:51
+   Duration  3.65s (transform 62ms, setup 569ms, collect 35ms, tests 9ms, environment 1.91s, prepare 404ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpxuu8wjsn/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpe621qiaz/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -83,17 +86,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/aquaPalette.test.ts (2 tests | 1 failed | 1 skipped) 12ms
+ ❯ src/shared/styles/aquaPalette.test.ts (2 tests | 1 failed | 1 skipped) 11ms
    ↓ paleta Aqua > define los tokens semánticos con los valores del design
    × paleta Aqua > mantiene los contrastes de texto del design 10ms
      → expected '15.68' to be '15.70' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  22:21:23
-   Duration  2.07s (transform 73ms, setup 311ms, collect 53ms, tests 12ms, environment 1.09s, prepare 253ms)
+   Start at  22:48:59
+   Duration  2.91s (transform 72ms, setup 463ms, collect 46ms, tests 11ms, environment 1.63s, prepare 296ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpnx50lilv/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjd6k7tqo/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -131,19 +134,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 10ms
+ ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 11ms
    ↓ tipografías autoalojadas > declara las dependencias y las importa antes de los estilos en el entry point
-   × tipografías autoalojadas > define Jost para títulos y Manrope para texto con fallback al system stack 8ms
+   × tipografías autoalojadas > define Jost para títulos y Manrope para texto con fallback al system stack 9ms
      → expected '"Jost", system-ui, -apple-system, "Se…' to contain '"Jost Variable"'
    ↓ tipografías autoalojadas > el body conserva la base y usa Manrope después
    ↓ tipografías autoalojadas > no usa URLs de Google Fonts ni CDNs externos en src
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:21:28
-   Duration  2.30s (transform 86ms, setup 382ms, collect 36ms, tests 10ms, environment 1.24s, prepare 222ms)
+   Start at  22:49:07
+   Duration  2.95s (transform 81ms, setup 406ms, collect 41ms, tests 11ms, environment 1.74s, prepare 330ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpt42v6pxb/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4cw6s044/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -180,19 +183,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 8ms
+ ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 12ms
    ↓ tipografías autoalojadas > declara las dependencias y las importa antes de los estilos en el entry point
    ↓ tipografías autoalojadas > define Jost para títulos y Manrope para texto con fallback al system stack
-   × tipografías autoalojadas > el body conserva la base y usa Manrope después 6ms
+   × tipografías autoalojadas > el body conserva la base y usa Manrope después 10ms
      → expected '*,\n*::before,\n*::after {\n  box-siz…' to match /body\s*\{[\s\S]*font-family:\s*var\(-…/
    ↓ tipografías autoalojadas > no usa URLs de Google Fonts ni CDNs externos en src
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:21:34
-   Duration  2.00s (transform 63ms, setup 292ms, collect 33ms, tests 8ms, environment 1.04s, prepare 254ms)
+   Start at  22:49:15
+   Duration  4.57s (transform 87ms, setup 669ms, collect 50ms, tests 12ms, environment 2.73s, prepare 524ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp07fiiql1/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0nrdtgmb/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -266,8 +269,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 15ms
-   × tipografías autoalojadas > declara las dependencias y las importa antes de los estilos en el entry point 11ms
+ ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 11ms
+   × tipografías autoalojadas > declara las dependencias y las importa antes de los estilos en el entry point 9ms
      → expected 120 to be greater than 193
    ↓ tipografías autoalojadas > define Jost para títulos y Manrope para texto con fallback al system stack
    ↓ tipografías autoalojadas > el body conserva la base y usa Manrope después
@@ -275,10 +278,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:21:41
-   Duration  2.58s (transform 75ms, setup 383ms, collect 45ms, tests 15ms, environment 1.46s, prepare 246ms)
+   Start at  22:49:26
+   Duration  4.75s (transform 95ms, setup 621ms, collect 41ms, tests 11ms, environment 2.84s, prepare 594ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgep9kl82/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyaszn57_/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -312,19 +315,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 28ms
+ ❯ src/shared/styles/fonts.test.ts (4 tests | 1 failed | 3 skipped) 87ms
    ↓ tipografías autoalojadas > declara las dependencias y las importa antes de los estilos en el entry point
    ↓ tipografías autoalojadas > define Jost para títulos y Manrope para texto con fallback al system stack
    ↓ tipografías autoalojadas > el body conserva la base y usa Manrope después
-   × tipografías autoalojadas > no usa URLs de Google Fonts ni CDNs externos en src 27ms
+   × tipografías autoalojadas > no usa URLs de Google Fonts ni CDNs externos en src 84ms
      → expected [ Array(1) ] to deeply equal []
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:21:47
-   Duration  2.16s (transform 58ms, setup 287ms, collect 54ms, tests 28ms, environment 1.17s, prepare 200ms)
+   Start at  22:49:38
+   Duration  4.51s (transform 110ms, setup 641ms, collect 87ms, tests 87ms, environment 2.68s, prepare 431ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpm8s0jlzg/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3h3gobwh/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -359,25 +362,25 @@ diff:
 +++ b/frontend/src/shared/components/AppShell.tsx
 @@ -25,3 +25,3 @@
          <div className={styles.brand} data-brand="aqua">
--          <img src={logoAquaOscuro} alt="" className={styles.brandLogo} />
-+          <img src={logoAquaOscuro} alt="Aqua" className={styles.brandLogo} />
+-          <img src={isotipoAqua} alt="" className={styles.brandLogo} />
++          <img src={isotipoAqua} alt="Aqua" className={styles.brandLogo} />
            <div className={styles.brandText}>
 
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/AppShellBrand.test.tsx (2 tests | 1 failed | 1 skipped) 101ms
-   × AppShell brand > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica 99ms
+ ❯ src/shared/components/AppShellBrand.test.tsx (2 tests | 1 failed | 1 skipped) 147ms
+   × AppShell brand > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica 144ms
      → expected null not to be null
    ↓ AppShell brand > ubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  22:21:54
-   Duration  2.80s (transform 226ms, setup 346ms, collect 360ms, tests 101ms, environment 1.35s, prepare 232ms)
+   Start at  22:49:50
+   Duration  4.53s (transform 296ms, setup 588ms, collect 497ms, tests 147ms, environment 2.29s, prepare 444ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg92xjbh5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpf257qc4c/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -388,8 +391,8 @@ AssertionError: expected null not to be null
      55|     const logo = bar.querySelector('img[alt=""]');
      56|     expect(logo).not.toBeNull();
        |                      ^
-     57|     expect(logo?.getAttribute("src")).toContain("logo-aqua-oscuro");
-     58|     expect(within(bar).getByText("Aqua")).toBeInTheDocument();
+     57|     expect(logo?.getAttribute("src")).toContain("isotipo-aqua");
+     58|     expect(logo?.getAttribute("src")).not.toContain("logo-aqua-oscuro"…
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 
@@ -405,35 +408,35 @@ diff:
        <header className={styles.topBar}>
 -        <div className={styles.brand} data-brand="aqua">
 +        <div className={styles.brand} data-brand="otro">
-           <img src={logoAquaOscuro} alt="" className={styles.brandLogo} />
+           <img src={isotipoAqua} alt="" className={styles.brandLogo} />
 
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/AppShellBrand.test.tsx (2 tests | 1 failed | 1 skipped) 138ms
+ ❯ src/shared/components/AppShellBrand.test.tsx (2 tests | 1 failed | 1 skipped) 99ms
    ↓ AppShell brand > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica
-   × AppShell brand > ubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px 136ms
+   × AppShell brand > ubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px 97ms
      → expected null not to be null
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  22:22:01
-   Duration  2.79s (transform 195ms, setup 342ms, collect 313ms, tests 138ms, environment 1.32s, prepare 201ms)
+   Start at  22:50:02
+   Duration  3.46s (transform 223ms, setup 411ms, collect 374ms, tests 99ms, environment 1.59s, prepare 412ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdx2bsm5a/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7gpn9ldu/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/shared/components/AppShellBrand.test.tsx > AppShell brand > ubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px
 AssertionError: expected null not to be null
- ❯ src/shared/components/AppShellBrand.test.tsx:73:23
-     71| 
-     72|     const brand = container.querySelector('[data-brand="aqua"]');
-     73|     expect(brand).not.toBeNull();
+ ❯ src/shared/components/AppShellBrand.test.tsx:74:23
+     72| 
+     73|     const brand = container.querySelector('[data-brand="aqua"]');
+     74|     expect(brand).not.toBeNull();
        |                       ^
-     74|     if (brand === null) {
-     75|       throw new Error("No se renderizó la marca");
+     75|     if (brand === null) {
+     76|       throw new Error("No se renderizó la marca");
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 
@@ -455,17 +458,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginBrand.test.tsx (2 tests | 1 failed | 1 skipped) 147ms
-   × LoginPage brand > muestra el logo claro, el heading accesible y la bajada 145ms
+ ❯ src/features/login/LoginBrand.test.tsx (2 tests | 1 failed | 1 skipped) 95ms
+   × LoginPage brand > muestra el logo claro, el heading accesible y la bajada 93ms
      → expected null not to be null
    ↓ LoginPage brand > renderiza sin window.matchMedia, usa reduced motion falso y permite avanzar el carrusel
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  22:22:08
-   Duration  2.78s (transform 244ms, setup 389ms, collect 431ms, tests 147ms, environment 1.16s, prepare 243ms)
+   Start at  22:50:11
+   Duration  3.27s (transform 254ms, setup 387ms, collect 466ms, tests 95ms, environment 1.50s, prepare 365ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpx67_gj_f/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1vyra930/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -499,17 +502,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginBrand.test.tsx (2 tests | 1 failed | 1 skipped) 107ms
+ ❯ src/features/login/LoginBrand.test.tsx (2 tests | 1 failed | 1 skipped) 93ms
    ↓ LoginPage brand > muestra el logo claro, el heading accesible y la bajada
-   × LoginPage brand > renderiza sin window.matchMedia, usa reduced motion falso y permite avanzar el carrusel 105ms
+   × LoginPage brand > renderiza sin window.matchMedia, usa reduced motion falso y permite avanzar el carrusel 91ms
      → expected '0' to be '1' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  22:22:15
-   Duration  2.64s (transform 188ms, setup 244ms, collect 342ms, tests 107ms, environment 1.35s, prepare 251ms)
+   Start at  22:50:19
+   Duration  4.51s (transform 291ms, setup 627ms, collect 505ms, tests 93ms, environment 2.28s, prepare 428ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp8soda5to/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpm78urbas/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -547,8 +550,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 32ms
-   × LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta 30ms
+ ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 39ms
+   × LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta 37ms
      → expected '2' to be '1' // Object.is equality
    ↓ LoginCarousel > pausa y reanuda el avance sin aria-pressed
    ↓ LoginCarousel > reduced motion desactiva la rotación y el Ken Burns
@@ -557,10 +560,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  22:22:23
-   Duration  2.57s (transform 130ms, setup 301ms, collect 233ms, tests 32ms, environment 1.30s, prepare 235ms)
+   Start at  22:50:30
+   Duration  5.13s (transform 205ms, setup 611ms, collect 520ms, tests 39ms, environment 2.77s, prepare 504ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7p7ymbrb/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyxol2x7q/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -598,9 +601,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 186ms
+ ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 150ms
    ↓ LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta
-   × LoginCarousel > pausa y reanuda el avance sin aria-pressed 183ms
+   × LoginCarousel > pausa y reanuda el avance sin aria-pressed 148ms
      → expected '1' to be '0' // Object.is equality
    ↓ LoginCarousel > reduced motion desactiva la rotación y el Ken Burns
    ↓ LoginCarousel > cancela el ticker al desmontar
@@ -608,10 +611,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  22:22:29
-   Duration  2.53s (transform 136ms, setup 282ms, collect 212ms, tests 186ms, environment 1.23s, prepare 207ms)
+   Start at  22:50:42
+   Duration  5.05s (transform 278ms, setup 581ms, collect 582ms, tests 150ms, environment 2.72s, prepare 436ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpaete7ns4/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6tfpsg7i/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -649,20 +652,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 50ms
+ ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 69ms
    ↓ LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta
    ↓ LoginCarousel > pausa y reanuda el avance sin aria-pressed
-   × LoginCarousel > reduced motion desactiva la rotación y el Ken Burns 47ms
+   × LoginCarousel > reduced motion desactiva la rotación y el Ken Burns 66ms
      → expected '1' to be '0' // Object.is equality
    ↓ LoginCarousel > cancela el ticker al desmontar
    ↓ LoginCarousel > muestra cinco fotos decorativas y la clase de Ken Burns solo en la activa
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  22:22:37
-   Duration  2.67s (transform 176ms, setup 354ms, collect 282ms, tests 50ms, environment 1.24s, prepare 233ms)
+   Start at  22:50:56
+   Duration  4.33s (transform 247ms, setup 506ms, collect 599ms, tests 69ms, environment 2.16s, prepare 369ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpicfheoyk/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpamkmf8nw/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -700,20 +703,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 38ms
+ ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 34ms
    ↓ LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta
    ↓ LoginCarousel > pausa y reanuda el avance sin aria-pressed
    ↓ LoginCarousel > reduced motion desactiva la rotación y el Ken Burns
-   × LoginCarousel > cancela el ticker al desmontar 35ms
+   × LoginCarousel > cancela el ticker al desmontar 33ms
      → expected +0 to be 1 // Object.is equality
    ↓ LoginCarousel > muestra cinco fotos decorativas y la clase de Ken Burns solo en la activa
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  22:22:44
-   Duration  2.48s (transform 173ms, setup 339ms, collect 292ms, tests 38ms, environment 1.22s, prepare 230ms)
+   Start at  22:51:07
+   Duration  4.55s (transform 243ms, setup 509ms, collect 517ms, tests 34ms, environment 2.47s, prepare 449ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpurbypxzz/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyb_0xytn/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -754,12 +757,12 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 40ms
+ ❯ src/features/login/LoginCarousel.test.tsx (5 tests | 1 failed | 4 skipped) 75ms
    ↓ LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta
    ↓ LoginCarousel > pausa y reanuda el avance sin aria-pressed
    ↓ LoginCarousel > reduced motion desactiva la rotación y el Ken Burns
    ↓ LoginCarousel > cancela el ticker al desmontar
-   × LoginCarousel > muestra cinco fotos decorativas y la clase de Ken Burns solo en la activa 37ms
+   × LoginCarousel > muestra cinco fotos decorativas y la clase de Ken Burns solo en la activa 72ms
      → expect(element).toHaveAttribute("aria-hidden", "true") // element.getAttribute("aria-hidden") === "true"
 
 Expected the element to have attribute:
@@ -769,10 +772,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  22:22:51
-   Duration  2.46s (transform 160ms, setup 366ms, collect 358ms, tests 40ms, environment 1.08s, prepare 217ms)
+   Start at  22:51:22
+   Duration  4.51s (transform 257ms, setup 581ms, collect 554ms, tests 75ms, environment 2.26s, prepare 435ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuw1oo92j/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpo2mhlxj5/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -812,16 +815,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/test/readmeCredits.test.ts (1 test | 1 failed) 21ms
-   × README credits > documenta las fotografías, el logo y la licencia de las tipografías 17ms
+ ❯ src/test/readmeCredits.test.ts (1 test | 1 failed) 24ms
+   × README credits > documenta las fotografías, el logo y la licencia de las tipografías 21ms
      → expected '# turnos-odontologia\n\nSistema web d…' to contain 'SIL Open Font License 1.1'
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  22:22:58
-   Duration  2.26s (transform 80ms, setup 373ms, collect 61ms, tests 21ms, environment 1.14s, prepare 269ms)
+   Start at  22:51:35
+   Duration  4.97s (transform 86ms, setup 713ms, collect 58ms, tests 24ms, environment 3.02s, prepare 520ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpnv9bwtzk/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpfdvz_dex/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1220,5 +1223,5 @@ RESUMEN
 mutaciones que hicieron fallar su test: 16
 mutaciones que NO lo hicieron fallar: 0
 mutaciones inválidas: 0
-SHA-256 de produccion despues: 0b57fc0ea8de7c6ec464789936a2ea0cf81856bb1486fbda108c9a03438f7771
+SHA-256 de produccion despues: c8c01906c75c72f86507f1cde2891da9aa557e1d74ac55e13d703767f35c34a6
 SHA-256 sin cambios: si

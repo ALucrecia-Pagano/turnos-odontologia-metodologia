@@ -138,8 +138,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         T_APP_SHELL_BRAND,
         "muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica",
         P_APP_SHELL,
-        '<img src={logoAquaOscuro} alt="" className={styles.brandLogo} />',
-        '<img src={logoAquaOscuro} alt="Aqua" className={styles.brandLogo} />',
+        '<img src={isotipoAqua} alt="" className={styles.brandLogo} />',
+        '<img src={isotipoAqua} alt="Aqua" className={styles.brandLogo} />',
     ),
     Mutation(
         T_APP_SHELL_BRAND,
