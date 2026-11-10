@@ -1,0 +1,36 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest --run src/shared/styles/appointmentStatusTokens.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 16[2mms[22m[39m
+   [32m✓[39m APPOINTMENT_STATUS_TOKENS[2m > [22mel mapa cubre los cinco estados sin undefined[32m 3[2mms[22m[39m
+[31m   [31m×[31m APPOINTMENT_STATUS_TOKENS[2m > [22mcada par texto y fondo cumple contraste AA[39m[32m 11[2mms[22m[39m
+[31m     → reservado: expected '#1D4ED8' to be '#1F5F86' // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/appointmentStatusTokens.test.ts[2m > [22mAPPOINTMENT_STATUS_TOKENS[2m > [22mcada par texto y fondo cumple contraste AA
+[31m[1mAssertionError[22m: reservado: expected '#1D4ED8' to be '#1F5F86' // Object.is equality[39m
+
+Expected: [32m"#1[7mF5F86[27m"[39m
+Received: [31m"#1[7mD4ED8[27m"[39m
+
+[36m [2m❯[22m src/shared/styles/appointmentStatusTokens.test.ts:[2m45:35[22m[39m
+    [90m 43| [39m      [35mconst[39m tokens [33m=[39m [33mAPPOINTMENT_STATUS_TOKENS[39m[status][33m;[39m
+    [90m 44| [39m      [35mconst[39m ratio [33m=[39m [34mcontrastRatio[39m(tokens[33m.[39mtext[33m,[39m tokens[33m.[39mbackground)[33m;[39m
+    [90m 45| [39m      [34mexpect[39m(tokens[33m.[39mtext[33m,[39m status)[33m.[39m[34mtoBe[39m(expected[status][33m.[39mtext)[33m;[39m
+    [90m   | [39m                                  [31m^[39m
+    [90m 46| [39m      expect(tokens.background, status).toBe(expected[status].backgrou…
+    [90m 47| [39m      [34mexpect[39m(ratio[33m.[39m[34mtoFixed[39m([34m2[39m)[33m,[39m status)[33m.[39m[34mtoBe[39m(expected[status][33m.[39mratio)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:26:16
+[2m   Duration [22m 3.10s[2m (transform 97ms, setup 337ms, collect 67ms, tests 16ms, environment 1.95s, prepare 284ms)[22m
+

@@ -38,6 +38,7 @@
 
 .columnHeader {
   flex: 1 0 var(--agenda-column-min-width, 220px);
+  font-family: var(--font-family-heading);
   min-width: var(--agenda-column-min-width, 220px);
   min-height: var(--agenda-column-header-height, 48px);
   padding: var(--space-2) var(--space-3);

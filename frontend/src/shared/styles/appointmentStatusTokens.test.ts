@@ -32,11 +32,11 @@ describe("APPOINTMENT_STATUS_TOKENS", () => {
 
   it("cada par texto y fondo cumple contraste AA", () => {
     const expected = {
-      reservado: { text: "#1D4ED8", background: "#DBEAFE", ratio: "5.49" },
-      confirmado: { text: "#15803D", background: "#DCFCE7", ratio: "4.57" },
-      atendido: { text: "#374151", background: "#E5E7EB", ratio: "8.33" },
-      ausente: { text: "#B45309", background: "#FEF3C7", ratio: "4.51" },
-      cancelado: { text: "#B91C1C", background: "#FEE2E2", ratio: "5.30" },
+      reservado: { text: "#1F5F86", background: "#E4F2F8", ratio: "6.04" },
+      confirmado: { text: "#146C43", background: "#DDF3E7", ratio: "5.54" },
+      atendido: { text: "#3D4A5C", background: "#E6EBF1", ratio: "7.51" },
+      ausente: { text: "#9A5B00", background: "#FDF0D5", ratio: "4.81" },
+      cancelado: { text: "#A8242C", background: "#FBE4E6", ratio: "5.87" },
     } as const;
 
     for (const status of APPOINTMENT_STATUSES) {

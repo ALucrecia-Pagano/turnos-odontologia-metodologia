@@ -1,0 +1,83 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest --run src/shared/styles/fonts.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/styles/fonts.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 17[2mms[22m[39m
+[31m   [31m×[31m tipografías autoalojadas[2m > [22mdefine Jost para títulos y Manrope para texto con fallback al system stack[39m[32m 10[2mms[22m[39m
+[31m     → the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string[39m
+[31m   [31m×[31m tipografías autoalojadas[2m > [22mel body conserva la base y usa Manrope después[39m[32m 5[2mms[22m[39m
+[31m     → expected '*,\n*::before,\n*::after {\n  box-siz…' to match /body\s*\{[\s\S]*font-family:\s*var\(-…/[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/fonts.test.ts[2m > [22mtipografías autoalojadas[2m > [22mdefine Jost para títulos y Manrope para texto con fallback al system stack
+[31m[1mAssertionError[22m: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string[39m
+[36m [2m❯[22m src/shared/styles/fonts.test.ts:[2m15:50[22m[39m
+    [90m 13| [39m[34mdescribe[39m([32m"tipografías autoalojadas"[39m[33m,[39m () [33m=>[39m {
+    [90m 14| [39m  it("define Jost para títulos y Manrope para texto con fallback al sy…
+    [90m 15| [39m    expect(declaration("--font-family-heading")).toContain('"Jost Vari…
+    [90m   | [39m                                                 [31m^[39m
+    [90m 16| [39m    expect(declaration("--font-family-heading")).toContain("system-ui"…
+    [90m 17| [39m    expect(declaration("--font-family-body")).toContain('"Manrope Vari…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/fonts.test.ts[2m > [22mtipografías autoalojadas[2m > [22mel body conserva la base y usa Manrope después
+[31m[1mAssertionError[22m: expected '*,\n*::before,\n*::after {\n  box-siz…' to match /body\s*\{[\s\S]*font-family:\s*var\(-…/[39m
+
+[32m- Expected:[39m 
+/body\s*\{[\s\S]*font-family:\s*var\(--font-family-base\)[\s\S]*font-family:\s*var\(--font-family-body\)/
+
+[31m+ Received:[39m 
+"*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+"
+
+[36m [2m❯[22m src/shared/styles/fonts.test.ts:[2m22:22[22m[39m
+    [90m 20| [39m
+    [90m 21| [39m  [34mit[39m([32m"el body conserva la base y usa Manrope después"[39m[33m,[39m () [33m=>[39m {
+    [90m 22| [39m    [34mexpect[39m(resetCss)[33m.[39m[34mtoMatch[39m(
+    [90m   | [39m                     [31m^[39m
+    [90m 23| [39m      /body\s*\{[\s\S]*font-family:\s*var\(--font-family-base\)[\s\S]*…
+    [90m 24| [39m    )[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:29:35
+[2m   Duration [22m 3.05s[2m (transform 97ms, setup 421ms, collect 67ms, tests 17ms, environment 1.77s, prepare 316ms)[22m
+

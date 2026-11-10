@@ -1,0 +1,706 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest --run src/features/login/LoginBrand.test.tsx src/features/login/LoginCarousel.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 213[2mms[22m[39m
+[31m   [31m×[31m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada[39m[32m 180[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "img" and name "Aqua — Clínica Odontológica"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"page"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Turnos Odontología":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"login-heading"[31m
+    [33mclass[31m=[32m"card"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"header"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"login-heading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"subtitle"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  form:
+
+  Name "Iniciar sesión":
+  [36m<form[31m
+    [33maria-label[31m=[32m"Iniciar sesión"[31m
+    [33mclass[31m=[32m"form"[31m
+    [33mnovalidate[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Usuario":
+  [36m<input[31m
+    [33mautocomplete[31m=[32m"username"[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"login-username"[31m
+    [33mmaxlength[31m=[32m"150"[31m
+    [33mname[31m=[32m"username"[31m
+    [33mrequired[31m=[32m""[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Ingresar":
+  [36m<button[31m
+    [33maria-busy[31m=[32m"false"[31m
+    [33mclass[31m=[32m"submit"[31m
+    [33mtype[31m=[32m"submit"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"login-heading"[31m
+        [33mclass[31m=[32m"card"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"header"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"title"[31m
+            [33mid[31m=[32m"login-heading"[31m
+          [36m>[31m
+            [0mTurnos Odontología[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"subtitle"[31m
+          [36m>[31m
+            [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+          [36m</p>[31m
+        [36m</header>[31m
+        [36m<form[31m
+          [33maria-label[31m=[32m"Iniciar sesión"[31m
+          [33mclass[31m=[32m"form"[31m
+          [33mnovalidate[31m=[32m""[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-username"[31m
+            [36m>[31m
+              [0mUsuario[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"username"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-username"[31m
+              [33mmaxlength[31m=[32m"150"[31m
+              [33mname[31m=[32m"username"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-password"[31m
+            [36m>[31m
+              [0mContraseña[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"current-password"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-password"[31m
+              [33mmaxlength[31m=[32m"128"[31m
+              [33mname[31m=[32m"password"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"password"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-busy[31m=[32m"false"[31m
+            [33mclass[31m=[32m"submit"[31m
+            [33mtype[31m=[32m"submit"[31m
+          [36m>[31m
+            [0mIngresar[0m
+          [36m</button>[31m
+        [36m</form>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[31m   [31m×[31m LoginPage brand[2m > [22mrenderiza sin window.matchMedia sin inyectar prefersReducedMotion[39m[32m 31[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "button" and name "Pausar animación"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"page"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Turnos Odontología":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"login-heading"[31m
+    [33mclass[31m=[32m"card"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"header"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"login-heading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"subtitle"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  form:
+
+  Name "Iniciar sesión":
+  [36m<form[31m
+    [33maria-label[31m=[32m"Iniciar sesión"[31m
+    [33mclass[31m=[32m"form"[31m
+    [33mnovalidate[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Usuario":
+  [36m<input[31m
+    [33mautocomplete[31m=[32m"username"[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"login-username"[31m
+    [33mmaxlength[31m=[32m"150"[31m
+    [33mname[31m=[32m"username"[31m
+    [33mrequired[31m=[32m""[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Ingresar":
+  [36m<button[31m
+    [33maria-busy[31m=[32m"false"[31m
+    [33mclass[31m=[32m"submit"[31m
+    [33mtype[31m=[32m"submit"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"login-heading"[31m
+        [33mclass[31m=[32m"card"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"header"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"title"[31m
+            [33mid[31m=[32m"login-heading"[31m
+          [36m>[31m
+            [0mTurnos Odontología[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"subtitle"[31m
+          [36m>[31m
+            [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+          [36m</p>[31m
+        [36m</header>[31m
+        [36m<form[31m
+          [33maria-label[31m=[32m"Iniciar sesión"[31m
+          [33mclass[31m=[32m"form"[31m
+          [33mnovalidate[31m=[32m""[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-username"[31m
+            [36m>[31m
+              [0mUsuario[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"username"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-username"[31m
+              [33mmaxlength[31m=[32m"150"[31m
+              [33mname[31m=[32m"username"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-password"[31m
+            [36m>[31m
+              [0mContraseña[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"current-password"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-password"[31m
+              [33mmaxlength[31m=[32m"128"[31m
+              [33mname[31m=[32m"password"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"password"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-busy[31m=[32m"false"[31m
+            [33mclass[31m=[32m"submit"[31m
+            [33mtype[31m=[32m"submit"[31m
+          [36m>[31m
+            [0mIngresar[0m
+          [36m</button>[31m
+        [36m</form>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 285[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/login/LoginBrand.test.tsx[2m > [22mLoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada
+[31m[1mTestingLibraryElementError[22m: Unable to find an accessible element with the role "img" and name "Aqua — Clínica Odontológica"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"page"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Turnos Odontología":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"login-heading"[31m
+    [33mclass[31m=[32m"card"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"header"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"login-heading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"subtitle"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  form:
+
+  Name "Iniciar sesión":
+  [36m<form[31m
+    [33maria-label[31m=[32m"Iniciar sesión"[31m
+    [33mclass[31m=[32m"form"[31m
+    [33mnovalidate[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Usuario":
+  [36m<input[31m
+    [33mautocomplete[31m=[32m"username"[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"login-username"[31m
+    [33mmaxlength[31m=[32m"150"[31m
+    [33mname[31m=[32m"username"[31m
+    [33mrequired[31m=[32m""[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Ingresar":
+  [36m<button[31m
+    [33maria-busy[31m=[32m"false"[31m
+    [33mclass[31m=[32m"submit"[31m
+    [33mtype[31m=[32m"submit"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"login-heading"[31m
+        [33mclass[31m=[32m"card"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"header"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"title"[31m
+            [33mid[31m=[32m"login-heading"[31m
+          [36m>[31m
+            [0mTurnos Odontología[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"subtitle"[31m
+          [36m>[31m
+            [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+          [36m</p>[31m
+        [36m</header>[31m
+        [36m<form[31m
+          [33maria-label[31m=[32m"Iniciar sesión"[31m
+          [33mclass[31m=[32m"form"[31m
+          [33mnovalidate[31m=[32m""[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-username"[31m
+            [36m>[31m
+              [0mUsuario[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"username"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-username"[31m
+              [33mmaxlength[31m=[32m"150"[31m
+              [33mname[31m=[32m"username"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-password"[31m
+            [36m>[31m
+              [0mContraseña[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"current-password"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-password"[31m
+              [33mmaxlength[31m=[32m"128"[31m
+              [33mname[31m=[32m"password"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"password"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-busy[31m=[32m"false"[31m
+            [33mclass[31m=[32m"submit"[31m
+            [33mtype[31m=[32m"submit"[31m
+          [36m>[31m
+            [0mIngresar[0m
+          [36m</button>[31m
+        [36m</form>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/login/LoginBrand.test.tsx:[2m34:25[22m[39m
+    [90m 32| [39m    [34mrenderLogin[39m()[33m;[39m
+    [90m 33| [39m
+    [90m 34| [39m    const logo = screen.getByRole("img", { name: "Aqua — Clínica Odont…
+    [90m   | [39m                        [31m^[39m
+    [90m 35| [39m    [34mexpect[39m(logo[33m.[39m[34mgetAttribute[39m([32m"src"[39m))[33m.[39m[34mtoContain[39m([32m"logo-aqua-claro"[39m)[33m;[39m
+    [90m 36| [39m    expect(screen.getByRole("heading", { name: "Turnos Odontología" })…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/login/LoginBrand.test.tsx[2m > [22mLoginPage brand[2m > [22mrenderiza sin window.matchMedia sin inyectar prefersReducedMotion
+[31m[1mTestingLibraryElementError[22m: Unable to find an accessible element with the role "button" and name "Pausar animación"
+
+Here are the accessible roles:
+
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"page"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Turnos Odontología":
+  [36m<section[31m
+    [33maria-labelledby[31m=[32m"login-heading"[31m
+    [33mclass[31m=[32m"card"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"header"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Turnos Odontología":
+  [36m<h1[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"login-heading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"subtitle"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  form:
+
+  Name "Iniciar sesión":
+  [36m<form[31m
+    [33maria-label[31m=[32m"Iniciar sesión"[31m
+    [33mclass[31m=[32m"form"[31m
+    [33mnovalidate[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Usuario":
+  [36m<input[31m
+    [33mautocomplete[31m=[32m"username"[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"login-username"[31m
+    [33mmaxlength[31m=[32m"150"[31m
+    [33mname[31m=[32m"username"[31m
+    [33mrequired[31m=[32m""[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Ingresar":
+  [36m<button[31m
+    [33maria-busy[31m=[32m"false"[31m
+    [33mclass[31m=[32m"submit"[31m
+    [33mtype[31m=[32m"submit"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<main[31m
+      [33mclass[31m=[32m"page"[31m
+    [36m>[31m
+      [36m<section[31m
+        [33maria-labelledby[31m=[32m"login-heading"[31m
+        [33mclass[31m=[32m"card"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"header"[31m
+        [36m>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"title"[31m
+            [33mid[31m=[32m"login-heading"[31m
+          [36m>[31m
+            [0mTurnos Odontología[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"subtitle"[31m
+          [36m>[31m
+            [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+          [36m</p>[31m
+        [36m</header>[31m
+        [36m<form[31m
+          [33maria-label[31m=[32m"Iniciar sesión"[31m
+          [33mclass[31m=[32m"form"[31m
+          [33mnovalidate[31m=[32m""[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-username"[31m
+            [36m>[31m
+              [0mUsuario[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"username"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-username"[31m
+              [33mmaxlength[31m=[32m"150"[31m
+              [33mname[31m=[32m"username"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"field"[31m
+          [36m>[31m
+            [36m<label[31m
+              [33mclass[31m=[32m"label"[31m
+              [33mfor[31m=[32m"login-password"[31m
+            [36m>[31m
+              [0mContraseña[0m
+            [36m</label>[31m
+            [36m<input[31m
+              [33mautocomplete[31m=[32m"current-password"[31m
+              [33mclass[31m=[32m"input"[31m
+              [33mid[31m=[32m"login-password"[31m
+              [33mmaxlength[31m=[32m"128"[31m
+              [33mname[31m=[32m"password"[31m
+              [33mrequired[31m=[32m""[31m
+              [33mtype[31m=[32m"password"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-busy[31m=[32m"false"[31m
+            [33mclass[31m=[32m"submit"[31m
+            [33mtype[31m=[32m"submit"[31m
+          [36m>[31m
+            [0mIngresar[0m
+          [36m</button>[31m
+        [36m</form>[31m
+      [36m</section>[31m
+    [36m</main>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/login/LoginBrand.test.tsx:[2m44:19[22m[39m
+    [90m 42| [39m
+    [90m 43| [39m    expect(screen.getByRole("heading", { name: "Turnos Odontología" })…
+    [90m 44| [39m    expect(screen.getByRole("button", { name: "Pausar animación" })).t…
+    [90m   | [39m                  [31m^[39m
+    [90m 45| [39m  })[33m;[39m
+    [90m 46| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 21:49:41
+[2m   Duration [22m 3.82s[2m (transform 341ms, setup 943ms, collect 969ms, tests 498ms, environment 3.71s, prepare 582ms)[22m
+

@@ -1,0 +1,7 @@
+33:.kenBurns {
+34:  animation: kenBurns 7s ease-out;
+38:@keyframes kenBurns {
+204:@media (prefers-reduced-motion: reduce) {
+205:  .kenBurns {
+206:    animation: none;
+210:    transition: none;

@@ -286,6 +286,14 @@ El seed (`python -m app.db.seed`, desde `backend/`) crea un usuario ficticio por
 La contraseña de los tres es el valor de `SEED_USER_PASSWORD` en tu `.env`, que no
 está en el repositorio.
 
+## Créditos
+
+| Recurso | Ubicación | Crédito y licencia |
+|---|---|---|
+| Fotografías `hero-1-sala-de-espera.webp`, `hero-2-consultorio.webp`, `hero-3-dentista.webp`, `hero-4-instrumental.webp` y `hero-5-sillon.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Material de demostración provisto para este TP. No se identifican autores porque no se dispone de ese dato. |
+| Logo de Aqua (`logo-aqua-claro.png`, `logo-aqua-oscuro.png`, `isotipo-aqua.png` e `isotipo-aqua-claro.png`) | [frontend/src/assets/brand/](frontend/src/assets/brand/) | Provisto por la autora del TP. |
+| Tipografías Jost y Manrope | Paquetes `@fontsource-variable/jost` y `@fontsource-variable/manrope` | SIL Open Font License 1.1, distribuidas por Fontsource. |
+
 ## Dónde está cada entregable
 
 | Entregable | Ubicación |

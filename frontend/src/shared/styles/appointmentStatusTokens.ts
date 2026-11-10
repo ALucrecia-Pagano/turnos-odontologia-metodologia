@@ -10,9 +10,9 @@ export interface StatusColorTokens {
 
 // Paleta AA (contraste texto/fondo >= 4.5:1), documentada en docs/evidencias/verify-C-25.md.
 export const APPOINTMENT_STATUS_TOKENS: Readonly<Record<AppointmentStatus, StatusColorTokens>> = {
-  reservado: { text: "#1D4ED8", background: "#DBEAFE", border: "#93C5FD" },
-  confirmado: { text: "#15803D", background: "#DCFCE7", border: "#86EFAC" },
-  atendido: { text: "#374151", background: "#E5E7EB", border: "#9CA3AF" },
-  ausente: { text: "#B45309", background: "#FEF3C7", border: "#FCD34D" },
-  cancelado: { text: "#B91C1C", background: "#FEE2E2", border: "#FCA5A5" },
+  reservado: { text: "#1F5F86", background: "#E4F2F8", border: "#9CC7D8" },
+  confirmado: { text: "#146C43", background: "#DDF3E7", border: "#86EFAC" },
+  atendido: { text: "#3D4A5C", background: "#E6EBF1", border: "#94A3B8" },
+  ausente: { text: "#9A5B00", background: "#FDF0D5", border: "#F0C36D" },
+  cancelado: { text: "#A8242C", background: "#FBE4E6", border: "#EFA3A3" },
 };

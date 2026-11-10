@@ -1,0 +1,6 @@
+
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\login\LoginCarousel.tsx
+  14:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+✖ 1 problem (0 errors, 1 warning)
+

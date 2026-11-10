@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import logoAquaOscuro from "../../assets/brand/logo-aqua-oscuro.png";
 import { useAuth } from "../../features/auth/AuthContext";
 import { menuFor } from "../../features/auth/menuFor";
 import styles from "./AppShell.module.css";
@@ -20,7 +21,14 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className={styles.appShell}>
-      <div className={styles.topBar}>
+      <header className={styles.topBar}>
+        <div className={styles.brand} data-brand="aqua">
+          <img src={logoAquaOscuro} alt="" className={styles.brandLogo} />
+          <div className={styles.brandText}>
+            <span className={styles.brandName}>Aqua</span>
+            <span className={styles.brandSubtitle}>Clínica Odontológica</span>
+          </div>
+        </div>
         <nav aria-label="Menú principal" className={styles.nav}>
           <ul className={styles.menuList}>
             {menuItems.map((item) => (
@@ -58,7 +66,7 @@ export function AppShell({ children }: AppShellProps) {
             </button>
           </div>
         )}
-      </div>
+      </header>
       {actionErrors !== null && actionErrors.length > 0 && (
         <div role="alert" aria-live="polite" className={styles.alertBanner}>
           {actionErrors.map((msg) => (

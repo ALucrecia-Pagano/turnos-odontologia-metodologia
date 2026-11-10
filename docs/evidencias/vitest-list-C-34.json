@@ -1,0 +1,654 @@
+[
+  {
+    "name": "tooling del frontend > npm run typecheck falla con un tipo inválido",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/tooling.test.ts"
+  },
+  {
+    "name": "tooling del frontend > npm run lint detecta una violación",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/tooling.test.ts"
+  },
+  {
+    "name": "tooling del frontend > la estructura de carpetas y los scripts están presentes",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/tooling.test.ts"
+  },
+  {
+    "name": "LoginPage > login correcto del administrador",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginPage.test.tsx"
+  },
+  {
+    "name": "LoginPage > login correcto de recepción y del odontólogo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginPage.test.tsx"
+  },
+  {
+    "name": "LoginPage > credenciales inválidas con mensaje genérico",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginPage.test.tsx"
+  },
+  {
+    "name": "LoginPage > el 401 del login no es sesión vencida",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginPage.test.tsx"
+  },
+  {
+    "name": "LoginPage > envío en curso y doble submit",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginPage.test.tsx"
+  },
+  {
+    "name": "LoginPage > accesibilidad del formulario",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > respeta el borde de medianoche en la fecha inicial y normaliza una fecha inválida con replace mostrando aviso",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > muestra Cargando... con role=status en la carga inicial sin mostrar error",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > delega el 401 de GET /api/agenda en C-26 descartando el token y redirigiendo a /login sin mostrar error local",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > muestra la violación de un 403 en el error local sin cerrar sesión ni duplicar el banner global",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > un view desconocido o ausente cae a vista diaria con botón Día seleccionado",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol odontólogo su propio professionalId",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > preselecciona automáticamente por rol recepción al primer profesional activo en el orden del selector",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > navegación semanal avanza y retrocede 7 días cruzando mes y año",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > botón Hoy en vista semanal navega a la fecha actual del Clock",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > preselección automática en vista semanal envía professionalId en la única llamada y el contador solo incluye sus turnos",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaPage > AgendaPage - Vista Semanal (C-28) > vista semanal muestra Agenda semanal como título, rango de semana en encabezado y Turnos de la semana en contador",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaPage.test.tsx"
+  },
+  {
+    "name": "AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > posiciona el turno de Quiroga 10:00–10:30 a 120 minutos del inicio con 30 minutos de alto y muestra la fecha local",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > reparte un turno cancelado y uno activo superpuestos en dos carriles y da alto mínimo al turno de cinco minutos",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > la tarjeta de 30 minutos muestra el nombre del paciente en su texto visible y el aria-label completo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > en un solapamiento de dos carriles la tarjeta muestra en dos líneas el paciente y el nombre del estado como texto visible",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > un turno de un solo carril conserva el formato de una línea con la etiqueta de estado",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > la tarjeta de 60 minutos muestra la prestación en su texto visible en una línea separada",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > anuncia la cantidad de turnos con aria-live y alterna a la vista en lista con Ver como lista",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > AgendaView - Vista Semanal (C-28) > renderiza 7 columnas de lunes a domingo con turno en el día local correcto según timezone y cancelados visibles",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso informativo cuando la semana está vacía sin turnos para la profesional",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > AgendaView - Vista Semanal (C-28) > muestra grilla y aviso de filtro cuando la semana está vacía con filtro de sillón activo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AgendaView > AgendaView - Vista Semanal (C-28) > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaView.test.tsx"
+  },
+  {
+    "name": "AuthContext > estado checking mientras se verifica la sesión",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/AuthContext.test.tsx"
+  },
+  {
+    "name": "AuthContext > sesión autenticada con el usuario de /me",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/AuthContext.test.tsx"
+  },
+  {
+    "name": "AuthContext > /me responde 401 y limpia la sesión",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/AuthContext.test.tsx"
+  },
+  {
+    "name": "AuthContext > error de red en /me conserva el token y permite reintentar",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/AuthContext.test.tsx"
+  },
+  {
+    "name": "AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/AuthContext.test.tsx"
+  },
+  {
+    "name": "AuthContext > rol sin permiso muestra la violación ante 403 sin cerrar sesión ni refrescar /me",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/AuthContext.test.tsx"
+  },
+  {
+    "name": "App con router y guards de sesión > la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/App.test.tsx"
+  },
+  {
+    "name": "App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/App.test.tsx"
+  },
+  {
+    "name": "App con router y guards de sesión > ruta protegida sin sesión conserva el destino",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/App.test.tsx"
+  },
+  {
+    "name": "App con router y guards de sesión > login con sesión vuelve al destino válido",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/App.test.tsx"
+  },
+  {
+    "name": "App con router y guards de sesión > sin parpadeo de login a home",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/App.test.tsx"
+  },
+  {
+    "name": "App con router y guards de sesión > token vencido en una request protegida",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/App.test.tsx"
+  },
+  {
+    "name": "AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/AppShell.test.tsx"
+  },
+  {
+    "name": "AppShell > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/AppShell.test.tsx"
+  },
+  {
+    "name": "Logout > cerrar sesión desde el shell descarta token y usuario y navega a /login con replace",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/Logout.test.tsx"
+  },
+  {
+    "name": "AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaToolbar.test.tsx"
+  },
+  {
+    "name": "AgendaToolbar > renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaToolbar.test.tsx"
+  },
+  {
+    "name": "AgendaTable > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/AgendaTable.test.tsx"
+  },
+  {
+    "name": "ErrorState > muestra uno y varios mensajes",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/ErrorState.test.tsx"
+  },
+  {
+    "name": "ErrorState > muestra el mensaje de un 409 textual",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/ErrorState.test.tsx"
+  },
+  {
+    "name": "ErrorState > con reintento muestra el botón y lo ejecuta",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/ErrorState.test.tsx"
+  },
+  {
+    "name": "ErrorState > sin reintento no muestra botón",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/ErrorState.test.tsx"
+  },
+  {
+    "name": "useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/useAgenda.test.tsx"
+  },
+  {
+    "name": "useAgenda > aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/useAgenda.test.tsx"
+  },
+  {
+    "name": "useAgenda > pide la semana completa en una sola llamada a GET /api/agenda cuando se especifica toDate",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/useAgenda.test.tsx"
+  },
+  {
+    "name": "EmptyState > con acción muestra el botón",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/EmptyState.test.tsx"
+  },
+  {
+    "name": "EmptyState > sin acción no muestra botón",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/EmptyState.test.tsx"
+  },
+  {
+    "name": "smoke del andamiaje > monta App y muestra el título",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/smoke.test.tsx"
+  },
+  {
+    "name": "LoginPage brand > muestra el logo claro, el heading accesible y la bajada",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginBrand.test.tsx"
+  },
+  {
+    "name": "LoginPage brand > renderiza sin window.matchMedia, usa reduced motion falso y permite avanzar el carrusel",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginBrand.test.tsx"
+  },
+  {
+    "name": "PageShell > envuelve header, main y footer y renderiza sus hijos",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/PageShell.test.tsx"
+  },
+  {
+    "name": "StatusBadge > el estado reservado muestra su variante",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/StatusBadge.test.tsx"
+  },
+  {
+    "name": "StatusBadge > el estado confirmado muestra su variante",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/StatusBadge.test.tsx"
+  },
+  {
+    "name": "StatusBadge > el estado atendido muestra su variante",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/StatusBadge.test.tsx"
+  },
+  {
+    "name": "StatusBadge > el estado ausente muestra su variante",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/StatusBadge.test.tsx"
+  },
+  {
+    "name": "StatusBadge > el estado cancelado muestra su variante",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/StatusBadge.test.tsx"
+  },
+  {
+    "name": "AppShell brand > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/AppShellBrand.test.tsx"
+  },
+  {
+    "name": "AppShell brand > ubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/AppShellBrand.test.tsx"
+  },
+  {
+    "name": "LoadingState > renderiza su rol y su texto",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/components/LoadingState.test.tsx"
+  },
+  {
+    "name": "agendaLayout — eje de horas (R4) > calcula el eje 08:00 a 20:00 para el lunes 2026-11-16 con horarios 09:00–13:00 y 15:00–19:00, bloqueo y turnos",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaLayout — eje de horas (R4) > usa 08:00–20:00 en día vacío, expande rangos menores a 4 horas y clampea bloqueos y turnos en medianoche a [0, 1440]",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaLayout — columnas por profesional (R5) > ordena las columnas de forma alfabética estable con desempate por id, conserva columnas vacías y une defensivamente la agenda",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaLayout — columnas por profesional (R5) > marca profesionales inactivos con (inactivo) y el filtro professionalId deja una sola columna",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaLayout — posición, alto y carriles (R6) > asigna carriles a turnos sin solape, a un cancelado y un activo superpuestos y a tres turnos en cadena",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaLayout — posición, alto y carriles (R6) > aplica alto mínimo a un turno de 5 minutos, clampea el inicio al eje y soporta un turno que termina a las 00:00",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaLayout — posición, alto y carriles (R6) > groupByDayForProfessional genera 7 columnas de lunes a domingo para un profesional, distribuye turnos, horarios y bloqueos en hora local y marca isToday",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaLayout.test.ts"
+  },
+  {
+    "name": "agendaTime > 13:00Z se convierte a 10:00 y 2026-11-16 en Buenos Aires y formatea la etiqueta del día",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTime.test.ts"
+  },
+  {
+    "name": "agendaTime > respeta el borde de medianoche entre 02:30Z y 03:30Z en Buenos Aires",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTime.test.ts"
+  },
+  {
+    "name": "agendaTime > addDays suma y resta días calendario cruzando mes y año y weekdayOf devuelve ISO con domingo 7",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTime.test.ts"
+  },
+  {
+    "name": "agendaTime > parseHHMM convierte 24:00 a 1440 y appointmentRange maneja el cruce de medianoche",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTime.test.ts"
+  },
+  {
+    "name": "agendaTime > una zona con DST como America/New_York no altera la hora de Buenos Aires y el resultado no depende del proceso",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTime.test.ts"
+  },
+  {
+    "name": "agendaTime > weekRangeOf calcula lunes a domingo de la semana y getWeekDates genera los 7 días admitiendo cruce de mes y año",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTime.test.ts"
+  },
+  {
+    "name": "punto de enganche del token > sin provider no se envía Authorization",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/auth.test.ts"
+  },
+  {
+    "name": "punto de enganche del token > con provider se agrega el Bearer",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/auth.test.ts"
+  },
+  {
+    "name": "punto de enganche del token > C-25 no persiste el token",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/auth.test.ts"
+  },
+  {
+    "name": "LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginCarousel.test.tsx"
+  },
+  {
+    "name": "LoginCarousel > pausa y reanuda el avance sin aria-pressed",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginCarousel.test.tsx"
+  },
+  {
+    "name": "LoginCarousel > reduced motion desactiva la rotación y el Ken Burns",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginCarousel.test.tsx"
+  },
+  {
+    "name": "LoginCarousel > cancela el ticker al desmontar",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginCarousel.test.tsx"
+  },
+  {
+    "name": "LoginCarousel > muestra cinco fotos decorativas y la clase de Ken Burns solo en la activa",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/login/LoginCarousel.test.tsx"
+  },
+  {
+    "name": "servicio frontend en Docker Compose > docker compose up levanta el frontend en 5173",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/docker.test.ts"
+  },
+  {
+    "name": "servicio frontend en Docker Compose > un cambio de archivo se refleja por HMR en Windows",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/docker.test.ts"
+  },
+  {
+    "name": "servicio frontend en Docker Compose > VITE_API_URL del navegador apunta a localhost",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/docker.test.ts"
+  },
+  {
+    "name": "guardián de zona horaria y reloj en agenda > prohíbe getters locales de Date y toLocale* sin timeZone y confina new Date() a clock.ts",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaTimeGuard.test.ts"
+  },
+  {
+    "name": "authApi > login envía POST /api/auth/login y devuelve el accessToken con 200",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "authApi > login devuelve error auth ante 401 INVALID_CREDENTIALS",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "authApi > login devuelve error validation ante 400 con errors",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "authApi > el login no manda un token viejo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "authApi > petición autenticada con Bearer",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "authApi > sin token no se envía Authorization",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "authApi > fetchMe devuelve error auth ante 401 INVALID_TOKEN y error unknown ante red o 5xx",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/authApi.test.ts"
+  },
+  {
+    "name": "cliente de API > una respuesta 200 devuelve ok con los datos",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > serializa el cuerpo como JSON y envía los headers de contenido",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un 400 con errors se modela como validation",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un 401 con code y message se modela como auth",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un 403 con violations se modela como forbidden",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un 409 con PROFESSIONAL_OVERLAP conserva el mensaje exacto",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un 422 con violations se modela como unprocessable",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un 404 con code y message se modela como not_found",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > una respuesta desconocida se modela como unknown",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "cliente de API > un fallo de red se modela como unknown con status 0 sin lanzar",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/client.test.ts"
+  },
+  {
+    "name": "agendaApi > fetchAgenda pide GET /api/agenda con from y to locales sin sufijo Z, filtros opcionales y signal, y parsea el 200 completo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaApi.test.ts"
+  },
+  {
+    "name": "agendaApi > fetchAgenda propaga errores 400, 401, 403, 500, red y rechaza una respuesta 200 con JSON o forma inválida",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaApi.test.ts"
+  },
+  {
+    "name": "agendaApi > fetchProfessionals y fetchChairs cargan los catálogos con activos e inactivos y validan la respuesta",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaApi.test.ts"
+  },
+  {
+    "name": "agendaConfig > DEFAULT_AGENDA_TIMEZONE vive en un único archivo de configuración y resolveAgendaTimezone prioriza el timezone de la respuesta",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaConfig.test.ts"
+  },
+  {
+    "name": "tipografías autoalojadas > define Jost para títulos y Manrope para texto con fallback al system stack",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/fonts.test.ts"
+  },
+  {
+    "name": "tipografías autoalojadas > el body conserva la base y usa Manrope después",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/fonts.test.ts"
+  },
+  {
+    "name": "tipografías autoalojadas > no usa URLs de Google Fonts ni CDNs externos en src",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/fonts.test.ts"
+  },
+  {
+    "name": "clock > systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/clock.test.ts"
+  },
+  {
+    "name": "confinamiento del storage de sesión > el storage está confinado a un solo archivo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/storageGuard.test.ts"
+  },
+  {
+    "name": "getApiErrorMessages > devuelve errors[].message de un 400 en orden y tal cual",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/errors.test.ts"
+  },
+  {
+    "name": "getApiErrorMessages > devuelve message de un 401 tal cual",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/errors.test.ts"
+  },
+  {
+    "name": "getApiErrorMessages > devuelve violations[].message de un 409 con PROFESSIONAL_OVERLAP sin reformular",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/errors.test.ts"
+  },
+  {
+    "name": "getApiErrorMessages > devuelve violations[].message de un 403 y de un 422",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/errors.test.ts"
+  },
+  {
+    "name": "getApiErrorMessages > devuelve message de un 404 tal cual",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/errors.test.ts"
+  },
+  {
+    "name": "getApiErrorMessages > un error unknown devuelve un mensaje genérico con el status, sin el texto crudo",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/api/errors.test.ts"
+  },
+  {
+    "name": "agendaStyles y responsive de escritorio/tablet (D12, D13) > define los tokens de agenda en tokens.css, scroll horizontal, sticky, controles >= 44x44 px y cero HEX en TSX",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaStyles.test.ts"
+  },
+  {
+    "name": "agendaStyles y responsive de escritorio/tablet (D12, D13) > la columna es un contenedor y por debajo de 260 px la tarjeta compacta pasa a dos líneas con la etiqueta reducida",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaStyles.test.ts"
+  },
+  {
+    "name": "agendaStyles y responsive de escritorio/tablet (D12, D13) > verifica estáticamente los estilos de tablet y el tag de Hoy para la vista semanal (C-28)",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaStyles.test.ts"
+  },
+  {
+    "name": "agendaStyles y responsive de escritorio/tablet (D12, D13) > las columnas semanales usan token de ancho sin min-width de 220px y en tablet mantienen scroll horizontal",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaStyles.test.ts"
+  },
+  {
+    "name": "agendaStyles y responsive de escritorio/tablet (D12, D13) > en carriles divididos y tarjetas apiladas la etiqueta de estado no desborda la tarjeta con max-width 100%, overflow hidden y text-overflow ellipsis (H5)",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaStyles.test.ts"
+  },
+  {
+    "name": "agendaStyles y responsive de escritorio/tablet (D12, D13) > en columnas menores a 260 px las tarjetas no compactas usan etiqueta reducida y líneas con ellipsis en una línea (H6)",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/agenda/agendaStyles.test.ts"
+  },
+  {
+    "name": "APPOINTMENT_STATUS_TOKENS > el mapa cubre los cinco estados sin undefined",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/appointmentStatusTokens.test.ts"
+  },
+  {
+    "name": "APPOINTMENT_STATUS_TOKENS > cada par texto y fondo cumple contraste AA",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/appointmentStatusTokens.test.ts"
+  },
+  {
+    "name": "menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/menuFor.test.ts"
+  },
+  {
+    "name": "menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/menuFor.test.ts"
+  },
+  {
+    "name": "menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/menuFor.test.ts"
+  },
+  {
+    "name": "tokens.css > define la escala de espaciado 4/8/12/16/24/32/48 px",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/tokens.test.ts"
+  },
+  {
+    "name": "tokens.css > define la tipografía 12/14/16/20/24/32 px",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/tokens.test.ts"
+  },
+  {
+    "name": "tokens.css > usa el system font stack en el reset",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/tokens.test.ts"
+  },
+  {
+    "name": "tokens.css > el foco es visible",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/tokens.test.ts"
+  },
+  {
+    "name": "TokenStore > guardar y leer el token de la pestaña",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/tokenStore.test.ts"
+  },
+  {
+    "name": "TokenStore > limpiar el token",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/tokenStore.test.ts"
+  },
+  {
+    "name": "TokenStore > fallback a memoria si el almacenamiento falla",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/tokenStore.test.ts"
+  },
+  {
+    "name": "TokenStore > createMemoryTokenStore aísla cada instancia sin tocar sessionStorage",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/tokenStore.test.ts"
+  },
+  {
+    "name": "safeInternalPath > acepta una ruta interna con query string como /agenda?date=2026-11-07",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/safeInternalPath.test.ts"
+  },
+  {
+    "name": "safeInternalPath > se rechaza una ruta protocol-relative",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/safeInternalPath.test.ts"
+  },
+  {
+    "name": "safeInternalPath > se rechaza una URL absoluta",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/safeInternalPath.test.ts"
+  },
+  {
+    "name": "safeInternalPath > se rechaza volver al propio login",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/features/auth/safeInternalPath.test.ts"
+  },
+  {
+    "name": "paleta Aqua > define los tokens semánticos con los valores del design",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/aquaPalette.test.ts"
+  },
+  {
+    "name": "paleta Aqua > mantiene los contrastes de texto del design",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/shared/styles/aquaPalette.test.ts"
+  },
+  {
+    "name": "README credits > documenta las fotografías, el logo y la licencia de las tipografías",
+    "file": "C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend/src/test/readmeCredits.test.ts"
+  }
+]

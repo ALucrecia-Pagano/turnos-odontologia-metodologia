@@ -1,0 +1,53 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest --run src/shared/styles/aquaPalette.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/styles/aquaPalette.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 15[2mms[22m[39m
+[31m   [31m×[31m paleta Aqua[2m > [22mdefine los tokens semánticos con los valores del design[39m[32m 11[2mms[22m[39m
+[31m     → expected '#111827' to be '#011C40' // Object.is equality[39m
+[31m   [31m×[31m paleta Aqua[2m > [22mmantiene los contrastes de texto del design[39m[32m 2[2mms[22m[39m
+[31m     → expected '16.98' to be '15.70' // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/aquaPalette.test.ts[2m > [22mpaleta Aqua[2m > [22mdefine los tokens semánticos con los valores del design
+[31m[1mAssertionError[22m: expected '#111827' to be '#011C40' // Object.is equality[39m
+
+Expected: [32m"#[7m0[27m11[7mC40[27m"[39m
+Received: [31m"#11[7m1827[27m"[39m
+
+[36m [2m❯[22m src/shared/styles/aquaPalette.test.ts:[2m40:41[22m[39m
+    [90m 38| [39m[34mdescribe[39m([32m"paleta Aqua"[39m[33m,[39m () [33m=>[39m {
+    [90m 39| [39m  [34mit[39m([32m"define los tokens semánticos con los valores del design"[39m[33m,[39m () [33m=>[39m {
+    [90m 40| [39m    [34mexpect[39m([34mdeclaration[39m([32m"--color-text"[39m))[33m.[39m[34mtoBe[39m([32m"#011C40"[39m)[33m;[39m
+    [90m   | [39m                                        [31m^[39m
+    [90m 41| [39m    [34mexpect[39m([34mdeclaration[39m([32m"--color-text-muted"[39m))[33m.[39m[34mtoBe[39m([32m"#4A5F78"[39m)[33m;[39m
+    [90m 42| [39m    [34mexpect[39m([34mdeclaration[39m([32m"--color-background"[39m))[33m.[39m[34mtoBe[39m([32m"#F3F7FA"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/styles/aquaPalette.test.ts[2m > [22mpaleta Aqua[2m > [22mmantiene los contrastes de texto del design
+[31m[1mAssertionError[22m: expected '16.98' to be '15.70' // Object.is equality[39m
+
+Expected: [32m"1[7m5.70[27m"[39m
+Received: [31m"1[7m6.98[27m"[39m
+
+[36m [2m❯[22m src/shared/styles/aquaPalette.test.ts:[2m55:73[22m[39m
+    [90m 53| [39m  [34mit[39m([32m"mantiene los contrastes de texto del design"[39m[33m,[39m () [33m=>[39m {
+    [90m 54| [39m    [35mconst[39m background [33m=[39m [34mtoken[39m([32m"--color-background"[39m)[33m;[39m
+    [90m 55| [39m    expect(contrastRatio(token("--color-text"), background).toFixed(2)…
+    [90m   | [39m                                                                        [31m^[39m
+    [90m 56| [39m    expect(contrastRatio(token("--color-text-muted"), background).toFi…
+    [90m 57| [39m    expect(contrastRatio(token("--color-primary-contrast"), token("--c…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:25:02
+[2m   Duration [22m 2.85s[2m (transform 83ms, setup 285ms, collect 52ms, tests 15ms, environment 1.63s, prepare 335ms)[22m
+

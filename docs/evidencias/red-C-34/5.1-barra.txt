@@ -1,0 +1,52 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest --run src/shared/components/AppShellBrand.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 311[2mms[22m[39m
+[31m   [31m×[31m AppShell brand[2m > [22mmuestra una sola barra con logo decorativo, Aqua y Clínica Odontológica[39m[32m 269[2mms[22m[39m
+[31m     → expected  to have a length of 1 but got +0[39m
+[31m   [31m×[31m AppShell brand[2m > [22mubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px[39m[32m 38[2mms[22m[39m
+[31m     → expected null not to be null[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShellBrand.test.tsx[2m > [22mAppShell brand[2m > [22mmuestra una sola barra con logo decorativo, Aqua y Clínica Odontológica
+[31m[1mAssertionError[22m: expected  to have a length of 1 but got +0[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 0[39m
+
+[36m [2m❯[22m src/shared/components/AppShellBrand.test.tsx:[2m49:18[22m[39m
+    [90m 47| [39m
+    [90m 48| [39m    [35mconst[39m bars [33m=[39m container[33m.[39m[34mquerySelectorAll[39m([32m"header"[39m)[33m;[39m
+    [90m 49| [39m    [34mexpect[39m(bars)[33m.[39m[34mtoHaveLength[39m([34m1[39m)[33m;[39m
+    [90m   | [39m                 [31m^[39m
+    [90m 50| [39m    [35mconst[39m bar [33m=[39m bars[[34m0[39m][33m;[39m
+    [90m 51| [39m    [35mif[39m (bar [33m===[39m undefined) {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShellBrand.test.tsx[2m > [22mAppShell brand[2m > [22mubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/shared/components/AppShellBrand.test.tsx:[2m73:23[22m[39m
+    [90m 71| [39m
+    [90m 72| [39m    [35mconst[39m brand [33m=[39m container[33m.[39m[34mquerySelector[39m([32m'[data-brand="aqua"]'[39m)[33m;[39m
+    [90m 73| [39m    [34mexpect[39m(brand)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 74| [39m    [35mif[39m (brand [33m===[39m [35mnull[39m) {
+    [90m 75| [39m      [35mthrow[39m [35mnew[39m [33mError[39m([32m"No se renderizó la marca"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:38:47
+[2m   Duration [22m 5.39s[2m (transform 409ms, setup 500ms, collect 898ms, tests 311ms, environment 2.61s, prepare 401ms)[22m
+

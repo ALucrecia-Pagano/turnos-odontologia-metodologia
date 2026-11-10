@@ -1,0 +1,14 @@
+Ratios C-34 calculados con la función contrastRatio del test existente
+Paleta:
+ink/fondo: #011C40 sobre #F3F7FA = 15.70:1 (esperado 15.70:1) OK
+secundario/fondo: #4A5F78 sobre #F3F7FA = 6.09:1 (esperado 6.09:1) OK
+blanco/primary: #FFFFFF sobre #26658C = 6.32:1 (esperado 6.32:1) OK
+foco/fondo: #26658C sobre #F3F7FA = 5.87:1 (esperado 5.87:1) OK
+accent/fondo: #54ACBF sobre #F3F7FA = 2.43:1 (esperado 2.43:1) OK
+Estados:
+reservado: #1F5F86 sobre #E4F2F8 = 6.04:1 (esperado 6.04:1) OK
+confirmado: #146C43 sobre #DDF3E7 = 5.54:1 (esperado 5.54:1) OK
+atendido: #3D4A5C sobre #E6EBF1 = 7.51:1 (esperado 7.51:1) OK
+ausente: #9A5B00 sobre #FDF0D5 = 4.81:1 (esperado 4.81:1) OK
+cancelado: #A8242C sobre #FBE4E6 = 5.87:1 (esperado 5.87:1) OK
+RESUMEN: todos los ratios coinciden con design.md
