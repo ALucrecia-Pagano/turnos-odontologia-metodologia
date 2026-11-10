@@ -58,8 +58,10 @@ C-22 + C-23 + C-24
       └── C-26 ui-login-y-sesion                 (también C-19)
            ├── C-27 ui-agenda-diaria
            │    ├── C-28 ui-agenda-semanal
-           │    │    └── C-34 ui-identidad-visual     (antes de C-29)
-           │    ├── C-29 ui-dar-turno-con-errores
+           │    │    └── C-34 ui-identidad-visual
+           │    │         └── C-35 ui-portada-y-acceso
+           │    │              └── C-36 ui-tema-oscuro-y-movil   (antes de C-29)
+           │    ├── C-29 ui-dar-turno-con-errores   (después de C-36)
            │    │    └── C-30 ui-reprogramar-cancelar-y-estados
            │    └── C-31 ui-vista-de-recepcion-por-sillon
            ├── C-32 ui-horarios-y-bloqueos       (también C-21)
@@ -140,7 +142,13 @@ GATE 17: C-27 ✓                                   ← FORK
 
 GATE 17b: C-28 ✓
   → C-34 ui-identidad-visual                     [Agente B]
-  → C-29 ui-dar-turno-con-errores                [Agente A — cuando C-34 ✓]
+
+GATE 17c: C-34 ✓
+  → C-35 ui-portada-y-acceso                     [Agente B]
+       └── C-36 ui-tema-oscuro-y-movil           [Agente B]
+
+GATE 17d: C-36 ✓
+  → C-29 ui-dar-turno-con-errores                [Agente A]
 
 GATE 18: C-29 ✓
   → C-30 ui-reprogramar-cancelar-y-estados       [Agente A]
@@ -154,7 +162,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 
 - `C-30*` cierra el camino: con ese change se puede iniciar sesión y dar, ver, reprogramar, cancelar y marcar estados de turnos desde la UI sobre la API ya probada.
 - La infraestructura (C-13, C-14, C-15, C-18, C-19, C-20) no está en el camino crítico: corre en paralelo con el dominio y termina antes de que se la necesite (GATE 12).
-- Fuera del camino crítico (se pueden hacer en paralelo o recortar en este orden si el plazo aprieta): `C-31` (vista por sillón, diferenciador), `C-28` (vista semanal), `C-34` (identidad visual, se aplica antes de C-29 pero no bloquea funcionalidad), `C-32` y `C-33` (con seeds y la API alcanza para operar; la UI de configuración es lo más postergable), `C-21` (API de horarios, los horarios pueden venir de seeds).
+- Fuera del camino crítico (se pueden hacer en paralelo o recortar en este orden si el plazo aprieta): `C-31` (vista por sillón, diferenciador), `C-28` (vista semanal), `C-34` (identidad visual), `C-35` (portada pública) y `C-36` (tema oscuro y móvil), que se aplican antes de C-29 pero no bloquean funcionalidad, `C-32` y `C-33` (con seeds y la API alcanza para operar; la UI de configuración es lo más postergable), `C-21` (API de horarios, los horarios pueden venir de seeds).
 - **No** se recorta ningún test: la regla de contingencia de la KB es postergar vistas antes que tests (08 §Plan de contingencia).
 - Redis no tiene change propio: el MVP no tiene funcionalidades asincrónicas (SU-11). Su servicio se levanta en C-13 y no se usa hasta el backlog.
 
@@ -176,8 +184,9 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 | 12 | C-26 ui-login-y-sesion | — | — |
 | 13 | C-27 ui-agenda-diaria | C-32 ui-horarios-y-bloqueos | C-33 ui-catalogos-y-pacientes |
 | 14 | — | C-28 ui-agenda-semanal → C-34 ui-identidad-visual | C-31 ui-vista-de-recepcion-por-sillon |
-| 15 | C-29 ui-dar-turno-con-errores | — | — |
-| 16 | C-30 ui-reprogramar-cancelar-y-estados | — | — |
+| 15 | — | C-35 ui-portada-y-acceso → C-36 ui-tema-oscuro-y-movil | — |
+| 16 | C-29 ui-dar-turno-con-errores | — | — |
+| 17 | C-30 ui-reprogramar-cancelar-y-estados | — | — |
 
 ---
 
@@ -654,6 +663,40 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/02_descripcion_general.md` §Stack del frontend
   - `knowledge-base/06_funcionalidades.md` §US-040, §US-050
 
+### [C-35] `ui-portada-y-acceso`
+- **Estado**: `[ ]` pendiente
+- **Scope**:
+  - Portada pública en `/login`: `LoginPage` pasa a ser un wrapper delgado de `LandingPage`; el hero reutiliza el carrusel de C-34, el `<h1>` contiene el logo claro con `alt` y se muestran la bajada "Claridad en cada cuidado.", el lead, el badge "Sitio de demostración" y el CTA "Ingresar al sistema".
+  - `<dialog>` nativo abierto al entrar, con heading "Turnos Odontología", form de login, botón "Ver la clínica", foco en Usuario, Escape, retorno de foco, bloqueo del scroll y fallback por atributo `open` en jsdom; sin stubs de globals.
+  - Cuatro secciones (Quiénes somos, Servicios, Equipo, Horarios y contacto) con datos ficticios del seed, nota de datos ficticios y reveal con observador inyectable + `prefers-reduced-motion`.
+  - Tokens `--landing-hero-min-height` y `--landing-content-max-width` en `tokens.css`; cero colores nuevos. No se toca `App.tsx` ni se reordena `createAppRoutes`.
+  - Specs: nueva capability `frontend-landing`; delta MODIFIED de `frontend-auth-session` ("Bajada y tarjeta del login"); delta ADDED de `frontend-foundation` (tokens de layout).
+  - Tests nuevos de portada, contenido, diálogo, foco y reveal; los tests existentes de login, ruta y smoke no se modifican.
+  - Evidencias: RED/GREEN, una mutación por test nuevo con detector de inválidas, trazabilidad, `tsc`, ESLint, build y capturas 1440/768/390 px a cargo de Claude.
+- **Dependencias**: `C-34`
+- **Governance**: BAJO
+- **Preparación**: skill `appointment-frontend-ux` (tokens, accesibilidad, regla C1 y verificación visual 1440/768) y MCP `context7` (React Router v6, ya consultado en el explore). Se ejecuta antes de C-29.
+- **Leer antes**:
+  - `docs/evidencias/explore-portada-y-acceso.md` §4–§7
+  - `openspec/specs/frontend-auth-session/spec.md` §Bajada y tarjeta del login, §Carrusel decorativo del login
+  - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
+  - `knowledge-base/06_funcionalidades.md` §US-050
+
+### [C-36] `ui-tema-oscuro-y-movil`
+- **Estado**: `[ ]` pendiente
+- **Scope**:
+  - Tema oscuro siguiendo `prefers-color-scheme`, más un botón que alterna el tema sin guardar la elección (no persiste en `localStorage` ni en cookie).
+  - Responsive para celular de la portada y del diálogo de acceso: hero, secciones, equipo, contacto y formulario legibles y sin overflow horizontal a 390 px.
+  - Tokens de tema oscuro en `tokens.css`/variantes, sin colores fuera de la paleta Aqua; contraste AA en texto real.
+  - Tests de componentes: tema según la preferencia, el botón alterna sin persistir y la estructura se mantiene en viewport angosto (lo medible en jsdom); capturas 1440/768/390 px a cargo de Claude.
+- **Dependencias**: `C-35`
+- **Governance**: BAJO
+- **Preparación**: skill `appointment-frontend-ux` y MCP `context7` antes de implementar (React 18, Vite 5, Vitest 3).
+- **Leer antes**:
+  - `docs/evidencias/explore-portada-y-acceso.md` §6.2 y §7
+  - `openspec/changes/ui-portada-y-acceso/design.md` §D9, §Riesgos
+  - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
+
 ### [C-29] `ui-dar-turno-con-errores`
 - **Estado**: `[ ]` pendiente
 - **Scope**:
@@ -781,8 +824,10 @@ Fuera del alcance del MVP (D.3 y KB 06 §Épica 7). **No tienen C-NN y no se imp
 | C-32 | `ui-horarios-y-bloqueos` | 6 | C-26, C-21 | BAJO |
 | C-33 | `ui-catalogos-y-pacientes` | 6 | C-26, C-20 | BAJO |
 | C-34 | `ui-identidad-visual` | 6 | C-28 | BAJO |
+| C-35 | `ui-portada-y-acceso` | 6 | C-34 | BAJO |
+| C-36 | `ui-tema-oscuro-y-movil` | 6 | C-35 | BAJO |
 
-**Totales**: 34 changes en 6 fases, 20 gates (GATE 0 a GATE 18, con GATE 17b), camino crítico de 15 changes.
+**Totales**: 36 changes en 6 fases, 22 gates (GATE 0 a GATE 18, con GATE 17b, 17c y 17d), camino crítico de 15 changes.
 
 **Primer change recomendado**: `C-01` (`fundacion-backend-y-dominio`), y enseguida `C-02` (`crear-turno-sin-solapamientos`, el "change 1" de la KB).
 
