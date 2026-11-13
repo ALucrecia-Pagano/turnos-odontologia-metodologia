@@ -82,7 +82,7 @@
 
 ## 8. Verificación visual independiente
 
-- [ ] 8.1 **Capturas 1440, 768 y 390 px — A CARGO DE CLAUDE**: Esta tarea NO la ejecuta el apply. Se reserva para la verificación independiente con navegador real / Playwright al auditar el cambio en escritorio (`docs/evidencias/capturas/C-29-1440.png`), tablet (`docs/evidencias/capturas/C-29-768.png`) y móvil (`docs/evidencias/capturas/C-29-390.png`). Los 3 escenarios de adaptabilidad visual no tienen test de Vitest ni mutaciones en el apply.
+- [x] 8.1 **Capturas 1440, 768 y 390 px — A CARGO DE CLAUDE**: Verificación independiente con navegador real completada. Se generaron las 7 capturas de pantalla en `docs/evidencias/capturas/`: `C-29-form-1440.png`, `C-29-form-768.png`, `C-29-form-390.png`, `C-29-form-completo-1440.png`, `C-29-alta-exitosa-1440.png`, `C-29-error-409-1440.png` y `C-29-error-409-390.png`. Los 3 escenarios de adaptabilidad visual quedan verificados visualmente.
 
 ## 9. Correcciones de la revisión
 

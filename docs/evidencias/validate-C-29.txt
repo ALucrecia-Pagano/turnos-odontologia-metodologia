@@ -1,0 +1,19 @@
+﻿✓ spec/agenda-api
+✓ spec/api-foundation
+✓ spec/appointment-lifecycle
+✓ spec/appointment-scheduling
+✓ spec/appointments-api
+✓ spec/authentication-and-rbac
+✓ spec/backend-toolchain
+✓ spec/catalog-and-patients
+✓ spec/database-infrastructure
+✓ spec/domain-dependency-guard
+✓ spec/frontend-agenda
+✓ spec/frontend-appointment-form
+✓ spec/frontend-auth-session
+✓ spec/frontend-foundation
+✓ change/ui-portada-y-acceso
+✓ spec/working-hours-and-blocks-api
+Totals: 16 passed, 0 failed (16 items)
+
+exit: 0

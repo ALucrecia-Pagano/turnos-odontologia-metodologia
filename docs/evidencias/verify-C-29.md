@@ -4,7 +4,7 @@
 
 Todos los números provienen de las ejecuciones reales y archivos de evidencia enlazados.
 
-- Tareas: implementadas según [tasks.md](../../openspec/changes/ui-dar-turno-con-errores/tasks.md).
+- Tareas: implementadas según [tasks.md](../../openspec/changes/archive/2026-11-13-ui-dar-turno-con-errores/tasks.md).
 - Vitest: suite completa pasando en verde (línea base de 164 tests intactos + 27 tests nuevos de C-29 = 191 tests en verde); `tsc --noEmit` y `eslint .` con código 0.
 - Mutaciones: 27/27 hicieron fallar su test respectivo (una mutación por cada test nuevo de C-29); mutaciones inválidas: 0; 0 sobrevivientes; SHA-256 de producción intacto.
 - Trazabilidad: 23 escenarios probados mediante Vitest (mapeo 1:1 a tests distintos) y 3 escenarios de adaptabilidad visual verificados visualmente (capturas independientes a cargo de Claude).
@@ -57,6 +57,32 @@ Todos los números provienen de las ejecuciones reales y archivos de evidencia e
 
 6. **Corrección visual post-captura (centrado del modal, wrap del buscador en 390 px, font-family inherit)**:
    - CSS no verificable en jsdom; verificado con capturas C-29-*.png.
+
+---
+
+## Verificación manual contra la API real
+
+Se realizaron pruebas interactivas con navegador real contra la API local activa, verificadas con las capturas en `docs/evidencias/capturas/C-29-*.png`:
+
+1. **Alta exitosa (201)**:
+   - Al completar el formulario y confirmar, el turno se crea correctamente.
+   - El diálogo se cierra, la agenda se refresca y la región accesible permanente anuncia: `"Turno creado para el 13/11/2026 a las 10:00."`.
+   - El foco retorna programáticamente al botón `"Nuevo turno"`.
+   - Evidencia: `C-29-alta-exitosa-1440.png` y `C-29-form-completo-1440.png`.
+
+2. **Conflicto de dominio (409)**:
+   - Al intentar crear un turno que solapa agenda o sillón, la API responde 409 con violaciones múltiples (`PROFESSIONAL_OVERLAP` y `CHAIR_OVERLAP`).
+   - El alert superior de error muestra los códigos y los mensajes textuales del backend intactos con sus referencias correspondientes.
+   - Foco trasladado automáticamente al contenedor de alerta.
+   - Evidencia: `C-29-error-409-1440.png` y `C-29-error-409-390.png` (verificando wrap accesible en pantallas angostas).
+
+3. **Cierre accesible con Escape**:
+   - Al pulsar la tecla Escape, el modal se cierra sin enviar solicitudes y retorna el foco al disparador.
+
+4. **Defectos visuales detectados en primera captura y corregidos en ca28ad5**:
+   - Modal ubicado arriba a la izquierda por falta de centrado en `<dialog>`: corregido con flexbox (`align-items: center; justify-content: center;`) y padding en `Dialog.module.css`.
+   - Botón de búsqueda desbordado en viewport de 390 px: corregido con `flex-wrap: wrap;` y ancho al 100% en pantallas móviles en `PatientSearchGroup.module.css`.
+   - Tipografía Arial / genérica en campos y selectores: corregido con `font-family: inherit;` para heredar Manrope de los tokens.
 
 ---
 
@@ -124,7 +150,7 @@ Todos los números provienen de las ejecuciones reales y archivos de evidencia e
 | 21 | `frontend-appointment-form` | Errores de validación 400 y permisos 403 | Foco se traslada al resumen de alerta ante fallo | src/features/appointments/AppointmentFormDialog.test.tsx > foco al resumen de alerta ante fallo | M20: omisión de foco al alert ante violaciones |
 | 22 | `frontend-appointment-form` | Éxito, refresco de agenda y retorno de foco | Alta exitosa 201 refresca agenda y anuncia resultado | src/features/agenda/AgendaPage.nuevoTurno.test.tsx > tras alta exitosa (201) anuncia el turno creado en una región de estado accesible | M27: alteración del mensaje de anuncio en AgendaPage |
 | 23 | `frontend-appointment-form` | Éxito, refresco de agenda y retorno de foco | Cancelación retorna el foco | src/features/appointments/AppointmentFormDialog.test.tsx > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura | M21: no-op en onClick de botón Cancelar |
-| 24 | `frontend-appointment-form` | Adaptabilidad visual del formulario | Visualización en escritorio a 1440 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-29-1440.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
-| 25 | `frontend-appointment-form` | Adaptabilidad visual del formulario | Visualización en tablet a 768 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-29-768.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
-| 26 | `frontend-appointment-form` | Adaptabilidad visual del formulario | Visualización en móvil a 390 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-29-390.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
+| 24 | `frontend-appointment-form` | Adaptabilidad visual del formulario | Visualización en escritorio a 1440 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-29-form-1440.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
+| 25 | `frontend-appointment-form` | Adaptabilidad visual del formulario | Visualización en tablet a 768 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-29-form-768.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
+| 26 | `frontend-appointment-form` | Adaptabilidad visual del formulario | Visualización en móvil a 390 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-29-form-390.png`, `docs/evidencias/capturas/C-29-error-409-390.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
 <!-- trazabilidad:fin -->
