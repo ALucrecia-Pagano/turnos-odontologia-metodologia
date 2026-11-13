@@ -49,6 +49,8 @@ export function AppointmentDetailDialog({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isConfirmingCancel, setIsConfirmingCancel] = useState(false);
   const alertRef = useRef<HTMLDivElement>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
+  const focusCancelOnReturnRef = useRef(false);
 
   if (open !== prevOpen) {
     setPrevOpen(open);
@@ -64,6 +66,13 @@ export function AppointmentDetailDialog({
       alertRef.current?.focus();
     }
   }, [violations]);
+
+  useEffect(() => {
+    if (!isConfirmingCancel && focusCancelOnReturnRef.current) {
+      focusCancelOnReturnRef.current = false;
+      cancelButtonRef.current?.focus();
+    }
+  }, [isConfirmingCancel]);
 
   if (!open || !appointment) {
     return null;
@@ -82,9 +91,14 @@ export function AppointmentDetailDialog({
     isDentist && currentUser.professionalId === appointment.professionalId;
   const isDentistOther = isDentist && !isOwnAppointment;
 
+  const returnToDetail = () => {
+    focusCancelOnReturnRef.current = true;
+    setIsConfirmingCancel(false);
+  };
+
   const handleDialogClose = () => {
     if (isConfirmingCancel) {
-      setIsConfirmingCancel(false);
+      returnToDetail();
     } else {
       onClose();
     }
@@ -245,7 +259,7 @@ export function AppointmentDetailDialog({
               <button
                 type="button"
                 disabled={isSubmitting}
-                onClick={() => setIsConfirmingCancel(false)}
+                onClick={returnToDetail}
                 className={styles.secondaryButton}
               >
                 Volver al detalle
@@ -305,9 +319,11 @@ export function AppointmentDetailDialog({
                     </button>
 
                     <button
+                      ref={cancelButtonRef}
                       type="button"
                       disabled={isSubmitting}
                       onClick={() => {
+                        setViolations([]);
                         setIsConfirmingCancel(true);
                       }}
                       className={styles.dangerButton}

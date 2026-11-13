@@ -1,5 +1,5 @@
 Salida generada por docs/evidencias/trazabilidad-C-30.py. No editar a mano.
-tests listados por vitest en el repo: 229
+tests listados por vitest en el repo: 232
 escenarios totales en las specs delta de C-30: 31
 escenarios verificados con tests de Vitest: 28
 escenarios de adaptabilidad visual (verificación visual independiente): 3

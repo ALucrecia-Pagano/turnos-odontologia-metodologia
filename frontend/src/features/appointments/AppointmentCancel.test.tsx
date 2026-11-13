@@ -215,4 +215,75 @@ describe("AppointmentDetailDialog — Cancelación", () => {
     expect(screen.queryByRole("button", { name: "Cancelar turno" })).not.toBeNull();
     expect(postSent).toBe(false);
   });
+
+  it("5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno", () => {
+    const client = createApiClient({
+      fetchFn: async () => new Response(JSON.stringify([]), { status: 200 }),
+    });
+
+    render(
+      <AppointmentDetailDialog
+        open={true}
+        onClose={() => {}}
+        appointment={BASE_APPOINTMENT}
+        client={client}
+        timezone="America/Argentina/Buenos_Aires"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Cancelar turno" }));
+    const dialog = screen.queryByRole("dialog");
+    expect(dialog).not.toBeNull();
+    fireEvent.keyDown(dialog!, { key: "Escape" });
+
+    const cancelBtn = screen.queryByRole("button", { name: "Cancelar turno" });
+    expect(cancelBtn).not.toBeNull();
+    expect(cancelBtn).toHaveFocus();
+  });
+
+  it("5.7 al entrar a la confirmación se limpia el alert de una acción anterior", async () => {
+    const errorResponse = {
+      code: "BUSINESS_RULE_VIOLATION",
+      message: "Violación de regla de negocio",
+      violations: [
+        {
+          code: "STATUS_CHANGE_TOO_EARLY",
+          message: "No se puede marcar atendido un turno que todavía no empezó.",
+        },
+      ],
+    };
+    const client = createApiClient({
+      fetchFn: async (input, init) => {
+        if (String(input).includes("/status") && init?.method === "POST") {
+          return new Response(JSON.stringify(errorResponse), {
+            status: 422,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+        return new Response(JSON.stringify([]), { status: 200 });
+      },
+    });
+
+    render(
+      <AppointmentDetailDialog
+        open={true}
+        onClose={() => {}}
+        appointment={BASE_APPOINTMENT}
+        client={client}
+        timezone="America/Argentina/Buenos_Aires"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Marcar atendido" }));
+    await waitFor(() => {
+      expect(screen.queryByRole("alert")).not.toBeNull();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Cancelar turno" }));
+
+    expect(
+      screen.queryByText("¿Confirma que desea cancelar el turno de Ana Pérez?"),
+    ).not.toBeNull();
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
 });

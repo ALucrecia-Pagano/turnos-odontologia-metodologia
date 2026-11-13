@@ -1,5 +1,6 @@
+=== Tanda 1: comando: node node_modules/vitest/vitest.mjs run --exclude src/test/tooling.test.ts
 
-[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
 
 [90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial
 [22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
@@ -12,7 +13,7 @@ act(() => {
 /* assert on the output */
 
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+    at AppointmentFormDialog (c:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 
 [90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mprellenado con fecha y filtros activos
 [22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
@@ -25,7 +26,7 @@ act(() => {
 /* assert on the output */
 
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+    at AppointmentFormDialog (c:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 
 [90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2msin filtros activos los selectores quedan sin selección
 [22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
@@ -38,21 +39,21 @@ act(() => {
 /* assert on the output */
 
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+    at AppointmentFormDialog (c:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 
- [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1102[2mms[22m[39m
- [32m✓[39m src/features/appointments/AppointmentRescheduleDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1628[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.1 apertura con paciente y prestación en solo lectura y campos prellenados [33m 379[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.2 reprogramación exitosa envía POST con offset exacto y cierra modal [33m 647[2mms[22m[39m
- [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1224[2mms[22m[39m
-   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 849[2mms[22m[39m
-   [33m[2m✓[22m[39m AppShell[2m > [22mmuestra en un alerta del shell la violación de un 403 sin cerrar la sesión [33m 369[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 2721[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía [33m 503[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaView[2m > [22mmuestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta [33m 368[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaView[2m > [22men un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista [33m 315[2mms[22m[39m
- [32m✓[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 1347[2mms[22m[39m
-   [33m[2m✓[22m[39m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace [33m 1340[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 822[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Detalle e Historial[2m > [22m3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar [33m 490[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentStatusActions.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 994[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Cambios de estado[2m > [22m4.1 botones contextuales según estado y rol [33m 695[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentCancel.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 1056[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Cancelación[2m > [22m5.1 cancelar turno muestra subvista de confirmación in-dialog [33m 522[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentRescheduleDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1230[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.1 apertura con paciente y prestación en solo lectura y campos prellenados [33m 385[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.2 reprogramación exitosa envía POST con offset exacto y cierra modal [33m 469[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 1449[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía [33m 301[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 784[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 302[2mms[22m[39m
 [90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mpulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
 [22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
 
@@ -64,7 +65,7 @@ act(() => {
 /* assert on the output */
 
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+    at AppointmentFormDialog (c:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 
 [90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mEscape cierra sin enviar solicitudes y devuelve el foco
 [22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
@@ -77,104 +78,103 @@ act(() => {
 /* assert on the output */
 
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
-    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+    at AppointmentFormDialog (c:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 
- [32m✓[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 3577[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mapertura y foco inicial [33m 396[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco [33m 749[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias [33m 516[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos [33m 475[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mmapea errores 400 a los campos del formulario con aria-invalid y mensaje inline [33m 396[2mms[22m[39m
- [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1867[2mms[22m[39m
-   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage [33m 629[2mms[22m[39m
-   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 685[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.nuevoTurno.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 3012[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mal pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda [33m 2456[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mtras alta exitosa (201) anuncia el turno creado en una región de estado accesible [33m 551[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 4658[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 1358[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha [33m 1018[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL [33m 596[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 6941[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 2584[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 1826[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 627[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 669[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 651[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 578[2mms[22m[39m
- [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1044[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentDetailDialog — Detalle e Historial[2m > [22m3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar [33m 579[2mms[22m[39m
- [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 772[2mms[22m[39m
-   [33m[2m✓[22m[39m useAgenda[2m > [22mdispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled [33m 500[2mms[22m[39m
- [32m✓[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 885[2mms[22m[39m
-   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mrenderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons [33m 342[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaTable.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 988[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda [33m 983[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 912[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaToolbar — Acción Nuevo turno[2m > [22mvisible para recepción y dispara onNewAppointment al clic [33m 688[2mms[22m[39m
- [32m✓[39m src/features/appointments/AppointmentStatusActions.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1770[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentDetailDialog — Cambios de estado[2m > [22m4.1 botones contextuales según estado y rol [33m 1002[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1270[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros [33m 1020[2mms[22m[39m
- [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 604[2mms[22m[39m
-   [33m[2m✓[22m[39m ErrorState[2m > [22mmuestra uno y varios mensajes [33m 441[2mms[22m[39m
- [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 1145[2mms[22m[39m
-   [33m[2m✓[22m[39m smoke del andamiaje[2m > [22mmonta App y muestra el título [33m 1140[2mms[22m[39m
- [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 1530[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginCarousel[2m > [22mpausa y reanuda el avance sin aria-pressed [33m 1261[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaTable.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1275[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaTable — Acciones[2m > [22mcon onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback [33m 1017[2mms[22m[39m
- [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1518[2mms[22m[39m
-   [33m[2m✓[22m[39m AppShell brand[2m > [22mmuestra una sola barra con logo decorativo, Aqua y Clínica Odontológica [33m 1107[2mms[22m[39m
-   [33m[2m✓[22m[39m AppShell brand[2m > [22mubica logo, Aqua y subtítulo en la marca y el subtítulo usa la clase oculta en 768 px [33m 369[2mms[22m[39m
- [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 764[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada [33m 640[2mms[22m[39m
- [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 639[2mms[22m[39m
-   [33m[2m✓[22m[39m EmptyState[2m > [22mcon acción muestra el botón [33m 594[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaGrid.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 326[2mms[22m[39m
- [32m✓[39m src/features/appointments/AppointmentCancel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 1088[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentDetailDialog — Cancelación[2m > [22m5.1 cancelar turno muestra subvista de confirmación in-dialog [33m 698[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.acciones.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 5566[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial [33m 2561[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.2 bloquear acciones e historial para odontólogo en turnos ajenos [33m 566[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión [33m 384[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda [33m 379[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.8 cancelar emite anuncio Turno cancelado. [33m 351[2mms[22m[39m
- [32m✓[39m src/shared/components/Dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 399[2mms[22m[39m
-   [33m[2m✓[22m[39m Dialog[2m > [22mabre con atributo open en jsdom y expone el nombre accesible por aria-labelledby [33m 317[2mms[22m[39m
- [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 521[2mms[22m[39m
-   [33m[2m✓[22m[39m PageShell[2m > [22menvuelve header, main y footer y renderiza sus hijos [33m 487[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 315[2mms[22m[39m
- [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 196[2mms[22m[39m
- [32m✓[39m src/shared/api/auth.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 210[2mms[22m[39m
- [32m✓[39m src/features/auth/storageGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 174[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 176[2mms[22m[39m
- [32m✓[39m src/shared/styles/fonts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 231[2mms[22m[39m
- [32m✓[39m src/features/agenda/clock.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 200[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 205[2mms[22m[39m
- [32m✓[39m src/test/docker.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 54[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 116[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 104[2mms[22m[39m
- [32m✓[39m src/features/auth/authApi.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 55[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 51[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaApi.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 135[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 75[2mms[22m[39m
- [32m✓[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 36[2mms[22m[39m
- [32m✓[39m src/shared/api/errors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 57[2mms[22m[39m
- [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 36[2mms[22m[39m
- [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 22[2mms[22m[39m
- [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
- [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 26[2mms[22m[39m
- [32m✓[39m src/test/tooling.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 59037[2mms[22m[39m
-   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido [33m 18081[2mms[22m[39m
-   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run lint detecta una violación [33m 40913[2mms[22m[39m
- [32m✓[39m src/features/auth/safeInternalPath.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
- [32m✓[39m src/shared/styles/aquaPalette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32m✓[39m src/test/readmeCredits.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 1757[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mapertura y foco inicial [33m 308[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.nuevoTurno.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1690[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mal pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda [33m 1032[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mtras alta exitosa (201) anuncia el turno creado en una región de estado accesible [33m 655[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.acciones.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 2829[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial [33m 810[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión [33m 313[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 3033[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 519[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha [33m 605[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL [33m 310[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 341[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 506[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros [33m 427[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 316[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 283[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 5404[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 1441[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 1529[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 561[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 699[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 663[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 507[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 501[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 364[2mms[22m[39m
+ [32m✓[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 481[2mms[22m[39m
+   [33m[2m✓[22m[39m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace [33m 478[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 727[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 343[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaTable — Acciones[2m > [22mcon onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback [33m 310[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 2769[2mms[22m[39m
+   [33m[2m✓[22m[39m useAgenda[2m > [22mdispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled [33m 1950[2mms[22m[39m
+   [33m[2m✓[22m[39m useAgenda[2m > [22maborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda [33m 660[2mms[22m[39m
+ [32m✓[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 4716[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mrenderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons [33m 2283[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mbúsqueda con resultados muestra radio buttons con nombre y DNI [33m 1766[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mbúsqueda sin resultados muestra aviso accesible y sin radio buttons [33m 399[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaGrid.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 210[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 551[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda [33m 549[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 452[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaToolbar — Acción Nuevo turno[2m > [22mvisible para recepción y dispara onNewAppointment al clic [33m 330[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.escape.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 266[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 393[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada [33m 307[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 382[2mms[22m[39m
+   [33m[2m✓[22m[39m smoke del andamiaje[2m > [22mmonta App y muestra el título [33m 379[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 442[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginCarousel[2m > [22mpausa y reanuda el avance sin aria-pressed [33m 311[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 346[2mms[22m[39m
+ [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 280[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 224[2mms[22m[39m
+ [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 141[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 117[2mms[22m[39m
+ [32m✓[39m src/shared/styles/fonts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 114[2mms[22m[39m
+ [32m✓[39m src/features/agenda/clock.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/shared/api/auth.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 68[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m src/features/auth/authApi.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m src/features/auth/storageGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/shared/styles/aquaPalette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m src/test/readmeCredits.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m54 passed[39m[22m[90m (54)[39m
 [2m      Tests [22m [1m[32m229 passed[39m[22m[90m (229)[39m
-[2m   Start at [22m 15:58:33
-[2m   Duration [22m 71.89s[2m (transform 10.53s, setup 112.91s, collect 41.15s, tests 112.65s, environment 386.56s, prepare 35.95s)[22m
+[2m   Start at [22m 16:51:00
+[2m   Duration [22m 34.08s[2m (transform 7.36s, setup 37.78s, collect 23.14s, tests 36.40s, environment 222.88s, prepare 15.68s)[22m
 
-exit: 0 
+exit tanda 1: 0
+
+=== Tanda 2: comando: node node_modules/vitest/vitest.mjs run src/test/tooling.test.ts
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mc:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/test/tooling.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 11399[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido [33m 4789[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run lint detecta una violación [33m 6604[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 16:51:35
+[2m   Duration [22m 13.79s[2m (transform 64ms, setup 225ms, collect 37ms, tests 11.40s, environment 1.28s, prepare 217ms)[22m
+
+exit tanda 2: 0

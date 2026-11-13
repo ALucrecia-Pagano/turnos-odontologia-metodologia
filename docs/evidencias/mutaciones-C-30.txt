@@ -1,32 +1,34 @@
 Salida generada por docs/evidencias/mutaciones-C-30.py. No editar a mano.
-tests nuevos de C-30 listados por vitest: 38; mutaciones: 38 (una por test)
-SHA-256 de produccion antes: 066fb08a8ace6481de11d726eb512913d3521305eff957fe0d8cc5ff4753089b
+tests nuevos de C-30 listados por vitest: 41; mutaciones: 41 (una por test)
+SHA-256 de produccion antes: cb188ea7cb6f9fbff6916caed7a21b9ac15f81a7ad812efc422570db624ab329
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ✓ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests) 270ms
- ✓ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests) 412ms
-   ✓ AgendaTable — Acciones > con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback  370ms
- ✓ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests) 664ms
-   ✓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar  400ms
- ✓ src/features/appointments/AppointmentCancel.test.tsx (5 tests) 711ms
-   ✓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog  430ms
- ✓ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests) 744ms
-   ✓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol  460ms
- ✓ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests) 735ms
-   ✓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal  314ms
- ✓ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests) 1736ms
-   ✓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial  540ms
+ ✓ src/shared/components/Dialog.escape.test.tsx (1 test) 236ms
+ ✓ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests) 272ms
+ ✓ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests) 695ms
+   ✓ AgendaTable — Acciones > con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback  621ms
+ ✓ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests) 880ms
+   ✓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar  538ms
+ ✓ src/features/appointments/AppointmentCancel.test.tsx (7 tests) 964ms
+   ✓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog  530ms
+ ✓ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests) 990ms
+   ✓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol  649ms
+ ✓ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests) 979ms
+   ✓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados  447ms
+   ✓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal  340ms
+ ✓ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests) 1384ms
+   ✓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial  426ms
 
- Test Files  7 passed (7)
-      Tests  38 passed (38)
-   Start at  16:03:33
-   Duration  10.69s (transform 2.37s, setup 8.78s, collect 7.73s, tests 5.27s, environment 28.81s, prepare 4.30s)
+ Test Files  8 passed (8)
+      Tests  41 passed (41)
+   Start at  16:38:41
+   Duration  11.62s (transform 3.36s, setup 5.01s, collect 7.63s, tests 6.40s, environment 52.97s, prepare 2.21s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpta57hbhj/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp84d9vb40/vitest.json
 ================================================================================
-[01/38] cada turno en AgendaGrid es un button type=button accesible con aria-label completo
+[01/41] cada turno en AgendaGrid es un button type=button accesible con aria-label completo
 test: src/features/agenda/AgendaGrid.accionable.test.tsx > cada turno en AgendaGrid es un button type=button accesible con aria-label completo
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
@@ -44,8 +46,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 156ms
-   × AgendaGrid — Turnos accionables > cada turno en AgendaGrid es un button type=button accesible con aria-label completo 152ms
+ ❯ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 63ms
+   × AgendaGrid — Turnos accionables > cada turno en AgendaGrid es un button type=button accesible con aria-label completo 61ms
      → expect(element).toHaveAttribute("type", "button") // element.getAttribute("type") === "button"
 
 Expected the element to have attribute:
@@ -56,10 +58,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  16:03:45
-   Duration  5.64s (transform 412ms, setup 830ms, collect 533ms, tests 156ms, environment 2.98s, prepare 448ms)
+   Start at  16:38:54
+   Duration  2.90s (transform 186ms, setup 286ms, collect 203ms, tests 63ms, environment 1.60s, prepare 317ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7_pyd49b/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkq2g7t0r/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -81,7 +83,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[02/38] al pulsar el turno invoca onSelectAppointment con los datos del turno
+[02/41] al pulsar el turno invoca onSelectAppointment con los datos del turno
 test: src/features/agenda/AgendaGrid.accionable.test.tsx > al pulsar el turno invoca onSelectAppointment con los datos del turno
 diff:
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
@@ -99,17 +101,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 154ms
+ ❯ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 98ms
    ↓ AgendaGrid — Turnos accionables > cada turno en AgendaGrid es un button type=button accesible con aria-label completo
-   × AgendaGrid — Turnos accionables > al pulsar el turno invoca onSelectAppointment con los datos del turno 151ms
+   × AgendaGrid — Turnos accionables > al pulsar el turno invoca onSelectAppointment con los datos del turno 95ms
      → expected null to deeply equal { …(12) }
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  16:04:00
-   Duration  5.85s (transform 399ms, setup 804ms, collect 524ms, tests 154ms, environment 3.17s, prepare 534ms)
+   Start at  16:39:06
+   Duration  2.24s (transform 204ms, setup 254ms, collect 303ms, tests 98ms, environment 953ms, prepare 157ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3owk024q/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqc1_h67m/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -146,7 +148,7 @@ null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[03/38] con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback
+[03/41] con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback
 test: src/features/agenda/AgendaTable.accionable.test.tsx > con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback
 diff:
 --- a/frontend/src/features/agenda/AgendaTable.tsx
@@ -164,17 +166,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 281ms
-   × AgendaTable — Acciones > con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback 275ms
+ ❯ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 204ms
+   × AgendaTable — Acciones > con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback 200ms
      → expected null to deeply equal { …(12) }
    ↓ AgendaTable — Acciones > sin onSelectAppointment conserva exactamente las 6 columnas originales
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  16:04:17
-   Duration  6.67s (transform 392ms, setup 863ms, collect 424ms, tests 281ms, environment 3.53s, prepare 743ms)
+   Start at  16:39:19
+   Duration  8.09s (transform 199ms, setup 350ms, collect 233ms, tests 204ms, environment 6.56s, prepare 254ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgsodqekw/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7n9ye_ht/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -211,7 +213,7 @@ null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[04/38] sin onSelectAppointment conserva exactamente las 6 columnas originales
+[04/41] sin onSelectAppointment conserva exactamente las 6 columnas originales
 test: src/features/agenda/AgendaTable.accionable.test.tsx > sin onSelectAppointment conserva exactamente las 6 columnas originales
 diff:
 --- a/frontend/src/features/agenda/AgendaTable.tsx
@@ -229,17 +231,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 280ms
+ ❯ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests | 1 failed | 1 skipped) 157ms
    ↓ AgendaTable — Acciones > con onSelectAppointment renderiza el botón Ver turno y al activarlo invoca el callback
-   × AgendaTable — Acciones > sin onSelectAppointment conserva exactamente las 6 columnas originales 276ms
+   × AgendaTable — Acciones > sin onSelectAppointment conserva exactamente las 6 columnas originales 154ms
      → expected [ 'Hora', 'Paciente', …(5) ] to deeply equal [ 'Hora', 'Paciente', …(4) ]
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  16:04:34
-   Duration  6.42s (transform 390ms, setup 990ms, collect 445ms, tests 280ms, environment 3.31s, prepare 618ms)
+   Start at  16:39:31
+   Duration  2.60s (transform 277ms, setup 364ms, collect 365ms, tests 157ms, environment 1.15s, prepare 213ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2rp4yvyf/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpr9hqytpl/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -269,12 +271,12 @@ AssertionError: expected [ 'Hora', 'Paciente', …(5) ] to deeply equal [ 'Hora'
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[05/38] 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
+[05/41] 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
 test: src/features/appointments/AppointmentDetailDialog.test.tsx > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -322,7 +322,7 @@
+@@ -338,7 +338,7 @@
              <button
                type="button"
                disabled={isSubmitting}
@@ -287,8 +289,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 292ms
-   × AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar 288ms
+ ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 304ms
+   × AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar 299ms
      → expected false to be true // Object.is equality
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
@@ -298,10 +300,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:04:50
-   Duration  5.97s (transform 484ms, setup 843ms, collect 707ms, tests 292ms, environment 2.95s, prepare 428ms)
+   Start at  16:39:38
+   Duration  3.48s (transform 322ms, setup 461ms, collect 562ms, tests 304ms, environment 1.38s, prepare 364ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmppibziuy7/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6gc_jmzq/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -325,7 +327,7 @@ AssertionError: expected false to be true // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[06/38] 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
+[06/41] 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
 test: src/features/appointments/AppointmentDetailDialog.test.tsx > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
 diff:
 --- a/frontend/src/features/appointments/AppointmentHistoryList.tsx
@@ -343,9 +345,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1171ms
+ ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1079ms
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
-   × AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local 1167ms
+   × AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local 1077ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -579,10 +581,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:05:06
-   Duration  6.86s (transform 500ms, setup 890ms, collect 779ms, tests 1.17s, environment 2.86s, prepare 486ms)
+   Start at  16:39:51
+   Duration  3.06s (transform 202ms, setup 246ms, collect 347ms, tests 1.08s, environment 864ms, prepare 152ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpp3ak5n1r/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpolftv9dp/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -827,7 +829,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[07/38] 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
+[07/41] 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
 test: src/features/appointments/AppointmentDetailDialog.test.tsx > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
 diff:
 --- a/frontend/src/features/appointments/AppointmentHistoryList.tsx
@@ -845,10 +847,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1301ms
+ ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1132ms
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
-   × AppointmentDetailDialog — Detalle e Historial > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local 1297ms
+   × AppointmentDetailDialog — Detalle e Historial > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local 1130ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -1074,10 +1076,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:05:23
-   Duration  7.72s (transform 519ms, setup 978ms, collect 751ms, tests 1.30s, environment 3.45s, prepare 500ms)
+   Start at  16:39:59
+   Duration  3.25s (transform 216ms, setup 257ms, collect 356ms, tests 1.13s, environment 944ms, prepare 202ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_hf9n1zz/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2itsr4sa/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1315,7 +1317,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[08/38] 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle
+[08/41] 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle
 test: src/features/appointments/AppointmentDetailDialog.test.tsx > 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle
 diff:
 --- a/frontend/src/features/appointments/AppointmentHistoryList.tsx
@@ -1332,11 +1334,11 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1184ms
+ ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1105ms
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
-   × AppointmentDetailDialog — Detalle e Historial > 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle 1180ms
+   × AppointmentDetailDialog — Detalle e Historial > 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle 1103ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -1524,10 +1526,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:05:41
-   Duration  6.97s (transform 491ms, setup 932ms, collect 722ms, tests 1.18s, environment 2.88s, prepare 544ms)
+   Start at  16:40:06
+   Duration  3.44s (transform 225ms, setup 342ms, collect 367ms, tests 1.10s, environment 1.07s, prepare 215ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpkf1uocwn/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpf8gkpawu/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1728,12 +1730,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[09/38] 3.5 alert muestra código estable y mensaje textual en español
+[09/41] 3.5 alert muestra código estable y mensaje textual en español
 test: src/features/appointments/AppointmentDetailDialog.test.tsx > 3.5 alert muestra código estable y mensaje textual en español
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -177,8 +177,8 @@
+@@ -191,8 +191,8 @@
              <ul className={styles.alertList}>
                {violations.map((v, i) => (
                  <li key={i}>
@@ -1748,12 +1750,12 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1316ms
+ ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1185ms
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle
-   × AppointmentDetailDialog — Detalle e Historial > 3.5 alert muestra código estable y mensaje textual en español 1313ms
+   × AppointmentDetailDialog — Detalle e Historial > 3.5 alert muestra código estable y mensaje textual en español 1183ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -1961,10 +1963,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:05:58
-   Duration  7.15s (transform 507ms, setup 891ms, collect 745ms, tests 1.32s, environment 2.96s, prepare 530ms)
+   Start at  16:40:13
+   Duration  3.45s (transform 227ms, setup 305ms, collect 373ms, tests 1.19s, environment 1.03s, prepare 201ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp41adox68/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppdyy7jx6/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2186,12 +2188,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[10/38] 3.6 foco automático al alert de error
+[10/41] 3.6 foco automático al alert de error
 test: src/features/appointments/AppointmentDetailDialog.test.tsx > 3.6 foco automático al alert de error
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -167,7 +167,6 @@
+@@ -181,7 +181,6 @@
  
          {violations.length > 0 && (
            <div
@@ -2203,13 +2205,13 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1340ms
+ ❯ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1133ms
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.2 historial renderiza transiciones cronológicas con autor, estados y hora local
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.3 historial renderiza desglose de reprogramación con horario previo y nuevo en hora local
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.4 historial maneja error de carga mostrando aviso accesible sin romper el detalle
    ↓ AppointmentDetailDialog — Detalle e Historial > 3.5 alert muestra código estable y mensaje textual en español
-   × AppointmentDetailDialog — Detalle e Historial > 3.6 foco automático al alert de error 1338ms
+   × AppointmentDetailDialog — Detalle e Historial > 3.6 foco automático al alert de error 1131ms
      → expect(element).toHaveFocus()
 
 Expected element with focus:
@@ -2644,10 +2646,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:06:15
-   Duration  7.44s (transform 466ms, setup 854ms, collect 670ms, tests 1.34s, environment 3.01s, prepare 625ms)
+   Start at  16:40:21
+   Duration  3.31s (transform 246ms, setup 303ms, collect 396ms, tests 1.13s, environment 877ms, prepare 203ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3hlnlmsa/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbi06tnq0/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3097,12 +3099,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[11/38] 4.1 botones contextuales según estado y rol
+[11/41] 4.1 botones contextuales según estado y rol
 test: src/features/appointments/AppointmentStatusActions.test.tsx > 4.1 botones contextuales según estado y rol
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -255,7 +255,7 @@
+@@ -269,7 +269,7 @@
          ) : (
            <div className={styles.actionsBar}>
              {isTerminal ? (
@@ -3115,8 +3117,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 364ms
-   × AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol 359ms
+ ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 162ms
+   × AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol 160ms
      → expected null not to be null
    ↓ AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
@@ -3126,10 +3128,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:06:32
-   Duration  6.29s (transform 497ms, setup 850ms, collect 752ms, tests 364ms, environment 3.15s, prepare 469ms)
+   Start at  16:40:29
+   Duration  2.39s (transform 213ms, setup 290ms, collect 325ms, tests 162ms, environment 1.02s, prepare 229ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2t7eqm7_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpotnzukfb/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3146,12 +3148,12 @@ AssertionError: expected null not to be null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[12/38] 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
+[12/41] 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
 test: src/features/appointments/AppointmentStatusActions.test.tsx > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -262,7 +262,7 @@
+@@ -276,7 +276,7 @@
                    <button
                      type="button"
                      disabled={isSubmitting}
@@ -3164,9 +3166,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1476ms
+ ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1163ms
    ↓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol
-   × AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito 1472ms
+   × AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito 1161ms
      → expected { toStatus: 'atendido' } to deeply equal { toStatus: 'confirmado' }
 
 Ignored nodes: comments, script, style
@@ -3355,10 +3357,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:06:49
-   Duration  7.25s (transform 513ms, setup 880ms, collect 797ms, tests 1.48s, environment 2.86s, prepare 475ms)
+   Start at  16:40:35
+   Duration  3.38s (transform 206ms, setup 269ms, collect 331ms, tests 1.16s, environment 1.04s, prepare 225ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp8_wvq6f_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_erm7wmw/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3567,12 +3569,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[13/38] 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
+[13/41] 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
 test: src/features/appointments/AppointmentStatusActions.test.tsx > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -272,7 +272,7 @@
+@@ -286,7 +286,7 @@
                  <button
                    type="button"
                    disabled={isSubmitting}
@@ -3585,10 +3587,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1361ms
+ ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1147ms
    ↓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol
    ↓ AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
-   × AppointmentDetailDialog — Cambios de estado > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito 1358ms
+   × AppointmentDetailDialog — Cambios de estado > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito 1145ms
      → expected { toStatus: 'ausente' } to deeply equal { toStatus: 'atendido' }
 
 Ignored nodes: comments, script, style
@@ -3770,10 +3772,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:07:06
-   Duration  7.82s (transform 537ms, setup 1.01s, collect 764ms, tests 1.36s, environment 3.39s, prepare 618ms)
+   Start at  16:40:42
+   Duration  3.06s (transform 215ms, setup 212ms, collect 374ms, tests 1.15s, environment 826ms, prepare 152ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd4ds6hl7/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbqw61tkz/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3976,12 +3978,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[14/38] 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito
+[14/41] 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito
 test: src/features/appointments/AppointmentStatusActions.test.tsx > 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -285,7 +285,7 @@
+@@ -299,7 +299,7 @@
                  <button
                    type="button"
                    disabled={isSubmitting}
@@ -3994,11 +3996,11 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1336ms
+ ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1167ms
    ↓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol
    ↓ AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
-   × AppointmentDetailDialog — Cambios de estado > 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito 1331ms
+   × AppointmentDetailDialog — Cambios de estado > 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito 1165ms
      → expected { toStatus: 'atendido' } to deeply equal { toStatus: 'ausente' }
 
 Ignored nodes: comments, script, style
@@ -4185,10 +4187,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:07:25
-   Duration  7.55s (transform 550ms, setup 843ms, collect 787ms, tests 1.34s, environment 3.37s, prepare 478ms)
+   Start at  16:40:49
+   Duration  3.23s (transform 247ms, setup 229ms, collect 412ms, tests 1.17s, environment 882ms, prepare 189ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpiuptdn22/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvcxc9g99/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -4397,12 +4399,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[15/38] 4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco
+[15/41] 4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco
 test: src/features/appointments/AppointmentStatusActions.test.tsx > 4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -177,7 +177,7 @@
+@@ -191,7 +191,7 @@
              <ul className={styles.alertList}>
                {violations.map((v, i) => (
                  <li key={i}>
@@ -4415,12 +4417,12 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1310ms
+ ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1191ms
    ↓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol
    ↓ AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito
-   × AppointmentDetailDialog — Cambios de estado > 4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco 1307ms
+   × AppointmentDetailDialog — Cambios de estado > 4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco 1190ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -4628,10 +4630,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:07:43
-   Duration  8.08s (transform 510ms, setup 873ms, collect 747ms, tests 1.31s, environment 3.83s, prepare 507ms)
+   Start at  16:40:56
+   Duration  3.14s (transform 231ms, setup 251ms, collect 402ms, tests 1.19s, environment 761ms, prepare 178ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzn3bnie6/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpaxpi6gvi/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -4853,12 +4855,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[16/38] 4.6 rechazo 422 INVALID_TRANSITION expone mensaje en alerta con foco
+[16/41] 4.6 rechazo 422 INVALID_TRANSITION expone mensaje en alerta con foco
 test: src/features/appointments/AppointmentStatusActions.test.tsx > 4.6 rechazo 422 INVALID_TRANSITION expone mensaje en alerta con foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -61,7 +61,7 @@
+@@ -63,7 +63,7 @@
  
    useEffect(() => {
      if (violations.length > 0) {
@@ -4870,13 +4872,13 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1367ms
+ ❯ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests | 1 failed | 5 skipped) 1124ms
    ↓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol
    ↓ AppointmentDetailDialog — Cambios de estado > 4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.4 marcar ausente envía toStatus ausente y cierra modal con éxito
    ↓ AppointmentDetailDialog — Cambios de estado > 4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco
-   × AppointmentDetailDialog — Cambios de estado > 4.6 rechazo 422 INVALID_TRANSITION expone mensaje en alerta con foco 1363ms
+   × AppointmentDetailDialog — Cambios de estado > 4.6 rechazo 422 INVALID_TRANSITION expone mensaje en alerta con foco 1122ms
      → expect(element).toHaveFocus()
 
 Expected element with focus:
@@ -5311,10 +5313,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:08:02
-   Duration  7.60s (transform 518ms, setup 967ms, collect 780ms, tests 1.37s, environment 3.30s, prepare 421ms)
+   Start at  16:41:02
+   Duration  3.09s (transform 248ms, setup 207ms, collect 418ms, tests 1.12s, environment 824ms, prepare 195ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp0x61cay4/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpp8uyrx6o/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5764,12 +5766,12 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[17/38] 5.1 cancelar turno muestra subvista de confirmación in-dialog
+[17/41] 5.1 cancelar turno muestra subvista de confirmación in-dialog
 test: src/features/appointments/AppointmentCancel.test.tsx > 5.1 cancelar turno muestra subvista de confirmación in-dialog
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -231,7 +231,7 @@
+@@ -245,7 +245,7 @@
          {isConfirmingCancel ? (
            <div className={styles.cancelConfirmBox}>
              <p className={styles.cancelConfirmWarning}>
@@ -5782,20 +5784,22 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentCancel.test.tsx (5 tests | 1 failed | 4 skipped) 284ms
-   × AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog 280ms
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 183ms
+   × AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog 181ms
      → expected null not to be null
    ↓ AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
    ↓ AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
    ↓ AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
    ↓ AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+   ↓ AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+   ↓ AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
 
  Test Files  1 failed (1)
-      Tests  1 failed | 4 skipped (5)
-   Start at  16:08:20
-   Duration  6.98s (transform 535ms, setup 902ms, collect 809ms, tests 284ms, environment 3.63s, prepare 533ms)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:09
+   Duration  2.21s (transform 249ms, setup 232ms, collect 434ms, tests 183ms, environment 762ms, prepare 199ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpiw36vs92/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmkoa8gqs/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5812,16 +5816,16 @@ AssertionError: expected null not to be null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[18/38] 5.2 volver al detalle o Escape restaura la vista sin enviar petición
+[18/41] 5.2 volver al detalle o Escape restaura la vista sin enviar petición
 test: src/features/appointments/AppointmentCancel.test.tsx > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -245,7 +245,7 @@
+@@ -259,7 +259,7 @@
                <button
                  type="button"
                  disabled={isSubmitting}
--                onClick={() => setIsConfirmingCancel(false)}
+-                onClick={returnToDetail}
 +                onClick={() => undefined}
                  className={styles.secondaryButton}
                >
@@ -5830,9 +5834,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentCancel.test.tsx (5 tests | 1 failed | 4 skipped) 340ms
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 125ms
    ↓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog
-   × AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición 336ms
+   × AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición 123ms
      → expect(element).not.toBeInTheDocument()
 
 expected document not to contain element, found <p
@@ -5845,13 +5849,15 @@ expected document not to contain element, found <p
    ↓ AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
    ↓ AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
    ↓ AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+   ↓ AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+   ↓ AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
 
  Test Files  1 failed (1)
-      Tests  1 failed | 4 skipped (5)
-   Start at  16:08:38
-   Duration  6.59s (transform 549ms, setup 906ms, collect 775ms, tests 340ms, environment 3.30s, prepare 566ms)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:16
+   Duration  2.05s (transform 206ms, setup 207ms, collect 374ms, tests 125ms, environment 852ms, prepare 151ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp24lgsike/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvgh1o66y/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -5876,7 +5882,7 @@ expected document not to contain element, found <p
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[19/38] 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
+[19/41] 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
 test: src/features/appointments/AppointmentCancel.test.tsx > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
 diff:
 --- a/frontend/src/features/appointments/appointmentApi.ts
@@ -5894,10 +5900,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentCancel.test.tsx (5 tests | 1 failed | 4 skipped) 1338ms
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 1236ms
    ↓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog
    ↓ AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
-   × AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal 1335ms
+   × AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal 1233ms
      → expected 'DELETE' to be 'POST' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -6075,13 +6081,15 @@ Ignored nodes: comments, script, style
 [36m</html>[39m
    ↓ AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
    ↓ AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+   ↓ AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+   ↓ AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
 
  Test Files  1 failed (1)
-      Tests  1 failed | 4 skipped (5)
-   Start at  16:08:54
-   Duration  6.90s (transform 477ms, setup 817ms, collect 712ms, tests 1.34s, environment 2.78s, prepare 515ms)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:22
+   Duration  3.33s (transform 231ms, setup 270ms, collect 395ms, tests 1.24s, environment 878ms, prepare 168ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpv7jis667/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvttzx5my/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6279,12 +6287,12 @@ Received: "DELETE"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[20/38] 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
+[20/41] 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
 test: src/features/appointments/AppointmentCancel.test.tsx > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -139,7 +139,7 @@
+@@ -153,7 +153,7 @@
        result.error.kind === "conflict" ||
        result.error.kind === "forbidden"
      ) {
@@ -6297,11 +6305,11 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentCancel.test.tsx (5 tests | 1 failed | 4 skipped) 1357ms
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 1142ms
    ↓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog
    ↓ AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
    ↓ AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
-   × AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco 1353ms
+   × AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco 1140ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -6478,13 +6486,15 @@ Ignored nodes: comments, script, style
   [36m</body>[39m
 [36m</html>[39m
    ↓ AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+   ↓ AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+   ↓ AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
 
  Test Files  1 failed (1)
-      Tests  1 failed | 4 skipped (5)
-   Start at  16:09:11
-   Duration  7.20s (transform 493ms, setup 870ms, collect 723ms, tests 1.36s, environment 3.09s, prepare 467ms)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:29
+   Duration  7.98s (transform 209ms, setup 225ms, collect 346ms, tests 1.14s, environment 5.18s, prepare 581ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpml5zdfjf/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmparyim0mo/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6678,17 +6688,17 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[21/38] 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+[21/41] 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
 test: src/features/appointments/AppointmentCancel.test.tsx > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -83,11 +83,7 @@
-   const isDentistOther = isDentist && !isOwnAppointment;
+@@ -97,11 +97,7 @@
+   };
  
    const handleDialogClose = () => {
 -    if (isConfirmingCancel) {
--      setIsConfirmingCancel(false);
+-      returnToDetail();
 -    } else {
 -      onClose();
 -    }
@@ -6700,20 +6710,22 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentCancel.test.tsx (5 tests | 1 failed | 4 skipped) 346ms
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 152ms
    ↓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog
    ↓ AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
    ↓ AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
    ↓ AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
-   × AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle 342ms
+   × AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle 150ms
      → expected true to be false // Object.is equality
+   ↓ AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+   ↓ AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
 
  Test Files  1 failed (1)
-      Tests  1 failed | 4 skipped (5)
-   Start at  16:09:28
-   Duration  6.88s (transform 539ms, setup 1.02s, collect 780ms, tests 346ms, environment 3.28s, prepare 620ms)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:41
+   Duration  2.02s (transform 222ms, setup 224ms, collect 376ms, tests 152ms, environment 767ms, prepare 171ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpke7zp3k7/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgso_hqrg/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6737,7 +6749,541 @@ AssertionError: expected true to be false // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[22/38] 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
+[22/41] 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+test: src/features/appointments/AppointmentCancel.test.tsx > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+diff:
+--- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
+@@ -70,7 +70,6 @@
+   useEffect(() => {
+     if (!isConfirmingCancel && focusCancelOnReturnRef.current) {
+       focusCancelOnReturnRef.current = false;
+-      cancelButtonRef.current?.focus();
+     }
+   }, [isConfirmingCancel]);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 276ms
+   ↓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog
+   ↓ AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
+   ↓ AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
+   ↓ AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
+   ↓ AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+   × AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno 273ms
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button
+  class="dangerButton"
+  type="button"
+>
+  Cancelar turno
+</button>
+Received element with focus:
+  <body>
+  <div>
+    <dialog
+      aria-labelledby="appointment-detail-title"
+      aria-modal="true"
+      class="dialog"
+      open=""
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header"
+        >
+          <h2
+            class="title"
+            id="appointment-detail-title"
+          >
+            Detalle del turno
+          </h2>
+          <span
+            class="badge confirmado"
+            data-status="confirmado"
+            style="color: rgb(20, 108, 67); background-color: rgb(221, 243, 231); border-color: rgb(134, 239, 172);"
+          >
+            Confirmado
+          </span>
+        </div>
+        <div
+          class="detailsGrid"
+        >
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Paciente
+            </span>
+            <span
+              class="detailValue"
+            >
+              Ana Pérez
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Prestación
+            </span>
+            <span
+              class="detailValue"
+            >
+              Control
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Profesional
+            </span>
+            <span
+              class="detailValue"
+            >
+              Dra. Laura Quiroga
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Sillón
+            </span>
+            <span
+              class="detailValue"
+            >
+              Sillón 1
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Fecha
+            </span>
+            <span
+              class="detailValue"
+            >
+              16/11/2026
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Horario
+            </span>
+            <span
+              class="detailValue"
+            >
+              10:00–10:30
+            </span>
+          </div>
+        </div>
+        <section
+          aria-label="Historial de cambios"
+          class="historySection"
+        >
+          <h3
+            class="historyHeading"
+          >
+            Historial de cambios
+          </h3>
+          <p
+            class="historyLoading"
+          >
+            Cargando historial...
+          </p>
+        </section>
+        <div
+          class="actionsBar"
+        >
+          <button
+            class="primaryButton"
+            type="button"
+          >
+            Marcar atendido
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Marcar ausente
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Reprogramar
+          </button>
+          <button
+            class="dangerButton"
+            type="button"
+          >
+            Cancelar turno
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</body>
+   ↓ AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:47
+   Duration  2.38s (transform 309ms, setup 258ms, collect 534ms, tests 276ms, environment 786ms, prepare 173ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpn9y1s0gt/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentCancel.test.tsx > AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button
+  class="dangerButton"
+  type="button"
+>
+  Cancelar turno
+</button>
+Received element with focus:
+  <body>
+  <div>
+    <dialog
+      aria-labelledby="appointment-detail-title"
+      aria-modal="true"
+      class="dialog"
+      open=""
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header"
+        >
+          <h2
+            class="title"
+            id="appointment-detail-title"
+          >
+            Detalle del turno
+          </h2>
+          <span
+            class="badge confirmado"
+            data-status="confirmado"
+            style="color: rgb(20, 108, 67); background-color: rgb(221, 243, 231); border-color: rgb(134, 239, 172);"
+          >
+            Confirmado
+          </span>
+        </div>
+        <div
+          class="detailsGrid"
+        >
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Paciente
+            </span>
+            <span
+              class="detailValue"
+            >
+              Ana Pérez
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Prestación
+            </span>
+            <span
+              class="detailValue"
+            >
+              Control
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Profesional
+            </span>
+            <span
+              class="detailValue"
+            >
+              Dra. Laura Quiroga
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Sillón
+            </span>
+            <span
+              class="detailValue"
+            >
+              Sillón 1
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Fecha
+            </span>
+            <span
+              class="detailValue"
+            >
+              16/11/2026
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Horario
+            </span>
+            <span
+              class="detailValue"
+            >
+              10:00–10:30
+            </span>
+          </div>
+        </div>
+        <section
+          aria-label="Historial de cambios"
+          class="historySection"
+        >
+          <h3
+            class="historyHeading"
+          >
+            Historial de cambios
+          </h3>
+          <p
+            class="historyLoading"
+          >
+            Cargando historial...
+          </p>
+        </section>
+        <div
+          class="actionsBar"
+        >
+          <button
+            class="primaryButton"
+            type="button"
+          >
+            Marcar atendido
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Marcar ausente
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Reprogramar
+          </button>
+          <button
+            class="dangerButton"
+            type="button"
+          >
+            Cancelar turno
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</body>
+ ❯ src/features/appointments/AppointmentCancel.test.tsx:241:23
+    239|     const cancelBtn = screen.queryByRole("button", { name: "Cancelar t…
+    240|     expect(cancelBtn).not.toBeNull();
+    241|     expect(cancelBtn).toHaveFocus();
+       |                       ^
+    242|   });
+    243| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[23/41] 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
+test: src/features/appointments/AppointmentCancel.test.tsx > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
+diff:
+--- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
+@@ -323,7 +323,6 @@
+                       type="button"
+                       disabled={isSubmitting}
+                       onClick={() => {
+-                        setViolations([]);
+                         setIsConfirmingCancel(true);
+                       }}
+                       className={styles.dangerButton}
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentCancel.test.tsx (7 tests | 1 failed | 6 skipped) 180ms
+   ↓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog
+   ↓ AppointmentDetailDialog — Cancelación > 5.2 volver al detalle o Escape restaura la vista sin enviar petición
+   ↓ AppointmentDetailDialog — Cancelación > 5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
+   ↓ AppointmentDetailDialog — Cancelación > 5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
+   ↓ AppointmentDetailDialog — Cancelación > 5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+   ↓ AppointmentDetailDialog — Cancelación > 5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+   × AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior 179ms
+     → expected <div tabindex="-1" …(3)>…(2)</div> to be null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  16:41:59
+   Duration  2.37s (transform 236ms, setup 290ms, collect 392ms, tests 180ms, environment 958ms, prepare 190ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpt0pbeux5/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentCancel.test.tsx > AppointmentDetailDialog — Cancelación > 5.7 al entrar a la confirmación se limpia el alert de una acción anterior
+AssertionError: expected <div tabindex="-1" …(3)>…(2)</div> to be null
+
+- Expected: 
+null
+
++ Received: 
+<div
+  aria-live="assertive"
+  class="alertContainer"
+  role="alert"
+  tabindex="-1"
+>
+  <p
+    class="alertTitle"
+  >
+    No se pudo actualizar el turno:
+  </p>
+  <ul
+    class="alertList"
+  >
+    <li>
+      <span
+        class="codeBadge"
+      >
+        STATUS_CHANGE_TOO_EARLY
+      </span>
+      No se puede marcar atendido un turno que todavía no empezó.
+    </li>
+  </ul>
+</div>
+
+ ❯ src/features/appointments/AppointmentCancel.test.tsx:287:41
+    285|       screen.queryByText("¿Confirma que desea cancelar el turno de Ana…
+    286|     ).not.toBeNull();
+    287|     expect(screen.queryByRole("alert")).toBeNull();
+       |                                         ^
+    288|   });
+    289| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[24/41] un segundo Escape (evento cancel posterior) vuelve a llamar onClose
+test: src/shared/components/Dialog.escape.test.tsx > un segundo Escape (evento cancel posterior) vuelve a llamar onClose
+diff:
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -77,9 +77,6 @@
+     }
+     event.preventDefault();
+     closeHandledRef.current = true;
+-    setTimeout(() => {
+-      closeHandledRef.current = false;
+-    }, 0);
+     onClose();
+   };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/Dialog.escape.test.tsx (1 test | 1 failed) 163ms
+   × Dialog — Escape repetido > un segundo Escape (evento cancel posterior) vuelve a llamar onClose 160ms
+     → expected 1 to be 2 // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  16:42:05
+   Duration  2.61s (transform 206ms, setup 397ms, collect 211ms, tests 163ms, environment 1.23s, prepare 249ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvucrhlka/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/Dialog.escape.test.tsx > Dialog — Escape repetido > un segundo Escape (evento cancel posterior) vuelve a llamar onClose
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ src/shared/components/Dialog.escape.test.tsx:29:20
+     27| 
+     28|     fireEvent(dialog!, new Event("cancel", { cancelable: true }));
+     29|     expect(closes).toBe(2);
+       |                    ^
+     30|   });
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[25/41] 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
 test: src/features/appointments/AppointmentRescheduleDialog.test.tsx > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
 diff:
 --- a/frontend/src/features/appointments/AppointmentRescheduleDialog.tsx
@@ -6755,8 +7301,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 180ms
-   × AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados 177ms
+ ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 69ms
+   × AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados 67ms
      → expected '2000-01-01' to be '2026-11-16' // Object.is equality
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
@@ -6766,10 +7312,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:09:45
-   Duration  6.56s (transform 510ms, setup 986ms, collect 777ms, tests 180ms, environment 3.33s, prepare 518ms)
+   Start at  16:42:11
+   Duration  2.46s (transform 274ms, setup 294ms, collect 460ms, tests 69ms, environment 1.05s, prepare 213ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmppexatok_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbgn57m_e/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -6790,7 +7336,7 @@ Received: "2000-01-01"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[23/38] 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
+[26/41] 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
 test: src/features/appointments/AppointmentRescheduleDialog.test.tsx > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
 diff:
 --- a/frontend/src/features/appointments/AppointmentRescheduleDialog.tsx
@@ -6807,9 +7353,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1339ms
+ ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1223ms
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
-   × AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal 1335ms
+   × AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal 1222ms
      → expected { …(4) } to deeply equal { …(4) }
 
 Ignored nodes: comments, script, style
@@ -7011,10 +7557,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:10:03
-   Duration  7.32s (transform 444ms, setup 853ms, collect 727ms, tests 1.34s, environment 3.09s, prepare 661ms)
+   Start at  16:42:18
+   Duration  3.97s (transform 243ms, setup 315ms, collect 384ms, tests 1.22s, environment 1.33s, prepare 299ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpy5amw0ic/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1tw5g8mu/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -7239,7 +7785,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[24/38] 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
+[27/41] 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
 test: src/features/appointments/AppointmentRescheduleDialog.test.tsx > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentRescheduleDialog.tsx
@@ -7257,10 +7803,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1347ms
+ ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1173ms
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
-   × AppointmentRescheduleDialog — Reprogramación > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco 1343ms
+   × AppointmentRescheduleDialog — Reprogramación > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco 1172ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -7489,10 +8035,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:10:21
-   Duration  7.76s (transform 610ms, setup 871ms, collect 950ms, tests 1.35s, environment 3.25s, prepare 524ms)
+   Start at  16:42:25
+   Duration  3.17s (transform 252ms, setup 274ms, collect 438ms, tests 1.17s, environment 798ms, prepare 186ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpi4wjgels/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpy9dq6a2l/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -7733,7 +8279,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[25/38] 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
+[28/41] 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
 test: src/features/appointments/AppointmentRescheduleDialog.test.tsx > 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentRescheduleDialog.tsx
@@ -7751,11 +8297,11 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1409ms
+ ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1131ms
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
-   × AppointmentRescheduleDialog — Reprogramación > 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco 1405ms
+   × AppointmentRescheduleDialog — Reprogramación > 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco 1130ms
      → expected null not to be null
 
 Ignored nodes: comments, script, style
@@ -7979,10 +8525,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:10:39
-   Duration  9.78s (transform 586ms, setup 1.12s, collect 811ms, tests 1.41s, environment 4.72s, prepare 624ms)
+   Start at  16:42:33
+   Duration  3.31s (transform 259ms, setup 381ms, collect 433ms, tests 1.13s, environment 828ms, prepare 149ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3_jx42y5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpissayby3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -8219,7 +8765,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[26/38] 6.5 error 400 marca campos con aria-invalid y mensaje inline
+[29/41] 6.5 error 400 marca campos con aria-invalid y mensaje inline
 test: src/features/appointments/AppointmentRescheduleDialog.test.tsx > 6.5 error 400 marca campos con aria-invalid y mensaje inline
 diff:
 --- a/frontend/src/features/appointments/AppointmentRescheduleDialog.tsx
@@ -8237,12 +8783,12 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1453ms
+ ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 1215ms
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
-   × AppointmentRescheduleDialog — Reprogramación > 6.5 error 400 marca campos con aria-invalid y mensaje inline 1449ms
+   × AppointmentRescheduleDialog — Reprogramación > 6.5 error 400 marca campos con aria-invalid y mensaje inline 1213ms
      → expect(element).toHaveAttribute("aria-invalid", "true") // element.getAttribute("aria-invalid") === "true"
 
 Expected the element to have attribute:
@@ -8451,10 +8997,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:10:59
-   Duration  6.96s (transform 486ms, setup 748ms, collect 769ms, tests 1.45s, environment 2.79s, prepare 450ms)
+   Start at  16:42:40
+   Duration  3.53s (transform 263ms, setup 265ms, collect 460ms, tests 1.21s, environment 1.09s, prepare 160ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjbwf4ta_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpm_9q12jr/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -8677,7 +9223,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[27/38] 6.6 cancelar reprogramación cierra diálogo y retorna foco
+[30/41] 6.6 cancelar reprogramación cierra diálogo y retorna foco
 test: src/features/appointments/AppointmentRescheduleDialog.test.tsx > 6.6 cancelar reprogramación cierra diálogo y retorna foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentRescheduleDialog.tsx
@@ -8695,21 +9241,21 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 245ms
+ ❯ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests | 1 failed | 5 skipped) 164ms
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
    ↓ AppointmentRescheduleDialog — Reprogramación > 6.5 error 400 marca campos con aria-invalid y mensaje inline
-   × AppointmentRescheduleDialog — Reprogramación > 6.6 cancelar reprogramación cierra diálogo y retorna foco 242ms
+   × AppointmentRescheduleDialog — Reprogramación > 6.6 cancelar reprogramación cierra diálogo y retorna foco 162ms
      → expected false to be true // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 5 skipped (6)
-   Start at  16:11:17
-   Duration  5.85s (transform 443ms, setup 799ms, collect 665ms, tests 245ms, environment 2.82s, prepare 487ms)
+   Start at  16:42:47
+   Duration  2.35s (transform 260ms, setup 228ms, collect 460ms, tests 164ms, environment 957ms, prepare 161ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpepxz84hc/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmps6g9ujhz/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -8733,7 +9279,7 @@ AssertionError: expected false to be true // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[28/38] 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
+[31/41] 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -8751,8 +9297,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 433ms
-   × AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial 430ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 277ms
+   × AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial 276ms
      → expect(element).not.toBeInTheDocument()
 
 expected document not to contain element, found <button
@@ -8774,10 +9320,10 @@ expected document not to contain element, found <button
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:11:32
-   Duration  7.53s (transform 996ms, setup 761ms, collect 2.28s, tests 433ms, environment 2.89s, prepare 527ms)
+   Start at  16:42:53
+   Duration  3.62s (transform 564ms, setup 250ms, collect 1.49s, tests 277ms, environment 1.07s, prepare 184ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp86mt4cmr/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbgp3lct3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -8801,27 +9347,27 @@ expected document not to contain element, found <button
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[29/38] 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
+[32/41] 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -80,7 +80,7 @@
+@@ -89,7 +89,7 @@
    const isDentist = currentUser?.role === "odontologo";
    const isOwnAppointment =
      isDentist && currentUser.professionalId === appointment.professionalId;
 -  const isDentistOther = isDentist && !isOwnAppointment;
 +  const isDentistOther = false;
  
-   const handleDialogClose = () => {
-     if (isConfirmingCancel) {
+   const returnToDetail = () => {
+     focusCancelOnReturnRef.current = true;
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 487ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 238ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
-   × AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos 484ms
+   × AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos 236ms
      → expect(element).not.toBeInTheDocument()
 
 expected document not to contain element, found <button
@@ -8842,10 +9388,10 @@ expected document not to contain element, found <button
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:11:51
-   Duration  7.62s (transform 1.05s, setup 806ms, collect 2.27s, tests 487ms, environment 2.74s, prepare 458ms)
+   Start at  16:43:02
+   Duration  3.07s (transform 440ms, setup 293ms, collect 1.03s, tests 238ms, environment 925ms, prepare 179ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmcy1fg4g/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp02xwnqy8/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -8869,12 +9415,12 @@ expected document not to contain element, found <button
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[30/38] 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
+[33/41] 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
 diff:
 --- a/frontend/src/features/appointments/AppointmentDetailDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentDetailDialog.tsx
-@@ -105,8 +105,7 @@
+@@ -119,8 +119,7 @@
  
      if (
        result.error.kind === "unprocessable" ||
@@ -8888,10 +9434,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 449ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 329ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
-   × AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión 447ms
+   × AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión 327ms
      → expected null not to be null
    ↓ AgendaPage — Integración de Acciones > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
    ↓ AgendaPage — Integración de Acciones > 7.5 confirmación emite anuncio Turno confirmado.
@@ -8904,10 +9450,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:12:10
-   Duration  7.36s (transform 947ms, setup 753ms, collect 2.19s, tests 449ms, environment 2.77s, prepare 543ms)
+   Start at  16:43:09
+   Duration  7.91s (transform 2.91s, setup 344ms, collect 5.63s, tests 329ms, environment 1.03s, prepare 192ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp8rfpg29f/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpt08ic6fk/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -8924,7 +9470,7 @@ AssertionError: expected null not to be null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[31/38] 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
+[34/41] 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -8942,11 +9488,11 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1465ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1246ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
-   × AgendaPage — Integración de Acciones > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda 1462ms
+   × AgendaPage — Integración de Acciones > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda 1244ms
      → expected 1 to be greater than or equal to 2
 
 Ignored nodes: comments, script, style
@@ -9467,10 +10013,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:12:28
-   Duration  8.24s (transform 933ms, setup 793ms, collect 2.16s, tests 1.47s, environment 2.71s, prepare 454ms)
+   Start at  16:43:22
+   Duration  4.02s (transform 492ms, setup 246ms, collect 1.19s, tests 1.25s, environment 833ms, prepare 158ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp15zoii3h/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpk_1wjyiz/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -9999,7 +10545,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[32/38] 7.5 confirmación emite anuncio Turno confirmado.
+[35/41] 7.5 confirmación emite anuncio Turno confirmado.
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.5 confirmación emite anuncio Turno confirmado.
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -10017,12 +10563,12 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1439ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1281ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
    ↓ AgendaPage — Integración de Acciones > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
-   × AgendaPage — Integración de Acciones > 7.5 confirmación emite anuncio Turno confirmado. 1435ms
+   × AgendaPage — Integración de Acciones > 7.5 confirmación emite anuncio Turno confirmado. 1278ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -10547,10 +11093,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:12:48
-   Duration  8.20s (transform 929ms, setup 773ms, collect 2.12s, tests 1.44s, environment 2.80s, prepare 424ms)
+   Start at  16:43:30
+   Duration  4.15s (transform 499ms, setup 239ms, collect 1.23s, tests 1.28s, environment 899ms, prepare 176ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsih857hb/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2p6a4agm/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -11084,7 +11630,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[33/38] 7.6 marcar atendido emite anuncio Turno marcado como atendido.
+[36/41] 7.6 marcar atendido emite anuncio Turno marcado como atendido.
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.6 marcar atendido emite anuncio Turno marcado como atendido.
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -11102,13 +11648,13 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1424ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1212ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
    ↓ AgendaPage — Integración de Acciones > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
    ↓ AgendaPage — Integración de Acciones > 7.5 confirmación emite anuncio Turno confirmado.
-   × AgendaPage — Integración de Acciones > 7.6 marcar atendido emite anuncio Turno marcado como atendido. 1420ms
+   × AgendaPage — Integración de Acciones > 7.6 marcar atendido emite anuncio Turno marcado como atendido. 1210ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -11632,10 +12178,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:13:07
-   Duration  8.33s (transform 926ms, setup 901ms, collect 2.10s, tests 1.42s, environment 2.76s, prepare 485ms)
+   Start at  16:43:39
+   Duration  3.81s (transform 409ms, setup 223ms, collect 1.00s, tests 1.21s, environment 853ms, prepare 169ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbinyag8u/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpnagqnj9k/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -12169,7 +12715,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[34/38] 7.7 marcar ausente emite anuncio Turno marcado como ausente.
+[37/41] 7.7 marcar ausente emite anuncio Turno marcado como ausente.
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.7 marcar ausente emite anuncio Turno marcado como ausente.
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -12187,14 +12733,14 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1426ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1241ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
    ↓ AgendaPage — Integración de Acciones > 7.4 seleccionar turno abre modal y mutación exitosa refresca la agenda
    ↓ AgendaPage — Integración de Acciones > 7.5 confirmación emite anuncio Turno confirmado.
    ↓ AgendaPage — Integración de Acciones > 7.6 marcar atendido emite anuncio Turno marcado como atendido.
-   × AgendaPage — Integración de Acciones > 7.7 marcar ausente emite anuncio Turno marcado como ausente. 1422ms
+   × AgendaPage — Integración de Acciones > 7.7 marcar ausente emite anuncio Turno marcado como ausente. 1239ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -12717,10 +13263,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:13:26
-   Duration  8.06s (transform 954ms, setup 802ms, collect 2.09s, tests 1.43s, environment 2.64s, prepare 418ms)
+   Start at  16:43:47
+   Duration  3.93s (transform 519ms, setup 260ms, collect 1.21s, tests 1.24s, environment 748ms, prepare 170ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqf3puyq7/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvvmao75h/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -13254,7 +13800,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[35/38] 7.8 cancelar emite anuncio Turno cancelado.
+[38/41] 7.8 cancelar emite anuncio Turno cancelado.
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.8 cancelar emite anuncio Turno cancelado.
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -13271,7 +13817,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1454ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1212ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
@@ -13279,7 +13825,7 @@ diff:
    ↓ AgendaPage — Integración de Acciones > 7.5 confirmación emite anuncio Turno confirmado.
    ↓ AgendaPage — Integración de Acciones > 7.6 marcar atendido emite anuncio Turno marcado como atendido.
    ↓ AgendaPage — Integración de Acciones > 7.7 marcar ausente emite anuncio Turno marcado como ausente.
-   × AgendaPage — Integración de Acciones > 7.8 cancelar emite anuncio Turno cancelado. 1451ms
+   × AgendaPage — Integración de Acciones > 7.8 cancelar emite anuncio Turno cancelado. 1210ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -13801,10 +14347,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:13:45
-   Duration  8.30s (transform 963ms, setup 751ms, collect 2.18s, tests 1.45s, environment 2.79s, prepare 477ms)
+   Start at  16:43:55
+   Duration  4.00s (transform 524ms, setup 318ms, collect 1.22s, tests 1.21s, environment 775ms, prepare 141ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc0_pb0p3/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1tv3h0bm/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -14338,7 +14884,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[36/38] 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM.
+[39/41] 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM.
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM.
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -14355,7 +14901,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1470ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1423ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
@@ -14364,7 +14910,7 @@ diff:
    ↓ AgendaPage — Integración de Acciones > 7.6 marcar atendido emite anuncio Turno marcado como atendido.
    ↓ AgendaPage — Integración de Acciones > 7.7 marcar ausente emite anuncio Turno marcado como ausente.
    ↓ AgendaPage — Integración de Acciones > 7.8 cancelar emite anuncio Turno cancelado.
-   × AgendaPage — Integración de Acciones > 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM. 1467ms
+   × AgendaPage — Integración de Acciones > 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM. 1420ms
      → expect(element).toHaveTextContent()
 
 Expected element to have text content:
@@ -14885,10 +15431,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:14:05
-   Duration  8.59s (transform 960ms, setup 742ms, collect 2.17s, tests 1.47s, environment 2.88s, prepare 519ms)
+   Start at  16:44:06
+   Duration  5.28s (transform 655ms, setup 354ms, collect 1.68s, tests 1.42s, environment 1.26s, prepare 187ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjp2_yyxo/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg_oos7qr/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -15422,7 +15968,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[37/38] 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno
+[40/41] 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -15440,7 +15986,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1472ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1295ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
@@ -15450,7 +15996,7 @@ diff:
    ↓ AgendaPage — Integración de Acciones > 7.7 marcar ausente emite anuncio Turno marcado como ausente.
    ↓ AgendaPage — Integración de Acciones > 7.8 cancelar emite anuncio Turno cancelado.
    ↓ AgendaPage — Integración de Acciones > 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM.
-   × AgendaPage — Integración de Acciones > 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno 1468ms
+   × AgendaPage — Integración de Acciones > 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno 1292ms
      → expected <body><div>…(1)</div></body> to be <button type="button" …(11)>…(1)</button> // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -15963,10 +16509,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:14:24
-   Duration  8.17s (transform 922ms, setup 777ms, collect 2.05s, tests 1.47s, environment 2.80s, prepare 420ms)
+   Start at  16:44:18
+   Duration  4.36s (transform 475ms, setup 272ms, collect 1.12s, tests 1.29s, environment 1.05s, prepare 223ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpflfuomw5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzt2e5pml/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -16977,7 +17523,7 @@ Ignored nodes: comments, script, style
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[38/38] 7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno
+[41/41] 7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno
 test: src/features/agenda/AgendaPage.acciones.test.tsx > 7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno
 diff:
 --- a/frontend/src/features/agenda/AgendaPage.tsx
@@ -16996,7 +17542,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1495ms
+ ❯ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests | 1 failed | 10 skipped) 1242ms
    ↓ AgendaPage — Integración de Acciones > 7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial
    ↓ AgendaPage — Integración de Acciones > 7.2 bloquear acciones e historial para odontólogo en turnos ajenos
    ↓ AgendaPage — Integración de Acciones > 7.3 respuesta 403 FORBIDDEN_OPERATION muestra alerta sin cerrar sesión
@@ -17007,7 +17553,7 @@ diff:
    ↓ AgendaPage — Integración de Acciones > 7.8 cancelar emite anuncio Turno cancelado.
    ↓ AgendaPage — Integración de Acciones > 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM.
    ↓ AgendaPage — Integración de Acciones > 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno
-   × AgendaPage — Integración de Acciones > 7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno 1492ms
+   × AgendaPage — Integración de Acciones > 7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno 1241ms
      → expected <button type="button" …(1)></button> to be <button type="button" …(11)>…(1)</button> // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -17519,10 +18065,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 skipped (11)
-   Start at  16:14:44
-   Duration  8.40s (transform 940ms, setup 727ms, collect 2.11s, tests 1.50s, environment 2.81s, prepare 563ms)
+   Start at  16:44:27
+   Duration  4.04s (transform 420ms, setup 251ms, collect 1.03s, tests 1.24s, environment 894ms, prepare 175ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpoqdvgsdh/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7549ikko/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -18093,8 +18639,8 @@ Ignored nodes: comments, script, style
 restaurado: test en verde
 ================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 38
+mutaciones que hicieron fallar su test: 41
 mutaciones que NO lo hicieron fallar: 0
 mutaciones inválidas: 0
-SHA-256 de produccion despues: 066fb08a8ace6481de11d726eb512913d3521305eff957fe0d8cc5ff4753089b
+SHA-256 de produccion despues: cb188ea7cb6f9fbff6916caed7a21b9ac15f81a7ad812efc422570db624ab329
 SHA-256 sin cambios: si

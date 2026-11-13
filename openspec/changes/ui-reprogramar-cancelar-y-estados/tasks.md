@@ -93,6 +93,10 @@
 - [x] 10.3 Alinear la superficie modal de `AppointmentDetailDialog.module.css` y `AppointmentRescheduleDialog.module.css` con `.modalContent` de `AppointmentFormDialog.module.css` (superficie, bordes, radios, sombras, max-width 580px, max-height `calc(100dvh - 2 * var(--space-4))` y overflow-y auto).
 - [x] 10.4 Configurar centrado seguro en `Dialog.module.css` (`align-items: center; align-items: safe center;`) para evitar recorte de encabezados en pantallas de 390 px.
 - [x] 10.5 Actualizar batería completa de verificación, mutaciones (38/38), trazabilidad (31 escenarios) y documentación de desvíos en `verify-C-30.md`.
+- [x] 10.6 Corregir la bandera de Escape pegada en `Dialog.tsx` (C-29): `closeHandledRef` solo suprime el `cancel` de la misma pulsación (reset diferido con `setTimeout(..., 0)` en `handleKeyDown`; `handleCancel` resetea la bandera sin llamar `onClose` si estaba en `true`). Test nuevo en `Dialog.escape.test.tsx`. Evidencias: `docs/evidencias/red-C-30/37-dialog-escape-repetido.txt` y `docs/evidencias/green-C-30/37-dialog-escape-repetido.txt`.
+- [x] 10.7 Devolver el foco al botón "Cancelar turno" al volver de la confirmación ("Volver al detalle" o Escape) en `AppointmentDetailDialog.tsx`. Test 5.6. Evidencias: `docs/evidencias/red-C-30/38-cancel-focus-return.txt` y `docs/evidencias/green-C-30/38-cancel-focus-return.txt`.
+- [x] 10.8 Limpiar las violaciones previas (`setViolations([])`) al entrar a la confirmación de cancelación. Test 5.7. Evidencias: `docs/evidencias/red-C-30/39-cancel-clear-alert.txt` y `docs/evidencias/green-C-30/39-cancel-clear-alert.txt`.
+- [x] 10.9 Re-correr la batería completa (suite, tooling, build, validate, diff de tests existentes, mutaciones 41/41, trazabilidad) y documentar los desvíos de la segunda ronda en `verify-C-30.md`.
 
 ## Workflow follow-up
 

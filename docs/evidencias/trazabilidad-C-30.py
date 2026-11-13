@@ -152,6 +152,15 @@ MUTATION_BY_TEST: dict[str, str] = {
     "7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno": (
         "M38: omisión de guardado de triggerAppointmentBtnRef en AgendaPage"
     ),
+    "5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno": (
+        "M39: omisión del foco al botón Cancelar turno al volver de la confirmación"
+    ),
+    "5.7 al entrar a la confirmación se limpia el alert de una acción anterior": (
+        "M40: omisión de setViolations([]) al entrar a la confirmación de cancelación"
+    ),
+    "un segundo Escape (evento cancel posterior) vuelve a llamar onClose": (
+        "M41: omisión del reset diferido de closeHandledRef en Dialog"
+    ),
 }
 
 # (capability, requirement, scenario) -> (test_node, mutation_desc)

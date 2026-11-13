@@ -6,7 +6,7 @@ Uso, desde la raíz del repo o desde frontend/:
 
 Cada mutación es (archivo de test, nombre del test, archivo de producción, texto_original, texto_mutado).
 Hay UNA mutación por cada test nuevo de C-30: antes de mutar se cuentan los tests con `vitest list --json`
-y se exige una correspondencia uno a uno con los 33 tests nuevos.
+y se exige una correspondencia uno a uno con los 41 tests nuevos (incluido Dialog.escape.test.tsx).
 
 Por cada mutación: comprueba que el original aparezca exactamente una vez y que el mutante cambie el archivo
 (respetando LF o CRLF), aplica la mutación, corre Vitest solo para ese test (`vitest run <archivo> -t <nombre>$`),
@@ -65,6 +65,7 @@ T_STATUS = "src/features/appointments/AppointmentStatusActions.test.tsx"
 T_CANCEL = "src/features/appointments/AppointmentCancel.test.tsx"
 T_RESCHEDULE = "src/features/appointments/AppointmentRescheduleDialog.test.tsx"
 T_PAGE = "src/features/agenda/AgendaPage.acciones.test.tsx"
+T_DIALOG_ESCAPE = "src/shared/components/Dialog.escape.test.tsx"
 
 C30_TEST_FILES = (
     T_GRID,
@@ -74,6 +75,7 @@ C30_TEST_FILES = (
     T_CANCEL,
     T_RESCHEDULE,
     T_PAGE,
+    T_DIALOG_ESCAPE,
 )
 
 # --- Archivos de producción modificados o creados en C-30 ---
@@ -85,8 +87,10 @@ P_API = "frontend/src/features/appointments/appointmentApi.ts"
 P_DETAIL = "frontend/src/features/appointments/AppointmentDetailDialog.tsx"
 P_HISTORY = "frontend/src/features/appointments/AppointmentHistoryList.tsx"
 P_RESCHEDULE = "frontend/src/features/appointments/AppointmentRescheduleDialog.tsx"
+P_DIALOG = "frontend/src/shared/components/Dialog.tsx"
 
 PRODUCTION_FILES = (
+    P_DIALOG,
     P_GRID,
     P_TABLE,
     P_VIEW,
@@ -244,7 +248,7 @@ MUTATIONS: tuple[Mutation, ...] = (
         T_CANCEL,
         "5.2 volver al detalle o Escape restaura la vista sin enviar petición",
         P_DETAIL,
-        '                onClick={() => setIsConfirmingCancel(false)}\n                className={styles.secondaryButton}\n              >\n                Volver al detalle',
+        '                onClick={returnToDetail}\n                className={styles.secondaryButton}\n              >\n                Volver al detalle',
         '                onClick={() => undefined}\n                className={styles.secondaryButton}\n              >\n                Volver al detalle',
     ),
     Mutation(
@@ -265,8 +269,31 @@ MUTATIONS: tuple[Mutation, ...] = (
         T_CANCEL,
         "5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle",
         P_DETAIL,
-        '  const handleDialogClose = () => {\n    if (isConfirmingCancel) {\n      setIsConfirmingCancel(false);\n    } else {\n      onClose();\n    }\n  };',
+        '  const handleDialogClose = () => {\n    if (isConfirmingCancel) {\n      returnToDetail();\n    } else {\n      onClose();\n    }\n  };',
         '  const handleDialogClose = () => {\n    onClose();\n  };',
+    ),
+    Mutation(
+        T_CANCEL,
+        "5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno",
+        P_DETAIL,
+        '      focusCancelOnReturnRef.current = false;\n      cancelButtonRef.current?.focus();',
+        '      focusCancelOnReturnRef.current = false;',
+    ),
+    Mutation(
+        T_CANCEL,
+        "5.7 al entrar a la confirmación se limpia el alert de una acción anterior",
+        P_DETAIL,
+        '                        setViolations([]);\n                        setIsConfirmingCancel(true);',
+        '                        setIsConfirmingCancel(true);',
+    ),
+
+    # --- 5b. Dialog — Escape repetido (1 test, corrección de C-29) ---
+    Mutation(
+        T_DIALOG_ESCAPE,
+        "un segundo Escape (evento cancel posterior) vuelve a llamar onClose",
+        P_DIALOG,
+        '    closeHandledRef.current = true;\n    setTimeout(() => {\n      closeHandledRef.current = false;\n    }, 0);\n    onClose();',
+        '    closeHandledRef.current = true;\n    onClose();',
     ),
 
     # --- 6. AppointmentRescheduleDialog — Reprogramación (6 tests) ---

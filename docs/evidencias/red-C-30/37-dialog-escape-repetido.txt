@@ -1,0 +1,35 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/components/Dialog.escape.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 196[2mms[22m[39m
+[31m   [31m×[31m Dialog — Escape repetido[2m > [22mun segundo Escape (evento cancel posterior) vuelve a llamar onClose[39m[32m 192[2mms[22m[39m
+[31m     → expected 1 to be 2 // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/Dialog.escape.test.tsx[2m > [22mDialog — Escape repetido[2m > [22mun segundo Escape (evento cancel posterior) vuelve a llamar onClose
+[31m[1mAssertionError[22m: expected 1 to be 2 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 2[39m
+[31m+ 1[39m
+
+[36m [2m❯[22m src/shared/components/Dialog.escape.test.tsx:[2m29:20[22m[39m
+    [90m 27| [39m
+    [90m 28| [39m    [34mfireEvent[39m(dialog[33m![39m[33m,[39m [35mnew[39m [33mEvent[39m([32m"cancel"[39m[33m,[39m { cancelable[33m:[39m [35mtrue[39m }))[33m;[39m
+    [90m 29| [39m    [34mexpect[39m(closes)[33m.[39m[34mtoBe[39m([34m2[39m)[33m;[39m
+    [90m   | [39m                   [31m^[39m
+    [90m 30| [39m  })[33m;[39m
+    [90m 31| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 16:34:16
+[2m   Duration [22m 3.61s[2m (transform 231ms, setup 572ms, collect 285ms, tests 196ms, environment 1.84s, prepare 312ms)[22m
+
+exit: 1

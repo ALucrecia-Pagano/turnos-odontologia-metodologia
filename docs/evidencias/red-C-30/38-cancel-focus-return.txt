@@ -1,0 +1,390 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentCancel.test.tsx [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m6 skipped[39m[2m)[22m[32m 206[2mms[22m[39m
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.1 cancelar turno muestra subvista de confirmación in-dialog
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.2 volver al detalle o Escape restaura la vista sin enviar petición
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+[31m   [31m×[31m AppointmentDetailDialog — Cancelación[2m > [22m5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno[39m[32m 204[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveFocus()[22m
+
+Expected element with focus:
+  [32m<button
+  class="dangerButton"
+  type="button"
+>
+  Cancelar turno
+</button>[31m
+Received element with focus:
+  [31m<body>
+  <div>
+    <dialog
+      aria-labelledby="appointment-detail-title"
+      aria-modal="true"
+      class="dialog"
+      open=""
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header"
+        >
+          <h2
+            class="title"
+            id="appointment-detail-title"
+          >
+            Detalle del turno
+          </h2>
+          <span
+            class="badge confirmado"
+            data-status="confirmado"
+            style="color: rgb(20, 108, 67); background-color: rgb(221, 243, 231); border-color: rgb(134, 239, 172);"
+          >
+            Confirmado
+          </span>
+        </div>
+        <div
+          class="detailsGrid"
+        >
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Paciente
+            </span>
+            <span
+              class="detailValue"
+            >
+              Ana Pérez
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Prestación
+            </span>
+            <span
+              class="detailValue"
+            >
+              Control
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Profesional
+            </span>
+            <span
+              class="detailValue"
+            >
+              Dra. Laura Quiroga
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Sillón
+            </span>
+            <span
+              class="detailValue"
+            >
+              Sillón 1
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Fecha
+            </span>
+            <span
+              class="detailValue"
+            >
+              16/11/2026
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Horario
+            </span>
+            <span
+              class="detailValue"
+            >
+              10:00–10:30
+            </span>
+          </div>
+        </div>
+        <section
+          aria-label="Historial de cambios"
+          class="historySection"
+        >
+          <h3
+            class="historyHeading"
+          >
+            Historial de cambios
+          </h3>
+          <p
+            class="historyLoading"
+          >
+            Cargando historial...
+          </p>
+        </section>
+        <div
+          class="actionsBar"
+        >
+          <button
+            class="primaryButton"
+            type="button"
+          >
+            Marcar atendido
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Marcar ausente
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Reprogramar
+          </button>
+          <button
+            class="dangerButton"
+            type="button"
+          >
+            Cancelar turno
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</body>[31m[39m
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.7 al entrar a la confirmación se limpia el alert de una acción anterior
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentCancel.test.tsx[2m > [22mAppointmentDetailDialog — Cancelación[2m > [22m5.6 al volver de la confirmación con Escape el foco queda en el botón Cancelar turno
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveFocus()[22m
+
+Expected element with focus:
+  [32m<button
+  class="dangerButton"
+  type="button"
+>
+  Cancelar turno
+</button>[31m
+Received element with focus:
+  [31m<body>
+  <div>
+    <dialog
+      aria-labelledby="appointment-detail-title"
+      aria-modal="true"
+      class="dialog"
+      open=""
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header"
+        >
+          <h2
+            class="title"
+            id="appointment-detail-title"
+          >
+            Detalle del turno
+          </h2>
+          <span
+            class="badge confirmado"
+            data-status="confirmado"
+            style="color: rgb(20, 108, 67); background-color: rgb(221, 243, 231); border-color: rgb(134, 239, 172);"
+          >
+            Confirmado
+          </span>
+        </div>
+        <div
+          class="detailsGrid"
+        >
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Paciente
+            </span>
+            <span
+              class="detailValue"
+            >
+              Ana Pérez
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Prestación
+            </span>
+            <span
+              class="detailValue"
+            >
+              Control
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Profesional
+            </span>
+            <span
+              class="detailValue"
+            >
+              Dra. Laura Quiroga
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Sillón
+            </span>
+            <span
+              class="detailValue"
+            >
+              Sillón 1
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Fecha
+            </span>
+            <span
+              class="detailValue"
+            >
+              16/11/2026
+            </span>
+          </div>
+          <div
+            class="detailItem"
+          >
+            <span
+              class="detailLabel"
+            >
+              Horario
+            </span>
+            <span
+              class="detailValue"
+            >
+              10:00–10:30
+            </span>
+          </div>
+        </div>
+        <section
+          aria-label="Historial de cambios"
+          class="historySection"
+        >
+          <h3
+            class="historyHeading"
+          >
+            Historial de cambios
+          </h3>
+          <p
+            class="historyLoading"
+          >
+            Cargando historial...
+          </p>
+        </section>
+        <div
+          class="actionsBar"
+        >
+          <button
+            class="primaryButton"
+            type="button"
+          >
+            Marcar atendido
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Marcar ausente
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Reprogramar
+          </button>
+          <button
+            class="dangerButton"
+            type="button"
+          >
+            Cancelar turno
+          </button>
+          <button
+            class="secondaryButton"
+            type="button"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</body>[31m[39m
+[36m [2m❯[22m src/features/appointments/AppointmentCancel.test.tsx:[2m241:23[22m[39m
+    [90m239| [39m    const cancelBtn = screen.queryByRole("button", { name: "Cancelar t…
+    [90m240| [39m    [34mexpect[39m(cancelBtn)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m241| [39m    [34mexpect[39m(cancelBtn)[33m.[39m[34mtoHaveFocus[39m()[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m242| [39m  })[33m;[39m
+    [90m243| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m6 skipped[39m[90m (7)[39m
+[2m   Start at [22m 16:34:21
+[2m   Duration [22m 2.36s[2m (transform 214ms, setup 283ms, collect 360ms, tests 206ms, environment 975ms, prepare 189ms)[22m
+
+exit: 1

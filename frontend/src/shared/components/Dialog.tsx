@@ -77,15 +77,19 @@ export function Dialog({
     }
     event.preventDefault();
     closeHandledRef.current = true;
+    setTimeout(() => {
+      closeHandledRef.current = false;
+    }, 0);
     onClose();
   };
 
   const handleCancel = (event: SyntheticEvent<HTMLDialogElement>) => {
     event.preventDefault();
-    if (!closeHandledRef.current) {
-      closeHandledRef.current = true;
-      onClose();
+    if (closeHandledRef.current) {
+      closeHandledRef.current = false;
+      return;
     }
+    onClose();
   };
 
   const isNativeModalSupported =
