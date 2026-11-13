@@ -4,7 +4,7 @@
 
 Todos los números provienen de las ejecuciones reales y archivos de evidencia enlazados.
 
-- **Tareas**: implementadas según [tasks.md](../../openspec/changes/ui-reprogramar-cancelar-y-estados/tasks.md). Fases 1 a 8 completadas, junto con la Fase 10 de correcciones de navegador real (dos rondas: 10.1–10.5 y 10.6–10.9); Fase 9 reservada para capturas independientes a cargo de Claude.
+- **Tareas**: implementadas según [tasks.md](../../openspec/changes/archive/2026-11-13-ui-reprogramar-cancelar-y-estados/tasks.md). Fases 1 a 8 completadas, junto con la Fase 10 de correcciones de navegador real (dos rondas: 10.1–10.5 y 10.6–10.9); Fase 9 reservada para capturas independientes a cargo de Claude.
 - **Vitest**: suite completa en verde (línea base de 191 intactos + 41 tests nuevos de C-30 = 232 tests pasando en 55 archivos); `tsc --noEmit` y `eslint .` con código de salida 0.
 - **Mutaciones**: 41/41 hicieron fallar su test respectivo (una mutación por cada test nuevo de C-30, incluido `Dialog.escape.test.tsx`); mutaciones inválidas: 0; sobrevivientes: 0; SHA-256 del código de producción intacto tras restauración.
 - **Trazabilidad**: 31 escenarios totales en las specs delta (28 probados mediante Vitest con relación 1:1 estricta sin tests compartidos y 3 escenarios de adaptabilidad visual para verificación independiente por capturas). 0 problemas.
@@ -137,10 +137,31 @@ Los 28 escenarios automatizables de las specs delta (`frontend-agenda` y `fronte
 | 26 | `frontend-appointment-actions` | Anuncios accesibles y refresco de agenda | Anuncio accesible y refresco tras marcar ausente | src/features/agenda/AgendaPage.acciones.test.tsx > 7.7 marcar ausente emite anuncio Turno marcado como ausente. | M31: alteración de texto de anuncio tras marcar ausente en AgendaPage |
 | 27 | `frontend-appointment-actions` | Anuncios accesibles y refresco de agenda | Anuncio accesible y refresco tras cancelar turno | src/features/agenda/AgendaPage.acciones.test.tsx > 7.8 cancelar emite anuncio Turno cancelado. | M32: alteración de texto de anuncio tras cancelar turno en AgendaPage |
 | 28 | `frontend-appointment-actions` | Anuncios accesibles y refresco de agenda | Anuncio accesible y refresco tras reprogramar turno | src/features/agenda/AgendaPage.acciones.test.tsx > 7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM. | M33: alteración de texto de anuncio tras reprogramar turno en AgendaPage |
-| 29 | `frontend-appointment-actions` | Adaptabilidad visual de las interfaces de turno | Visualización en escritorio a 1440 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-turno-1440.png`, `C-30-historial-1440.png`, `C-30-reprogramar-1440.png`, `C-30-error-409-1440.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
-| 30 | `frontend-appointment-actions` | Adaptabilidad visual de las interfaces de turno | Visualización en tablet a 768 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-turno-768.png`, `C-30-confirmacion-cancelar-768.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
-| 31 | `frontend-appointment-actions` | Adaptabilidad visual de las interfaces de turno | Visualización en móvil a 390 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-turno-390.png`, `C-30-reprogramar-390.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
+| 29 | `frontend-appointment-actions` | Adaptabilidad visual de las interfaces de turno | Visualización en escritorio a 1440 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-1440.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
+| 30 | `frontend-appointment-actions` | Adaptabilidad visual de las interfaces de turno | Visualización en tablet a 768 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-768.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
+| 31 | `frontend-appointment-actions` | Adaptabilidad visual de las interfaces de turno | Visualización en móvil a 390 px | Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-390.png`, `docs/evidencias/capturas/C-30-reprogramar-409-390.png`) | Sin mutación (verificación visual independiente a cargo de Claude) |
 <!-- trazabilidad:fin -->
+
+---
+
+## Verificación en navegador real contra la API (Claude)
+
+Se ejecutó la verificación funcional y visual en navegador real Chromium conectado a la API de backend en ejecución (puerto 8000) y frontend Vite (puerto 5173). Se capturaron las 14 pantallas en `docs/evidencias/capturas/C-30-*.png`, comprobando los siguientes flujos de negocio y accesibilidad:
+
+1. **Rechazo 422 por marcar atendido antes de inicio**: al intentar marcar atendido un turno futuro, la API responde 422 `STATUS_CHANGE_TOO_EARLY`. El diálogo expone el alert accesible con badge de código y mensaje del dominio, trasladando automáticamente el foco al alert (`C-30-error-422-atendido-1440.png`).
+2. **Subvista de confirmación de cancelación y manejo de Escape**: al pulsar "Cancelar turno", se abre la subvista de confirmación interna (`C-30-confirmar-cancelacion-1440.png`). Al pulsar Escape, se cancela la confirmación y se retorna al detalle con el foco posicionado en el botón "Cancelar turno". Un segundo Escape cierra el diálogo completo de detalle y retorna el foco al botón del turno disparador en la grilla.
+3. **Cancelación confirmada y anuncio accesible**: al confirmar la cancelación, se envía `POST /api/appointments/{id}/cancel`, se cierra el diálogo, se refresca la agenda mostrando el turno cancelado (`C-30-cancelado-1440.png`) y la región accesible permanente emite el anuncio `"Turno cancelado."`.
+4. **Reprogramación y conflicto 409**: al intentar reprogramar a un horario superpuesto, la API rechaza con 409 y violaciones múltiples `PROFESSIONAL_OVERLAP` y `CHAIR_OVERLAP`. El diálogo de reprogramación muestra los badges y referencias textuales de conflicto con foco en el alert (`C-30-reprogramar-409-1440.png`).
+5. **Reprogramación exitosa y anuncio accesible**: al elegir un horario libre, se envía `POST /api/appointments/{id}/reschedule`, el turno vuelve a reservado en su nueva franja horaria (`C-30-reprogramado-1440.png`) y se emite el anuncio `"Turno reprogramado para el 18/11/2026 a las 17:00."`.
+6. **Historial cronológico de cambios**: la sección de historial refleja cronológicamente cada cambio con autor, horario en zona horaria local (`America/Argentina/Buenos_Aires`) y el desglose de reprogramación con etiquetas "Anterior:" y "Nuevo:" (`C-30-historial-reprogramacion-1440.png`).
+7. **Acción en vista de tabla**: la vista de tabla expone los 3 botones accesibles "Ver turno" en su columna dedicada (`C-30-lista-ver-turno-1440.png`), abriendo el detalle respectivo.
+8. **Control de acceso para odontóloga**: en turnos propios (`C-30-odontologo-propio-1440.png`), la profesional puede visualizar el historial y ejecutar cambios de estado ("Confirmar turno", "Marcar atendido", "Marcar ausente"), manteniendo ocultos "Reprogramar" y "Cancelar turno". En turnos de otros profesionales (`C-30-odontologo-ajeno-1440.png`), la interfaz se presenta en solo lectura sin botones de acción y sin disparar llamadas a `GET /api/appointments/{id}/history`.
+9. **Defectos detectados y subsanados durante la verificación real (rondas `8e6ee29` y `041dab6`)**:
+   - *Escape en confirmación de cancelación*: el evento nativo `cancel` cerraba todo el diálogo en lugar de volver a la vista de detalle. Subsanado con interceptor de `onClose` en `AppointmentDetailDialog.tsx`.
+   - *Foco al volver de confirmación*: el foco se perdía y quedaba en `document.body`. Se corrigió para focalizar el botón "Cancelar turno" al desestimar la confirmación.
+   - *Superficie y centrado de los diálogos*: los modales carecían de superficie estándar (`.container` alineado a `.modalContent` con `var(--color-surface)`) y en viewport móvil de 390 px el título quedaba recortado por centrado absoluto; se aplicó `align-items: center; align-items: safe center;` en `Dialog.module.css`.
+   - *Bandera de Escape pegada en `Dialog.tsx`*: la guarda `closeHandledRef` quedaba en `true` tras el primer Escape en confirmación, bloqueando el cierre del modal en el segundo Escape. Se ajustó para suprimir únicamente el `cancel` de la misma pulsación con reset diferido mediante `setTimeout(..., 0)`.
+10. **Ejecución de suite en el entorno de Claude**: la suite completa ejecutó **232/232 tests en verde** en una sola corrida (con la nota sobre `Logout.test.tsx` intermitente en Linux documentada en Desvíos).
 
 ---
 

@@ -716,14 +716,17 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/03_actores_y_roles.md` §RBAC
 
 ### [C-30] `ui-reprogramar-cancelar-y-estados`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-13 en [openspec/changes/archive/2026-11-13-ui-reprogramar-cancelar-y-estados/](openspec/changes/archive/2026-11-13-ui-reprogramar-cancelar-y-estados/))
 - **Scope**:
   - Acciones sobre un turno: reprogramar (reutiliza el formulario de C-29 con los errores del dominio), cancelar y cambiar estado (confirmado, atendido, ausente) solo con las transiciones válidas habilitadas.
   - Panel de historial del turno (`from`, `to`, quién, cuándo) en solo lectura.
   - Tests de componentes: botones según estado y rol, error de transición inválida mostrado, historial ordenado.
+  - Corrección de `Dialog.tsx` de C-29: corrige la bandera de Escape (`closeHandledRef`) pegada tras un Escape que no cerraba el modal (como volver de la confirmación de cancelación), garantizando que un segundo Escape cierre el diálogo.
 - **Dependencias**: `C-29`
 - **Governance**: MEDIO
 - **Leer antes**:
+  - `docs/evidencias/explore-C-30.md`
+  - `openspec/changes/archive/2026-11-13-ui-reprogramar-cancelar-y-estados/proposal.md` y `design.md`
   - `knowledge-base/06_funcionalidades.md` §US-030, §US-031, §US-032, §US-033, §US-042
   - `knowledge-base/07_flujos_principales.md` §Flujo 2, §Flujo 3
   - `knowledge-base/05_reglas_de_negocio.md` §RN-TU-02

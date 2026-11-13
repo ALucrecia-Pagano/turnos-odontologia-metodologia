@@ -9,11 +9,11 @@
 ✓ spec/database-infrastructure
 ✓ spec/domain-dependency-guard
 ✓ spec/frontend-agenda
+✓ spec/frontend-appointment-actions
 ✓ spec/frontend-appointment-form
 ✓ spec/frontend-auth-session
 ✓ spec/frontend-foundation
 ✓ change/ui-portada-y-acceso
-✓ change/ui-reprogramar-cancelar-y-estados
 ✓ spec/working-hours-and-blocks-api
 Totals: 17 passed, 0 failed (17 items)
-exit: 0
+exit: 0 

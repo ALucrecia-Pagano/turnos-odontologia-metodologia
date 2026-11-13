@@ -82,9 +82,9 @@
 
 ## 9. Capturas visuales independientes a cargo de Claude
 
-- [ ] 9.1 Inspección visual y capturas en escritorio a 1440 px: `C-30-detalle-turno-1440.png`, `C-30-historial-1440.png`, `C-30-reprogramar-1440.png`, `C-30-error-409-1440.png`.
-- [ ] 9.2 Inspección visual y capturas en tablet a 768 px: `C-30-detalle-turno-768.png`, `C-30-confirmacion-cancelar-768.png`.
-- [ ] 9.3 Inspección visual y capturas en móvil a 390 px: `C-30-detalle-turno-390.png`, `C-30-reprogramar-390.png`.
+- [x] 9.1 Inspección visual y capturas en escritorio a 1440 px: `C-30-detalle-1440.png`, `C-30-confirmar-cancelacion-1440.png`, `C-30-cancelado-1440.png`, `C-30-reprogramar-1440.png`, `C-30-reprogramar-409-1440.png`, `C-30-reprogramado-1440.png`, `C-30-historial-reprogramacion-1440.png`, `C-30-error-422-atendido-1440.png`, `C-30-odontologo-propio-1440.png`, `C-30-odontologo-ajeno-1440.png`, `C-30-lista-ver-turno-1440.png`.
+- [x] 9.2 Inspección visual y capturas en tablet a 768 px: `C-30-detalle-768.png`.
+- [x] 9.3 Inspección visual y capturas en móvil a 390 px: `C-30-detalle-390.png`, `C-30-reprogramar-409-390.png`.
 
 ## 10. Correcciones de la verificación en navegador
 

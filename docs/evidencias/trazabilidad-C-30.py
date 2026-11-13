@@ -23,7 +23,14 @@ FRONTEND = REPO / "frontend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-30.txt"
 VERIFY = EVIDENCE / "verify-C-30.md"
-SPECS_DIR = REPO / "openspec" / "changes" / "ui-reprogramar-cancelar-y-estados" / "specs"
+SPECS_DIR = (
+    REPO
+    / "openspec"
+    / "changes"
+    / "archive"
+    / "2026-11-13-ui-reprogramar-cancelar-y-estados"
+    / "specs"
+)
 TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str(FRONTEND / "node_modules" / "vitest" / "vitest.mjs")]
@@ -399,7 +406,7 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Adaptabilidad visual de las interfaces de turno",
         "Visualización en escritorio a 1440 px",
     ): (
-        "Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-turno-1440.png`, `C-30-historial-1440.png`, `C-30-reprogramar-1440.png`, `C-30-error-409-1440.png`)",
+        "Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-1440.png`)",
         "Sin mutación (verificación visual independiente a cargo de Claude)",
     ),
     (
@@ -407,7 +414,7 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Adaptabilidad visual de las interfaces de turno",
         "Visualización en tablet a 768 px",
     ): (
-        "Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-turno-768.png`, `C-30-confirmacion-cancelar-768.png`)",
+        "Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-768.png`)",
         "Sin mutación (verificación visual independiente a cargo de Claude)",
     ),
     (
@@ -415,7 +422,7 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Adaptabilidad visual de las interfaces de turno",
         "Visualización en móvil a 390 px",
     ): (
-        "Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-turno-390.png`, `C-30-reprogramar-390.png`)",
+        "Captura a cargo de Claude (`docs/evidencias/capturas/C-30-detalle-390.png`, `docs/evidencias/capturas/C-30-reprogramar-409-390.png`)",
         "Sin mutación (verificación visual independiente a cargo de Claude)",
     ),
 }
