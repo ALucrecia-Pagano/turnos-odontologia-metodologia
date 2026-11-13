@@ -8,7 +8,7 @@ Definir los tokens de layout y superficies de la portada, login y modales de la 
 
 ### Requirement: Tokens de layout y superficies
 
-`tokens.css` SHALL definir `--landing-hero-min-height: 60vh`, `--landing-content-max-width: 1120px` y tokens de superficie: oscura translúcida navy para login/portada y clara suave (marfil-hielo) para los modales de la agenda (`Dialog`, `AppointmentFormDialog`, `AppointmentDetailDialog`, `AppointmentRescheduleDialog`). MUST asegurar contraste AA (>= 4.5:1) en todos los textos sobre sus fondos respectivos y fallback sólido en entornos sin soporte de `backdrop-filter`.
+`tokens.css` SHALL definir `--landing-hero-min-height: 60vh`, `--landing-content-max-width: 1120px` y tokens de superficie: navy translúcida para login/portada y marfil-hielo para los modales de la agenda. MUST asegurar contraste AA (>= 4.5:1) en todo texto y fallback sólido sin `backdrop-filter`. El accent `#54ACBF` MAY usarse como texto o línea solo sobre navy `#011C40` (6,55:1); sobre fondo claro MUST seguir siendo decorativo.
 
 #### Scenario: Tokens de layout y contraste AA de superficies
 
@@ -17,6 +17,7 @@ Definir los tokens de layout y superficies de la portada, login y modales de la 
 - **THEN** `--landing-hero-min-height` vale `60vh` y `--landing-content-max-width` vale `1120px`
 - **AND** los textos claros sobre fondo navy `#011C40` (blanco `16.05:1`, ice `#A7EBF2` `12.35:1`, accent `#54ACBF` `6.55:1`) superan el umbral AA de 4.5:1
 - **AND** el texto `--color-text` `#011C40` sobre la superficie marfil-hielo translúcida `rgba(243, 247, 250, 0.95)` alcanza un contraste de `15.70:1` (AA / AAA)
+- **AND** el accent `#54ACBF` solo aparece como texto o línea sobre superficies navy y nunca como texto sobre fondo claro
 
 #### Scenario: Fallback sólido sin soporte de backdrop-filter
 

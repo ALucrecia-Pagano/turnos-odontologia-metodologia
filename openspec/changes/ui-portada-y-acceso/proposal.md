@@ -8,7 +8,7 @@ Con C-29 y C-30 ya archivados en `main`, la primitiva `Dialog` ya existe canóni
 
 ## Reutilización desde c35-apply
 
-La rama `c35-apply` (`cea858b`) **no se rebasa**. El nuevo apply se ejecutará en la rama `c35-apply2` nacida de `main` y reutilizará, leyéndolos exclusivamente con `git show c35-apply:<ruta>` (sin checkout de ramas descartadas), los siguientes componentes y utilidades probadas:
+La rama `c35-apply` (`cea858b`) **no se rebasa**. El nuevo apply se ejecutará en la rama `c35-apply2` nacida de `main` y reutilizará, leyéndolos exclusivamente con `git show cea858b:<ruta>` desde Git Bash (sin checkout de ramas descartadas y nunca con el `>` de PowerShell, que guarda en UTF-16), los siguientes componentes y utilidades probadas:
 
 1. `frontend/src/features/landing/RevealSection.tsx` (+ `RevealSection.module.css` + `RevealSection.test.tsx`): contenedor con observador inyectable y detección de reduced motion, actualizando su transición CSS a `translateX` (200-250 ms).
 2. `frontend/src/features/landing/revealObserver.ts`: contratos de observación por intersección y detección de accesibilidad.

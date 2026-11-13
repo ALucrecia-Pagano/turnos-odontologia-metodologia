@@ -16,7 +16,9 @@ Una iteración previa en la rama `c35-apply` (commit `cea858b`) planteó abrir e
 
 ## Reutilización desde c35-apply
 
-La rama `c35-apply` (`cea858b`) no se rebasa ni se mezcla. El nuevo apply se ejecutará en la rama limpia `c35-apply2` a partir de `main` y reutilizará mediante `git show c35-apply:<ruta>` únicamente los siguientes archivos:
+La rama `c35-apply` (`cea858b`) no se rebasa ni se mezcla. El nuevo apply se ejecutará en la rama limpia `c35-apply2` a partir de `main` y reutilizará mediante `git show cea858b:<ruta>` únicamente los siguientes archivos.
+
+**Codificación al recuperar**: los comandos se ejecutan **desde Git Bash** (`git show cea858b:<ruta> > <ruta>`) y **nunca** con la redirección `>` de PowerShell, que guarda en UTF-16. Alternativa en PowerShell: `git show cea858b:<ruta> | Out-File -Encoding utf8 <ruta>`. Antes de seguir, se verifica con `file <ruta>` (o leyendo los primeros bytes) que ningún archivo recuperado tenga BOM ni esté en UTF-16 (tarea 2.6).
 
 | Archivo en `c35-apply` | Destino en `c35-apply2` | Adaptaciones requeridas |
 |------------------------|-------------------------|-------------------------|
@@ -27,7 +29,7 @@ La rama `c35-apply` (`cea858b`) no se rebasa ni se mezcla. El nuevo apply se eje
 | `frontend/src/features/landing/landingContent.ts` | Mismo destino | Reutilizado íntegramente (datos del seed, servicios, equipo, horarios y teléfono `(0261) 555-0101`). |
 | `frontend/src/features/landing/landingContent.test.ts` | Mismo destino | Reutilizado íntegramente (validación de datos ficticios del consultorio). |
 | `frontend/src/features/login/carouselTicker.ts` | Mismo destino | Reutilizado íntegramente (ticker desacoplado de timers de jsdom). |
-| `frontend/src/shared/styles/landingTokens.test.ts` | Mismo destino | Reutilizado para comprobar estáticamente `--landing-hero-min-height` y `--landing-content-max-width`. |
+| `frontend/src/shared/styles/landingTokens.test.ts` | Mismo destino | Reutilizado para comprobar estáticamente `--landing-hero-min-height` y `--landing-content-max-width`; su lista de colores permitidos se amplía con los tokens de superficie y se le agrega el test del escenario 10 (contraste AA). |
 | Tokens en `tokens.css` | `frontend/src/shared/styles/tokens.css` | Incorporación de `--landing-hero-min-height: 60vh;` y `--landing-content-max-width: 1120px;`. |
 
 **Archivos descartados de `c35-apply`**:
@@ -51,6 +53,11 @@ El diseño de la portada, `/acceso` y `/login` utiliza una estética oscura edit
 | Botón primario ("Ingresar" / CTA) | `#FFFFFF` (`--color-primary-contrast`) | `#26658C` (`--color-primary`) | **6.32:1** | AA (>= 4.5:1) |
 | Textos en modales (Decisión A) | `#011C40` (`--color-text`) | `rgba(243, 247, 250, 0.95)` (Marfil-hielo) | **15.70:1** | AAA (>= 7:1) |
 | Texto secundario en modales | `#4A5F78` (`--color-text-muted`) | `rgba(243, 247, 250, 0.95)` (Marfil-hielo) | **6.09:1** | AA (>= 4.5:1) |
+
+### Decisión: uso del accent `#54ACBF` según la superficie
+
+- **Sobre superficies oscuras (navy `#011C40`)**, el accent `#54ACBF` se permite como **texto o línea** (enlaces activos, subrayados, bordes en hover/focus), porque alcanza **6,55:1** (AA).
+- **Sobre fondo claro** (blanco, `--color-background`, marfil-hielo de los modales), el accent **sigue siendo solo decorativo**, como estableció la identidad de C-34: no se usa para texto ni para indicadores que dependan de su contraste.
 
 ### Superficies y Fallbacks
 
