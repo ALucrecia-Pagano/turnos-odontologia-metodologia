@@ -1,0 +1,39 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentCancel.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m4 skipped[39m[2m)[22m[32m 187[2mms[22m[39m
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.1 cancelar turno muestra subvista de confirmación in-dialog
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.2 volver al detalle o Escape restaura la vista sin enviar petición
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.3 confirmar cancelación envía POST sin cuerpo y cierra modal
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cancelación[2m > [22m5.4 error 422 INVALID_TRANSITION en cancelación muestra alerta con foco
+[31m   [31m×[31m AppointmentDetailDialog — Cancelación[2m > [22m5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle[39m[32m 185[2mms[22m[39m
+[31m     → expected true to be false // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentCancel.test.tsx[2m > [22mAppointmentDetailDialog — Cancelación[2m > [22m5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m src/features/appointments/AppointmentCancel.test.tsx:[2m211:20[22m[39m
+    [90m209| [39m    fireEvent[33m.[39m[34mkeyDown[39m(dialog[33m![39m[33m,[39m { key[33m:[39m [32m"Escape"[39m })[33m;[39m
+    [90m210| [39m
+    [90m211| [39m    [34mexpect[39m(closed)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m   | [39m                   [31m^[39m
+    [90m212| [39m    [34mexpect[39m(
+    [90m213| [39m      screen.queryByText("¿Confirma que desea cancelar el turno de Ana…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m4 skipped[39m[90m (5)[39m
+[2m   Start at [22m 15:42:42
+[2m   Duration [22m 4.06s[2m (transform 293ms, setup 520ms, collect 425ms, tests 187ms, environment 2.14s, prepare 303ms)[22m
+
+exit: 0 

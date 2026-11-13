@@ -72,10 +72,10 @@
 
 ## 8. Verificación integral, mutaciones, trazabilidad y tooling
 
-- [x] 8.1 Ejecutar suite completa de Vitest (línea base de 191 intactos + 33 tests nuevos = 224 tests en verde) y registrar salida en `docs/evidencias/test-suite-C-30.txt`.
+- [x] 8.1 Ejecutar suite completa de Vitest (línea base de 191 intactos + 38 tests nuevos = 229 tests en verde) y registrar salida en `docs/evidencias/test-suite-C-30.txt`.
 - [x] 8.2 Ejecutar `tsc --noEmit` y `eslint .` verificando código de salida 0 en `docs/evidencias/tooling-C-30.txt`.
 - [x] 8.3 Ejecutar `npm run build` verificando compilación de producción exitosa en `docs/evidencias/build-C-30.txt`.
-- [x] 8.4 Ejecutar script de mutaciones `mutaciones-C-30.py` garantizando un mutante por test nuevo (33/33 muertos, 0 inválidas, 0 sobrevivientes, SHA-256 intacto) en `docs/evidencias/mutaciones-C-30.txt`.
+- [x] 8.4 Ejecutar script de mutaciones `mutaciones-C-30.py` garantizando un mutante por test nuevo (38/38 muertos, 0 inválidas, 0 sobrevivientes, SHA-256 intacto) en `docs/evidencias/mutaciones-C-30.txt`.
 - [x] 8.5 Ejecutar script de trazabilidad `trazabilidad-C-30.py` certificando relación 1:1 estricta entre escenarios y tests en `docs/evidencias/trazabilidad-C-30.txt`.
 - [x] 8.6 Verificar ausencia de modificaciones en tests existentes (`git diff main --stat -- 'frontend/**/*.test.ts' 'frontend/**/*.test.tsx'` con `--diff-filter=M` vacío) en `docs/evidencias/diff-tests-existentes-C-30.txt`.
 - [x] 8.7 Consolidar informe de verificación en `docs/evidencias/verify-C-30.md`.
@@ -85,6 +85,14 @@
 - [ ] 9.1 Inspección visual y capturas en escritorio a 1440 px: `C-30-detalle-turno-1440.png`, `C-30-historial-1440.png`, `C-30-reprogramar-1440.png`, `C-30-error-409-1440.png`.
 - [ ] 9.2 Inspección visual y capturas en tablet a 768 px: `C-30-detalle-turno-768.png`, `C-30-confirmacion-cancelar-768.png`.
 - [ ] 9.3 Inspección visual y capturas en móvil a 390 px: `C-30-detalle-turno-390.png`, `C-30-reprogramar-390.png`.
+
+## 10. Correcciones de la verificación en navegador
+
+- [x] 10.1 Manejar tecla Escape en la subvista de confirmación de cancelación en `AppointmentDetailDialog.tsx` volviendo al detalle sin cerrar el modal completo. Evidencias: `docs/evidencias/red-C-30/34-cancel-escape.txt` y `docs/evidencias/green-C-30/34-cancel-escape.txt`.
+- [x] 10.2 Retornar el foco al botón del turno que abrió el diálogo (o botón "Nuevo turno" / encabezado de fecha como fallback) al cerrar el detalle por botón o por Escape en `AgendaPage.tsx`. Evidencias: `docs/evidencias/red-C-30/35-focus-close.txt`, `docs/evidencias/red-C-30/36-focus-escape.txt` y `docs/evidencias/green-C-30/35-focus-close.txt`, `docs/evidencias/green-C-30/36-focus-escape.txt`.
+- [x] 10.3 Alinear la superficie modal de `AppointmentDetailDialog.module.css` y `AppointmentRescheduleDialog.module.css` con `.modalContent` de `AppointmentFormDialog.module.css` (superficie, bordes, radios, sombras, max-width 580px, max-height `calc(100dvh - 2 * var(--space-4))` y overflow-y auto).
+- [x] 10.4 Configurar centrado seguro en `Dialog.module.css` (`align-items: center; align-items: safe center;`) para evitar recorte de encabezados en pantallas de 390 px.
+- [x] 10.5 Actualizar batería completa de verificación, mutaciones (38/38), trazabilidad (31 escenarios) y documentación de desvíos en `verify-C-30.md`.
 
 ## Workflow follow-up
 

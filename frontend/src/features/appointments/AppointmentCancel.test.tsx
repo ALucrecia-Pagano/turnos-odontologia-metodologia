@@ -174,4 +174,45 @@ describe("AppointmentDetailDialog — Cancelación", () => {
       ).not.toBeNull();
     });
   });
+
+  it("5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle", () => {
+    let closed = false;
+    let postSent = false;
+    const client = createApiClient({
+      fetchFn: async (_input, init) => {
+        if (init?.method === "POST") {
+          postSent = true;
+        }
+        return new Response(JSON.stringify([]), { status: 200 });
+      },
+    });
+
+    render(
+      <AppointmentDetailDialog
+        open={true}
+        onClose={() => {
+          closed = true;
+        }}
+        appointment={BASE_APPOINTMENT}
+        client={client}
+        timezone="America/Argentina/Buenos_Aires"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Cancelar turno" }));
+    expect(
+      screen.queryByText("¿Confirma que desea cancelar el turno de Ana Pérez?"),
+    ).not.toBeNull();
+
+    const dialog = screen.queryByRole("dialog");
+    expect(dialog).not.toBeNull();
+    fireEvent.keyDown(dialog!, { key: "Escape" });
+
+    expect(closed).toBe(false);
+    expect(
+      screen.queryByText("¿Confirma que desea cancelar el turno de Ana Pérez?"),
+    ).toBeNull();
+    expect(screen.queryByRole("button", { name: "Cancelar turno" })).not.toBeNull();
+    expect(postSent).toBe(false);
+  });
 });

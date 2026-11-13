@@ -387,4 +387,44 @@ describe("AgendaPage — Integración de Acciones", () => {
       );
     });
   });
+
+  it("7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno", async () => {
+    const fetchFn = createFetchFn({ user: RECEPCION_USER });
+    renderPage(fetchFn);
+
+    const apptBtn = await screen.findByTestId(
+      "agenda-appointment-00000000-0000-0000-0000-000000000aa1",
+    );
+    apptBtn.focus();
+    fireEvent.click(apptBtn);
+
+    const closeBtn = await screen.findByRole("button", { name: "Cerrar" });
+    closeBtn.focus();
+    fireEvent.click(closeBtn);
+
+    await waitFor(() => {
+      expect(document.activeElement).toBe(apptBtn);
+    });
+  });
+
+  it("7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno", async () => {
+    const fetchFn = createFetchFn({ user: RECEPCION_USER });
+    renderPage(fetchFn);
+
+    const apptBtn = await screen.findByTestId(
+      "agenda-appointment-00000000-0000-0000-0000-000000000aa1",
+    );
+    apptBtn.focus();
+    fireEvent.click(apptBtn);
+
+    const closeBtn = await screen.findByRole("button", { name: "Cerrar" });
+    closeBtn.focus();
+
+    const dialog = await screen.findByRole("dialog");
+    fireEvent.keyDown(dialog, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(document.activeElement).toBe(apptBtn);
+    });
+  });
 });

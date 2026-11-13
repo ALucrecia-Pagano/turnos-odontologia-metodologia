@@ -59,6 +59,26 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
   const [isRescheduling, setIsRescheduling] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const newAppointmentBtnRef = useRef<HTMLButtonElement | null>(null);
+  const triggerAppointmentBtnRef = useRef<HTMLElement | null>(null);
+
+  const detailReturnFocusRef = {
+    get current(): HTMLElement | null {
+      if (triggerAppointmentBtnRef.current && triggerAppointmentBtnRef.current.isConnected) {
+        return triggerAppointmentBtnRef.current;
+      }
+      if (newAppointmentBtnRef.current && newAppointmentBtnRef.current.isConnected) {
+        return newAppointmentBtnRef.current;
+      }
+      const heading = document.querySelector("h2");
+      if (heading instanceof HTMLElement) {
+        if (!heading.hasAttribute("tabIndex")) {
+          heading.tabIndex = -1;
+        }
+        return heading;
+      }
+      return null;
+    },
+  };
 
   const handleAppointmentSuccess = (info?: { date?: string; time?: string }) => {
     if (info?.date && info?.time) {
@@ -252,6 +272,8 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           isRefreshing={state.phase === "refreshing"}
           catalogWarning={state.catalogWarning}
           onSelectAppointment={(appt) => {
+            triggerAppointmentBtnRef.current =
+              document.activeElement instanceof HTMLElement ? document.activeElement : null;
             setSelectedAppointment(appt);
             setIsRescheduling(false);
           }}
@@ -266,6 +288,7 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           client={client}
           timezone={state.timezone}
           currentUser={user}
+          returnFocusRef={detailReturnFocusRef}
           onStatusChanged={handleStatusChanged}
           onCancelled={handleCancelled}
           onRequestReschedule={(appt) => {
@@ -287,6 +310,7 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           timezone={state.timezone}
           professionals={state.professionals}
           chairs={state.chairs}
+          returnFocusRef={detailReturnFocusRef}
           onSuccess={handleRescheduleSuccess}
         />
       )}

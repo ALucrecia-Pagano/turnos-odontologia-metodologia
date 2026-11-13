@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ApiClient } from "../../shared/api/client";
 import type { Violation } from "../../shared/api/types";
 import type { AgendaAppointment } from "../agenda/agendaApi";
@@ -82,11 +82,11 @@ export function AppointmentDetailDialog({
     isDentist && currentUser.professionalId === appointment.professionalId;
   const isDentistOther = isDentist && !isOwnAppointment;
 
-  const handleContainerKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Escape" && isConfirmingCancel) {
-      e.stopPropagation();
-      e.preventDefault();
+  const handleDialogClose = () => {
+    if (isConfirmingCancel) {
       setIsConfirmingCancel(false);
+    } else {
+      onClose();
     }
   };
 
@@ -153,11 +153,11 @@ export function AppointmentDetailDialog({
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleDialogClose}
       labelledBy="appointment-detail-title"
       returnFocusRef={returnFocusRef}
     >
-      <div className={styles.container} onKeyDown={handleContainerKeyDown}>
+      <div className={styles.container}>
         <div className={styles.header}>
           <h2 id="appointment-detail-title" className={styles.title}>
             Detalle del turno

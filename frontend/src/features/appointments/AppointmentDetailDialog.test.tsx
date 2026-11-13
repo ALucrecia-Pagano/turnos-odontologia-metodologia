@@ -165,4 +165,91 @@ describe("AppointmentDetailDialog — Detalle e Historial", () => {
       expect(screen.queryByText("No se pudo cargar el historial de cambios.")).not.toBeNull();
     });
   });
+
+  it("3.5 alert muestra código estable y mensaje textual en español", async () => {
+    const errorResponse = {
+      code: "BUSINESS_RULE_VIOLATION",
+      message: "Violación de regla de negocio",
+      violations: [
+        {
+          code: "STATUS_CHANGE_TOO_EARLY",
+          message: "No se puede marcar como atendido antes del inicio del turno.",
+        },
+      ],
+    };
+    const client = createApiClient({
+      fetchFn: async (_input, init) => {
+        if (init?.method === "POST") {
+          return new Response(JSON.stringify(errorResponse), {
+            status: 422,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+        return new Response(JSON.stringify([]), { status: 200 });
+      },
+    });
+
+    render(
+      <AppointmentDetailDialog
+        open={true}
+        onClose={() => {}}
+        appointment={APPOINTMENT}
+        client={client}
+        timezone="America/Argentina/Buenos_Aires"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Marcar atendido" }));
+
+    await waitFor(() => {
+      const alert = screen.queryByRole("alert");
+      expect(alert).not.toBeNull();
+      expect(screen.queryByText("STATUS_CHANGE_TOO_EARLY")).not.toBeNull();
+      expect(
+        screen.queryByText("No se puede marcar como atendido antes del inicio del turno."),
+      ).not.toBeNull();
+    });
+  });
+
+  it("3.6 foco automático al alert de error", async () => {
+    const errorResponse = {
+      code: "BUSINESS_RULE_VIOLATION",
+      message: "Violación de regla de negocio",
+      violations: [
+        {
+          code: "INVALID_TRANSITION",
+          message: "No se puede cambiar el estado de un turno cancelado.",
+        },
+      ],
+    };
+    const client = createApiClient({
+      fetchFn: async (_input, init) => {
+        if (init?.method === "POST") {
+          return new Response(JSON.stringify(errorResponse), {
+            status: 422,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+        return new Response(JSON.stringify([]), { status: 200 });
+      },
+    });
+
+    render(
+      <AppointmentDetailDialog
+        open={true}
+        onClose={() => {}}
+        appointment={APPOINTMENT}
+        client={client}
+        timezone="America/Argentina/Buenos_Aires"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Marcar atendido" }));
+
+    await waitFor(() => {
+      const alert = screen.queryByRole("alert");
+      expect(alert).not.toBeNull();
+      expect(alert).toHaveFocus();
+    });
+  });
 });

@@ -173,6 +173,20 @@ MUTATIONS: tuple[Mutation, ...] = (
         '        setError("No se pudo cargar el historial de cambios.");',
         '        setError("Error inesperado al cargar historial.");',
     ),
+    Mutation(
+        T_DETAIL,
+        "3.5 alert muestra código estable y mensaje textual en español",
+        P_DETAIL,
+        '                  <span className={styles.codeBadge}>{v.code}</span>\n                  {v.message}',
+        '                  <span className={styles.codeBadge}></span>\n                  {"Error genérico"}',
+    ),
+    Mutation(
+        T_DETAIL,
+        "3.6 foco automático al alert de error",
+        P_DETAIL,
+        '          <div\n            ref={alertRef}\n            tabIndex={-1}',
+        '          <div\n            tabIndex={-1}',
+    ),
 
     # --- 4. AppointmentStatusActions — Cambios de estado (6 tests) ---
     Mutation(
@@ -247,6 +261,13 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    setIsConfirmingCancel(false);\n    if (\n      result.error.kind === "unprocessable" ||\n      result.error.kind === "conflict" ||\n      result.error.kind === "forbidden"\n    ) {\n      setViolations(result.error.violations);',
         '    setIsConfirmingCancel(false);\n    if (\n      result.error.kind === "unprocessable" ||\n      result.error.kind === "conflict" ||\n      result.error.kind === "forbidden"\n    ) {\n      // setViolations(result.error.violations);',
     ),
+    Mutation(
+        T_CANCEL,
+        "5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle",
+        P_DETAIL,
+        '  const handleDialogClose = () => {\n    if (isConfirmingCancel) {\n      setIsConfirmingCancel(false);\n    } else {\n      onClose();\n    }\n  };',
+        '  const handleDialogClose = () => {\n    onClose();\n  };',
+    ),
 
     # --- 6. AppointmentRescheduleDialog — Reprogramación (6 tests) ---
     Mutation(
@@ -292,13 +313,13 @@ MUTATIONS: tuple[Mutation, ...] = (
         '            <button\n              type="button"\n              disabled={isSubmitting}\n              onClick={() => undefined}\n              className={styles.secondaryButton}\n            >\n              Cancelar\n            </button>',
     ),
 
-    # --- 7. AgendaPage — Integración de Acciones (9 tests) ---
+    # --- 7. AgendaPage — Integración de Acciones (11 tests) ---
     Mutation(
         T_PAGE,
         "7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial",
         P_PAGE,
-        '          currentUser={user}\n          onStatusChanged={handleStatusChanged}',
-        '          currentUser={null}\n          onStatusChanged={handleStatusChanged}',
+        '          currentUser={user}\n          returnFocusRef={detailReturnFocusRef}\n          onStatusChanged={handleStatusChanged}',
+        '          currentUser={null}\n          returnFocusRef={detailReturnFocusRef}\n          onStatusChanged={handleStatusChanged}',
     ),
     Mutation(
         T_PAGE,
@@ -355,6 +376,20 @@ MUTATIONS: tuple[Mutation, ...] = (
         P_PAGE,
         '    setStatusMessage(`Turno reprogramado para el ${day}/${month}/${year} a las ${time}.`);',
         '    setStatusMessage("Turno reprogramado.");',
+    ),
+    Mutation(
+        T_PAGE,
+        "7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno",
+        P_PAGE,
+        '          returnFocusRef={detailReturnFocusRef}\n          onStatusChanged={handleStatusChanged}',
+        '          returnFocusRef={{ current: null }}\n          onStatusChanged={handleStatusChanged}',
+    ),
+    Mutation(
+        T_PAGE,
+        "7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno",
+        P_PAGE,
+        '            triggerAppointmentBtnRef.current =\n              document.activeElement instanceof HTMLElement ? document.activeElement : null;',
+        '            triggerAppointmentBtnRef.current = null;',
     ),
 )
 

@@ -137,6 +137,21 @@ MUTATION_BY_TEST: dict[str, str] = {
     "7.9 reprogramar emite anuncio Turno reprogramado para el DD/MM/AAAA a las HH:MM.": (
         "M33: alteración de texto de anuncio tras reprogramar turno en AgendaPage"
     ),
+    "3.5 alert muestra código estable y mensaje textual en español": (
+        "M34: omisión de badge de código en alerta de AppointmentDetailDialog"
+    ),
+    "3.6 foco automático al alert de error": (
+        "M35: omisión de foco automático al alert ante violaciones"
+    ),
+    "5.5 Escape sobre el diálogo con confirmación abierta vuelve a la vista de detalle": (
+        "M36: omisión de guarda isConfirmingCancel en onClose de AppointmentDetailDialog"
+    ),
+    "7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno": (
+        "M37: omisión de returnFocusRef en AppointmentDetailDialog desde AgendaPage"
+    ),
+    "7.11 al cerrar el detalle con Escape sobre el diálogo el foco vuelve al botón del turno": (
+        "M38: omisión de guardado de triggerAppointmentBtnRef en AgendaPage"
+    ),
 }
 
 # (capability, requirement, scenario) -> (test_node, mutation_desc)
@@ -181,8 +196,8 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Diálogo de detalle del turno",
         "Retorno de foco al cerrar el detalle",
     ): (
-        f"{T_RESCHEDULE} > 6.6 cancelar reprogramación cierra diálogo y retorna foco",
-        MUTATION_BY_TEST["6.6 cancelar reprogramación cierra diálogo y retorna foco"],
+        f"{T_PAGE} > 7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno",
+        MUTATION_BY_TEST["7.10 al cerrar el detalle con el botón Cerrar el foco vuelve al botón del turno"],
     ),
     (
         "frontend-appointment-actions",
@@ -317,16 +332,16 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Gestión de errores del dominio en alertas accesibles",
         "Alert muestra código estable y mensaje textual en español",
     ): (
-        f"{T_CANCEL} > 5.1 cancelar turno muestra subvista de confirmación in-dialog",
-        MUTATION_BY_TEST["5.1 cancelar turno muestra subvista de confirmación in-dialog"],
+        f"{T_DETAIL} > 3.5 alert muestra código estable y mensaje textual en español",
+        MUTATION_BY_TEST["3.5 alert muestra código estable y mensaje textual en español"],
     ),
     (
         "frontend-appointment-actions",
         "Gestión de errores del dominio en alertas accesibles",
         "Foco automático al alert de error",
     ): (
-        f"{T_STATUS} > 4.1 botones contextuales según estado y rol",
-        MUTATION_BY_TEST["4.1 botones contextuales según estado y rol"],
+        f"{T_DETAIL} > 3.6 foco automático al alert de error",
+        MUTATION_BY_TEST["3.6 foco automático al alert de error"],
     ),
     (
         "frontend-appointment-actions",
