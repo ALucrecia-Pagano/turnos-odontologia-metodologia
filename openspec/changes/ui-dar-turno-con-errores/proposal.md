@@ -7,7 +7,7 @@ Las secretarias y los administradores del consultorio necesitan dar turnos mient
 ## What Changes
 
 - **Acceso modal desde la agenda**: Se agrega un botón principal accesible `"Nuevo turno"` en `AgendaToolbar` (mediante prop opcional `onNewAppointment`), visible y habilitado únicamente para los roles con permiso (`recepcion` y `administrador`), montando el formulario en un `<dialog>` modal sobre `AgendaPage`.
-- **Reutilización de la primitiva `Dialog`**: Se utiliza `frontend/src/shared/components/Dialog.tsx` creado en C-35, que provee `<dialog>` nativo con `showModal()`, tecla Escape, backdrop nativo y fallback con atributo `open` para el entorno `jsdom` de Vitest, sin focus trap manual redundante.
+- **Primitiva `Dialog` modal compartida**: Se crea `frontend/src/shared/components/Dialog.tsx` (+ `Dialog.module.css` y `Dialog.test.tsx`), que provee `<dialog>` nativo con `showModal()`, `aria-labelledby` obligatorio, tecla Escape, backdrop nativo y fallback con atributo `open` para el entorno `jsdom` de Vitest, sin atributo `role="dialog"` redundante ni focus trap manual superfluo.
 - **Búsqueda accesible de pacientes**: Campo de búsqueda textual con botón explícito `"Buscar paciente"` (y tecla `Enter`) que consulta `GET /api/patients?query=`, sin combobox, sin debounce ni timers. Despliega los resultados como un grupo de radio buttons (`name="patientId"`) con nombre y DNI formateado. Si no hay coincidencias, muestra un aviso accesible.
 - **Prellenado contextual**: Al abrirse, el formulario preselecciona la fecha activa de la agenda (`effectiveDate`), el profesional activo en el filtro (o en la vista semanal) y el sillón activo en el filtro.
 - **Sugerencia y edición de duración**: Al elegir una prestación de `GET /api/services`, el campo de duración se inicializa con `defaultDurationMin` de dicha prestación y puede editarse libremente en múltiplos de 5 minutos (rango 5 a 480 min).
@@ -21,29 +21,33 @@ Las secretarias y los administradores del consultorio necesitan dar turnos mient
 
 ### New Capabilities
 
-- `frontend-appointment-form`: Formulario modal de alta de turnos para recepción y administración con búsqueda de pacientes por radio buttons, duración sugerida, cálculo de offset horario, renderizado íntegro de violaciones del dominio y actualización accesible.
+- `frontend-appointment-form`: Formulario modal de alta de turnos para recepción y administración con primitiva `Dialog`, búsqueda de pacientes por radio buttons, duración sugerida, cálculo de offset horario, renderizado íntegro de violaciones del dominio y actualización accesible.
 
 ### Modified Capabilities
 
-- `frontend-agenda`: La barra de navegación de la agenda (`AgendaToolbar`) incorpora la acción `"Nuevo turno"` para recepción y administrador, y la vista refresca su contenido al completarse el alta.
+- `frontend-agenda`: La barra de navegación de la agenda (`AgendaToolbar`) incorpora la acción `"Nuevo turno"` como requisito ADDED ("Acción Nuevo turno en la agenda") para recepción y administrador, y la vista refresca su contenido al completarse el alta.
 
 ## Out of Scope
 
 - Reprogramación de turnos, cancelación y transiciones de estado (`confirmado`, `atendido`, `ausente`), que corresponden a C-30 (`ui-reprogramar-cancelar-y-estados`).
 - Habilitar el ítem "Turnos" en el menú principal: `menuFor.ts` conserva "Turnos" deshabilitado con `"Próximamente"` para no romper los tests existentes de `menuFor.test.ts` y `AppShell.test.tsx`.
-- Arreglo de fallos preexistentes en tests no vinculados (ej. `Logout.test.tsx`).
+- Arreglo de fallos preexistentes en tests no vinculados (ej. `Logout.test.tsx` fuera de alcance).
 - Creación de nuevos pacientes, profesionales, sillones o prestaciones desde este formulario (corresponde a C-33).
 - Validación de reglas de solapamiento o de horarios en el cliente: el frontend no duplica la lógica del dominio puro.
 
 ## Impact
 
 - **Código nuevo**:
+  - `frontend/src/shared/components/Dialog.tsx` (+ `Dialog.module.css` y `Dialog.test.tsx`)
   - `frontend/src/features/appointments/AppointmentFormDialog.tsx` (+ `AppointmentFormDialog.module.css` y `AppointmentFormDialog.test.tsx`)
   - `frontend/src/features/appointments/PatientSearchGroup.tsx` (+ `PatientSearchGroup.module.css` y `PatientSearchGroup.test.tsx`)
+  - `frontend/src/shared/api/client.violations.test.ts` (test aislado para campos opcionales de violaciones)
+  - `frontend/src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx` (test aislado para botón "Nuevo turno")
+  - `frontend/src/features/agenda/AgendaPage.nuevoTurno.test.tsx` (test aislado para integración de apertura y refresco)
 - **Código modificado**:
   - `frontend/src/features/agenda/AgendaToolbar.tsx` (prop opcional `onNewAppointment` y botón visible según rol)
   - `frontend/src/features/agenda/AgendaPage.tsx` (integración del modal con el estado de `useAgenda`)
   - `frontend/src/shared/api/types.ts` (extensión de `Violation` con campos opcionales de conflicto)
   - `frontend/src/shared/api/client.ts` (captura de campos opcionales en `asViolations`)
 - **Sin cambios**: `frontend/src/features/auth/menuFor.ts`, `frontend/src/shared/components/AppShell.tsx`, `frontend/src/features/agenda/AgendaGrid.tsx`, `frontend/src/App.tsx`, backend, base de datos y variables de entorno.
-- **Tests existentes**: Se preservan intactos todos los tests existentes (`menuFor.test.ts`, `AppShell.test.tsx`, `AgendaToolbar.test.tsx`, `AgendaView.test.tsx`, `client.test.ts`, etc.).
+- **Tests existentes intactos**: Se preservan 100% intactos todos los tests existentes (`menuFor.test.ts`, `AppShell.test.tsx`, `AgendaToolbar.test.tsx`, `AgendaPage.test.tsx`, `AgendaView.test.tsx`, `client.test.ts`, etc.). Los tests nuevos van en archivos `.test.ts` y `.test.tsx` separados.

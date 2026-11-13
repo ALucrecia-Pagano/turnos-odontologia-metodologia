@@ -1,28 +1,33 @@
 # Spec Delta
 
-## MODIFIED Requirements
+## ADDED Requirements
 
-### Requirement: Navegación anterior, siguiente, Hoy y selector
+### Requirement: Acción Nuevo turno en la agenda
 
-La barra de navegación MUST ofrecer Anterior, Siguiente, Hoy, un selector de fecha y, para recepción y administración, la acción Nuevo turno. Cada cambio de fecha MUST actualizar date en la URL con push. Anterior y Siguiente MUST sumar o restar un día calendario. Tras crear un turno exitosamente, la vista MUST refrescar la agenda mediante useAgenda.
+La barra de herramientas de la agenda SHALL incorporar la acción "Nuevo turno" únicamente para usuarios autenticados con rol `recepcion` o `administrador`. El botón MUST NOT estar presente en el DOM para el rol `odontologo`. Al activar la acción, MUST abrirse el diálogo modal de alta de turnos y, al completarse exitosamente la creación de un turno, la vista MUST refrescar los datos de la agenda mediante `useAgenda`.
 
-#### Scenario: Anterior y siguiente
-
-- **GIVEN** la URL `/agenda?date=2026-11-16`
-- **WHEN** se activa `Anterior`
-- **THEN** la URL pasa a `/agenda?date=2026-11-15` con `push` y se pide ese día
-- **AND** al activar `Siguiente` desde esa fecha la URL vuelve a `2026-11-16`
-
-#### Scenario: Hoy y selector de fecha
-
-- **GIVEN** un `Clock` fijo en `2026-11-16T12:00:00Z` y la URL `/agenda?date=2026-11-10`
-- **WHEN** se activa `Hoy`
-- **THEN** la URL pasa a `/agenda?date=2026-11-16`
-- **AND** al elegir `2026-12-01` en el selector la URL pasa a `/agenda?date=2026-12-01`
-
-#### Scenario: Acción Nuevo turno visible según rol y refresco tras alta
+#### Scenario: Visible para recepción
 
 - **GIVEN** un usuario autenticado con rol `recepcion` en `/agenda`
-- **WHEN** se visualiza la barra de herramientas de la agenda
-- **THEN** se expone la acción "Nuevo turno"
-- **AND** al completarse la creación de un turno se invoca el refresco de la vista
+- **WHEN** se renderiza la barra de herramientas de la agenda
+- **THEN** se muestra el botón "Nuevo turno" habilitado
+- **AND** al activarlo se abre el formulario de dar turno
+
+#### Scenario: Visible para administrador
+
+- **GIVEN** un usuario autenticado con rol `administrador` en `/agenda`
+- **WHEN** se renderiza la barra de herramientas de la agenda
+- **THEN** se muestra el botón "Nuevo turno" habilitado
+- **AND** al activarlo se abre el formulario de dar turno
+
+#### Scenario: No visible para odontólogo
+
+- **GIVEN** un usuario autenticado con rol `odontologo` en `/agenda`
+- **WHEN** se renderiza la barra de herramientas de la agenda
+- **THEN** el botón "Nuevo turno" no está presente en el DOM
+
+#### Scenario: Refresco tras alta
+
+- **GIVEN** la agenda abierta con el modal de nuevo turno
+- **WHEN** se completa la creación exitosa de un turno desde el formulario
+- **THEN** se invoca el refresco de los datos de la agenda mediante `useAgenda`

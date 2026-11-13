@@ -2,30 +2,42 @@
 
 ## Purpose
 
-Formulario modal para dar turnos desde la agenda (`frontend/`), autorizado para recepción y administración. Permite buscar pacientes con radio buttons, sugiere la duración de la prestación y calcula el offset horario nativo de la API. Muestra fielmente los rechazos de dominio (409, 422, 400, 403) en un resumen superior con `role="alert"` conservando las referencias de colisión. Al responder 201 Created, cierra el modal, refresca la agenda y emite confirmación accesible.
+Formulario modal para dar turnos desde la agenda (`frontend/`), autorizado para recepción y administración. Incluye la primitiva accesible `Dialog`, búsqueda de pacientes con radio buttons, duración sugerida y cálculo de offset horario nativo de la API. Muestra fielmente los rechazos de dominio (409, 422, 400, 403) en un resumen superior con `role="alert"` conservando las referencias de colisión. Al responder 201 Created, cierra el modal, refresca la agenda y emite confirmación accesible.
 
 ## ADDED Requirements
 
-### Requirement: Acceso y apertura del formulario de turnos
+### Requirement: Primitiva de diálogo modal accesible
 
-El formulario SHALL ser un diálogo modal accesible montado sobre la agenda. El botón "Nuevo turno" MUST estar visible y habilitado únicamente para recepción y administrador; el odontólogo MUST NOT ver el botón. Al abrirse, el diálogo MUST enfocar el primer control interactivo.
+El componente `Dialog` SHALL renderizar un elemento `<dialog>` nativo accesible sin el atributo redundante `role="dialog"`. MUST requerir `aria-labelledby` y aplicar `aria-modal="true"` solo cuando no haya `showModal`. En entornos como `jsdom`, MUST abrirse mediante el atributo `open`. Al presionar la tecla Escape, MUST invocar `onClose` exactamente una vez. Al cambiar la propiedad `open` de `true` a `false`, el foco MUST retornar exactamente una vez a `returnFocusRef`.
 
-#### Scenario: Botón visible para recepción y administrador
+#### Scenario: Abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby
 
-- **GIVEN** un usuario autenticado con rol `recepcion` o `administrador` en `/agenda`
-- **WHEN** se renderiza la barra de herramientas de la agenda
-- **THEN** se muestra el botón "Nuevo turno" habilitado
+- **GIVEN** un componente `Dialog` renderizado en un entorno de pruebas con `open=true` y un título asociado por `labelledBy`
+- **WHEN** se evalúa el elemento en el DOM
+- **THEN** el elemento `<dialog>` posee el atributo `open`
+- **AND** no posee el atributo redundante `role="dialog"`
+- **AND** expone su nombre accesible a través de `aria-labelledby`
 
-#### Scenario: Botón no visible para odontólogo
+#### Scenario: Escape llama onClose exactamente una vez
 
-- **GIVEN** un usuario autenticado con rol `odontologo` en `/agenda`
-- **WHEN** se renderiza la barra de herramientas de la agenda
-- **THEN** el botón "Nuevo turno" no está presente en el DOM
+- **GIVEN** el diálogo modal abierto con un callback `onClose` asignado
+- **WHEN** el usuario presiona la tecla Escape sobre el diálogo
+- **THEN** el callback `onClose` se invoca exactamente una vez
+
+#### Scenario: Al pasar open de true a false el foco vuelve a returnFocusRef
+
+- **GIVEN** el diálogo modal abierto asociado a un elemento disparador mediante `returnFocusRef`
+- **WHEN** la propiedad `open` cambia de `true` a `false`
+- **THEN** el foco del navegador se traslada exactamente una vez al elemento referenciado por `returnFocusRef`
+
+### Requirement: Apertura y foco inicial
+
+El formulario de alta de turnos SHALL estructurarse como un diálogo modal accesible montado sobre la página de agenda. Al abrirse el modal, el foco MUST posicionarse en el primer control interactivo del formulario.
 
 #### Scenario: Apertura y foco inicial
 
-- **GIVEN** la barra de agenda con el botón "Nuevo turno"
-- **WHEN** se activa el botón "Nuevo turno"
+- **GIVEN** la página de agenda con el diálogo modal de dar turno cerrado
+- **WHEN** se activa la apertura del formulario de nuevo turno
 - **THEN** se abre el diálogo modal de dar turno
 - **AND** el foco se posiciona en el primer campo interactivo del formulario
 
