@@ -1,214 +1,89 @@
-# Spec Delta
+# frontend-landing Specification
 
 ## Purpose
 
-Definir la portada pública de Aqua en `/login`: el hero con marca y carrusel, las secciones informativas con datos ficticios, el diálogo de acceso que se abre al entrar y el reveal accesible. La portada presenta la clínica sin iniciar sesión y deja el formulario a un clic, sin cambiar rutas ni reglas de autenticación.
+Definir la portada pública editorial de Aqua en `/` para usuarios anónimos (pantalla completa, overlay navy sobre el carrusel, navegación de texto sin cajas, `<h1>` con logo claro, eslogan, CTA primario, badge de demo, secciones editoriales en dos columnas con reveal lateral `translateX` y teléfono ficticio) y la página intermedia `/acceso` con tres tarjetas de rol oscuras hacia `/login`.
 
 ## ADDED Requirements
 
-### Requirement: Portada pública en /login
+### Requirement: Portada pública en la raíz
 
-La ruta `/login` SHALL mostrar la portada pública de Aqua para usuarios anónimos, con el diálogo de acceso abierto al entrar. MUST NOT agregar rutas nuevas ni cambiar el orden de `createAppRoutes`; `/` sigue redirigiendo al anónimo a `/login`.
+La ruta `/` SHALL mostrar para usuarios anónimos la portada a pantalla completa con el carrusel bajo overlay navy, navegación superior de texto sin cajas (`Inicio`, `La clínica`, `Acceder`), `<h1>` con el logo (`alt="Aqua — Clínica Odontológica"`), eslogan "Claridad en cada cuidado.", CTA "Explorar la clínica →", badge "Sitio de demostración" y franja de estado. Con sesión autenticada, `/` MUST conservar la redirección con replace a `/agenda` según el Clock.
 
-#### Scenario: La portada se muestra en /login
+#### Scenario: Portada completa para anónimo en /
 
-- **GIVEN** un usuario anónimo en la ruta `/login`
-- **WHEN** se renderiza la aplicación
-- **THEN** se ve el hero, las cuatro secciones y el diálogo de acceso abierto
-- **AND** `createAppRoutes` conserva la misma cantidad y el mismo orden de rutas
+- **GIVEN** un usuario anónimo navegando a `/`
+- **WHEN** la aplicación monta la ruta raíz
+- **THEN** se renderiza la portada pública con el carrusel bajo el overlay navy
+- **AND** el encabezado de nivel 1 expone el nombre accesible "Aqua — Clínica Odontológica" mediante el `alt` del logo claro
+- **AND** son visibles el eslogan "Claridad en cada cuidado.", el CTA "Explorar la clínica →", el badge "Sitio de demostración" y los enlaces de texto de navegación
+- **AND** la navegación superior expone `aria-current="page"` en el enlace activo
 
-#### Scenario: El anónimo en / sigue llegando a la portada
+#### Scenario: Usuario autenticado en / redirige a agenda
 
-- **GIVEN** un usuario anónimo en la ruta `/`
-- **WHEN** se renderiza la aplicación
-- **THEN** la aplicación redirige a `/login`
-- **AND** se ve la portada pública con el diálogo abierto
+- **GIVEN** un usuario con sesión autenticada navegando a `/`
+- **WHEN** la aplicación evalúa la ruta raíz
+- **THEN** se ejecuta `RootRedirect` con replace hacia `/agenda?date=<fecha_actual>`
+- **AND** la portada pública no se renderiza
 
-#### Scenario: El autenticado en /login no ve la portada
+#### Scenario: Adaptabilidad de la portada en 1440, 768 y 390 px
 
-- **GIVEN** un usuario autenticado
-- **WHEN** navega a `/login`
-- **THEN** `PublicOnlyRoute` lo redirige a `from` o a `/`
-- **AND** la portada no se renderiza
+- **GIVEN** la portada pública montada en un navegador real
+- **WHEN** se inspecciona en viewports de 1440 px, 768 px y 390 px
+- **THEN** el hero cubre la pantalla completa sin desbordes horizontales
+- **AND** los enlaces de texto superiores se mantienen legibles y alineados
+- **AND** esta verificación es visual (capturas a 1440, 768 y 390 px a cargo de Claude), no un test de jsdom
 
-### Requirement: Hero con marca, carrusel y llamada a la acción
+### Requirement: Secciones editoriales con reveal lateral
 
-El hero SHALL ocupar al menos 60vh y mostrar el logo claro dentro del `<h1>` con `alt="Aqua — Clínica Odontológica"`, la bajada exacta "Claridad en cada cuidado.", un lead, el badge "Sitio de demostración" y el CTA "Ingresar al sistema". La marca MUST anunciarse una sola vez.
+La portada SHALL presentar las cuatro secciones editoriales "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto" en dos columnas con teléfono ficticio "(0261) 555-0101". `RevealSection` SHALL aplicar animación lateral (`translateX` y opacidad entre 200 y 250 ms) al hacer scroll. Ante `prefers-reduced-motion` o sin `IntersectionObserver`, el contenido MUST mostrarse visible de inmediato sin desplazamiento ni transición.
 
-#### Scenario: La marca se anuncia una sola vez
+#### Scenario: Secciones editoriales entran con animación lateral al scrollear
 
-- **GIVEN** el hero renderizado
-- **WHEN** se consulta el encabezado de nivel 1
-- **THEN** su nombre accesible es "Aqua — Clínica Odontológica"
-- **AND** el logo está dentro del `<h1>` y no hay un texto de marca duplicado al lado
+- **GIVEN** la portada pública con un observador de intersección inyectado
+- **WHEN** el usuario scrollea hacia las secciones informativas
+- **THEN** cada sección transiciona de pendiente a revelada con `translateX` y opacidad en 200-250 ms
+- **AND** se muestran los títulos "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto"
+- **AND** la sección de contacto incluye el teléfono ficticio "(0261) 555-0101" y la franja de estado de demostración
 
-#### Scenario: El CTA y el submit tienen nombres distintos
+#### Scenario: Reduced motion desactiva la animación lateral y deja el contenido visible
 
-- **GIVEN** el diálogo de acceso abierto sobre la portada
-- **WHEN** se consultan los botones por rol y nombre
-- **THEN** existe un único botón "Ingresar" (submit del formulario)
-- **AND** existe un botón "Ingresar al sistema" (CTA del hero)
-- **AND** el CTA no está oculto con `aria-hidden` ni excluido con `tabIndex={-1}`
+- **GIVEN** la portada pública con `prefers-reduced-motion` activado o en un entorno sin `IntersectionObserver`
+- **WHEN** se evalúa `RevealSection`
+- **THEN** la sección se monta inmediatamente con estado revelado
+- **AND** no se aplica desplazamiento lateral `translateX` ni transición temporal
+- **AND** todo el contenido editorial permanece accesible y visible en el DOM
 
-#### Scenario: El carrusel del hero se reutiliza
+#### Scenario: Secciones editoriales se adaptan a dos columnas en 1440 px y una columna en 768 y 390 px
 
-- **GIVEN** el hero renderizado
-- **WHEN** se inspeccionan las imágenes del carrusel
-- **THEN** se muestran las cinco fotos decorativas de C-34
-- **AND** está disponible el botón "Pausar animación" o "Reanudar animación"
+- **GIVEN** la portada pública renderizada en navegador real
+- **WHEN** se observa el layout de las secciones editoriales a 1440 px, 768 px y 390 px
+- **THEN** en escritorio (1440 px) el contenido se distribuye en dos columnas editoriales
+- **AND** en tablet (768 px) y móvil (390 px) se apila en una sola columna con espaciado vertical armonioso
+- **AND** esta verificación es visual (capturas a 1440, 768 y 390 px a cargo de Claude)
 
-#### Scenario: El hero mide al menos 60vh
+### Requirement: Página de acceso por rol
 
-- **GIVEN** la portada renderizada en un navegador real
-- **WHEN** se mide el alto visible del hero
-- **THEN** ocupa al menos el 60% del alto del viewport
-- **AND** esta verificación es visual (captura), no un test de Vitest
+La ruta `/acceso` SHALL mostrar la vista "¿Cómo querés ingresar?" con tres tarjetas-enlace oscuras con borde de 1 px para Recepción, Odontología y Administración dirigidas a `/login?rol=recepcion|odontologo|administrador`. MUST incluir el texto visible "El rol se confirma al ingresar", el enlace de texto "← Volver a Aqua" sin caja y aclarar el borde en hover y focus. El rol de la URL MUST ser solo presentacional y no otorgar permisos.
 
-#### Scenario: El badge de demostración es visible
+#### Scenario: Navegación desde las tres tarjetas de rol hacia login
 
-- **GIVEN** el hero renderizado
-- **WHEN** se consulta el texto del hero
-- **THEN** se lee "Sitio de demostración"
+- **GIVEN** un usuario en `/acceso`
+- **WHEN** se examinan las tres tarjetas de rol disponibles
+- **THEN** existen enlaces accesibles para "Recepción" (`/login?rol=recepcion`), "Odontología" (`/login?rol=odontologo`) y "Administración" (`/login?rol=administrador`)
+- **AND** se muestra el texto explicativo "El rol se confirma al ingresar"
+- **AND** las tarjetas presentan superficie oscura con borde sutil de 1 px que resalta al recibir foco o hover
 
-### Requirement: Secciones informativas con datos ficticios
+#### Scenario: Navegación de retorno con el enlace Volver a Aqua
 
-La portada SHALL incluir cuatro secciones —Quiénes somos, Servicios, Equipo y Horarios y contacto— con datos ficticios del seed y un `<h2>` por sección. MUST mostrar el badge "Sitio de demostración" y una nota visible de datos ficticios en "Horarios y contacto".
+- **GIVEN** la pantalla `/acceso`
+- **WHEN** se activa el enlace "← Volver a Aqua"
+- **THEN** la aplicación navega hacia la portada pública `/`
+- **AND** el enlace se renderiza como texto limpio sin contenedor de caja ni bordes tipo botón
 
-#### Scenario: Las cuatro secciones están en el DOM
+#### Scenario: Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px
 
-- **GIVEN** la portada renderizada sin `IntersectionObserver`
-- **WHEN** se consultan los encabezados de nivel 2
-- **THEN** se leen "Quiénes somos", "Servicios", "Equipo" y "Horarios y contacto"
-- **AND** las cuatro secciones están visibles, sin estado pendiente
-
-#### Scenario: El equipo coincide con el seed
-
-- **GIVEN** la sección Equipo
-- **WHEN** se consultan los profesionales
-- **THEN** aparecen el Dr. Martín Sosa, la Dra. Laura Quiroga y la Dra. Paula Benítez
-- **AND** no se usan datos reales de pacientes
-
-#### Scenario: Los servicios y duraciones coinciden con el seed
-
-- **GIVEN** la sección Servicios
-- **WHEN** se consultan las prestaciones
-- **THEN** aparecen Limpieza (45 min), Extracción (60 min), Restauración (60 min), Control (30 min) y Blanqueamiento (90 min)
-
-#### Scenario: Los horarios coinciden con el seed
-
-- **GIVEN** la sección Horarios y contacto
-- **WHEN** se consulta el texto de horarios
-- **THEN** se lee lunes a viernes de 9:00 a 13:00 y de 15:00 a 19:00
-- **AND** se aclara que el Dr. Sosa atiende solo por la mañana
-
-#### Scenario: Los datos ficticios se marcan visiblemente
-
-- **GIVEN** la portada renderizada
-- **WHEN** se recorre el hero y la sección Horarios y contacto
-- **THEN** el badge "Sitio de demostración" es visible en el hero
-- **AND** la nota de datos ficticios es visible en Horarios y contacto
-- **AND** el teléfono de contacto es "(0261) 555-0101"
-
-### Requirement: Diálogo de acceso
-
-El diálogo de acceso SHALL abrirse al entrar a `/login`, con heading "Turnos Odontología", el formulario de login y un botón visible "Ver la clínica" que lo cierra. MUST mostrar el mensaje de sesión vencida dentro del formulario cuando corresponda.
-
-#### Scenario: El diálogo se abre al entrar
-
-- **GIVEN** un usuario anónimo que entra a `/login`
-- **WHEN** la portada termina de montar
-- **THEN** el diálogo está abierto y expone el rol `dialog`
-- **AND** contiene el heading "Turnos Odontología" y el formulario "Iniciar sesión"
-
-#### Scenario: Ver la clínica cierra el diálogo
-
-- **GIVEN** el diálogo abierto sobre la portada
-- **WHEN** se activa el botón "Ver la clínica"
-- **THEN** el diálogo se cierra
-- **AND** la portada queda recorrible y visible
-
-#### Scenario: El mensaje de sesión vencida cae en el formulario
-
-- **GIVEN** un usuario que llega a `/login` con el flag de sesión vencida
-- **WHEN** el diálogo se abre
-- **THEN** el mensaje "Tu sesión venció. Volvé a ingresar." se muestra como `role="alert"`
-- **AND** el mensaje está dentro del formulario, no en la portada
-
-#### Scenario: Los nombres de los botones no colisionan
-
-- **GIVEN** el diálogo abierto
-- **WHEN** se consultan los botones por rol y nombre
-- **THEN** hay un único "Ingresar" y un "Ingresar al sistema"
-- **AND** "Ver la clínica" es visible y accesible por teclado
-
-#### Scenario: El diálogo tiene backdrop y tarjeta tipo vidrio
-
-- **GIVEN** el diálogo abierto en un navegador real
-- **WHEN** se observa la superficie del diálogo
-- **THEN** hay un backdrop que oscurece la portada
-- **AND** el formulario está en una tarjeta tipo vidrio sobre overlay degradado navy
-- **AND** esta verificación es visual (captura), no un test de Vitest
-
-#### Scenario: El foco queda atrapado en el diálogo
-
-- **GIVEN** el diálogo abierto con `showModal` en un navegador real
-- **WHEN** se tabula repetidamente
-- **THEN** el foco recorre solo los controles del diálogo
-- **AND** esta verificación es visual (captura), no un test de Vitest
-
-### Requirement: Foco y scroll del diálogo de acceso
-
-Al abrir el diálogo, el foco SHALL quedar en el campo Usuario. Mientras esté abierto, el scroll del fondo MUST quedar bloqueado y MUST restaurarse al cerrarlo.
-
-#### Scenario: El foco inicia en Usuario
-
-- **GIVEN** el diálogo de acceso recién abierto
-- **WHEN** se consulta el elemento activo
-- **THEN** el foco está en el campo "Usuario"
-
-#### Scenario: El scroll del fondo queda bloqueado
-
-- **GIVEN** el diálogo abierto en un navegador real
-- **WHEN** se intenta scrollear la portada de fondo
-- **THEN** el fondo no se mueve mientras el diálogo está abierto
-- **AND** al cerrarlo el scroll se restaura
-- **AND** esta verificación es visual (captura), no un test de Vitest
-
-### Requirement: Reveal accesible de secciones
-
-`RevealSection` SHALL mantener el contenido en el DOM y recibir un observador inyectable. Sin `IntersectionObserver` o con `prefers-reduced-motion`, MUST quedar visible sin estado pendiente. Con observador, SHALL pasar de pendiente a revelado al intersectar y limpiar la suscripción al desmontar.
-
-#### Scenario: Sin IntersectionObserver las secciones quedan visibles
-
-- **GIVEN** jsdom, donde `IntersectionObserver` no existe
-- **WHEN** se renderiza una sección con `RevealSection`
-- **THEN** la sección no queda en estado pendiente
-- **AND** su contenido es visible
-
-#### Scenario: Con observador inyectado pasa a revelado y limpia
-
-- **GIVEN** una sección con un observador inyectado que captura el callback
-- **WHEN** el callback se dispara y luego la sección se desmonta
-- **THEN** la sección pasa de pendiente a revelada
-- **AND** la suscripción se limpia al desmontar
-
-#### Scenario: Reduced motion evita el estado pendiente
-
-- **GIVEN** una sección con `prefersReducedMotion` verdadero
-- **WHEN** se renderiza
-- **THEN** no hay estado pendiente
-- **AND** el contenido es visible de inmediato
-
-#### Scenario: El contenido sigue en el DOM durante la animación
-
-- **GIVEN** una sección en estado pendiente
-- **WHEN** se consulta su contenido
-- **THEN** el contenido ya está en el DOM
-- **AND** la animación solo cambia la presentación
-
-#### Scenario: La animación de reveal es visual
-
-- **GIVEN** la portada en un navegador real
-- **WHEN** se scrollea hasta una sección
-- **THEN** la sección aparece con una transición suave
-- **AND** esta verificación es visual (captura), no un test de Vitest
+- **GIVEN** la página `/acceso` en un navegador real
+- **WHEN** se inspecciona en viewports de 1440 px, 768 px y 390 px
+- **THEN** las tres tarjetas se despliegan en fila horizontal en 1440 px y se reorganizan fluidamente en 768 px y 390 px sin recortar textos ni desbordar la ventana
+- **AND** esta verificación es visual (capturas a 1440, 768 y 390 px a cargo de Claude)

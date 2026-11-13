@@ -1,53 +1,59 @@
-# Spec Delta
+# frontend-foundation Specification
+
+## Purpose
+
+Definir los tokens de layout y superficies de la portada, login y modales de la agenda (superficie navy oscura translúcida y superficie clara suave marfil-hielo para `Dialog`, `AppointmentFormDialog`, `AppointmentDetailDialog` y `AppointmentRescheduleDialog`) y la navegación de `AppShell` estilizada sin cajas contenedoras con la etiqueta "Próximamente" como texto secundario sin pastilla.
 
 ## ADDED Requirements
 
-### Requirement: Tokens de layout de la portada
+### Requirement: Tokens de layout y superficies
 
-`tokens.css` SHALL definir `--landing-hero-min-height: 60vh` y `--landing-content-max-width` con un valor de longitud. MUST NOT agregar colores nuevos ni valores de color fuera de la paleta Aqua.
+`tokens.css` SHALL definir `--landing-hero-min-height: 60vh`, `--landing-content-max-width: 1120px` y tokens de superficie: oscura translúcida navy para login/portada y clara suave (marfil-hielo) para los modales de la agenda (`Dialog`, `AppointmentFormDialog`, `AppointmentDetailDialog`, `AppointmentRescheduleDialog`). MUST asegurar contraste AA (>= 4.5:1) en todos los textos sobre sus fondos respectivos y fallback sólido en entornos sin soporte de `backdrop-filter`.
 
-#### Scenario: Los tokens de layout existen
+#### Scenario: Tokens de layout y contraste AA de superficies
 
-- **GIVEN** el archivo `frontend/src/shared/styles/tokens.css`
-- **WHEN** se leen las custom properties de layout
-- **THEN** `--landing-hero-min-height` vale `60vh`
-- **AND** `--landing-content-max-width` existe con un valor de longitud
+- **GIVEN** `tokens.css` y los estilos de portada, login y modales
+- **WHEN** se inspeccionan las custom properties y los ratios de contraste
+- **THEN** `--landing-hero-min-height` vale `60vh` y `--landing-content-max-width` vale `1120px`
+- **AND** los textos claros sobre fondo navy `#011C40` (blanco `16.05:1`, ice `#A7EBF2` `12.35:1`, accent `#54ACBF` `6.55:1`) superan el umbral AA de 4.5:1
+- **AND** el texto `--color-text` `#011C40` sobre la superficie marfil-hielo translúcida `rgba(243, 247, 250, 0.95)` alcanza un contraste de `15.70:1` (AA / AAA)
 
-#### Scenario: La portada usa los tokens de layout
+#### Scenario: Fallback sólido sin soporte de backdrop-filter
 
-- **GIVEN** los CSS modules de `frontend/src/features/landing/`
-- **WHEN** se buscan los valores de layout
-- **THEN** el hero usa `var(--landing-hero-min-height)`
-- **AND** el contenido usa `var(--landing-content-max-width)`
+- **GIVEN** un navegador que no soporta la propiedad CSS `backdrop-filter`
+- **WHEN** se renderiza la superficie del formulario de login o de un modal
+- **THEN** se aplica la regla `@supports not (backdrop-filter: blur(1px))` (o background sólido de base)
+- **AND** la superficie provee fondo opaco navy o marfil-hielo sin transparencias rotas ni pérdida de legibilidad
 
-#### Scenario: No se agregan colores nuevos
+#### Scenario: Superficie clara suave de modales verificada a 1440, 768 y 390 px
 
-- **GIVEN** los tokens de color existentes de C-34
-- **WHEN** se comparan con `tokens.css` después de C-35
-- **THEN** no hay custom properties de color nuevas
-- **AND** la paleta Aqua no cambia
+- **GIVEN** cualquiera de los diálogos modales de la agenda (`AppointmentFormDialog`, `AppointmentDetailDialog` o `AppointmentRescheduleDialog`) abierto sobre la vista
+- **WHEN** se inspecciona en navegador real a 1440 px, 768 px y 390 px
+- **THEN** la superficie exhibe el fondo marfil-hielo translúcido, `::backdrop` con desenfoque suave, borde fino de 1 px y sombra sutil
+- **AND** esta verificación es visual (capturas a 1440, 768 y 390 px a cargo de Claude)
 
-### Requirement: Diálogo modal reutilizable
+### Requirement: Navegación de AppShell sin cajas
 
-La primitiva `Dialog` en `frontend/src/shared/components/Dialog.tsx` SHALL ser un `<dialog>` modal reutilizable con `open`, `onClose`, `labelledBy`, `returnFocusRef` y `children`. MUST abrir con `showModal()` o, en jsdom, con el atributo `open`, cerrar con `close()` o `removeAttribute("open")`, aplicar `aria-labelledby` y devolver el foco a `returnFocusRef`.
+La barra de `AppShell` SHALL presentar navegación de texto sin cajas contenedoras ni fondos de botón, con línea fina inferior en el enlace activo (`aria-current="page"`) y la etiqueta "Próximamente" como texto secundario plano sin pastilla ni borde. En 1440 px, el bloque de sesión MUST alinearse en la misma línea que la marca y navegación. Los ítems deshabilitados MUST conservar la semántica accesible de botón deshabilitado con `data-menu-item` para no alterar tests existentes.
 
-#### Scenario: Sin showModal el diálogo usa el atributo open
+#### Scenario: Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
 
-- **GIVEN** jsdom, donde `HTMLDialogElement.showModal` no existe
-- **WHEN** `Dialog` se abre con `open` verdadero
-- **THEN** el elemento `<dialog>` tiene el atributo `open`
-- **AND** no se reemplazan globals ni se usan stubs de `showModal`
+- **GIVEN** una sesión autenticada en escritorio (1440 px)
+- **WHEN** se renderiza `AppShell`
+- **THEN** los enlaces de navegación se muestran como texto limpio sin cajas de fondo
+- **AND** el enlace de la ruta activa ("Agenda") exhibe una línea fina inferior de acento y `aria-current="page"`
+- **AND** el bloque de sesión (nombre de usuario y botón "Cerrar sesión") comparte la misma línea horizontal con la marca y la navegación
 
-#### Scenario: Escape cierra y devuelve el foco
+#### Scenario: Ítems deshabilitados con Próximamente conservan semántica y accesibilidad
 
-- **GIVEN** `Dialog` abierto con `returnFocusRef` apuntando a un botón
-- **WHEN** se presiona Escape
-- **THEN** se llama a `onClose`
-- **AND** el foco vuelve al botón de `returnFocusRef`
+- **GIVEN** el menú de navegación renderizado para cualquier rol autenticado
+- **WHEN** se evalúa el DOM de los ítems de menú de funcionalidades futuras
+- **THEN** cada ítem sigue siendo un elemento `<button disabled data-menu-item="...">` accesible por teclado y Testing Library
+- **AND** la etiqueta "Próximamente" se renderiza con estilos de texto secundario atenuado, sin borde exterior ni caja de pastilla
 
-#### Scenario: El evento cancel cierra
+#### Scenario: Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px)
 
-- **GIVEN** `Dialog` abierto
-- **WHEN** se dispara el evento `cancel` del `<dialog>`
-- **THEN** se llama a `onClose`
-- **AND** no se produce un error de consola
+- **GIVEN** `AppShell` renderizado en viewports de 768 px y 390 px
+- **WHEN** se inspecciona la barra superior
+- **THEN** no supera los dos renglones máximos permitidos en 768 px y la navegación de texto permite desplazamiento horizontal fluido
+- **AND** esta verificación es visual (capturas a 768 px y 390 px a cargo de Claude)

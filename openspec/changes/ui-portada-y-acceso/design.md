@@ -2,208 +2,218 @@
 
 ## Context
 
-C-34 dejó el sistema de tokens, la tipografía autoalojada, el logo claro y el carrusel de cinco fotos. Hoy `LoginPage` (`frontend/src/features/login/LoginPage.tsx`) renderiza el carrusel, la marca y una tarjeta con `LoginForm` en `/login`. C-35 reemplaza esa pantalla por una portada pública y mueve el formulario a un `<dialog>` que se abre al entrar.
+El change C-34 estableció la base tipográfica autoalojada (`Jost Variable` y `Manrope Variable`), el logo claro y el carrusel de fotografías. Posteriormente se ejecutaron y archivaron en `main` los changes C-29 (`ui-formulario-nuevo-turno`) y C-30 (`ui-acciones-turno-y-estados`), los cuales crearon y consolidaron la primitiva `<dialog>` nativa en `frontend/src/shared/components/Dialog.tsx`.
 
-Restricciones que mandan sobre el diseño:
+Una iteración previa en la rama `c35-apply` (commit `cea858b`) planteó abrir el login en un diálogo modal sobre `/login`. Dicha rama quedó **descartada** por basarse en un estado anterior a C-29/C-30, duplicar la primitiva de diálogo e introducir fricción modal innecesaria. El presente diseño implementa una **arquitectura de rutas limpias** y una **estética oscura editorial** inspirada en el estándar de cuidado de interfaces de referencia (tipo Luti, sin copiar), distribuyendo la experiencia en:
 
-- `App.tsx` no se toca: `routes[0]` es `/login` y `routes[1]` es `/`; `App.test.tsx:186-192` depende de ese orden.
-- `LoginPage.test.tsx` consulta `getByRole("button", { name: "Ingresar" })` (líneas 101, 138, 195, 224, 259), espera el foco en Usuario (312), un único form “Iniciar sesión” (267) y prohíbe checkbox/“recordar” (314-316).
-- `LoginBrand.test.tsx:56-63,71` espera el logo por rol y nombre, el heading “Turnos Odontología”, la bajada exacta y “Pausar animación”.
-- `smoke.test.tsx:7` entra por `/`, es redirigido a `/login` y busca el heading “Turnos Odontología”.
-- Regla C1: sin `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, timers falsos ni MSW.
-- jsdom 31: `HTMLDialogElement` existe, pero `showModal()`/`close()` son `undefined`; `IntersectionObserver` y `matchMedia` no existen.
+1. `/`: Portada pública a pantalla completa para usuarios anónimos (con carrusel de fondo bajo overlay navy oscuro, navegación superior de texto sin cajas, logo claro, eslogan, CTA primario, badge de demo, franja de estado y cuatro secciones editoriales con reveal lateral). Con sesión autenticada, conserva el comportamiento actual de redirección a `/agenda`.
+2. `/acceso`: Página intermedia de selección de rol con tres tarjetas oscuras.
+3. `/login`: Formulario translúcido sobre carrusel difuminado con soporte de `?rol`, conservando todas las redirecciones seguras y el aviso literal de sesión vencida.
+4. Modales de la agenda (Decisión A): Adopción de una superficie clara suave marfil-hielo en `Dialog`, `AppointmentFormDialog`, `AppointmentDetailDialog` y `AppointmentRescheduleDialog`.
+5. Barra de la aplicación (`AppShell`): Navegación sin cajas contenedoras con la etiqueta "Próximamente" en texto secundario plano y bloque de sesión en la misma línea a 1440 px.
 
-## Goals / Non-goals
+---
 
-**Goals:** portada pública en `/login`, hero con marca única y CTA, cuatro secciones con datos ficticios, diálogo de acceso abierto al entrar, foco/Escape/retorno, reveal accesible, tokens de layout y cero regresiones en tests existentes.
+## Reutilización desde c35-apply
 
-**Non-goals:** tema oscuro y responsive de celular (C-36), formulario de dar turno (C-29), acciones de agenda (C-30), cambios de autenticación, API, dominio, Docker o `.env`.
+La rama `c35-apply` (`cea858b`) no se rebasa ni se mezcla. El nuevo apply se ejecutará en la rama limpia `c35-apply2` a partir de `main` y reutilizará mediante `git show c35-apply:<ruta>` únicamente los siguientes archivos:
 
-## Decisions
+| Archivo en `c35-apply` | Destino en `c35-apply2` | Adaptaciones requeridas |
+|------------------------|-------------------------|-------------------------|
+| `frontend/src/features/landing/RevealSection.tsx` | Mismo destino | Se mantiene la lógica del observador y reduced motion; se ajustan los estilos CSS. |
+| `frontend/src/features/landing/RevealSection.module.css` | Mismo destino | Se actualiza la animación de `translateY` (500 ms) a desplazamiento lateral `translateX` (200-250 ms) y opacidad. |
+| `frontend/src/features/landing/RevealSection.test.tsx` | Mismo destino | Se mantiene intacto para verificar reveal con observador, sin observador y con reduced motion. |
+| `frontend/src/features/landing/revealObserver.ts` | Mismo destino | Reutilizado íntegramente (fábrica de `IntersectionObserver` y detector de `prefers-reduced-motion`). |
+| `frontend/src/features/landing/landingContent.ts` | Mismo destino | Reutilizado íntegramente (datos del seed, servicios, equipo, horarios y teléfono `(0261) 555-0101`). |
+| `frontend/src/features/landing/landingContent.test.ts` | Mismo destino | Reutilizado íntegramente (validación de datos ficticios del consultorio). |
+| `frontend/src/features/login/carouselTicker.ts` | Mismo destino | Reutilizado íntegramente (ticker desacoplado de timers de jsdom). |
+| `frontend/src/shared/styles/landingTokens.test.ts` | Mismo destino | Reutilizado para comprobar estáticamente `--landing-hero-min-height` y `--landing-content-max-width`. |
+| Tokens en `tokens.css` | `frontend/src/shared/styles/tokens.css` | Incorporación de `--landing-hero-min-height: 60vh;` y `--landing-content-max-width: 1120px;`. |
 
-### D1 — `<dialog>` nativo con fallback por capacidad
+**Archivos descartados de `c35-apply`**:
+- `frontend/src/features/landing/LoginDialog.*`: Descartado; el formulario de login no se renderiza dentro de un modal.
+- `frontend/src/shared/components/Dialog.*` de esa rama: Descartado; la primitiva canónica ya fue creada en C-29 y vive en `frontend/src/shared/components/Dialog.tsx`.
 
-La solución usa un `<dialog>` real. La mecánica de apertura/cierre, el fallback por capacidad y el retorno de foco viven en la primitiva `Dialog` (D13); `LoginDialog` la compone. No se reemplazan globals ni se stubea `showModal`. La guarda `dialog.open` evita dobles llamadas. En jsdom el atributo `open` alcanza para que el formulario sea accesible; en un navegador real `showModal()` aporta el focus trap y el backdrop nativos.
+---
 
-**Alternativa descartada:** un modal propio con `div` + `role="dialog"`; pierde el focus trap y el `cancel` nativos y agrega más código que el fallback.
+## Sistema de Diseño y Tokens: Estética Oscura Editorial
 
-### D2 — La portada vive en `/login` y el diálogo abre al entrar
+### Paleta y Pares de Contraste AA (WCAG 2.1)
 
-`LoginPage` pasa a ser un wrapper delgado de `LandingPage`; no se agregan rutas ni se reordena `createAppRoutes`. `LandingPage` mantiene `const [isLoginOpen, setIsLoginOpen] = useState(true)`, así el anónimo que llega desde `/` ve la portada con el acceso abierto. El diálogo incluye un botón visible **“Ver la clínica”** que lo cierra para recorrer la portada; el CTA del hero **“Ingresar al sistema”** lo reabre.
+El diseño de la portada, `/acceso` y `/login` utiliza una estética oscura editorial basada en la paleta semántica de Aqua, garantizando contraste accesible de al menos 4.5:1 en todo el texto:
 
-**Alternativa descartada:** montar la portada con el modal cerrado en `/`; `smoke.test.tsx` dejaría de encontrar el heading “Turnos Odontología” por rol.
+| Elemento / Rol | Color de Texto | Color de Fondo | Ratio de Contraste | Nivel WCAG |
+|---|---|---|---|---|
+| Texto principal (login/hero) | `#FFFFFF` (Blanco) | `#011C40` (Navy oscuro base) | **16.05:1** | AAA (>= 7:1) |
+| Acentos e isotipo | `#A7EBF2` (`--color-ice`) | `#011C40` (Navy oscuro base) | **12.35:1** | AAA (>= 7:1) |
+| Textos secundarios y bordes claros | `#C9DDE4` (`--color-border`) | `#011C40` (Navy oscuro base) | **9.85:1** | AAA (>= 7:1) |
+| Enlaces y acentos activos | `#54ACBF` (`--color-accent`) | `#011C40` (Navy oscuro base) | **6.55:1** | AA (>= 4.5:1) |
+| Botón primario ("Ingresar" / CTA) | `#FFFFFF` (`--color-primary-contrast`) | `#26658C` (`--color-primary`) | **6.32:1** | AA (>= 4.5:1) |
+| Textos en modales (Decisión A) | `#011C40` (`--color-text`) | `rgba(243, 247, 250, 0.95)` (Marfil-hielo) | **15.70:1** | AAA (>= 7:1) |
+| Texto secundario en modales | `#4A5F78` (`--color-text-muted`) | `rgba(243, 247, 250, 0.95)` (Marfil-hielo) | **6.09:1** | AA (>= 4.5:1) |
 
-### D3 — Estructura de la feature
+### Superficies y Fallbacks
 
-```
-frontend/src/shared/components/
-├── Dialog.tsx
-├── Dialog.module.css
-└── Dialog.test.tsx
+1. **Superficie oscura translúcida (Login y tarjetas)**:
+   ```css
+   background: rgba(1, 28, 64, 0.82);
+   border: 1px solid rgba(167, 235, 242, 0.22);
+   backdrop-filter: blur(12px);
+   -webkit-backdrop-filter: blur(12px);
+   box-shadow: 0 16px 40px rgba(1, 28, 64, 0.45);
+   ```
+   **Fallback sólido** (para navegadores o contextos sin soporte de `backdrop-filter`):
+   ```css
+   @supports not (backdrop-filter: blur(1px)) {
+     background: #011C40;
+     border-color: rgba(167, 235, 242, 0.35);
+   }
+   ```
 
-frontend/src/features/landing/
-├── LandingPage.tsx
-├── LandingPage.module.css
-├── LoginDialog.tsx
-├── LoginDialog.module.css
-├── RevealSection.tsx
-├── RevealSection.module.css
-├── landingContent.ts
-├── revealObserver.ts
-├── LandingPage.test.tsx
-├── LoginDialog.test.tsx
-├── RevealSection.test.tsx
-└── landingContent.test.ts
-```
+2. **Superficie clara suave para modales de la agenda (Decisión A)**:
+   Aplicada a `Dialog.module.css`, `AppointmentFormDialog.module.css`, `AppointmentDetailDialog.module.css` y `AppointmentRescheduleDialog.module.css`:
+   ```css
+   background: rgba(243, 247, 250, 0.96);
+   border: 1px solid var(--color-border);
+   box-shadow: var(--shadow-md);
+   backdrop-filter: blur(4px);
+   -webkit-backdrop-filter: blur(4px);
+   border-radius: var(--radius-md);
+   ```
+   El `::backdrop` del `<dialog>` se estiliza con:
+   ```css
+   background: rgba(1, 28, 64, 0.45);
+   backdrop-filter: blur(4px);
+   -webkit-backdrop-filter: blur(4px);
+   ```
 
-`LoginPage.tsx` conserva `LoginPageProps` (`carouselTicker`, `prefersReducedMotion`), calcula `showExpiredMessage` igual que hoy y renderiza `<LandingPage ... initialNotice={...} />`. `LoginForm.tsx` y `LoginCarousel.tsx` no se modifican; `LandingPage` importa `LoginCarousel` desde `../login/LoginCarousel` y `LoginDialog` compone `Dialog` (desde `../../shared/components/Dialog`) y `LoginForm` (desde `../login/LoginForm`).
+---
 
-### D4 — CTA “Ingresar al sistema”, sin ocultar el hero
+## Decisiones de Arquitectura e Interfaz
 
-El CTA del hero dice **“Ingresar al sistema”** y el submit del form sigue diciendo **“Ingresar”**. El CTA no lleva `aria-hidden` ni `tabIndex={-1}`. Así `getByRole("button", { name: "Ingresar" })` sigue siendo único (el submit) y el CTA tiene un nombre accesible distinto que describe su acción. Ver “Desvíos respecto del explore”.
+### D1 — Portada a pantalla completa en `/` para usuarios anónimos
 
-### D5 — El `<h1>` contiene el logo y la marca se anuncia una vez
+- **Ubicación y comportamiento**: La portada pública vive en la ruta raíz `/`. Si el usuario no tiene sesión autenticada (`anonymous`), se renderiza la portada completa. Si el usuario ya está autenticado, `/` ejecuta `RootRedirect` redirigiendo inmediatamente con `replace` a `/agenda?date=<hoy>` según el `Clock` inyectado.
+- **Hero**: Ocupa la pantalla completa (`100vh`, con mínimo `--landing-hero-min-height: 60vh`). El fondo reproduce el carrusel de fotografías (`LoginCarousel`) atenuado bajo un overlay navy oscuro.
+- **Navegación superior**: Ubicada arriba a la derecha con enlaces de texto plano: "Inicio", "La clínica", "Acceder". Sin cajas, sin botones con borde. El enlace de la sección activa lleva una línea inferior de 1 px en `--color-accent` y `aria-current="page"`.
+- **Encabezado y marca**: `<h1>` con el logo claro informativo (`alt="Aqua — Clínica Odontológica"`). El nombre accesible del heading proviene del `alt`, evitando redundancia textual. Debajo, eslogan editorial destacado "Claridad en cada cuidado.", lead explicativo breve, badge "Sitio de demostración", línea fina horizontal en color accent y CTA primario "Explorar la clínica →" (único botón primario de la página).
+- **Secciones editoriales**: "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto" diagramadas en dos columnas asimétricas. Entran desde el lateral (`translateX(24px) → translateX(0)` y opacidad `0 → 1` en 200-250 ms) al hacer scroll con `RevealSection`.
+- **Franja de estado y contacto**: Indicador visible de sistema de demostración ("Estado actual: demostración funcional") y teléfono ficticio `(0261) 555-0101`.
 
-```
-<h1 id="hero-heading" className={styles.heroTitle}>
-  <img src={logoAquaClaro} alt="Aqua — Clínica Odontológica" className={styles.logo} />
-</h1>
-```
+### D2 — Selección visual de rol en `/acceso`
 
-El nombre accesible del `h1` sale del `alt`; no se repite “Aqua — Clínica Odontológica” en texto al lado. El diálogo conserva `<h2 id="login-heading">Turnos Odontología</h2>`, que es el heading que buscan `LoginBrand`, `smoke` y `LoginPage.test`. Cada sección informativa tiene su `<h2>`. Ver “Desvíos respecto del explore”.
+- **Encabezado**: "¿Cómo querés ingresar?".
+- **Tarjetas de rol**: Tres tarjetas-enlace oscuras con borde fino de 1 px:
+  1. "Recepción" → `/login?rol=recepcion`
+  2. "Odontología" → `/login?rol=odontologo`
+  3. "Administración" → `/login?rol=administrador`
+  El borde de 1 px se ilumina con `--color-accent` en estado `:hover` y `:focus-visible`.
+- **Aclaración**: Texto secundario visible: *"El rol se confirma al ingresar"*. (Se documenta que el parámetro `?rol` es exclusivamente de presentación y no otorga privilegios; el backend autentica y asigna el rol real a través del JWT).
+- **Retorno**: Enlace de texto plano "← Volver a Aqua" que navega a `/` sin caja ni fondo.
 
-### D6 — Reveal con observador inyectable
+### D3 — Página de login translúcida en `/login`
 
-`revealObserver.ts` define:
+- **Estructura visual**: Página limpia centrada sobre el carrusel difuminado de fondo. Enlace "← Volver" (a `/acceso` o `/`), logo claro, bajada visible "Claridad en cada cuidado." y heading accesible `<h1>` o `<h2>` con el nombre exacto "Turnos Odontología".
+- **Etiqueta de rol**: Si la URL contiene `?rol=recepcion|odontologo|administrador`, se despliega una pastilla editorial en la cabecera del formulario (ej. "Recepción", "Odontología", "Administración"). Si el parámetro no está presente o contiene un valor desconocido, el formulario se renderiza sin etiqueta de rol sin emitir errores.
+- **Campos del formulario**: Entradas de texto ("Usuario" y "Contraseña") con fondo oscuro semi-opaco, texto claro, borde fino de 1 px que transiciona a `--color-accent` en foco (`:focus-visible`), etiquetas en mayúsculas con `letter-spacing: 0.05em` y `font-family: inherit`.
+- **Botón "Ingresar"**: Botón primario con flecha indicadora `→` que experimenta un micro-desplazamiento lateral de 4 px en `:hover`.
+- **Transición de entrada**: Fade-in con ligero ascenso vertical (200-250 ms, `cubic-bezier(0.16, 1, 0.3, 1)`), desactivado totalmente ante `prefers-reduced-motion`.
+- **Manejo de errores y sesión vencida**: Mantiene intacto el manejo de credenciales inválidas (401 de login muestra mensaje genérico en `role="alert"`) y, ante expiración de token en rutas protegidas, despliega fielmente el mensaje literal `SESSION_EXPIRED_MESSAGE`: *"La sesión venció. Iniciá sesión de nuevo."*.
 
-```
-export interface RevealObserver {
-  observe(element: Element, onReveal: () => void): () => void;
+### D4 — Modales de la agenda claros suaves (Decisión A)
+
+- **Unificación visual**: Los diálogos modales de la agenda (`Dialog.tsx` como primitiva, `AppointmentFormDialog`, `AppointmentDetailDialog` y `AppointmentRescheduleDialog`) adoptan una superficie clara suave marfil-hielo apenas translúcida (`rgba(243, 247, 250, 0.96)`), manteniendo tipografía Jost en títulos, etiquetas editoriales en Manrope, borde fino de 1 px y `::backdrop` con desenfoque leve (`backdrop-filter: blur(4px)`).
+- **Compatibilidad**: No se altera el árbol DOM, las props ni los identificadores accesibles (`labelledBy`, `open`, botones de acción, etc.) garantizando que todos los tests de C-29 y C-30 continúen pasando sin cambios.
+
+### D5 — Barra de la aplicación (`AppShell`) con navegación sin cajas
+
+- **Navegación**: Enlaces de navegación renderizados como texto plano sin fondos de botón ni cajas rectangulares. El enlace de la página activa ("Agenda") muestra una línea fina inferior de 2 px en color primario/acento y el atributo `aria-current="page"`.
+- **Etiqueta "Próximamente"**: Los ítems del menú correspondientes a funcionalidades futuras muestran "Próximamente" como texto secundario atenuado (`color: var(--color-text-muted)`), eliminando el borde y el fondo de pastilla.
+- **Bloque de sesión**: En resoluciones de escritorio (1440 px), el nombre de usuario y el botón "Cerrar sesión" se sitúan en la misma línea horizontal que la marca y la navegación principal (`display: flex; align-items: center; justify-content: space-between;`).
+- **Análisis de compatibilidad de tests de `AppShell.test.tsx` y `menuFor.test.ts`**:
+  Los tests existentes en `frontend/src/shared/components/AppShell.test.tsx` (líneas 67-79) ejecutan:
+  ```tsx
+  const adminButtons = within(nav).getAllByRole("button");
+  expect(adminButtons).toHaveLength(5);
+  expect(adminButtons.map((btn) => btn.getAttribute("data-menu-item"))).toEqual([
+    "Turnos", "Horarios y bloqueos", "Catálogos", "Pacientes", "Usuarios y roles",
+  ]);
+  for (const button of adminButtons) {
+    expect(button).toBeDisabled();
+    expect(button).toHaveTextContent("Próximamente");
+  }
+  ```
+  *Resolución técnica sin modificar tests*: Para cumplir la especificación de "navegación sin cajas" sin alterar el contrato de los tests existentes, los ítems deshabilitados se mantienen como elementos `<button type="button" disabled data-menu-item={item.label} className={styles.menuButton}>` en el JSX. En `AppShell.module.css`, se eliminan sus propiedades de caja (`background: transparent; border: none; box-shadow: none; padding: ...; cursor: default;`) y el `.badge` interior se estiliza como texto secundario plano sin borde (`background: none; border: none; color: var(--color-text-muted); font-size: var(--font-size-xs);`). De este modo, la interfaz es 100% fiel al diseño sin cajas y `AppShell.test.tsx` y `menuFor.test.ts` siguen pasando en verde.
+
+### D6 — RevealSection con desplazamiento lateral
+
+- `RevealSection.tsx` recibe `children`, `observer?: RevealObserverFactory` y `reducedMotion?: boolean`.
+- En `RevealSection.module.css`, la animación de entrada utiliza `transform: translateX(20px)` y `opacity: 0` para el estado `data-reveal="pending"`, transicionando a `transform: none` y `opacity: 1` en 200-250 ms `ease-out`.
+- Ante `@media (prefers-reduced-motion: reduce)` o cuando `reducedMotion === true`, la transición se desactiva (`transition: none; transform: none; opacity: 1;`), renderizando el contenido visible de inmediato.
+
+### D7 — Orden de rutas en `createAppRoutes`
+
+En `frontend/src/App.tsx`:
+```tsx
+export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
+  return [
+    {
+      path: "/login",
+      element: <PublicOnlyRoute />,
+      children: [{ index: true, element: <LoginPage /> }],
+    },
+    {
+      path: "/",
+      element: <RootGate clock={clock} />,
+      children: [
+        {
+          element: <AppShell />,
+          children: [
+            { path: "agenda", element: <AgendaPage clock={clock} /> },
+            { path: "*", element: <NotFoundPage /> },
+          ],
+        },
+      ],
+    },
+    {
+      path: "/acceso",
+      element: <AccesoPage />,
+    },
+  ];
 }
-export type RevealObserverFactory = () => RevealObserver | null;
-export const browserRevealObserver: RevealObserverFactory;
-export function detectPrefersReducedMotion(): boolean;
 ```
+- `routes[0]` sigue siendo `/login`.
+- `routes[1]` sigue teniendo `path: "/"`. El componente `RootGate` evalúa la ruta y el estado de autenticación:
+  - Si `location.pathname === "/"`: si el usuario está autenticado, redirige con replace a `/agenda?date=<hoy>` (`RootRedirect`); si es anónimo, renderiza `<LandingPage />`.
+  - Si `location.pathname !== "/"` (por ejemplo en el test de request protegida `App.test.tsx:186-192` que inyecta `children: [{ path: "agenda", element: <ProtectedTriggerPage /> }]`), `RootGate` actúa como el guardia de autenticación (`RequireAuth`), redirigiendo a `/login` ante sesiones expiradas o anónimas con `state: { from, expired }`.
+- Las rutas nuevas (como `/acceso`) se ubican **al final** (`routes[2]`), preservando con exactitud quirúrgica los índices `routes[0]` y `routes[1]` que consumen los tests de `App.test.tsx`.
 
-`RevealSection` recibe `observer?: RevealObserverFactory`, `reducedMotion?: boolean` y `children`. Calcula `canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined")`; el estado inicial es `revealed = !canAnimate`. Si `canAnimate`, el `useEffect` crea el observador, observa el elemento y devuelve el cleanup. Si la fábrica devuelve `null`, revela de inmediato. El contenido siempre está en el DOM; el estado se expone con `data-reveal="pending"|"revealed"` y el CSS solo cambia opacidad/transform.
+### D8 — Desvío documentado: `frontend/src/test/smoke.test.tsx`
 
-**Alternativa descartada:** leer `IntersectionObserver` solo dentro del efecto y arrancar en `pending`; en jsdom las secciones quedarían con `opacity:0` y `toBeVisible` fallaría.
+El único test existente que se modifica en todo el repositorio es `frontend/src/test/smoke.test.tsx`.
+- **Comportamiento anterior**: el test montaba `<App />` en la raíz `/` sin sesión; como `/` redirigía a `/login`, esperaba encontrar el heading "Turnos Odontología".
+- **Comportamiento nuevo**: al visitar `/` sin sesión, `<App />` monta la portada pública de la clínica. El heading principal de la portada es el `<h1>` con el logo claro (`alt="Aqua — Clínica Odontológica"`). Por tanto, `smoke.test.tsx` se actualiza para verificar:
+  ```tsx
+  expect(screen.queryByRole("heading", { name: "Aqua — Clínica Odontológica" })).toBeInTheDocument();
+  ```
+  Este cambio de requisito queda explícitamente documentado como el único desvío autorizado.
 
-### D7 — Foco en Usuario y retorno de foco
+---
 
-`LoginDialog` compone `Dialog` con `labelledBy="login-heading"` y `returnFocusRef` apuntando al CTA “Ingresar al sistema”. El foco inicial en Usuario queda en `LoginDialog`: un `useLayoutEffect` sobre `open` busca `document.getElementById("login-username")` y lo enfoca. No se confía en `autoFocus`, que puede ejecutarse antes de que el diálogo esté abierto. Escape, `cancel` y el retorno de foco a `returnFocusRef` los resuelve `Dialog` (D13).
+## Análisis de Tests Existentes de `LoginPage`
 
-### D8 — Bloqueo del scroll del fondo
+`LoginPage.test.tsx`, `LoginBrand.test.tsx` y `LoginCarousel.test.tsx` se mantienen **100% intactos**. La nueva implementación de `LoginPage` preserva todos sus contratos:
+1. `screen.getByRole("heading", { name: "Turnos Odontología" })` sigue existiendo como el heading accesible del formulario.
+2. `screen.queryByRole("img", { name: "Aqua — Clínica Odontológica" })` sigue existiendo con la imagen `logo-aqua-claro.png`.
+3. `screen.getByText("Claridad en cada cuidado.")` sigue siendo visible.
+4. `getByLabelText("Usuario")` y `getByLabelText("Contraseña")` siguen vinculados a sus inputs accesibles.
+5. `getByRole("button", { name: "Ingresar" })` sigue siendo el submit único del formulario.
+6. `SESSION_EXPIRED_MESSAGE` ("La sesión venció. Iniciá sesión de nuevo.") sigue mostrándose ante `state.expired === true` o `lastEvent === "expired"`.
+7. `LoginCarousel` y su botón "Pausar animación" siguen operativos.
 
-Mientras `open`, `LoginDialog` (no `Dialog`) guarda `document.body.style.overflow`, lo pone en `"hidden"` y lo restaura en el cleanup. La compensación de la barra de scroll es opcional y se valida en la captura de 1440/768; no se simula scroll en jsdom.
+---
 
-### D9 — Tokens de layout, cero colores nuevos
+## Dudas y Aclaraciones Documentadas
 
-Se agregan a `frontend/src/shared/styles/tokens.css`:
-
-```
---landing-hero-min-height: 60vh;
---landing-content-max-width: 1120px;
-```
-
-No se agregan custom properties de color. `LandingPage.module.css` usa `var(--landing-hero-min-height)` en el hero y `var(--landing-content-max-width)` en el contenedor; el resto sale de los tokens de C-34 (`--color-navy`, `--color-primary-contrast`, `--space-*`, etc.).
-
-### D10 — Deltas de specs
-
-- `frontend-landing` (nueva): seis requisitos —portada en `/login`, hero con marca/carrusel/CTA, secciones con datos ficticios, diálogo de acceso, apertura/cierre/foco y reveal accesible— con escenarios GIVEN/WHEN/THEN. Los escenarios de alto del hero, backdrop/tarjeta vidrio, focus trap nativo, scroll bloqueado y animación de reveal se marcan “verificación visual (captura)”.
-- `frontend-auth-session` (MODIFIED): solo “Bajada y tarjeta del login”, copiado completo con sus dos escenarios y ajustado a que la bajada queda en el hero y la tarjeta en el diálogo. No se toca “Logo del login sobre fondo oscuro”: el logo sigue sobre fondo oscuro, informativo, y el heading “Turnos Odontología” se conserva en el diálogo.
-- `frontend-foundation` (ADDED): “Tokens de layout de la portada”, con los dos tokens y la prohibición de colores nuevos.
-
-### D11 — Marcas de demostración
-
-El badge **“Sitio de demostración”** va en el hero. En “Horarios y contacto” se muestra la nota **“Datos de contacto ficticios, solo para la demostración. No agendar turnos reales.”** El teléfono es **(0261) 555-0101**; la dirección y el correo salen del explore (“Av. Ejemplo 1234, Ciudad Demo”, “turnos@aqua-demo.example”).
-
-### D12 — Contenido del seed
-
-Profesionales: Dr. Martín Sosa (solo mañana), Dra. Laura Quiroga y Dra. Paula Benítez. Servicios y duraciones: Limpieza 45, Extracción 60, Restauración 60, Control 30, Blanqueamiento 90. Horarios: lunes a viernes de 9:00 a 13:00 y de 15:00 a 19:00. Los textos salen del explore §4, con el teléfono cambiado a (0261) 555-0101.
-
-### D13 — Primitiva `Dialog` compartida
-
-`frontend/src/shared/components/Dialog.tsx` (+ `Dialog.module.css` y `Dialog.test.tsx`) es la única implementación del `<dialog>` modal. C-29 (dar turno) y C-30 (reprogramar) la reutilizan; no debe haber dos modales.
-
-Props: `open: boolean`, `onClose: () => void`, `labelledBy: string`, `returnFocusRef?: RefObject<HTMLElement>` y `children: ReactNode`.
-
-- Aplica `role="dialog"`, `aria-modal="true"` y `aria-labelledby={labelledBy}`.
-- Abre con `showModal()` si es función; si no (jsdom 31), con `setAttribute("open", "")`.
-- Cierra con `close()` si existe; si no, `removeAttribute("open")`.
-- `onKeyDown` de Escape y `onCancel` (Escape nativo) llaman a `onClose()` con `preventDefault()`.
-- Al cerrar, el foco vuelve a `returnFocusRef.current`.
-- Sin focus trap manual: con `showModal()` lo hace el navegador.
-- Sin estilos de la portada: el backdrop y la tarjeta vidrio son de `LoginDialog`, que compone `Dialog`; el scroll lock y el foco en Usuario también quedan en `LoginDialog`.
-
-**Alternativa descartada:** dejar la lógica del `<dialog>` dentro de `LoginDialog`; C-29 y C-30 tendrían que copiarla y aparecerían dos implementaciones divergentes.
-
-## Rutas (sin cambios)
-
-| URL | Sesión | Resultado |
-|-----|--------|-----------|
-| `/login` | anónima | Portada completa con el `<dialog>` abierto, heading “Turnos Odontología”, form y foco en Usuario. |
-| `/login` | `checking` | `PublicOnlyRoute` muestra `LoadingState`; no se muestra el form. |
-| `/login` | autenticada | `PublicOnlyRoute` redirige a `state.from` válido o `/`. |
-| `/` | anónima | `RequireAuth` redirige con `replace` a `/login` con `from` y `expired`; se ve la portada. |
-| `/` | autenticada | `RootRedirect` → `/agenda?date=<hoy>`. |
-| `/agenda?date=…` | anónima | Redirect a `/login` con `from`; después del login vuelve al destino. |
-| ruta desconocida | autenticada | `NotFoundPage` dentro de `AppShell`. |
-| ruta desconocida | anónima | El `*` vive bajo `/` (`RequireAuth`), así que primero redirige a `/login`. |
-
-## Estrategia para jsdom
-
-- `LoginDialog` no llama `showModal()` si no es función; usa `setAttribute("open", "")`. El `<dialog>` con `open` calcula `display:block` y expone su contenido a Testing Library.
-- Se agrega `role="dialog"` y `aria-modal="true"` explícitos para que el rol no dependa de la accesibilidad nativa de jsdom; `aria-labelledby="login-heading"` apunta al `h2`.
-- El foco se fuerza con `document.getElementById("login-username")` después de abrir; no se depende de `autoFocus`.
-- Escape se prueba en `Dialog` con `fireEvent.keyDown(dialog, { key: "Escape" })`; `cancel` se prueba con `fireEvent(dialog, new Event("cancel"))`.
-- `RevealSection` arranca revelado si no hay `IntersectionObserver` ni observador inyectado; el test de reveal pasa una fábrica falsa que captura el callback y un contador de cleanup.
-- No se usa `vi.mock`, `vi.spyOn`, `vi.stubGlobal` ni timers falsos. El carrusel ya tiene su ticker inyectable.
-
-## Mapa de componentes
-
-| Archivo | Responsabilidad |
-|---------|-----------------|
-| `Dialog.tsx` | Primitiva `<dialog>`: open/close, fallback, Escape/cancel y retorno de foco. |
-| `LandingPage.tsx` | Estado `isLoginOpen`, CTA, hero, secciones y `LoginDialog`. |
-| `LoginDialog.tsx` | Compone `Dialog`; estilos de portada, foco en Usuario, scroll lock y `LoginForm`. |
-| `RevealSection.tsx` | Wrapper con `data-reveal`, observador inyectable y cleanup. |
-| `landingContent.ts` | Textos y datos ficticios tipados (servicios, equipo, horarios, contacto). |
-| `revealObserver.ts` | Fábrica de observador y detección de reduced motion. |
-| `LoginPage.tsx` | Wrapper delgado; conserva props y el cálculo de sesión vencida. |
-
-## Desvíos respecto del explore
-
-1. **D4 — CTA del hero.** El explore proponía “Ingresar” oculto con `aria-hidden` y `tabIndex={-1}` mientras el modal estaba abierto. La decisión final es “Ingresar al sistema”, sin ocultarlo. Motivo: WAI-ARIA desaconseja ocultar contenido focusable; dos nombres accesibles únicos (“Ingresar al sistema” vs “Ingresar”) resuelven la colisión de `getByRole` sin quitar el CTA del árbol de accesibilidad. La fila de riesgo “Dos botones Ingresar” del explore queda superada.
-2. **D5 — `<h1>` con logo.** El explore proponía un `<h1>` con texto “Aqua — Clínica Odontológica”. La decisión final es un `<h1>` que contiene el logo claro con `alt="Aqua — Clínica Odontológica"`. Motivo: el nombre accesible del heading sale del `alt`, la marca se anuncia una sola vez y no se repite el texto al lado del logo. El diálogo conserva “Turnos Odontología” como `h2`, que es el heading que buscan los tests existentes.
-3. **“Ver la clínica”.** No estaba en el explore. Se agrega como cierre visible del diálogo para que el usuario pueda recorrer la portada sin depender de Escape; es el complemento de D2.
-
-## Riesgos y mitigaciones
-
-| Riesgo | Mitigación |
-|--------|------------|
-| `LoginPage.test` falla por dos “Ingresar” | D4: CTA “Ingresar al sistema”; submit “Ingresar”; sin `aria-hidden`. |
-| `smoke.test` no encuentra el heading | D2: `/` redirige a `/login`, que monta el diálogo abierto; el `h2` “Turnos Odontología” está accesible. |
-| `App.test` depende del orden de rutas | No se toca `App.tsx` ni `createAppRoutes`. |
-| jsdom sin `showModal`/`close` | D1/D13: fallback por atributo `open`, sin stubs. |
-| Dos implementaciones del modal | D13: `Dialog` es la única; `LoginDialog` la compone y C-29/C-30 la reutilizan. |
-| `LoginBrand` espera logo y “Pausar animación” con el modal abierto | El hero y el carrusel quedan fuera del `<dialog>`; en jsdom el atributo `open` no aplica `inert`. |
-| `autoFocus` antes de abrir | D7/D13: foco explícito en el layout effect de apertura. |
-| `toBeVisible` con `opacity:0` | D6: sin observador el estado inicial es revelado. |
-| Bloqueo del scroll con salto de layout | D8: guardar/restaurar `overflow`; validar en captura 1440/768. |
-| Datos reales | Solo datos ficticios del seed y del explore; sin DNI, teléfonos reales ni nombres reales. |
-
-## Orden de implementación
-
-1. Tokens de layout y su test.
-2. `landingContent.ts` y su test de datos.
-3. `LandingPage` con hero y secciones; test de contenido.
-4. `Dialog` compartido: props, fallback jsdom, Escape/cancel y retorno de foco.
-5. `LoginDialog` compone `Dialog`; foco en Usuario, scroll lock y “Ver la clínica”.
-6. `RevealSection` + `revealObserver`.
-7. `LoginPage` wrapper y regresión de la suite existente.
-8. Evidencias: RED, mutaciones, trazabilidad, `tsc`, ESLint, build y capturas.
-
-## Preguntas abiertas
-
-Ninguna. Las decisiones D1-D13 están cerradas por la autora; si aparece un choque con un test existente, se frena y se reporta en vez de modificar el test.
+1. **Ruta del archivo smoke**: En el enunciado se menciona `frontend/src/app/smoke.test.tsx`, pero en el árbol real del proyecto el archivo se ubica en `frontend/src/test/smoke.test.tsx`. Se cita y trabaja sobre su ruta física real verificada.
+2. **Preservación de elementos `<button>` en `AppShell`**: Como `AppShell.test.tsx` realiza una consulta estricta `within(nav).getAllByRole("button")` y valida `btn.getAttribute("data-menu-item")`, la exigencia de "navegación sin cajas" se resuelve 100% mediante CSS (eliminando fondos, bordes y estilos de pastilla en `.menuButton` y `.badge`) sin cambiar las etiquetas HTML a `<span>`, lo que rompería la suite de pruebas.

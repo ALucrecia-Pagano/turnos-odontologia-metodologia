@@ -1,107 +1,162 @@
 # Tasks
 
-## 1. Línea base y preparación
+## Reglas Mandatorias de Implementación y Testeo
 
-- [ ] 1.1 Confirmar que la rama es `main` y que `git status --short` no muestra cambios inesperados; `.codex/` y `docs/evidencias/explore-C-29.md` son untracked preexistentes y no se tocan. No tocar `.env`, `AGENTS.md` ni `CLAUDE.md`.
-- [ ] 1.2 Ejecutar la suite completa desde `frontend/` con `npm run test:run` y guardar la salida en `docs/evidencias/baseline-C-35.txt`. Anotar el total de tests y confirmar que no hay fallos preexistentes. Si aparece uno, registrarlo y no modificarlo; si afecta un archivo que C-35 toca, frenar y reportar.
-- [ ] 1.3 Confirmar que existen `frontend/src/assets/brand/logo-aqua-claro.png` y las cinco fotos `hero-*.webp`; no instalar dependencias nuevas.
-- [ ] 1.4 Releer `docs/evidencias/explore-portada-y-acceso.md`, `openspec/changes/ui-portada-y-acceso/design.md` y los specs del change antes de escribir código.
-- [ ] 1.5 Registrar el estado inicial de los tests que no se pueden modificar: `LoginPage.test.tsx`, `LoginBrand.test.tsx`, `LoginCarousel.test.tsx`, `App.test.tsx` y `smoke.test.tsx`.
+> **Reglas Obligatorias para la fase de Apply (Strict TDD & Active Stack):**
+>
+> 1. **Regla C1 (Sin mocks de módulo ni stubs globales)**:
+>    - Prohibido el uso de `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, fake timers (`vi.useFakeTimers`, `vi.setSystemTime`), MSW o `waitFor` con tiempos largos (> 1000 ms).
+>    - Enrutamiento con `createMemoryRouter` + `RouterProvider` pasando `createAppRoutes(clock)`.
+>    - Temporizadores (`ticker`), detección de `prefers-reduced-motion` e `IntersectionObserver` **inyectados** por props o parámetros (jsdom no implementa `matchMedia` ni `IntersectionObserver`).
+> 2. **Sin excepciones al linter ni al compilador**: Cero directivas `@ts-ignore`, `@ts-nocheck` o `eslint-disable` en código nuevo o editado.
+> 3. **Preservación estricta de tests existentes**: Ningún test preexistente puede ser modificado, con la **única excepción documentada** de `frontend/src/test/smoke.test.tsx` (que pasa a esperar el heading accesible `"Aqua — Clínica Odontológica"` en `/`).
+> 4. **Trazabilidad 1:1**: Un escenario del spec = un test automatizado = una mutación en `mutaciones-C-35.py` (salvo escenarios marcados expresamente como verificación visual por captura a cargo de Claude). El script de trazabilidad debe fallar si dos escenarios comparten test o si falta cobertura.
+> 5. **Mutaciones con detector de inválidas**: Cada mutación debe provocar el fallo de su test asociado por aserción, sin romper la carga del módulo ni lanzar errores sintácticos. Cero mutaciones inválidas y SHA-256 restaurado.
+> 6. **Calidad con exit code**: `npm run typecheck`, `npm run lint` y `npm run build` deben terminar con código de salida `0`.
+> 7. **Evidencias legibles en UTF-8**: Todas las salidas se guardan en `docs/evidencias/` en texto plano UTF-8, sin datos reales de pacientes.
+> 8. **Control de versiones**: La implementación partirá de la rama `c35-apply2` nacida de `main`.
 
-## 2. Tokens de layout (`frontend-foundation`)
+---
 
-- [ ] 2.1 **RED** — Crear `frontend/src/shared/styles/landingTokens.test.ts` con un test que lea `tokens.css` y exija `--landing-hero-min-height: 60vh` y `--landing-content-max-width` con valor de longitud. Ejecutar `npx vitest run src/shared/styles/landingTokens.test.ts -t "tokens de layout"` desde `frontend/`; guardar la salida en `docs/evidencias/red-C-35/tokens-layout.txt` y confirmar que falla por el token ausente.
-- [ ] 2.2 **GREEN** — Agregar los dos tokens a `frontend/src/shared/styles/tokens.css`. Ejecutar el test y guardar la salida en `docs/evidencias/green-C-35/tokens-layout.txt`; debe pasar.
-- [ ] 2.3 **RED** — Agregar al mismo archivo un test que verifique que los CSS modules de `frontend/src/features/landing/` usan `var(--landing-hero-min-height)` y `var(--landing-content-max-width)`. Guardar la salida RED en `docs/evidencias/red-C-35/tokens-uso.txt`.
-- [ ] 2.4 **GREEN** — Usar los tokens en `LandingPage.module.css` (se crea en la tarea 4). Guardar la salida GREEN en `docs/evidencias/green-C-35/tokens-uso.txt`.
-- [ ] 2.5 **RED** — Agregar un test que compare las custom properties de color de `tokens.css` antes y después de C-35 y exija cero colores nuevos. Guardar la salida RED en `docs/evidencias/red-C-35/tokens-colores.txt`.
-- [ ] 2.6 **GREEN** — Confirmar que no se agregó ningún color; el test pasa. Guardar la salida en `docs/evidencias/green-C-35/tokens-colores.txt`.
+## 1. Línea Base y Preparación
 
-## 3. Contenido ficticio (`landingContent.ts`)
+- [ ] 1.1 Crear y posicionarse en la rama `c35-apply2` a partir de `main` (con C-29 y C-30 ya archivados). Confirmar que `git status --short` no muestra cambios inesperados; `.codex/` es untracked y no se toca. Prohibido tocar `.env`, `AGENTS.md`, `CLAUDE.md` ni `CHANGES.md`.
+- [ ] 1.2 Ejecutar la suite completa desde `frontend/` con `npm run test:run` y volcar la salida a `docs/evidencias/baseline-C-35.txt`. Anotar el total exacto de tests en verde y confirmar que no existen fallos preexistentes.
+- [ ] 1.3 **Skill y MCP (Context7 y appointment-frontend-ux)**:
+  - Aplicar las directivas de `appointment-frontend-ux` sobre accesibilidad, tokens semánticos y preservación de C1.
+  - Consultar en Context7 la documentación oficial de React Router 6.30.6 (anidamiento de rutas e índices) y CSS (`backdrop-filter` con fallback y `prefers-reduced-motion`).
+  - Registrar las consultas y su impacto técnico en `docs/skills-mcp/evidencias/C-35-mcp-context7.md`.
+- [ ] 1.4 Registrar el estado base de los tests existentes que no se pueden modificar: `frontend/src/features/login/LoginPage.test.tsx`, `LoginBrand.test.tsx`, `LoginCarousel.test.tsx`, `frontend/src/App.test.tsx`, `frontend/src/shared/components/AppShell.test.tsx`, `AppShellBrand.test.tsx` y `frontend/src/features/auth/menuFor.test.ts`.
 
-- [ ] 3.1 **RED** — Crear `frontend/src/features/landing/landingContent.test.ts` con un test que exija los tres profesionales del seed y sus horarios (Sosa solo mañana). Ejecutar y guardar la salida RED en `docs/evidencias/red-C-35/contenido-equipo.txt`.
-- [ ] 3.2 **GREEN** — Crear `frontend/src/features/landing/landingContent.ts` con los datos tipados y hacer pasar el test. Guardar la salida GREEN.
-- [ ] 3.3 **RED** — Agregar un test de los cinco servicios con sus duraciones (45, 60, 60, 30, 90). Guardar la salida RED en `docs/evidencias/red-C-35/contenido-servicios.txt`.
-- [ ] 3.4 **GREEN** — Completar los servicios en `landingContent.ts`; guardar la salida GREEN.
-- [ ] 3.5 **RED** — Agregar un test de horarios (lunes a viernes 9:00-13:00 y 15:00-19:00), contacto ficticio (dirección “Av. Ejemplo 1234, Ciudad Demo”, teléfono “(0261) 555-0101”, correo “turnos@aqua-demo.example”) y nota de datos ficticios. Guardar la salida RED en `docs/evidencias/red-C-35/contenido-contacto.txt`.
-- [ ] 3.6 **GREEN** — Completar los datos de horarios y contacto; guardar la salida GREEN.
+---
 
-## 4. Portada, hero y secciones (`LandingPage`)
+## 2. Reutilización desde c35-apply (sin checkout)
 
-- [ ] 4.1 **RED** — Crear `frontend/src/features/landing/LandingPage.test.tsx` con un test que renderice `LandingPage` y exija el `h1` cuyo nombre accesible es “Aqua — Clínica Odontológica” (logo dentro del `h1`), la bajada exacta “Claridad en cada cuidado.”, el lead del explore y el CTA “Ingresar al sistema”. Guardar la salida RED en `docs/evidencias/red-C-35/hero-marca.txt`.
-- [ ] 4.2 **GREEN** — Crear `LandingPage.tsx` y `LandingPage.module.css` con el hero; usar `var(--landing-hero-min-height)` y `var(--landing-content-max-width)`. Guardar la salida GREEN.
-- [ ] 4.3 **RED** — Agregar un test del badge “Sitio de demostración” y de la nota visible de datos ficticios en “Horarios y contacto”. Guardar la salida RED en `docs/evidencias/red-C-35/demo-marcas.txt`.
-- [ ] 4.4 **GREEN** — Agregar el badge y la nota; guardar la salida GREEN.
-- [ ] 4.5 **RED** — Agregar un test de las cuatro secciones con sus `h2` (“Quiénes somos”, “Servicios”, “Equipo”, “Horarios y contacto”) y de que están visibles sin `IntersectionObserver`. Guardar la salida RED en `docs/evidencias/red-C-35/secciones.txt`.
-- [ ] 4.6 **GREEN** — Implementar las cuatro secciones; guardar la salida GREEN.
-- [ ] 4.7 **RED** — Agregar un test de que el carrusel de C-34 se reutiliza (cinco imágenes decorativas y botón “Pausar animación”). Guardar la salida RED en `docs/evidencias/red-C-35/carrusel.txt`.
-- [ ] 4.8 **GREEN** — Montar `LoginCarousel` en el hero con `carouselTicker` y `prefersReducedMotion`; guardar la salida GREEN.
+- [ ] 2.1 Reutilizar `landingTokens.test.ts` y tokens de layout:
+  - Recuperar el archivo con `git show cea858b:frontend/src/shared/styles/landingTokens.test.ts > frontend/src/shared/styles/landingTokens.test.ts`.
+  - **RED**: Ejecutar `npx vitest run src/shared/styles/landingTokens.test.ts` comprobando el fallo por falta de tokens de layout. Guardar en `docs/evidencias/red-C-35/tokens-layout.txt`.
+  - **GREEN**: Agregar `--landing-hero-min-height: 60vh;` y `--landing-content-max-width: 1120px;` a `frontend/src/shared/styles/tokens.css`. Correr el test y verificar que pasa en verde. Guardar en `docs/evidencias/green-C-35/tokens-layout.txt`.
+- [ ] 2.2 Reutilizar `carouselTicker.ts`:
+  - Extraer con `git show cea858b:frontend/src/features/login/carouselTicker.ts > frontend/src/features/login/carouselTicker.ts`.
+- [ ] 2.3 Reutilizar `landingContent.ts` y su test:
+  - Extraer `landingContent.ts` y `landingContent.test.ts` desde `cea858b:frontend/src/features/landing/`.
+  - Ejecutar `npx vitest run src/features/landing/landingContent.test.ts` y confirmar que pasa en verde (validando profesionales, servicios, horarios y teléfono `(0261) 555-0101`). Guardar en `docs/evidencias/green-C-35/contenido-datos.txt`.
+- [ ] 2.4 Reutilizar `revealObserver.ts`:
+  - Extraer con `git show cea858b:frontend/src/features/landing/revealObserver.ts > frontend/src/features/landing/revealObserver.ts`.
+- [ ] 2.5 Reutilizar y adaptar `RevealSection.tsx` (+ `.module.css` + `.test.tsx`):
+  - Extraer los 3 archivos desde `cea858b:frontend/src/features/landing/`.
+  - Adaptar `RevealSection.module.css` para aplicar `transform: translateX(20px)` y `opacity: 0` en estado `data-reveal="pending"`, con transición de 200-250 ms hacia `transform: none` y `opacity: 1`, y desactivación ante reduced motion.
+  - Ejecutar `npx vitest run src/features/landing/RevealSection.test.tsx` y guardar en `docs/evidencias/green-C-35/reveal-section.txt`.
 
-## 5. Primitiva `Dialog` compartida (`frontend-foundation`)
+---
 
-- [ ] 5.1 **RED** — Crear `frontend/src/shared/components/Dialog.test.tsx` con un test de que `Dialog` abre en jsdom sin `showModal`, deja el atributo `open`, aplica `role="dialog"`, `aria-modal="true"`, `aria-labelledby={labelledBy}` y renderiza `children`. Guardar la salida RED en `docs/evidencias/red-C-35/dialog-primitiva-abre.txt`.
-- [ ] 5.2 **GREEN** — Crear `frontend/src/shared/components/Dialog.tsx` y `Dialog.module.css` sin estilos de la portada; implementar props, atributos y fallback por atributo `open`. Guardar la salida GREEN.
-- [ ] 5.3 **RED** — Agregar un test de que Escape llama a `onClose` y devuelve el foco a `returnFocusRef`. Guardar la salida RED en `docs/evidencias/red-C-35/dialog-primitiva-escape.txt`.
-- [ ] 5.4 **GREEN** — Implementar `onKeyDown` de Escape y el retorno de foco; guardar la salida GREEN.
-- [ ] 5.5 **RED** — Agregar un test de que el evento `cancel` llama a `onClose` y de que cerrar usa `close()` cuando existe o `removeAttribute("open")` cuando no, sin stubs. Guardar la salida RED en `docs/evidencias/red-C-35/dialog-primitiva-cancel.txt`.
-- [ ] 5.6 **GREEN** — Implementar `onCancel` y el cierre por capacidad; guardar la salida GREEN.
-- [ ] 5.7 Agregar a `docs/evidencias/mutaciones-C-35.py` una mutación por cada test de `Dialog` (fallback `open`, Escape/retorno de foco, cancel/cierre, `labelledBy`/`children`) y verificar que todas fallan su test, con 0 inválidas y SHA-256 restaurado.
+## 3. Portada Pública en `/` (`frontend-landing`)
 
-## 6. Diálogo de acceso (`LoginDialog` compone `Dialog`)
+- [ ] 3.1 **RED** — Crear `frontend/src/features/landing/LandingPage.test.tsx` con un test que verifique el montaje de la portada en `/` para usuarios anónimos: `<h1>` con logo claro (`alt="Aqua — Clínica Odontológica"`), eslogan "Claridad en cada cuidado.", CTA "Explorar la clínica →", badge "Sitio de demostración", franja "Estado actual", enlaces de navegación de texto sin cajas ("Inicio", "La clínica", "Acceder") y `aria-current="page"` en el activo. Guardar salida RED en `docs/evidencias/red-C-35/portada-hero.txt`.
+- [ ] 3.2 **GREEN** — Implementar `frontend/src/features/landing/LandingPage.tsx` y `LandingPage.module.css` con el hero a pantalla completa, overlay navy oscuro sobre `LoginCarousel`, enlaces de texto superior y CTA. Correr el test y verificar verde. Guardar en `docs/evidencias/green-C-35/portada-hero.txt`.
+- [ ] 3.3 **RED** — Agregar a `LandingPage.test.tsx` un test de las cuatro secciones editoriales ("01 / Quiénes somos", "02 / Servicios", "03 / Equipo", "04 / Horarios y contacto"), teléfono ficticio `(0261) 555-0101` y su integración con `RevealSection`. Guardar salida RED en `docs/evidencias/red-C-35/portada-secciones.txt`.
+- [ ] 3.4 **GREEN** — Integrar las secciones editoriales en `LandingPage.tsx` envolviéndolas en `RevealSection`. Verificar que el test pasa. Guardar en `docs/evidencias/green-C-35/portada-secciones.txt`.
+- [ ] 3.5 **RED** — Agregar test que verifique que un usuario con sesión autenticada que ingresa a `/` es redirigido con replace a `/agenda?date=<hoy>` y no renderiza la portada. Guardar salida RED en `docs/evidencias/red-C-35/portada-autenticado-redirect.txt`.
+- [ ] 3.6 **GREEN** — Configurar `RootGate` en `frontend/src/App.tsx` para coordinar la bifurcación entre `LandingPage` (anónimo) y `RootRedirect` (autenticado) en la ruta `/`. Correr el test y verificar verde. Guardar en `docs/evidencias/green-C-35/portada-autenticado-redirect.txt`.
 
-- [ ] 6.1 **RED** — Crear `frontend/src/features/landing/LoginDialog.test.tsx` con un test de que el diálogo abre al entrar, expone `role="dialog"`, el heading “Turnos Odontología”, el form “Iniciar sesión” y el botón “Ver la clínica”. Guardar la salida RED en `docs/evidencias/red-C-35/dialogo-abre.txt`.
-- [ ] 6.2 **GREEN** — Crear `LoginDialog.tsx` y `LoginDialog.module.css`; componer `Dialog` con `labelledBy="login-heading"` y `returnFocusRef`, montar `LoginForm` y el botón “Ver la clínica”. No reimplementar apertura/cierre, Escape, `cancel` ni retorno de foco. Guardar la salida GREEN.
-- [ ] 6.3 **RED** — Agregar un test de que “Ver la clínica” cierra el diálogo. Guardar la salida RED en `docs/evidencias/red-C-35/dialogo-cierra.txt`.
-- [ ] 6.4 **GREEN** — Implementar el cierre a través de `onClose` de `Dialog`; guardar la salida GREEN.
-- [ ] 6.5 **RED** — Agregar un test de que el mensaje de sesión vencida se muestra dentro del formulario como `role="alert"` con el texto exacto. Guardar la salida RED en `docs/evidencias/red-C-35/dialogo-vencida.txt`.
-- [ ] 6.6 **GREEN** — Pasar `initialNotice` desde `LoginPage`/`LandingPage` a `LoginDialog`/`LoginForm`; guardar la salida GREEN.
-- [ ] 6.7 **RED** — Agregar un test de nombres únicos: con el diálogo abierto, un solo botón “Ingresar” y un botón “Ingresar al sistema” sin `aria-hidden` ni `tabIndex={-1}`. Guardar la salida RED en `docs/evidencias/red-C-35/dialogo-nombres.txt`.
-- [ ] 6.8 **GREEN** — Ajustar el CTA y el submit; guardar la salida GREEN.
-- [ ] 6.9 **RED** — Agregar un test de foco inicial en “Usuario” al abrir el diálogo. Guardar la salida RED en `docs/evidencias/red-C-35/dialogo-foco.txt`.
-- [ ] 6.10 **GREEN** — En `LoginDialog`, enfocar `document.getElementById("login-username")` en un `useLayoutEffect` sobre `open`; guardar la salida GREEN.
-- [ ] 6.11 **RED** — Agregar un test de que el `overflow` del body queda en `hidden` con el diálogo abierto y se restaura al cerrar. Guardar la salida RED en `docs/evidencias/red-C-35/dialogo-scroll.txt`.
-- [ ] 6.12 **GREEN** — Implementar el bloqueo y el cleanup en `LoginDialog` (no en `Dialog`); guardar la salida GREEN.
-- [ ] 6.13 Verificar que `LoginDialog` no duplica la lógica genérica: los escenarios de fallback, Escape y `cancel` están cubiertos por `Dialog.test.tsx`, y `LoginDialog.test.tsx` solo prueba lo específico de la portada.
+---
 
-## 7. Reveal accesible
+## 4. Página de Selección de Rol en `/acceso` (`frontend-landing`)
 
-- [ ] 7.1 **RED** — Crear `frontend/src/features/landing/RevealSection.test.tsx` con un test de que sin `IntersectionObserver` la sección no queda pendiente y su contenido es visible. Guardar la salida RED en `docs/evidencias/red-C-35/reveal-sin-observador.txt`.
-- [ ] 7.2 **GREEN** — Crear `RevealSection.tsx` y `RevealSection.module.css`; guardar la salida GREEN.
-- [ ] 7.3 **RED** — Agregar un test con observador inyectado: estado `pending` al montar, `revealed` al disparar el callback y cleanup al desmontar. Guardar la salida RED en `docs/evidencias/red-C-35/reveal-observador.txt`.
-- [ ] 7.4 **GREEN** — Crear `revealObserver.ts` e implementar la suscripción/cleanup; guardar la salida GREEN.
-- [ ] 7.5 **RED** — Agregar un test de reduced motion (sin estado pendiente) y de que el contenido sigue en el DOM durante la animación. Guardar la salida RED en `docs/evidencias/red-C-35/reveal-reduced.txt`.
-- [ ] 7.6 **GREEN** — Implementar la detección de reduced motion y el estado inicial revelado; guardar la salida GREEN.
-- [ ] 7.7 **GREEN** — Envolver las cuatro secciones con `RevealSection` y ajustar el CSS; correr todos los tests de la feature.
+- [ ] 4.1 **RED** — Crear `frontend/src/features/landing/AccesoPage.test.tsx` con tests que comprueben:
+  - Título "¿Cómo querés ingresar?".
+  - Tres tarjetas-enlace para Recepción (`/login?rol=recepcion`), Odontología (`/login?rol=odontologo`) y Administración (`/login?rol=administrador`).
+  - Tarjetas con superficie oscura y borde de 1 px.
+  - Texto explicativo "El rol se confirma al ingresar".
+  - Enlace "← Volver a Aqua" sin caja hacia `/`.
+  - Guardar salida RED en `docs/evidencias/red-C-35/acceso-tarjetas.txt`.
+- [ ] 4.2 **GREEN** — Crear `frontend/src/features/landing/AccesoPage.tsx` y `AccesoPage.module.css`. Registrar la ruta `/acceso` al final de `createAppRoutes` en `frontend/src/App.tsx`. Correr el test y verificar verde. Guardar en `docs/evidencias/green-C-35/acceso-tarjetas.txt`.
 
-## 8. Wrapper `LoginPage` y regresión
+---
 
-- [ ] 8.1 **RED** — Agregar a `LandingPage.test.tsx` un test de que `LoginPage` renderiza la portada y calcula el aviso de sesión vencida. Guardar la salida RED en `docs/evidencias/red-C-35/loginpage-wrapper.txt`.
-- [ ] 8.2 **GREEN** — Convertir `LoginPage.tsx` en wrapper delgado de `LandingPage`, conservando `LoginPageProps` y el cálculo `lastEvent`/`location.state`; guardar la salida GREEN.
-- [ ] 8.3 Ejecutar sin modificar: `npx vitest run src/features/login/LoginPage.test.tsx src/features/login/LoginBrand.test.tsx src/features/login/LoginCarousel.test.tsx src/App.test.tsx src/test/smoke.test.tsx` desde `frontend/`; los cinco archivos deben quedar en verde.
-- [ ] 8.4 Verificar con `git diff --stat` que los cinco archivos de test existentes no tienen cambios; el diff debe estar vacío. Si un escenario obliga a modificarlos, frenar y reportar en vez de editar el test.
-- [ ] 8.5 Ejecutar la suite completa `npm run test:run` y guardar `docs/evidencias/suite-C-35.txt`; comparar con `baseline-C-35.txt` y confirmar que no hay regresiones.
+## 5. Login Translúcido en `/login` (`frontend-auth-session`)
 
-## 9. Evidencias, mutaciones y trazabilidad
+- [ ] 5.1 **RED** — Crear un test en `LoginPage.test.tsx` (o archivo dedicado `LoginPage.translucido.test.tsx`) que verifique:
+  - Enlace "← Volver" (hacia `/acceso` o `/`).
+  - Etiqueta de rol visible cuando se pasa `?rol=recepcion` ("Recepción"), `?rol=odontologo` ("Odontología") o `?rol=administrador` ("Administración").
+  - Ausencia de etiqueta si `?rol` no se proporciona o si es desconocido.
+  - Tarjeta del formulario con clase translúcida y fallback sólido.
+  - Botón "Ingresar" con flecha indicadora.
+  - Guardar salida RED en `docs/evidencias/red-C-35/login-translucido.txt`.
+- [ ] 5.2 **GREEN** — Actualizar `frontend/src/features/login/LoginPage.tsx` y `LoginPage.module.css` (y `LoginForm.tsx` si aplica):
+  - Incorporar la lectura de `useSearchParams()` para `?rol`.
+  - Aplicar superficie navy translúcida (`backdrop-filter: blur(12px)` con fallback sólido), borde ice/accent a baja opacidad y campos oscuros con línea fina.
+  - Agregar transición de entrada fade + desplazamiento desactivable ante reduced motion.
+  - Asegurar que el aviso de sesión vencida despliega `SESSION_EXPIRED_MESSAGE` ("La sesión venció. Iniciá sesión de nuevo.").
+  - Correr el test y verificar verde. Guardar en `docs/evidencias/green-C-35/login-translucido.txt`.
+- [ ] 5.3 **Regresión Login**: Ejecutar la suite original de login: `npx vitest run src/features/login/LoginPage.test.tsx src/features/login/LoginBrand.test.tsx src/features/login/LoginCarousel.test.tsx` y confirmar que todos los tests históricos pasan sin alteraciones. Guardar en `docs/evidencias/green-C-35/login-regresion.txt`.
 
-- [ ] 9.1 Revisar que cada test nuevo tiene su salida RED y GREEN guardada en `docs/evidencias/red-C-35/` y `docs/evidencias/green-C-35/`; completar las que falten.
-- [ ] 9.2 Crear `docs/evidencias/mutaciones-C-35.py` tomando como base `mutaciones-C-34.py`: una mutación por cada test nuevo de la tabla de trazabilidad, incluidas las de la primitiva `Dialog`, aplicada una sola vez, restaurada en `finally`, preservando LF/CRLF. El detector de inválidas debe marcar inválida una mutación si el archivo de test no carga, si el test exacto no se ejecuta, si el error no es de aserción o si el primer frame fuera de `node_modules` no es `*.test.ts(x)`.
-- [ ] 9.3 Ejecutar `python docs/evidencias/mutaciones-C-35.py` desde la raíz; generar `docs/evidencias/mutaciones-C-35.txt` y regenerar la tabla de `verify-C-35.md` entre `<!-- mutaciones:inicio -->` y `<!-- mutaciones:fin -->`. El script debe salir 0 solo si todas las mutaciones hacen fallar su test, hay 0 inválidas y el SHA-256 del código de producción queda igual (`SHA-256 sin cambios: si`). El `RESUMEN` final debe mostrar 0 inválidas.
-- [ ] 9.4 Crear `docs/evidencias/trazabilidad-C-35.py` y usarlo para completar la tabla escenario → test → mutación en `verify-C-35.md`; los escenarios marcados “verificación visual (captura)” van sin mutación y con la captura pendiente a cargo de Claude.
-- [ ] 9.5 Crear `docs/evidencias/verify-C-35.md` con el encabezado, el estado, la tabla de mutaciones y una sección **“Desvíos”** que registre D4, D5 y “Ver la clínica” respecto del explore. Verificar que todos los archivos de evidencia estén en UTF-8 y que no contengan datos reales de pacientes.
-- [ ] 9.6 Ejecutar `cmd /c openspec validate --all --strict` y guardar la salida en `docs/evidencias/openspec-C-35.txt`; deben validar 15 elementos (14 specs + este change) con 0 fallos.
+---
 
-## 10. Calidad
+## 6. Modales Claros Suaves de la Agenda (Decisión A, `frontend-foundation`)
 
-- [ ] 10.1 Ejecutar `npm run typecheck` desde `frontend/`; registrar el comando y el código de salida en `verify-C-35.md`. Debe salir 0.
-- [ ] 10.2 Ejecutar `npm run lint` desde `frontend/`; registrar el comando y el código de salida en `verify-C-35.md`. Debe salir 0.
-- [ ] 10.3 Ejecutar `npm run build` desde `frontend/`; registrar el comando y el código de salida en `verify-C-35.md`. Debe salir 0.
-- [ ] 10.4 Confirmar que no se agregaron dependencias ni se tocaron `App.tsx`, `AuthContext`, `tokenStore`, el cliente de API, el backend, Docker o `.env`.
+- [ ] 6.1 **RED** — Crear `frontend/src/shared/components/DialogTheme.test.tsx` que verifique la presencia de las clases y estilos de superficie clara suave marfil-hielo en `Dialog.module.css`, `AppointmentFormDialog.module.css`, `AppointmentDetailDialog.module.css` y `AppointmentRescheduleDialog.module.css`: fondo marfil-hielo translúcido (`rgba(243, 247, 250, 0.95)`), borde fino de 1 px, `::backdrop` con desenfoque suave y sombra sutil. Guardar salida RED en `docs/evidencias/red-C-35/modales-claros.txt`.
+- [ ] 6.2 **GREEN** — Actualizar los CSS modules de los cuatro componentes modales aplicando los tokens y valores de superficie clara suave marfil-hielo, sin alterar markup ni props. Correr el test y verificar verde. Guardar en `docs/evidencias/green-C-35/modales-claros.txt`.
+- [ ] 6.3 **Regresión Modales**: Ejecutar `npx vitest run src/shared/components/Dialog.test.tsx src/features/appointments/` y confirmar que todos los tests de C-29 y C-30 continúan pasando al 100%. Guardar en `docs/evidencias/green-C-35/modales-regresion.txt`.
 
-## 11. Verificación visual independiente (no la ejecuta apply)
+---
 
-- [ ] 11.1 **Capturas 1440, 768 y 390 px — A CARGO DE CLAUDE (verificación independiente).** NO ejecutar en apply; se completa después, con el build levantado, para revisar hero de 60vh, carrusel sin recortes, overlay legible, backdrop y tarjeta vidrio, focus trap nativo, scroll bloqueado, reveal suave, reduced motion, jerarquía de las cuatro secciones, marcas de demo y cero overflow horizontal. Sin capturas aprobadas no se archiva C-35.
+## 7. AppShell con Navegación sin Cajas (`frontend-foundation`)
+
+- [ ] 7.1 **RED** — Crear un test en `frontend/src/shared/components/AppShellNavigation.test.tsx` que valide:
+  - Los enlaces de navegación no tienen fondos de caja.
+  - El ítem activo ("Agenda") posee línea fina inferior y `aria-current="page"`.
+  - El badge "Próximamente" se renderiza sin borde exterior ni caja de pastilla (como texto secundario plano).
+  - En viewport de escritorio (1440 px), la barra de encabezado ubica marca, menú y bloque de sesión en la misma fila horizontal.
+  - Guardar salida RED en `docs/evidencias/red-C-35/appshell-sin-cajas.txt`.
+- [ ] 7.2 **GREEN** — Modificar `frontend/src/shared/components/AppShell.module.css` (y `AppShell.tsx` si es necesario):
+  - Mantener los `<button disabled data-menu-item="...">` para preservar compatibilidad con `AppShell.test.tsx`.
+  - Resetear en CSS los bordes y fondos de `.menuButton` y `.badge`.
+  - Estilizar el enlace activo con línea inferior en `--color-primary` o `--color-accent`.
+  - Configurar flexbox en `.topBar` para alinear marca, nav y controles de sesión en una sola línea en 1440 px.
+  - Correr el test y verificar verde. Guardar en `docs/evidencias/green-C-35/appshell-sin-cajas.txt`.
+- [ ] 7.3 **Regresión AppShell**: Ejecutar `npx vitest run src/shared/components/AppShell.test.tsx src/shared/components/AppShellBrand.test.tsx src/features/auth/menuFor.test.ts` y verificar que todos los tests existentes pasan intactos. Guardar en `docs/evidencias/green-C-35/appshell-regresion.txt`.
+
+---
+
+## 8. Verificación, Suite de Regresión y Calidad
+
+- [ ] 8.1 **Actualizar `smoke.test.tsx` (Único desvío autorizado)**:
+  - Modificar `frontend/src/test/smoke.test.tsx` para esperar el heading accesible `"Aqua — Clínica Odontológica"` en lugar de `"Turnos Odontología"`.
+  - Ejecutar `npx vitest run src/test/smoke.test.tsx` y confirmar que pasa en verde. Guardar en `docs/evidencias/green-C-35/smoke.txt`.
+- [ ] 8.2 **Verificación de inmutabilidad de tests existentes**:
+  - Ejecutar `git diff --stat` sobre los archivos de test preexistentes.
+  - Verificar que el **único** archivo modificado es `frontend/src/test/smoke.test.tsx`; todos los demás deben mostrar 0 diferencias.
+- [ ] 8.3 **Suite de pruebas completa**:
+  - Ejecutar `npm run test:run` desde `frontend/` y volcar la salida completa a `docs/evidencias/suite-C-35.txt`.
+  - Comparar contra `baseline-C-35.txt` verificando que la totalidad de pruebas pasa y no hay regresiones.
+- [ ] 8.4 **Mutaciones y Trazabilidad**:
+  - Crear `docs/evidencias/mutaciones-C-35.py` con una mutación por cada test nuevo implementado.
+  - Ejecutar `python docs/evidencias/mutaciones-C-35.py` asegurando 0 mutaciones inválidas y restauración íntegra del código. Volcar a `docs/evidencias/mutaciones-C-35.txt`.
+  - Crear `docs/evidencias/trazabilidad-C-35.py` y generar la matriz escenario → test → mutación en `docs/evidencias/verify-C-35.md`.
+- [ ] 8.5 **Comprobación estricta de calidad y OpenSpec**:
+  - Ejecutar `npm run typecheck` (debe terminar con exit code 0).
+  - Ejecutar `npm run lint` (debe terminar con exit code 0).
+  - Ejecutar `npm run build` (debe terminar con exit code 0).
+  - Ejecutar `cmd /c openspec validate ui-portada-y-acceso --strict` y `cmd /c openspec validate --all --strict` (ambos deben terminar con exit code 0). Volcar a `docs/evidencias/openspec-C-35.txt`.
+
+---
+
+## 9. Verificación Visual Independiente (A Cargo de Claude)
+
+- [ ] 9.1 **Capturas en navegador real a 1440 px, 768 px y 390 px**:
+  - Levantar el servidor de desarrollo (`npm run dev`) con datos de demostración del seed.
+  - Capturar portada pública `/` en escritorio (1440 px), tablet (768 px) y móvil (390 px): validar hero de al menos 60vh, carrusel atenuado, enlaces de texto sin cajas, franja de demo y dos columnas editoriales.
+  - Capturar animación de reveal lateral y comprobación con `prefers-reduced-motion`.
+  - Capturar pantalla `/acceso` en 1440, 768 y 390 px: validar tres tarjetas oscuras con borde que se aclara en hover/focus.
+  - Capturar pantalla `/login` en 1440, 768 y 390 px: validar formulario translúcido con `backdrop-filter: blur`, fallback sólido, contraste AA y etiqueta de rol cuando se pasa `?rol`.
+  - Capturar modales de la agenda (`AppointmentFormDialog`, etc.): validar superficie clara suave marfil-hielo y desenfoque leve en backdrop.
+  - Capturar `AppShell`: validar navegación sin cajas y alineación en una sola línea a 1440 px.
+  - Guardar todas las capturas en `docs/evidencias/capturas/C-35-*.png` e incorporarlas al reporte final en `verify-C-35.md`.
+
+---
 
 ## Workflow Follow-up
 
-- Archivar C-35 (`/opsx:archive ui-portada-y-acceso`) solo después de las capturas de 11.1 y de la aprobación de la autora; no commitear ni pushear sin pedido explícito.
-- Si aparece un choque con un test existente, frenar y reportar antes de modificar cualquier test.
+- No archivar C-35 (`/opsx:archive ui-portada-y-acceso`) hasta que todas las tareas y capturas de la fase 9 estén completas y aprobadas por la autora.
+- No commitear ni hacer `git push` sin instrucción explícita de la usuaria.

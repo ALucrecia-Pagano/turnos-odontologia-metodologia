@@ -2,36 +2,64 @@
 
 ## Why
 
-C-34 dejó la identidad visual y el carrusel, pero `/login` sigue siendo una tarjeta aislada: no presenta la clínica ni explica qué hace el sistema antes de pedir credenciales. La portada pública cierra esa brecha y mantiene el acceso a un clic, sin tocar autenticación, rutas ni reglas de negocio. Se ejecuta ahora porque C-34 está archivado (2026-11-09) y C-35 es el prerrequisito visual de C-36 y del resto de la UI de agenda.
+El change C-34 aplicó la identidad visual inicial y el carrusel de fotografías, pero `/login` seguía siendo un formulario aislado sin presentar la clínica ni contextualizar el servicio antes de solicitar credenciales. Una primera versión exploratoria en la rama `c35-apply` (commit `cea858b`) intentó montar la portada en `/login` abriendo el formulario dentro de un diálogo modal propio. Dicha versión quedó **descartada**: partió de `main` antes de que se integraran y archivaran los changes C-29 (`ui-formulario-nuevo-turno`) y C-30 (`ui-acciones-turno-y-estados`), introdujo un `Dialog` redundante y forzó un flujo modal complejo en el acceso.
+
+Con C-29 y C-30 ya archivados en `main`, la primitiva `Dialog` ya existe canónicamente en `frontend/src/shared/components/Dialog.tsx`. Este rediseño completo de C-35 adopta una **estética oscura editorial** refinada (con nivel de cuidado de referencia estilo Luti, sin copiar), distribuye la experiencia en rutas limpias (`/` para la portada pública a pantalla completa, `/acceso` para la selección visual del rol y `/login` para el formulario translúcido), unifica los modales de la agenda bajo una superficie clara suave marfil-hielo (Decisión A) y estrena una barra de navegación en `AppShell` sin cajas contenedoras.
+
+## Reutilización desde c35-apply
+
+La rama `c35-apply` (`cea858b`) **no se rebasa**. El nuevo apply se ejecutará en la rama `c35-apply2` nacida de `main` y reutilizará, leyéndolos exclusivamente con `git show c35-apply:<ruta>` (sin checkout de ramas descartadas), los siguientes componentes y utilidades probadas:
+
+1. `frontend/src/features/landing/RevealSection.tsx` (+ `RevealSection.module.css` + `RevealSection.test.tsx`): contenedor con observador inyectable y detección de reduced motion, actualizando su transición CSS a `translateX` (200-250 ms).
+2. `frontend/src/features/landing/revealObserver.ts`: contratos de observación por intersección y detección de accesibilidad.
+3. `frontend/src/features/landing/landingContent.ts` (+ `landingContent.test.ts`): contenidos tipados de las cuatro secciones editoriales, horarios de atención, servicios del consultorio y teléfono ficticio `(0261) 555-0101`.
+4. `frontend/src/features/login/carouselTicker.ts`: temporizador desacoplado de timers globales para el avance del carrusel.
+5. `frontend/src/shared/styles/landingTokens.test.ts`: suite de verificación estática de tokens de layout y preservación de paleta.
+6. Tokens de layout incorporados a `frontend/src/shared/styles/tokens.css`: `--landing-hero-min-height: 60vh;` y `--landing-content-max-width: 1120px;`.
+
+**Archivos descartados de `c35-apply`**:
+- `frontend/src/features/landing/LoginDialog.tsx` (+ `.module.css` y `.test.tsx`): descartado por completo; el login ya no es un diálogo modal.
+- `frontend/src/shared/components/Dialog.tsx` de esa rama: descartado; se preserva la primitiva canónica de C-29 ya presente en `main`.
 
 ## What Changes
 
-- **Portada pública en `/login`**: `LoginPage` pasa a ser un wrapper delgado de `LandingPage`; el hero reutiliza el carrusel de C-34 y el diálogo de login se abre al entrar. No se agregan rutas ni se altera el orden de `createAppRoutes`.
-- **Hero con marca y acceso**: el `<h1>` contiene el logo claro (la marca se anuncia una sola vez por el `alt`), la bajada "Claridad en cada cuidado.", un lead, el badge "Sitio de demostración" y el CTA "Ingresar al sistema".
-- **Diálogo de acceso**: `<dialog>` nativo con heading "Turnos Odontología", foco en Usuario, Escape, botón "Ver la clínica", retorno de foco y bloqueo del scroll del fondo. En jsdom se usa el atributo `open` cuando `showModal` no existe, sin stubs de globals.
-- **Primitiva `Dialog` compartida**: `frontend/src/shared/components/Dialog.tsx` concentra el `<dialog>` modal (`open`, `onClose`, `labelledBy`, `returnFocusRef`, `children`), el fallback `showModal`/`open`, Escape/`cancel` y el retorno de foco. `LoginDialog` la compone y conserva el scroll lock y el foco en Usuario; C-29 (dar turno) y C-30 (reprogramar) la reutilizan para no duplicar el modal.
-- **Cuatro secciones informativas**: Quiénes somos, Servicios, Equipo y Horarios y contacto, con datos ficticios del seed, horarios reales de la demo y marcas visibles de demostración.
-- **Reveal accesible**: las secciones se animan al scrollear con un observador inyectable; sin `IntersectionObserver` o con `prefers-reduced-motion` el contenido queda visible.
-- **Tokens de layout**: `--landing-hero-min-height` y `--landing-content-max-width` en `tokens.css`, sin colores nuevos.
-- **Specs**: nueva capability `frontend-landing`; delta de `frontend-auth-session` para la bajada y la tarjeta que pasan a la portada y al diálogo; delta de `frontend-foundation` por los tokens de layout y la primitiva `Dialog` reutilizable.
-
-**Fuera de alcance:** tema oscuro y responsive para celular (C-36 `ui-tema-oscuro-y-movil`); formulario de dar turno (C-29) y acciones de reprogramar/cancelar/estados (C-30); arreglo del fallo preexistente de `Logout.test.tsx` (va aparte). No se toca la lógica de autenticación, la API ni el dominio.
+- **Portada pública a pantalla completa en `/`**: para usuarios anónimos, la ruta raíz despliega la portada completa con el carrusel de fotografías bajo un overlay navy oscuro. Incluye navegación superior de texto sin cajas (`Inicio`, `La clínica`, `Acceder`, con línea fina inferior y `aria-current="page"` en el activo), `<h1>` con logo claro informativo (`alt="Aqua — Clínica Odontológica"`), eslogan grande "Claridad en cada cuidado.", lead breve, CTA único "Explorar la clínica →" (único botón primario de la vista), badge "Sitio de demostración", línea fina en color accent, franja de "Estado actual" (demostración) y teléfono ficticio `(0261) 555-0101`. Con sesión iniciada, `/` conserva su comportamiento actual de `RootRedirect` hacia `/agenda?date=<hoy>`.
+- **Secciones editoriales con reveal lateral**: "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto" diagramadas en dos columnas editoriales, que entran desde el lateral al hacer scroll mediante `RevealSection` (`translateX` + opacidad, 200-250 ms, sin animación ante `prefers-reduced-motion`).
+- **Página de selección de rol en `/acceso`**: vista limpia con el encabezado "¿Cómo querés ingresar?", tres tarjetas-enlace oscuras con borde de 1 px que se aclara en hover y focus ("Recepción", "Odontología", "Administración" con destino a `/login?rol=recepcion|odontologo|administrador`), el texto explicativo "El rol se confirma al ingresar" (el rol en la URL es meramente presentacional; la autorización real la decide el backend en el JWT) y enlace "← Volver a Aqua" sin caja.
+- **Página de login translúcida en `/login`**: página limpia con enlace "← Volver", etiqueta visual de rol si viene el query param `?rol` (sin etiqueta si no viene o si es inválido), logo claro, bajada "Claridad en cada cuidado." y heading accesible "Turnos Odontología". La tarjeta del formulario se posa sobre el carrusel difuminado con superficie navy translúcida (`backdrop-filter: blur(12px)` con fallback sólido si no hay soporte), borde de 1 px ice/accent a baja opacidad, texto claro con contraste AA garantizado, campos oscuros con línea fina que se aclara en focus, etiquetas en mayúsculas con letter-spacing, entrada animada con fade + desplazamiento corto (200-250 ms, desactivada con reduced motion) y botón "Ingresar" con flecha indicadora en hover. Funciona con o sin `?rol`, conserva redirecciones internas seguras y despliega el mensaje literal de sesión vencida `SESSION_EXPIRED_MESSAGE` ("La sesión venció. Iniciá sesión de nuevo.").
+- **Modales de la agenda claros suaves (Decisión A)**: `Dialog`, `AppointmentFormDialog`, `AppointmentDetailDialog` y `AppointmentRescheduleDialog` adoptan una superficie clara suave marfil-hielo apenas translúcida (`rgba(243, 247, 250, 0.95)`), `::backdrop` con desenfoque leve (`backdrop-filter: blur(4px)`), borde fino de 1 px, sombra suave, títulos Jost y etiquetas editoriales, sin alterar markup ni comportamiento que usen los tests existentes.
+- **Barra de la aplicación (`AppShell`) sin cajas**: navegación con enlaces de texto plano, línea fina inferior en el ítem activo (`aria-current="page"`), "Próximamente" renderizado como texto secundario plano (sin pastilla ni borde) y bloque de sesión en la misma línea a 1440 px. Preserva los `<button disabled data-menu-item="...">` para no alterar los tests existentes de `AppShell.test.tsx`.
+- **Rutas y tests existentes**: las rutas nuevas se añaden al final de `createAppRoutes` preservando `routes[0]=/login` y `routes[1]=/` (clave para `App.test.tsx:186-192`). El único test existente modificado es `frontend/src/test/smoke.test.tsx`, que ahora valida el heading accesible "Aqua — Clínica Odontológica" en `/` debido a la incorporación de la portada pública en la raíz.
 
 ## Capabilities
 
 ### New Capabilities
 
-- `frontend-landing`: portada pública de la clínica en `/login`, hero con marca y carrusel, secciones informativas con datos ficticios, diálogo de acceso y reveal accesible.
+- `frontend-landing`: portada pública editorial en `/`, secciones con reveal lateral `translateX`, página intermedia `/acceso` con tres roles y navegación de texto sin cajas.
 
 ### Modified Capabilities
 
-- `frontend-auth-session`: el requisito "Bajada y tarjeta del login" cambia porque la bajada queda en la portada y la tarjeta del formulario pasa al diálogo de acceso.
-- `frontend-foundation`: se agregan el requisito de tokens de layout de la portada (`--landing-hero-min-height` y `--landing-content-max-width`) y el requisito de la primitiva `Dialog` modal reutilizable que comparten la portada, C-29 y C-30.
+- `frontend-auth-session`: actualización del requisito `Login` para describir la página `/login` translúcida con `backdrop-filter: blur`, fallback sólido, soporte de etiqueta presentacional `?rol`, botón "Ingresar" con flecha en hover, contraste AA, redirecciones con `from` y despliegue del mensaje literal `SESSION_EXPIRED_MESSAGE`.
+- `frontend-foundation`: tokens de layout (`--landing-hero-min-height`, `--landing-content-max-width`), tokens y estilos de superficies (navy oscura translúcida para login/portada y marfil-hielo suave para modales de la agenda), y navegación de `AppShell` sin cajas. Se elimina el requisito de "Diálogo modal reutilizable", ya que la primitiva `Dialog` fue provista canónicamente por C-29.
 
 ## Impact
 
-- **Código nuevo**: `frontend/src/shared/components/Dialog.tsx` (+ `Dialog.module.css` y `Dialog.test.tsx`) y `frontend/src/features/landing/` (`LandingPage.tsx`, `LandingPage.module.css`, `LoginDialog.tsx` + estilos, `RevealSection.tsx` + estilos, `landingContent.ts`, `revealObserver.ts` y tests).
-- **Código modificado**: `frontend/src/features/login/LoginPage.tsx` (wrapper delgado que conserva `carouselTicker` y `prefersReducedMotion`), `frontend/src/shared/styles/tokens.css` (tokens de layout) y, si hace falta, estilos compartidos del carrusel.
-- **Sin cambios**: `frontend/src/App.tsx`, `RequireAuth`/`PublicOnlyRoute`, `AuthContext`, `tokenStore`, cliente de API, backend, base de datos, Docker y `.env`.
-- **Tests existentes**: `LoginPage.test.tsx`, `LoginBrand.test.tsx`, `LoginCarousel.test.tsx`, `App.test.tsx`, `smoke.test.tsx` y el resto de la suite MUST seguir pasando sin cambios. Si un escenario obliga a modificarlos, se frena y se reporta.
-- **Evidencias**: RED por test nuevo, mutaciones con detector de inválidas, trazabilidad escenario → test → mutación (visuales sin mutación), suite, `tsc`, ESLint, build y capturas 1440/768/390 px a cargo de Claude en la verificación independiente.
+- **Archivos nuevos**:
+  - `frontend/src/features/landing/LandingPage.tsx` (+ `.module.css` y `LandingPage.test.tsx`)
+  - `frontend/src/features/landing/AccesoPage.tsx` (+ `.module.css` y `AccesoPage.test.tsx`)
+  - `frontend/src/features/landing/RevealSection.tsx` (+ `.module.css` y `RevealSection.test.tsx`, adaptados desde `c35-apply`)
+  - `frontend/src/features/landing/revealObserver.ts` (reutilizado desde `c35-apply`)
+  - `frontend/src/features/landing/landingContent.ts` (+ `landingContent.test.ts`, reutilizados desde `c35-apply`)
+  - `frontend/src/features/login/carouselTicker.ts` (reutilizado desde `c35-apply`)
+  - `frontend/src/shared/styles/landingTokens.test.ts` (reutilizado desde `c35-apply`)
+- **Archivos modificados**:
+  - `frontend/src/App.tsx`: configuración de `createAppRoutes` para atender `/` con la portada pública cuando no hay sesión, y agregar `/acceso` al final de la lista de rutas.
+  - `frontend/src/features/login/LoginPage.tsx` (+ `LoginPage.module.css` y `LoginForm.tsx`): diseño translúcido oscuro editorial, lectura de `?rol`, enlace "← Volver", animación de entrada.
+  - `frontend/src/shared/components/AppShell.tsx` (+ `AppShell.module.css`): navegación sin cajas, badge "Próximamente" plano y bloque de sesión en línea en escritorio.
+  - `frontend/src/shared/components/Dialog.module.css`, `AppointmentFormDialog.module.css`, `AppointmentDetailDialog.module.css`, `AppointmentRescheduleDialog.module.css`: superficie clara suave marfil-hielo y desenfoque leve en backdrop.
+  - `frontend/src/shared/styles/tokens.css`: adición de `--landing-hero-min-height: 60vh;` y `--landing-content-max-width: 1120px;`.
+  - `frontend/src/test/smoke.test.tsx`: única prueba existente actualizada para esperar "Aqua — Clínica Odontológica".
+- **Sin impacto / no tocados**:
+  - Backend, base de datos, migraciones, Docker y `.env`.
+  - Lógica de autenticación (`AuthContext.tsx`, `tokenStore.ts`, `RequireAuth.tsx`, `PublicOnlyRoute.tsx`).
+  - Primitiva estructural `Dialog.tsx` (solo se ajustan sus estilos en `.module.css`).
