@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EmptyState } from "../../shared/components/EmptyState";
-import type { AgendaResponse, Professional } from "./agendaApi";
+import type { AgendaAppointment, AgendaResponse, Professional } from "./agendaApi";
 import { AgendaGrid } from "./AgendaGrid";
 import {
   computeAxis,
@@ -24,6 +24,7 @@ export interface AgendaViewProps {
   readonly filterChairId?: string | null;
   readonly isRefreshing?: boolean;
   readonly catalogWarning?: string | null;
+  readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;
 }
 
 export function AgendaView({
@@ -38,6 +39,7 @@ export function AgendaView({
   filterChairId = null,
   isRefreshing = false,
   catalogWarning = null,
+  onSelectAppointment,
 }: AgendaViewProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const isWeekView = view === "week";
@@ -156,6 +158,7 @@ export function AgendaView({
             appointments={filteredAppointments}
             view={view}
             caption={isWeekView ? weekLabel : undefined}
+            onSelectAppointment={onSelectAppointment}
           />
         )
       ) : (
@@ -176,6 +179,7 @@ export function AgendaView({
             axis={axis}
             columns={columns}
             view={view}
+            onSelectAppointment={onSelectAppointment}
           />
         </>
       )}

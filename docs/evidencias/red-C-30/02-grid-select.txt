@@ -1,0 +1,66 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaGrid.accionable.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 143[2mms[22m[39m
+[31m   [31m×[31m AgendaGrid — Turnos accionables[2m > [22mcada turno en AgendaGrid es un button type=button accesible con aria-label completo[39m[32m 127[2mms[22m[39m
+[31m     → expected 'ARTICLE' to be 'BUTTON' // Object.is equality[39m
+[31m   [31m×[31m AgendaGrid — Turnos accionables[2m > [22mal pulsar el turno invoca onSelectAppointment con los datos del turno[39m[32m 15[2mms[22m[39m
+[31m     → expected null to deeply equal { …(12) }[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaGrid.accionable.test.tsx[2m > [22mAgendaGrid — Turnos accionables[2m > [22mcada turno en AgendaGrid es un button type=button accesible con aria-label completo
+[31m[1mAssertionError[22m: expected 'ARTICLE' to be 'BUTTON' // Object.is equality[39m
+
+Expected: [32m"BUTTON"[39m
+Received: [31m"ARTICLE"[39m
+
+[36m [2m❯[22m src/features/agenda/AgendaGrid.accionable.test.tsx:[2m60:26[22m[39m
+    [90m 58| [39m
+    [90m 59| [39m    const card = screen.getByTestId(`agenda-appointment-${APPOINTMENT.…
+    [90m 60| [39m    [34mexpect[39m(card[33m.[39mtagName)[33m.[39m[34mtoBe[39m([32m"BUTTON"[39m)[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m 61| [39m    [34mexpect[39m(card)[33m.[39m[34mtoHaveAttribute[39m([32m"type"[39m[33m,[39m [32m"button"[39m)[33m;[39m
+    [90m 62| [39m    [34mexpect[39m(card)[33m.[39m[34mtoHaveAttribute[39m(
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaGrid.accionable.test.tsx[2m > [22mAgendaGrid — Turnos accionables[2m > [22mal pulsar el turno invoca onSelectAppointment con los datos del turno
+[31m[1mAssertionError[22m: expected null to deeply equal { …(12) }[39m
+
+[32m- Expected:[39m 
+{
+  "chairId": "00000000-0000-0000-0000-0000000000b1",
+  "chairName": "Sillón 1",
+  "endAt": "2026-11-16T13:30:00Z",
+  "id": "00000000-0000-0000-0000-000000000aa1",
+  "patientId": "00000000-0000-0000-0000-0000000000c1",
+  "patientName": "Ana Pérez",
+  "professionalId": "00000000-0000-0000-0000-000000000001",
+  "professionalName": "Dra. Laura Quiroga",
+  "serviceId": "00000000-0000-0000-0000-0000000000d1",
+  "serviceName": "Consulta",
+  "startAt": "2026-11-16T13:00:00Z",
+  "status": "reservado",
+}
+
+[31m+ Received:[39m 
+null
+
+[36m [2m❯[22m src/features/agenda/AgendaGrid.accionable.test.tsx:[2m101:22[22m[39m
+    [90m 99| [39m    const card = screen.getByTestId(`agenda-appointment-${APPOINTMENT.…
+    [90m100| [39m    fireEvent[33m.[39m[34mclick[39m(card)[33m;[39m
+    [90m101| [39m    [34mexpect[39m(selected)[33m.[39m[34mtoEqual[39m([33mAPPOINTMENT[39m)[33m;[39m
+    [90m   | [39m                     [31m^[39m
+    [90m102| [39m  })[33m;[39m
+    [90m103| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 02:08:04
+[2m   Duration [22m 4.52s[2m (transform 297ms, setup 622ms, collect 392ms, tests 143ms, environment 2.36s, prepare 372ms)[22m
+
+exit: 1 

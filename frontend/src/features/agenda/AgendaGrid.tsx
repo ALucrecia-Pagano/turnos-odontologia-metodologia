@@ -25,6 +25,7 @@ export interface AgendaGridProps {
   >[];
   readonly view?: "day" | "week";
   readonly isWeek?: boolean;
+  readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;
 }
 
 const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
@@ -35,7 +36,15 @@ const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
   cancelado: "Cancelado",
 };
 
-export function AgendaGrid({ date, timezone, axis, columns, view, isWeek }: AgendaGridProps) {
+export function AgendaGrid({
+  date,
+  timezone,
+  axis,
+  columns,
+  view,
+  isWeek,
+  onSelectAppointment,
+}: AgendaGridProps) {
   const isWeekView = isWeek ?? view === "week";
   const axisSpan = Math.max(1, axis.endMinute - axis.startMinute);
 
@@ -192,7 +201,8 @@ export function AgendaGrid({ date, timezone, axis, columns, view, isWeek }: Agen
                     .join(" ");
 
                   return (
-                    <article
+                    <button
+                      type="button"
                       key={appt.id}
                       aria-label={cardAriaLabel}
                       title={isCompact ? appt.serviceName : undefined}
@@ -210,6 +220,7 @@ export function AgendaGrid({ date, timezone, axis, columns, view, isWeek }: Agen
                         left: `${leftPercent}%`,
                         width: `${widthPercent}%`,
                       }}
+                      onClick={() => onSelectAppointment?.(appt)}
                     >
                       {isCompact ? (
                         // La hora y el paciente tienen prioridad: en carriles divididos (y en
@@ -240,7 +251,7 @@ export function AgendaGrid({ date, timezone, axis, columns, view, isWeek }: Agen
                           <div className={styles.cardMeta}>{appt.serviceName}</div>
                         </>
                       )}
-                    </article>
+                    </button>
                   );
                 })}
               </div>

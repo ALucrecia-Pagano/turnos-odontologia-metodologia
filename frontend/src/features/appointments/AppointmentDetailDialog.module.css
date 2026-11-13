@@ -1,0 +1,220 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  color: var(--color-text);
+  max-width: 540px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.alertContainer {
+  background-color: var(--color-danger-background);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  color: var(--color-danger-text);
+}
+
+.alertContainer:focus {
+  outline: 2px solid var(--color-focus);
+}
+
+.alertTitle {
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--font-size-sm);
+}
+
+.alertList {
+  margin: 0;
+  padding-left: var(--space-4);
+  font-size: var(--font-size-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.codeBadge {
+  display: inline-block;
+  background-color: var(--color-danger-text);
+  color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: 1px 4px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  margin-right: var(--space-2);
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  background-color: var(--color-background);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.detailLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-bold);
+}
+
+.detailValue {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.historySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+}
+
+.historyHeading {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.actionsBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+}
+
+.terminalNotice {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+  align-self: center;
+}
+
+.primaryButton,
+.secondaryButton,
+.dangerButton {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1px solid transparent;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.primaryButton {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: var(--color-navy);
+}
+
+.secondaryButton {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background-color: var(--color-background);
+}
+
+.dangerButton {
+  background-color: var(--color-surface);
+  color: var(--color-danger-text);
+  border-color: var(--color-danger-border);
+}
+
+.dangerButton:hover:not(:disabled) {
+  background-color: var(--color-danger-background);
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.dangerButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled,
+.dangerButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Subvista de confirmación de cancelación */
+.cancelConfirmBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: var(--color-danger-background);
+  border: 1px solid var(--color-danger-border);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.cancelConfirmWarning {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-danger-text);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Tablet y móvil: min-height 44px */
+@media (max-width: 768px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .primaryButton,
+  .secondaryButton,
+  .dangerButton {
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .actionsBar {
+    flex-direction: column;
+  }
+}

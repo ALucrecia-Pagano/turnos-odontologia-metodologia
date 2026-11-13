@@ -1,0 +1,173 @@
+﻿
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > apertura y foco inicial
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > prellenado con fecha y filtros activos
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > sin filtros activos los selectores quedan sin selecciÃ³n
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+ âœ“ src/features/agenda/AgendaToolbar.test.tsx (2 tests) 1796ms
+   âœ“ AgendaToolbar > renderiza selectores de Profesional y SillÃ³n con opciÃ³n Todos, marca (inactivo), ayuda de sillÃ³n y Limpiar filtros  1138ms
+   âœ“ AgendaToolbar > renderiza el selector de vista [ DÃ­a | Semana ], dispara onSelectView y adapta los botones de navegaciÃ³n a Semana anterior y Semana siguiente  652ms
+ âœ“ src/features/auth/AuthContext.test.tsx (6 tests) 1984ms
+   âœ“ AuthContext > estado checking mientras se verifica la sesiÃ³n  439ms
+   âœ“ AuthContext > error de red en /me conserva el token y permite reintentar  784ms
+   âœ“ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout  334ms
+ âœ“ src/shared/components/AppShell.test.tsx (2 tests) 1781ms
+   âœ“ AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con PrÃ³ximamente  1534ms
+ âœ“ src/features/auth/Logout.test.tsx (1 test) 1503ms
+   âœ“ Logout > cerrar sesiÃ³n desde el shell descarta token y usuario y navega a /login con replace  1482ms
+ âœ“ src/App.test.tsx (6 tests) 2295ms
+   âœ“ App con router y guards de sesiÃ³n > la ruta raÃ­z redirige con replace a /agenda segÃºn el Clock y no renderiza HomePage  600ms
+   âœ“ App con router y guards de sesiÃ³n > una ruta desconocida muestra la pÃ¡gina de no encontrada  1057ms
+ âœ“ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (2 tests) 3311ms
+   âœ“ AgendaPage â€” IntegraciÃ³n con AppointmentFormDialog > al pulsar Nuevo turno abre el diÃ¡logo y tras alta exitosa (201) cierra y refresca la agenda  2109ms
+   âœ“ AgendaPage â€” IntegraciÃ³n con AppointmentFormDialog > tras alta exitosa (201) anuncia el turno creado en una regiÃ³n de estado accesible  1197ms
+ âœ“ src/features/agenda/AgendaView.test.tsx (15 tests) 4169ms
+   âœ“ AgendaView > dibuja el eje 08:00â€“20:00 y las tres columnas en orden alfabÃ©tico estable con inactivo y columna vacÃ­a  1230ms
+   âœ“ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta  496ms
+   âœ“ AgendaView > en un dÃ­a sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista  1199ms
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > pulsar Cancelar cierra el diÃ¡logo sin enviar solicitudes y devuelve el foco al elemento de apertura
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+ âœ“ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests) 5157ms
+   âœ“ AppointmentFormDialog > apertura y foco inicial  1052ms
+   âœ“ AppointmentFormDialog > duraciÃ³n sugerida al elegir prestaciÃ³n  346ms
+   âœ“ AppointmentFormDialog > envÃ­o exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco  781ms
+   âœ“ AppointmentFormDialog > respuesta 409 con violaciones mÃºltiples muestra alert superior intacto con badges y referencias  658ms
+   âœ“ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos  736ms
+   âœ“ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesiÃ³n  355ms
+ âœ“ src/features/agenda/AgendaPage.test.tsx (17 tests) 5939ms
+   âœ“ AgendaPage > carga con fetch y Clock inyectados y al filtrar por SillÃ³n 2 conserva horarios y bloqueos con ayuda visible  1540ms
+   âœ“ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha  1075ms
+   âœ“ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL  546ms
+   âœ“ AgendaPage > muestra ErrorState con Reintentar ante error de red, al reintentar con 200 renderiza la agenda y Actualizar agenda refresca manualmente  442ms
+   âœ“ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de dÃ­a a semana conservando fecha y filtros  479ms
+ âœ“ src/features/login/LoginPage.test.tsx (6 tests) 11107ms
+   âœ“ LoginPage > login correcto del administrador  4022ms
+   âœ“ LoginPage > login correcto de recepciÃ³n y del odontÃ³logo  2255ms
+   âœ“ LoginPage > credenciales invÃ¡lidas con mensaje genÃ©rico  1254ms
+   âœ“ LoginPage > el 401 del login no es sesiÃ³n vencida  1520ms
+   âœ“ LoginPage > envÃ­o en curso y doble submit  1296ms
+   âœ“ LoginPage > accesibilidad del formulario  752ms
+ âœ“ src/features/appointments/PatientSearchGroup.test.tsx (4 tests) 787ms
+   âœ“ PatientSearchGroup > renderizado inicial: input de bÃºsqueda, botÃ³n Buscar paciente habilitado y sin radio buttons  386ms
+ âœ“ src/features/login/LoginBrand.test.tsx (2 tests) 560ms
+   âœ“ LoginPage brand > muestra el logo claro, el heading accesible y la bajada  480ms
+ âœ“ src/shared/components/EmptyState.test.tsx (2 tests) 541ms
+   âœ“ EmptyState > con acciÃ³n muestra el botÃ³n  484ms
+ âœ“ src/features/login/LoginCarousel.test.tsx (5 tests) 828ms
+   âœ“ LoginCarousel > pausa y reanuda el avance sin aria-pressed  468ms
+ âœ“ src/shared/components/ErrorState.test.tsx (4 tests) 523ms
+   âœ“ ErrorState > muestra uno y varios mensajes  318ms
+ âœ“ src/features/agenda/AgendaTable.test.tsx (1 test) 571ms
+   âœ“ AgendaTable > renderiza la tabla semÃ¡ntica con caption, encabezados con scope=col y filas en el mismo orden de la agenda  563ms
+ âœ“ src/features/agenda/useAgenda.test.tsx (3 tests) 660ms
+   âœ“ useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catÃ¡logo con Promise.allSettled  489ms
+ âœ“ src/shared/components/AppShellBrand.test.tsx (2 tests) 828ms
+   âœ“ AppShell brand > muestra una sola barra con logo decorativo, Aqua y ClÃ­nica OdontolÃ³gica  713ms
+ âœ“ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (3 tests) 804ms
+   âœ“ AgendaToolbar â€” AcciÃ³n Nuevo turno > visible para recepciÃ³n y dispara onNewAppointment al clic  477ms
+ âœ“ src/shared/components/Dialog.test.tsx (3 tests) 408ms
+ âœ“ src/shared/components/PageShell.test.tsx (1 test) 385ms
+   âœ“ PageShell > envuelve header, main y footer y renderiza sus hijos  370ms
+ âœ“ src/shared/components/StatusBadge.test.tsx (5 tests) 360ms
+ âœ“ src/test/smoke.test.tsx (1 test) 806ms
+   âœ“ smoke del andamiaje > monta App y muestra el tÃ­tulo  801ms
+ âœ“ src/features/agenda/agendaLayout.test.ts (7 tests) 300ms
+ âœ“ src/shared/components/LoadingState.test.tsx (1 test) 495ms
+   âœ“ LoadingState > renderiza su rol y su texto  491ms
+ âœ“ src/features/agenda/clock.test.ts (1 test) 313ms
+   âœ“ clock > systemClock devuelve el instante actual y createFixedClock inyecta un reloj determinista con new Date() solo en clock.ts  309ms
+ âœ“ src/shared/api/auth.test.ts (3 tests) 613ms
+   âœ“ punto de enganche del token > C-25 no persiste el token  581ms
+ âœ“ src/features/agenda/agendaConfig.test.ts (1 test) 306ms
+ âœ“ src/shared/styles/fonts.test.ts (4 tests) 306ms
+ âœ“ src/features/auth/storageGuard.test.ts (1 test) 172ms
+ âœ“ src/features/agenda/agendaApi.test.ts (3 tests) 49ms
+ âœ“ src/features/agenda/agendaStyles.test.ts (6 tests) 46ms
+ âœ“ src/shared/api/errors.test.ts (6 tests) 40ms
+ âœ“ src/features/agenda/agendaTime.test.ts (6 tests) 115ms
+ âœ“ src/shared/api/client.test.ts (10 tests) 76ms
+ âœ“ src/features/auth/authApi.test.ts (7 tests) 53ms
+ âœ“ src/features/agenda/agendaTimeGuard.test.ts (1 test) 136ms
+ âœ“ src/test/docker.test.ts (3 tests) 39ms
+ âœ“ src/shared/api/client.violations.test.ts (1 test) 24ms
+ âœ“ src/shared/styles/tokens.test.ts (4 tests) 30ms
+ âœ“ src/shared/styles/appointmentStatusTokens.test.ts (2 tests) 33ms
+ âœ“ src/features/auth/tokenStore.test.ts (4 tests) 30ms
+ âœ“ src/features/auth/menuFor.test.ts (3 tests) 22ms
+ âœ“ src/features/auth/safeInternalPath.test.ts (4 tests) 12ms
+ âœ“ src/shared/styles/aquaPalette.test.ts (2 tests) 20ms
+ âœ“ src/test/readmeCredits.test.ts (1 test) 10ms
+ âœ“ src/test/tooling.test.ts (3 tests) 55350ms
+   âœ“ tooling del frontend > npm run typecheck falla con un tipo invÃ¡lido  22491ms
+   âœ“ tooling del frontend > npm run lint detecta una violaciÃ³n  32821ms
+
+ Test Files  47 passed (47)
+      Tests  191 passed (191)
+   Start at  02:01:34
+   Duration  70.65s (transform 13.76s, setup 92.42s, collect 41.08s, tests 105.69s, environment 347.02s, prepare 41.45s)
+
+exit: 0

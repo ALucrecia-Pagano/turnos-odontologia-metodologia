@@ -1,0 +1,32 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaGrid.accionable.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 198[2mms[22m[39m
+[31m   [31m×[31m AgendaGrid — Turnos accionables[2m > [22mcada turno en AgendaGrid es un button type=button accesible con aria-label completo[39m[32m 196[2mms[22m[39m
+[31m     → expected 'ARTICLE' to be 'BUTTON' // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaGrid.accionable.test.tsx[2m > [22mAgendaGrid — Turnos accionables[2m > [22mcada turno en AgendaGrid es un button type=button accesible con aria-label completo
+[31m[1mAssertionError[22m: expected 'ARTICLE' to be 'BUTTON' // Object.is equality[39m
+
+Expected: [32m"BUTTON"[39m
+Received: [31m"ARTICLE"[39m
+
+[36m [2m❯[22m src/features/agenda/AgendaGrid.accionable.test.tsx:[2m60:26[22m[39m
+    [90m 58| [39m
+    [90m 59| [39m    const card = screen.getByTestId(`agenda-appointment-${APPOINTMENT.…
+    [90m 60| [39m    [34mexpect[39m(card[33m.[39mtagName)[33m.[39m[34mtoBe[39m([32m"BUTTON"[39m)[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m 61| [39m    [34mexpect[39m(card)[33m.[39m[34mtoHaveAttribute[39m([32m"type"[39m[33m,[39m [32m"button"[39m)[33m;[39m
+    [90m 62| [39m    [34mexpect[39m(card)[33m.[39m[34mtoHaveAttribute[39m(
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 02:06:08
+[2m   Duration [22m 4.98s[2m (transform 349ms, setup 748ms, collect 439ms, tests 198ms, environment 2.48s, prepare 563ms)[22m
+
+exit: 1 

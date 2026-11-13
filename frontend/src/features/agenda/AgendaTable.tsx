@@ -16,6 +16,7 @@ export interface AgendaTableProps {
   readonly appointments: readonly AgendaAppointment[];
   readonly view?: "day" | "week";
   readonly caption?: string;
+  readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;
 }
 
 const SHORT_WEEKDAY_NAMES = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
@@ -36,6 +37,7 @@ export function AgendaTable({
   appointments,
   view = "day",
   caption,
+  onSelectAppointment,
 }: AgendaTableProps) {
   const isWeek = view === "week";
   const dayLabel = formatDayLabel(date);
@@ -74,6 +76,11 @@ export function AgendaTable({
             <th scope="col" className={styles.th}>
               Estado
             </th>
+            {onSelectAppointment && (
+              <th scope="col" className={styles.th}>
+                Acción
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -98,6 +105,17 @@ export function AgendaTable({
                 <td className={styles.td}>
                   <StatusBadge status={appt.status} />
                 </td>
+                {onSelectAppointment && (
+                  <td className={styles.td}>
+                    <button
+                      type="button"
+                      className={styles.actionButton}
+                      onClick={() => onSelectAppointment(appt)}
+                    >
+                      Ver turno
+                    </button>
+                  </td>
+                )}
               </tr>
             );
           })}

@@ -1,0 +1,39 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentRescheduleDialog.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m5 skipped[39m[2m)[22m[32m 95[2mms[22m[39m
+[31m   [31m×[31m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.1 apertura con paciente y prestación en solo lectura y campos prellenados[39m[32m 93[2mms[22m[39m
+[31m     → expected '' to be '2026-11-16' // Object.is equality[39m
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.5 error 400 marca campos con aria-invalid y mensaje inline
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.6 cancelar reprogramación cierra diálogo y retorna foco
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentRescheduleDialog.test.tsx[2m > [22mAppointmentRescheduleDialog — Reprogramación[2m > [22m6.1 apertura con paciente y prestación en solo lectura y campos prellenados
+[31m[1mAssertionError[22m: expected '' to be '2026-11-16' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 2026-11-16[39m
+
+[36m [2m❯[22m src/features/appointments/AppointmentRescheduleDialog.test.tsx:[2m78:29[22m[39m
+    [90m 76| [39m    const durationInput = screen.getByLabelText(/Duración/i) as HTMLIn…
+    [90m 77| [39m
+    [90m 78| [39m    [34mexpect[39m(dateInput[33m.[39mvalue)[33m.[39m[34mtoBe[39m([32m"2026-11-16"[39m)[33m;[39m
+    [90m   | [39m                            [31m^[39m
+    [90m 79| [39m    [34mexpect[39m(timeInput[33m.[39mvalue)[33m.[39m[34mtoBe[39m([32m"10:00"[39m)[33m;[39m
+    [90m 80| [39m    expect(profSelect.value).toBe("00000000-0000-0000-0000-00000000000…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 02:32:06
+[2m   Duration [22m 4.83s[2m (transform 440ms, setup 692ms, collect 734ms, tests 95ms, environment 2.34s, prepare 455ms)[22m
+
+exit: 1 

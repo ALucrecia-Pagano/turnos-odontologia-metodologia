@@ -1,13 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import { AppointmentDetailDialog } from "../appointments/AppointmentDetailDialog";
 import { AppointmentFormDialog } from "../appointments/AppointmentFormDialog";
+import { AppointmentRescheduleDialog } from "../appointments/AppointmentRescheduleDialog";
 import { ErrorState } from "../../shared/components/ErrorState";
 import { LoadingState } from "../../shared/components/LoadingState";
 import { PageShell } from "../../shared/components/PageShell";
+import type { AgendaAppointment } from "./agendaApi";
 import { DEFAULT_AGENDA_TIMEZONE } from "./agendaConfig";
 import { compareProfessionals } from "./agendaLayout";
-import { addDays, isValidLocalDate, todayInTimeZone, weekRangeOf } from "./agendaTime";
+import {
+  addDays,
+  formatLocalDate,
+  formatLocalTime,
+  isValidLocalDate,
+  todayInTimeZone,
+  weekRangeOf,
+} from "./agendaTime";
 import { AgendaToolbar } from "./AgendaToolbar";
 import { AgendaView } from "./AgendaView";
 import { systemClock, type Clock } from "./clock";
@@ -45,6 +55,8 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     rawDate !== null && !hasValidDate ? INVALID_DATE_NOTICE : null,
   );
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<AgendaAppointment | null>(null);
+  const [isRescheduling, setIsRescheduling] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const newAppointmentBtnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -53,6 +65,33 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
       const [year, month, day] = info.date.split("-");
       setStatusMessage(`Turno creado para el ${day}/${month}/${year} a las ${info.time}.`);
     }
+    void state.refresh();
+  };
+
+  const handleStatusChanged = (newStatus: string) => {
+    if (newStatus === "confirmado") {
+      setStatusMessage("Turno confirmado.");
+    } else if (newStatus === "atendido") {
+      setStatusMessage("Turno marcado como atendido.");
+    } else if (newStatus === "ausente") {
+      setStatusMessage("Turno marcado como ausente.");
+    }
+    void state.refresh();
+  };
+
+  const handleCancelled = () => {
+    setStatusMessage("Turno cancelado.");
+    void state.refresh();
+  };
+
+  const handleRescheduleSuccess = (info: {
+    date: string;
+    time: string;
+    appointment: { startAt: string };
+  }) => {
+    const [year, month, day] = formatLocalDate(info.appointment.startAt, state.timezone).split("-");
+    const time = formatLocalTime(info.appointment.startAt, state.timezone);
+    setStatusMessage(`Turno reprogramado para el ${day}/${month}/${year} a las ${time}.`);
     void state.refresh();
   };
 
@@ -212,6 +251,43 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           filterChairId={chairId}
           isRefreshing={state.phase === "refreshing"}
           catalogWarning={state.catalogWarning}
+          onSelectAppointment={(appt) => {
+            setSelectedAppointment(appt);
+            setIsRescheduling(false);
+          }}
+        />
+      )}
+
+      {selectedAppointment !== null && !isRescheduling && (
+        <AppointmentDetailDialog
+          open={selectedAppointment !== null && !isRescheduling}
+          onClose={() => setSelectedAppointment(null)}
+          appointment={selectedAppointment}
+          client={client}
+          timezone={state.timezone}
+          currentUser={user}
+          onStatusChanged={handleStatusChanged}
+          onCancelled={handleCancelled}
+          onRequestReschedule={(appt) => {
+            setSelectedAppointment(appt);
+            setIsRescheduling(true);
+          }}
+        />
+      )}
+
+      {selectedAppointment !== null && isRescheduling && (
+        <AppointmentRescheduleDialog
+          open={selectedAppointment !== null && isRescheduling}
+          onClose={() => {
+            setIsRescheduling(false);
+            setSelectedAppointment(null);
+          }}
+          appointment={selectedAppointment}
+          client={client}
+          timezone={state.timezone}
+          professionals={state.professionals}
+          chairs={state.chairs}
+          onSuccess={handleRescheduleSuccess}
         />
       )}
 

@@ -1,0 +1,435 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentRescheduleDialog.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 1260[2mms[22m[39m
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.1 apertura con paciente y prestación en solo lectura y campos prellenados
+[31m   [31m×[31m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.2 reprogramación exitosa envía POST con offset exacto y cierra modal[39m[33m 1258[2mms[22m[39m
+[31m     → expected { …(4) } to deeply equal { …(4) }
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<dialog[31m
+        [33maria-labelledby[31m=[32m"reschedule-dialog-title"[31m
+        [33maria-modal[31m=[32m"true"[31m
+        [33mclass[31m=[32m"dialog"[31m
+        [33mopen[31m=[32m""[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"container"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"title"[31m
+            [33mid[31m=[32m"reschedule-dialog-title"[31m
+          [36m>[31m
+            [0mReprogramar turno[0m
+          [36m</h2>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"readonlySection"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"readonlyItem"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"readonlyLabel"[31m
+              [36m>[31m
+                [0mPaciente[0m
+              [36m</span>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"readonlyValue"[31m
+              [36m>[31m
+                [0mAna Pérez[0m
+              [36m</span>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"readonlyItem"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"readonlyLabel"[31m
+              [36m>[31m
+                [0mPrestación[0m
+              [36m</span>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"readonlyValue"[31m
+              [36m>[31m
+                [0mControl[0m
+              [36m</span>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<form[31m
+            [33mclass[31m=[32m"form"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"gridTwoCols"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"field"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"label"[31m
+                  [33mfor[31m=[32m"reschedule-date"[31m
+                [36m>[31m
+                  [0mFecha[0m
+                [36m</label>[31m
+                [36m<input[31m
+                  [33mclass[31m=[32m"input"[31m
+                  [33mid[31m=[32m"reschedule-date"[31m
+                  [33mrequired[31m=[32m""[31m
+                  [33mtype[31m=[32m"date"[31m
+                  [33mvalue[31m=[32m"2026-11-17"[31m
+                [36m/>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"field"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"label"[31m
+                  [33mfor[31m=[32m"reschedule-time"[31m
+                [36m>[31m
+                  [0mHora[0m
+                [36m</label>[31m
+                [36m<input[31m
+                  [33mclass[31m=[32m"input"[31m
+                  [33mid[31m=[32m"reschedule-time"[31m
+                  [33mrequired[31m=[32m""[31m
+                  [33mstep[31m=[32m"300"[31m
+                  [33mtype[31m=[32m"time"[31m
+                  [33mvalue[31m=[32m"11:00"[31m
+                [36m/>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"gridTwoCols"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"field"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"label"[31m
+                  [33mfor[31m=[32m"reschedule-professional"[31m
+                [36m>[31m
+                  [0mProfesional[0m
+                [36m</label>[31m
+                [36m<select[31m
+                  [33mclass[31m=[32m"select"[31m
+                  [33mid[31m=[32m"reschedule-professional"[31m
+                  [33mrequired[31m=[32m""[31m
+                [36m>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"00000000-0000-0000-0000-000000000001"[31m
+                  [36m>[31m
+                    [0mDra. Laura Quiroga[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"00000000-0000-0000-0000-000000000002"[31m
+                  [36m>[31m
+                    [0mDr. Carlos Rossi[0m
+                  [36m</option>[31m
+                [36m</select>[31m
+              [36m</div>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"field"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"label"[31m
+                  [33mfor[31m=[32m"reschedule-chair"[31m
+                [36m>[31m
+                  [0mSillón[0m
+                [36m</label>[31m
+                [36m<select[31m
+                  [33mclass[31m=[32m"select"[31m
+                  [33mid[31m=[32m"reschedule-chair"[31m
+                  [33mrequired[31m=[32m""[31m
+                [36m>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000b1"[31m
+                  [36m>[31m
+                    [0mSillón 1[0m
+                  [36m</option>[31m
+                  [36m<option[31m
+                    [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000b2"[31m
+                  [36m>[31m
+                    [0mSillón 2[0m
+                  [36m</option>[31m
+                [36m</select>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"reschedule-duration"[31m
+              [36m>[31m
+                [0mDuración (minutos)[0m
+              [36m</label>[31m
+              [36m<input[31m
+                [33mclass[31m=[32m"input"[31m
+                [33mid[31m=[32m"reschedule-duration"[31m
+                [33mmax[31m=[32m"480"[31m
+                [33mmin[31m=[32m"5"[31m
+                [33mrequired[31m=[32m""[31m
+                [33mstep[31m=[32m"5"[31m
+                [33mtype[31m=[32m"number"[31m
+                [33mvalue[31m=[32m"45"[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"actionsBar"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"primaryButton"[31m
+                [33mtype[31m=[32m"submit"[31m
+              [36m>[31m
+                [0mGuardar reprogramación[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"secondaryButton"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0mCancelar[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</form>[31m
+        [36m</div>[31m
+      [36m</dialog>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.3 rechazo 409 con violaciones múltiples de solapamiento muestra badges y alert con foco
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.4 rechazo 422 IN_THE_PAST expone mensaje del dominio en alert con foco
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.5 error 400 marca campos con aria-invalid y mensaje inline
+   [2m[90m↓[39m[22m AppointmentRescheduleDialog — Reprogramación[2m > [22m6.6 cancelar reprogramación cierra diálogo y retorna foco
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentRescheduleDialog.test.tsx[2m > [22mAppointmentRescheduleDialog — Reprogramación[2m > [22m6.2 reprogramación exitosa envía POST con offset exacto y cierra modal
+[31m[1mAssertionError[22m[39m: expected { …(4) } to deeply equal { …(4) }
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<dialog[39m
+        [33maria-labelledby[39m=[32m"reschedule-dialog-title"[39m
+        [33maria-modal[39m=[32m"true"[39m
+        [33mclass[39m=[32m"dialog"[39m
+        [33mopen[39m=[32m""[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"container"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"title"[39m
+            [33mid[39m=[32m"reschedule-dialog-title"[39m
+          [36m>[39m
+            [0mReprogramar turno[0m
+          [36m</h2>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"readonlySection"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"readonlyItem"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"readonlyLabel"[39m
+              [36m>[39m
+                [0mPaciente[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"readonlyValue"[39m
+              [36m>[39m
+                [0mAna Pérez[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"readonlyItem"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"readonlyLabel"[39m
+              [36m>[39m
+                [0mPrestación[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"readonlyValue"[39m
+              [36m>[39m
+                [0mControl[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<form[39m
+            [33mclass[39m=[32m"form"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"reschedule-date"[39m
+                [36m>[39m
+                  [0mFecha[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"reschedule-date"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"date"[39m
+                  [33mvalue[39m=[32m"2026-11-17"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"reschedule-time"[39m
+                [36m>[39m
+                  [0mHora[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"reschedule-time"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mstep[39m=[32m"300"[39m
+                  [33mtype[39m=[32m"time"[39m
+                  [33mvalue[39m=[32m"11:00"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"reschedule-professional"[39m
+                [36m>[39m
+                  [0mProfesional[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"reschedule-professional"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000001"[39m
+                  [36m>[39m
+                    [0mDra. Laura Quiroga[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000002"[39m
+                  [36m>[39m
+                    [0mDr. Carlos Rossi[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"reschedule-chair"[39m
+                [36m>[39m
+                  [0mSillón[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"reschedule-chair"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b1"[39m
+                  [36m>[39m
+                    [0mSillón 1[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b2"[39m
+                  [36m>[39m
+                    [0mSillón 2[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"reschedule-duration"[39m
+              [36m>[39m
+                [0mDuración (minutos)[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"reschedule-duration"[39m
+                [33mmax[39m=[32m"480"[39m
+                [33mmin[39m=[32m"5"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mstep[39m=[32m"5"[39m
+                [33mtype[39m=[32m"number"[39m
+                [33mvalue[39m=[32m"45"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actionsBar"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"primaryButton"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mGuardar reprogramación[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"secondaryButton"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mCancelar[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</form>[39m
+        [36m</div>[39m
+      [36m</dialog>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "chairId": "00000000-0000-0000-0000-0000000000b1",[39m
+[31m+   "chairId": "",[39m
+[2m    "durationMin": 45,[22m
+[32m-   "professionalId": "00000000-0000-0000-0000-000000000001",[39m
+[31m+   "professionalId": "",[39m
+[2m    "startAt": "2026-11-17T11:00:00-03:00",[22m
+[2m  }[22m
+
+[36m [2m❯[22m src/features/appointments/AppointmentRescheduleDialog.test.tsx:[2m133:30[22m[39m
+    [90m131| [39m
+    [90m132| [39m    [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m133| [39m      [34mexpect[39m(requestPayload)[33m.[39m[34mtoEqual[39m({
+    [90m   | [39m                             [31m^[39m
+    [90m134| [39m        startAt[33m:[39m [32m"2026-11-17T11:00:00-03:00"[39m[33m,[39m
+    [90m135| [39m        professionalId[33m:[39m [32m"00000000-0000-0000-0000-000000000001"[39m[33m,[39m
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 02:32:20
+[2m   Duration [22m 5.33s[2m (transform 394ms, setup 448ms, collect 601ms, tests 1.26s, environment 1.87s, prepare 422ms)[22m
+
+exit: 1 

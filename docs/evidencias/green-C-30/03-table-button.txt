@@ -1,0 +1,13 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 111[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 316[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 467[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 02:13:24
+[2m   Duration [22m 10.73s[2m (transform 576ms, setup 2.32s, collect 1.17s, tests 894ms, environment 23.35s, prepare 1.19s)[22m
+
+exit: 0  

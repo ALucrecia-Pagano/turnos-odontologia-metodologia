@@ -1,0 +1,439 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentStatusActions.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m5 skipped[39m[2m)[22m[32m 287[2mms[22m[39m
+[31m   [31m×[31m AppointmentDetailDialog — Cambios de estado[2m > [22m4.1 botones contextuales según estado y rol[39m[32m 284[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "button" and name "Confirmar turno"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "Detalle del turno":
+  [36m<dialog[31m
+    [33maria-labelledby[31m=[32m"appointment-detail-title"[31m
+    [33maria-modal[31m=[32m"true"[31m
+    [33mclass[31m=[32m"dialog"[31m
+    [33mopen[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Detalle del turno":
+  [36m<h2[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"appointment-detail-title"[31m
+  [36m/>[31m
+
+  Name "Historial de cambios":
+  [36m<h3[31m
+    [33mclass[31m=[32m"historyHeading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  region:
+
+  Name "Historial de cambios":
+  [36m<section[31m
+    [33maria-label[31m=[32m"Historial de cambios"[31m
+    [33mclass[31m=[32m"historySection"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[31m
+    [33mclass[31m=[32m"historyLoading"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Cerrar":
+  [36m<button[31m
+    [33mclass[31m=[32m"secondaryButton"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<dialog[31m
+      [33maria-labelledby[31m=[32m"appointment-detail-title"[31m
+      [33maria-modal[31m=[32m"true"[31m
+      [33mclass[31m=[32m"dialog"[31m
+      [33mopen[31m=[32m""[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"container"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"header"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"title"[31m
+            [33mid[31m=[32m"appointment-detail-title"[31m
+          [36m>[31m
+            [0mDetalle del turno[0m
+          [36m</h2>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"badge reservado"[31m
+            [33mdata-status[31m=[32m"reservado"[31m
+            [33mstyle[31m=[32m"color: rgb(31, 95, 134); background-color: rgb(228, 242, 248); border-color: rgb(156, 199, 216);"[31m
+          [36m>[31m
+            [0mReservado[0m
+          [36m</span>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"detailsGrid"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"detailItem"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailLabel"[31m
+            [36m>[31m
+              [0mPaciente[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailValue"[31m
+            [36m>[31m
+              [0mAna Pérez[0m
+            [36m</span>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"detailItem"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailLabel"[31m
+            [36m>[31m
+              [0mPrestación[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailValue"[31m
+            [36m>[31m
+              [0mControl[0m
+            [36m</span>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"detailItem"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailLabel"[31m
+            [36m>[31m
+              [0mProfesional[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailValue"[31m
+            [36m>[31m
+              [0mDra. Laura Quiroga[0m
+            [36m</span>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"detailItem"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailLabel"[31m
+            [36m>[31m
+              [0mSillón[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailValue"[31m
+            [36m>[31m
+              [0mSillón 1[0m
+            [36m</span>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"detailItem"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailLabel"[31m
+            [36m>[31m
+              [0mFecha[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailValue"[31m
+            [36m>[31m
+              [0m16/11/2026[0m
+            [36m</span>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"detailItem"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailLabel"[31m
+            [36m>[31m
+              [0mHorario[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"detailValue"[31m
+            [36m>[31m
+              [0m10:00–10:30[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<section[31m
+          [33maria-label[31m=[32m"Historial de cambios"[31m
+          [33mclass[31m=[32m"historySection"[31m
+        [36m>[31m
+          [36m<h3[31m
+            [33mclass[31m=[32m"historyHeading"[31m
+          [36m>[31m
+            [0mHistorial de cambios[0m
+          [36m</h3>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"historyLoading"[31m
+          [36m>[31m
+            [0mCargando historial...[0m
+          [36m</p>[31m
+        [36m</section>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"actionsBar"[31m
+        [36m>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"secondaryButton"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [0mCerrar[0m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</dialog>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cambios de estado[2m > [22m4.2 confirmar turno envía toStatus confirmado y cierra modal con éxito
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cambios de estado[2m > [22m4.3 marcar atendido envía toStatus atendido y cierra modal con éxito
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cambios de estado[2m > [22m4.4 marcar ausente envía toStatus ausente y cierra modal con éxito
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cambios de estado[2m > [22m4.5 rechazo 422 STATUS_CHANGE_TOO_EARLY expone alerta con código, mensaje y foco
+   [2m[90m↓[39m[22m AppointmentDetailDialog — Cambios de estado[2m > [22m4.6 rechazo 422 INVALID_TRANSITION expone mensaje en alerta con foco
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentStatusActions.test.tsx[2m > [22mAppointmentDetailDialog — Cambios de estado[2m > [22m4.1 botones contextuales según estado y rol
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an accessible element with the role "button" and name "Confirmar turno"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "Detalle del turno":
+  [36m<dialog[39m
+    [33maria-labelledby[39m=[32m"appointment-detail-title"[39m
+    [33maria-modal[39m=[32m"true"[39m
+    [33mclass[39m=[32m"dialog"[39m
+    [33mopen[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Detalle del turno":
+  [36m<h2[39m
+    [33mclass[39m=[32m"title"[39m
+    [33mid[39m=[32m"appointment-detail-title"[39m
+  [36m/>[39m
+
+  Name "Historial de cambios":
+  [36m<h3[39m
+    [33mclass[39m=[32m"historyHeading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "Historial de cambios":
+  [36m<section[39m
+    [33maria-label[39m=[32m"Historial de cambios"[39m
+    [33mclass[39m=[32m"historySection"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"historyLoading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Cerrar":
+  [36m<button[39m
+    [33mclass[39m=[32m"secondaryButton"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<dialog[39m
+      [33maria-labelledby[39m=[32m"appointment-detail-title"[39m
+      [33maria-modal[39m=[32m"true"[39m
+      [33mclass[39m=[32m"dialog"[39m
+      [33mopen[39m=[32m""[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"container"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"title"[39m
+            [33mid[39m=[32m"appointment-detail-title"[39m
+          [36m>[39m
+            [0mDetalle del turno[0m
+          [36m</h2>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"badge reservado"[39m
+            [33mdata-status[39m=[32m"reservado"[39m
+            [33mstyle[39m=[32m"color: rgb(31, 95, 134); background-color: rgb(228, 242, 248); border-color: rgb(156, 199, 216);"[39m
+          [36m>[39m
+            [0mReservado[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"detailsGrid"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"detailItem"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailLabel"[39m
+            [36m>[39m
+              [0mPaciente[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailValue"[39m
+            [36m>[39m
+              [0mAna Pérez[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"detailItem"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailLabel"[39m
+            [36m>[39m
+              [0mPrestación[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailValue"[39m
+            [36m>[39m
+              [0mControl[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"detailItem"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailLabel"[39m
+            [36m>[39m
+              [0mProfesional[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailValue"[39m
+            [36m>[39m
+              [0mDra. Laura Quiroga[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"detailItem"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailLabel"[39m
+            [36m>[39m
+              [0mSillón[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailValue"[39m
+            [36m>[39m
+              [0mSillón 1[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"detailItem"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailLabel"[39m
+            [36m>[39m
+              [0mFecha[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailValue"[39m
+            [36m>[39m
+              [0m16/11/2026[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"detailItem"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailLabel"[39m
+            [36m>[39m
+              [0mHorario[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"detailValue"[39m
+            [36m>[39m
+              [0m10:00–10:30[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<section[39m
+          [33maria-label[39m=[32m"Historial de cambios"[39m
+          [33mclass[39m=[32m"historySection"[39m
+        [36m>[39m
+          [36m<h3[39m
+            [33mclass[39m=[32m"historyHeading"[39m
+          [36m>[39m
+            [0mHistorial de cambios[0m
+          [36m</h3>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"historyLoading"[39m
+          [36m>[39m
+            [0mCargando historial...[0m
+          [36m</p>[39m
+        [36m</section>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actionsBar"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"secondaryButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mCerrar[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</dialog>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/appointments/AppointmentStatusActions.test.tsx:[2m39:19[22m[39m
+    [90m 37| [39m
+    [90m 38| [39m    [90m// En reservado[39m
+    [90m 39| [39m    expect(screen.getByRole("button", { name: "Confirmar turno" })).to…
+    [90m   | [39m                  [31m^[39m
+    [90m 40| [39m    expect(screen.getByRole("button", { name: "Marcar atendido" })).to…
+    [90m 41| [39m    expect(screen.getByRole("button", { name: "Marcar ausente" })).toB…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 02:22:25
+[2m   Duration [22m 4.13s[2m (transform 350ms, setup 459ms, collect 559ms, tests 287ms, environment 2.00s, prepare 353ms)[22m
+
+exit: 1 
