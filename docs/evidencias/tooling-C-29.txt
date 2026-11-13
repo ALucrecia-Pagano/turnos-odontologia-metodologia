@@ -1,4 +1,4 @@
-=== npx tsc --noEmit ===
+﻿=== npx tsc --noEmit ===
 exit: 0
 
 === npx eslint . ===
@@ -15,4 +15,3 @@ C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\shared\components\Di
   72:6   warning  React Hook useEffect has a missing dependency: 'returnFocusRef'. Either include it or remove the dependency array                                                                                                                                                            react-hooks/exhaustive-deps
 
 ✖ 4 problems (0 errors, 4 warnings)
-

@@ -5,92 +5,78 @@
 
 [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
 
- [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 305[2mms[22m[39m
- [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 337[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 442[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros [33m 369[2mms[22m[39m
- [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 349[2mms[22m[39m
- [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 677[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 1337[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaView[2m > [22mdibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía [33m 316[2mms[22m[39m
- [32m✓[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 972[2mms[22m[39m
-   [33m[2m✓[22m[39m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace [33m 967[2mms[22m[39m
- [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1438[2mms[22m[39m
-   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage [33m 527[2mms[22m[39m
-   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 369[2mms[22m[39m
-   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mtoken vencido en una request protegida [33m 307[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 6043[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 959[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha [33m 1469[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL [33m 1328[2mms[22m[39m
- [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 7430[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 1917[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 2986[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 728[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 633[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 614[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 548[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaTable.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 557[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda [33m 553[2mms[22m[39m
- [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 600[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginPage brand[2m > [22mmuestra el logo claro, el heading accesible y la bajada [33m 427[2mms[22m[39m
- [32m✓[39m src/shared/styles/fonts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 318[2mms[22m[39m
- [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 621[2mms[22m[39m
-   [33m[2m✓[22m[39m smoke del andamiaje[2m > [22mmonta App y muestra el título [33m 618[2mms[22m[39m
- [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 916[2mms[22m[39m
-   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 683[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaPage.nuevoTurno.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1712[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mal pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda [33m 1241[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mtras alta exitosa (201) anuncia el turno creado en una región de estado accesible [33m 464[2mms[22m[39m
- [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 623[2mms[22m[39m
-   [33m[2m✓[22m[39m AppShell brand[2m > [22mmuestra una sola barra con logo decorativo, Aqua y Clínica Odontológica [33m 519[2mms[22m[39m
- [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 751[2mms[22m[39m
-   [33m[2m✓[22m[39m LoginCarousel[2m > [22mpausa y reanuda el avance sin aria-pressed [33m 504[2mms[22m[39m
- [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 352[2mms[22m[39m
-   [33m[2m✓[22m[39m PageShell[2m > [22menvuelve header, main y footer y renderiza sus hijos [33m 348[2mms[22m[39m
- [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 218[2mms[22m[39m
- [32m✓[39m src/features/auth/storageGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 181[2mms[22m[39m
- [32m✓[39m src/features/agenda/clock.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 182[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTime.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 75[2mms[22m[39m
- [32m✓[39m src/shared/api/auth.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 367[2mms[22m[39m
-   [33m[2m✓[22m[39m punto de enganche del token[2m > [22mC-25 no persiste el token [33m 342[2mms[22m[39m
- [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 150[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 135[2mms[22m[39m
- [32m✓[39m src/shared/components/Dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 394[2mms[22m[39m
-   [33m[2m✓[22m[39m Dialog[2m > [22mabre con atributo open en jsdom y expone el nombre accesible por aria-labelledby [33m 315[2mms[22m[39m
- [32m✓[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 2794[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mapertura y foco inicial [33m 391[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mrespuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión [33m 376[2mms[22m[39m
-   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mfoco al resumen de alerta ante fallo [33m 317[2mms[22m[39m
- [32m✓[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 1176[2mms[22m[39m
-   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mrenderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons [33m 437[2mms[22m[39m
-   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mbúsqueda con resultados muestra radio buttons con nombre y DNI [33m 488[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 155[2mms[22m[39m
- [32m✓[39m src/test/docker.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 35[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 66[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 62[2mms[22m[39m
- [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 37[2mms[22m[39m
- [32m✓[39m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 360[2mms[22m[39m
-   [33m[2m✓[22m[39m AgendaToolbar — Acción Nuevo turno[2m > [22mvisible para recepción y dispara onNewAppointment al clic [33m 300[2mms[22m[39m
- [32m✓[39m src/features/agenda/agendaApi.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 52[2mms[22m[39m
+ [32m✓[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 392[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 345[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 599[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 368[2mms[22m[39m
+ [32m✓[39m src/features/auth/Logout.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 645[2mms[22m[39m
+   [33m[2m✓[22m[39m Logout[2m > [22mcerrar sesión desde el shell descarta token y usuario y navega a /login con replace [33m 642[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 1717[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias [33m 308[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 1461[2mms[22m[39m
+ [32m✓[39m src/App.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1061[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22mla ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage [33m 423[2mms[22m[39m
+   [33m[2m✓[22m[39m App con router y guards de sesión[2m > [22muna ruta desconocida muestra la página de no encontrada [33m 331[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.nuevoTurno.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1380[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mal pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda [33m 1023[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mtras alta exitosa (201) anuncia el turno creado en una región de estado accesible [33m 355[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 2796[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 601[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha [33m 602[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL [33m 350[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 4799[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto del administrador [33m 1333[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mlogin correcto de recepción y del odontólogo [33m 1350[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mcredenciales inválidas con mensaje genérico [33m 501[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22mel 401 del login no es sesión vencida [33m 589[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22menvío en curso y doble submit [33m 549[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginPage[2m > [22maccesibilidad del formulario [33m 474[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 368[2mms[22m[39m
+ [32m✓[39m src/test/smoke.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 280[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 350[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaTable[2m > [22mrenderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda [33m 332[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 232[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 393[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros [33m 308[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 607[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 369[2mms[22m[39m
+ [32m✓[39m src/shared/api/auth.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 147[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 319[2mms[22m[39m
+ [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 174[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 293[2mms[22m[39m
+ [32m✓[39m src/shared/styles/fonts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 79[2mms[22m[39m
+ [32m✓[39m src/features/auth/storageGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 84[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 157[2mms[22m[39m
+ [32m✓[39m src/features/agenda/clock.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 277[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 243[2mms[22m[39m
+ [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 153[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 107[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 84[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m src/test/docker.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 34[2mms[22m[39m
  [32m✓[39m src/features/auth/authApi.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 44[2mms[22m[39m
- [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
- [32m✓[39m src/shared/api/errors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 22[2mms[22m[39m
- [32m✓[39m src/test/readmeCredits.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
- [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
- [32m✓[39m src/shared/styles/aquaPalette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 17[2mms[22m[39m
- [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
- [32m✓[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 21[2mms[22m[39m
- [32m✓[39m src/features/auth/safeInternalPath.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
- [32m✓[39m src/test/tooling.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 35498[2mms[22m[39m
-   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido [33m 14637[2mms[22m[39m
-   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run lint detecta una violación [33m 20843[2mms[22m[39m
+ [32m✓[39m src/shared/api/errors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/shared/styles/aquaPalette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/test/readmeCredits.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/features/auth/safeInternalPath.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m src/test/tooling.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 23690[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run typecheck falla con un tipo inválido [33m 9779[2mms[22m[39m
+   [33m[2m✓[22m[39m tooling del frontend[2m > [22mnpm run lint detecta una violación [33m 13901[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m47 passed[39m[22m[90m (47)[39m
 [2m      Tests [22m [1m[32m191 passed[39m[22m[90m (191)[39m
-[2m   Start at [22m 00:02:06
-[2m   Duration [22m 44.63s[2m (transform 7.59s, setup 72.53s, collect 26.00s, tests 67.89s, environment 230.90s, prepare 25.47s)[22m
+[2m   Start at [22m 00:36:14
+[2m   Duration [22m 32.33s[2m (transform 4.66s, setup 54.45s, collect 19.45s, tests 44.07s, environment 165.96s, prepare 18.48s)[22m
 
 
 [90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial

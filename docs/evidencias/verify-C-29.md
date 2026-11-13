@@ -55,6 +55,9 @@ Todos los números provienen de las ejecuciones reales y archivos de evidencia e
 5. **Logout.test.tsx fuera de alcance**:
    - En entornos Linux puede reportar desvío por prefijo `/agenda` duplicado en navegación sintética; en Windows ejecuta 1/1 passed. Permanece intacto según regla de no modificar tests de main.
 
+6. **Corrección visual post-captura (centrado del modal, wrap del buscador en 390 px, font-family inherit)**:
+   - CSS no verificable en jsdom; verificado con capturas C-29-*.png.
+
 ---
 
 ## Mutaciones
