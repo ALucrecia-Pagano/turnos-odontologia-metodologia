@@ -6,7 +6,7 @@ Uso, desde la raíz del repo o desde frontend/:
 
 Cada mutación es (archivo de test, nombre del test, archivo de producción, texto_original, texto_mutado).
 Hay UNA mutación por cada test nuevo de C-29: antes de mutar se cuentan los tests con `vitest list --json`
-y se exige una correspondencia uno a uno con los 19 tests nuevos.
+y se exige una correspondencia uno a uno con los 27 tests nuevos.
 
 Por cada mutación: comprueba que el original aparezca exactamente una vez y que el mutante cambie el archivo
 (respetando LF o CRLF), aplica la mutación, corre Vitest solo para ese test (`vitest run <archivo> -t <nombre>$`),
@@ -165,20 +165,41 @@ MUTATIONS: tuple[Mutation, ...] = (
         "                onChange={() => onSelectPatient(p.id)}",
         "                onChange={() => undefined}",
     ),
-    # --- 4. Formulario modal de turnos (9 tests) ---
+    # --- 4. Formulario modal de turnos (14 tests) ---
     Mutation(
         T_FORM,
-        "apertura y foco inicial con prellenado contextual",
+        "apertura y foco inicial",
         P_FORM,
         "    if (open) {\n      patientSearchInputRef.current?.focus();",
         "    if (open) {\n      // patientSearchInputRef.current?.focus();",
     ),
     Mutation(
         T_FORM,
-        "sugerencia y edición de duración según prestación",
+        "prellenado con fecha y filtros activos",
+        P_FORM,
+        '  const [professionalId, setProfessionalId] = useState(initialProfessionalId ?? "");',
+        '  const [professionalId, setProfessionalId] = useState("");',
+    ),
+    Mutation(
+        T_FORM,
+        "sin filtros activos los selectores quedan sin selección",
+        P_FORM,
+        '  const [chairId, setChairId] = useState(initialChairId ?? "");',
+        '  const [chairId, setChairId] = useState(initialChairId ?? "00000000-0000-0000-0000-0000000000b1");',
+    ),
+    Mutation(
+        T_FORM,
+        "duración sugerida al elegir prestación",
         P_FORM,
         "    const s = services.find((srv) => srv.id === selectedId);\n    if (s) {\n      setDurationMin(s.defaultDurationMin);\n    }",
         "    const s = services.find((srv) => srv.id === selectedId);\n    if (s) {\n      setDurationMin(15);\n    }",
+    ),
+    Mutation(
+        T_FORM,
+        "edición manual de duración se conserva",
+        P_FORM,
+        '                  const val = e.target.value;\n                  setDurationMin(val === "" ? "" : Number(val));',
+        '                  const val = e.target.value;\n                  setDurationMin(val === "" ? "" : 60);',
     ),
     Mutation(
         T_FORM,
@@ -189,14 +210,14 @@ MUTATIONS: tuple[Mutation, ...] = (
     ),
     Mutation(
         T_FORM,
-        "envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco",
+        "envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco",
         P_FORM,
-        "    if (result.ok && result.status === 201) {\n      setSuccessMessage(`Turno creado con éxito para el ${date} a las ${time}`);\n      onSuccess?.();\n      onClose();\n      return;\n    }",
-        "    if (result.ok && result.status === 201) {\n      setSuccessMessage(`Turno creado con éxito para el ${date} a las ${time}`);\n      // onSuccess?.();\n      onClose();\n      return;\n    }",
+        "    if (result.ok && result.status === 201) {\n      onSuccess?.({ date, time });\n      onClose();\n      return;\n    }",
+        "    if (result.ok && result.status === 201) {\n      // onSuccess?.({ date, time });\n      onClose();\n      return;\n    }",
     ),
     Mutation(
         T_FORM,
-        "respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid",
+        "respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias",
         P_FORM,
         '                <li key={i}>\n                  <span className={styles.codeBadge}>{v.code}</span>\n                  {v.message}\n                </li>',
         '                <li key={i}>\n                  {/* <span className={styles.codeBadge}>{v.code}</span> */}\n                  {v.message}\n                </li>',
@@ -220,30 +241,65 @@ MUTATIONS: tuple[Mutation, ...] = (
         "respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión",
         P_FORM,
         '        result.error.kind === "forbidden"',
-        '        result.error.kind === "unknown"',
+        '        result.error.kind === ("unknown" as string)',
     ),
     Mutation(
         T_FORM,
-        "pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura",
+        "foco al resumen de alerta ante fallo",
+        P_FORM,
+        '        setViolations(result.error.violations);\n        setTimeout(() => alertRef.current?.focus(), 0);',
+        '        setViolations(result.error.violations);\n        // setTimeout(() => alertRef.current?.focus(), 0);',
+    ),
+    Mutation(
+        T_FORM,
+        "pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura",
         P_FORM,
         '            <button\n              type="button"\n              className={styles.secondaryButton}\n              onClick={onClose}\n              disabled={isSubmitting}\n            >\n              Cancelar\n            </button>',
         '            <button\n              type="button"\n              className={styles.secondaryButton}\n              onClick={() => undefined}\n              disabled={isSubmitting}\n            >\n              Cancelar\n            </button>',
     ),
-    # --- 5. Toolbar acción Nuevo turno (1 test) ---
+    Mutation(
+        T_FORM,
+        "Escape cierra sin enviar solicitudes y devuelve el foco",
+        P_FORM,
+        "  const handleDialogClose = () => {\n    onClose();\n  };",
+        "  const handleDialogClose = () => {\n    // onClose();\n  };",
+    ),
+    # --- 5. Toolbar acción Nuevo turno (3 tests) ---
     Mutation(
         T_TOOLBAR,
-        "controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear",
+        "visible para recepción y dispara onNewAppointment al clic",
         P_TOOLBAR,
         '  const canCreateAppointment =\n    (userRole === "recepcion" || userRole === "administrador") &&\n    onNewAppointment !== undefined;',
         '  const canCreateAppointment =\n    (userRole === "administrador") &&\n    onNewAppointment !== undefined;',
     ),
-    # --- 6. Integración en AgendaPage (1 test) ---
+    Mutation(
+        T_TOOLBAR,
+        "visible para administrador",
+        P_TOOLBAR,
+        '  const canCreateAppointment =\n    (userRole === "recepcion" || userRole === "administrador") &&\n    onNewAppointment !== undefined;',
+        '  const canCreateAppointment =\n    (userRole === "recepcion") &&\n    onNewAppointment !== undefined;',
+    ),
+    Mutation(
+        T_TOOLBAR,
+        "no visible para odontólogo",
+        P_TOOLBAR,
+        '  const canCreateAppointment =\n    (userRole === "recepcion" || userRole === "administrador") &&\n    onNewAppointment !== undefined;',
+        '  const canCreateAppointment =\n    (userRole !== null) &&\n    onNewAppointment !== undefined;',
+    ),
+    # --- 6. Integración en AgendaPage (2 tests) ---
     Mutation(
         T_PAGE,
         "al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda",
         P_PAGE,
-        "        onSuccess={state.refresh}",
-        "        // onSuccess={state.refresh}",
+        "    void state.refresh();",
+        "    // void state.refresh();",
+    ),
+    Mutation(
+        T_PAGE,
+        "tras alta exitosa (201) anuncia el turno creado en una región de estado accesible",
+        P_PAGE,
+        '      setStatusMessage(`Turno creado para el ${day}/${month}/${year} a las ${info.time}.`);',
+        '      setStatusMessage("Turno creado");',
     ),
 )
 
@@ -316,12 +372,11 @@ def listed_tests() -> list[tuple[str, str]]:
     )
     start = result.stdout.find("[")
     entries = json.loads(result.stdout[start:])
-    expected_names = {m.test_name for m in MUTATIONS}
     tests: list[tuple[str, str]] = []
     for entry in entries:
         file = Path(entry["file"]).resolve().relative_to(FRONTEND.resolve()).as_posix()
         name = entry["name"].split(" > ")[-1]
-        if file in C29_TEST_FILES and name in expected_names:
+        if file in C29_TEST_FILES:
             tests.append((file, name))
     return tests
 

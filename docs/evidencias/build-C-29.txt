@@ -1,4 +1,4 @@
-$ npm run build
+
 > turnos-odontologia-frontend@0.1.0 build
 > npm run typecheck && vite build
 
@@ -8,7 +8,7 @@ $ npm run build
 
 [36mvite v5.4.21 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 94 modules transformed.
+[32m✓[39m 95 modules transformed.
 rendering chunks...
 computing gzip size...
 [2mdist/[22m[32mindex.html                                            [39m[1m[2m  0.41 kB[22m[1m[22m[2m │ gzip:  0.28 kB[22m
@@ -27,7 +27,9 @@ computing gzip size...
 [2mdist/[22m[32massets/hero-5-sillon-13gnaYe-.webp                    [39m[1m[2m 95.66 kB[22m[1m[22m
 [2mdist/[22m[32massets/hero-2-consultorio-CnjHP-hs.webp               [39m[1m[2m 95.95 kB[22m[1m[22m
 [2mdist/[22m[32massets/logo-aqua-claro-tLeNvrJR.png                   [39m[1m[2m113.12 kB[22m[1m[22m
-[2mdist/[22m[35massets/index-D4KhnZP-.css                             [39m[1m[2m 35.13 kB[22m[1m[22m[2m │ gzip:  8.53 kB[22m
-[2mdist/[22m[36massets/index-CkUZmIgy.js                              [39m[1m[2m266.02 kB[22m[1m[22m[2m │ gzip: 85.56 kB[22m
-[32m✓ built in 1.98s[39m
-Exit code: 0
+[2mdist/[22m[35massets/index-DKf5SNBk.css                             [39m[1m[2m 35.27 kB[22m[1m[22m[2m │ gzip:  8.54 kB[22m
+[2mdist/[22m[36massets/index-Cb7EX9HR.js                              [39m[1m[2m266.19 kB[22m[1m[22m[2m │ gzip: 85.63 kB[22m
+[32m✓ built in 1.82s[39m
+
+
+exit: 0

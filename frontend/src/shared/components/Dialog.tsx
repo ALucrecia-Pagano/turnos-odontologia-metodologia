@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   type KeyboardEvent,
@@ -60,14 +61,15 @@ export function Dialog({
       wasOpenRef.current = false;
       returnFocusRef?.current?.focus();
     }
+  }, [open, returnFocusRef]);
 
-    const target = returnFocusRef?.current;
+  useEffect(() => {
     return () => {
       if (wasOpenRef.current) {
-        target?.focus();
+        returnFocusRef?.current?.focus();
       }
     };
-  }, [open, returnFocusRef]);
+  }, []);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
     if (event.key !== "Escape") {

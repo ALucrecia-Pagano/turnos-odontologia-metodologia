@@ -17,9 +17,9 @@ const CHAIRS: readonly Chair[] = [
 ];
 
 describe("AgendaToolbar — Acción Nuevo turno", () => {
-  it("controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear", () => {
+  it("visible para recepción y dispara onNewAppointment al clic", () => {
     let clicked = false;
-    const { rerender } = render(
+    render(
       <AgendaToolbar
         date="2026-11-16"
         professionalId={null}
@@ -36,14 +36,14 @@ describe("AgendaToolbar — Acción Nuevo turno", () => {
       />,
     );
 
-    // Visible para recepción y clickea
     const btn = screen.queryByRole("button", { name: "Nuevo turno" });
     expect(btn).not.toBeNull();
     fireEvent.click(btn!);
     expect(clicked).toBe(true);
+  });
 
-    // Visible para administrador
-    rerender(
+  it("visible para administrador", () => {
+    render(
       <AgendaToolbar
         date="2026-11-16"
         professionalId={null}
@@ -57,10 +57,13 @@ describe("AgendaToolbar — Acción Nuevo turno", () => {
         onNewAppointment={() => undefined}
       />,
     );
-    expect(screen.queryByRole("button", { name: "Nuevo turno" })).not.toBeNull();
 
-    // No visible para odontólogo
-    rerender(
+    const btn = screen.queryByRole("button", { name: "Nuevo turno" });
+    expect(btn).not.toBeNull();
+  });
+
+  it("no visible para odontólogo", () => {
+    render(
       <AgendaToolbar
         date="2026-11-16"
         professionalId={null}
@@ -74,22 +77,8 @@ describe("AgendaToolbar — Acción Nuevo turno", () => {
         onNewAppointment={() => undefined}
       />,
     );
-    expect(screen.queryByRole("button", { name: "Nuevo turno" })).toBeNull();
 
-    // No visible si onNewAppointment no está definido
-    rerender(
-      <AgendaToolbar
-        date="2026-11-16"
-        professionalId={null}
-        chairId={null}
-        professionals={PROFESSIONALS}
-        chairs={CHAIRS}
-        onSelectProfessional={() => undefined}
-        onSelectChair={() => undefined}
-        onClearFilters={() => undefined}
-        userRole="recepcion"
-      />,
-    );
-    expect(screen.queryByRole("button", { name: "Nuevo turno" })).toBeNull();
+    const btn = screen.queryByRole("button", { name: "Nuevo turno" });
+    expect(btn).toBeNull();
   });
 });

@@ -1,13 +1,13 @@
 """Trazabilidad de C-29: cada escenario de las specs delta a un test listado por Vitest y su mutación.
 
-Uso, desde la raiz del repo o desde frontend/:
+Uso, desde la raíz del repo o desde frontend/:
 
     python docs/evidencias/trazabilidad-C-29.py
 
 Lee los escenarios de las specs delta de C-29 (frontend-agenda y frontend-appointment-form),
 comprueba con `vitest list --json` que cada test existe, genera trazabilidad-C-29.txt y
-regenera la tabla de verify-C-29.md. Termina con codigo 0 solo si no falta ningun escenario
-y no sobra ninguna fila.
+regenera la tabla de verify-C-29.md. Termina con código 0 solo si no falta ningún escenario,
+no sobra ninguna fila y ningún test es compartido por más de un escenario.
 """
 
 from __future__ import annotations
@@ -61,38 +61,62 @@ MUTATION_BY_TEST: dict[str, str] = {
     "selección por clic o teclado invoca onSelectPatient con el id correspondiente": (
         "M8: omisión de llamada a onSelectPatient en radio onChange"
     ),
-    "apertura y foco inicial con prellenado contextual": (
+    "apertura y foco inicial": (
         "M9: omisión de foco automático en patientSearchInputRef"
     ),
-    "sugerencia y edición de duración según prestación": (
-        "M10: asignación de duración hardcodeada a 15 min"
+    "prellenado con fecha y filtros activos": (
+        "M10: inicialización de professionalId sin valor por defecto"
+    ),
+    "sin filtros activos los selectores quedan sin selección": (
+        "M11: inicialización de chairId con valor por defecto cuando initialChairId es nulo"
+    ),
+    "duración sugerida al elegir prestación": (
+        "M12: asignación de duración fija 15 min en lugar de sugerida"
+    ),
+    "edición manual de duración se conserva": (
+        "M13: forzar duración fija 60 min en onChange de duración"
     ),
     "armado de startAt con offset exacto para la fecha elegida y timezone de la API": (
-        "M11: hardcodeo de sufijo 'Z' en lugar de offset local calculado"
+        "M14: hardcodeo de sufijo 'Z' en lugar de offset local calculado"
     ),
-    "envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco": (
-        "M12: omisión de invocación a onSuccess tras 201"
+    "envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco": (
+        "M15: omisión de invocación a onSuccess tras 201"
     ),
-    "respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid": (
-        "M13: omisión de renderizado de badge con code de violación"
+    "respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias": (
+        "M16: omisión de renderizado de badge con code de violación"
     ),
     "rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos": (
-        "M14: desactivación de manejo de kind unprocessable"
+        "M17: desactivación de manejo de kind unprocessable"
     ),
     "mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline": (
-        "M15: omisión de actualización de setFieldErrors ante error 400"
+        "M18: omisión de actualización de setFieldErrors ante error 400"
     ),
     "respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión": (
-        "M16: alteración de condición de kind forbidden"
+        "M19: alteración de condición de kind forbidden"
     ),
-    "pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura": (
-        "M17: no-op en onClick de botón Cancelar"
+    "foco al resumen de alerta ante fallo": (
+        "M20: omisión de foco al alert ante violaciones"
     ),
-    "controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear": (
-        "M18: restricción de botón Nuevo turno solo a rol administrador"
+    "pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura": (
+        "M21: no-op en onClick de botón Cancelar"
+    ),
+    "Escape cierra sin enviar solicitudes y devuelve el foco": (
+        "M22: no-op en handleDialogClose ante Escape"
+    ),
+    "visible para recepción y dispara onNewAppointment al clic": (
+        "M23: restricción de botón Nuevo turno solo a rol administrador"
+    ),
+    "visible para administrador": (
+        "M24: restricción de botón Nuevo turno solo a rol recepcion"
+    ),
+    "no visible para odontólogo": (
+        "M25: mostrar botón Nuevo turno para todos los roles"
     ),
     "al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda": (
-        "M19: omisión de refresh en onSuccess de AppointmentFormDialog"
+        "M26: omisión de refresh en onSuccess de AppointmentFormDialog"
+    ),
+    "tras alta exitosa (201) anuncia el turno creado en una región de estado accesible": (
+        "M27: alteración del mensaje de anuncio en AgendaPage"
     ),
 }
 
@@ -104,24 +128,24 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Acción Nuevo turno en la agenda",
         "Visible para recepción",
     ): (
-        f"{T_TOOLBAR} > controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear",
-        MUTATION_BY_TEST["controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear"],
+        f"{T_TOOLBAR} > visible para recepción y dispara onNewAppointment al clic",
+        MUTATION_BY_TEST["visible para recepción y dispara onNewAppointment al clic"],
     ),
     (
         "frontend-agenda",
         "Acción Nuevo turno en la agenda",
         "Visible para administrador",
     ): (
-        f"{T_TOOLBAR} > controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear",
-        MUTATION_BY_TEST["controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear"],
+        f"{T_TOOLBAR} > visible para administrador",
+        MUTATION_BY_TEST["visible para administrador"],
     ),
     (
         "frontend-agenda",
         "Acción Nuevo turno en la agenda",
         "No visible para odontólogo",
     ): (
-        f"{T_TOOLBAR} > controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear",
-        MUTATION_BY_TEST["controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear"],
+        f"{T_TOOLBAR} > no visible para odontólogo",
+        MUTATION_BY_TEST["no visible para odontólogo"],
     ),
     (
         "frontend-agenda",
@@ -162,24 +186,24 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Apertura y foco inicial",
         "Apertura y foco inicial",
     ): (
-        f"{T_FORM} > apertura y foco inicial con prellenado contextual",
-        MUTATION_BY_TEST["apertura y foco inicial con prellenado contextual"],
+        f"{T_FORM} > apertura y foco inicial",
+        MUTATION_BY_TEST["apertura y foco inicial"],
     ),
     (
         "frontend-appointment-form",
         "Prellenado contextual desde la agenda",
         "Prellenado con fecha y filtros activos",
     ): (
-        f"{T_FORM} > apertura y foco inicial con prellenado contextual",
-        MUTATION_BY_TEST["apertura y foco inicial con prellenado contextual"],
+        f"{T_FORM} > prellenado con fecha y filtros activos",
+        MUTATION_BY_TEST["prellenado con fecha y filtros activos"],
     ),
     (
         "frontend-appointment-form",
         "Prellenado contextual desde la agenda",
         "Sin filtros activos los selectores quedan sin selección",
     ): (
-        f"{T_FORM} > apertura y foco inicial con prellenado contextual",
-        MUTATION_BY_TEST["apertura y foco inicial con prellenado contextual"],
+        f"{T_FORM} > sin filtros activos los selectores quedan sin selección",
+        MUTATION_BY_TEST["sin filtros activos los selectores quedan sin selección"],
     ),
     (
         "frontend-appointment-form",
@@ -210,16 +234,16 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Sugerencia y edición de duración",
         "Duración sugerida al elegir prestación",
     ): (
-        f"{T_FORM} > sugerencia y edición de duración según prestación",
-        MUTATION_BY_TEST["sugerencia y edición de duración según prestación"],
+        f"{T_FORM} > duración sugerida al elegir prestación",
+        MUTATION_BY_TEST["duración sugerida al elegir prestación"],
     ),
     (
         "frontend-appointment-form",
         "Sugerencia y edición de duración",
         "Edición manual de duración",
     ): (
-        f"{T_FORM} > sugerencia y edición de duración según prestación",
-        MUTATION_BY_TEST["sugerencia y edición de duración según prestación"],
+        f"{T_FORM} > edición manual de duración se conserva",
+        MUTATION_BY_TEST["edición manual de duración se conserva"],
     ),
     (
         "frontend-appointment-form",
@@ -234,8 +258,8 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Renderizado de violaciones de dominio 409 y 422",
         "Conflicto múltiple 409 muestra todas las violaciones con sus referencias",
     ): (
-        f"{T_FORM} > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid ; {T_CLIENT_VIOLATIONS} > captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind",
-        f"{MUTATION_BY_TEST['respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid']} ; {MUTATION_BY_TEST['captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind']}",
+        f"{T_FORM} > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias",
+        MUTATION_BY_TEST["respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias"],
     ),
     (
         "frontend-appointment-form",
@@ -266,24 +290,24 @@ TRACE: dict[tuple[str, str, str], tuple[str, str]] = {
         "Errores de validación 400 y permisos 403",
         "Foco se traslada al resumen de alerta ante fallo",
     ): (
-        f"{T_FORM} > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid",
-        MUTATION_BY_TEST["respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid"],
+        f"{T_FORM} > foco al resumen de alerta ante fallo",
+        MUTATION_BY_TEST["foco al resumen de alerta ante fallo"],
     ),
     (
         "frontend-appointment-form",
         "Éxito, refresco de agenda y retorno de foco",
         "Alta exitosa 201 refresca agenda y anuncia resultado",
     ): (
-        f"{T_FORM} > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco",
-        MUTATION_BY_TEST["envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco"],
+        f"{T_PAGE} > tras alta exitosa (201) anuncia el turno creado en una región de estado accesible",
+        MUTATION_BY_TEST["tras alta exitosa (201) anuncia el turno creado en una región de estado accesible"],
     ),
     (
         "frontend-appointment-form",
         "Éxito, refresco de agenda y retorno de foco",
         "Cancelación retorna el foco",
     ): (
-        f"{T_FORM} > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura",
-        MUTATION_BY_TEST["pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura"],
+        f"{T_FORM} > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura",
+        MUTATION_BY_TEST["pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura"],
     ),
     (
         "frontend-appointment-form",
@@ -356,6 +380,7 @@ def main() -> int:
     problems: list[str] = []
     number = 0
     seen: set[tuple[str, str, str]] = set()
+    seen_test_nodes: set[str] = set()
 
     for cap, req, scenario in load_spec_scenarios():
         number += 1
@@ -367,6 +392,9 @@ def main() -> int:
         test_str, mut_str = mapping
         # Validar existencia de test si no es verificación visual
         if not test_str.startswith("Captura a cargo de Claude"):
+            if test_str in seen_test_nodes:
+                problems.append(f"test compartido por más de un escenario: {test_str}")
+            seen_test_nodes.add(test_str)
             for single in test_str.split(" ; "):
                 if single.strip() not in nodes:
                     problems.append(f"test inexistente: {single.strip()}")

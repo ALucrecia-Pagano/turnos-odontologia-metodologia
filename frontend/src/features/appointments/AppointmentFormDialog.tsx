@@ -21,7 +21,7 @@ export interface Service {
 export interface AppointmentFormDialogProps {
   open: boolean;
   onClose: () => void;
-  onSuccess?: () => void;
+  onSuccess?: (info: { date: string; time: string }) => void;
   client: ApiClient;
   timezone: string;
   effectiveDate: string;
@@ -84,7 +84,6 @@ export function AppointmentFormDialog({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [violations, setViolations] = useState<Violation[]>([]);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const patientSearchInputRef = useRef<HTMLInputElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
@@ -101,7 +100,6 @@ export function AppointmentFormDialog({
       setPatientId(null);
       setViolations([]);
       setFieldErrors({});
-      setSuccessMessage(null);
     }
   }
 
@@ -168,8 +166,7 @@ export function AppointmentFormDialog({
     setIsSubmitting(false);
 
     if (result.ok && result.status === 201) {
-      setSuccessMessage(`Turno creado con éxito para el ${date} a las ${time}`);
-      onSuccess?.();
+      onSuccess?.({ date, time });
       onClose();
       return;
     }
@@ -195,10 +192,14 @@ export function AppointmentFormDialog({
     }
   };
 
+  const handleDialogClose = () => {
+    onClose();
+  };
+
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleDialogClose}
       labelledBy="appointment-dialog-title"
       returnFocusRef={returnFocusRef}
     >
@@ -224,12 +225,6 @@ export function AppointmentFormDialog({
                 </li>
               ))}
             </ul>
-          </div>
-        )}
-
-        {successMessage && (
-          <div role="status" aria-live="polite" className={styles.srOnly}>
-            {successMessage}
           </div>
         )}
 

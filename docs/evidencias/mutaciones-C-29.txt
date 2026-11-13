@@ -1,25 +1,25 @@
 Salida generada por docs/evidencias/mutaciones-C-29.py. No editar a mano.
-tests nuevos de C-29 listados por vitest: 19; mutaciones: 19 (una por test)
-SHA-256 de produccion antes: d5fd089276a7a635376d69784a173b17119bb63cc160e95a7b6100636c61bff7
+tests nuevos de C-29 listados por vitest: 27; mutaciones: 27 (una por test)
+SHA-256 de produccion antes: 3469644c84087b0d13cc138a54d89725eafbaa989d635f36724a9ab0c2e7b2ed
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ✓ src/shared/api/client.violations.test.ts (1 test) 19ms
- ✓ src/shared/components/Dialog.test.tsx (3 tests) 217ms
- ✓ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (1 test) 254ms
- ✓ src/features/appointments/PatientSearchGroup.test.tsx (4 tests) 351ms
- ✓ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests) 1033ms
- ✓ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (1 test) 411ms
-   ✓ AgendaPage — Integración con AppointmentFormDialog > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda  409ms
+ ✓ src/shared/api/client.violations.test.ts (1 test) 17ms
+ ✓ src/shared/components/Dialog.test.tsx (3 tests) 231ms
+ ✓ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (3 tests) 269ms
+ ✓ src/features/appointments/PatientSearchGroup.test.tsx (4 tests) 363ms
+ ✓ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests) 1083ms
+ ✓ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (2 tests) 660ms
+   ✓ AgendaPage — Integración con AppointmentFormDialog > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda  484ms
 
  Test Files  6 passed (6)
-      Tests  19 passed (19)
-   Start at  22:56:37
-   Duration  6.83s (transform 1.49s, setup 4.89s, collect 4.08s, tests 2.29s, environment 17.64s, prepare 2.29s)
+      Tests  27 passed (27)
+   Start at  23:56:42
+   Duration  7.96s (transform 1.50s, setup 6.48s, collect 3.70s, tests 2.62s, environment 20.38s, prepare 2.65s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjj_m7mi1/vitest.json
-stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > apertura y foco inicial con prellenado contextual
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpxo6r14ux/vitest.json
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > apertura y foco inicial
 Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
 
 When testing, code that causes React state updates should be wrapped into act(...):
@@ -32,7 +32,46 @@ act(() => {
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
     at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 
-stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > prellenado con fecha y filtros activos
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
 
 When testing, code that causes React state updates should be wrapped into act(...):
@@ -45,12 +84,12 @@ act(() => {
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
     at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
 ================================================================================
-[01/19] abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby
+[01/27] abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby
 test: src/shared/components/Dialog.test.tsx > abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby
 diff:
 --- a/frontend/src/shared/components/Dialog.tsx
 +++ b/frontend/src/shared/components/Dialog.tsx
-@@ -41,7 +41,7 @@
+@@ -42,7 +42,7 @@
            dialog.setAttribute("open", "");
          }
        } else {
@@ -63,18 +102,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 95ms
-   × Dialog > abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby 94ms
+ ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 118ms
+   × Dialog > abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby 116ms
      → expected null not to be null
    ↓ Dialog > Escape llama onClose exactamente una vez
    ↓ Dialog > al pasar open de true a false el foco vuelve a returnFocusRef
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  22:56:45
-   Duration  3.03s (transform 141ms, setup 347ms, collect 163ms, tests 95ms, environment 1.67s, prepare 312ms)
+   Start at  23:56:51
+   Duration  3.50s (transform 181ms, setup 536ms, collect 179ms, tests 118ms, environment 1.88s, prepare 373ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp849arcj1/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgaic63e6/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -91,13 +130,13 @@ AssertionError: expected null not to be null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[02/19] Escape llama onClose exactamente una vez
+[02/27] Escape llama onClose exactamente una vez
 test: src/shared/components/Dialog.test.tsx > Escape llama onClose exactamente una vez
 diff:
 --- a/frontend/src/shared/components/Dialog.tsx
 +++ b/frontend/src/shared/components/Dialog.tsx
-@@ -70,7 +70,7 @@
-   }, [open, returnFocusRef]);
+@@ -72,7 +72,7 @@
+   }, []);
  
    const handleKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
 -    if (event.key !== "Escape") {
@@ -109,18 +148,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 93ms
+ ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 140ms
    ↓ Dialog > abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby
-   × Dialog > Escape llama onClose exactamente una vez 91ms
+   × Dialog > Escape llama onClose exactamente una vez 138ms
      → expected +0 to be 1 // Object.is equality
    ↓ Dialog > al pasar open de true a false el foco vuelve a returnFocusRef
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  22:56:53
-   Duration  3.03s (transform 127ms, setup 339ms, collect 140ms, tests 93ms, environment 1.73s, prepare 319ms)
+   Start at  23:57:00
+   Duration  3.19s (transform 191ms, setup 487ms, collect 205ms, tests 140ms, environment 1.62s, prepare 291ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqhpwcdw5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4c1083xz/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -144,28 +183,27 @@ AssertionError: expected +0 to be 1 // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[03/19] al pasar open de true a false el foco vuelve a returnFocusRef
+[03/27] al pasar open de true a false el foco vuelve a returnFocusRef
 test: src/shared/components/Dialog.test.tsx > al pasar open de true a false el foco vuelve a returnFocusRef
 diff:
 --- a/frontend/src/shared/components/Dialog.tsx
 +++ b/frontend/src/shared/components/Dialog.tsx
-@@ -58,7 +58,7 @@
+@@ -59,7 +59,7 @@
          dialog.removeAttribute("open");
        }
        wasOpenRef.current = false;
 -      returnFocusRef?.current?.focus();
 +      // returnFocusRef?.current?.focus();
      }
- 
-     const target = returnFocusRef?.current;
+   }, [open, returnFocusRef]);
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 95ms
+ ❯ src/shared/components/Dialog.test.tsx (3 tests | 1 failed | 2 skipped) 142ms
    ↓ Dialog > abre con atributo open en jsdom y expone el nombre accesible por aria-labelledby
    ↓ Dialog > Escape llama onClose exactamente una vez
-   × Dialog > al pasar open de true a false el foco vuelve a returnFocusRef 94ms
+   × Dialog > al pasar open de true a false el foco vuelve a returnFocusRef 140ms
      → expect(element).toHaveFocus()
 
 Expected element with focus:
@@ -198,10 +236,10 @@ Received element with focus:
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  22:57:01
-   Duration  3.21s (transform 187ms, setup 383ms, collect 204ms, tests 95ms, environment 1.69s, prepare 413ms)
+   Start at  23:57:09
+   Duration  3.51s (transform 191ms, setup 529ms, collect 204ms, tests 142ms, environment 1.81s, prepare 339ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1gyufwpv/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyucu5zp9/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -246,7 +284,7 @@ Received element with focus:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[04/19] captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind
+[04/27] captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind
 test: src/shared/api/client.violations.test.ts > captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind
 diff:
 --- a/frontend/src/shared/api/client.ts
@@ -264,16 +302,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/api/client.violations.test.ts (1 test | 1 failed) 13ms
-   × asViolations con campos opcionales > captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind 12ms
+ ❯ src/shared/api/client.violations.test.ts (1 test | 1 failed) 21ms
+   × asViolations con campos opcionales > captura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind 19ms
      → expected undefined to be 'PATIENT' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  22:57:09
-   Duration  2.76s (transform 77ms, setup 427ms, collect 66ms, tests 13ms, environment 1.46s, prepare 319ms)
+   Start at  23:57:19
+   Duration  3.44s (transform 109ms, setup 486ms, collect 86ms, tests 21ms, environment 2.03s, prepare 340ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpou02ed5y/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzrc8j5mn/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -297,7 +335,7 @@ undefined
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[05/19] renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons
+[05/27] renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons
 test: src/features/appointments/PatientSearchGroup.test.tsx > renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons
 diff:
 --- a/frontend/src/features/appointments/PatientSearchGroup.tsx
@@ -315,8 +353,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 110ms
-   × PatientSearchGroup > renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons 108ms
+ ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 133ms
+   × PatientSearchGroup > renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons 130ms
      → expect(element).toBeEnabled()
 
 Received element is not enabled:
@@ -331,10 +369,10 @@ Received element is not enabled:
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:57:17
-   Duration  3.21s (transform 205ms, setup 409ms, collect 258ms, tests 110ms, environment 1.54s, prepare 330ms)
+   Start at  23:57:28
+   Duration  3.57s (transform 235ms, setup 450ms, collect 269ms, tests 133ms, environment 1.94s, prepare 360ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_jc5alj_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyr_00bcj/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -358,7 +396,7 @@ Received element is not enabled:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[06/19] búsqueda con resultados muestra radio buttons con nombre y DNI
+[06/27] búsqueda con resultados muestra radio buttons con nombre y DNI
 test: src/features/appointments/PatientSearchGroup.test.tsx > búsqueda con resultados muestra radio buttons con nombre y DNI
 diff:
 --- a/frontend/src/features/appointments/PatientSearchGroup.tsx
@@ -376,19 +414,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 132ms
+ ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 205ms
    ↓ PatientSearchGroup > renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons
-   × PatientSearchGroup > búsqueda con resultados muestra radio buttons con nombre y DNI 130ms
+   × PatientSearchGroup > búsqueda con resultados muestra radio buttons con nombre y DNI 203ms
      → expected null not to be null
    ↓ PatientSearchGroup > búsqueda sin resultados muestra aviso accesible y sin radio buttons
    ↓ PatientSearchGroup > selección por clic o teclado invoca onSelectPatient con el id correspondiente
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:57:25
-   Duration  3.11s (transform 204ms, setup 416ms, collect 252ms, tests 132ms, environment 1.45s, prepare 325ms)
+   Start at  23:57:37
+   Duration  4.41s (transform 247ms, setup 602ms, collect 284ms, tests 205ms, environment 2.34s, prepare 447ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3u9e57r1/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4_2l5gz7/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -405,7 +443,7 @@ AssertionError: expected null not to be null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[07/19] búsqueda sin resultados muestra aviso accesible y sin radio buttons
+[07/27] búsqueda sin resultados muestra aviso accesible y sin radio buttons
 test: src/features/appointments/PatientSearchGroup.test.tsx > búsqueda sin resultados muestra aviso accesible y sin radio buttons
 diff:
 --- a/frontend/src/features/appointments/PatientSearchGroup.tsx
@@ -422,19 +460,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 186ms
+ ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 172ms
    ↓ PatientSearchGroup > renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons
    ↓ PatientSearchGroup > búsqueda con resultados muestra radio buttons con nombre y DNI
-   × PatientSearchGroup > búsqueda sin resultados muestra aviso accesible y sin radio buttons 184ms
+   × PatientSearchGroup > búsqueda sin resultados muestra aviso accesible y sin radio buttons 170ms
      → expected null not to be null
    ↓ PatientSearchGroup > selección por clic o teclado invoca onSelectPatient con el id correspondiente
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:57:34
-   Duration  3.43s (transform 239ms, setup 493ms, collect 282ms, tests 186ms, environment 1.62s, prepare 362ms)
+   Start at  23:57:47
+   Duration  4.31s (transform 263ms, setup 642ms, collect 284ms, tests 172ms, environment 2.27s, prepare 425ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqysaf4tt/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpjmpj0p6x/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -451,7 +489,7 @@ AssertionError: expected null not to be null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[08/19] selección por clic o teclado invoca onSelectPatient con el id correspondiente
+[08/27] selección por clic o teclado invoca onSelectPatient con el id correspondiente
 test: src/features/appointments/PatientSearchGroup.test.tsx > selección por clic o teclado invoca onSelectPatient con el id correspondiente
 diff:
 --- a/frontend/src/features/appointments/PatientSearchGroup.tsx
@@ -469,19 +507,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 145ms
+ ❯ src/features/appointments/PatientSearchGroup.test.tsx (4 tests | 1 failed | 3 skipped) 194ms
    ↓ PatientSearchGroup > renderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons
    ↓ PatientSearchGroup > búsqueda con resultados muestra radio buttons con nombre y DNI
    ↓ PatientSearchGroup > búsqueda sin resultados muestra aviso accesible y sin radio buttons
-   × PatientSearchGroup > selección por clic o teclado invoca onSelectPatient con el id correspondiente 143ms
+   × PatientSearchGroup > selección por clic o teclado invoca onSelectPatient con el id correspondiente 191ms
      → expected null to be '00000000-0000-0000-0000-0000000000c1' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  22:57:42
-   Duration  3.14s (transform 172ms, setup 329ms, collect 222ms, tests 145ms, environment 1.59s, prepare 327ms)
+   Start at  23:57:58
+   Duration  4.19s (transform 306ms, setup 691ms, collect 305ms, tests 194ms, environment 2.03s, prepare 394ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqemgccbm/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_f3qwh02/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -505,12 +543,12 @@ null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[09/19] apertura y foco inicial con prellenado contextual
-test: src/features/appointments/AppointmentFormDialog.test.tsx > apertura y foco inicial con prellenado contextual
+[09/27] apertura y foco inicial
+test: src/features/appointments/AppointmentFormDialog.test.tsx > apertura y foco inicial
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -108,7 +108,7 @@
+@@ -106,7 +106,7 @@
    // Foco en el primer control interactivo al abrir
    useEffect(() => {
      if (open) {
@@ -522,8 +560,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 149ms
-   × AppointmentFormDialog > apertura y foco inicial con prellenado contextual 148ms
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 162ms
+   × AppointmentFormDialog > apertura y foco inicial 160ms
      → expect(element).toHaveFocus()
 
 Expected element with focus:
@@ -758,25 +796,30 @@ Received element with focus:
     </dialog>
   </div>
 </body>
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:57:51
-   Duration  3.30s (transform 213ms, setup 336ms, collect 323ms, tests 149ms, environment 1.66s, prepare 337ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:58:08
+   Duration  3.64s (transform 277ms, setup 439ms, collect 391ms, tests 162ms, environment 1.83s, prepare 372ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmphkyrw5tc/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpte7loqbd/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > apertura y foco inicial con prellenado contextual
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > apertura y foco inicial
 Error: expect(element).toHaveFocus()
 
 Expected element with focus:
@@ -1011,23 +1054,149 @@ Received element with focus:
     </dialog>
   </div>
 </body>
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:51:25
-     49|     const searchInput = screen.queryByRole("searchbox", { name: /busca…
-     50|     expect(searchInput).not.toBeNull();
-     51|     expect(searchInput).toHaveFocus();
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:37:25
+     35|     const searchInput = screen.queryByRole("searchbox", { name: /busca…
+     36|     expect(searchInput).not.toBeNull();
+     37|     expect(searchInput).toHaveFocus();
        |                         ^
-     52|   });
-     53| 
+     38|   });
+     39| 
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[10/19] sugerencia y edición de duración según prestación
-test: src/features/appointments/AppointmentFormDialog.test.tsx > sugerencia y edición de duración según prestación
+[10/27] prellenado con fecha y filtros activos
+test: src/features/appointments/AppointmentFormDialog.test.tsx > prellenado con fecha y filtros activos
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -127,7 +127,7 @@
+@@ -74,7 +74,7 @@
+   const [prevOpen, setPrevOpen] = useState(open);
+   const [date, setDate] = useState(effectiveDate);
+   const [time, setTime] = useState("");
+-  const [professionalId, setProfessionalId] = useState(initialProfessionalId ?? "");
++  const [professionalId, setProfessionalId] = useState("");
+   const [chairId, setChairId] = useState(initialChairId ?? "");
+   const [serviceId, setServiceId] = useState("");
+   const [durationMin, setDurationMin] = useState<number | "">("");
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 122ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   × AppointmentFormDialog > prellenado con fecha y filtros activos 120ms
+     → expected '' to be '00000000-0000-0000-0000-000000000001' // Object.is equality
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
+   ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+   ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+   ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:58:17
+   Duration  3.67s (transform 317ms, setup 472ms, collect 443ms, tests 122ms, environment 1.68s, prepare 388ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpad7jrhpr/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > prellenado con fecha y filtros activos
+AssertionError: expected '' to be '00000000-0000-0000-0000-000000000001' // Object.is equality
+
+- Expected
++ Received
+
+- 00000000-0000-0000-0000-000000000001
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:62:31
+     60|     const profSelect = screen.queryByLabelText<HTMLSelectElement>("Pro…
+     61|     expect(profSelect).not.toBeNull();
+     62|     expect(profSelect?.value).toBe("00000000-0000-0000-0000-0000000000…
+       |                               ^
+     63| 
+     64|     const chairSelect = screen.queryByLabelText<HTMLSelectElement>("Si…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[11/27] sin filtros activos los selectores quedan sin selección
+test: src/features/appointments/AppointmentFormDialog.test.tsx > sin filtros activos los selectores quedan sin selección
+diff:
+--- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
+@@ -75,7 +75,7 @@
+   const [date, setDate] = useState(effectiveDate);
+   const [time, setTime] = useState("");
+   const [professionalId, setProfessionalId] = useState(initialProfessionalId ?? "");
+-  const [chairId, setChairId] = useState(initialChairId ?? "");
++  const [chairId, setChairId] = useState(initialChairId ?? "00000000-0000-0000-0000-0000000000b1");
+   const [serviceId, setServiceId] = useState("");
+   const [durationMin, setDurationMin] = useState<number | "">("");
+   const [patientId, setPatientId] = useState<string | null>(null);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 131ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   × AppointmentFormDialog > sin filtros activos los selectores quedan sin selección 128ms
+     → expected '00000000-0000-0000-0000-0000000000b1' to be '' // Object.is equality
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
+   ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+   ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+   ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:58:27
+   Duration  4.64s (transform 346ms, setup 610ms, collect 505ms, tests 131ms, environment 2.43s, prepare 371ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp64t0prqj/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+AssertionError: expected '00000000-0000-0000-0000-0000000000b1' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ 00000000-0000-0000-0000-0000000000b1
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:91:32
+     89|     const chairSelect = screen.queryByLabelText<HTMLSelectElement>("Si…
+     90|     expect(chairSelect).not.toBeNull();
+     91|     expect(chairSelect?.value).toBe("");
+       |                                ^
+     92|   });
+     93| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[12/27] duración sugerida al elegir prestación
+test: src/features/appointments/AppointmentFormDialog.test.tsx > duración sugerida al elegir prestación
+diff:
+--- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
+@@ -125,7 +125,7 @@
      setServiceId(selectedId);
      const s = services.find((srv) => srv.id === selectedId);
      if (s) {
@@ -1039,45 +1208,111 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 148ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   × AppointmentFormDialog > sugerencia y edición de duración según prestación 146ms
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 152ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   × AppointmentFormDialog > duración sugerida al elegir prestación 150ms
      → expected '15' to be '60' // Object.is equality
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:57:59
-   Duration  3.48s (transform 305ms, setup 498ms, collect 453ms, tests 148ms, environment 1.46s, prepare 370ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:58:37
+   Duration  3.68s (transform 307ms, setup 457ms, collect 412ms, tests 152ms, environment 1.74s, prepare 337ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg06kz8xw/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyjdnizwf/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > sugerencia y edición de duración según prestación
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > duración sugerida al elegir prestación
 AssertionError: expected '15' to be '60' // Object.is equality
 
 Expected: "60"
 Received: "15"
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:80:34
-     78|     const durationInput = screen.queryByLabelText<HTMLInputElement>("D…
-     79|     expect(durationInput).not.toBeNull();
-     80|     expect(durationInput?.value).toBe("60");
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:120:34
+    118|     const durationInput = screen.queryByLabelText<HTMLInputElement>("D…
+    119|     expect(durationInput).not.toBeNull();
+    120|     expect(durationInput?.value).toBe("60");
        |                                  ^
-     81| 
-     82|     fireEvent.change(durationInput!, { target: { value: "45" } });
+    121|   });
+    122| 
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[11/19] armado de startAt con offset exacto para la fecha elegida y timezone de la API
+[13/27] edición manual de duración se conserva
+test: src/features/appointments/AppointmentFormDialog.test.tsx > edición manual de duración se conserva
+diff:
+--- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
+@@ -367,7 +367,7 @@
+                 value={durationMin}
+                 onChange={(e) => {
+                   const val = e.target.value;
+-                  setDurationMin(val === "" ? "" : Number(val));
++                  setDurationMin(val === "" ? "" : 60);
+                 }}
+                 aria-invalid={fieldErrors.durationMin ? "true" : undefined}
+               />
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 143ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   × AppointmentFormDialog > edición manual de duración se conserva 140ms
+     → expected '60' to be '45' // Object.is equality
+   ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+   ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+   ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:58:47
+   Duration  3.59s (transform 304ms, setup 503ms, collect 416ms, tests 143ms, environment 1.69s, prepare 365ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1j9fwuxp/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > edición manual de duración se conserva
+AssertionError: expected '60' to be '45' // Object.is equality
+
+Expected: "45"
+Received: "60"
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:151:34
+    149| 
+    150|     fireEvent.change(durationInput!, { target: { value: "45" } });
+    151|     expect(durationInput?.value).toBe("45");
+       |                                  ^
+    152|   });
+    153| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[14/27] armado de startAt con offset exacto para la fecha elegida y timezone de la API
 test: src/features/appointments/AppointmentFormDialog.test.tsx > armado de startAt con offset exacto para la fecha elegida y timezone de la API
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
@@ -1095,24 +1330,29 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 29ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
-   × AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API 28ms
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 97ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
+   × AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API 95ms
      → expected '2026-11-16T10:00:00Z' to be '2026-11-16T10:00:00-03:00' // Object.is equality
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:58:08
-   Duration  3.19s (transform 250ms, setup 390ms, collect 365ms, tests 29ms, environment 1.52s, prepare 365ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:58:56
+   Duration  3.90s (transform 305ms, setup 524ms, collect 425ms, tests 97ms, environment 1.91s, prepare 331ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpa8y7h52g/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpb69ooctb/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1122,28 +1362,28 @@ AssertionError: expected '2026-11-16T10:00:00Z' to be '2026-11-16T10:00:00-03:00
 Expected: "2026-11-16T10:00:00-03:00"
 Received: "2026-11-16T10:00:00Z"
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:88:21
-     86|   it("armado de startAt con offset exacto para la fecha elegida y time…
-     87|     const isoBsAs = buildStartAtIso("2026-11-16", "10:00", "America/Ar…
-     88|     expect(isoBsAs).toBe("2026-11-16T10:00:00-03:00");
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:156:21
+    154|   it("armado de startAt con offset exacto para la fecha elegida y time…
+    155|     const isoBsAs = buildStartAtIso("2026-11-16", "10:00", "America/Ar…
+    156|     expect(isoBsAs).toBe("2026-11-16T10:00:00-03:00");
        |                     ^
-     89| 
-     90|     const isoNySummer = buildStartAtIso("2026-07-15", "10:00", "Americ…
+    157| 
+    158|     const isoNySummer = buildStartAtIso("2026-07-15", "10:00", "Americ…
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[12/19] envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-test: src/features/appointments/AppointmentFormDialog.test.tsx > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
+[15/27] envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+test: src/features/appointments/AppointmentFormDialog.test.tsx > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -169,7 +169,7 @@
+@@ -166,7 +166,7 @@
+     setIsSubmitting(false);
  
      if (result.ok && result.status === 201) {
-       setSuccessMessage(`Turno creado con éxito para el ${date} a las ${time}`);
--      onSuccess?.();
-+      // onSuccess?.();
+-      onSuccess?.({ date, time });
++      // onSuccess?.({ date, time });
        onClose();
        return;
      }
@@ -1151,28 +1391,33 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 189ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 289ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   × AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco 187ms
+   × AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco 286ms
      → expected false to be true // Object.is equality
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:58:17
-   Duration  3.18s (transform 233ms, setup 345ms, collect 342ms, tests 189ms, environment 1.55s, prepare 354ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:59:05
+   Duration  3.78s (transform 280ms, setup 523ms, collect 395ms, tests 289ms, environment 1.84s, prepare 321ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmphi8ewk0a/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp7n0tvs9j/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
 AssertionError: expected false to be true // Object.is equality
 
 - Expected
@@ -1181,23 +1426,23 @@ AssertionError: expected false to be true // Object.is equality
 - true
 + false
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:189:27
-    187|     // Esperar a que se procese
-    188|     await screen.findByRole("button", { name: "Nuevo turno" });
-    189|     expect(successCalled).toBe(true);
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:259:27
+    257|     // Esperar a que se procese
+    258|     await screen.findByRole("button", { name: "Nuevo turno" });
+    259|     expect(successCalled).toBe(true);
        |                           ^
-    190|     expect(postBody).toEqual({
-    191|       patientId: "00000000-0000-0000-0000-0000000000c1",
+    260|     expect(successInfo).toEqual({ date: "2026-11-16", time: "10:00" });
+    261|     expect(postBody).toEqual({
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[13/19] respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
-test: src/features/appointments/AppointmentFormDialog.test.tsx > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+[16/27] respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+test: src/features/appointments/AppointmentFormDialog.test.tsx > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -219,7 +219,7 @@
+@@ -220,7 +220,7 @@
              <ul className={styles.alertList}>
                {violations.map((v, i) => (
                  <li key={i}>
@@ -1210,46 +1455,51 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 247ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 305ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   × AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid 245ms
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   × AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias 302ms
      → expected null not to be null
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:58:25
-   Duration  3.18s (transform 203ms, setup 333ms, collect 298ms, tests 247ms, environment 1.49s, prepare 329ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:59:16
+   Duration  4.29s (transform 327ms, setup 558ms, collect 447ms, tests 305ms, environment 2.10s, prepare 307ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbbwakosb/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmporbkpcjo/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
 AssertionError: expected null not to be null
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:293:60
-    291|     expect(alert).not.toBeNull();
-    292|     expect(alert).toHaveFocus();
-    293|     expect(screen.queryByText("PROFESSIONAL_OVERLAP")).not.toBeNull();
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:371:60
+    369|     const alert = screen.queryByRole("alert");
+    370|     expect(alert).not.toBeNull();
+    371|     expect(screen.queryByText("PROFESSIONAL_OVERLAP")).not.toBeNull();
        |                                                            ^
-    294|     expect(screen.queryByText(profOverlapMsg)).not.toBeNull();
-    295|     expect(screen.queryByText("CHAIR_OVERLAP")).not.toBeNull();
+    372|     expect(screen.queryByText(profOverlapMsg)).not.toBeNull();
+    373|     expect(screen.queryByText("CHAIR_OVERLAP")).not.toBeNull();
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[14/19] rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+[17/27] rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
 test: src/features/appointments/AppointmentFormDialog.test.tsx > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -177,7 +177,7 @@
+@@ -174,7 +174,7 @@
      if (!result.ok) {
        if (
          result.error.kind === "conflict" ||
@@ -1262,46 +1512,51 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 224ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 468ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
-   × AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos 222ms
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+   × AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos 465ms
      → expected null not to be null
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:58:34
-   Duration  3.31s (transform 308ms, setup 372ms, collect 475ms, tests 224ms, environment 1.49s, prepare 338ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:59:27
+   Duration  5.73s (transform 414ms, setup 672ms, collect 562ms, tests 468ms, environment 2.89s, prepare 412ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpb5gjjwyy/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp9lsvjbeo/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
 AssertionError: expected null not to be null
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:388:23
-    386|     await screen.findByRole("button", { name: "Crear turno" });
-    387|     const alert = screen.queryByRole("alert");
-    388|     expect(alert).not.toBeNull();
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:470:23
+    468|     await screen.findByRole("button", { name: "Crear turno" });
+    469|     const alert = screen.queryByRole("alert");
+    470|     expect(alert).not.toBeNull();
        |                       ^
-    389|     expect(screen.queryByText("IN_THE_PAST")).not.toBeNull();
-    390|     expect(screen.queryByText(inPastMsg)).not.toBeNull();
+    471|     expect(screen.queryByText("IN_THE_PAST")).not.toBeNull();
+    472|     expect(screen.queryByText(pastMsg)).not.toBeNull();
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[15/19] mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+[18/27] mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
 test: src/features/appointments/AppointmentFormDialog.test.tsx > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -189,7 +189,7 @@
+@@ -186,7 +186,7 @@
              mappedErrors[err.field] = err.message;
            }
          }
@@ -1314,14 +1569,17 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 185ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 308ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
-   × AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline 183ms
+   × AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline 306ms
      → expect(element).toHaveAttribute("aria-invalid", "true") // element.getAttribute("aria-invalid") === "true"
 
 Expected the element to have attribute:
@@ -1329,14 +1587,16 @@ Expected the element to have attribute:
 Received:
   null
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:58:43
-   Duration  3.09s (transform 205ms, setup 318ms, collect 302ms, tests 185ms, environment 1.51s, prepare 323ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:59:40
+   Duration  4.57s (transform 345ms, setup 588ms, collect 488ms, tests 308ms, environment 2.31s, prepare 383ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp54r2t9ew/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp83tbzpmy/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1347,28 +1607,28 @@ Expected the element to have attribute:
   aria-invalid="true"
 Received:
   null
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:493:27
-    491|     const durationInput = screen.queryByLabelText("Duración (minutos)"…
-    492|     expect(durationInput).not.toBeNull();
-    493|     expect(durationInput).toHaveAttribute("aria-invalid", "true");
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:565:27
+    563|     await screen.findByRole("button", { name: "Crear turno" });
+    564|     const durationInput = screen.queryByLabelText("Duración (minutos)"…
+    565|     expect(durationInput).toHaveAttribute("aria-invalid", "true");
        |                           ^
-    494|     expect(screen.queryByText("La fecha y hora debe incluir zona horar…
-    495| 
+    566|     expect(
+    567|       screen.queryByText("La duración debe ser entre 15 y 240 minutos.…
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[16/19] respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+[19/27] respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
 test: src/features/appointments/AppointmentFormDialog.test.tsx > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -178,7 +178,7 @@
+@@ -175,7 +175,7 @@
        if (
          result.error.kind === "conflict" ||
          result.error.kind === "unprocessable" ||
 -        result.error.kind === "forbidden"
-+        result.error.kind === "unknown"
++        result.error.kind === ("unknown" as string)
        ) {
          setViolations(result.error.violations);
          setTimeout(() => alertRef.current?.focus(), 0);
@@ -1376,46 +1636,737 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 233ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 316ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
-   × AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión 231ms
+   × AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión 313ms
      → expected null not to be null
-   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:58:51
-   Duration  3.32s (transform 236ms, setup 308ms, collect 329ms, tests 233ms, environment 1.58s, prepare 429ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  23:59:52
+   Duration  4.25s (transform 325ms, setup 606ms, collect 450ms, tests 316ms, environment 2.07s, prepare 405ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpj9nikpok/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpiahrca2q/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
 AssertionError: expected null not to be null
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:583:23
-    581|     await screen.findByRole("button", { name: "Crear turno" });
-    582|     const alert = screen.queryByRole("alert");
-    583|     expect(alert).not.toBeNull();
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:657:23
+    655|     await screen.findByRole("button", { name: "Crear turno" });
+    656|     const alert = screen.queryByRole("alert");
+    657|     expect(alert).not.toBeNull();
        |                       ^
-    584|     expect(screen.queryByText("FORBIDDEN_OPERATION")).not.toBeNull();
-    585|     expect(screen.queryByText(forbiddenMsg)).not.toBeNull();
+    658|     expect(screen.queryByText("FORBIDDEN_OPERATION")).not.toBeNull();
+    659|     expect(screen.queryByText(forbiddenMsg)).not.toBeNull();
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[17/19] pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
-test: src/features/appointments/AppointmentFormDialog.test.tsx > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+[20/27] foco al resumen de alerta ante fallo
+test: src/features/appointments/AppointmentFormDialog.test.tsx > foco al resumen de alerta ante fallo
 diff:
 --- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
 +++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
-@@ -386,7 +386,7 @@
+@@ -178,7 +178,7 @@
+         result.error.kind === "forbidden"
+       ) {
+         setViolations(result.error.violations);
+-        setTimeout(() => alertRef.current?.focus(), 0);
++        // setTimeout(() => alertRef.current?.focus(), 0);
+       } else if (result.error.kind === "validation") {
+         const mappedErrors: Record<string, string> = {};
+         for (const err of result.error.errors) {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 1310ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
+   ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+   ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+   ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+   × AppointmentFormDialog > foco al resumen de alerta ante fallo 1308ms
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <div
+  aria-live="assertive"
+  class="alertContainer"
+  role="alert"
+  tabindex="-1"
+>
+  <p
+    class="alertTitle"
+  >
+    No se pudo agendar el turno:
+  </p>
+  <ul
+    class="alertList"
+  >
+    <li>
+      <span
+        class="codeBadge"
+      >
+        PROFESSIONAL_OVERLAP
+      </span>
+      Solapamiento de profesional.
+    </li>
+  </ul>
+</div>
+Received element with focus:
+  <input
+  aria-label="Buscar paciente"
+  class="input"
+  id="patient-search-input"
+  placeholder="Buscar por nombre o DNI..."
+  type="search"
+  value="Pérez"
+/>
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<dialog[39m
+        [33maria-labelledby[39m=[32m"appointment-dialog-title"[39m
+        [33maria-modal[39m=[32m"true"[39m
+        [33mclass[39m=[32m"dialog"[39m
+        [33mopen[39m=[32m""[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"modalContent"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"title"[39m
+            [33mid[39m=[32m"appointment-dialog-title"[39m
+          [36m>[39m
+            [0mNuevo turno[0m
+          [36m</h2>[39m
+          [36m<div[39m
+            [33maria-live[39m=[32m"assertive"[39m
+            [33mclass[39m=[32m"alertContainer"[39m
+            [33mrole[39m=[32m"alert"[39m
+            [33mtabindex[39m=[32m"-1"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"alertTitle"[39m
+            [36m>[39m
+              [0mNo se pudo agendar el turno:[0m
+            [36m</p>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"alertList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"codeBadge"[39m
+                [36m>[39m
+                  [0mPROFESSIONAL_OVERLAP[0m
+                [36m</span>[39m
+                [0mSolapamiento de profesional.[0m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</div>[39m
+          [36m<form[39m
+            [33mclass[39m=[32m"form"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"container"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"searchRow"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"field"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"label"[39m
+                    [33mfor[39m=[32m"patient-search-input"[39m
+                  [36m>[39m
+                    [0mPaciente[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33maria-label[39m=[32m"Buscar paciente"[39m
+                    [33mclass[39m=[32m"input"[39m
+                    [33mid[39m=[32m"patient-search-input"[39m
+                    [33mplaceholder[39m=[32m"Buscar por nombre o DNI..."[39m
+                    [33mtype[39m=[32m"search"[39m
+                    [33mvalue[39m=[32m"Pérez"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"searchButton"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mBuscar paciente[0m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Pacientes encontrados"[39m
+                [33mclass[39m=[32m"resultsGroup"[39m
+                [33mrole[39m=[32m"radiogroup"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"radioLabel"[39m
+                [36m>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"radioInput"[39m
+                    [33mname[39m=[32m"patientId"[39m
+                    [33mtype[39m=[32m"radio"[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000c1"[39m
+                  [36m/>[39m
+                  [36m<span>[39m
+                    [0mAna Pérez[0m
+                    [0m (DNI [0m
+                    [0m30111222[0m
+                    [0m)[0m
+                  [36m</span>[39m
+                [36m</label>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-date"[39m
+                [36m>[39m
+                  [0mFecha[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"appointment-date"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"date"[39m
+                  [33mvalue[39m=[32m"2026-11-16"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-time"[39m
+                [36m>[39m
+                  [0mHora[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"appointment-time"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mstep[39m=[32m"300"[39m
+                  [33mtype[39m=[32m"time"[39m
+                  [33mvalue[39m=[32m"10:00"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-professional"[39m
+                [36m>[39m
+                  [0mProfesional[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"appointment-professional"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0mSeleccionar profesional...[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000001"[39m
+                  [36m>[39m
+                    [0mDra. Laura Quiroga[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000002"[39m
+                  [36m>[39m
+                    [0mDr. Martín Sosa[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-chair"[39m
+                [36m>[39m
+                  [0mSillón[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"appointment-chair"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0mSeleccionar sillón...[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b1"[39m
+                  [36m>[39m
+                    [0mSillón 1[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b2"[39m
+                  [36m>[39m
+                    [0mSillón 2[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-service"[39m
+                [36m>[39m
+                  [0mPrestación[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"appointment-service"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0mSeleccionar prestación...[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000d1"[39m
+                  [36m>[39m
+                    [0mExtracción[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-duration"[39m
+                [36m>[39m
+                  [0mDuración (minutos)[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"appointment-duration"[39m
+                  [33mmax[39m=[32m"480"[39m
+                  [33mmin[39m=[32m"5"[39m
+                  [33mstep[39m=[32m"5"[39m
+                  [33mtype[39m=[32m"number"[39m
+                  [33mvalue[39m=[32m"60"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actionsRow"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"secondaryButton"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mCancelar[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"primaryButton"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mCrear turno[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</form>[39m
+        [36m</div>[39m
+      [36m</dialog>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  00:00:02
+   Duration  5.00s (transform 314ms, setup 636ms, collect 461ms, tests 1.31s, environment 1.78s, prepare 351ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6tx8w9g7/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > foco al resumen de alerta ante fallo
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <div
+  aria-live="assertive"
+  class="alertContainer"
+  role="alert"
+  tabindex="-1"
+>
+  <p
+    class="alertTitle"
+  >
+    No se pudo agendar el turno:
+  </p>
+  <ul
+    class="alertList"
+  >
+    <li>
+      <span
+        class="codeBadge"
+      >
+        PROFESSIONAL_OVERLAP
+      </span>
+      Solapamiento de profesional.
+    </li>
+  </ul>
+</div>
+Received element with focus:
+  <input
+  aria-label="Buscar paciente"
+  class="input"
+  id="patient-search-input"
+  placeholder="Buscar por nombre o DNI..."
+  type="search"
+  value="Pérez"
+/>
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<dialog[39m
+        [33maria-labelledby[39m=[32m"appointment-dialog-title"[39m
+        [33maria-modal[39m=[32m"true"[39m
+        [33mclass[39m=[32m"dialog"[39m
+        [33mopen[39m=[32m""[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"modalContent"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"title"[39m
+            [33mid[39m=[32m"appointment-dialog-title"[39m
+          [36m>[39m
+            [0mNuevo turno[0m
+          [36m</h2>[39m
+          [36m<div[39m
+            [33maria-live[39m=[32m"assertive"[39m
+            [33mclass[39m=[32m"alertContainer"[39m
+            [33mrole[39m=[32m"alert"[39m
+            [33mtabindex[39m=[32m"-1"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"alertTitle"[39m
+            [36m>[39m
+              [0mNo se pudo agendar el turno:[0m
+            [36m</p>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"alertList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"codeBadge"[39m
+                [36m>[39m
+                  [0mPROFESSIONAL_OVERLAP[0m
+                [36m</span>[39m
+                [0mSolapamiento de profesional.[0m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</div>[39m
+          [36m<form[39m
+            [33mclass[39m=[32m"form"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"container"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"searchRow"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"field"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"label"[39m
+                    [33mfor[39m=[32m"patient-search-input"[39m
+                  [36m>[39m
+                    [0mPaciente[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33maria-label[39m=[32m"Buscar paciente"[39m
+                    [33mclass[39m=[32m"input"[39m
+                    [33mid[39m=[32m"patient-search-input"[39m
+                    [33mplaceholder[39m=[32m"Buscar por nombre o DNI..."[39m
+                    [33mtype[39m=[32m"search"[39m
+                    [33mvalue[39m=[32m"Pérez"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"searchButton"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mBuscar paciente[0m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Pacientes encontrados"[39m
+                [33mclass[39m=[32m"resultsGroup"[39m
+                [33mrole[39m=[32m"radiogroup"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"radioLabel"[39m
+                [36m>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"radioInput"[39m
+                    [33mname[39m=[32m"patientId"[39m
+                    [33mtype[39m=[32m"radio"[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000c1"[39m
+                  [36m/>[39m
+                  [36m<span>[39m
+                    [0mAna Pérez[0m
+                    [0m (DNI [0m
+                    [0m30111222[0m
+                    [0m)[0m
+                  [36m</span>[39m
+                [36m</label>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-date"[39m
+                [36m>[39m
+                  [0mFecha[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"appointment-date"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"date"[39m
+                  [33mvalue[39m=[32m"2026-11-16"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-time"[39m
+                [36m>[39m
+                  [0mHora[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"appointment-time"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mstep[39m=[32m"300"[39m
+                  [33mtype[39m=[32m"time"[39m
+                  [33mvalue[39m=[32m"10:00"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-professional"[39m
+                [36m>[39m
+                  [0mProfesional[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"appointment-professional"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0mSeleccionar profesional...[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000001"[39m
+                  [36m>[39m
+                    [0mDra. Laura Quiroga[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000002"[39m
+                  [36m>[39m
+                    [0mDr. Martín Sosa[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-chair"[39m
+                [36m>[39m
+                  [0mSillón[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"appointment-chair"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0mSeleccionar sillón...[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b1"[39m
+                  [36m>[39m
+                    [0mSillón 1[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b2"[39m
+                  [36m>[39m
+                    [0mSillón 2[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"gridTwoCols"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-service"[39m
+                [36m>[39m
+                  [0mPrestación[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33mclass[39m=[32m"select"[39m
+                  [33mid[39m=[32m"appointment-service"[39m
+                  [33mrequired[39m=[32m""[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m>[39m
+                    [0mSeleccionar prestación...[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000d1"[39m
+                  [36m>[39m
+                    [0mExtracción[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"appointment-duration"[39m
+                [36m>[39m
+                  [0mDuración (minutos)[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"appointment-duration"[39m
+                  [33mmax[39m=[32m"480"[39m
+                  [33mmin[39m=[32m"5"[39m
+                  [33mstep[39m=[32m"5"[39m
+                  [33mtype[39m=[32m"number"[39m
+                  [33mvalue[39m=[32m"60"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"actionsRow"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"secondaryButton"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mCancelar[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"primaryButton"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mCrear turno[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</form>[39m
+        [36m</div>[39m
+      [36m</dialog>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:745:21
+    743|     const alert = screen.getByRole("alert");
+    744|     await waitFor(() => {
+    745|       expect(alert).toHaveFocus();
+       |                     ^
+    746|     });
+    747|   });
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[21/27] pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+test: src/features/appointments/AppointmentFormDialog.test.tsx > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+diff:
+--- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
+@@ -381,7 +381,7 @@
              <button
                type="button"
                className={styles.secondaryButton}
@@ -1428,28 +2379,33 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx (9 tests | 1 failed | 8 skipped) 139ms
-   ↓ AppointmentFormDialog > apertura y foco inicial con prellenado contextual
-   ↓ AppointmentFormDialog > sugerencia y edición de duración según prestación
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 209ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
    ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
-   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
-   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
    ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
    ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
    ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
-   × AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura 137ms
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   × AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura 207ms
      → expected true to be false // Object.is equality
+   ↓ AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
 
  Test Files  1 failed (1)
-      Tests  1 failed | 8 skipped (9)
-   Start at  22:59:00
-   Duration  3.39s (transform 321ms, setup 382ms, collect 444ms, tests 139ms, environment 1.56s, prepare 395ms)
+      Tests  1 failed | 13 skipped (14)
+   Start at  00:00:14
+   Duration  5.03s (transform 386ms, setup 721ms, collect 534ms, tests 209ms, environment 2.55s, prepare 460ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpsh8910qg/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpf9etdmcq/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > pulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
 AssertionError: expected true to be false // Object.is equality
 
 - Expected
@@ -1458,19 +2414,83 @@ AssertionError: expected true to be false // Object.is equality
 - false
 + true
 
- ❯ src/features/appointments/AppointmentFormDialog.test.tsx:639:18
-    637|     );
-    638| 
-    639|     expect(open).toBe(false);
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:801:18
+    799|     );
+    800| 
+    801|     expect(open).toBe(false);
        |                  ^
-    640|     expect(document.activeElement).toBe(trigger);
-    641|     document.body.removeChild(trigger);
+    802|     expect(postCalled).toBe(false);
+    803|     expect(document.activeElement).toBe(trigger);
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[18/19] controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear
-test: src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear
+[22/27] Escape cierra sin enviar solicitudes y devuelve el foco
+test: src/features/appointments/AppointmentFormDialog.test.tsx > Escape cierra sin enviar solicitudes y devuelve el foco
+diff:
+--- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
+@@ -193,7 +193,7 @@
+   };
+ 
+   const handleDialogClose = () => {
+-    onClose();
++    // onClose();
+   };
+ 
+   return (
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests | 1 failed | 13 skipped) 184ms
+   ↓ AppointmentFormDialog > apertura y foco inicial
+   ↓ AppointmentFormDialog > prellenado con fecha y filtros activos
+   ↓ AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+   ↓ AppointmentFormDialog > duración sugerida al elegir prestación
+   ↓ AppointmentFormDialog > edición manual de duración se conserva
+   ↓ AppointmentFormDialog > armado de startAt con offset exacto para la fecha elegida y timezone de la API
+   ↓ AppointmentFormDialog > envío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco
+   ↓ AppointmentFormDialog > respuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias
+   ↓ AppointmentFormDialog > rechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   ↓ AppointmentFormDialog > mapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+   ↓ AppointmentFormDialog > respuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+   ↓ AppointmentFormDialog > foco al resumen de alerta ante fallo
+   ↓ AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+   × AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco 182ms
+     → expected true to be false // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  00:00:26
+   Duration  4.84s (transform 375ms, setup 664ms, collect 480ms, tests 184ms, environment 2.33s, prepare 656ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpy43rd0ap/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/features/appointments/AppointmentFormDialog.test.tsx:859:18
+    857|     );
+    858| 
+    859|     expect(open).toBe(false);
+       |                  ^
+    860|     expect(postCalled).toBe(false);
+    861|     expect(document.activeElement).toBe(trigger);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[23/27] visible para recepción y dispara onNewAppointment al clic
+test: src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > visible para recepción y dispara onNewAppointment al clic
 diff:
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
 +++ b/frontend/src/features/agenda/AgendaToolbar.tsx
@@ -1487,60 +2507,167 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (1 test | 1 failed) 84ms
-   × AgendaToolbar — Acción Nuevo turno > controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear 82ms
+ ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (3 tests | 1 failed | 2 skipped) 350ms
+   × AgendaToolbar — Acción Nuevo turno > visible para recepción y dispara onNewAppointment al clic 346ms
      → expected null not to be null
+   ↓ AgendaToolbar — Acción Nuevo turno > visible para administrador
+   ↓ AgendaToolbar — Acción Nuevo turno > no visible para odontólogo
 
  Test Files  1 failed (1)
-      Tests  1 failed (1)
-   Start at  22:59:09
-   Duration  2.98s (transform 175ms, setup 377ms, collect 221ms, tests 84ms, environment 1.50s, prepare 320ms)
+      Tests  1 failed | 2 skipped (3)
+   Start at  00:00:38
+   Duration  3.97s (transform 252ms, setup 485ms, collect 324ms, tests 350ms, environment 1.93s, prepare 367ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpxgw_heff/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg46xdegm/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > AgendaToolbar — Acción Nuevo turno > controla la visibilidad por rol del botón Nuevo turno y dispara onNewAppointment al clickear
+ FAIL  src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > AgendaToolbar — Acción Nuevo turno > visible para recepción y dispara onNewAppointment al clic
 AssertionError: expected null not to be null
- ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx:41:21
-     39|     // Visible para recepción y clickea
-     40|     const btn = screen.queryByRole("button", { name: "Nuevo turno" });
-     41|     expect(btn).not.toBeNull();
+ ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx:40:21
+     38| 
+     39|     const btn = screen.queryByRole("button", { name: "Nuevo turno" });
+     40|     expect(btn).not.toBeNull();
        |                     ^
-     42|     fireEvent.click(btn!);
-     43|     expect(clicked).toBe(true);
+     41|     fireEvent.click(btn!);
+     42|     expect(clicked).toBe(true);
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[19/19] al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda
-test: src/features/agenda/AgendaPage.nuevoTurno.test.tsx > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda
+[24/27] visible para administrador
+test: src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > visible para administrador
 diff:
---- a/frontend/src/features/agenda/AgendaPage.tsx
-+++ b/frontend/src/features/agenda/AgendaPage.tsx
-@@ -209,7 +209,7 @@
-         <AppointmentFormDialog
-           open={isAppointmentDialogOpen}
-           onClose={() => setIsAppointmentDialogOpen(false)}
--          onSuccess={state.refresh}
-+          // onSuccess={state.refresh}
-           client={client}
-           timezone={state.timezone}
-           effectiveDate={effectiveDate}
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -64,7 +64,7 @@
+   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
+   const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
+   const canCreateAppointment =
+-    (userRole === "recepcion" || userRole === "administrador") &&
++    (userRole === "recepcion") &&
+     onNewAppointment !== undefined;
+ 
+   return (
 --- salida mutada (codigo de salida 1) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (1 test | 1 failed) 346ms
-   × AgendaPage — Integración con AppointmentFormDialog > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda 345ms
-     → expected 1 to be greater than 1
+ ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (3 tests | 1 failed | 2 skipped) 139ms
+   ↓ AgendaToolbar — Acción Nuevo turno > visible para recepción y dispara onNewAppointment al clic
+   × AgendaToolbar — Acción Nuevo turno > visible para administrador 137ms
+     → expected null not to be null
+   ↓ AgendaToolbar — Acción Nuevo turno > no visible para odontólogo
 
  Test Files  1 failed (1)
-      Tests  1 failed (1)
-   Start at  22:59:17
-   Duration  4.13s (transform 476ms, setup 349ms, collect 1.07s, tests 346ms, environment 1.60s, prepare 360ms)
+      Tests  1 failed | 2 skipped (3)
+   Start at  00:00:48
+   Duration  3.69s (transform 216ms, setup 486ms, collect 282ms, tests 139ms, environment 1.96s, prepare 375ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg7bwtwv5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpl0rv7233/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > AgendaToolbar — Acción Nuevo turno > visible para administrador
+AssertionError: expected null not to be null
+ ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx:62:21
+     60| 
+     61|     const btn = screen.queryByRole("button", { name: "Nuevo turno" });
+     62|     expect(btn).not.toBeNull();
+       |                     ^
+     63|   });
+     64| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[25/27] no visible para odontólogo
+test: src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > no visible para odontólogo
+diff:
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -64,7 +64,7 @@
+   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
+   const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
+   const canCreateAppointment =
+-    (userRole === "recepcion" || userRole === "administrador") &&
++    (userRole !== null) &&
+     onNewAppointment !== undefined;
+ 
+   return (
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (3 tests | 1 failed | 2 skipped) 193ms
+   ↓ AgendaToolbar — Acción Nuevo turno > visible para recepción y dispara onNewAppointment al clic
+   ↓ AgendaToolbar — Acción Nuevo turno > visible para administrador
+   × AgendaToolbar — Acción Nuevo turno > no visible para odontólogo 190ms
+     → expected <button type="button" …(1)></button> to be null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  00:00:59
+   Duration  4.53s (transform 322ms, setup 711ms, collect 398ms, tests 193ms, environment 2.08s, prepare 471ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1s8uz32h/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx > AgendaToolbar — Acción Nuevo turno > no visible para odontólogo
+AssertionError: expected <button type="button" …(1)></button> to be null
+
+- Expected: 
+null
+
++ Received: 
+<button
+  class="primaryButton"
+  type="button"
+>
+  Nuevo turno
+</button>
+
+ ❯ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx:82:17
+     80| 
+     81|     const btn = screen.queryByRole("button", { name: "Nuevo turno" });
+     82|     expect(btn).toBeNull();
+       |                 ^
+     83|   });
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[26/27] al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda
+test: src/features/agenda/AgendaPage.nuevoTurno.test.tsx > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda
+diff:
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -53,7 +53,7 @@
+       const [year, month, day] = info.date.split("-");
+       setStatusMessage(`Turno creado para el ${day}/${month}/${year} a las ${info.time}.`);
+     }
+-    void state.refresh();
++    // void state.refresh();
+   };
+ 
+   const rawProfessionalId = searchParams.get("professionalId");
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (2 tests | 1 failed | 1 skipped) 443ms
+   × AgendaPage — Integración con AppointmentFormDialog > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda 441ms
+     → expected 1 to be greater than 1
+   ↓ AgendaPage — Integración con AppointmentFormDialog > tras alta exitosa (201) anuncia el turno creado en una región de estado accesible
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  00:01:09
+   Duration  5.08s (transform 654ms, setup 516ms, collect 1.48s, tests 443ms, environment 1.84s, prepare 361ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmppnih7y2s/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1552,14 +2679,69 @@ AssertionError: expected 1 to be greater than 1
     164|     expect(agendaCallsAfter).toBeGreaterThan(agendaCallsBefore);
        |                              ^
     165|   });
-    166| });
+    166| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[27/27] tras alta exitosa (201) anuncia el turno creado en una región de estado accesible
+test: src/features/agenda/AgendaPage.nuevoTurno.test.tsx > tras alta exitosa (201) anuncia el turno creado en una región de estado accesible
+diff:
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -51,7 +51,7 @@
+   const handleAppointmentSuccess = (info?: { date?: string; time?: string }) => {
+     if (info?.date && info?.time) {
+       const [year, month, day] = info.date.split("-");
+-      setStatusMessage(`Turno creado para el ${day}/${month}/${year} a las ${info.time}.`);
++      setStatusMessage("Turno creado");
+     }
+     void state.refresh();
+   };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (2 tests | 1 failed | 1 skipped) 467ms
+   ↓ AgendaPage — Integración con AppointmentFormDialog > al pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda
+   × AgendaPage — Integración con AppointmentFormDialog > tras alta exitosa (201) anuncia el turno creado en una región de estado accesible 465ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Turno creado para el 16/11/2026 a las 10:00.
+Received:
+  Turno creado
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  00:01:22
+   Duration  6.33s (transform 697ms, setup 630ms, collect 1.61s, tests 467ms, environment 2.68s, prepare 442ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpho9nb6p0/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/agenda/AgendaPage.nuevoTurno.test.tsx > AgendaPage — Integración con AppointmentFormDialog > tras alta exitosa (201) anuncia el turno creado en una región de estado accesible
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  Turno creado para el 16/11/2026 a las 10:00.
+Received:
+  Turno creado
+ ❯ src/features/agenda/AgendaPage.nuevoTurno.test.tsx:272:26
+    270| 
+    271|     const statusRegion = screen.getByRole("status");
+    272|     expect(statusRegion).toHaveTextContent("Turno creado para el 16/11…
+       |                          ^
+    273|   });
+    274| });
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 19
+mutaciones que hicieron fallar su test: 27
 mutaciones que NO lo hicieron fallar: 0
 mutaciones inválidas: 0
-SHA-256 de produccion despues: d5fd089276a7a635376d69784a173b17119bb63cc160e95a7b6100636c61bff7
+SHA-256 de produccion despues: 3469644c84087b0d13cc138a54d89725eafbaa989d635f36724a9ab0c2e7b2ed
 SHA-256 sin cambios: si

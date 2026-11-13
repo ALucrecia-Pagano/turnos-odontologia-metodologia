@@ -12,6 +12,7 @@ import { AgendaToolbar } from "./AgendaToolbar";
 import { AgendaView } from "./AgendaView";
 import { systemClock, type Clock } from "./clock";
 import { useAgenda } from "./useAgenda";
+import styles from "./AgendaPage.module.css";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const INVALID_DATE_NOTICE = "La fecha del enlace no era válida; se muestra hoy.";
@@ -44,7 +45,16 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     rawDate !== null && !hasValidDate ? INVALID_DATE_NOTICE : null,
   );
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
   const newAppointmentBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleAppointmentSuccess = (info?: { date?: string; time?: string }) => {
+    if (info?.date && info?.time) {
+      const [year, month, day] = info.date.split("-");
+      setStatusMessage(`Turno creado para el ${day}/${month}/${year} a las ${info.time}.`);
+    }
+    void state.refresh();
+  };
 
   const rawProfessionalId = searchParams.get("professionalId");
   const rawChairId = searchParams.get("chairId");
@@ -209,7 +219,7 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
         <AppointmentFormDialog
           open={isAppointmentDialogOpen}
           onClose={() => setIsAppointmentDialogOpen(false)}
-          onSuccess={state.refresh}
+          onSuccess={handleAppointmentSuccess}
           client={client}
           timezone={state.timezone}
           effectiveDate={effectiveDate}
@@ -220,6 +230,14 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           returnFocusRef={newAppointmentBtnRef}
         />
       )}
+
+      <div
+        role={state.phase === "loading" ? undefined : "status"}
+        aria-live="polite"
+        className={styles.srOnly}
+      >
+        {statusMessage}
+      </div>
     </PageShell>
   );
 }

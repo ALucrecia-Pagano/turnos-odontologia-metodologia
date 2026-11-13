@@ -83,3 +83,13 @@
 ## 8. Verificación visual independiente
 
 - [ ] 8.1 **Capturas 1440, 768 y 390 px — A CARGO DE CLAUDE**: Esta tarea NO la ejecuta el apply. Se reserva para la verificación independiente con navegador real / Playwright al auditar el cambio en escritorio (`docs/evidencias/capturas/C-29-1440.png`), tablet (`docs/evidencias/capturas/C-29-768.png`) y móvil (`docs/evidencias/capturas/C-29-390.png`). Los 3 escenarios de adaptabilidad visual no tienen test de Vitest ni mutaciones en el apply.
+
+## 9. Correcciones de la revisión
+
+- [x] 9.1 **Anuncio accesible de éxito en AgendaPage**: región permanente con `aria-live="polite"` y estilos `.srOnly`, vacía al inicio, actualizada con `Turno creado para el DD/MM/AAAA a las HH:MM.` tras 201 en `AppointmentFormDialog`. Eliminada la región interna del modal. RED: `docs/evidencias/red-C-29/page-anuncio-status.txt`; GREEN: `docs/evidencias/green-C-29/page-anuncio-status.txt`.
+- [x] 9.2 **Separación de escenarios y tests 1:1 en AgendaToolbar**: 3 tests independientes para roles recepción, administrador y odontólogo en `AgendaToolbar.nuevoTurno.test.tsx`, cada uno con su mutación específica (M23, M24, M25).
+- [x] 9.3 **Separación de escenarios y tests 1:1 en AppointmentFormDialog**: tests separados para apertura y foco inicial (M9), prellenado con filtros (M10), selectores sin filtros (M11), duración sugerida (M12), edición manual de duración (M13), foco al alert ante fallo (M20), cierre con Escape sin POST (M22) y cierre con Cancelar sin POST (M21).
+- [x] 9.4 **Limpieza de foco en primitiva Dialog**: `useLayoutEffect` enfoca `returnFocusRef` únicamente cuando `!open && wasOpenRef.current`; el caso de desmontaje mientras sigue abierto se maneja en un `useEffect` con arreglo vacío.
+- [x] 9.5 **Trazabilidad 1:1 estricta**: actualización de `docs/evidencias/trazabilidad-C-29.py` para mapear los 23 escenarios testeables a 23 tests distintos de Vitest con verificación estricta de no repetición; 3 escenarios de adaptabilidad visual asignados a capturas de Claude.
+- [x] 9.6 **Batería de 27 mutaciones 1:1**: actualización de `docs/evidencias/mutaciones-C-29.py` con 27 mutaciones correspondientes 1:1 a los 27 tests de C-29 (27 eliminadas, 0 sobrevivientes, 0 inválidas, SHA-256 intacto).
+- [x] 9.7 **Verificación integral y tooling**: ejecución completa de los 191 tests en verde, `tsc --noEmit` y `eslint .` con código 0, `npm run build` con código 0, `openspec validate --all --strict` con 16/16 passed y `git diff main --diff-filter=M` sobre tests existentes estrictamente vacío.
