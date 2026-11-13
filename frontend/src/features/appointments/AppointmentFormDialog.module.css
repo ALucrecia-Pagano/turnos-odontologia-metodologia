@@ -1,0 +1,198 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  box-sizing: border-box;
+}
+
+.modalContent {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-5);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.alertContainer {
+  background-color: var(--color-danger-background);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-text);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.alertContainer:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.alertTitle {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.alertList {
+  margin: 0;
+  padding-left: var(--space-4);
+  font-size: var(--font-size-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.codeBadge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-surface);
+  color: var(--color-danger-text);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-sm);
+  padding: 1px var(--space-1);
+  margin-right: var(--space-1);
+  display: inline-block;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.gridTwoCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.input,
+.select {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.input[aria-invalid="true"],
+.select[aria-invalid="true"] {
+  border-color: var(--color-danger-text);
+  outline-color: var(--color-danger-text);
+}
+
+.fieldError {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger-text);
+  margin: 0;
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.primaryButton {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  border: 0;
+  border-radius: var(--radius-sm);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.primaryButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.secondaryButton {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.secondaryButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  .gridTwoCols {
+    grid-template-columns: 1fr;
+  }
+
+  .actionsRow {
+    flex-direction: column-reverse;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}

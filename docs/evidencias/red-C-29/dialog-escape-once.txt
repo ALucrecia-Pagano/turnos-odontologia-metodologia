@@ -1,0 +1,38 @@
+Comando: node frontend/node_modules/vitest/vitest.mjs run --root frontend frontend/src/shared/components/Dialog.test.tsx
+Codigo de salida: 1
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/components/Dialog.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 255[2mms[22m[39m
+   [32m✓[39m Dialog[2m > [22mabre con atributo open en jsdom y expone el nombre accesible por aria-labelledby[32m 210[2mms[22m[39m
+[31m   [31m×[31m Dialog[2m > [22mEscape llama onClose exactamente una vez[39m[32m 41[2mms[22m[39m
+[31m     → expected +0 to be 1 // Object.is equality[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:41:44
+[2m   Duration [22m 7.72s[2m (transform 454ms, setup 1.28s, collect 483ms, tests 255ms, environment 4.27s, prepare 636ms)[22m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/Dialog.test.tsx[2m > [22mDialog[2m > [22mEscape llama onClose exactamente una vez
+[31m[1mAssertionError[22m: expected +0 to be 1 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 0[39m
+
+[36m [2m❯[22m src/shared/components/Dialog.test.tsx:[2m39:20[22m[39m
+    [90m 37| [39m    [35mconst[39m dialog [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m"dialog"[39m)[33m;[39m
+    [90m 38| [39m    fireEvent[33m.[39m[34mkeyDown[39m(dialog[33m,[39m { key[33m:[39m [32m"Escape"[39m })[33m;[39m
+    [90m 39| [39m    [34mexpect[39m(closes)[33m.[39m[34mtoBe[39m([34m1[39m)[33m;[39m
+    [90m   | [39m                   [31m^[39m
+    [90m 40| [39m  })[33m;[39m
+    [90m 41| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

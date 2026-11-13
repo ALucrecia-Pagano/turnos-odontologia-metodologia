@@ -1,0 +1,7 @@
+Salida generada por docs/evidencias/trazabilidad-C-29.py. No editar a mano.
+tests listados por vitest en el repo: 183
+escenarios totales en las specs delta de C-29: 26
+escenarios verificados con tests de Vitest: 23
+escenarios de adaptabilidad visual (verificación visual independiente): 3
+problemas: 0
+26 escenarios, 0 problemas

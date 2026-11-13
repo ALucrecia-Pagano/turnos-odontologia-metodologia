@@ -1,0 +1,38 @@
+Comando: node frontend/node_modules/vitest/vitest.mjs run --root frontend frontend/src/features/appointments/PatientSearchGroup.test.tsx
+Codigo de salida: 1
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 504[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientSearchGroup[2m > [22mrenderizado inicial: input de búsqueda, botón Buscar paciente habilitado y sin radio buttons [33m 326[2mms[22m[39m
+[31m   [31m×[31m PatientSearchGroup[2m > [22mbúsqueda con resultados muestra radio buttons con nombre y DNI[39m[32m 172[2mms[22m[39m
+[31m     → expected [] to have a length of 2 but got +0[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:48:54
+[2m   Duration [22m 9.17s[2m (transform 940ms, setup 1.49s, collect 1.28s, tests 504ms, environment 4.39s, prepare 498ms)[22m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/PatientSearchGroup.test.tsx[2m > [22mPatientSearchGroup[2m > [22mbúsqueda con resultados muestra radio buttons con nombre y DNI
+[31m[1mAssertionError[22m: expected [] to have a length of 2 but got +0[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 2[39m
+[31m+ 0[39m
+
+[36m [2m❯[22m src/features/appointments/PatientSearchGroup.test.tsx:[2m61:20[22m[39m
+    [90m 59| [39m    [34mexpect[39m(requestedUrl)[33m.[39m[34mtoContain[39m([32m"/patients?query=P%C3%A9rez"[39m)[33m;[39m
+    [90m 60| [39m    [35mconst[39m radios [33m=[39m screen[33m.[39m[34mqueryAllByRole[39m([32m"radio"[39m)[33m;[39m
+    [90m 61| [39m    [34mexpect[39m(radios)[33m.[39m[34mtoHaveLength[39m([34m2[39m)[33m;[39m
+    [90m   | [39m                   [31m^[39m
+    [90m 62| [39m  })[33m;[39m
+    [90m 63| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

@@ -1,0 +1,53 @@
+Comando: node frontend/node_modules/vitest/vitest.mjs run --root frontend frontend/src/features/appointments/AppointmentFormDialog.test.tsx
+Codigo de salida: 1
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 315[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mapertura y foco inicial con prellenado contextual[32m 145[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación[32m 22[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22marmado de startAt con offset exacto para la fecha elegida y timezone de la API[32m 66[2mms[22m[39m
+[31m   [31m×[31m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco[39m[32m 79[2mms[22m[39m
+[31m     → expected false to be true // Object.is equality[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 21:59:46
+[2m   Duration [22m 4.65s[2m (transform 275ms, setup 574ms, collect 416ms, tests 315ms, environment 2.56s, prepare 322ms)[22m
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial con prellenado contextual
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:25:3)
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m189:27[22m[39m
+    [90m187| [39m    [90m// Esperar a que se procese[39m
+    [90m188| [39m    [35mawait[39m screen[33m.[39m[34mfindByRole[39m([32m"button"[39m[33m,[39m { name[33m:[39m [32m"Nuevo turno"[39m })[33m;[39m
+    [90m189| [39m    [34mexpect[39m(successCalled)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                          [31m^[39m
+    [90m190| [39m    [34mexpect[39m(postBody)[33m.[39m[34mtoEqual[39m({
+    [90m191| [39m      patientId[33m:[39m [32m"00000000-0000-0000-0000-0000000000c1"[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

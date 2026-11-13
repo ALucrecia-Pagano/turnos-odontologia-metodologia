@@ -1,0 +1,114 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run
+
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/agenda/AgendaToolbar.test.tsx (2 tests) 1901ms
+   ✓ AgendaToolbar > renderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros  1547ms
+   ✓ AgendaToolbar > renderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente  341ms
+ ✓ src/features/login/LoginBrand.test.tsx (2 tests) 1805ms
+   ✓ LoginPage brand > muestra el logo claro, el heading accesible y la bajada  1529ms
+ ✓ src/features/login/LoginCarousel.test.tsx (5 tests) 2448ms
+   ✓ LoginCarousel > inicia en hero-1-sala-de-espera, avanza con el ticker y vuelve a la primera tras la quinta  347ms
+   ✓ LoginCarousel > pausa y reanuda el avance sin aria-pressed  1907ms
+ ✓ src/features/auth/AuthContext.test.tsx (6 tests) 3113ms
+   ✓ AuthContext > estado checking mientras se verifica la sesión  999ms
+   ✓ AuthContext > error de red en /me conserva el token y permite reintentar  1115ms
+   ✓ AuthContext > lastEvent registra expired ante 401 protegido y manual ante logout  358ms
+ ✓ src/features/agenda/AgendaView.test.tsx (15 tests) 4986ms
+   ✓ AgendaView > dibuja el eje 08:00–20:00 y las tres columnas en orden alfabético estable con inactivo y columna vacía  1139ms
+   ✓ AgendaView > dibuja las bandas de horario de Quiroga, el bloqueo Congreso de 12:00 a 13:00 y conserva visible y atenuado el turno cancelado  323ms
+   ✓ AgendaView > muestra Reservado y Cancelado con StatusBadge AA y expone el nombre accesible completo en cada tarjeta  1017ms
+   ✓ AgendaView > en un día sin turnos muestra SOLO el EmptyState sin grilla en modo grilla ni tabla en modo lista  680ms
+   ✓ AgendaView > AgendaView - Vista Semanal (C-28) > ver como lista en vista semanal incluye caption de semana, columna Fecha y orden cronológico  314ms
+ ✓ src/features/auth/Logout.test.tsx (1 test) 2528ms
+   ✓ Logout > cerrar sesión desde el shell descarta token y usuario y navega a /login con replace  2518ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 3421ms
+   ✓ AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente  2401ms
+   ✓ AppShell > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión  1010ms
+ ✓ src/App.test.tsx (6 tests) 2691ms
+   ✓ App con router y guards de sesión > la ruta raíz redirige con replace a /agenda según el Clock y no renderiza HomePage  1289ms
+   ✓ App con router y guards de sesión > una ruta desconocida muestra la página de no encontrada  687ms
+ ✓ src/features/agenda/AgendaPage.test.tsx (17 tests) 7906ms
+   ✓ AgendaPage > carga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible  2387ms
+   ✓ AgendaPage > filtra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha  1315ms
+   ✓ AgendaPage > navega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL  1078ms
+   ✓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de día a semana conservando fecha y filtros  394ms
+   ✓ AgendaPage > AgendaPage - Vista Semanal (C-28) > alterna de semana a día conservando el día exacto de anclaje y filtros  443ms
+   ✓ AgendaPage > AgendaPage - Vista Semanal (C-28) > botón Hoy en vista semanal navega a la fecha actual del Clock  332ms
+ ✓ src/features/login/LoginPage.test.tsx (6 tests) 9511ms
+   ✓ LoginPage > login correcto del administrador  3616ms
+   ✓ LoginPage > login correcto de recepción y del odontólogo  2074ms
+   ✓ LoginPage > credenciales inválidas con mensaje genérico  911ms
+   ✓ LoginPage > el 401 del login no es sesión vencida  974ms
+   ✓ LoginPage > envío en curso y doble submit  1072ms
+   ✓ LoginPage > accesibilidad del formulario  845ms
+ ✓ src/features/agenda/AgendaTable.test.tsx (1 test) 759ms
+   ✓ AgendaTable > renderiza la tabla semántica con caption, encabezados con scope=col y filas en el mismo orden de la agenda  754ms
+ ✓ src/test/smoke.test.tsx (1 test) 498ms
+   ✓ smoke del andamiaje > monta App y muestra el título  493ms
+ ✓ src/shared/components/AppShellBrand.test.tsx (2 tests) 1357ms
+   ✓ AppShell brand > muestra una sola barra con logo decorativo, Aqua y Clínica Odontológica  1171ms
+ ✓ src/shared/components/StatusBadge.test.tsx (5 tests) 767ms
+   ✓ StatusBadge > el estado reservado muestra su variante  518ms
+ ✓ src/shared/components/ErrorState.test.tsx (4 tests) 1516ms
+   ✓ ErrorState > muestra uno y varios mensajes  341ms
+   ✓ ErrorState > muestra el mensaje de un 409 textual  304ms
+   ✓ ErrorState > con reintento muestra el botón y lo ejecuta  726ms
+ ✓ src/shared/components/PageShell.test.tsx (1 test) 732ms
+   ✓ PageShell > envuelve header, main y footer y renderiza sus hijos  700ms
+ ✓ src/shared/components/LoadingState.test.tsx (1 test) 603ms
+   ✓ LoadingState > renderiza su rol y su texto  587ms
+ ✓ src/features/agenda/useAgenda.test.tsx (3 tests) 1765ms
+   ✓ useAgenda > dispara las tres requests en paralelo, pasa por loading/refreshing/success y tolera fallo del catálogo con Promise.allSettled  1180ms
+   ✓ useAgenda > aborta e ignora respuestas viejas al cambiar de fecha y expone error cuando falla la agenda  519ms
+ ✓ src/shared/components/EmptyState.test.tsx (2 tests) 2661ms
+   ✓ EmptyState > con acción muestra el botón  2563ms
+ ✓ src/features/agenda/agendaTime.test.ts (6 tests) 205ms
+ ✓ src/features/agenda/agendaLayout.test.ts (7 tests) 327ms
+ ✓ src/shared/api/auth.test.ts (3 tests) 451ms
+   ✓ punto de enganche del token > C-25 no persiste el token  309ms
+ ✓ src/shared/styles/fonts.test.ts (4 tests) 293ms
+ ✓ src/features/agenda/clock.test.ts (1 test) 240ms
+ ✓ src/features/agenda/agendaTimeGuard.test.ts (1 test) 192ms
+ ✓ src/shared/api/client.test.ts (10 tests) 86ms
+ ✓ src/features/auth/authApi.test.ts (7 tests) 94ms
+ ✓ src/features/agenda/agendaConfig.test.ts (1 test) 280ms
+ ✓ src/features/agenda/agendaApi.test.ts (3 tests) 75ms
+ ✓ src/features/auth/storageGuard.test.ts (1 test) 261ms
+ ✓ src/shared/api/errors.test.ts (6 tests) 85ms
+ ✓ src/features/agenda/agendaStyles.test.ts (6 tests) 69ms
+ ✓ src/test/docker.test.ts (3 tests) 106ms
+ ✓ src/shared/styles/appointmentStatusTokens.test.ts (2 tests) 48ms
+ ✓ src/shared/styles/tokens.test.ts (4 tests) 20ms
+ ✓ src/features/auth/menuFor.test.ts (3 tests) 18ms
+ ✓ src/test/readmeCredits.test.ts (1 test) 10ms
+ ✓ src/shared/styles/aquaPalette.test.ts (2 tests) 15ms
+ ✓ src/features/auth/tokenStore.test.ts (4 tests) 18ms
+ ✓ src/features/auth/safeInternalPath.test.ts (4 tests) 26ms
+ ✓ src/test/tooling.test.ts (3 tests) 143323ms
+   ✓ tooling del frontend > npm run typecheck falla con un tipo inválido  54295ms
+   ✓ tooling del frontend > npm run lint detecta una violación  88965ms
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯⎯ Unhandled Error ⎯⎯⎯⎯⎯⎯⎯
+Error: [vitest-worker]: Timeout calling "onTaskUpdate"
+ ❯ Object.onTimeoutError node_modules/vitest/dist/chunks/rpc.-pEldfrD.js:53:10
+ ❯ Timeout._onTimeout node_modules/vitest/dist/chunks/index.B521nVV-.js:59:62
+ ❯ listOnTimeout node:internal/timers:635:17
+ ❯ processTimers node:internal/timers:571:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  41 passed (41)
+      Tests  164 passed (164)
+     Errors  1 error
+   Start at  21:34:31
+   Duration  216.56s (transform 38.40s, setup 250.15s, collect 102.89s, tests 197.21s, environment 869.40s, prepare 53.27s)
+

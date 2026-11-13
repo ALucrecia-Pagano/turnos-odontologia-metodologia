@@ -1,0 +1,12 @@
+$ npx tsc --noEmit
+Exit code: 0
+
+$ npx eslint .
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx
+  36:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\login\LoginCarousel.tsx
+  14:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+✖ 2 problems (0 errors, 2 warnings)
+Exit code: 0

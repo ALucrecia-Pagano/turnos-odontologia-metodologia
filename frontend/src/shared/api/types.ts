@@ -11,6 +11,13 @@ export interface FieldError {
 export interface Violation {
   code: string;
   message: string;
+  conflictingAppointmentId?: string;
+  conflictingBlockId?: string;
+  conflictingInterval?: {
+    startAt: string;
+    endAt: string;
+  };
+  referenceKind?: string;
 }
 
 export type ApiErrorPayload =

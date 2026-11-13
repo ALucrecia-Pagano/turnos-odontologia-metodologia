@@ -1,0 +1,37 @@
+Comando: node frontend/node_modules/vitest/vitest.mjs run --root frontend frontend/src/shared/api/client.violations.test.ts
+Codigo de salida: 1
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 73[2mms[22m[39m
+[31m   [31m×[31m asViolations con campos opcionales[2m > [22mcaptura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind[39m[32m 67[2mms[22m[39m
+[31m     → expected undefined to be '00000000-0000-0000-0000-0000000000a1' // Object.is equality[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 21:45:05
+[2m   Duration [22m 15.08s[2m (transform 1.01s, setup 2.95s, collect 556ms, tests 73ms, environment 8.38s, prepare 1.53s)[22m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/api/client.violations.test.ts[2m > [22masViolations con campos opcionales[2m > [22mcaptura conflictingAppointmentId, conflictingBlockId, conflictingInterval y referenceKind
+[31m[1mAssertionError[22m: expected undefined to be '00000000-0000-0000-0000-0000000000a1' // Object.is equality[39m
+
+[32m- Expected:[39m 
+"00000000-0000-0000-0000-0000000000a1"
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/shared/api/client.violations.test.ts:[2m37:42[22m[39m
+    [90m 35| [39m      [34mexpect[39m(v[33m.[39mcode)[33m.[39m[34mtoBe[39m([32m"PROFESSIONAL_OVERLAP"[39m)[33m;[39m
+    [90m 36| [39m      [34mexpect[39m(v[33m.[39mmessage)[33m.[39m[34mtoBe[39m([32m"Solapamiento con Dra. Laura Quiroga"[39m)[33m;[39m
+    [90m 37| [39m      expect(v.conflictingAppointmentId).toBe("00000000-0000-0000-0000…
+    [90m   | [39m                                         [31m^[39m
+    [90m 38| [39m      expect(v.conflictingBlockId).toBe("00000000-0000-0000-0000-00000…
+    [90m 39| [39m      [34mexpect[39m(v[33m.[39mconflictingInterval)[33m.[39m[34mtoEqual[39m({
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

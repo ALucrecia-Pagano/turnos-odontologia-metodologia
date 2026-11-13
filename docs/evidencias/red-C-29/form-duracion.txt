@@ -1,0 +1,50 @@
+Comando: node frontend/node_modules/vitest/vitest.mjs run --root frontend frontend/src/features/appointments/AppointmentFormDialog.test.tsx
+Codigo de salida: 1
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 176[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mapertura y foco inicial con prellenado contextual[32m 145[2mms[22m[39m
+[31m   [31m×[31m AppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación[39m[32m 30[2mms[22m[39m
+[31m     → expected '' to be '60' // Object.is equality[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 21:57:07
+[2m   Duration [22m 5.41s[2m (transform 364ms, setup 736ms, collect 527ms, tests 176ms, environment 2.85s, prepare 509ms)[22m
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial con prellenado contextual
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:25:3)
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación
+[31m[1mAssertionError[22m: expected '' to be '60' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 60[39m
+
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m79:34[22m[39m
+    [90m 77| [39m    const durationInput = screen.queryByLabelText<HTMLInputElement>("D…
+    [90m 78| [39m    [34mexpect[39m(durationInput)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m 79| [39m    [34mexpect[39m(durationInput[33m?.[39mvalue)[33m.[39m[34mtoBe[39m([32m"60"[39m)[33m;[39m
+    [90m   | [39m                                 [31m^[39m
+    [90m 80| [39m
+    [90m 81| [39m    fireEvent[33m.[39m[34mchange[39m(durationInput[33m![39m[33m,[39m { target[33m:[39m { value[33m:[39m [32m"45"[39m } })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

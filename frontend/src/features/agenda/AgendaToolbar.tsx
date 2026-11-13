@@ -1,3 +1,4 @@
+import type { UserRole } from "../../shared/api/types";
 import type { Chair, Professional } from "./agendaApi";
 import { compareProfessionals, formatProfessionalLabel } from "./agendaLayout";
 import styles from "./AgendaToolbar.module.css";
@@ -22,6 +23,9 @@ export interface AgendaToolbarProps {
   readonly onRefresh?: () => void;
   readonly onSelectView?: (view: "day" | "week") => void;
   readonly invalidDateNotice?: string | null;
+  readonly userRole?: UserRole | null;
+  readonly onNewAppointment?: () => void;
+  readonly newAppointmentRef?: { current: HTMLButtonElement | null };
 }
 
 function compareChairs(a: Chair, b: Chair): number {
@@ -49,6 +53,9 @@ export function AgendaToolbar({
   onRefresh,
   onSelectView,
   invalidDateNotice = null,
+  userRole = null,
+  onNewAppointment,
+  newAppointmentRef,
 }: AgendaToolbarProps) {
   const sortedProfessionals = [...professionals].sort(compareProfessionals);
   const sortedChairs = [...chairs].sort(compareChairs);
@@ -56,6 +63,9 @@ export function AgendaToolbar({
   const isWeekView = view === "week";
   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
   const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
+  const canCreateAppointment =
+    (userRole === "recepcion" || userRole === "administrador") &&
+    onNewAppointment !== undefined;
 
   return (
     <div className={styles.toolbar} aria-label="Controles de agenda">
@@ -132,6 +142,17 @@ export function AgendaToolbar({
               onClick={onRefresh}
             >
               Actualizar agenda
+            </button>
+          )}
+
+          {canCreateAppointment && (
+            <button
+              ref={newAppointmentRef}
+              type="button"
+              className={styles.primaryButton}
+              onClick={onNewAppointment}
+            >
+              Nuevo turno
             </button>
           )}
         </div>

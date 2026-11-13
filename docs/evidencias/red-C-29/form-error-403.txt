@@ -1,0 +1,39 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest AppointmentFormDialog.test.tsx -t 403 FORBIDDEN_OPERATION --run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m8 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m7 skipped[39m[2m)[22m[33m 355[2mms[22m[39m
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mapertura y foco inicial con prellenado contextual
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22marmado de startAt con offset exacto para la fecha elegida y timezone de la API
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mmapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+[31m   [31m×[31m AppointmentFormDialog[2m > [22mrespuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión[39m[33m 353[2mms[22m[39m
+[31m     → expected null not to be null[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m7 skipped[39m[90m (8)[39m
+[2m   Start at [22m 22:08:33
+[2m   Duration [22m 5.03s[2m (transform 362ms, setup 858ms, collect 504ms, tests 355ms, environment 2.42s, prepare 311ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22mrespuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m583:23[22m[39m
+    [90m581| [39m    [35mawait[39m screen[33m.[39m[34mfindByRole[39m([32m"button"[39m[33m,[39m { name[33m:[39m [32m"Crear turno"[39m })[33m;[39m
+    [90m582| [39m    [35mconst[39m alert [33m=[39m screen[33m.[39m[34mqueryByRole[39m([32m"alert"[39m)[33m;[39m
+    [90m583| [39m    [34mexpect[39m(alert)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m584| [39m    [34mexpect[39m(screen[33m.[39m[34mqueryByText[39m([32m"FORBIDDEN_OPERATION"[39m))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m585| [39m    [34mexpect[39m(screen[33m.[39m[34mqueryByText[39m(forbiddenMsg))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

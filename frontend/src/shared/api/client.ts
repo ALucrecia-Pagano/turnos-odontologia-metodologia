@@ -64,7 +64,27 @@ function asViolations(value: Json | undefined): Violation[] | undefined {
   const violations: Violation[] = [];
   for (const item of value) {
     if (!isObject(item) || !isString(item.code) || !isString(item.message)) return undefined;
-    violations.push({ code: item.code, message: item.message });
+    const violation: Violation = { code: item.code, message: item.message };
+    if (isString(item.conflictingAppointmentId)) {
+      violation.conflictingAppointmentId = item.conflictingAppointmentId;
+    }
+    if (isString(item.conflictingBlockId)) {
+      violation.conflictingBlockId = item.conflictingBlockId;
+    }
+    if (
+      isObject(item.conflictingInterval) &&
+      isString(item.conflictingInterval.startAt) &&
+      isString(item.conflictingInterval.endAt)
+    ) {
+      violation.conflictingInterval = {
+        startAt: item.conflictingInterval.startAt,
+        endAt: item.conflictingInterval.endAt,
+      };
+    }
+    if (isString(item.referenceKind)) {
+      violation.referenceKind = item.referenceKind;
+    }
+    violations.push(violation);
   }
   return violations;
 }

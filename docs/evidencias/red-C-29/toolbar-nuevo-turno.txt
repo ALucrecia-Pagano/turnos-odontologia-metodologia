@@ -1,0 +1,47 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest AgendaToolbar.nuevoTurno.test.tsx --run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 254[2mms[22m[39m
+[31m   [31m×[31m AgendaToolbar — Acción Nuevo turno[2m > [22mmuestra el botón Nuevo turno para recepción y dispara onNewAppointment al clickear[39m[32m 173[2mms[22m[39m
+[31m     → expected null not to be null[39m
+[31m   [31m×[31m AgendaToolbar — Acción Nuevo turno[2m > [22mmuestra el botón Nuevo turno para administrador[39m[32m 27[2mms[22m[39m
+[31m     → expected null not to be null[39m
+   [32m✓[39m AgendaToolbar — Acción Nuevo turno[2m > [22mno muestra el botón Nuevo turno para odontólogo ni cuando onNewAppointment no se provee[32m 50[2mms[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 22:12:24
+[2m   Duration [22m 5.72s[2m (transform 488ms, setup 877ms, collect 680ms, tests 254ms, environment 2.78s, prepare 467ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx[2m > [22mAgendaToolbar — Acción Nuevo turno[2m > [22mmuestra el botón Nuevo turno para recepción y dispara onNewAppointment al clickear
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx:[2m40:21[22m[39m
+    [90m 38| [39m
+    [90m 39| [39m    [35mconst[39m btn [33m=[39m screen[33m.[39m[34mqueryByRole[39m([32m"button"[39m[33m,[39m { name[33m:[39m [32m"Nuevo turno"[39m })[33m;[39m
+    [90m 40| [39m    [34mexpect[39m(btn)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                    [31m^[39m
+    [90m 41| [39m    fireEvent[33m.[39m[34mclick[39m(btn[33m![39m)[33m;[39m
+    [90m 42| [39m    [34mexpect[39m(clicked)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx[2m > [22mAgendaToolbar — Acción Nuevo turno[2m > [22mmuestra el botón Nuevo turno para administrador
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx:[2m62:21[22m[39m
+    [90m 60| [39m
+    [90m 61| [39m    [35mconst[39m btn [33m=[39m screen[33m.[39m[34mqueryByRole[39m([32m"button"[39m[33m,[39m { name[33m:[39m [32m"Nuevo turno"[39m })[33m;[39m
+    [90m 62| [39m    [34mexpect[39m(btn)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                    [31m^[39m
+    [90m 63| [39m  })[33m;[39m
+    [90m 64| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+

@@ -1,0 +1,48 @@
+Comando: node frontend/node_modules/vitest/vitest.mjs run --root frontend frontend/src/features/appointments/AppointmentFormDialog.test.tsx
+Codigo de salida: 1
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 580[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mapertura y foco inicial con prellenado contextual[32m 218[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación[32m 35[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22marmado de startAt con offset exacto para la fecha elegida y timezone de la API[32m 26[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco[32m 107[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid[32m 107[2mms[22m[39m
+[31m   [31m×[31m AppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos[39m[32m 84[2mms[22m[39m
+[31m     → expected null not to be null[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 22:02:26
+[2m   Duration [22m 4.39s[2m (transform 243ms, setup 414ms, collect 369ms, tests 580ms, environment 2.19s, prepare 354ms)[22m
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial con prellenado contextual
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:25:3)
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m388:23[22m[39m
+    [90m386| [39m    [35mawait[39m screen[33m.[39m[34mfindByRole[39m([32m"button"[39m[33m,[39m { name[33m:[39m [32m"Crear turno"[39m })[33m;[39m
+    [90m387| [39m    [35mconst[39m alert [33m=[39m screen[33m.[39m[34mqueryByRole[39m([32m"alert"[39m)[33m;[39m
+    [90m388| [39m    [34mexpect[39m(alert)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m389| [39m    [34mexpect[39m(screen[33m.[39m[34mqueryByText[39m([32m"IN_THE_PAST"[39m))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m390| [39m    [34mexpect[39m(screen[33m.[39m[34mqueryByText[39m(inPastMsg))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

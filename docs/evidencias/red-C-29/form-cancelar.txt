@@ -1,0 +1,56 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest AppointmentFormDialog.test.tsx -t pulsar Cancelar cierra el diálogo --run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m9 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m8 skipped[39m[2m)[22m[33m 301[2mms[22m[39m
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mapertura y foco inicial con prellenado contextual
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22marmado de startAt con offset exacto para la fecha elegida y timezone de la API
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mmapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrespuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión
+[31m   [31m×[31m AppointmentFormDialog[2m > [22mpulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura[39m[32m 297[2mms[22m[39m
+[31m     → expected <input …(6)></input> to be <button></button> // Object.is equality[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m8 skipped[39m[90m (9)[39m
+[2m   Start at [22m 22:09:39
+[2m   Duration [22m 5.89s[2m (transform 440ms, setup 739ms, collect 578ms, tests 301ms, environment 2.83s, prepare 549ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22mpulsar Cancelar cierra el diálogo y devuelve el foco al elemento de apertura
+[31m[1mAssertionError[22m: expected <input …(6)></input> to be <button></button> // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- <button>[39m
+[32m-   Nuevo turno[39m
+[32m- </button>[39m
+[31m+ <input[39m
+[31m+   aria-label="Buscar paciente"[39m
+[31m+   class="input"[39m
+[31m+   id="patient-search-input"[39m
+[31m+   placeholder="Buscar por nombre o DNI..."[39m
+[31m+   type="search"[39m
+[31m+   value=""[39m
+[31m+ />[39m
+
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m640:36[22m[39m
+    [90m638| [39m
+    [90m639| [39m    [34mexpect[39m(open)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m640| [39m    [34mexpect[39m(document[33m.[39mactiveElement)[33m.[39m[34mtoBe[39m(trigger)[33m;[39m
+    [90m   | [39m                                   [31m^[39m
+    [90m641| [39m    document[33m.[39mbody[33m.[39m[34mremoveChild[39m(trigger)[33m;[39m
+    [90m642| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

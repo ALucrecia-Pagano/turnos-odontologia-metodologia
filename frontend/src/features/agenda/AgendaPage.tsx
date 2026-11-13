@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import { AppointmentFormDialog } from "../appointments/AppointmentFormDialog";
 import { ErrorState } from "../../shared/components/ErrorState";
 import { LoadingState } from "../../shared/components/LoadingState";
 import { PageShell } from "../../shared/components/PageShell";
@@ -42,6 +43,8 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
   const [invalidDateNotice, setInvalidDateNotice] = useState<string | null>(() =>
     rawDate !== null && !hasValidDate ? INVALID_DATE_NOTICE : null,
   );
+  const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
+  const newAppointmentBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const rawProfessionalId = searchParams.get("professionalId");
   const rawChairId = searchParams.get("chairId");
@@ -176,6 +179,9 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
         onRefresh={state.refresh}
         onSelectView={handleSelectView}
         invalidDateNotice={invalidDateNotice}
+        userRole={user?.role}
+        onNewAppointment={() => setIsAppointmentDialogOpen(true)}
+        newAppointmentRef={newAppointmentBtnRef}
       />
 
       {state.phase === "loading" && state.agenda === null && <LoadingState />}
@@ -196,6 +202,22 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           filterChairId={chairId}
           isRefreshing={state.phase === "refreshing"}
           catalogWarning={state.catalogWarning}
+        />
+      )}
+
+      {isAppointmentDialogOpen && (
+        <AppointmentFormDialog
+          open={isAppointmentDialogOpen}
+          onClose={() => setIsAppointmentDialogOpen(false)}
+          onSuccess={state.refresh}
+          client={client}
+          timezone={state.timezone}
+          effectiveDate={effectiveDate}
+          initialProfessionalId={effectiveProfessionalId}
+          initialChairId={chairId}
+          professionals={state.professionals}
+          chairs={state.chairs}
+          returnFocusRef={newAppointmentBtnRef}
         />
       )}
     </PageShell>

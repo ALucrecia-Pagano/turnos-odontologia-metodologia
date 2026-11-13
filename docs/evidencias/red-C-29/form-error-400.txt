@@ -1,0 +1,48 @@
+
+> turnos-odontologia-frontend@0.1.0 test
+> vitest AppointmentFormDialog.test.tsx -t mapea errores 400 --run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m6 skipped[39m[2m)[22m[32m 214[2mms[22m[39m
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mapertura y foco inicial con prellenado contextual
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22msugerencia y edición de duración según prestación
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22marmado de startAt con offset exacto para la fecha elegida y timezone de la API
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess, emite anuncio y devuelve foco
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto, foco al alert y campos sin aria-invalid
+   [2m[90m↓[39m[22m AppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos
+[31m   [31m×[31m AppointmentFormDialog[2m > [22mmapea errores 400 a los campos del formulario con aria-invalid y mensaje inline[39m[32m 212[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveAttribute([22m[32m[32m"aria-invalid"[32m[31m[2m, [22m[32m[32m"true"[32m[31m[2m) // element.getAttribute("aria-invalid") === "true"[22m
+
+Expected the element to have attribute:
+[32m  aria-invalid="true"[31m
+Received:
+[31m  null[31m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m6 skipped[39m[90m (7)[39m
+[2m   Start at [22m 22:07:03
+[2m   Duration [22m 4.49s[2m (transform 312ms, setup 652ms, collect 427ms, tests 214ms, environment 2.28s, prepare 377ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22mmapea errores 400 a los campos del formulario con aria-invalid y mensaje inline
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveAttribute([22m[32m[32m"aria-invalid"[32m[31m[2m, [22m[32m[32m"true"[32m[31m[2m) // element.getAttribute("aria-invalid") === "true"[22m
+
+Expected the element to have attribute:
+[32m  aria-invalid="true"[31m
+Received:
+[31m  null[31m[39m
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m493:27[22m[39m
+    [90m491| [39m    const durationInput = screen.queryByLabelText("Duración (minutos)"…
+    [90m492| [39m    [34mexpect[39m(durationInput)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m493| [39m    [34mexpect[39m(durationInput)[33m.[39m[34mtoHaveAttribute[39m([32m"aria-invalid"[39m[33m,[39m [32m"true"[39m)[33m;[39m
+    [90m   | [39m                          [31m^[39m
+    [90m494| [39m    expect(screen.queryByText("La fecha y hora debe incluir zona horar…
+    [90m495| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
