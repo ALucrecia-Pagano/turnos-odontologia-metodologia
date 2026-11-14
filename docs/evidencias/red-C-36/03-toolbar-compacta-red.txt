@@ -1,0 +1,9 @@
+=== RED EVIDENCE: 03-toolbar-distribucion-compacta ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaToolbar.mobile.test.tsx
+Result: FAILED (1 failed | 0 passed)
+Failure: Unable to find an element by: [data-testid="agenda-toolbar-nav-row"]
+Output:
+ ❯ src/features/agenda/AgendaToolbar.mobile.test.tsx (1 test | 1 failed) 69ms
+   × AgendaToolbar — Modo Móvil (<= 640 px) > 03-toolbar-distribucion-compacta: organiza navegación y fecha en dos filas diferenciadas en celular 68ms
+     → Unable to find an element by: [data-testid="agenda-toolbar-nav-row"]
+TestingLibraryElementError: Unable to find an element by: [data-testid="agenda-toolbar-nav-row"]

@@ -1,0 +1,19 @@
+=== TOOLING: tsc --noEmit ===
+Command: cd frontend && npx tsc --noEmit
+Exit code: 0
+Output: (sin errores de tipos)
+
+=== TOOLING: npx eslint . ===
+Command: cd frontend && npx eslint .
+Exit code: 0
+Output:
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx
+  36:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\shared\components\Dialog.tsx
+   98:25  warning  The ref value 'returnFocusRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'returnFocusRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+  101:6   warning  React Hook useEffect has a missing dependency: 'returnFocusRef'. Either include it or remove the dependency array                                                                                                                                                            react-hooks/exhaustive-deps
+
+✖ 3 problems (0 errors, 3 warnings)
+
+(3 advertencias preexistentes heredadas de C-29/C-30, idénticas a las documentadas en verify-C-35.md; 0 errores nuevos).

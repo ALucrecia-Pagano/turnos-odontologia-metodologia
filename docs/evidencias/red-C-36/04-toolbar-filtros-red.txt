@@ -1,0 +1,13 @@
+=== RED EVIDENCE: 04-toolbar-boton-filtros-con-contador ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaToolbar.mobile.test.tsx
+Result: FAILED (1 failed | 1 passed)
+Failure: expect(element).toHaveTextContent() - Expected: "Filtros (1)", Received: "Filtros"
+Output:
+ ❯ src/features/agenda/AgendaToolbar.mobile.test.tsx (2 tests | 1 failed) 137ms
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 03-toolbar-distribucion-compacta: organiza navegación y fecha en dos filas diferenciadas en celular 118ms
+   × AgendaToolbar — Modo Móvil (<= 640 px) > 04-toolbar-boton-filtros-con-contador: expone botón Filtros con indicador dinámico de filtros activos y despliega panel accesible 17ms
+     → expect(element).toHaveTextContent()
+Expected element to have text content:
+  Filtros (1)
+Received:
+  Filtros

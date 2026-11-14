@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { UserRole } from "../../shared/api/types";
 import type { Chair, Professional } from "./agendaApi";
 import { compareProfessionals, formatProfessionalLabel } from "./agendaLayout";
@@ -26,10 +27,11 @@ export interface AgendaToolbarProps {
   readonly userRole?: UserRole | null;
   readonly onNewAppointment?: () => void;
   readonly newAppointmentRef?: { current: HTMLButtonElement | null };
+  readonly isMobile?: boolean;
 }
 
 function compareChairs(a: Chair, b: Chair): number {
-  const byName = a.name.localeCompare(b.name, "es", { sensitivity: "base" });
+  const byName = a.name.localeCompare(a.name, "es", { sensitivity: "base" });
   if (byName !== 0) {
     return byName;
   }
@@ -56,6 +58,7 @@ export function AgendaToolbar({
   userRole = null,
   onNewAppointment,
   newAppointmentRef,
+  isMobile,
 }: AgendaToolbarProps) {
   const sortedProfessionals = [...professionals].sort(compareProfessionals);
   const sortedChairs = [...chairs].sort(compareChairs);
@@ -67,150 +70,282 @@ export function AgendaToolbar({
     (userRole === "recepcion" || userRole === "administrador") &&
     onNewAppointment !== undefined;
 
+  const [isMobileDevice, setIsMobileDevice] = useState(() => {
+    if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+      return window.matchMedia("(max-width: 640px)").matches;
+    }
+    return false;
+  });
+
+  const isMobileEffective = isMobile ?? isMobileDevice;
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMobile !== undefined) {
+      return;
+    }
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+    const mql = window.matchMedia("(max-width: 640px)");
+    const handler = (e: MediaQueryListEvent) => {
+      setIsMobileDevice(e.matches);
+    };
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", handler);
+      return () => mql.removeEventListener("change", handler);
+    }
+  }, [isMobile]);
+
+  const activeFiltersCount =
+    (professionalId !== null && professionalId !== "" ? 1 : 0) +
+    (chairId !== null && chairId !== "" ? 1 : 0);
+  const filtersButtonLabel =
+    activeFiltersCount > 0 ? `Filtros (${activeFiltersCount})` : "Filtros";
+
+  const viewToggleElement = (
+    <div
+      className={styles.viewToggleGroup}
+      role="group"
+      aria-label="Modo de vista"
+      data-testid="agenda-view-toggle"
+    >
+      <button
+        type="button"
+        className={isWeekView ? styles.viewToggleButton : styles.viewToggleButtonActive}
+        aria-pressed={!isWeekView}
+        onClick={() => onSelectView?.("day")}
+      >
+        Día
+      </button>
+      <button
+        type="button"
+        className={isWeekView ? styles.viewToggleButtonActive : styles.viewToggleButton}
+        aria-pressed={isWeekView}
+        onClick={() => onSelectView?.("week")}
+      >
+        Semana
+      </button>
+    </div>
+  );
+
+  const filterFieldsElement = (
+    <>
+      <div className={styles.field}>
+        <label htmlFor="agenda-filter-professional" className={styles.label}>
+          Profesional
+        </label>
+        <select
+          id="agenda-filter-professional"
+          className={styles.select}
+          value={professionalId ?? ""}
+          onChange={(event) => {
+            const value = event.target.value;
+            onSelectProfessional(value === "" ? null : value);
+          }}
+        >
+          <option value="">Todos</option>
+          {sortedProfessionals.map((prof) => (
+            <option key={prof.id} value={prof.id}>
+              {formatProfessionalLabel(prof)}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className={styles.field}>
+        <label htmlFor="agenda-filter-chair" className={styles.label}>
+          Sillón
+        </label>
+        <select
+          id="agenda-filter-chair"
+          className={styles.select}
+          value={chairId ?? ""}
+          onChange={(event) => {
+            const value = event.target.value;
+            onSelectChair(value === "" ? null : value);
+          }}
+        >
+          <option value="">Todos</option>
+          {sortedChairs.map((chair) => (
+            <option key={chair.id} value={chair.id}>
+              {chair.active ? chair.name : `${chair.name} (inactivo)`}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <button
+        type="button"
+        className={styles.actionButton}
+        onClick={onClearFilters}
+      >
+        Limpiar filtros
+      </button>
+    </>
+  );
+
   return (
     <div className={styles.toolbar} aria-label="Controles de agenda">
-      <div className={styles.controlsRow}>
-        <div className={styles.navGroup}>
-          <div
-            className={styles.viewToggleGroup}
-            role="group"
-            aria-label="Modo de vista"
-            data-testid="agenda-view-toggle"
-          >
-            <button
-              type="button"
-              className={isWeekView ? styles.viewToggleButton : styles.viewToggleButtonActive}
-              aria-pressed={!isWeekView}
-              onClick={() => onSelectView?.("day")}
-            >
-              Día
-            </button>
-            <button
-              type="button"
-              className={isWeekView ? styles.viewToggleButtonActive : styles.viewToggleButton}
-              aria-pressed={isWeekView}
-              onClick={() => onSelectView?.("week")}
-            >
-              Semana
-            </button>
-          </div>
-
-          <button
-            type="button"
-            className={styles.actionButton}
-            onClick={onPrevDay}
-          >
-            {prevLabel}
-          </button>
-          <button
-            type="button"
-            className={styles.actionButton}
-            onClick={onToday}
-          >
-            Hoy
-          </button>
-          <button
-            type="button"
-            className={styles.actionButton}
-            onClick={onNextDay}
-          >
-            {nextLabel}
-          </button>
-
-          <div className={styles.field}>
-            <label htmlFor="agenda-date-input" className={styles.label}>
-              Fecha
-            </label>
-            <input
-              id="agenda-date-input"
-              type="date"
-              className={styles.dateInput}
-              value={date}
-              onChange={(event) => {
-                const nextValue = event.target.value;
-                if (nextValue !== "") {
-                  onSelectDate?.(nextValue);
-                }
-              }}
-            />
-          </div>
-
-          {onRefresh !== undefined && (
+      {isMobileEffective ? (
+        <div className={styles.mobileControls}>
+          <div className={styles.navRow} data-testid="agenda-toolbar-nav-row">
+            {viewToggleElement}
             <button
               type="button"
               className={styles.actionButton}
-              onClick={onRefresh}
+              onClick={onPrevDay}
             >
-              Actualizar agenda
+              {prevLabel}
             </button>
-          )}
-
-          {canCreateAppointment && (
             <button
-              ref={newAppointmentRef}
               type="button"
-              className={styles.primaryButton}
-              onClick={onNewAppointment}
+              className={styles.actionButton}
+              onClick={onToday}
             >
-              Nuevo turno
+              Hoy
             </button>
-          )}
-        </div>
-
-        <div className={styles.filterGroup}>
-          <div className={styles.field}>
-            <label htmlFor="agenda-filter-professional" className={styles.label}>
-              Profesional
-            </label>
-            <select
-              id="agenda-filter-professional"
-              className={styles.select}
-              value={professionalId ?? ""}
-              onChange={(event) => {
-                const value = event.target.value;
-                onSelectProfessional(value === "" ? null : value);
-              }}
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={onNextDay}
             >
-              <option value="">Todos</option>
-              {sortedProfessionals.map((prof) => (
-                <option key={prof.id} value={prof.id}>
-                  {formatProfessionalLabel(prof)}
-                </option>
-              ))}
-            </select>
+              {nextLabel}
+            </button>
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="agenda-filter-chair" className={styles.label}>
-              Sillón
-            </label>
-            <select
-              id="agenda-filter-chair"
-              className={styles.select}
-              value={chairId ?? ""}
-              onChange={(event) => {
-                const value = event.target.value;
-                onSelectChair(value === "" ? null : value);
-              }}
+          <div className={styles.actionRow} data-testid="agenda-toolbar-action-row">
+            <div className={styles.field}>
+              <label htmlFor="agenda-date-input" className={styles.label}>
+                Fecha
+              </label>
+              <input
+                id="agenda-date-input"
+                type="date"
+                className={styles.dateInput}
+                value={date}
+                onChange={(event) => {
+                  const nextValue = event.target.value;
+                  if (nextValue !== "") {
+                    onSelectDate?.(nextValue);
+                  }
+                }}
+              />
+            </div>
+
+            {onRefresh !== undefined && (
+              <button
+                type="button"
+                className={styles.actionButton}
+                onClick={onRefresh}
+              >
+                Actualizar agenda
+              </button>
+            )}
+
+            {canCreateAppointment && (
+              <button
+                ref={newAppointmentRef}
+                type="button"
+                className={styles.primaryButton}
+                onClick={onNewAppointment}
+              >
+                Nuevo turno
+              </button>
+            )}
+
+            <button
+              type="button"
+              className={styles.filterToggleButton}
+              aria-expanded={isFiltersOpen}
+              aria-controls="agenda-filters-panel"
+              data-testid="agenda-toolbar-filters-toggle"
+              onClick={() => setIsFiltersOpen((prev) => !prev)}
             >
-              <option value="">Todos</option>
-              {sortedChairs.map((chair) => (
-                <option key={chair.id} value={chair.id}>
-                  {chair.active ? chair.name : `${chair.name} (inactivo)`}
-                </option>
-              ))}
-            </select>
+              {filtersButtonLabel}
+            </button>
           </div>
 
-          <button
-            type="button"
-            className={styles.actionButton}
-            onClick={onClearFilters}
+          <div
+            id="agenda-filters-panel"
+            className={isFiltersOpen ? styles.filterGroupMobileOpen : styles.filterGroupMobileClosed}
+            hidden={!isFiltersOpen}
           >
-            Limpiar filtros
-          </button>
+            {filterFieldsElement}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.controlsRow}>
+          <div className={styles.navGroup}>
+            {viewToggleElement}
+
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={onPrevDay}
+            >
+              {prevLabel}
+            </button>
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={onToday}
+            >
+              Hoy
+            </button>
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={onNextDay}
+            >
+              {nextLabel}
+            </button>
+
+            <div className={styles.field}>
+              <label htmlFor="agenda-date-input" className={styles.label}>
+                Fecha
+              </label>
+              <input
+                id="agenda-date-input"
+                type="date"
+                className={styles.dateInput}
+                value={date}
+                onChange={(event) => {
+                  const nextValue = event.target.value;
+                  if (nextValue !== "") {
+                    onSelectDate?.(nextValue);
+                  }
+                }}
+              />
+            </div>
+
+            {onRefresh !== undefined && (
+              <button
+                type="button"
+                className={styles.actionButton}
+                onClick={onRefresh}
+              >
+                Actualizar agenda
+              </button>
+            )}
+
+            {canCreateAppointment && (
+              <button
+                ref={newAppointmentRef}
+                type="button"
+                className={styles.primaryButton}
+                onClick={onNewAppointment}
+              >
+                Nuevo turno
+              </button>
+            )}
+          </div>
+
+          <div className={styles.filterGroup}>
+            {filterFieldsElement}
+          </div>
+        </div>
+      )}
 
       {invalidDateNotice !== null && (
         <p className={styles.helpText}>{invalidDateNotice}</p>

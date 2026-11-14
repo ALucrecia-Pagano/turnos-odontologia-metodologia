@@ -6,6 +6,23 @@
   background-color: var(--color-surface);
 }
 
+.gridScrollMobile {
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--agenda-time-gutter-width, 64px);
+}
+
+.columnHeaderMobile {
+  scroll-snap-align: start;
+  min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+  flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+}
+
+.columnTrackMobile {
+  scroll-snap-align: start;
+  min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+  flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+}
+
 .gridTable {
   display: grid;
   min-width: max-content;
@@ -319,5 +336,26 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 1.2;
+  }
+}
+
+@media (max-width: 640px) {
+  .gridScrollContainer {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--agenda-time-gutter-width, 64px);
+  }
+
+  .columnHeader,
+  .weekColumnHeader {
+    scroll-snap-align: start;
+    min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+    flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+  }
+
+  .columnTrack,
+  .weekColumnTrack {
+    scroll-snap-align: start;
+    min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+    flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
   }
 }

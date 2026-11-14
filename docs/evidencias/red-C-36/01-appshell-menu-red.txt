@@ -1,0 +1,7 @@
+=== RED EVIDENCE: 01-cabecera-compacta-y-apertura-menu ===
+Command: cd frontend && npx vitest run src/shared/components/AppShell.mobile.test.tsx
+Result: FAILED (1 failed | 0 passed)
+Failure: Unable to find an accessible element with the role "button" and name "Menú"
+Trace:
+ ❯ src/shared/components/AppShell.mobile.test.tsx:48:31
+     48|     const menuButton = screen.getByRole("button", { name: "Menú" });

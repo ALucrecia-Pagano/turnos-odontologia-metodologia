@@ -193,6 +193,31 @@
   }
 }
 
+@media (max-width: 640px) {
+  .modalContent {
+    max-width: 100%;
+    width: 100%;
+    max-height: var(--sheet-max-height, 90dvh);
+    border-radius: var(--radius-lg, 16px) var(--radius-lg, 16px) 0 0;
+    border-bottom: 0;
+    padding: var(--space-4);
+  }
+
+  .gridTwoCols {
+    grid-template-columns: 1fr;
+  }
+
+  .actionsRow {
+    flex-direction: column-reverse;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-height: 44px;
+    width: 100%;
+  }
+}
+
 @supports not (backdrop-filter: blur(1px)) {
   .modalContent {
     background-color: var(--color-background);

@@ -1,0 +1,7 @@
+=== GREEN EVIDENCE: 02-cierre-menu-escape-y-retorno-foco ===
+Command: cd frontend && npx vitest run src/shared/components/AppShell.mobile.test.tsx
+Result: PASSED (2 passed | 0 failed)
+Output:
+ ✓ src/shared/components/AppShell.mobile.test.tsx (2 tests) 275ms
+   ✓ 01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación
+   ✓ 02-cierre-menu-escape-y-retorno-foco: presionar Escape cierra el menú desplegado y devuelve el foco al botón Menú

@@ -1,0 +1,7 @@
+=== GREEN EVIDENCE: 04-toolbar-boton-filtros-con-contador ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaToolbar.mobile.test.tsx
+Result: PASSED (2 passed | 0 failed)
+Output:
+ ✓ src/features/agenda/AgendaToolbar.mobile.test.tsx (2 tests) 150ms
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 03-toolbar-distribucion-compacta: organiza navegación y fecha en dos filas diferenciadas en celular 118ms
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 04-toolbar-boton-filtros-con-contador: expone botón Filtros con indicador dinámico de filtros activos y despliega panel accesible 32ms

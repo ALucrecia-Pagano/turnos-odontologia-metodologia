@@ -2,6 +2,7 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
   type KeyboardEvent,
   type ReactNode,
   type SyntheticEvent,
@@ -14,6 +15,7 @@ export interface DialogProps {
   labelledBy: string;
   returnFocusRef?: { current: HTMLElement | null };
   children: ReactNode;
+  isMobile?: boolean;
 }
 
 export function Dialog({
@@ -22,10 +24,37 @@ export function Dialog({
   labelledBy,
   returnFocusRef,
   children,
+  isMobile,
 }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const wasOpenRef = useRef(false);
   const closeHandledRef = useRef(false);
+
+  const [isMobileDevice, setIsMobileDevice] = useState(() => {
+    if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+      return window.matchMedia("(max-width: 640px)").matches;
+    }
+    return false;
+  });
+
+  const isMobileEffective = isMobile ?? isMobileDevice;
+
+  useEffect(() => {
+    if (isMobile !== undefined) {
+      return;
+    }
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+    const mql = window.matchMedia("(max-width: 640px)");
+    const handler = (e: MediaQueryListEvent) => {
+      setIsMobileDevice(e.matches);
+    };
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", handler);
+      return () => mql.removeEventListener("change", handler);
+    }
+  }, [isMobile]);
 
   useLayoutEffect(() => {
     const dialog = dialogRef.current;
@@ -101,7 +130,8 @@ export function Dialog({
       ref={dialogRef}
       aria-labelledby={labelledBy}
       aria-modal={isNativeModalSupported ? undefined : "true"}
-      className={styles.dialog}
+      className={`${styles.dialog} ${isMobileEffective ? styles.dialogBottomSheet : ""}`}
+      data-mobile-sheet={isMobileEffective ? "true" : undefined}
       onKeyDown={handleKeyDown}
       onCancel={handleCancel}
     >

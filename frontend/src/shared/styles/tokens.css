@@ -66,9 +66,17 @@
   /* Radios y sombras */
   --radius-sm: 4px;
   --radius-md: 8px;
+  --radius-lg: 16px;
   --radius-pill: 999px;
   --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.08);
   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
+
+  /* Layout móvil y hojas inferiores (C-36) */
+  --breakpoint-mobile: 640px;
+  --sheet-max-height: 90dvh;
+  --sheet-max-height-fallback: 90vh;
+  --sheet-drag-handle-width: 36px;
+  --sheet-drag-handle-height: 4px;
 
   /* Portada pública y acceso (C-35) */
   --landing-hero-min-height: 60vh;

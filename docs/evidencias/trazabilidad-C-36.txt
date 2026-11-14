@@ -1,0 +1,18 @@
+================================================================================
+TRAZABILIDAD C-36 (ui-tema-oscuro-y-movil) — SPEC -> TEST -> EVIDENCIA -> MUTACIÓN
+================================================================================
+Total escenarios en specs: 12 (8 testeables, 4 visuales)
+Validación de correspondencia 1:1: OK
+Validación de evidencias RED/GREEN: OK (8/8 pares presentes)
+[01] frontend-foundation > Cabecera compacta y apertura de menú en celular -> testeable
+[02] frontend-foundation > Cierre del menú con Escape y retorno de foco al botón -> testeable
+[V01] frontend-foundation > Navegación de AppShell y menú verificados a 1440, 768 y 390 px -> visual
+[07] frontend-foundation > Hoja inferior a ancho completo con scroll interno en celular -> testeable
+[08] frontend-foundation > Preservación de modal centrado flotante en tablet y escritorio -> testeable
+[V02] frontend-foundation > Modales de turnos verificados a 1440, 768 y 390 px -> visual
+[03] frontend-agenda > Organización compacta de navegación y fecha en celular -> testeable
+[04] frontend-agenda > Botón Filtros con contador de filtros activos y panel accesible -> testeable
+[V03] frontend-agenda > Toolbar de agenda verificada a 1440, 768 y 390 px -> visual
+[05] frontend-agenda > Desplazamiento horizontal fluido con scroll-snap y horas fijas -> testeable
+[06] frontend-agenda > Columna completa al ancho útil y preservación de grilla por defecto -> testeable
+[V04] frontend-agenda > Grilla de agenda verificada a 1440, 768 y 390 px -> visual

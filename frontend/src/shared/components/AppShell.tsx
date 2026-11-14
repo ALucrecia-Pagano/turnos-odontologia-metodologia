@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import isotipoAqua from "../../assets/brand/isotipo-aqua.png";
 import { useAuth } from "../../features/auth/AuthContext";
@@ -7,12 +7,59 @@ import styles from "./AppShell.module.css";
 
 export interface AppShellProps {
   children?: ReactNode;
+  isMobile?: boolean;
 }
 
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, isMobile }: AppShellProps) {
   const { user, actionErrors, logout } = useAuth();
   const navigate = useNavigate();
   const menuItems = user !== null ? menuFor(user.role) : [];
+
+  const [isMobileDevice, setIsMobileDevice] = useState(() => {
+    if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+      return window.matchMedia("(max-width: 640px)").matches;
+    }
+    return false;
+  });
+
+  const isMobileEffective = isMobile ?? isMobileDevice;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (isMobile !== undefined) {
+      return;
+    }
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+    const mql = window.matchMedia("(max-width: 640px)");
+    const handler = (e: MediaQueryListEvent) => {
+      setIsMobileDevice(e.matches);
+      if (!e.matches) {
+        setIsMenuOpen(false);
+      }
+    };
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", handler);
+      return () => mql.removeEventListener("change", handler);
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMenuOpen]);
 
   const handleLogout = () => {
     logout();
@@ -29,7 +76,13 @@ export function AppShell({ children }: AppShellProps) {
             <span className={styles.brandSubtitle}>Clínica Odontológica</span>
           </div>
         </div>
-        <nav aria-label="Menú principal" className={styles.nav}>
+
+        <nav
+          id="main-menu"
+          aria-label="Menú principal"
+          className={`${styles.nav} ${isMobileEffective ? (isMenuOpen ? styles.navOpen : styles.navClosed) : ""}`}
+          hidden={isMobileEffective && !isMenuOpen ? true : undefined}
+        >
           <ul className={styles.menuList}>
             {menuItems.map((item) => (
               <li key={item.id}>
@@ -47,6 +100,11 @@ export function AppShell({ children }: AppShellProps) {
                   <NavLink
                     to={item.path}
                     data-menu-item={item.label}
+                    onClick={() => {
+                      if (isMobileEffective) {
+                        setIsMenuOpen(false);
+                      }
+                    }}
                     className={({ isActive }) =>
                       isActive ? `${styles.menuLink} ${styles.menuLinkActive}` : styles.menuLink
                     }
@@ -58,6 +116,7 @@ export function AppShell({ children }: AppShellProps) {
             ))}
           </ul>
         </nav>
+
         {user !== null && (
           <div className={styles.sessionControls}>
             <span className={styles.userName}>{user.displayName}</span>
@@ -66,7 +125,24 @@ export function AppShell({ children }: AppShellProps) {
             </button>
           </div>
         )}
+
+        {isMobileEffective && (
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className={styles.menuToggleButton}
+            aria-expanded={isMenuOpen}
+            aria-controls="main-menu"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            <span aria-hidden="true" className={styles.menuToggleIcon}>
+              {isMenuOpen ? "✕" : "☰"}
+            </span>
+            <span>Menú</span>
+          </button>
+        )}
       </header>
+
       {actionErrors !== null && actionErrors.length > 0 && (
         <div role="alert" aria-live="polite" className={styles.alertBanner}>
           {actionErrors.map((msg) => (

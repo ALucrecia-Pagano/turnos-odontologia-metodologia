@@ -1,0 +1,7 @@
+=== GREEN EVIDENCE: 08-dialog-modal-centrado-desktop ===
+Command: cd frontend && npx vitest run src/shared/components/Dialog.bottomSheet.test.tsx
+Result: PASSED (2 passed | 0 failed)
+Output:
+ ✓ src/shared/components/Dialog.bottomSheet.test.tsx (2 tests) 86ms
+   ✓ Dialog — Presentación Responsiva Móvil vs Escritorio > 07-dialog-bottom-sheet-mobile: renderiza como hoja inferior anclada al fondo con scroll interno en celular 68ms
+   ✓ Dialog — Presentación Responsiva Móvil vs Escritorio > 08-dialog-modal-centrado-desktop: preserva modal centrado flotante en pantallas de escritorio 18ms

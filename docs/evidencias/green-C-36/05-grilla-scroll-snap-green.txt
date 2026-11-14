@@ -1,0 +1,6 @@
+=== GREEN EVIDENCE: 05-grilla-scroll-snap-y-horas-sticky ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Result: PASSED (1 passed | 0 failed)
+Output:
+ ✓ src/features/agenda/AgendaGrid.mobile.test.tsx (1 test) 116ms
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 05-grilla-scroll-snap-y-horas-sticky: aplica scroll-snap horizontal mandatory y eje horario fijo en celular 116ms

@@ -25,6 +25,18 @@
   box-sizing: border-box;
 }
 
+.dialogBottomSheet[open] {
+  align-items: flex-end;
+  padding: 0;
+}
+
+@media (max-width: 640px) {
+  .dialog[open] {
+    align-items: flex-end;
+    padding: 0;
+  }
+}
+
 .dialog::backdrop {
   background: var(--scrim-navy);
   backdrop-filter: blur(var(--blur-backdrop));

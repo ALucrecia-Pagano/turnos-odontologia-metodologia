@@ -191,6 +191,21 @@
   }
 }
 
+.topBarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.menuToggleButton {
+  display: none;
+}
+
+.menuToggleIcon {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
 @media (max-width: 768px) {
   .topBar {
     justify-content: space-between;
@@ -202,6 +217,10 @@
 
   .brandSubtitle {
     display: none;
+  }
+
+  .topBarActions {
+    order: 2;
   }
 
   .sessionControls {
@@ -223,5 +242,105 @@
 
   .menuList > li {
     flex-shrink: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .topBar {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .topBarActions {
+    gap: var(--space-2);
+  }
+
+  .userName {
+    display: none;
+  }
+
+  .logoutButton {
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .brand {
+    order: 1;
+  }
+
+  .sessionControls {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .menuToggleButton {
+    order: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+  }
+
+  .menuToggleButton:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .nav {
+    order: 4;
+    width: 100%;
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-2) 0 0;
+    margin-top: var(--space-1);
+  }
+
+  .navClosed {
+    display: none !important;
+  }
+
+  .navOpen {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .menuList {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-1);
+  }
+
+  .menuList > li {
+    width: 100%;
+  }
+
+  .menuLink,
+  .menuButton {
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    border-bottom: none;
+    box-sizing: border-box;
+  }
+
+  .menuLink:hover,
+  .menuButton:hover {
+    background-color: var(--color-background);
+  }
+
+  .menuLinkActive {
+    background-color: var(--color-background);
+    border-left: 3px solid var(--color-primary);
   }
 }

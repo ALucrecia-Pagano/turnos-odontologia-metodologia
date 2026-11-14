@@ -1,0 +1,6 @@
+================================================================================
+MUTACIONES C-36 (ui-tema-oscuro-y-movil) — VERIFICACIÓN AUTOMATIZADA
+================================================================================
+Comprobación de definiciones: OK (cada original aparece 1 vez)
+Correspondencia 1:1: OK (8 tests listados == 8 mutaciones)
+Modo --check: todo correcto.

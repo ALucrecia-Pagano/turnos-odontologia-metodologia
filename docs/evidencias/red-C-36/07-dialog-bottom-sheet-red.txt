@@ -1,0 +1,12 @@
+=== RED EVIDENCE: 07-dialog-bottom-sheet-mobile ===
+Command: cd frontend && npx vitest run src/shared/components/Dialog.bottomSheet.test.tsx
+Result: FAILED (1 failed | 0 passed)
+Failure: expect(element).toHaveAttribute("data-mobile-sheet", "true") - Received: null
+Output:
+ ❯ src/shared/components/Dialog.bottomSheet.test.tsx (1 test | 1 failed) 104ms
+   × Dialog — Presentación Responsiva Móvil vs Escritorio > 07-dialog-bottom-sheet-mobile: renderiza como hoja inferior anclada al fondo con scroll interno en celular 103ms
+     → expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"
+Expected the element to have attribute:
+  data-mobile-sheet="true"
+Received:
+  null

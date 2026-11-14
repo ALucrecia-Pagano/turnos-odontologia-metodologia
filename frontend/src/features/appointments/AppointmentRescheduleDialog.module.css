@@ -222,6 +222,17 @@
   }
 }
 
+@media (max-width: 640px) {
+  .container {
+    max-width: 100%;
+    width: 100%;
+    max-height: var(--sheet-max-height, 90dvh);
+    border-radius: var(--radius-lg, 16px) var(--radius-lg, 16px) 0 0;
+    border-bottom: 0;
+    padding: var(--space-4);
+  }
+}
+
 @supports not (backdrop-filter: blur(1px)) {
   .container {
     background-color: var(--color-background);

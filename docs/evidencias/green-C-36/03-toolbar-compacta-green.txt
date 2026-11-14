@@ -1,0 +1,6 @@
+=== GREEN EVIDENCE: 03-toolbar-distribucion-compacta ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaToolbar.mobile.test.tsx
+Result: PASSED (1 passed | 0 failed)
+Output:
+ ✓ src/features/agenda/AgendaToolbar.mobile.test.tsx (1 test) 107ms
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 03-toolbar-distribucion-compacta: organiza navegación y fecha en dos filas diferenciadas en celular 107ms

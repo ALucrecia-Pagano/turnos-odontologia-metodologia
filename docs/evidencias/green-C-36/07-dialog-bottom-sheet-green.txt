@@ -1,0 +1,6 @@
+=== GREEN EVIDENCE: 07-dialog-bottom-sheet-mobile ===
+Command: cd frontend && npx vitest run src/shared/components/Dialog.bottomSheet.test.tsx
+Result: PASSED (1 passed | 0 failed)
+Output:
+ ✓ src/shared/components/Dialog.bottomSheet.test.tsx (1 test) 78ms
+   ✓ Dialog — Presentación Responsiva Móvil vs Escritorio > 07-dialog-bottom-sheet-mobile: renderiza como hoja inferior anclada al fondo con scroll interno en celular 78ms

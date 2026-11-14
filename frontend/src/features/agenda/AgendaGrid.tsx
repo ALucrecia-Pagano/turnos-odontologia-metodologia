@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StatusBadge } from "../../shared/components/StatusBadge";
 import type { AppointmentStatus } from "../../shared/styles/appointmentStatusTokens";
 import type {
@@ -26,6 +27,7 @@ export interface AgendaGridProps {
   readonly view?: "day" | "week";
   readonly isWeek?: boolean;
   readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;
+  readonly isMobile?: boolean;
 }
 
 const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
@@ -44,12 +46,43 @@ export function AgendaGrid({
   view,
   isWeek,
   onSelectAppointment,
+  isMobile,
 }: AgendaGridProps) {
   const isWeekView = isWeek ?? view === "week";
   const axisSpan = Math.max(1, axis.endMinute - axis.startMinute);
 
+  const [isMobileDevice, setIsMobileDevice] = useState(() => {
+    if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+      return window.matchMedia("(max-width: 640px)").matches;
+    }
+    return false;
+  });
+
+  const isMobileEffective = isMobile ?? isMobileDevice;
+
+  useEffect(() => {
+    if (isMobile !== undefined) {
+      return;
+    }
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+    const mql = window.matchMedia("(max-width: 640px)");
+    const handler = (e: MediaQueryListEvent) => {
+      setIsMobileDevice(e.matches);
+    };
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", handler);
+      return () => mql.removeEventListener("change", handler);
+    }
+  }, [isMobile]);
+
   return (
-    <div className={styles.gridScrollContainer} data-testid="agenda-grid-scroll">
+    <div
+      className={`${styles.gridScrollContainer} ${isMobileEffective ? styles.gridScrollMobile : ""}`}
+      data-testid="agenda-grid-scroll"
+      data-scroll-snap={isMobileEffective ? "mandatory" : undefined}
+    >
       <div className={styles.gridTable}>
         <div className={styles.headerRow}>
           <div className={styles.cornerCell}>Hora</div>
@@ -58,8 +91,9 @@ export function AgendaGrid({
             return (
               <div
                 key={col.id}
-                className={`${styles.columnHeader} ${isWeekView ? styles.weekColumnHeader : ""}`}
+                className={`${styles.columnHeader} ${isWeekView ? styles.weekColumnHeader : ""} ${isMobileEffective ? styles.columnHeaderMobile : ""}`}
                 data-testid="agenda-column-header"
+                data-snap-align={isMobileEffective ? "start" : undefined}
                 aria-current={isToday ? "date" : undefined}
               >
                 <span>{col.displayLabel}</span>
@@ -94,8 +128,10 @@ export function AgendaGrid({
             return (
               <div
                 key={col.id}
-                className={`${styles.columnTrack} ${isWeekView ? styles.weekColumnTrack : ""}`}
+                className={`${styles.columnTrack} ${isWeekView ? styles.weekColumnTrack : ""} ${isMobileEffective ? styles.columnTrackMobile : ""}`}
                 data-testid={`agenda-column-${col.id}`}
+                data-snap-align={isMobileEffective ? "start" : undefined}
+                data-mobile-column={isMobileEffective ? "true" : undefined}
               >
                 {col.appointments.length === 0 && (
                   <div className={styles.emptyColumnNote}>Sin turnos</div>

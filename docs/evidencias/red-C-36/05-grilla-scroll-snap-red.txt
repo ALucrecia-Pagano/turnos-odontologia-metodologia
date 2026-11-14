@@ -1,0 +1,12 @@
+=== RED EVIDENCE: 05-grilla-scroll-snap-y-horas-sticky ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Result: FAILED (1 failed | 0 passed)
+Failure: expect(element).toHaveAttribute("data-scroll-snap", "mandatory") - Received: null
+Output:
+ ❯ src/features/agenda/AgendaGrid.mobile.test.tsx (1 test | 1 failed) 106ms
+   × AgendaGrid — Modo Móvil (<= 640 px) > 05-grilla-scroll-snap-y-horas-sticky: aplica scroll-snap horizontal mandatory y eje horario fijo en celular 104ms
+     → expect(element).toHaveAttribute("data-scroll-snap", "mandatory") // element.getAttribute("data-scroll-snap") === "mandatory"
+Expected the element to have attribute:
+  data-scroll-snap="mandatory"
+Received:
+  null

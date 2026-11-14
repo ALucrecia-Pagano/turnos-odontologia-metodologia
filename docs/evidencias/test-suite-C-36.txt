@@ -1,0 +1,79 @@
+=== VITEST FULL SUITE: npx vitest run ===
+Command: cd frontend && npx vitest run
+Exit code: 0
+Output:
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests) 1361ms
+ ✓ src/features/appointments/AppointmentCancel.test.tsx (7 tests) 1367ms
+ ✓ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests) 1502ms
+ ✓ src/features/agenda/AgendaView.test.tsx (15 tests) 1837ms
+ ✓ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests) 2207ms
+ ✓ src/features/login/LoginPage.translucido.test.tsx (7 tests) 3784ms
+ ✓ src/features/login/LoginPage.test.tsx (6 tests) 5261ms
+ ✓ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests) 615ms
+ ✓ src/features/agenda/AgendaPage.nuevoTurno.test.tsx (2 tests) 835ms
+ ✓ src/features/agenda/AgendaPage.acciones.test.tsx (11 tests) 1344ms
+ ✓ src/features/agenda/AgendaPage.test.tsx (4 tests) 944ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 545ms
+ ✓ src/features/auth/AuthContext.test.tsx (6 tests) 868ms
+ ✓ src/App.test.tsx (6 tests) 857ms
+ ✓ src/features/auth/Logout.test.tsx (1 test) 579ms
+ ✓ src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx (3 tests) 323ms
+ ✓ src/features/login/LoginCarousel.test.tsx (5 tests) 389ms
+ ✓ src/features/landing/AccesoPage.test.tsx (2 tests) 420ms
+ ✓ src/features/agenda/AgendaToolbar.test.tsx (2 tests) 349ms
+ ✓ src/features/login/LoginBrand.test.tsx (2 tests) 401ms
+ ✓ src/features/appointments/PatientSearchGroup.test.tsx (4 tests) 422ms
+ ✓ src/features/agenda/useAgenda.test.tsx (3 tests) 375ms
+ ✓ src/shared/components/ErrorState.test.tsx (4 tests) 352ms
+ ✓ src/shared/components/EmptyState.test.tsx (2 tests) 336ms
+ ✓ src/features/agenda/AgendaTable.test.tsx (1 test) 332ms
+ ✓ src/features/agenda/AgendaTable.accionable.test.tsx (2 tests) 356ms
+ ✓ src/shared/components/AppShellBrand.test.tsx (2 tests) 281ms
+ ✓ src/test/smoke.test.tsx (1 test) 290ms
+ ✓ src/features/landing/RootGate.test.tsx (1 test) 238ms
+ ✓ src/shared/components/StatusBadge.test.tsx (5 tests) 185ms
+ ✓ src/shared/components/Dialog.escape.test.tsx (1 test) 176ms
+ ✓ src/shared/components/Dialog.test.tsx (3 tests) 261ms
+ ✓ src/features/agenda/AgendaGrid.accionable.test.tsx (2 tests) 197ms
+ ✓ src/features/landing/RevealSection.test.tsx (4 tests) 173ms
+ ✓ src/shared/components/PageShell.test.tsx (1 test) 214ms
+ ✓ src/shared/components/AppShell.mobile.test.tsx (2 tests) 537ms
+ ✓ src/shared/api/auth.test.ts (3 tests) 131ms
+ ✓ src/shared/components/LoadingState.test.tsx (1 test) 134ms
+ ✓ src/features/auth/storageGuard.test.ts (1 test) 105ms
+ ✓ src/shared/components/AppShellNavigation.test.tsx (3 tests) 339ms
+ ✓ src/shared/styles/fonts.test.ts (4 tests) 80ms
+ ✓ src/features/agenda/agendaLayout.test.ts (7 tests) 115ms
+ ✓ src/features/agenda/agendaConfig.test.ts (1 test) 110ms
+ ✓ src/features/agenda/clock.test.ts (1 test) 109ms
+ ✓ src/features/agenda/AgendaToolbar.mobile.test.tsx (2 tests) 421ms
+ ✓ src/features/agenda/agendaTime.test.ts (6 tests) 64ms
+ ✓ src/features/agenda/AgendaGrid.mobile.test.tsx (2 tests) 402ms
+ ✓ src/test/tooling.test.ts (3 tests) 28574ms
+ ✓ src/features/agenda/agendaTimeGuard.test.ts (1 test) 51ms
+ ✓ src/shared/components/Dialog.bottomSheet.test.tsx (2 tests) 188ms
+ ✓ src/features/agenda/agendaApi.test.ts (3 tests) 30ms
+ ✓ src/features/auth/authApi.test.ts (7 tests) 31ms
+ ✓ src/shared/api/client.test.ts (10 tests) 31ms
+ ✓ src/shared/styles/landingTokens.test.ts (4 tests) 25ms
+ ✓ src/shared/api/errors.test.ts (6 tests) 22ms
+ ✓ src/shared/api/client.violations.test.ts (1 test) 17ms
+ ✓ src/test/docker.test.ts (3 tests) 14ms
+ ✓ src/features/agenda/agendaStyles.test.ts (6 tests) 21ms
+ ✓ src/shared/styles/appointmentStatusTokens.test.ts (2 tests) 11ms
+ ✓ src/features/auth/tokenStore.test.ts (4 tests) 10ms
+ ✓ src/shared/components/DialogTheme.test.ts (1 test) 11ms
+ ✓ src/features/landing/landingContent.test.ts (3 tests) 6ms
+ ✓ src/shared/styles/aquaPalette.test.ts (2 tests) 7ms
+ ✓ src/features/auth/menuFor.test.ts (3 tests) 7ms
+ ✓ src/features/auth/safeInternalPath.test.ts (4 tests) 4ms
+ ✓ src/shared/styles/tokens.test.ts (4 tests) 4ms
+ ✓ src/test/readmeCredits.test.ts (1 test) 4ms
+
+ Test Files  68 passed (68)
+      Tests  268 passed (268)
+   Start at  16:46:36
+   Duration  41.53s

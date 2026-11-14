@@ -1,0 +1,10 @@
+=== RED EVIDENCE: 02-cierre-menu-escape-y-retorno-foco ===
+Command: cd frontend && npx vitest run src/shared/components/AppShell.mobile.test.tsx
+Result: FAILED (1 failed | 1 passed)
+Failure: AssertionError: expected <body>... to be <button type="button" aria-controls="main-menu" ...>Menú</button>
+Output:
+ ❯ src/shared/components/AppShell.mobile.test.tsx (2 tests | 1 failed) 277ms
+   ✓ AppShell — Móvil (≤ 640 px) > 01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación 141ms
+   × AppShell — Móvil (≤ 640 px) > 02-cierre-menu-escape-y-retorno-foco: presionar Escape cierra el menú desplegado y devuelve el foco al botón Menú 134ms
+     → expected <body><div>…(1)</div></body> to be <button type="button" …(3)>…(2)</button> // Object.is equality
+AssertionError: expected <body><div>…(1)</div></body> to be <button type="button" …(3)>…(2)</button> // Object.is equality

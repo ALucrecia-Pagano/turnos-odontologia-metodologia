@@ -1,0 +1,7 @@
+=== GREEN EVIDENCE: 06-grilla-ancho-util-y-default-grid ===
+Command: cd frontend && npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Result: PASSED (2 passed | 0 failed)
+Output:
+ ✓ src/features/agenda/AgendaGrid.mobile.test.tsx (2 tests) 190ms
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 05-grilla-scroll-snap-y-horas-sticky: aplica scroll-snap horizontal mandatory y eje horario fijo en celular 122ms
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 06-grilla-ancho-util-y-default-grid: preserva modo inicial grilla en AgendaView y dimensiona columnas a ancho útil en móvil 68ms
