@@ -8,7 +8,7 @@ Definir la portada pública editorial de Aqua en `/` para usuarios anónimos (pa
 
 ### Requirement: Portada pública en la raíz
 
-La ruta `/` SHALL mostrar para usuarios anónimos la portada a pantalla completa con el carrusel bajo overlay navy, navegación superior de texto sin cajas (`Inicio`, `La clínica`, `Acceder`), `<h1>` con el logo (`alt="Aqua — Clínica Odontológica"`), eslogan "Claridad en cada cuidado.", CTA "Explorar la clínica →", badge "Sitio de demostración" y franja de estado. Con sesión autenticada, `/` MUST conservar la redirección con replace a `/agenda` según el Clock.
+La ruta `/` SHALL mostrar al anónimo una portada a pantalla completa con carrusel bajo overlay navy y `<h1>` con el logo (`alt="Aqua — Clínica Odontológica"`) grande y centrado; debajo, el eslogan "Claridad en cada cuidado." más chico y un lead discreto. Arriba a la izquierda, navegación de texto (`Inicio`, `La clínica`, `Acceder`); abajo a la izquierda, el enlace discreto "Explorar la clínica →" y el badge "Sitio de demostración". Con sesión, `/` MUST redirigir con replace a `/agenda`.
 
 #### Scenario: Portada completa para anónimo en /
 
@@ -31,18 +31,18 @@ La ruta `/` SHALL mostrar para usuarios anónimos la portada a pantalla completa
 - **GIVEN** la portada pública montada en un navegador real
 - **WHEN** se inspecciona en viewports de 1440 px, 768 px y 390 px
 - **THEN** el hero cubre la pantalla completa sin desbordes horizontales
-- **AND** los enlaces de texto superiores se mantienen legibles y alineados
+- **AND** el logo se ve centrado y grande, la navegación arriba a la izquierda y el enlace discreto con el badge abajo a la izquierda, con "Pausar animación" abajo a la derecha
 - **AND** esta verificación es visual (capturas a 1440, 768 y 390 px a cargo de Claude), no un test de jsdom
 
 ### Requirement: Secciones editoriales con reveal lateral
 
-La portada SHALL presentar las cuatro secciones editoriales "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto" en dos columnas con teléfono ficticio "(0261) 555-0101". `RevealSection` SHALL aplicar animación lateral (`translateX` y opacidad entre 200 y 250 ms) al hacer scroll. Ante `prefers-reduced-motion` o sin `IntersectionObserver`, el contenido MUST mostrarse visible de inmediato sin desplazamiento ni transición.
+La portada SHALL presentar "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto" intercaladas: 01 y 03 a la izquierda, 02 y 04 a la derecha, en bloques de ~60 % del ancho (número y título arriba, contenido abajo; ancho completo en 768 y 390 px). `RevealSection` SHALL entrar desde su lado (`translateX` y opacidad, 200-250 ms). Con reduced motion o sin `IntersectionObserver`, MUST verse de inmediato, sin desplazamiento.
 
 #### Scenario: Secciones editoriales entran con animación lateral al scrollear
 
 - **GIVEN** la portada pública con un observador de intersección inyectado
 - **WHEN** el usuario scrollea hacia las secciones informativas
-- **THEN** cada sección transiciona de pendiente a revelada con `translateX` y opacidad en 200-250 ms
+- **THEN** cada sección transiciona de pendiente a revelada con `translateX` y opacidad en 200-250 ms, desde su propio lado (01 y 03 desde la izquierda, 02 y 04 desde la derecha)
 - **AND** se muestran los títulos "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto"
 - **AND** la sección de contacto incluye el teléfono ficticio "(0261) 555-0101" y la franja de estado de demostración
 
@@ -54,12 +54,12 @@ La portada SHALL presentar las cuatro secciones editoriales "01 / Quiénes somos
 - **AND** no se aplica desplazamiento lateral `translateX` ni transición temporal
 - **AND** todo el contenido editorial permanece accesible y visible en el DOM
 
-#### Scenario: Secciones editoriales se adaptan a dos columnas en 1440 px y una columna en 768 y 390 px
+#### Scenario: Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px
 
 - **GIVEN** la portada pública renderizada en navegador real
 - **WHEN** se observa el layout de las secciones editoriales a 1440 px, 768 px y 390 px
-- **THEN** en escritorio (1440 px) el contenido se distribuye en dos columnas editoriales
-- **AND** en tablet (768 px) y móvil (390 px) se apila en una sola columna con espaciado vertical armonioso
+- **THEN** en escritorio (1440 px) 01 y 03 ocupan ~60 % del ancho alineadas a la izquierda y 02 y 04 a la derecha
+- **AND** en tablet (768 px) y móvil (390 px) ocupan el ancho completo, en el mismo orden y con menor desplazamiento de entrada
 - **AND** esta verificación es visual (capturas a 1440, 768 y 390 px a cargo de Claude)
 
 ### Requirement: Página de acceso por rol

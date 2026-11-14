@@ -11,12 +11,31 @@
   transform: translateX(var(--landing-reveal-offset));
 }
 
+.reveal[data-reveal="pending"][data-side="left"] {
+  transform: translateX(calc(-1 * var(--landing-reveal-offset)));
+}
+
+@media (max-width: 768px) {
+  .reveal[data-reveal="pending"] {
+    transform: translateX(calc(var(--landing-reveal-offset) / 2));
+  }
+
+  .reveal[data-reveal="pending"][data-side="left"] {
+    transform: translateX(calc(var(--landing-reveal-offset) / -2));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     transition: none;
   }
 
   .reveal[data-reveal="pending"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal[data-reveal="pending"][data-side] {
     opacity: 1;
     transform: none;
   }

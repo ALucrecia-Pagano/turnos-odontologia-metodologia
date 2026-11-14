@@ -78,6 +78,8 @@
   min-height: 44px;
   padding: var(--space-1);
   background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
   color: var(--color-text);
   font-family: var(--font-family-body);
   font-size: var(--font-size-sm);

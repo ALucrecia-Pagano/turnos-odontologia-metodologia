@@ -147,4 +147,34 @@ describe("LandingPage", () => {
     expect(reducedPending).toContain("transform: none;");
     expect(reducedPending).toContain("opacity: 1;");
   });
+
+  it("las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha", () => {
+    const { container } = renderLanding({ reducedMotion: true });
+
+    const wrappers = [...container.querySelectorAll("[data-reveal]")];
+    expect(wrappers.map((wrapper) => wrapper.getAttribute("data-side"))).toEqual(["left", "right", "left", "right"]);
+    expect(
+      wrappers.map((wrapper) => within(wrapper as HTMLElement).queryByRole("heading", { level: 2 })?.textContent),
+    ).toEqual(["01 / Quiénes somos", "02 / Servicios", "03 / Equipo", "04 / Horarios y contacto"]);
+
+    const css = readSrcFile("features/landing/LandingPage.module.css");
+    expect(ruleBody(css, ".sectionLeft")).toContain("margin-right: auto;");
+    expect(ruleBody(css, ".sectionRight")).toContain("margin-left: auto;");
+    expect(ruleBody(css, ".section")).toContain("width: 60%;");
+  });
+
+  it("el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único", () => {
+    const { container } = renderLanding({ reducedMotion: true });
+
+    const ctas = container.querySelectorAll("[data-cta]");
+    expect(ctas).toHaveLength(1);
+    expect(ctas[0]).toHaveAttribute("data-variant", "ghost");
+    expect(ctas[0]).toHaveTextContent("Explorar la clínica →");
+    expect(ctas[0]?.tagName).toBe("A");
+
+    const cta = ruleBody(readSrcFile("features/landing/LandingPage.module.css"), ".cta");
+    expect(cta).toContain("background: transparent;");
+    expect(cta).toContain("border-bottom: 1px solid var(--border-on-navy-strong);");
+    expect(cta).not.toMatch(/(^|[\s;])background(-color)?:\s+(?!transparent|none)/);
+  });
 });

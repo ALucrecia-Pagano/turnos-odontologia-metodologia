@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/components/AppShellNavigation.test.tsx (3 tests) 407ms
+   ✓ AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px  327ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 519ms
+   ✓ AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente  380ms
+
+ Test Files  2 passed (2)
+      Tests  5 passed (5)
+   Start at  21:18:37
+   Duration  5.51s (transform 534ms, setup 1.23s, collect 1.36s, tests 926ms, environment 5.38s, prepare 664ms)
+

@@ -21,13 +21,13 @@ H3 [historico] Credenciales inválidas con mensaje genérico -> `src/features/lo
 H4 [historico] Envío en curso y doble submit -> `src/features/login/LoginPage.test.tsx` > envío en curso y doble submit | green-C-35/login-regresion.txt
 H5 [historico] Accesibilidad del formulario -> `src/features/login/LoginPage.test.tsx` > accesibilidad del formulario | green-C-35/login-regresion.txt
 V1 [visual] Adaptabilidad de la portada en 1440, 768 y 390 px -> capturas/C-35-portada-*.png
-V2 [visual] Secciones editoriales se adaptan a dos columnas en 1440 px y una columna en 768 y 390 px -> capturas/C-35-secciones-*.png
+V2 [visual] Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px -> capturas/C-35-secciones-*.png
 V3 [visual] Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px -> capturas/C-35-acceso-*.png
 V4 [visual] Adaptabilidad de /login en 1440, 768 y 390 px -> capturas/C-35-login-*.png
 V5 [visual] Superficie clara suave de modales verificada a 1440, 768 y 390 px -> capturas/C-35-modales-*.png
 V6 [visual] Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> capturas/C-35-appshell-*.png
 
-tests auxiliares recuperados de cea858b (no son escenarios; cada uno con su mutación): 9
+tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño); no son escenarios, cada uno con su mutación: 13
 [auxiliar] src/shared/styles/landingTokens.test.ts > define los dos tokens de layout | A01
 [auxiliar] src/shared/styles/landingTokens.test.ts > la portada usa los tokens de layout | A02
 [auxiliar] src/shared/styles/landingTokens.test.ts > no agrega colores nuevos | A03
@@ -37,6 +37,10 @@ tests auxiliares recuperados de cea858b (no son escenarios; cada uno con su muta
 [auxiliar] src/features/landing/RevealSection.test.tsx > sin IntersectionObserver queda revelada y su contenido es visible | A07
 [auxiliar] src/features/landing/RevealSection.test.tsx > con observador inyectado pasa de pendiente a revelada y limpia al desmontar | A08
 [auxiliar] src/features/landing/RevealSection.test.tsx > con movimiento reducido no queda pendiente y el contenido está en el DOM | A09
+[auxiliar] src/shared/components/AppShellNavigation.test.tsx > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces | M14
+[auxiliar] src/features/landing/RevealSection.test.tsx > from=right desplaza en positivo y from=left en negativo | M15
+[auxiliar] src/features/landing/LandingPage.test.tsx > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha | M16
+[auxiliar] src/features/landing/LandingPage.test.tsx > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único | M17
 
 problemas: 0
 RESULTADO: OK

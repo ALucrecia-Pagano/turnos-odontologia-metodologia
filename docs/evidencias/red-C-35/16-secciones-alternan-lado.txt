@@ -1,0 +1,44 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 89ms
+   ↓ LandingPage > portada completa para anónimo en /
+   ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
+   ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
+   × LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha 86ms
+     → expected [ 'right', 'right', 'right', 'right' ] to deeply equal [ 'left', 'right', 'left', 'right' ]
+   ↓ LandingPage > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
+AssertionError: expected [ 'right', 'right', 'right', 'right' ] to deeply equal [ 'left', 'right', 'left', 'right' ]
+
+- Expected
++ Received
+
+  [
+-   "left",
+    "right",
+-   "left",
++   "right",
++   "right",
+    "right",
+  ]
+
+ ❯ src/features/landing/LandingPage.test.tsx:155:74
+    153| 
+    154|     const wrappers = [...container.querySelectorAll("[data-reveal]")];
+    155|     expect(wrappers.map((wrapper) => wrapper.getAttribute("data-side")…
+       |                                                                          ^
+    156|     expect(
+    157|       wrappers.map((wrapper) => within(wrapper as HTMLElement).queryBy…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:19:57
+   Duration  5.17s (transform 857ms, setup 417ms, collect 2.14s, tests 89ms, environment 1.72s, prepare 319ms)
+

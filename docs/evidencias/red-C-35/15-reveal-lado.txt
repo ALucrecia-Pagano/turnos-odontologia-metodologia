@@ -1,0 +1,43 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 59ms
+   ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+   ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+   ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+   × RevealSection > from=right desplaza en positivo y from=left en negativo 56ms
+     → expected [ null, null, null ] to deeply equal [ 'left', 'right', 'right' ]
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > from=right desplaza en positivo y from=left en negativo
+AssertionError: expected [ null, null, null ] to deeply equal [ 'left', 'right', 'right' ]
+
+- Expected
++ Received
+
+  [
+-   "left",
+-   "right",
+-   "right",
++   null,
++   null,
++   null,
+  ]
+
+ ❯ src/features/landing/RevealSection.test.tsx:85:19
+     83| 
+     84|     const sides = [...container.querySelectorAll("[data-reveal]")].map…
+     85|     expect(sides).toEqual(["left", "right", "right"]);
+       |                   ^
+     86| 
+     87|     const css = readSrcFile("features/landing/RevealSection.module.css…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  21:19:08
+   Duration  4.42s (transform 238ms, setup 534ms, collect 293ms, tests 59ms, environment 2.52s, prepare 310ms)
+

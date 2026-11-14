@@ -1,0 +1,49 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 33ms
+   ↓ AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+   ↓ AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+   × AppShell navegación sin cajas > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces 29ms
+     → expected 'display: inline-flex;\n  flex-directi…' to contain 'border: 0;'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/AppShellNavigation.test.tsx > AppShell navegación sin cajas > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces
+AssertionError: expected 'display: inline-flex;\n  flex-directi…' to contain 'border: 0;'
+
+- Expected
++ Received
+
+- border: 0;
++ display: inline-flex;
++   flex-direction: column;
++   align-items: flex-start;
++   justify-content: center;
++   gap: 0;
++   min-height: 44px;
++   padding: var(--space-1);
++   background: transparent;
++   color: var(--color-text);
++   font-family: var(--font-family-body);
++   font-size: var(--font-size-sm);
++   font-weight: var(--font-weight-medium);
++   line-height: 1.2;
++   text-align: left;
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx:108:20
+    106|     const button = ruleBody(css, ".menuButton");
+    107|     const link = ruleBody(css, ".menuLink");
+    108|     expect(button).toContain("border: 0;");
+       |                    ^
+    109|     expect(button).toContain("border-bottom: 2px solid transparent;");
+    110|     expect(link).toContain("border-bottom: 2px solid transparent;");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  21:18:28
+   Duration  4.88s (transform 426ms, setup 651ms, collect 747ms, tests 33ms, environment 2.50s, prepare 310ms)
+

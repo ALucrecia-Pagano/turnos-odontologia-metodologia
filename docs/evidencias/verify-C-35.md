@@ -4,11 +4,11 @@
 
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8, sin BOM).
 
-- **Tareas**: fases 1 a 8 implementadas según [tasks.md](../../openspec/changes/ui-portada-y-acceso/tasks.md). La fase 9 (capturas en navegador real a 1440, 768 y 390 px) queda sin marcar, a cargo de Claude/la orquestación.
-- **Vitest**: línea base de 232 tests en 55 archivos ([baseline-C-35.txt](baseline-C-35.txt)); suite final de **254 tests en 64 archivos**, todos en verde ([test-suite-C-35.txt](test-suite-C-35.txt)). 254 = 232 + 22: 13 tests de escenario nuevos + 9 auxiliares recuperados (3 de `landingContent.test.ts`, 3 de `RevealSection.test.tsx`, 3 de `landingTokens.test.ts`).
-- **Mutaciones**: 13 de 13 hicieron fallar su test por aserción; sobrevivientes 0; inválidas 0; SHA-256 sin cambios: sí ([mutaciones-C-35.txt](mutaciones-C-35.txt), generado por [mutaciones-C-35.py](mutaciones-C-35.py)).
-- **Trazabilidad**: 24 escenarios = 13 nuevos + 5 históricos + 6 visuales, 0 problemas ([trazabilidad-C-35.txt](trazabilidad-C-35.txt), generado por [trazabilidad-C-35.py](trazabilidad-C-35.py)).
-- **Calidad**: `tsc --noEmit` exit 0; `npx eslint .` exit 0 (3 advertencias previas, ver Desvíos); `npm run build` exit 0 ([tooling-C-35.txt](tooling-C-35.txt), [build-C-35.txt](build-C-35.txt)).
+- **Tareas**: fases 1 a 8 y 10 (ajustes de diseño) implementadas según [tasks.md](../../openspec/changes/ui-portada-y-acceso/tasks.md). La fase 9 (capturas en navegador real a 1440, 768 y 390 px) queda sin marcar, a cargo de Claude/la orquestación.
+- **Vitest**: línea base de 232 tests en 55 archivos ([baseline-C-35.txt](baseline-C-35.txt)); suite final de **258 tests en 64 archivos**, todos en verde ([test-suite-C-35.txt](test-suite-C-35.txt)). 258 = 232 + 26: 13 tests de escenario nuevos, 9 auxiliares recuperados de `cea858b` (3 de `landingContent.test.ts`, 3 de `RevealSection.test.tsx`, 3 de `landingTokens.test.ts`) y 4 tests adicionales del ajuste de diseño (nuevos de esta ronda: 1 en `AppShellNavigation.test.tsx`, 1 en `RevealSection.test.tsx` y 2 en `LandingPage.test.tsx`); los 26 llevan mutación propia.
+- **Mutaciones**: 26 de 26 (M01-M13 de escenarios, A01-A09 de los 9 auxiliares y M14-M17 de los 4 tests del ajuste de diseño) hicieron fallar su test por aserción; sobrevivientes 0; inválidas 0; SHA-256 sin cambios: sí ([mutaciones-C-35.txt](mutaciones-C-35.txt), generado por [mutaciones-C-35.py](mutaciones-C-35.py)).
+- **Trazabilidad**: 24 escenarios = 13 nuevos + 5 históricos + 6 visuales, más 13 tests auxiliares/adicionales listados con su mutación (A01-A09 y M14-M17), 0 problemas ([trazabilidad-C-35.txt](trazabilidad-C-35.txt), generado por [trazabilidad-C-35.py](trazabilidad-C-35.py)).
+- **Calidad**: `tsc --noEmit` exit 0; `npx eslint .` exit 0 (0 errores, 3 advertencias previas); `npm run lint` exit 1 por esas 3 advertencias (ver Desvíos); `npm run build` exit 0 ([tooling-C-35.txt](tooling-C-35.txt), [build-C-35.txt](build-C-35.txt)).
 - **OpenSpec**: `openspec validate ui-portada-y-acceso --strict` y `openspec validate --all --strict` exit 0 ([validate-C-35.txt](validate-C-35.txt)).
 - **Tests existentes**: único modificado `frontend/src/test/smoke.test.tsx` ([diff-tests-existentes-C-35.txt](diff-tests-existentes-C-35.txt)).
 - **Skill y MCP**: [C-35-mcp-context7.md](../skills-mcp/evidencias/C-35-mcp-context7.md) y [C-35-skill-appointment-frontend-ux.md](../skills-mcp/evidencias/C-35-skill-appointment-frontend-ux.md).
@@ -38,13 +38,13 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | H4 | frontend-auth-session | Envío en curso y doble submit | historico | `src/features/login/LoginPage.test.tsx` > envío en curso y doble submit | — (test existente) | green-C-35/login-regresion.txt |
 | H5 | frontend-auth-session | Accesibilidad del formulario | historico | `src/features/login/LoginPage.test.tsx` > accesibilidad del formulario | — (test existente) | green-C-35/login-regresion.txt |
 | V1 | frontend-landing | Adaptabilidad de la portada en 1440, 768 y 390 px | visual | Captura (fase 9) | — | capturas/C-35-portada-*.png |
-| V2 | frontend-landing | Secciones editoriales se adaptan a dos columnas en 1440 px y una columna en 768 y 390 px | visual | Captura (fase 9) | — | capturas/C-35-secciones-*.png |
+| V2 | frontend-landing | Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px | visual | Captura (fase 9) | — | capturas/C-35-secciones-*.png |
 | V3 | frontend-landing | Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px | visual | Captura (fase 9) | — | capturas/C-35-acceso-*.png |
 | V4 | frontend-auth-session | Adaptabilidad de /login en 1440, 768 y 390 px | visual | Captura (fase 9) | — | capturas/C-35-login-*.png |
 | V5 | frontend-foundation | Superficie clara suave de modales verificada a 1440, 768 y 390 px | visual | Captura (fase 9) | — | capturas/C-35-modales-*.png |
 | V6 | frontend-foundation | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | visual | Captura (fase 9) | — | capturas/C-35-appshell-*.png |
 
-Tests auxiliares (no son escenarios; 24 = 13 + 5 + 6 no cambia):
+Tests auxiliares y adicionales (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 
 | Mutación | Archivo | Test |
 |----------|---------|------|
@@ -57,9 +57,13 @@ Tests auxiliares (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 | A07 | `src/features/landing/RevealSection.test.tsx` | sin IntersectionObserver queda revelada y su contenido es visible |
 | A08 | `src/features/landing/RevealSection.test.tsx` | con observador inyectado pasa de pendiente a revelada y limpia al desmontar |
 | A09 | `src/features/landing/RevealSection.test.tsx` | con movimiento reducido no queda pendiente y el contenido está en el DOM |
+| M14 | `src/shared/components/AppShellNavigation.test.tsx` | los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces |
+| M15 | `src/features/landing/RevealSection.test.tsx` | from=right desplaza en positivo y from=left en negativo |
+| M16 | `src/features/landing/LandingPage.test.tsx` | las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha |
+| M17 | `src/features/landing/LandingPage.test.tsx` | el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único |
 <!-- trazabilidad:fin -->
 
-## Mutaciones (M01–M13)
+## Mutaciones (M01–M13, A01–A09, M14–M17)
 
 <!-- mutaciones:inicio -->
 | # | Test | Archivo | Mutación | Primera línea del fallo |
@@ -85,8 +89,34 @@ Tests auxiliares (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 | A06 | `horarios y contacto son ficticios y coinciden con el seed` | `frontend/src/features/landing/landingContent.ts` | `-  phone: "(0261) 555-0101", +  phone: "(0261) 555-0102",` | `AssertionError: expected { …(3) } to deeply equal { …(3) }` |
 | A07 | `sin IntersectionObserver queda revelada y su contenido es visible` | `frontend/src/features/landing/RevealSection.tsx` | `-  const [revealed, setRevealed] = useState(!canAnimate); +  const [revealed, setRevealed]` | `Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute(` |
 | A08 | `con observador inyectado pasa de pendiente a revelada y limpia al desmontar` | `frontend/src/features/landing/RevealSection.tsx` | `-    return instance.observe(section, () => { +    instance.observe(section, () => {` | `AssertionError: expected +0 to be 1 // Object.is equality` |
-| A09 | `con movimiento reducido no queda pendiente y el contenido está en el DOM` | `frontend/src/features/landing/RevealSection.tsx` | `-    <div ref={sectionRef} data-reveal={revealed ? "revealed" : "pending"} className={styl` | `Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute(` |
+| A09 | `con movimiento reducido no queda pendiente y el contenido está en el DOM` | `frontend/src/features/landing/RevealSection.tsx` | `-      data-reveal={revealed ? "revealed" : "pending"} +      data-reveal={revealed && !re` | `Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute(` |
+| M14 | `los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces` | `frontend/src/shared/components/AppShell.module.css` | `-  border: 0;` | `AssertionError: expected 'display: inline-flex;\n  flex-directi…' to contain 'border: 0;'` |
+| M15 | `from=right desplaza en positivo y from=left en negativo` | `frontend/src/features/landing/RevealSection.module.css` | `-  transform: translateX(calc(-1 * var(--landing-reveal-offset))); +  transform: translate` | `AssertionError: expected 'transform: translateX(var(--landing-r…' to contain 'translateX(c` |
+| M16 | `las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha` | `frontend/src/features/landing/LandingPage.tsx` | `-          <RevealSection observer={observer} reducedMotion={motionReduced} from="right"> ` | `AssertionError: expected [ 'left', 'left', 'left', 'right' ] to deeply equal [ 'left', 'ri` |
+| M17 | `el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único` | `frontend/src/features/landing/LandingPage.module.css` | `-  background: transparent; +  background: var(--color-primary);` | `AssertionError: expected 'display: inline-flex;\n  align-items:…' to contain 'background: ` |
 <!-- mutaciones:fin -->
+
+## Tokens nuevos (de `tokens.css`)
+
+| Token | Valor |
+|---|---|
+| `--landing-hero-min-height` | `60vh` |
+| `--landing-content-max-width` | `1120px` |
+| `--landing-reveal-offset` | `20px` |
+| `--landing-logo-width` (nuevo en esta ronda) | `min(520px, 72vw)` |
+| `--landing-carousel-blur` / `--blur-surface` / `--blur-backdrop` | `6px` / `12px` / `4px` |
+| `--font-size-display` | `clamp(32px, 6vw, 56px)` |
+| `--color-navy-deep` | `#011C40` |
+| `--surface-navy` / `--surface-ivory-ice` | `rgba(1, 28, 64, 0.82)` / `rgba(243, 247, 250, 0.96)` |
+| `--border-on-navy` / `--border-on-navy-strong` | `rgba(167, 235, 242, 0.22)` / `rgba(167, 235, 242, 0.35)` |
+| `--field-on-navy` | `rgba(1, 28, 64, 0.6)` |
+| `--scrim-navy` / `--scrim-navy-strong` | `rgba(1, 28, 64, 0.45)` / `rgba(1, 28, 64, 0.7)` |
+| `--overlay-hero` | `linear-gradient(180deg, rgba(1, 28, 64, 0.55) 0%, rgba(1, 28, 64, 0.82) 100%)` |
+| `--shadow-on-navy` | `0 16px 40px rgba(1, 28, 64, 0.45)` |
+| `--login-overlay-start` / `-mid` / `-end` | `rgba(1, 28, 64, 0.92)` / `rgba(2, 56, 89, 0.78)` / `rgba(38, 101, 140, 0.62)` |
+| `--carousel-toggle-bg` / `-bg-hover` / `-border` | `rgba(1, 28, 64, 0.55)` / `rgba(1, 28, 64, 0.75)` / `rgba(255, 255, 255, 0.45)` |
+
+Color hardcodeado restante en los CSS Modules de C-35 y en `LoginPage.module.css`: ninguno (`grep` de HEX y `rgb(a)` sin resultados).
 
 ## Ciclo TDD (RED / GREEN por escenario)
 
@@ -106,18 +136,23 @@ Tests auxiliares (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 | 12 | [red](red-C-35/12-appshell-nav-activa.txt) | [green](green-C-35/12-appshell-nav-activa.txt) | Por aserción: `.menuLink` con caja de fondo y borde |
 | 13 | [red](red-C-35/13-appshell-proximamente.txt) | [green](green-C-35/13-appshell-proximamente.txt) | Por aserción: `.menuButton` con borde |
 
+| 14 | [red](red-C-35/14-appshell-menubutton-borde.txt) | [green](green-C-35/14-appshell-menubutton-borde.txt) | Por aserción: `.menuButton` sin `border: 0` (adicional, M14) |
+| 15 | [red](red-C-35/15-reveal-lado.txt) | [green](green-C-35/15-reveal-lado.txt) | Por aserción: sin `data-side` (adicional, M15) |
+| 16 | [red](red-C-35/16-secciones-alternan-lado.txt) | [green](green-C-35/16-secciones-alternan-lado.txt) | Por aserción: las 4 secciones eran `right` (adicional, M16) |
+| 17 | [red](red-C-35/17-cta-fantasma.txt) | [green](green-C-35/17-cta-fantasma.txt) | Por aserción: el CTA no tenía `data-cta` ni variante fantasma (adicional, M17) |
+
 Regresiones sin par nuevo: [login](green-C-35/login-regresion.txt), [modales](green-C-35/modales-regresion.txt), [appshell](green-C-35/appshell-regresion.txt), [smoke](green-C-35/smoke.txt); auxiliares: [contenido](green-C-35/aux-contenido-datos.txt) y [reveal](green-C-35/aux-reveal-section.txt).
 
 ## Desvíos
 
 1. **Orden de recuperación (2.4)**: `RevealSection.tsx` y `RevealSection.test.tsx` se recuperaron en el mismo paso (la tarea pedía el test primero). Son tests auxiliares sin escenario, así que no afecta ningún RED.
 2. **Tokens (2.5, 6.2)**: `--landing-hero-min-height`, `--landing-content-max-width`, `--landing-reveal-offset`, `--font-size-display` y `--color-navy-deep` se agregaron en las fases 3 y 5 porque el CSS y el test del fallback del login (08) los necesitan para quedar en verde. En la fase 6 se agregaron solo los de superficie; por eso el RED del escenario 10 falla por la ausencia de `--surface-navy` y `--surface-ivory-ice`. La lista del test auxiliar "no agrega colores nuevos" se amplió en cada paso con exactamente los tokens agregados.
-3. **Cifras de contraste del design y del spec**: sobre navy `#011C40` los ratios reales son blanco 16,92, ice 12,73, borde `#C9DDE4` 12,04 y accent 6,47; el design y el spec del escenario 10 citaban 16,05, 12,35, 9,85 y 6,55. El test del escenario 10 verifica los valores calculados (literales independientes). Se corrigió la tabla de `design.md` y la orquestación corrigió después `specs/frontend-foundation/spec.md`, que ahora usa 16,92 / 12,73 / 6,47. Todas las conclusiones AA/AAA se mantienen. La superficie marfil-hielo usa alfa 0,96 (design) y no 0,95 (spec); el ratio 15,70 se calcula sobre su RGB.
+3. **Cifras de contraste del design y del spec**: sobre navy `#011C40` los ratios reales son blanco 16,92, ice 12,73, borde `#C9DDE4` 12,04 y accent 6,47; el design y el spec decían 16,05, 12,35, 9,85 y 6,55. El test del escenario 10 verifica los valores calculados. Se corrigió la tabla de `design.md` y la orquestación corrigió también `specs/frontend-foundation/spec.md` (16,92 / 12,73 / 6,47). La superficie marfil-hielo usa alfa 0,96 (design) y no 0,95 (spec); el 15,70 se calcula sobre su RGB.
 4. **`RootGate` (D7)**: el design indicaba que `RootGate` redirigía él mismo y que se quitaba el índice. Eso hacía fallar `Logout.test.tsx` (existente), que espera el nombre de usuario en `/` antes de que la agenda pida datos. Se conservó el índice `RootRedirect` bajo `AppShell`: `RootGate` muestra la portada solo al anónimo en `/` y, en el resto de los casos, actúa como `RequireAuth`. Se actualizó D7 en `design.md`. `routes[0]` y `routes[1]` no cambiaron de posición.
 5. **Escenario 06**: el enlace "← Volver a Aqua" se implementó junto con la página de `/acceso` (escenario 05), así que el test 06 ya pasaba; su RED se documentó con la mutación M06.
 6. **Test del escenario 11**: el `::backdrop` con `backdrop-filter` solo existe en `Dialog.module.css` (los otros tres CSS no son dueños del `<dialog>`); por eso el test exige blur en el `::backdrop` de `Dialog.module.css` y, en cada uno de los tres diálogos de turnos, la superficie marfil-hielo con borde de 1 px, blur propio y el fallback `@supports not` con `--color-background`.
 7. **Tests 03 y 04** renderizan `LandingPage` directo dentro de `MemoryRouter` con observador, ticker y `reducedMotion` inyectados por props (`createAppRoutes` no los expone); 01, 02 y 05-09 usan `createMemoryRouter` + `createAppRoutes`.
-8. **`npm run lint`**: devuelve exit 1 porque hay 3 advertencias que ya existen en `main` (`AppointmentFormDialog.tsx:36` y 2 en `Dialog.tsx`), de código de C-29/C-30 que C-35 no debe tocar. `npx eslint .` termina con exit 0 y 0 errores. Se eliminó una cuarta advertencia heredada (`LoginCarousel.tsx`) moviendo `createIntervalTicker` a `carouselTicker.ts` (recuperado de `cea858b`).
+8. **`npm run lint`**: devuelve exit 1 porque hay 3 advertencias que ya existen en `main` (`AppointmentFormDialog.tsx:36` y 2 en `Dialog.tsx`), de código de C-29/C-30 que C-35 no debe tocar. `npx eslint .` termina con exit 0 y 0 errores. Se eliminó una cuarta advertencia heredada (`LoginCarousel.tsx`) moviendo `createIntervalTicker` a `carouselTicker.ts`.
 9. **`openspec validate`**: se ejecutó directamente (`openspec validate ... --strict`) y no con `cmd /c`, que abre una consola interactiva y no ejecuta el comando.
 10. **Cambios de CSS fuera de la lista literal de tasks**: botón de pausa del carrusel movido abajo a la derecha (en la portada chocaba con la navegación superior) y con `min-height: 44px`; contenedor del formulario de turno con `max-height: calc(100dvh - 2 * var(--space-4))` en lugar de `90vh`; ítems de menú deshabilitados con "Próximamente" apilado bajo la etiqueta para que el `AppShell` entre en una línea a 1440 px. Se agregó la prop opcional `blurred` a `LoginCarousel` (carrusel difuminado de `/login`).
 11. **Sin verificación visual**: no se levantó navegador; el layout a 1440/768/390 px, el desborde horizontal, el título de los modales a 390 px y el foco visible quedan para la fase 9.
@@ -126,3 +161,6 @@ Regresiones sin par nuevo: [login](green-C-35/login-regresion.txt), [modales](gr
 14. **Overlay del login a tokens**: los 6 `rgba(...)` heredados de C-34 en `LoginPage.module.css` (overlay del carrusel y botón de pausa) pasaron a `--login-overlay-start/-mid/-end` y `--carousel-toggle-bg/-bg-hover/-border`, con los mismos valores; se documentaron en `design.md` y se agregaron a la lista del test nuevo `landingTokens.test.ts`. Ningún test preexistente cambió.
 15. **Mutaciones de los auxiliares**: los 9 tests recuperados de `cea858b` son tests nuevos del change y llevan mutación propia (A01-A09); en la trazabilidad siguen siendo auxiliares (24 = 13 + 5 + 6 no cambia).
 16. **Fase 9**: no se hizo; las capturas las hará la usuaria en un navegador real contra la API. Queda sin marcar.
+17. **Ajustes de diseño pedidos tras la revisión visual: hero centrado, nav y CTA a la izquierda, secciones intercaladas.** Logo grande en el centro, eslogan más chico y lead discreto debajo, navegación arriba a la izquierda, CTA "Explorar la clínica →" como enlace fantasma abajo a la izquierda junto al badge, "Pausar animación" abajo a la derecha; secciones 01 y 03 a la izquierda, 02 y 04 a la derecha (bloques del 60 %, entrada desde su lado, ancho completo y mitad de desplazamiento hasta 768 px). Se actualizaron `specs/frontend-landing/spec.md` (requisitos de 491 y 450 caracteres; título del escenario visual V2), `specs/frontend-foundation/spec.md` (requisito de AppShell, 450 caracteres), `design.md` (D1, D5, D6) y `tasks.md` (fase 10 y tabla). Nuevo token `--landing-logo-width`. Los 4 tests nuevos no son escenarios: se listan como adicionales con mutación M14-M17; 24 = 13 + 5 + 6 no cambia.
+18. **Corrección de `.menuButton`**: el `<button>` heredaba el borde por defecto del navegador; ahora `border: 0; border-bottom: 2px solid transparent;`, alineado con `.menuLink` (test 14, M14).
+19. **Disposición sin comprobar a ojo**: la composición del hero y las secciones intercaladas solo está cubierta por tests de estructura y CSS; las capturas a 1440/768/390 px (fase 9) las hará la usuaria.

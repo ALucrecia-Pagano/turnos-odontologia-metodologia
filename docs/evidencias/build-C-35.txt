@@ -27,7 +27,7 @@ dist/assets/hero-1-sala-de-espera-CrJ8hMIY.webp             72.41 kB
 dist/assets/hero-5-sillon-13gnaYe-.webp                     95.66 kB
 dist/assets/hero-2-consultorio-CnjHP-hs.webp                95.95 kB
 dist/assets/logo-aqua-claro-tLeNvrJR.png                   113.12 kB
-dist/assets/index-C4_pao1s.css                              58.10 kB │ gzip: 11.69 kB
-dist/assets/index-C-qw8OAz.js                              290.70 kB │ gzip: 91.94 kB
-✓ built in 1.38s
+dist/assets/index-CURX8FyG.css                              58.89 kB │ gzip: 11.84 kB
+dist/assets/index-nCEzbyxV.js                              291.03 kB │ gzip: 92.05 kB
+✓ built in 2.66s
 exit build: 0

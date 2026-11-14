@@ -129,6 +129,19 @@
 
 ---
 
+## 10. Ajustes de Diseño tras la Revisión Visual (la fase 9 sigue pendiente)
+
+> Cada test nuevo de esta fase tiene RED por aserción (`red-C-35/NN-*.txt`), GREEN (`green-C-35/NN-*.txt`) y su propia mutación en `mutaciones-C-35.py`. No son escenarios del spec: se listan como tests adicionales en la trazabilidad (24 = 13 + 5 + 6 no cambia).
+
+- [x] 10.1 Actualizar `specs/frontend-landing/spec.md`, `specs/frontend-foundation/spec.md` y `design.md` (D1, D5, D6, tabla de tokens) con el hero centrado, la navegación y el CTA a la izquierda y las secciones intercaladas. Cada requisito editado queda por debajo de 500 caracteres. Se cambió el título del escenario visual V2.
+- [x] 10.2 **Test 14 / M14** — `.menuButton` anula el borde por defecto del navegador (`border: 0; border-bottom: 2px solid transparent;`), en `AppShellNavigation.test.tsx`. Evidencia `14-appshell-menubutton-borde`.
+- [x] 10.3 **Test 15 / M15** — `RevealSection` recibe `from="left" | "right"`, expone `data-side` y el CSS usa `translateX` negativo a la izquierda y positivo a la derecha (mitad del desplazamiento hasta 768 px). Test en `RevealSection.test.tsx`. Evidencia `15-reveal-lado`.
+- [x] 10.4 **Test 16 / M16** — las secciones 01-04 alternan izquierda, derecha, izquierda, derecha en bloques del 60 % del ancho. Test en `LandingPage.test.tsx`. Evidencia `16-secciones-alternan-lado`.
+- [x] 10.5 **Test 17 / M17** — el CTA "Explorar la clínica →" pasa a enlace fantasma (`data-cta`, `data-variant="ghost"`, sin relleno, línea inferior fina) y sigue siendo el único. Test en `LandingPage.test.tsx`. Evidencia `17-cta-fantasma`.
+- [x] 10.6 Hero de la portada: logo centrado y grande (`--landing-logo-width`), eslogan más chico debajo con el lead discreto, navegación arriba a la izquierda, CTA y badge abajo a la izquierda y "Pausar animación" abajo a la derecha.
+
+---
+
 ## Workflow Follow-up
 
 - No archivar C-35 (`/opsx:archive ui-portada-y-acceso`) hasta que todas las tareas y capturas de la fase 9 estén completas y aprobadas por la autora.
@@ -161,10 +174,14 @@ Totales: **24 escenarios** = **13 testeables nuevos** (13 pares RED/GREEN, 13 te
 | H4 | frontend-auth-session | Envío en curso y doble submit | Histórico | Cubierto por test existente: `features/login/LoginPage.test.tsx` > "envío en curso y doble submit" | Test existente (sin mutación nueva) | `green-C-35/login-regresion.txt` |
 | H5 | frontend-auth-session | Accesibilidad del formulario | Histórico | Cubierto por test existente: `features/login/LoginPage.test.tsx` > "accesibilidad del formulario" | Test existente (sin mutación nueva) | `green-C-35/login-regresion.txt` |
 | V1 | frontend-landing | Adaptabilidad de la portada en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-portada-*.png` |
-| V2 | frontend-landing | Secciones editoriales se adaptan a dos columnas en 1440 px y una columna en 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-secciones-*.png` |
+| V2 | frontend-landing | Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-secciones-*.png` |
 | V3 | frontend-landing | Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-acceso-*.png` |
 | V4 | frontend-auth-session | Adaptabilidad de /login en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-login-*.png` |
 | V5 | frontend-foundation | Superficie clara suave de modales verificada a 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-modales-*.png` |
 | V6 | frontend-foundation | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | Captura a cargo de Claude | — | `capturas/C-35-appshell-*.png` |
+| E14 | frontend-foundation | (adicional, no es escenario) `.menuButton` sin borde por defecto | Adicional | `shared/components/AppShellNavigation.test.tsx` > "los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces" | M14: quitar `border: 0` de `.menuButton` | `red/green-C-35/14-appshell-menubutton-borde.txt` |
+| E15 | frontend-landing | (adicional) `RevealSection` desde su lado | Adicional | `features/landing/RevealSection.test.tsx` > "from=right desplaza en positivo y from=left en negativo" | M15: `translateX` izquierdo en positivo | `red/green-C-35/15-reveal-lado.txt` |
+| E16 | frontend-landing | (adicional) secciones intercaladas | Adicional | `features/landing/LandingPage.test.tsx` > "las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha" | M16: la sección 02 entra desde la izquierda | `red/green-C-35/16-secciones-alternan-lado.txt` |
+| E17 | frontend-landing | (adicional) CTA fantasma | Adicional | `features/landing/LandingPage.test.tsx` > "el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único" | M17: `.cta` con fondo `--color-primary` | `red/green-C-35/17-cta-fantasma.txt` |
 
 Rutas de test relativas a `frontend/src/`; evidencias relativas a `docs/evidencias/`. Los nombres de los 5 tests históricos se verificaron con `grep` sobre `frontend/src/features/login/LoginPage.test.tsx` de `main` (líneas 75, 118, 176, 233 y 283). El test existente `"el 401 del login no es sesión vencida"` (línea 208) no está asignado a ningún escenario.

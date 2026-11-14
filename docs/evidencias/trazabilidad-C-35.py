@@ -16,7 +16,7 @@ Termina con código distinto de 0 si:
   (c) un escenario histórico no encuentra, con búsqueda literal, su test en LoginPage.test.tsx;
   (d) el total no es 13 nuevos + 5 históricos + 6 visuales = 24, o un escenario del spec no está
       mapeado, o el mapa tiene un escenario que el spec no declara;
-  (e) alguno de los 9 tests auxiliares no está listado por Vitest o no tiene mutación (A01-A09).
+  (e) alguno de los 13 tests auxiliares o adicionales no está listado por Vitest o no tiene mutación (A01-A09, M14-M17).
 """
 
 from __future__ import annotations
@@ -120,7 +120,7 @@ ENTRIES: tuple[Entry, ...] = (
     Entry("visual", "frontend-landing", "Adaptabilidad de la portada en 1440, 768 y 390 px", "V1",
           visual="capturas/C-35-portada-*.png"),
     Entry("visual", "frontend-landing",
-          "Secciones editoriales se adaptan a dos columnas en 1440 px y una columna en 768 y 390 px", "V2",
+          "Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px", "V2",
           visual="capturas/C-35-secciones-*.png"),
     Entry("visual", "frontend-landing", "Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px", "V3",
           visual="capturas/C-35-acceso-*.png"),
@@ -150,6 +150,20 @@ AUXILIARY: tuple[tuple[str, str], ...] = (
     (
         "src/features/landing/RevealSection.test.tsx",
         "con movimiento reducido no queda pendiente y el contenido está en el DOM",
+    ),
+    # Tests adicionales del ajuste de diseño (no son escenarios; cada uno con su mutación M14-M17)
+    (
+        "src/shared/components/AppShellNavigation.test.tsx",
+        "los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces",
+    ),
+    ("src/features/landing/RevealSection.test.tsx", "from=right desplaza en positivo y from=left en negativo"),
+    (
+        "src/features/landing/LandingPage.test.tsx",
+        "las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha",
+    ),
+    (
+        "src/features/landing/LandingPage.test.tsx",
+        "el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único",
     ),
 )
 
@@ -316,7 +330,7 @@ def main() -> int:
         "",
         *lines,
         "",
-        f"tests auxiliares recuperados de cea858b (no son escenarios; cada uno con su mutación): {len(AUXILIARY)}",
+        f"tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño); no son escenarios, cada uno con su mutación: {len(AUXILIARY)}",
         *aux_lines,
         "",
         f"problemas: {len(problems)}",
@@ -331,7 +345,7 @@ def main() -> int:
             "|---|------|-----------|------|------|----------|-----------|",
             *rows,
             "",
-            "Tests auxiliares (no son escenarios; 24 = 13 + 5 + 6 no cambia):",
+            "Tests auxiliares y adicionales (no son escenarios; 24 = 13 + 5 + 6 no cambia):",
             "",
             "| Mutación | Archivo | Test |",
             "|----------|---------|------|",

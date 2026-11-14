@@ -300,12 +300,45 @@ MUTATIONS: tuple[Mutation, ...] = (
         'data-reveal={revealed ? "revealed" : "pending"}',
         'data-reveal={revealed && !reducedMotion ? "revealed" : "pending"}',
     ),
+    # M14-M17 - tests adicionales del ajuste de diseño (no son escenarios del spec)
+    Mutation(
+        T_NAVIGATION,
+        "los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces",
+        P_SHELL_CSS,
+        "  background: transparent;\n  border: 0;\n",
+        "  background: transparent;\n",
+    ),
+    Mutation(
+        T_REVEAL,
+        "from=right desplaza en positivo y from=left en negativo",
+        P_REVEAL_CSS,
+        "translateX(calc(-1 * var(--landing-reveal-offset)));",
+        "translateX(var(--landing-reveal-offset));",
+    ),
+    Mutation(
+        T_LANDING,
+        "las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha",
+        P_LANDING,
+        'from="right">\n            <section className={`${styles.section} ${styles.sectionRight}`} aria-labelledby="seccion-servicios">',
+        'from="left">\n            <section className={`${styles.section} ${styles.sectionRight}`} aria-labelledby="seccion-servicios">',
+    ),
+    Mutation(
+        T_LANDING,
+        "el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único",
+        P_LANDING_CSS,
+        "  background: transparent;\n  border-bottom: 1px solid var(--border-on-navy-strong);",
+        "  background: var(--color-primary);\n  border-bottom: 1px solid var(--border-on-navy-strong);",
+    ),
 )
 
 
 def mutation_id(index: int) -> str:
-    """M01-M13 para los escenarios; A01-A09 para los tests auxiliares recuperados de cea858b."""
-    return f"M{index:02d}" if index <= 13 else f"A{index - 13:02d}"
+    """M01-M13 escenarios; A01-A09 auxiliares recuperados; M14-M17 tests adicionales del ajuste de diseño."""
+    if index <= 13:
+        return f"M{index:02d}"
+    if index <= 22:
+        return f"A{index - 13:02d}"
+    return f"M{index - 9:02d}"
 
 
 class MutationAbort(Exception):

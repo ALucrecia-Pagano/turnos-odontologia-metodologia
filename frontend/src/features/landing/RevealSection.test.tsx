@@ -1,5 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { readSrcFile, ruleBody } from "../../test/cssText";
 import { RevealSection } from "./RevealSection";
 import type { RevealObserverFactory } from "./revealObserver";
 
@@ -59,5 +60,34 @@ describe("RevealSection", () => {
 
     expect(screen.getByText("Contenido sin animación")).toBeInTheDocument();
     expect(document.querySelector("[data-reveal]")).toHaveAttribute("data-reveal", "revealed");
+  });
+
+  it("from=right desplaza en positivo y from=left en negativo", () => {
+    const observer: RevealObserverFactory = () => ({
+      observe: () => () => undefined,
+    });
+
+    const { container } = render(
+      <>
+        <RevealSection observer={observer} from="left">
+          <p>Desde la izquierda</p>
+        </RevealSection>
+        <RevealSection observer={observer} from="right">
+          <p>Desde la derecha</p>
+        </RevealSection>
+        <RevealSection observer={observer}>
+          <p>Sin lado explícito</p>
+        </RevealSection>
+      </>,
+    );
+
+    const sides = [...container.querySelectorAll("[data-reveal]")].map((section) => section.getAttribute("data-side"));
+    expect(sides).toEqual(["left", "right", "right"]);
+
+    const css = readSrcFile("features/landing/RevealSection.module.css");
+    expect(ruleBody(css, '.reveal[data-reveal="pending"]')).toContain("translateX(var(--landing-reveal-offset));");
+    expect(ruleBody(css, '.reveal[data-reveal="pending"][data-side="left"]')).toContain(
+      "translateX(calc(-1 * var(--landing-reveal-offset)));",
+    );
   });
 });

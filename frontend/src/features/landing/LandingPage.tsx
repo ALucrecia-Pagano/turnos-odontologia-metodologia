@@ -48,17 +48,18 @@ export function LandingPage({ carouselTicker, reducedMotion, observer }: Landing
             </h1>
             <p className={styles.slogan}>Claridad en cada cuidado.</p>
             <p className={styles.lead}>{heroLead}</p>
-            <p className={styles.demoBadge}>{demoBadge}</p>
-            <hr className={styles.rule} />
-            <a href="#la-clinica" className={styles.cta}>
+          </div>
+          <div className={styles.heroFooter}>
+            <a href="#la-clinica" className={styles.cta} data-cta="" data-variant="ghost">
               Explorar la clínica <span className={styles.ctaArrow}>→</span>
             </a>
+            <p className={styles.demoBadge}>{demoBadge}</p>
           </div>
         </section>
 
         <div className={styles.sections}>
-          <RevealSection observer={observer} reducedMotion={motionReduced}>
-            <section id="la-clinica" className={styles.section} aria-labelledby="seccion-clinica">
+          <RevealSection observer={observer} reducedMotion={motionReduced} from="left">
+            <section id="la-clinica" className={`${styles.section} ${styles.sectionLeft}`} aria-labelledby="seccion-clinica">
               <h2 id="seccion-clinica" className={styles.sectionTitle}>
                 01 / Quiénes somos
               </h2>
@@ -72,8 +73,8 @@ export function LandingPage({ carouselTicker, reducedMotion, observer }: Landing
             </section>
           </RevealSection>
 
-          <RevealSection observer={observer} reducedMotion={motionReduced}>
-            <section className={styles.section} aria-labelledby="seccion-servicios">
+          <RevealSection observer={observer} reducedMotion={motionReduced} from="right">
+            <section className={`${styles.section} ${styles.sectionRight}`} aria-labelledby="seccion-servicios">
               <h2 id="seccion-servicios" className={styles.sectionTitle}>
                 02 / Servicios
               </h2>
@@ -90,8 +91,8 @@ export function LandingPage({ carouselTicker, reducedMotion, observer }: Landing
             </section>
           </RevealSection>
 
-          <RevealSection observer={observer} reducedMotion={motionReduced}>
-            <section className={styles.section} aria-labelledby="seccion-equipo">
+          <RevealSection observer={observer} reducedMotion={motionReduced} from="left">
+            <section className={`${styles.section} ${styles.sectionLeft}`} aria-labelledby="seccion-equipo">
               <h2 id="seccion-equipo" className={styles.sectionTitle}>
                 03 / Equipo
               </h2>
@@ -106,8 +107,8 @@ export function LandingPage({ carouselTicker, reducedMotion, observer }: Landing
             </section>
           </RevealSection>
 
-          <RevealSection observer={observer} reducedMotion={motionReduced}>
-            <section className={styles.section} aria-labelledby="seccion-contacto">
+          <RevealSection observer={observer} reducedMotion={motionReduced} from="right">
+            <section className={`${styles.section} ${styles.sectionRight}`} aria-labelledby="seccion-contacto">
               <h2 id="seccion-contacto" className={styles.sectionTitle}>
                 04 / Horarios y contacto
               </h2>

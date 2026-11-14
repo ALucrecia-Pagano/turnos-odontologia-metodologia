@@ -6,9 +6,10 @@ export interface RevealSectionProps {
   children: ReactNode;
   observer?: RevealObserverFactory;
   reducedMotion?: boolean;
+  from?: "left" | "right";
 }
 
-export function RevealSection({ children, observer, reducedMotion = false }: RevealSectionProps) {
+export function RevealSection({ children, observer, reducedMotion = false, from = "right" }: RevealSectionProps) {
   const canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined");
   const [revealed, setRevealed] = useState(!canAnimate);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,12 @@ export function RevealSection({ children, observer, reducedMotion = false }: Rev
   }, [canAnimate, observer]);
 
   return (
-    <div ref={sectionRef} data-reveal={revealed ? "revealed" : "pending"} className={styles.reveal}>
+    <div
+      ref={sectionRef}
+      data-reveal={revealed ? "revealed" : "pending"}
+      data-side={from}
+      className={styles.reveal}
+    >
       {children}
     </div>
   );

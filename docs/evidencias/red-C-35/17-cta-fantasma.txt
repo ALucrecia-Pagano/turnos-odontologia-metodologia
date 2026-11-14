@@ -1,0 +1,38 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 91ms
+   ↓ LandingPage > portada completa para anónimo en /
+   ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
+   ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
+   ↓ LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
+   × LandingPage > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único 88ms
+     → expected  to have a length of 1 but got +0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único
+AssertionError: expected  to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/features/landing/LandingPage.test.tsx:170:18
+    168| 
+    169|     const ctas = container.querySelectorAll("[data-cta]");
+    170|     expect(ctas).toHaveLength(1);
+       |                  ^
+    171|     expect(ctas[0]).toHaveAttribute("data-variant", "ghost");
+    172|     expect(ctas[0]).toHaveTextContent("Explorar la clínica →");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:20:05
+   Duration  4.93s (transform 815ms, setup 482ms, collect 2.06s, tests 91ms, environment 1.55s, prepare 267ms)
+

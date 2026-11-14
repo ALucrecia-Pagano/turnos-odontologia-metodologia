@@ -100,4 +100,13 @@ describe("AppShell navegación sin cajas", () => {
     }
     expect(ruleBody(css, ".badge")).toContain("color: var(--color-text-muted);");
   });
+
+  it("los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces", () => {
+    const css = readSrcFile("shared/components/AppShell.module.css");
+    const button = ruleBody(css, ".menuButton");
+    const link = ruleBody(css, ".menuLink");
+    expect(button).toContain("border: 0;");
+    expect(button).toContain("border-bottom: 2px solid transparent;");
+    expect(link).toContain("border-bottom: 2px solid transparent;");
+  });
 });

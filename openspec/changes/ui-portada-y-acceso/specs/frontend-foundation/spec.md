@@ -35,7 +35,7 @@ Definir los tokens de layout y superficies de la portada, login y modales de la 
 
 ### Requirement: Navegación de AppShell sin cajas
 
-La barra de `AppShell` SHALL presentar navegación de texto sin cajas contenedoras ni fondos de botón, con línea fina inferior en el enlace activo (`aria-current="page"`) y la etiqueta "Próximamente" como texto secundario plano sin pastilla ni borde. En 1440 px, el bloque de sesión MUST alinearse en la misma línea que la marca y navegación. Los ítems deshabilitados MUST conservar la semántica accesible de botón deshabilitado con `data-menu-item` para no alterar tests existentes.
+La barra de `AppShell` SHALL presentar navegación de texto sin cajas ni fondos de botón, con línea fina inferior en el enlace activo (`aria-current="page"`). Los ítems futuros SHALL ser botones deshabilitados con `data-menu-item`, `border: 0` (sin el borde por defecto del navegador) y la etiqueta "Próximamente" como texto secundario plano, sin pastilla. En 1440 px, el bloque de sesión MUST alinearse en la misma línea que la marca y la navegación.
 
 #### Scenario: Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
 
@@ -50,7 +50,7 @@ La barra de `AppShell` SHALL presentar navegación de texto sin cajas contenedor
 - **GIVEN** el menú de navegación renderizado para cualquier rol autenticado
 - **WHEN** se evalúa el DOM de los ítems de menú de funcionalidades futuras
 - **THEN** cada ítem sigue siendo un elemento `<button disabled data-menu-item="...">` accesible por teclado y Testing Library
-- **AND** la etiqueta "Próximamente" se renderiza con estilos de texto secundario atenuado, sin borde exterior ni caja de pastilla
+- **AND** la etiqueta "Próximamente" se renderiza con estilos de texto secundario atenuado, sin borde exterior ni caja de pastilla, y el botón no hereda el borde por defecto del navegador
 
 #### Scenario: Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px)
 

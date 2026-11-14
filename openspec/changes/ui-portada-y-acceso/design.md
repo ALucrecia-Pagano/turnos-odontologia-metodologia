@@ -4,7 +4,7 @@
 
 El change C-34 estableció la base tipográfica autoalojada (`Jost Variable` y `Manrope Variable`), el logo claro y el carrusel de fotografías. Posteriormente se ejecutaron y archivaron en `main` los changes C-29 (`ui-formulario-nuevo-turno`) y C-30 (`ui-acciones-turno-y-estados`), los cuales crearon y consolidaron la primitiva `<dialog>` nativa en `frontend/src/shared/components/Dialog.tsx`.
 
-Una iteración previa en la rama `c35-apply` (commit `cea858b`) planteó abrir el login en un diálogo modal sobre `/login`. Dicha rama quedó **descartada** por basarse en un estado anterior a C-29/C-30, duplicar la primitiva de diálogo e introducir fricción modal innecesaria. El presente diseño implementa una **arquitectura de rutas limpias** y una **estética oscura editorial** inspirada en el estándar de cuidado de interfaces de referencia (tipo Luti, sin copiar), distribuyendo la experiencia en:
+Una iteración previa en la rama `c35-apply` (commit `cea858b`) planteó abrir el login en un diálogo modal sobre `/login`. Dicha rama quedó **descartada** por basarse en un estado anterior a C-29/C-30, duplicar la primitiva de diálogo e introducir fricción modal innecesaria. El presente diseño implementa una **arquitectura de rutas limpias** y una **estética oscura editorial** con **composición propia**: sitios de referencia como Luti se tomaron solo como vara del nivel de detalle y cuidado, no como modelo a copiar (la portada no debe parecerse a ellos), distribuyendo la experiencia en:
 
 1. `/`: Portada pública a pantalla completa para usuarios anónimos (con carrusel de fondo bajo overlay navy oscuro, navegación superior de texto sin cajas, logo claro, eslogan, CTA primario, badge de demo, franja de estado y cuatro secciones editoriales con reveal lateral). Con sesión autenticada, conserva el comportamiento actual de redirección a `/agenda`.
 2. `/acceso`: Página intermedia de selección de rol con tres tarjetas oscuras.
@@ -109,6 +109,7 @@ Todo color, sombra y medida de la portada, `/acceso`, `/login`, los modales y el
 | `--landing-hero-min-height` | `60vh` | Altura mínima del hero de la portada |
 | `--landing-content-max-width` | `1120px` | Ancho máximo del contenido de portada y `/acceso` |
 | `--landing-reveal-offset` | `20px` | Desplazamiento lateral inicial de `RevealSection` (`translateX`) |
+| `--landing-logo-width` | `min(520px, 72vw)` | Ancho del logo centrado del hero |
 | `--landing-carousel-blur` | `6px` | Desenfoque del carrusel de fondo en `/login` |
 | `--blur-surface` | `12px` | `backdrop-filter` de la tarjeta de login |
 | `--blur-backdrop` | `4px` | `backdrop-filter` del `::backdrop` y de las superficies de los modales |
@@ -139,10 +140,10 @@ El fallback sólido de los modales reutiliza `--color-background` (`#F3F7FA`) y 
 ### D1 — Portada a pantalla completa en `/` para usuarios anónimos
 
 - **Ubicación y comportamiento**: La portada pública vive en la ruta raíz `/`. Si el usuario no tiene sesión autenticada (`anonymous`), se renderiza la portada completa. Si el usuario ya está autenticado, `/` ejecuta `RootRedirect` redirigiendo inmediatamente con `replace` a `/agenda?date=<hoy>` según el `Clock` inyectado.
-- **Hero**: Ocupa la pantalla completa (`100vh`, con mínimo `--landing-hero-min-height: 60vh`). El fondo reproduce el carrusel de fotografías (`LoginCarousel`) atenuado bajo un overlay navy oscuro.
-- **Navegación superior**: Ubicada arriba a la derecha con enlaces de texto plano: "Inicio", "La clínica", "Acceder". Sin cajas, sin botones con borde. El enlace de la sección activa lleva una línea inferior de 1 px en `--color-accent` y `aria-current="page"`.
-- **Encabezado y marca**: `<h1>` con el logo claro informativo (`alt="Aqua — Clínica Odontológica"`). El nombre accesible del heading proviene del `alt`, evitando redundancia textual. Debajo, eslogan editorial destacado "Claridad en cada cuidado.", lead explicativo breve, badge "Sitio de demostración", línea fina horizontal en color accent y CTA primario "Explorar la clínica →" (único botón primario de la página).
-- **Secciones editoriales**: "01 / Quiénes somos", "02 / Servicios", "03 / Equipo" y "04 / Horarios y contacto" diagramadas en dos columnas asimétricas. Entran desde el lateral (`translateX(24px) → translateX(0)` y opacidad `0 → 1` en 200-250 ms) al hacer scroll con `RevealSection`.
+- **Hero**: Ocupa la pantalla completa (`100vh`, con mínimo `--landing-hero-min-height: 60vh`). El fondo reproduce el carrusel de fotografías (`LoginCarousel`) atenuado bajo un overlay navy oscuro. La composición es propia (no replica ningún sitio de referencia): el logo en el centro, el resto de los elementos anclados a las esquinas.
+- **Navegación superior**: Ubicada arriba a la **izquierda**, en una fila horizontal de enlaces de texto plano: "Inicio", "La clínica", "Acceder". Sin cajas ni botones con borde. El enlace activo lleva una línea inferior de 1 px en `--color-accent` y `aria-current="page"`.
+- **Encabezado y marca**: `<h1>` con el logo claro informativo (`alt="Aqua — Clínica Odontológica"`), **centrado y grande** (`--landing-logo-width: min(520px, 72vw)`); el nombre accesible del heading proviene del `alt`. Debajo, centrados, el eslogan "Claridad en cada cuidado." como subtítulo (`--font-size-lg`, más chico que antes) y el lead breve en tono discreto. **Abajo a la izquierda** (`.heroFooter`): el CTA "Explorar la clínica →" como enlace fantasma (sin relleno, texto claro con línea inferior fina y flecha que se desplaza en hover, `data-variant="ghost"`; sigue siendo el único CTA) y, a su lado, el badge "Sitio de demostración". El botón "Pausar animación" queda abajo a la derecha; en 390 px el pie izquierdo sube para no pisarlo.
+- **Secciones editoriales intercaladas**: "01 / Quiénes somos" (izquierda), "02 / Servicios" (derecha), "03 / Equipo" (izquierda) y "04 / Horarios y contacto" (derecha). Cada una es un bloque de ~60 % del ancho alineado a su lado, con número y título arriba y contenido debajo, separado por líneas finas. Entra desde su propio lado al hacer scroll con `RevealSection` (`from="left"` → `translateX` negativo, `from="right"` → positivo, opacidad `0 → 1`, 200-250 ms). En 768 y 390 px ocupan el ancho completo, en el mismo orden y con la mitad del desplazamiento.
 - **Franja de estado y contacto**: Indicador visible de sistema de demostración ("Estado actual: demostración funcional") y teléfono ficticio `(0261) 555-0101`.
 
 ### D2 — Selección visual de rol en `/acceso`
@@ -174,6 +175,7 @@ El fallback sólido de los modales reutiliza `--color-background` (`#F3F7FA`) y 
 
 - **Navegación**: Enlaces de navegación renderizados como texto plano sin fondos de botón ni cajas rectangulares. El enlace de la página activa ("Agenda") muestra una línea fina inferior de 2 px en color primario/acento y el atributo `aria-current="page"`.
 - **Etiqueta "Próximamente"**: Los ítems del menú correspondientes a funcionalidades futuras muestran "Próximamente" como texto secundario atenuado (`color: var(--color-text-muted)`), eliminando el borde y el fondo de pastilla.
+- **Sin borde por defecto**: `<button>` trae un borde propio del navegador; `.menuButton` lo anula con `border: 0; border-bottom: 2px solid transparent;`, igual que `.menuLink`, para que los ítems no se vean como cajas ni cambie su altura respecto de los enlaces.
 - **Bloque de sesión**: En resoluciones de escritorio (1440 px), el nombre de usuario y el botón "Cerrar sesión" se sitúan en la misma línea horizontal que la marca y la navegación principal (`display: flex; align-items: center; justify-content: space-between;`).
 - **Análisis de compatibilidad de tests de `AppShell.test.tsx` y `menuFor.test.ts`**:
   Los tests existentes en `frontend/src/shared/components/AppShell.test.tsx` (líneas 67-79) ejecutan:
@@ -190,11 +192,11 @@ El fallback sólido de los modales reutiliza `--color-background` (`#F3F7FA`) y 
   ```
   *Resolución técnica sin modificar tests*: Para cumplir la especificación de "navegación sin cajas" sin alterar el contrato de los tests existentes, los ítems deshabilitados se mantienen como elementos `<button type="button" disabled data-menu-item={item.label} className={styles.menuButton}>` en el JSX. En `AppShell.module.css`, se eliminan sus propiedades de caja (`background: transparent; border: none; box-shadow: none; padding: ...; cursor: default;`) y el `.badge` interior se estiliza como texto secundario plano sin borde (`background: none; border: none; color: var(--color-text-muted); font-size: var(--font-size-xs);`). De este modo, la interfaz es 100% fiel al diseño sin cajas y `AppShell.test.tsx` y `menuFor.test.ts` siguen pasando en verde.
 
-### D6 — RevealSection con desplazamiento lateral
+### D6 — RevealSection con desplazamiento lateral desde su lado
 
-- `RevealSection.tsx` recibe `children`, `observer?: RevealObserverFactory` y `reducedMotion?: boolean`.
-- En `RevealSection.module.css`, la animación de entrada utiliza `transform: translateX(20px)` y `opacity: 0` para el estado `data-reveal="pending"`, transicionando a `transform: none` y `opacity: 1` en 200-250 ms `ease-out`.
-- Ante `@media (prefers-reduced-motion: reduce)` o cuando `reducedMotion === true`, la transición se desactiva (`transition: none; transform: none; opacity: 1;`), renderizando el contenido visible de inmediato.
+- `RevealSection.tsx` recibe `children`, `observer?: RevealObserverFactory`, `reducedMotion?: boolean` y `from?: "left" | "right"` (por defecto `"right"`). Expone el lado como `data-side` en su contenedor para poder probarlo.
+- En `RevealSection.module.css`, el estado `data-reveal="pending"` usa `opacity: 0` y `transform: translateX(var(--landing-reveal-offset))` (derecha, positivo); con `data-side="left"` el desplazamiento es negativo (`translateX(calc(-1 * var(--landing-reveal-offset)))`). La transición a `transform: none` y `opacity: 1` dura 220 ms `ease-out`. Hasta 768 px el desplazamiento se reduce a la mitad.
+- Ante `@media (prefers-reduced-motion: reduce)` o cuando `reducedMotion === true`, no hay transición ni desplazamiento (`transition: none; transform: none; opacity: 1;`) y el contenido se renderiza visible de inmediato.
 
 ### D7 — Orden de rutas en `createAppRoutes`
 

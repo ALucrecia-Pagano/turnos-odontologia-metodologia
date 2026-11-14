@@ -71,6 +71,7 @@
   --landing-hero-min-height: 60vh;
   --landing-content-max-width: 1120px;
   --landing-reveal-offset: 20px;
+  --landing-logo-width: min(520px, 72vw);
   --landing-carousel-blur: 6px;
   --blur-surface: 12px;
   --blur-backdrop: 4px;
