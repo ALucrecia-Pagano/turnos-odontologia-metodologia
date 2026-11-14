@@ -664,21 +664,23 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/06_funcionalidades.md` §US-040, §US-050
 
 ### [C-35] `ui-portada-y-acceso`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-13 en [openspec/changes/archive/2026-11-13-ui-portada-y-acceso/](openspec/changes/archive/2026-11-13-ui-portada-y-acceso/))
 - **Scope**:
-  - Portada pública en `/login`: `LoginPage` pasa a ser un wrapper delgado de `LandingPage`; el hero reutiliza el carrusel de C-34, el `<h1>` contiene el logo claro con `alt` y se muestran la bajada "Claridad en cada cuidado.", el lead, el badge "Sitio de demostración" y el CTA "Ingresar al sistema".
-  - `<dialog>` nativo abierto al entrar, con heading "Turnos Odontología", form de login, botón "Ver la clínica", foco en Usuario, Escape, retorno de foco, bloqueo del scroll y fallback por atributo `open` en jsdom; sin stubs de globals.
-  - Cuatro secciones (Quiénes somos, Servicios, Equipo, Horarios y contacto) con datos ficticios del seed, nota de datos ficticios y reveal con observador inyectable + `prefers-reduced-motion`.
-  - Tokens `--landing-hero-min-height` y `--landing-content-max-width` en `tokens.css`; cero colores nuevos. No se toca `App.tsx` ni se reordena `createAppRoutes`.
-  - Specs: nueva capability `frontend-landing`; delta MODIFIED de `frontend-auth-session` ("Bajada y tarjeta del login"); delta ADDED de `frontend-foundation` (tokens de layout).
-  - Tests nuevos de portada, contenido, diálogo, foco y reveal; los tests existentes de login, ruta y smoke no se modifican.
-  - Evidencias: RED/GREEN, una mutación por test nuevo con detector de inválidas, trazabilidad, `tsc`, ESLint, build y capturas 1440/768/390 px a cargo de Claude.
+  - Portada pública editorial en `/`: hero a pantalla completa (`--landing-hero-min-height: 60vh`), carrusel bajo overlay navy, `<h1>` con logo claro centrado y grande, eslogan "Claridad en cada cuidado.", navegación de texto superior izquierda (`Inicio`, `La clínica`, `Acceder`), CTA fantasma "Explorar la clínica →" junto al badge "Sitio de demostración" inferior izquierdo y botón "Pausar animación" inferior derecho. Redirección automática con replace a `/agenda` para usuarios autenticados.
+  - Secciones editoriales 01–04 intercaladas en bloques del ~60 % del ancho (01 y 03 izquierda, 02 y 04 derecha) con reveal lateral `translateX` desde su respectivo lado; sin desplazamiento con `prefers-reduced-motion` o sin `IntersectionObserver`. Datos ficticios del seed y teléfono `(0261) 555-0101`.
+  - Página intermedia `/acceso` con tres tarjetas de rol oscuras con borde fino de 1 px para Recepción, Odontología y Administración hacia `/login?rol=...`, y enlace de retorno "← Volver a Aqua".
+  - Pantalla `/login` translúcida con `backdrop-filter: blur`, fallback sólido, etiqueta visible de rol solo para roles válidos, campos oscuros con autofill que conserva la superficie marina, y alertas de error oscuras `--alert-on-navy-*` con contraste AA.
+  - Modales claros suaves marfil-hielo (`AppointmentFormDialog`, `AppointmentDetailDialog`, `AppointmentRescheduleDialog`) con desenfoque suave en `::backdrop`.
+  - Barra `AppShell` con navegación sin cajas contenedoras y alineación en un solo renglón en 1440 px.
+  - Nota: primera versión en c35-apply (cea858b) descartada; se reutilizaron RevealSection, revealObserver, landingContent, carouselTicker y landingTokens; Dialog y LoginDialog descartados (la primitiva Dialog es la de C-29).
+  - Tests: 13 tests nuevos de escenario + 9 auxiliares + 4 adicionales de diseño + 2 del login = 28 tests nuevos (todos con mutación propia, 28/28 eliminadas); 5 históricos del login y tests existentes preservados.
+  - Evidencias: RED/GREEN, 28 mutaciones, trazabilidad 24 (13 nuevos + 5 históricos + 6 visuales), calidad con exit code 0, 35 capturas en navegador real a 1440, 768 y 390 px.
 - **Dependencias**: `C-34`
 - **Governance**: BAJO
-- **Preparación**: skill `appointment-frontend-ux` (tokens, accesibilidad, regla C1 y verificación visual 1440/768) y MCP `context7` (React Router v6, ya consultado en el explore). Se ejecuta antes de C-29.
+- **Preparación**: skill `appointment-frontend-ux` (tokens, accesibilidad, regla C1 y verificación visual 1440/768) y MCP `context7` (React Router v6, consultado en explore).
 - **Leer antes**:
   - `docs/evidencias/explore-portada-y-acceso.md` §4–§7
-  - `openspec/specs/frontend-auth-session/spec.md` §Bajada y tarjeta del login, §Carrusel decorativo del login
+  - `openspec/changes/archive/2026-11-13-ui-portada-y-acceso/proposal.md` y `design.md`
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
   - `knowledge-base/06_funcionalidades.md` §US-050
 
@@ -694,7 +696,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
 - **Preparación**: skill `appointment-frontend-ux` y MCP `context7` antes de implementar (React 18, Vite 5, Vitest 3).
 - **Leer antes**:
   - `docs/evidencias/explore-portada-y-acceso.md` §6.2 y §7
-  - `openspec/changes/ui-portada-y-acceso/design.md` §D9, §Riesgos
+  - `openspec/changes/archive/2026-11-13-ui-portada-y-acceso/design.md` §D9, §Riesgos
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
 
 ### [C-29] `ui-dar-turno-con-errores`

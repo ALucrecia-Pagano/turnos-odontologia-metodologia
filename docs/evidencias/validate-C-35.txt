@@ -1,7 +1,3 @@
---- openspec validate ui-portada-y-acceso --strict ---
-Change 'ui-portada-y-acceso' is valid
-exit: 0
---- openspec validate --all --strict ---
 ✓ spec/agenda-api
 ✓ spec/api-foundation
 ✓ spec/appointment-lifecycle
@@ -17,7 +13,7 @@ exit: 0
 ✓ spec/frontend-appointment-form
 ✓ spec/frontend-auth-session
 ✓ spec/frontend-foundation
-✓ change/ui-portada-y-acceso
+✓ spec/frontend-landing
 ✓ spec/working-hours-and-blocks-api
 Totals: 17 passed, 0 failed (17 items)
 exit: 0

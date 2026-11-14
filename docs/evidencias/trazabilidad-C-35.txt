@@ -20,12 +20,12 @@ H2 [historico] Login correcto de recepción y del odontólogo -> `src/features/l
 H3 [historico] Credenciales inválidas con mensaje genérico -> `src/features/login/LoginPage.test.tsx` > credenciales inválidas con mensaje genérico | green-C-35/login-regresion.txt
 H4 [historico] Envío en curso y doble submit -> `src/features/login/LoginPage.test.tsx` > envío en curso y doble submit | green-C-35/login-regresion.txt
 H5 [historico] Accesibilidad del formulario -> `src/features/login/LoginPage.test.tsx` > accesibilidad del formulario | green-C-35/login-regresion.txt
-V1 [visual] Adaptabilidad de la portada en 1440, 768 y 390 px -> capturas/C-35-portada-*.png
-V2 [visual] Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px -> capturas/C-35-secciones-*.png
-V3 [visual] Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px -> capturas/C-35-acceso-*.png
-V4 [visual] Adaptabilidad de /login en 1440, 768 y 390 px -> capturas/C-35-login-*.png
-V5 [visual] Superficie clara suave de modales verificada a 1440, 768 y 390 px -> capturas/C-35-modales-*.png
-V6 [visual] Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> capturas/C-35-appshell-*.png
+V1 [visual] Adaptabilidad de la portada en 1440, 768 y 390 px -> capturas/C-35-portada-{1440,768,390}.png
+V2 [visual] Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px -> capturas/C-35-portada-completa-{1440,768,390}.png y capturas/C-35-secciones-*.png (incluida C-35-secciones-reduced-motion-1440.png)
+V3 [visual] Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px -> capturas/C-35-acceso-{1440,768,390}.png y capturas/C-35-acceso-foco-1440.png
+V4 [visual] Adaptabilidad de /login en 1440, 768 y 390 px -> capturas/C-35-login-recepcion-{1440,768,390}.png, capturas/C-35-login-sin-rol-1440.png, capturas/C-35-login-campos-1440.png, capturas/C-35-login-autofill-1440.png, capturas/C-35-login-error-servidor.png y capturas/C-35-login-error-credenciales-{1440,768,390}.png
+V5 [visual] Superficie clara suave de modales verificada a 1440, 768 y 390 px -> capturas/C-35-modal-*.png
+V6 [visual] Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> capturas/C-35-agenda-nav-{1440,768,390}.png
 
 tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño y 2 del login); no son escenarios, cada uno con su mutación: 15
 [auxiliar] src/shared/styles/landingTokens.test.ts > define los dos tokens de layout | A01

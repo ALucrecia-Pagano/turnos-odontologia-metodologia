@@ -36,7 +36,7 @@ FRONTEND = REPO / "frontend"
 EVIDENCE = REPO / "docs" / "evidencias"
 OUTPUT = EVIDENCE / "trazabilidad-C-35.txt"
 VERIFY = EVIDENCE / "verify-C-35.md"
-SPECS_DIR = REPO / "openspec" / "changes" / "ui-portada-y-acceso" / "specs"
+SPECS_DIR = REPO / "openspec" / "changes" / "archive" / "2026-11-13-ui-portada-y-acceso" / "specs"
 TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str(FRONTEND / "node_modules" / "vitest" / "vitest.mjs")]
@@ -118,20 +118,20 @@ ENTRIES: tuple[Entry, ...] = (
     Entry("historico", "frontend-auth-session", "Accesibilidad del formulario", "H5", T_LOGIN_EXISTING,
           "accesibilidad del formulario"),
     Entry("visual", "frontend-landing", "Adaptabilidad de la portada en 1440, 768 y 390 px", "V1",
-          visual="capturas/C-35-portada-*.png"),
+          visual="capturas/C-35-portada-{1440,768,390}.png"),
     Entry("visual", "frontend-landing",
           "Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px", "V2",
-          visual="capturas/C-35-secciones-*.png"),
+          visual="capturas/C-35-portada-completa-{1440,768,390}.png y capturas/C-35-secciones-*.png (incluida C-35-secciones-reduced-motion-1440.png)"),
     Entry("visual", "frontend-landing", "Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px", "V3",
-          visual="capturas/C-35-acceso-*.png"),
+          visual="capturas/C-35-acceso-{1440,768,390}.png y capturas/C-35-acceso-foco-1440.png"),
     Entry("visual", "frontend-auth-session", "Adaptabilidad de /login en 1440, 768 y 390 px", "V4",
-          visual="capturas/C-35-login-*.png"),
+          visual="capturas/C-35-login-recepcion-{1440,768,390}.png, capturas/C-35-login-sin-rol-1440.png, capturas/C-35-login-campos-1440.png, capturas/C-35-login-autofill-1440.png, capturas/C-35-login-error-servidor.png y capturas/C-35-login-error-credenciales-{1440,768,390}.png"),
     Entry("visual", "frontend-foundation",
           "Superficie clara suave de modales verificada a 1440, 768 y 390 px", "V5",
-          visual="capturas/C-35-modales-*.png"),
+          visual="capturas/C-35-modal-*.png"),
     Entry("visual", "frontend-foundation",
           "Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px)", "V6",
-          visual="capturas/C-35-appshell-*.png"),
+          visual="capturas/C-35-agenda-nav-{1440,768,390}.png"),
 )
 
 SCENARIO = re.compile(r"^#### Scenario:\s*(.+?)\s*$", re.MULTILINE)
@@ -207,6 +207,20 @@ def listed_tests() -> set[tuple[str, str]]:
         check=False,
     )
     start = result.stdout.find("[")
+    if start == -1:
+        result = subprocess.run(
+            [*VITEST, "list", "--json"],
+            cwd=FRONTEND,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            env=vitest_env(),
+            timeout=300,
+            check=False,
+        )
+        start = result.stdout.find("[")
+    if start == -1:
+        raise RuntimeError(f"Vitest no devolvió JSON. stdout: {result.stdout!r}, stderr: {result.stderr!r}")
     entries = json.loads(result.stdout[start:])
     tests: set[tuple[str, str]] = set()
     for entry in entries:

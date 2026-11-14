@@ -117,19 +117,19 @@
 
 ## 9. Verificación Visual Independiente (A Cargo de Claude)
 
-- [ ] 9.1 **Capturas en navegador real a 1440 px, 768 px y 390 px**:
+- [x] 9.1 **Capturas en navegador real a 1440 px, 768 px y 390 px**:
   - Levantar el servidor de desarrollo (`npm run dev`) con datos de demostración del seed.
-  - Capturar portada pública `/` en escritorio (1440 px), tablet (768 px) y móvil (390 px): validar hero de al menos 60vh, carrusel atenuado, enlaces de texto sin cajas, franja de demo y dos columnas editoriales.
-  - Capturar animación de reveal lateral y comprobación con `prefers-reduced-motion`.
-  - Capturar pantalla `/acceso` en 1440, 768 y 390 px: validar tres tarjetas oscuras con borde que se aclara en hover/focus.
-  - Capturar pantalla `/login` en 1440, 768 y 390 px: validar formulario translúcido con `backdrop-filter: blur`, fallback sólido, contraste AA y etiqueta de rol cuando se pasa `?rol`.
-  - Capturar modales de la agenda (`AppointmentFormDialog`, etc.): validar superficie clara suave marfil-hielo y desenfoque leve en backdrop.
-  - Capturar `AppShell`: validar navegación sin cajas y alineación en una sola línea a 1440 px.
-  - Guardar todas las capturas en `docs/evidencias/capturas/C-35-*.png` e incorporarlas al reporte final en `verify-C-35.md`.
+  - Capturar portada pública `/` en escritorio (1440 px), tablet (768 px) y móvil (390 px): validar hero de al menos 60vh, carrusel atenuado, enlaces de texto sin cajas, franja de demo y dos columnas editoriales (`C-35-portada-{1440,768,390}.png`).
+  - Capturar animación de reveal lateral y comprobación con `prefers-reduced-motion` (`C-35-portada-completa-{1440,768,390}.png`, `C-35-secciones-{1440,768,390}.png`, `C-35-secciones-b-{1440,768,390}.png` y `C-35-secciones-reduced-motion-1440.png`).
+  - Capturar pantalla `/acceso` en 1440, 768 y 390 px: validar tres tarjetas oscuras con borde que se aclara en hover/focus (`C-35-acceso-{1440,768,390}.png` y `C-35-acceso-foco-1440.png`).
+  - Capturar pantalla `/login` en 1440, 768 y 390 px: validar formulario translúcido con `backdrop-filter: blur`, fallback sólido, contraste AA y etiqueta de rol cuando se pasa `?rol` (`C-35-login-recepcion-{1440,768,390}.png`, `C-35-login-sin-rol-1440.png`, `C-35-login-campos-1440.png`, `C-35-login-autofill-1440.png`, `C-35-login-error-servidor.png` y `C-35-login-error-credenciales-{1440,768,390}.png`).
+  - Capturar modales de la agenda (`AppointmentFormDialog`, etc.): validar superficie clara suave marfil-hielo y desenfoque leve en backdrop (`C-35-modal-*.png`: `C-35-modal-nuevo-turno-1440.png`, `C-35-modal-detalle-{1440,768,390}.png` y `C-35-modal-reprogramar-1440.png`).
+  - Capturar `AppShell`: validar navegación sin cajas y alineación en una sola línea a 1440 px (`C-35-agenda-nav-{1440,768,390}.png`).
+  - Guardar todas las capturas en `docs/evidencias/capturas/C-35-*.png` (35 capturas en total) e incorporarlas al reporte final en `verify-C-35.md`.
 
 ---
 
-## 10. Ajustes de Diseño tras la Revisión Visual (la fase 9 sigue pendiente)
+## 10. Ajustes de Diseño tras la Revisión Visual
 
 > Cada test nuevo de esta fase tiene RED por aserción (`red-C-35/NN-*.txt`), GREEN (`green-C-35/NN-*.txt`) y su propia mutación en `mutaciones-C-35.py`. No son escenarios del spec: se listan como tests adicionales en la trazabilidad (24 = 13 + 5 + 6 no cambia).
 
@@ -146,14 +146,14 @@
 
 ## Workflow Follow-up
 
-- No archivar C-35 (`/opsx:archive ui-portada-y-acceso`) hasta que todas las tareas y capturas de la fase 9 estén completas y aprobadas por la autora.
+- Fase 9 completada: 35 capturas tomadas, inspeccionadas y aprobadas por la autora. Proceder al archivado de C-35 (`/opsx:archive ui-portada-y-acceso`).
 - No commitear ni hacer `git push` sin instrucción explícita de la usuaria.
 
 ---
 
 ## Escenario → test → mutación
 
-Totales: **24 escenarios** = **13 testeables nuevos** (13 pares RED/GREEN, 13 tests distintos, 13 mutaciones) + **5 históricos** (cubiertos por tests existentes en `main`, sin par ni mutación nuevos) + **6 visuales** (captura a cargo de Claude, fase 9).
+Totales: **24 escenarios** = **13 testeables nuevos** (13 pares RED/GREEN, 13 tests distintos, 13 mutaciones) + **5 históricos** (cubiertos por tests existentes en `main`, sin par ni mutación nuevos) + **6 visuales** (capturas en navegador real, fase 9).
 
 | # | Spec | Escenario | Tipo | Test (archivo > nombre) | Mutación | Evidencia |
 |---|------|-----------|------|-------------------------|----------|-----------|
@@ -175,12 +175,12 @@ Totales: **24 escenarios** = **13 testeables nuevos** (13 pares RED/GREEN, 13 te
 | H3 | frontend-auth-session | Credenciales inválidas con mensaje genérico | Histórico | Cubierto por test existente: `features/login/LoginPage.test.tsx` > "credenciales inválidas con mensaje genérico" | Test existente (sin mutación nueva) | `green-C-35/login-regresion.txt` |
 | H4 | frontend-auth-session | Envío en curso y doble submit | Histórico | Cubierto por test existente: `features/login/LoginPage.test.tsx` > "envío en curso y doble submit" | Test existente (sin mutación nueva) | `green-C-35/login-regresion.txt` |
 | H5 | frontend-auth-session | Accesibilidad del formulario | Histórico | Cubierto por test existente: `features/login/LoginPage.test.tsx` > "accesibilidad del formulario" | Test existente (sin mutación nueva) | `green-C-35/login-regresion.txt` |
-| V1 | frontend-landing | Adaptabilidad de la portada en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-portada-*.png` |
-| V2 | frontend-landing | Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-secciones-*.png` |
-| V3 | frontend-landing | Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-acceso-*.png` |
-| V4 | frontend-auth-session | Adaptabilidad de /login en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-login-*.png` |
-| V5 | frontend-foundation | Superficie clara suave de modales verificada a 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-modales-*.png` |
-| V6 | frontend-foundation | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | Captura a cargo de Claude | — | `capturas/C-35-appshell-*.png` |
+| V1 | frontend-landing | Adaptabilidad de la portada en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-portada-{1440,768,390}.png` |
+| V2 | frontend-landing | Secciones editoriales intercaladas a ancho parcial en 1440 px y a ancho completo en 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-portada-completa-{1440,768,390}.png` y `capturas/C-35-secciones-*.png` (incluida `C-35-secciones-reduced-motion-1440.png`) |
+| V3 | frontend-landing | Adaptabilidad de las tarjetas de acceso en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-acceso-{1440,768,390}.png` y `capturas/C-35-acceso-foco-1440.png` |
+| V4 | frontend-auth-session | Adaptabilidad de /login en 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-login-recepcion-{1440,768,390}.png`, `capturas/C-35-login-sin-rol-1440.png`, `capturas/C-35-login-campos-1440.png`, `capturas/C-35-login-autofill-1440.png`, `capturas/C-35-login-error-servidor.png` y `capturas/C-35-login-error-credenciales-{1440,768,390}.png` |
+| V5 | frontend-foundation | Superficie clara suave de modales verificada a 1440, 768 y 390 px | Visual | Captura a cargo de Claude | — | `capturas/C-35-modal-*.png` |
+| V6 | frontend-foundation | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | Captura a cargo de Claude | — | `capturas/C-35-agenda-nav-{1440,768,390}.png` |
 | E14 | frontend-foundation | (adicional, no es escenario) `.menuButton` sin borde por defecto | Adicional | `shared/components/AppShellNavigation.test.tsx` > "los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces" | M14: quitar `border: 0` de `.menuButton` | `red/green-C-35/14-appshell-menubutton-borde.txt` |
 | E15 | frontend-landing | (adicional) `RevealSection` desde su lado | Adicional | `features/landing/RevealSection.test.tsx` > "from=right desplaza en positivo y from=left en negativo" | M15: `translateX` izquierdo en positivo | `red/green-C-35/15-reveal-lado.txt` |
 | E16 | frontend-landing | (adicional) secciones intercaladas | Adicional | `features/landing/LandingPage.test.tsx` > "las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha" | M16: la sección 02 entra desde la izquierda | `red/green-C-35/16-secciones-alternan-lado.txt` |
