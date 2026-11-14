@@ -1,0 +1,13 @@
+=== RED 12: Grilla horas sticky superficie y z-index ===
+Comando: npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Resultado: Falla por aserción esperada (en móvil timeGutter y cornerCell no tienen z-index superior ni background-color de superficie en media query móvil)
+
+AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' to match /@media\s*\(max-width:\s*640px\)[\s\S]…/
+- Expected: /@media\s*\(max-width:\s*640px\)[\s\S]*?\.timeGutter\s*\{[\s\S]*?z-index:\s*5;[\s\S]*?background-color:\s*var\(--color-surface\);/
+ ❯ src/features/agenda/AgendaGrid.mobile.test.tsx:160:24
+    160|     expect(cssContent).toMatch(
+    161|       /@media\s*\(max-width:\s*640px\)[\s\S]*?\.timeGutter\s*\{[\s\S]*?z-index:\s*5;[\s\S]*?background-color:\s*var\(--color-surface\);/,
+    162|     );
+
+Test Files  1 failed (1)
+Tests  1 failed | 3 passed (4)

@@ -245,6 +245,19 @@ MUTATIONS: tuple[Mutation, ...] = (
   gap: var(--space-3);
 }""",
     ),
+    # M12 - Grilla: z-index superior en timeGutter móvil
+    Mutation(
+        T_GRID,
+        "12-grilla-horas-sticky-superficie-y-zindex: asegura background de superficie y z-index superior en celda de esquina y eje de horas en móvil",
+        P_GRID_CSS,
+        """  .timeGutter {
+    z-index: 5;
+    background-color: var(--color-surface);
+  }""",
+        """  .timeGutter {
+    background-color: var(--color-surface);
+  }""",
+    ),
 )
 
 

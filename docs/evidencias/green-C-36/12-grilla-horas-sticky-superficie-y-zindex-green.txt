@@ -1,0 +1,12 @@
+=== GREEN 12: Grilla horas sticky superficie y z-index ===
+Comando: npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Resultado: Pasa (en móvil timeGutter tiene z-index: 5 y background-color: var(--color-surface); cornerCell tiene z-index: 6 y background-color: var(--color-surface); en escritorio se preserva z-index base 2 y 4)
+
+ ✓ src/features/agenda/AgendaGrid.mobile.test.tsx (4 tests) 110ms
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 05-grilla-scroll-snap-y-horas-sticky: aplica scroll-snap horizontal mandatory y eje horario fijo en celular
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 06-grilla-ancho-util-y-default-grid: preserva modo inicial grilla en AgendaView y dimensiona columnas a ancho útil en móvil
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 09-grilla-columna-cqi: utiliza container inline-size y ancho cqi en columnas móviles sin cálculo 100vw
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 12-grilla-horas-sticky-superficie-y-zindex: asegura background de superficie y z-index superior en celda de esquina y eje de horas en móvil
+
+Test Files  1 passed (1)
+Tests  4 passed (4)

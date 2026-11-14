@@ -151,4 +151,23 @@ describe("AgendaGrid — Modo Móvil (<= 640 px)", () => {
     expect(cssContent).not.toMatch(/@media\s*\(max-width:\s*640px\)[^{]*\{[^}]*100vw/);
     expect(cssContent).not.toContain("100vw");
   });
+
+  it("12-grilla-horas-sticky-superficie-y-zindex: asegura background de superficie y z-index superior en celda de esquina y eje de horas en móvil", () => {
+    const cssPath = path.resolve(__dirname, "./AgendaGrid.module.css");
+    const cssContent = fs.readFileSync(cssPath, "utf-8");
+
+    // 1. En reglas móviles: timeGutter tiene z-index 5 (por encima de tarjetas) y background-color con token de superficie
+    expect(cssContent).toMatch(
+      /@media\s*\(max-width:\s*640px\)[\s\S]*?\.timeGutter\s*\{[\s\S]*?z-index:\s*5;[\s\S]*?background-color:\s*var\(--color-surface\);/,
+    );
+
+    // 2. En reglas móviles: cornerCell tiene z-index 6 (por encima de timeGutter y headerRow) y background-color con token de superficie
+    expect(cssContent).toMatch(
+      /@media\s*\(max-width:\s*640px\)[\s\S]*?\.cornerCell\s*\{[\s\S]*?z-index:\s*6;[\s\S]*?background-color:\s*var\(--color-surface\);/,
+    );
+
+    // 3. En escritorio preserva z-index base intacto (.timeGutter: 2, .cornerCell: 4)
+    expect(cssContent).toMatch(/\.timeGutter\s*\{[^}]*z-index:\s*2;/);
+    expect(cssContent).toMatch(/\.cornerCell\s*\{[^}]*z-index:\s*4;/);
+  });
 });

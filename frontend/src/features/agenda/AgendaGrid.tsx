@@ -85,7 +85,7 @@ export function AgendaGrid({
     >
       <div className={styles.gridTable}>
         <div className={styles.headerRow}>
-          <div className={styles.cornerCell}>Hora</div>
+          <div className={`${styles.cornerCell} ${isMobileEffective ? styles.cornerCellMobile : ""}`}>Hora</div>
           {columns.map((col) => {
             const isToday = Boolean(col.isToday);
             return (
@@ -104,7 +104,10 @@ export function AgendaGrid({
         </div>
 
         <div className={styles.bodyRow}>
-          <div className={styles.timeGutter} data-testid="agenda-time-gutter">
+          <div
+            className={`${styles.timeGutter} ${isMobileEffective ? styles.timeGutterMobile : ""}`}
+            data-testid="agenda-time-gutter"
+          >
             {axis.hours.map((hour) => (
               <div
                 key={hour}

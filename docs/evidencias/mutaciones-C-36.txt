@@ -2,5 +2,171 @@
 MUTACIONES C-36 (ui-tema-oscuro-y-movil) — VERIFICACIÓN AUTOMATIZADA
 ================================================================================
 Comprobación de definiciones: OK (cada original aparece 1 vez)
-Correspondencia 1:1: OK (11 tests listados == 11 mutaciones)
-Modo --check: todo correcto.
+Correspondencia 1:1: OK (12 tests listados == 12 mutaciones)
+SHA-256 inicial: 0e8bfed024b72cd7f0b3aa58448749acf5f452e12ab5503e32871d0d008eb71c
+================================================================================
+
+[M01] src/shared/components/AppShell.mobile.test.tsx > 01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación
+--- a/frontend/src/shared/components/AppShell.tsx
++++ b/frontend/src/shared/components/AppShell.tsx
+@@ -133,5 +133,5 @@
+             className={styles.menuToggleButton}
+             aria-expanded={isMenuOpen}
+-            aria-controls="main-menu"
++            aria-controls="other-menu"
+             onClick={() => setIsMenuOpen((prev) => !prev)}
+           >
+RESULTADO: ELIMINADA
+Aserción: Error: expect(element).toHaveAttribute("aria-controls", "main-menu") // element.getAttribute("aria-controls") === "main-menu"
+
+[M02] src/shared/components/AppShell.mobile.test.tsx > 02-cierre-menu-escape-y-retorno-foco: presionar Escape cierra el menú desplegado y devuelve el foco al botón Menú
+--- a/frontend/src/shared/components/AppShell.tsx
++++ b/frontend/src/shared/components/AppShell.tsx
+@@ -55,5 +55,5 @@
+         event.preventDefault();
+         setIsMenuOpen(false);
+-        menuButtonRef.current?.focus();
++        // menuButtonRef.current?.focus();
+       }
+     };
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected <a data-menu-item="Agenda" …(3)></a> to be <button type="button" …(3)>…(2)</button> // Object.is equality
+
+[M03] src/features/agenda/AgendaToolbar.mobile.test.tsx > 03-toolbar-distribucion-compacta: organiza navegación y fecha en dos filas diferenciadas en celular
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -190,5 +190,5 @@
+       {isMobileEffective ? (
+         <div className={styles.mobileControls}>
+-          <div className={styles.navRow} data-testid="agenda-toolbar-nav-row">
++          <div className={styles.navGroup}>
+             {viewToggleElement}
+             <button
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected null not to be null
+
+[M04] src/features/agenda/AgendaToolbar.mobile.test.tsx > 04-toolbar-boton-filtros-con-contador: expone botón Filtros con indicador dinámico de filtros activos y despliega panel accesible
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -102,5 +102,5 @@
+     (chairId !== null && chairId !== "" ? 1 : 0);
+   const filtersButtonLabel =
+-    activeFiltersCount > 0 ? `Filtros (${activeFiltersCount})` : "Filtros";
++    "Filtros";
+ 
+   const viewToggleElement = (
+RESULTADO: ELIMINADA
+Aserción: Error: expect(element).toHaveTextContent()
+
+[M05] src/features/agenda/AgendaGrid.mobile.test.tsx > 05-grilla-scroll-snap-y-horas-sticky: aplica scroll-snap horizontal mandatory y eje horario fijo en celular
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -82,5 +82,5 @@
+       className={`${styles.gridScrollContainer} ${isMobileEffective ? styles.gridScrollMobile : ""}`}
+       data-testid="agenda-grid-scroll"
+-      data-scroll-snap={isMobileEffective ? "mandatory" : undefined}
++      data-scroll-snap={undefined}
+     >
+       <div className={styles.gridTable}>
+RESULTADO: ELIMINADA
+Aserción: Error: expect(element).toHaveAttribute("data-scroll-snap", "mandatory") // element.getAttribute("data-scroll-snap") === "mandatory"
+
+[M06] src/features/agenda/AgendaGrid.mobile.test.tsx > 06-grilla-ancho-util-y-default-grid: preserva modo inicial grilla en AgendaView y dimensiona columnas a ancho útil en móvil
+--- a/frontend/src/features/agenda/AgendaView.tsx
++++ b/frontend/src/features/agenda/AgendaView.tsx
+@@ -42,5 +42,5 @@
+   onSelectAppointment,
+ }: AgendaViewProps) {
+-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
++  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+   const isWeekView = view === "week";
+   const dayLabel = formatDayLabel(date);
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected null not to be null
+
+[M07] src/shared/components/Dialog.bottomSheet.test.tsx > 07-dialog-bottom-sheet-mobile: renderiza como hoja inferior anclada al fondo con scroll interno en celular
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -132,5 +132,5 @@
+       aria-modal={isNativeModalSupported ? undefined : "true"}
+       className={`${styles.dialog} ${isMobileEffective ? styles.dialogBottomSheet : ""}`}
+-      data-mobile-sheet={isMobileEffective ? "true" : undefined}
++      data-mobile-sheet={undefined}
+       onKeyDown={handleKeyDown}
+       onCancel={handleCancel}
+RESULTADO: ELIMINADA
+Aserción: Error: expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"
+
+[M08] src/shared/components/Dialog.bottomSheet.test.tsx > 08-dialog-modal-centrado-desktop: preserva modal centrado flotante en pantallas de escritorio
+--- a/frontend/src/shared/components/Dialog.tsx
++++ b/frontend/src/shared/components/Dialog.tsx
+@@ -38,5 +38,5 @@
+   });
+ 
+-  const isMobileEffective = isMobile ?? isMobileDevice;
++  const isMobileEffective = true;
+ 
+   useEffect(() => {
+RESULTADO: ELIMINADA
+Aserción: Error: expect(element).not.toHaveAttribute("data-mobile-sheet") // element.hasAttribute("data-mobile-sheet")
+
+[M09] src/features/agenda/AgendaGrid.mobile.test.tsx > 09-grilla-columna-cqi: utiliza container inline-size y ancho cqi en columnas móviles sin cálculo 100vw
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -25,6 +25,6 @@
+ .columnHeaderMobile {
+   scroll-snap-align: start;
+-  min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
+-  flex: 0 0 calc(100cqi - var(--agenda-time-gutter-width, 64px));
++  min-width: calc(100vw - var(--agenda-time-gutter-width, 64px));
++  flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px));
+ }
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' not to match /\.columnHeaderMobile[^{]*\{[^}]*100vw/
+
+[M10] src/features/agenda/AgendaToolbar.mobile.test.tsx > 10-toolbar-compacta-tres-filas: Anterior y Siguiente muestran texto corto conservando nombre accesible y fila 1 sin flex-wrap
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -198,5 +198,5 @@
+               aria-label={prevLabel}
+             >
+-              {isMobileEffective ? "‹" : prevLabel}
++              {prevLabel}
+             </button>
+             <button
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected 'Anterior' to be '‹' // Object.is equality
+
+[M11] src/features/agenda/AgendaSpacing.mobile.test.tsx > 11-espaciado-agenda: reduce separación entre título y toolbar y asigna margen superior con tokens al encabezado de fecha
+--- a/frontend/src/features/agenda/AgendaView.module.css
++++ b/frontend/src/features/agenda/AgendaView.module.css
+@@ -11,5 +11,4 @@
+   justify-content: space-between;
+   gap: var(--space-3);
+-  margin-top: var(--space-4);
+ }
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected '.agendaView {\r\n  display: flex;\r\n…' to match /\.headerBar\s*\{[^}]*margin-top:\s*va…/
+
+[M12] src/features/agenda/AgendaGrid.mobile.test.tsx > 12-grilla-horas-sticky-superficie-y-zindex: asegura background de superficie y z-index superior en celda de esquina y eje de horas en móvil
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -364,5 +364,4 @@
+ 
+   .timeGutter {
+-    z-index: 5;
+     background-color: var(--color-surface);
+   }
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' to match /@media\s*\(max-width:\s*640px\)[\s\S]…/
+
+================================================================================
+RESUMEN DE MUTACIONES C-36
+================================================================================
+Total mutaciones: 12
+Eliminadas:       12
+Supervivientes:   0
+Inválidas:        0
+SHA-256 inicial:  0e8bfed024b72cd7f0b3aa58448749acf5f452e12ab5503e32871d0d008eb71c
+SHA-256 final:    0e8bfed024b72cd7f0b3aa58448749acf5f452e12ab5503e32871d0d008eb71c
+SHA-256 sin cambios: si

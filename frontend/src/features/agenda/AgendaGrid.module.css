@@ -12,6 +12,16 @@
   container-type: inline-size;
 }
 
+.cornerCellMobile {
+  z-index: 6;
+  background-color: var(--color-surface);
+}
+
+.timeGutterMobile {
+  z-index: 5;
+  background-color: var(--color-surface);
+}
+
 .columnHeaderMobile {
   scroll-snap-align: start;
   min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
@@ -345,6 +355,16 @@
     scroll-snap-type: x mandatory;
     scroll-padding-left: var(--agenda-time-gutter-width, 64px);
     container-type: inline-size;
+  }
+
+  .cornerCell {
+    z-index: 6;
+    background-color: var(--color-surface);
+  }
+
+  .timeGutter {
+    z-index: 5;
+    background-color: var(--color-surface);
   }
 
   .columnHeader,

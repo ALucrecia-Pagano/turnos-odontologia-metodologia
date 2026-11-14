@@ -56,11 +56,12 @@
 
 - [x] 6.1 Ejecutar `npm run build` o `npx tsc --noEmit` y verificar código de salida 0.
 - [x] 6.2 Ejecutar `npm run lint` y verificar código de salida 0 (3 advertencias preexistentes documentadas).
-- [x] 6.3 Ejecutar la suite completa de pruebas unitarias (`npx vitest run`) y verificar que todos los tests pasan en verde (260 anteriores + 11 nuevos = 271 tests).
-- [x] 6.4 Implementar y ejecutar script de análisis de mutaciones `docs/evidencias/mutaciones-C-36.py` verificando 11/11 mutaciones eliminadas con 0 supervivientes y 0 mutaciones inválidas.
+- [x] 6.3 Ejecutar la suite completa de pruebas unitarias (`npx vitest run`) y verificar que todos los tests pasan en verde (260 anteriores + 12 nuevos = 272 tests).
+- [x] 6.4 Implementar y ejecutar script de análisis de mutaciones `docs/evidencias/mutaciones-C-36.py` verificando 12/12 mutaciones eliminadas con 0 supervivientes y 0 mutaciones inválidas.
 - [x] 6.5 Corrección grilla: cálculo de ancho útil de columna mediante container query `100cqi` sin `100vw` en `AgendaGrid.module.css` (test 09, M09).
 - [x] 6.6 Corrección toolbar: estructuración estricta en 3 filas con botones Anterior/Siguiente ('‹'/'›') y Actualizar ('↻') con nombre accesible intacto y `flex-wrap: nowrap` en navRow (test 10, M10).
 - [x] 6.7 Corrección espaciado: reducción de separación entre título y toolbar en `PageShell.module.css` y adición de margen superior a fecha en `AgendaView.module.css` (test 11, M11).
+- [x] 6.8 Corrección sticky eje de horas: asignación de `z-index: 5` y background de superficie a `timeGutter` y `z-index: 6` a `cornerCell` en móvil para evitar que tarjetas pasen por encima al deslizar (test 12, M12).
 
 ## 7. Verificación Visual Multi-Resolución a cargo de Claude
 
