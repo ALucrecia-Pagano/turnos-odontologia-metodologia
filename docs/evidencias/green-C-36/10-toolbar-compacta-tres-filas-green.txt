@@ -1,0 +1,11 @@
+=== GREEN 10: Toolbar compacta tres filas ===
+Comando: npx vitest run src/features/agenda/AgendaToolbar.mobile.test.tsx
+Resultado: Pasa (Anterior/Siguiente con nombre accesible y texto corto '‹'/'›', Actualizar agenda con '↻', navRow con flex-wrap: nowrap)
+
+ ✓ src/features/agenda/AgendaToolbar.mobile.test.tsx (3 tests) 140ms
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 03-toolbar-distribucion-compacta: organiza navegación y fecha en dos filas diferenciadas en celular
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 04-toolbar-boton-filtros-con-contador: expone botón Filtros con indicador dinámico de filtros activos y despliega panel accesible
+   ✓ AgendaToolbar — Modo Móvil (<= 640 px) > 10-toolbar-compacta-tres-filas: Anterior y Siguiente muestran texto corto conservando nombre accesible y fila 1 sin flex-wrap
+
+Test Files  1 passed (1)
+Tests  3 passed (3)

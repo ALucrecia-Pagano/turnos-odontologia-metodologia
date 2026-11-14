@@ -1,0 +1,11 @@
+=== RED 09: Grilla columna cqi sin 100vw ===
+Comando: npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Resultado: Falla por aserción esperada (container-type: inline-size no presente y 100vw prohibido)
+
+AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' to match /container-type:\s*inline-size/
+- Expected: /container-type:\s*inline-size/
+ ❯ src/features/agenda/AgendaGrid.mobile.test.tsx:143:24
+    143|     expect(cssContent).toMatch(/container-type:\s*inline-size/);
+
+Test Files  1 failed (1)
+Tests  1 failed | 2 passed (3)

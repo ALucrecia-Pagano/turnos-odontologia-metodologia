@@ -1,0 +1,12 @@
+=== RED 10: Toolbar compacta tres filas ===
+Comando: npx vitest run src/features/agenda/AgendaToolbar.mobile.test.tsx
+Resultado: Falla por aserción esperada (en móvil muestra 'Anterior' en lugar de '‹' y navRow no tiene flex-wrap: nowrap)
+
+AssertionError: expected 'Anterior' to be '‹' // Object.is equality
+Expected: "‹"
+Received: "Anterior"
+ ❯ src/features/agenda/AgendaToolbar.mobile.test.tsx:164:41
+    164|     expect(prevBtn.textContent?.trim()).toBe("‹");
+
+Test Files  1 failed (1)
+Tests  1 failed | 2 passed (3)

@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import type { Chair, Professional } from "./agendaApi";
@@ -132,5 +134,79 @@ describe("AgendaToolbar — Modo Móvil (<= 640 px)", () => {
     fireEvent.click(filtersBtn);
     expect(filtersBtn).toHaveAttribute("aria-expanded", "false");
     expect(filtersPanel).toHaveAttribute("hidden");
+  });
+
+  it("10-toolbar-compacta-tres-filas: Anterior y Siguiente muestran texto corto conservando nombre accesible y fila 1 sin flex-wrap", () => {
+    // 1. En móvil Anterior, Siguiente y Actualizar agenda conservan nombre accesible y texto corto
+    render(
+      <AgendaToolbar
+        date="2026-11-16"
+        view="day"
+        professionalId={null}
+        chairId={null}
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        onSelectProfessional={() => undefined}
+        onSelectChair={() => undefined}
+        onClearFilters={() => undefined}
+        onPrevDay={() => undefined}
+        onNextDay={() => undefined}
+        onToday={() => undefined}
+        onSelectDate={() => undefined}
+        onRefresh={() => undefined}
+        onSelectView={() => undefined}
+        isMobile={true}
+      />,
+    );
+
+    const prevBtn = screen.getByRole("button", { name: "Anterior" });
+    expect(prevBtn).toHaveAccessibleName("Anterior");
+    expect(prevBtn.textContent?.trim()).toBe("‹");
+
+    const nextBtn = screen.getByRole("button", { name: "Siguiente" });
+    expect(nextBtn).toHaveAccessibleName("Siguiente");
+    expect(nextBtn.textContent?.trim()).toBe("›");
+
+    const refreshBtn = screen.getByRole("button", { name: "Actualizar agenda" });
+    expect(refreshBtn).toHaveAccessibleName("Actualizar agenda");
+    expect(refreshBtn.textContent?.trim()).toBe("↻");
+
+    // 2. CSS: media query <= 640px con flex-wrap nowrap en navRow y tokens de espaciado compactos
+    const cssPath = path.resolve(__dirname, "./AgendaToolbar.module.css");
+    const cssContent = fs.readFileSync(cssPath, "utf-8");
+    expect(cssContent).toMatch(/@media\s*\(max-width:\s*640px\)/);
+    expect(cssContent).toMatch(/\.navRow\s*\{[^}]*flex-wrap:\s*nowrap/);
+
+    // 3. En escritorio preserva el texto completo
+    const { unmount } = render(
+      <AgendaToolbar
+        date="2026-11-16"
+        view="day"
+        professionalId={null}
+        chairId={null}
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        onSelectProfessional={() => undefined}
+        onSelectChair={() => undefined}
+        onClearFilters={() => undefined}
+        onPrevDay={() => undefined}
+        onNextDay={() => undefined}
+        onToday={() => undefined}
+        onSelectDate={() => undefined}
+        onRefresh={() => undefined}
+        onSelectView={() => undefined}
+        isMobile={false}
+      />,
+    );
+    const desktopButtons = screen.getAllByRole("button", { name: "Anterior" });
+    const desktopPrevBtn = desktopButtons[1] ?? desktopButtons[0];
+    expect(desktopPrevBtn?.textContent?.trim()).toBe("Anterior");
+    const desktopNextButtons = screen.getAllByRole("button", { name: "Siguiente" });
+    const desktopNextBtn = desktopNextButtons[1] ?? desktopNextButtons[0];
+    expect(desktopNextBtn?.textContent?.trim()).toBe("Siguiente");
+    const desktopRefreshButtons = screen.getAllByRole("button", { name: "Actualizar agenda" });
+    const desktopRefreshBtn = desktopRefreshButtons[1] ?? desktopRefreshButtons[0];
+    expect(desktopRefreshBtn?.textContent?.trim()).toBe("Actualizar agenda");
+    unmount();
   });
 });

@@ -1,7 +1,4 @@
-=== OPENSPEC VALIDATE: openspec validate --all --strict ===
-Command: openspec validate --all --strict
-Exit code: 0
-Output:
+$ openspec validate --all --strict
 ✓ spec/agenda-api
 ✓ spec/api-foundation
 ✓ spec/appointment-lifecycle
@@ -22,3 +19,4 @@ Output:
 ✓ change/ui-vista-de-recepcion-por-sillon
 ✓ spec/working-hours-and-blocks-api
 Totals: 19 passed, 0 failed (19 items)
+Exit code: 0

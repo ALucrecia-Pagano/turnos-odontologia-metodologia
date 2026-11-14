@@ -9,18 +9,19 @@
 .gridScrollMobile {
   scroll-snap-type: x mandatory;
   scroll-padding-left: var(--agenda-time-gutter-width, 64px);
+  container-type: inline-size;
 }
 
 .columnHeaderMobile {
   scroll-snap-align: start;
-  min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
-  flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+  min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
+  flex: 0 0 calc(100cqi - var(--agenda-time-gutter-width, 64px));
 }
 
 .columnTrackMobile {
   scroll-snap-align: start;
-  min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
-  flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+  min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
+  flex: 0 0 calc(100cqi - var(--agenda-time-gutter-width, 64px));
 }
 
 .gridTable {
@@ -343,19 +344,20 @@
   .gridScrollContainer {
     scroll-snap-type: x mandatory;
     scroll-padding-left: var(--agenda-time-gutter-width, 64px);
+    container-type: inline-size;
   }
 
   .columnHeader,
   .weekColumnHeader {
     scroll-snap-align: start;
-    min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
-    flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+    min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
+    flex: 0 0 calc(100cqi - var(--agenda-time-gutter-width, 64px));
   }
 
   .columnTrack,
   .weekColumnTrack {
     scroll-snap-align: start;
-    min-width: calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
-    flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px) - 2 * var(--space-4));
+    min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
+    flex: 0 0 calc(100cqi - var(--agenda-time-gutter-width, 64px));
   }
 }

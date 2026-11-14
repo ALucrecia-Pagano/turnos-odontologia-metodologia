@@ -62,12 +62,14 @@ T_APPSHELL = "src/shared/components/AppShell.mobile.test.tsx"
 T_TOOLBAR = "src/features/agenda/AgendaToolbar.mobile.test.tsx"
 T_GRID = "src/features/agenda/AgendaGrid.mobile.test.tsx"
 T_DIALOG = "src/shared/components/Dialog.bottomSheet.test.tsx"
+T_SPACING = "src/features/agenda/AgendaSpacing.mobile.test.tsx"
 
 C36_TEST_FILES = (
     T_APPSHELL,
     T_TOOLBAR,
     T_GRID,
     T_DIALOG,
+    T_SPACING,
 )
 
 # --- Archivos de producción modificados o creados en C-36 ---
@@ -78,6 +80,8 @@ P_TOOLBAR_CSS = "frontend/src/features/agenda/AgendaToolbar.module.css"
 P_GRID_TSX = "frontend/src/features/agenda/AgendaGrid.tsx"
 P_GRID_CSS = "frontend/src/features/agenda/AgendaGrid.module.css"
 P_VIEW_TSX = "frontend/src/features/agenda/AgendaView.tsx"
+P_VIEW_CSS = "frontend/src/features/agenda/AgendaView.module.css"
+P_PAGE_SHELL_CSS = "frontend/src/shared/components/PageShell.module.css"
 P_DIALOG_TSX = "frontend/src/shared/components/Dialog.tsx"
 P_DIALOG_CSS = "frontend/src/shared/components/Dialog.module.css"
 P_APPT_DETAIL_CSS = "frontend/src/features/appointments/AppointmentDetailDialog.module.css"
@@ -93,6 +97,8 @@ PRODUCTION_FILES = (
     P_GRID_TSX,
     P_GRID_CSS,
     P_VIEW_TSX,
+    P_VIEW_CSS,
+    P_PAGE_SHELL_CSS,
     P_DIALOG_TSX,
     P_DIALOG_CSS,
     P_APPT_DETAIL_CSS,
@@ -179,6 +185,65 @@ MUTATIONS: tuple[Mutation, ...] = (
         P_DIALOG_TSX,
         "const isMobileEffective = isMobile ?? isMobileDevice;",
         "const isMobileEffective = true;",
+    ),
+    # M09 - Grilla: ancho útil con 100cqi y sin 100vw
+    Mutation(
+        T_GRID,
+        "09-grilla-columna-cqi: utiliza container inline-size y ancho cqi en columnas móviles sin cálculo 100vw",
+        P_GRID_CSS,
+        """.columnHeaderMobile {
+  scroll-snap-align: start;
+  min-width: calc(100cqi - var(--agenda-time-gutter-width, 64px));
+  flex: 0 0 calc(100cqi - var(--agenda-time-gutter-width, 64px));
+}""",
+        """.columnHeaderMobile {
+  scroll-snap-align: start;
+  min-width: calc(100vw - var(--agenda-time-gutter-width, 64px));
+  flex: 0 0 calc(100vw - var(--agenda-time-gutter-width, 64px));
+}""",
+    ),
+    # M10 - Toolbar: texto corto '‹'/'›' y navRow sin flex-wrap
+    Mutation(
+        T_TOOLBAR,
+        "10-toolbar-compacta-tres-filas: Anterior y Siguiente muestran texto corto conservando nombre accesible y fila 1 sin flex-wrap",
+        P_TOOLBAR_TSX,
+        """            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={onPrevDay}
+              aria-label={prevLabel}
+            >
+              {isMobileEffective ? "‹" : prevLabel}
+            </button>""",
+        """            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={onPrevDay}
+              aria-label={prevLabel}
+            >
+              {prevLabel}
+            </button>""",
+    ),
+    # M11 - Espaciado: margen superior al encabezado de fecha
+    Mutation(
+        T_SPACING,
+        "11-espaciado-agenda: reduce separación entre título y toolbar y asigna margen superior con tokens al encabezado de fecha",
+        P_VIEW_CSS,
+        """.headerBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}""",
+        """.headerBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}""",
     ),
 )
 

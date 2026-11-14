@@ -1,0 +1,11 @@
+=== GREEN 09: Grilla columna cqi sin 100vw ===
+Comando: npx vitest run src/features/agenda/AgendaGrid.mobile.test.tsx
+Resultado: Pasa (container-type: inline-size presente, 100cqi utilizado, sin 100vw)
+
+ ✓ src/features/agenda/AgendaGrid.mobile.test.tsx (3 tests) 114ms
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 05-grilla-scroll-snap-y-horas-sticky: aplica scroll-snap horizontal mandatory y eje horario fijo en celular
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 06-grilla-ancho-util-y-default-grid: preserva modo inicial grilla en AgendaView y dimensiona columnas a ancho útil en móvil
+   ✓ AgendaGrid — Modo Móvil (<= 640 px) > 09-grilla-columna-cqi: utiliza container inline-size y ancho cqi en columnas móviles sin cálculo 100vw
+
+Test Files  1 passed (1)
+Tests  3 passed (3)

@@ -1,0 +1,9 @@
+=== GREEN 11: Espaciado agenda reducido y margen superior en fecha ===
+Comando: npx vitest run src/features/agenda/AgendaSpacing.mobile.test.tsx
+Resultado: Pasa (PageShell con padding reducido por tokens en escritorio y móvil; headerBar con margin-top: var(--space-4))
+
+ ✓ src/features/agenda/AgendaSpacing.mobile.test.tsx (1 test) 5ms
+   ✓ AgendaSpacing — Espaciado de página y encabezado > 11-espaciado-agenda: reduce separación entre título y toolbar y asigna margen superior con tokens al encabezado de fecha
+
+Test Files  1 passed (1)
+Tests  1 passed (1)

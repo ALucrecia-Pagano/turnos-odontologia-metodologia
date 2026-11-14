@@ -5,8 +5,8 @@
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8).
 
 - **Tareas**: Fases 1 a 6 implementadas y verificadas de forma autónoma según [tasks.md](../../openspec/changes/ui-tema-oscuro-y-movil/tasks.md); fase 7 (capturas visuales multi-resolución) preparada y delegada a Claude.
-- **Vitest**: Línea base de **260 tests en 64 archivos**; suite final de **268 tests en 68 archivos**, todos en verde ([test-suite-C-36.txt](test-suite-C-36.txt)). Los 8 tests nuevos se encuentran en 4 archivos aislados (`AppShell.mobile.test.tsx`, `AgendaToolbar.mobile.test.tsx`, `AgendaGrid.mobile.test.tsx`, `Dialog.bottomSheet.test.tsx`); cada uno cuenta con su par RED/GREEN documentado.
-- **Mutaciones**: **8 de 8 mutaciones eliminadas** (M01–M08) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 sin cambios: sí** ([mutaciones-C-36.txt](mutaciones-C-36.txt), generado por [mutaciones-C-36.py](mutaciones-C-36.py)).
+- **Vitest**: Línea base de **260 tests en 64 archivos**; suite final de **271 tests en 69 archivos**, todos en verde ([test-suite-C-36.txt](test-suite-C-36.txt)). Los 11 tests nuevos se encuentran en 5 archivos aislados (`AppShell.mobile.test.tsx`, `AgendaToolbar.mobile.test.tsx`, `AgendaGrid.mobile.test.tsx`, `Dialog.bottomSheet.test.tsx`, `AgendaSpacing.mobile.test.tsx`); cada uno cuenta con su par RED/GREEN documentado.
+- **Mutaciones**: **11 de 11 mutaciones eliminadas** (M01–M11) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 sin cambios: sí** ([mutaciones-C-36.txt](mutaciones-C-36.txt), generado por [mutaciones-C-36.py](mutaciones-C-36.py)).
 - **Trazabilidad**: **12 escenarios** declarados en specs delta (8 testeables 1:1 + 4 visuales a cargo de Claude), 0 inconsistencias ([trazabilidad-C-36.txt](trazabilidad-C-36.txt), generado por [trazabilidad-C-36.py](trazabilidad-C-36.py)).
 - **Calidad y Tooling**:
   - `npx tsc --noEmit` exit 0 (0 errores de tipos).
@@ -52,6 +52,9 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | M06 | `AgendaGrid.mobile.test.tsx` | `06-grilla-ancho-util-y-default-grid` | ELIMINADA | `AssertionError: expected null not to be null` |
 | M07 | `Dialog.bottomSheet.test.tsx` | `07-dialog-bottom-sheet-mobile` | ELIMINADA | `Error: expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"` |
 | M08 | `Dialog.bottomSheet.test.tsx` | `08-dialog-modal-centrado-desktop` | ELIMINADA | `Error: expect(element).not.toHaveAttribute("data-mobile-sheet") // element.hasAttribute("data-mobile-sheet")` |
+| M09 | `AgendaGrid.mobile.test.tsx` | `09-grilla-columna-cqi` | ELIMINADA | `AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' not to match /\.columnHeaderMobile[^{]*\{[^}]*100vw/` |
+| M10 | `AgendaToolbar.mobile.test.tsx` | `10-toolbar-compacta-tres-filas` | ELIMINADA | `AssertionError: expected 'Anterior' to be '‹' // Object.is equality` |
+| M11 | `AgendaSpacing.mobile.test.tsx` | `11-espaciado-agenda` | ELIMINADA | `AssertionError: expected '.agendaView {\r\n  display: flex;\r\n…' to match /\.headerBar\s*\{[^}]*margin-top:\s*va…/` |
 <!-- mutaciones:fin -->
 
 ---
@@ -72,6 +75,10 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 5. **Detección de foco en `AppShell.mobile.test.tsx` (M02)**:
    - *Causa*: En el test inicial de Escape, al abrir el menú mediante click, el botón Menú conservaba el foco activo en JSDOM, por lo que comentar el retorno de foco no hacía fallar el test.
    - *Resolución*: Se movió explícitamente el foco a un enlace dentro del menú (`screen.getByRole("link", { name: "Agenda" }).focus()`) antes de disparar la tecla `Escape`. Al pulsar Escape, se verifica que el foco regrese efectivamente al botón Menú, eliminando la mutación M02 estrictamente por aserción.
+6. **Defectos detectados en captura real: columna cortada por cálculo con 100vw, toolbar en 4 filas, espaciado**:
+   - *Columna cortada por cálculo con 100vw*: Al restar 64 px y padding de `2 * var(--space-4)` a `100vw`, no se consideraba el padding del PageShell y el borde, dando 294 px en lugar de 276 px (ancho útil real dentro de la grilla), cortando la columna 18 px e impidiendo que el snap mostrara una columna entera. Corregido aplicando `container-type: inline-size` a `.gridScrollContainer` (modo móvil) y dimensionando columnas con `calc(100cqi - var(--agenda-time-gutter-width, 64px))` suprimendo totalmente el cálculo con `100vw` (test 09 en `AgendaGrid.mobile.test.tsx`, mutación M09).
+   - *Toolbar en 4 filas*: La toolbar en móvil ocupaba excesiva altura vertical y rompía controles. Corregido reestructurándola estrictamente en 3 filas: Fila 1 con [Día | Semana] + Anterior ('‹') + Hoy + Siguiente ('›') con `flex-wrap: nowrap` y preservación de los nombres accesibles ("Anterior" / "Siguiente"); Fila 2 con Fecha a ancho disponible + 'Nuevo turno'; Fila 3 con 'Filtros' + 'Actualizar agenda' ('↻'). Paddings y gaps compactados mediante tokens (test 10 en `AgendaToolbar.mobile.test.tsx`, mutación M10).
+   - *Espaciado*: Había excesiva separación entre el título "Agenda diaria" y la toolbar, mientras que el encabezado de fecha ("miércoles 18 de noviembre de 2026") quedaba pegado al borde inferior de la toolbar. Corregido reduciendo el padding de `PageShell.module.css` mediante tokens (`var(--space-3)` en escritorio y `var(--space-2)` en móvil) y asignando `margin-top: var(--space-4)` a `.headerBar` en `AgendaView.module.css` (test 11 en `AgendaSpacing.mobile.test.tsx`, mutación M11).
 
 ---
 

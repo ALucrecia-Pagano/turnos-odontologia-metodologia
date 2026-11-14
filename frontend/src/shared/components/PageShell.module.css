@@ -7,7 +7,7 @@
 .header {
   display: flex;
   align-items: center;
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-3) var(--space-5);
 }
 
 .brand {
@@ -22,7 +22,7 @@
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-5);
+  padding: var(--space-3) var(--space-5) var(--space-6);
 }
 
 .footer {
@@ -30,4 +30,14 @@
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .main {
+    padding: var(--space-2) var(--space-4) var(--space-4);
+  }
 }

@@ -1,0 +1,11 @@
+=== RED 11: Espaciado agenda reducido y margen superior en fecha ===
+Comando: npx vitest run src/features/agenda/AgendaSpacing.mobile.test.tsx
+Resultado: Falla por aserción esperada (PageShell.module.css mantiene padding var(--space-6) y AgendaView.module.css no tiene margin-top en headerBar)
+
+AssertionError: expected '.shell {\r\n  display: flex;\r\n  fle…' to match /\.main\s*\{[^}]*padding:\s*var\(--spa…/
+- Expected: /\.main\s*\{[^}]*padding:\s*var\(--space-3\)/
+ ❯ src/features/agenda/AgendaSpacing.mobile.test.tsx:12:26
+    12|     expect(pageShellCss).toMatch(/\.main\s*\{[^}]*padding:\s*var\(--space-3\)/);
+
+Test Files  1 failed (1)
+Tests  1 failed (1)

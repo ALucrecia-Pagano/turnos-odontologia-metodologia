@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import type { AgendaAppointment } from "./agendaApi";
@@ -131,5 +133,22 @@ describe("AgendaGrid — Modo Móvil (<= 640 px)", () => {
 
     const mobileColumns = container.querySelectorAll("[data-mobile-column='true']");
     expect(mobileColumns.length).toBe(columns.length);
+  });
+
+  it("09-grilla-columna-cqi: utiliza container inline-size y ancho cqi en columnas móviles sin cálculo 100vw", () => {
+    const cssPath = path.resolve(__dirname, "./AgendaGrid.module.css");
+    const cssContent = fs.readFileSync(cssPath, "utf-8");
+
+    // Container en móvil define container-type: inline-size
+    expect(cssContent).toMatch(/container-type:\s*inline-size/);
+
+    // Columnas móviles calculan su ancho con 100cqi descontando el time gutter
+    expect(cssContent).toMatch(/calc\(100cqi\s*-\s*var\(--agenda-time-gutter-width,\s*64px\)\)/);
+
+    // Prohíbe el cálculo con 100vw en las reglas móviles de columna
+    expect(cssContent).not.toMatch(/\.columnHeaderMobile[^{]*\{[^}]*100vw/);
+    expect(cssContent).not.toMatch(/\.columnTrackMobile[^{]*\{[^}]*100vw/);
+    expect(cssContent).not.toMatch(/@media\s*\(max-width:\s*640px\)[^{]*\{[^}]*100vw/);
+    expect(cssContent).not.toContain("100vw");
   });
 });

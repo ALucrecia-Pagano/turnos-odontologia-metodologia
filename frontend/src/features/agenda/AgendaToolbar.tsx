@@ -195,8 +195,9 @@ export function AgendaToolbar({
               type="button"
               className={styles.actionButton}
               onClick={onPrevDay}
+              aria-label={prevLabel}
             >
-              {prevLabel}
+              {isMobileEffective ? "‹" : prevLabel}
             </button>
             <button
               type="button"
@@ -209,61 +210,67 @@ export function AgendaToolbar({
               type="button"
               className={styles.actionButton}
               onClick={onNextDay}
+              aria-label={nextLabel}
             >
-              {nextLabel}
+              {isMobileEffective ? "›" : nextLabel}
             </button>
           </div>
 
           <div className={styles.actionRow} data-testid="agenda-toolbar-action-row">
-            <div className={styles.field}>
-              <label htmlFor="agenda-date-input" className={styles.label}>
-                Fecha
-              </label>
-              <input
-                id="agenda-date-input"
-                type="date"
-                className={styles.dateInput}
-                value={date}
-                onChange={(event) => {
-                  const nextValue = event.target.value;
-                  if (nextValue !== "") {
-                    onSelectDate?.(nextValue);
-                  }
-                }}
-              />
+            <div className={styles.dateRow} data-testid="agenda-toolbar-date-row">
+              <div className={styles.fieldDate}>
+                <label htmlFor="agenda-date-input" className={styles.label}>
+                  Fecha
+                </label>
+                <input
+                  id="agenda-date-input"
+                  type="date"
+                  className={styles.dateInput}
+                  value={date}
+                  onChange={(event) => {
+                    const nextValue = event.target.value;
+                    if (nextValue !== "") {
+                      onSelectDate?.(nextValue);
+                    }
+                  }}
+                />
+              </div>
+
+              {canCreateAppointment && (
+                <button
+                  ref={newAppointmentRef}
+                  type="button"
+                  className={styles.primaryButton}
+                  onClick={onNewAppointment}
+                >
+                  Nuevo turno
+                </button>
+              )}
             </div>
 
-            {onRefresh !== undefined && (
+            <div className={styles.filterRow} data-testid="agenda-toolbar-filter-row">
               <button
                 type="button"
-                className={styles.actionButton}
-                onClick={onRefresh}
+                className={styles.filterToggleButton}
+                aria-expanded={isFiltersOpen}
+                aria-controls="agenda-filters-panel"
+                data-testid="agenda-toolbar-filters-toggle"
+                onClick={() => setIsFiltersOpen((prev) => !prev)}
               >
-                Actualizar agenda
+                {filtersButtonLabel}
               </button>
-            )}
 
-            {canCreateAppointment && (
-              <button
-                ref={newAppointmentRef}
-                type="button"
-                className={styles.primaryButton}
-                onClick={onNewAppointment}
-              >
-                Nuevo turno
-              </button>
-            )}
-
-            <button
-              type="button"
-              className={styles.filterToggleButton}
-              aria-expanded={isFiltersOpen}
-              aria-controls="agenda-filters-panel"
-              data-testid="agenda-toolbar-filters-toggle"
-              onClick={() => setIsFiltersOpen((prev) => !prev)}
-            >
-              {filtersButtonLabel}
-            </button>
+              {onRefresh !== undefined && (
+                <button
+                  type="button"
+                  className={styles.actionButton}
+                  onClick={onRefresh}
+                  aria-label="Actualizar agenda"
+                >
+                  ↻
+                </button>
+              )}
+            </div>
           </div>
 
           <div
