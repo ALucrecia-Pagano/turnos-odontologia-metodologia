@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/auth/menuFor.test.ts (3 tests) 6ms
+ ✓ src/shared/components/AppShellBrand.test.tsx (2 tests) 151ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 251ms
+
+ Test Files  3 passed (3)
+      Tests  7 passed (7)
+   Start at  20:17:04
+   Duration  2.39s (transform 370ms, setup 743ms, collect 913ms, tests 408ms, environment 2.82s, prepare 491ms)
+

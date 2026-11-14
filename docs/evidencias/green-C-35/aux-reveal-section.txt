@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/landing/RevealSection.test.tsx (3 tests) 87ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  19:54:55
+   Duration  1.80s (transform 124ms, setup 233ms, collect 128ms, tests 87ms, environment 849ms, prepare 132ms)
+

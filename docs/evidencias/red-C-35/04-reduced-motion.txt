@@ -1,0 +1,47 @@
+RED por mutacion (el escenario ya pasaba antes de la mutacion).
+archivo mutado: src/features/landing/RevealSection.tsx
+- const canAnimate = !reducedMotion && (observer
++ const canAnimate = (observer
+---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (3 tests | 1 failed | 2 skipped) 69ms
+   ↓ LandingPage > portada completa para anónimo en /
+   ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
+   × LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible 67ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  19:54:31
+   Duration  3.65s (transform 619ms, setup 297ms, collect 1.50s, tests 69ms, environment 1.20s, prepare 210ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/LandingPage.test.tsx:127:23
+    125|     expect(sections).toHaveLength(4);
+    126|     for (const section of sections) {
+    127|       expect(section).toHaveAttribute("data-reveal", "revealed");
+       |                       ^
+    128|     }
+    129|     expect(harness.observedCount()).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+SHA-256 restaurado: si
+exit: 1

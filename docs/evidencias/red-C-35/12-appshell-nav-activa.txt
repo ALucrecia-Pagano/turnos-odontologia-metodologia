@@ -1,0 +1,45 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx (1 test | 1 failed) 211ms
+   × AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px 208ms
+     → expected 'display: inline-flex;\r\n  align-item…' not to match /(^|[\s;])background(-color)?:\s*(?!tr…/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/AppShellNavigation.test.tsx > AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+AssertionError: expected 'display: inline-flex;\r\n  align-item…' not to match /(^|[\s;])background(-color)?:\s*(?!tr…/
+
+- Expected: 
+/(^|[\s;])background(-color)?:\s*(?!transparent|none)/
+
++ Received: 
+"display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;"
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx:62:22
+     60|     const link = ruleBody(css, ".menuLink");
+     61|     expect(link).not.toBe("");
+     62|     expect(link).not.toMatch(BOX_BACKGROUND);
+       |                      ^
+     63|     expect(link).not.toMatch(BOX_BORDER);
+     64|     expect(ruleBody(css, ".menuLinkActive")).toMatch(/border-bottom-co…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:12:21
+   Duration  3.26s (transform 271ms, setup 384ms, collect 457ms, tests 211ms, environment 1.60s, prepare 217ms)
+

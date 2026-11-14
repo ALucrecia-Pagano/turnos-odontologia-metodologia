@@ -4,24 +4,13 @@ import hero2 from "../../assets/images/hero-2-consultorio.webp";
 import hero3 from "../../assets/images/hero-3-dentista.webp";
 import hero4 from "../../assets/images/hero-4-instrumental.webp";
 import hero5 from "../../assets/images/hero-5-sillon.webp";
+import { createIntervalTicker, type CarouselTicker } from "./carouselTicker";
 import styles from "./LoginPage.module.css";
 
-export type CarouselTicker = (callback: () => void) => () => void;
+export type { CarouselTicker };
 
 const SLIDE_INTERVAL_MS = 7000;
 const SLIDES = [hero1, hero2, hero3, hero4, hero5];
-
-export function createIntervalTicker(intervalMs: number): CarouselTicker {
-  return (callback) => {
-    if (typeof window === "undefined") {
-      return () => {};
-    }
-    const intervalId = window.setInterval(callback, intervalMs);
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  };
-}
 
 const defaultTicker = createIntervalTicker(SLIDE_INTERVAL_MS);
 
@@ -35,9 +24,10 @@ function detectPrefersReducedMotion(): boolean {
 export interface LoginCarouselProps {
   ticker?: CarouselTicker;
   prefersReducedMotion?: boolean;
+  blurred?: boolean;
 }
 
-export function LoginCarousel({ ticker = defaultTicker, prefersReducedMotion }: LoginCarouselProps) {
+export function LoginCarousel({ ticker = defaultTicker, prefersReducedMotion, blurred = false }: LoginCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reducedMotion = prefersReducedMotion ?? detectPrefersReducedMotion();
@@ -53,7 +43,7 @@ export function LoginCarousel({ ticker = defaultTicker, prefersReducedMotion }: 
   }, [paused, reducedMotion, ticker]);
 
   return (
-    <div className={styles.carousel}>
+    <div className={blurred ? `${styles.carousel} ${styles.carouselBlurred}` : styles.carousel}>
       {SLIDES.map((slide, index) => {
         const isActive = index === activeIndex;
         const className = [styles.slide, isActive ? styles.slideActive : "", isActive && !reducedMotion ? styles.kenBurns : ""]

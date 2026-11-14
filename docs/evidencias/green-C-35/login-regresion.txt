@@ -1,0 +1,18 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/login/LoginCarousel.test.tsx (5 tests) 266ms
+ ✓ src/features/login/LoginBrand.test.tsx (2 tests) 233ms
+ ✓ src/features/login/LoginPage.test.tsx (6 tests) 4082ms
+   ✓ LoginPage > login correcto del administrador  732ms
+   ✓ LoginPage > login correcto de recepción y del odontólogo  1060ms
+   ✓ LoginPage > credenciales inválidas con mensaje genérico  545ms
+   ✓ LoginPage > el 401 del login no es sesión vencida  607ms
+   ✓ LoginPage > envío en curso y doble submit  614ms
+   ✓ LoginPage > accesibilidad del formulario  522ms
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  20:00:15
+   Duration  7.04s (transform 550ms, setup 1.03s, collect 1.79s, tests 4.58s, environment 3.92s, prepare 647ms)
+

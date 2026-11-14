@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/components/AppShellNavigation.test.tsx (1 test) 168ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:13:34
+   Duration  2.86s (transform 289ms, setup 404ms, collect 531ms, tests 168ms, environment 1.18s, prepare 193ms)
+

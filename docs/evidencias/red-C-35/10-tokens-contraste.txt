@@ -1,0 +1,30 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 15ms
+   ↓ tokens de layout de la portada > define los dos tokens de layout
+   ↓ tokens de layout de la portada > la portada usa los tokens de layout
+   ↓ tokens de layout de la portada > no agrega colores nuevos
+   × tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies 13ms
+     → expected undefined to be defined
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
+AssertionError: expected undefined to be defined
+ ❯ src/shared/styles/landingTokens.test.ts:123:25
+    121|     const navySurface = tokens.get("--surface-navy");
+    122|     const ivorySurface = tokens.get("--surface-ivory-ice");
+    123|     expect(navySurface).toBeDefined();
+       |                         ^
+    124|     expect(ivorySurface).toBeDefined();
+    125|     expect(navySurface).toMatch(/^rgba\(1, 28, 64, /);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  20:09:29
+   Duration  2.15s (transform 97ms, setup 306ms, collect 63ms, tests 15ms, environment 1.24s, prepare 204ms)
+

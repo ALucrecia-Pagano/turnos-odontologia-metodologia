@@ -1,0 +1,2 @@
+ frontend/src/test/smoke.test.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)

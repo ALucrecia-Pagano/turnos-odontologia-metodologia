@@ -1,0 +1,45 @@
+RED por mutacion (el escenario ya pasaba antes de la mutacion).
+archivo mutado: src/features/login/LoginPage.tsx
+- .expired === true;
++ .expired === false;
+---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 82ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+   × LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida 80ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  19:59:58
+   Duration  2.52s (transform 228ms, setup 235ms, collect 542ms, tests 82ms, environment 1.06s, prepare 212ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/features/login/LoginPage.translucido.test.tsx:149:19
+    147| 
+    148|     const alert = screen.queryByRole("alert");
+    149|     expect(alert).toBeInTheDocument();
+       |                   ^
+    150|     expect(alert).toHaveTextContent(/^La sesión venció\. Iniciá sesión…
+    151|     expect(screen.queryByLabelText("Usuario")).toHaveFocus();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+SHA-256 restaurado: si
+exit: 1

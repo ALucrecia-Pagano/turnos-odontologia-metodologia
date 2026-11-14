@@ -1,0 +1,14 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/styles/tokens.test.ts (4 tests) 8ms
+ ✓ src/shared/styles/appointmentStatusTokens.test.ts (2 tests) 9ms
+ ✓ src/shared/styles/aquaPalette.test.ts (2 tests) 7ms
+ ✓ src/shared/styles/landingTokens.test.ts (4 tests) 18ms
+ ✓ src/shared/styles/fonts.test.ts (4 tests) 44ms
+
+ Test Files  5 passed (5)
+      Tests  16 passed (16)
+   Start at  20:10:13
+   Duration  2.60s (transform 238ms, setup 1.79s, collect 372ms, tests 87ms, environment 7.44s, prepare 1.08s)
+

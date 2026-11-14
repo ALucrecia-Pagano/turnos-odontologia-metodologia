@@ -1,0 +1,846 @@
+RED por mutacion (el escenario ya pasaba antes de la mutacion).
+archivo mutado: src/features/landing/RootGate.tsx
+-     if (status === "anonymous") {
++     if (status === "anonymous" || status === "authenticated") {
+---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RootGate.test.tsx (1 test | 1 failed) 1111ms
+   × RootGate > usuario autenticado en / redirige a agenda 1109ms
+     → expected '/' to be '/agenda?date=2026-11-16' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Navegación principal"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"navList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/"[39m
+                [36m>[39m
+                  [0mInicio[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"#la-clinica"[39m
+                [36m>[39m
+                  [0mLa clínica[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/acceso"[39m
+                [36m>[39m
+                  [0mAcceder[0m
+                [36m</a>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+        [36m</header>[39m
+        [36m<main>[39m
+          [36m<section[39m
+            [33mclass[39m=[32m"hero"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"carousel"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+                [33mdata-active[39m=[32m"true"[39m
+                [33mdata-slide-index[39m=[32m"0"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"1"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"2"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"3"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"4"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"overlay"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"carouselToggle"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPausar animación[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"heroOverlay"[39m
+              [33mdata-landing-overlay[39m=[32m""[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"heroContent"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"logoHeading"[39m
+              [36m>[39m
+                [36m<img[39m
+                  [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+                  [33mclass[39m=[32m"logo"[39m
+                  [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+                [36m/>[39m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"slogan"[39m
+              [36m>[39m
+                [0mClaridad en cada cuidado.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"lead"[39m
+              [36m>[39m
+                [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"demoBadge"[39m
+              [36m>[39m
+                [0mSitio de demostración[0m
+              [36m</p>[39m
+              [36m<hr[39m
+                [33mclass[39m=[32m"rule"[39m
+              [36m/>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"cta"[39m
+                [33mhref[39m=[32m"#la-clinica"[39m
+              [36m>[39m
+                [0mExplorar la clínica [0m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ctaArrow"[39m
+                [36m>[39m
+                  [0m→[0m
+                [36m</span>[39m
+              [36m</a>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sections"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-clinica"[39m
+                [33mclass[39m=[32m"section"[39m
+                [33mid[39m=[32m"la-clinica"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-clinica"[39m
+                [36m>[39m
+                  [0m01 / Quiénes somos[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"sectionLead"[39m
+                  [36m>[39m
+                    [0mAqua es un consultorio odontológico de demostración. Este sitio muestra cómo se ordena una agenda de turnos: profesionales, sillones y prestaciones, sin superposiciones.[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mCada turno tiene un estado claro, y cada cambio queda registrado en su historial.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-servicios"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-servicios"[39m
+                [36m>[39m
+                  [0m02 / Servicios[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mLimpieza[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mProfilaxis y control de sarro.[0m
+                      [0m ([0m
+                      [0m45[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mExtracción[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mExtracciones simples con indicaciones de cuidado.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mRestauración[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRecuperación de piezas dañadas.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mControl[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRevisión general y seguimiento.[0m
+                      [0m ([0m
+                      [0m30[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mBlanqueamiento[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mTratamiento estético.[0m
+                      [0m ([0m
+                      [0m90[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-equipo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-equipo"[39m
+                [36m>[39m
+                  [0m03 / Equipo[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDr. Martín Sosa[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes por la mañana.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Laura Quiroga[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Paula Benítez[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-contacto"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-contacto"[39m
+                [36m>[39m
+                  [0m04 / Horarios y contacto[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p>[39m
+                    [0mLunes a viernes[0m
+                    [0m: [0m
+                    [0m9:00 a 13:00[0m
+                    [0m y [0m
+                    [0m15:00 a 19:00[0m
+                    [0m.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"phone"[39m
+                  [36m>[39m
+                    [0m(0261) 555-0101[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mAv. Ejemplo 1234, Ciudad Demo[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mturnos@aqua-demo.example[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"note"[39m
+                  [36m>[39m
+                    [0mDatos de contacto ficticios, solo para la demostración. No agendar turnos reales.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"statusStrip"[39m
+                  [36m>[39m
+                    [0mEstado actual: demostración funcional[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:24:28
+   Duration  5.65s (transform 742ms, setup 482ms, collect 1.76s, tests 1.11s, environment 1.67s, prepare 201ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RootGate.test.tsx > RootGate > usuario autenticado en / redirige a agenda
+AssertionError: expected '/' to be '/agenda?date=2026-11-16' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Navegación principal"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"navList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/"[39m
+                [36m>[39m
+                  [0mInicio[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"#la-clinica"[39m
+                [36m>[39m
+                  [0mLa clínica[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/acceso"[39m
+                [36m>[39m
+                  [0mAcceder[0m
+                [36m</a>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+        [36m</header>[39m
+        [36m<main>[39m
+          [36m<section[39m
+            [33mclass[39m=[32m"hero"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"carousel"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+                [33mdata-active[39m=[32m"true"[39m
+                [33mdata-slide-index[39m=[32m"0"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"1"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"2"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"3"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"4"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"overlay"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"carouselToggle"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPausar animación[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"heroOverlay"[39m
+              [33mdata-landing-overlay[39m=[32m""[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"heroContent"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"logoHeading"[39m
+              [36m>[39m
+                [36m<img[39m
+                  [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+                  [33mclass[39m=[32m"logo"[39m
+                  [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+                [36m/>[39m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"slogan"[39m
+              [36m>[39m
+                [0mClaridad en cada cuidado.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"lead"[39m
+              [36m>[39m
+                [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"demoBadge"[39m
+              [36m>[39m
+                [0mSitio de demostración[0m
+              [36m</p>[39m
+              [36m<hr[39m
+                [33mclass[39m=[32m"rule"[39m
+              [36m/>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"cta"[39m
+                [33mhref[39m=[32m"#la-clinica"[39m
+              [36m>[39m
+                [0mExplorar la clínica [0m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ctaArrow"[39m
+                [36m>[39m
+                  [0m→[0m
+                [36m</span>[39m
+              [36m</a>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sections"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-clinica"[39m
+                [33mclass[39m=[32m"section"[39m
+                [33mid[39m=[32m"la-clinica"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-clinica"[39m
+                [36m>[39m
+                  [0m01 / Quiénes somos[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"sectionLead"[39m
+                  [36m>[39m
+                    [0mAqua es un consultorio odontológico de demostración. Este sitio muestra cómo se ordena una agenda de turnos: profesionales, sillones y prestaciones, sin superposiciones.[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mCada turno tiene un estado claro, y cada cambio queda registrado en su historial.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-servicios"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-servicios"[39m
+                [36m>[39m
+                  [0m02 / Servicios[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mLimpieza[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mProfilaxis y control de sarro.[0m
+                      [0m ([0m
+                      [0m45[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mExtracción[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mExtracciones simples con indicaciones de cuidado.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mRestauración[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRecuperación de piezas dañadas.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mControl[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRevisión general y seguimiento.[0m
+                      [0m ([0m
+                      [0m30[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mBlanqueamiento[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mTratamiento estético.[0m
+                      [0m ([0m
+                      [0m90[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-equipo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-equipo"[39m
+                [36m>[39m
+                  [0m03 / Equipo[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDr. Martín Sosa[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes por la mañana.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Laura Quiroga[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Paula Benítez[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-contacto"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-contacto"[39m
+                [36m>[39m
+                  [0m04 / Horarios y contacto[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p>[39m
+                    [0mLunes a viernes[0m
+                    [0m: [0m
+                    [0m9:00 a 13:00[0m
+                    [0m y [0m
+                    [0m15:00 a 19:00[0m
+                    [0m.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"phone"[39m
+                  [36m>[39m
+                    [0m(0261) 555-0101[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mAv. Ejemplo 1234, Ciudad Demo[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mturnos@aqua-demo.example[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"note"[39m
+                  [36m>[39m
+                    [0mDatos de contacto ficticios, solo para la demostración. No agendar turnos reales.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"statusStrip"[39m
+                  [36m>[39m
+                    [0mEstado actual: demostración funcional[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+Expected: "/agenda?date=2026-11-16"
+Received: "/"
+
+ ❯ src/features/landing/RootGate.test.tsx:53:82
+     51| 
+     52|     await waitFor(() => {
+     53|       expect(`${router.state.location.pathname}${router.state.location…
+       |                                                                                  ^
+     54|     });
+     55|     expect(router.state.historyAction).toBe("REPLACE");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+SHA-256 restaurado: si
+exit: 1

@@ -1,0 +1,35 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (1 test | 1 failed) 123ms
+   × LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales 121ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/features/login/LoginPage.translucido.test.tsx:78:45
+     76|     const { router } = renderLogin("/login?rol=recepcion", tokenStore,…
+     77| 
+     78|     expect(screen.queryByText("Recepción")).toBeInTheDocument();
+       |                                             ^
+     79|     expect(screen.queryByRole("link", { name: "← Volver" })).toHaveAtt…
+     80|     expect(screen.queryByRole("img", { name: "Aqua — Clínica Odontológ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  19:56:41
+   Duration  2.83s (transform 291ms, setup 320ms, collect 679ms, tests 123ms, environment 1.15s, prepare 186ms)
+

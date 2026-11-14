@@ -1,0 +1,347 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 1125ms
+   × AccesoPage > navegación desde las tres tarjetas de rol hacia login 1123ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"carousel"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+            [33mdata-active[39m=[32m"true"[39m
+            [33mdata-slide-index[39m=[32m"0"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"1"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"2"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"3"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"4"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"overlay"[39m
+          [36m/>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"carouselToggle"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mPausar animación[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+              [33mclass[39m=[32m"logo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+            [36m/>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"tagline"[39m
+            [36m>[39m
+              [0mClaridad en cada cuidado.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"login-heading"[39m
+            [33mclass[39m=[32m"card"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"title"[39m
+                [33mid[39m=[32m"login-heading"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"subtitle"[39m
+              [36m>[39m
+                [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+              [36m</p>[39m
+            [36m</header>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"Iniciar sesión"[39m
+              [33mclass[39m=[32m"form"[39m
+              [33mnovalidate[39m=[32m""[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-username"[39m
+                [36m>[39m
+                  [0mUsuario[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"username"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-username"[39m
+                  [33mmaxlength[39m=[32m"150"[39m
+                  [33mname[39m=[32m"username"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-password"[39m
+                [36m>[39m
+                  [0mContraseña[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"current-password"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-password"[39m
+                  [33mmaxlength[39m=[32m"128"[39m
+                  [33mname[39m=[32m"password"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"password"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-busy[39m=[32m"false"[39m
+                [33mclass[39m=[32m"submit"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mIngresar[0m
+              [36m</button>[39m
+            [36m</form>[39m
+          [36m</section>[39m
+        [36m</div>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ↓ AccesoPage > navegación de retorno con el enlace Volver a Aqua
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/AccesoPage.test.tsx > AccesoPage > navegación desde las tres tarjetas de rol hacia login
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"carousel"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+            [33mdata-active[39m=[32m"true"[39m
+            [33mdata-slide-index[39m=[32m"0"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"1"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"2"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"3"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"4"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"overlay"[39m
+          [36m/>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"carouselToggle"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mPausar animación[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+              [33mclass[39m=[32m"logo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+            [36m/>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"tagline"[39m
+            [36m>[39m
+              [0mClaridad en cada cuidado.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"login-heading"[39m
+            [33mclass[39m=[32m"card"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"title"[39m
+                [33mid[39m=[32m"login-heading"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"subtitle"[39m
+              [36m>[39m
+                [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+              [36m</p>[39m
+            [36m</header>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"Iniciar sesión"[39m
+              [33mclass[39m=[32m"form"[39m
+              [33mnovalidate[39m=[32m""[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-username"[39m
+                [36m>[39m
+                  [0mUsuario[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"username"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-username"[39m
+                  [33mmaxlength[39m=[32m"150"[39m
+                  [33mname[39m=[32m"username"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-password"[39m
+                [36m>[39m
+                  [0mContraseña[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"current-password"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-password"[39m
+                  [33mmaxlength[39m=[32m"128"[39m
+                  [33mname[39m=[32m"password"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"password"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-busy[39m=[32m"false"[39m
+                [33mclass[39m=[32m"submit"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mIngresar[0m
+              [36m</button>[39m
+            [36m</form>[39m
+          [36m</section>[39m
+        [36m</div>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/landing/AccesoPage.test.tsx:31:91
+     29| 
+     30|     await waitFor(() => {
+     31|       expect(screen.queryByRole("heading", { level: 1, name: "¿Cómo qu…
+       |                                                                                           ^
+     32|     });
+     33|     expect(router.state.location.pathname).toBe("/acceso");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  19:55:27
+   Duration  4.97s (transform 638ms, setup 313ms, collect 1.70s, tests 1.12s, environment 1.20s, prepare 210ms)
+

@@ -1,0 +1,34 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (2 tests | 1 failed | 1 skipped) 1121ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   × LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter 1119ms
+     → expected '' to contain 'background: var(--color-navy-deep);'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+AssertionError: expected '' to contain 'background: var(--color-navy-deep);'
+
+- Expected
++ Received
+
+- background: var(--color-navy-deep);
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx:131:22
+    129|     const css = readSrcFile("features/login/LoginPage.module.css");
+    130|     const fallback = ruleBody(css, ".card", "@supports not (backdrop-f…
+    131|     expect(fallback).toContain("background: var(--color-navy-deep);");
+       |                      ^
+    132|     expect(readSrcFile("shared/styles/tokens.css")).toMatch(/--color-n…
+    133|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  19:58:48
+   Duration  3.77s (transform 283ms, setup 316ms, collect 629ms, tests 1.12s, environment 1.13s, prepare 197ms)
+

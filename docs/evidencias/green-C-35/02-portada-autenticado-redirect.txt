@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/landing/RootGate.test.tsx (1 test) 158ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:24:36
+   Duration  3.01s (transform 471ms, setup 244ms, collect 1.23s, tests 158ms, environment 894ms, prepare 151ms)
+

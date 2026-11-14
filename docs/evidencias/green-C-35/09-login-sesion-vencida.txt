@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/login/LoginPage.translucido.test.tsx (3 tests) 2264ms
+   ✓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales  654ms
+   ✓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter  1081ms
+   ✓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida  528ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:00:02
+   Duration  4.29s (transform 216ms, setup 209ms, collect 572ms, tests 2.26s, environment 814ms, prepare 137ms)
+

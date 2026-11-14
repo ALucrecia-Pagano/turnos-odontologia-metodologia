@@ -1,0 +1,35 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (2 tests | 1 failed | 1 skipped) 76ms
+   ↓ LandingPage > portada completa para anónimo en /
+   × LandingPage > secciones editoriales entran con animación lateral al scrollear 73ms
+     → expected  to have a length of 4 but got +0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > secciones editoriales entran con animación lateral al scrollear
+AssertionError: expected  to have a length of 4 but got +0
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ src/features/landing/LandingPage.test.tsx:93:22
+     91| 
+     92|     const sections = container.querySelectorAll("[data-reveal]");
+     93|     expect(sections).toHaveLength(4);
+       |                      ^
+     94|     for (const section of sections) {
+     95|       expect(section).toHaveAttribute("data-reveal", "pending");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  19:53:25
+   Duration  3.62s (transform 576ms, setup 288ms, collect 1.45s, tests 76ms, environment 1.23s, prepare 197ms)
+

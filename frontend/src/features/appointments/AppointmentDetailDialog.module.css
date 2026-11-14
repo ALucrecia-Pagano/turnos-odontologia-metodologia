@@ -1,9 +1,11 @@
 .container {
-  background-color: var(--color-surface);
+  background-color: var(--surface-ivory-ice);
   color: var(--color-text);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
+  backdrop-filter: blur(var(--blur-backdrop));
+  -webkit-backdrop-filter: blur(var(--blur-backdrop));
   width: 100%;
   max-width: 580px;
   max-height: calc(100dvh - 2 * var(--space-4));
@@ -223,5 +225,11 @@
 
   .actionsBar {
     flex-direction: column;
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .container {
+    background-color: var(--color-background);
   }
 }

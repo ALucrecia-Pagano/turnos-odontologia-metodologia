@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/landing/landingContent.test.ts (3 tests) 7ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  19:54:51
+   Duration  2.20s (transform 70ms, setup 295ms, collect 70ms, tests 7ms, environment 1.17s, prepare 189ms)
+

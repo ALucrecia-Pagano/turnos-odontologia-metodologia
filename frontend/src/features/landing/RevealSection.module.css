@@ -1,0 +1,23 @@
+.reveal {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 220ms ease-out,
+    transform 220ms ease-out;
+}
+
+.reveal[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateX(var(--landing-reveal-offset));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+  }
+
+  .reveal[data-reveal="pending"] {
+    opacity: 1;
+    transform: none;
+  }
+}

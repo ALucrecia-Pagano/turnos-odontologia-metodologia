@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/test/smoke.test.tsx (1 test) 137ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:17:59
+   Duration  3.96s (transform 678ms, setup 328ms, collect 1.68s, tests 137ms, environment 1.24s, prepare 192ms)
+

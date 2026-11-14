@@ -1,0 +1,86 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/components/Dialog.escape.test.tsx (1 test) 128ms
+ ✓ src/shared/components/Dialog.test.tsx (3 tests) 166ms
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > apertura y foco inicial
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > prellenado con fecha y filtros activos
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > sin filtros activos los selectores quedan sin selección
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+ ✓ src/features/appointments/PatientSearchGroup.test.tsx (4 tests) 353ms
+ ✓ src/features/appointments/AppointmentDetailDialog.test.tsx (6 tests) 551ms
+   ✓ AppointmentDetailDialog — Detalle e Historial > 3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar  360ms
+ ✓ src/features/appointments/AppointmentRescheduleDialog.test.tsx (6 tests) 622ms
+   ✓ AppointmentRescheduleDialog — Reprogramación > 6.1 apertura con paciente y prestación en solo lectura y campos prellenados  305ms
+ ✓ src/features/appointments/AppointmentStatusActions.test.tsx (6 tests) 612ms
+   ✓ AppointmentDetailDialog — Cambios de estado > 4.1 botones contextuales según estado y rol  379ms
+ ✓ src/features/appointments/AppointmentCancel.test.tsx (7 tests) 654ms
+   ✓ AppointmentDetailDialog — Cancelación > 5.1 cancelar turno muestra subvista de confirmación in-dialog  382ms
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > pulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+stderr | src/features/appointments/AppointmentFormDialog.test.tsx > AppointmentFormDialog > Escape cierra sin enviar solicitudes y devuelve el foco
+Warning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+ ✓ src/features/appointments/AppointmentFormDialog.test.tsx (14 tests) 1108ms
+
+ Test Files  8 passed (8)
+      Tests  47 passed (47)
+   Start at  20:11:04
+   Duration  3.61s (transform 974ms, setup 2.32s, collect 3.67s, tests 4.19s, environment 10.18s, prepare 1.39s)
+

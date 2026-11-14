@@ -46,17 +46,19 @@ El diseño de la portada, `/acceso` y `/login` utiliza una estética oscura edit
 
 | Elemento / Rol | Color de Texto | Color de Fondo | Ratio de Contraste | Nivel WCAG |
 |---|---|---|---|---|
-| Texto principal (login/hero) | `#FFFFFF` (Blanco) | `#011C40` (Navy oscuro base) | **16.05:1** | AAA (>= 7:1) |
-| Acentos e isotipo | `#A7EBF2` (`--color-ice`) | `#011C40` (Navy oscuro base) | **12.35:1** | AAA (>= 7:1) |
-| Textos secundarios y bordes claros | `#C9DDE4` (`--color-border`) | `#011C40` (Navy oscuro base) | **9.85:1** | AAA (>= 7:1) |
-| Enlaces y acentos activos | `#54ACBF` (`--color-accent`) | `#011C40` (Navy oscuro base) | **6.55:1** | AA (>= 4.5:1) |
+| Texto principal (login/hero) | `#FFFFFF` (Blanco) | `#011C40` (Navy oscuro base) | **16.92:1** | AAA (>= 7:1) |
+| Acentos e isotipo | `#A7EBF2` (`--color-ice`) | `#011C40` (Navy oscuro base) | **12.73:1** | AAA (>= 7:1) |
+| Textos secundarios y bordes claros | `#C9DDE4` (`--color-border`) | `#011C40` (Navy oscuro base) | **12.04:1** | AAA (>= 7:1) |
+| Enlaces y acentos activos | `#54ACBF` (`--color-accent`) | `#011C40` (Navy oscuro base) | **6.47:1** | AA (>= 4.5:1) |
 | Botón primario ("Ingresar" / CTA) | `#FFFFFF` (`--color-primary-contrast`) | `#26658C` (`--color-primary`) | **6.32:1** | AA (>= 4.5:1) |
 | Textos en modales (Decisión A) | `#011C40` (`--color-text`) | `rgba(243, 247, 250, 0.95)` (Marfil-hielo) | **15.70:1** | AAA (>= 7:1) |
 | Texto secundario en modales | `#4A5F78` (`--color-text-muted`) | `rgba(243, 247, 250, 0.95)` (Marfil-hielo) | **6.09:1** | AA (>= 4.5:1) |
 
+> **Corrección de cifras (apply C-35)**: los ratios de contraste sobre navy `#011C40` de la primera versión de esta tabla (16.05, 12.35, 9.85 y 6.55) no coincidían con el cálculo WCAG. Los valores de arriba son los calculados y los verifica el test del escenario 10 (`landingTokens.test.ts`). Todas las conclusiones de nivel (AAA o AA) se mantienen.
+
 ### Decisión: uso del accent `#54ACBF` según la superficie
 
-- **Sobre superficies oscuras (navy `#011C40`)**, el accent `#54ACBF` se permite como **texto o línea** (enlaces activos, subrayados, bordes en hover/focus), porque alcanza **6,55:1** (AA).
+- **Sobre superficies oscuras (navy `#011C40`)**, el accent `#54ACBF` se permite como **texto o línea** (enlaces activos, subrayados, bordes en hover/focus), porque alcanza **6,47:1** (AA).
 - **Sobre fondo claro** (blanco, `--color-background`, marfil-hielo de los modales), el accent **sigue siendo solo decorativo**, como estableció la identidad de C-34: no se usa para texto ni para indicadores que dependan de su contraste.
 
 ### Superficies y Fallbacks
@@ -93,6 +95,42 @@ El diseño de la portada, `/acceso` y `/login` utiliza una estética oscura edit
    backdrop-filter: blur(4px);
    -webkit-backdrop-filter: blur(4px);
    ```
+
+### Overlay del carrusel y botón de pausa (tokens, mismos valores de C-34)
+
+Los seis `rgba(...)` que `LoginPage.module.css` tenía escritos a mano se movieron a `tokens.css` sin cambiar ningún valor: el degradé del overlay usa `--login-overlay-start`, `--login-overlay-mid` y `--login-overlay-end`, y el botón de pausa usa `--carousel-toggle-bg`, `--carousel-toggle-bg-hover` y `--carousel-toggle-border` (valores en la tabla "Tokens nuevos de C-35"). Ningún CSS Module de C-35 conserva HEX ni `rgba`.
+
+### Tokens nuevos de C-35 (`frontend/src/shared/styles/tokens.css`)
+
+Todo color, sombra y medida de la portada, `/acceso`, `/login`, los modales y el `AppShell` sale de estas variables; los CSS Modules no llevan HEX ni `rgba` propios (sin excepciones: el overlay del carrusel y el botón de pausa heredados de C-34 también pasaron a tokens con los mismos valores).
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--landing-hero-min-height` | `60vh` | Altura mínima del hero de la portada |
+| `--landing-content-max-width` | `1120px` | Ancho máximo del contenido de portada y `/acceso` |
+| `--landing-reveal-offset` | `20px` | Desplazamiento lateral inicial de `RevealSection` (`translateX`) |
+| `--landing-carousel-blur` | `6px` | Desenfoque del carrusel de fondo en `/login` |
+| `--blur-surface` | `12px` | `backdrop-filter` de la tarjeta de login |
+| `--blur-backdrop` | `4px` | `backdrop-filter` del `::backdrop` y de las superficies de los modales |
+| `--font-size-display` | `clamp(32px, 6vw, 56px)` | Eslogan de la portada y título de `/acceso` |
+| `--color-navy-deep` | `#011C40` | Navy base (fondos oscuros y fallback sólido de la tarjeta de login) |
+| `--surface-navy` | `rgba(1, 28, 64, 0.82)` | Tarjeta de login y tarjetas de `/acceso` |
+| `--surface-ivory-ice` | `rgba(243, 247, 250, 0.96)` | Superficie de los cuatro modales de la agenda |
+| `--border-on-navy` | `rgba(167, 235, 242, 0.22)` | Borde de 1 px sobre navy |
+| `--border-on-navy-strong` | `rgba(167, 235, 242, 0.35)` | Borde del fallback sin `backdrop-filter` |
+| `--field-on-navy` | `rgba(1, 28, 64, 0.6)` | Fondo de los campos oscuros del login |
+| `--scrim-navy` | `rgba(1, 28, 64, 0.45)` | `::backdrop` de los diálogos |
+| `--scrim-navy-strong` | `rgba(1, 28, 64, 0.7)` | `::backdrop` sin soporte de `backdrop-filter` |
+| `--overlay-hero` | degradé navy `0.55 → 0.82` | Capa de legibilidad sobre el carrusel de la portada y fondo de `/acceso` |
+| `--shadow-on-navy` | `0 16px 40px rgba(1, 28, 64, 0.45)` | Sombra de la tarjeta de login |
+| `--login-overlay-start` | `rgba(1, 28, 64, 0.92)` | Primer tramo (0 %) del degradé que oscurece el carrusel de `/login` |
+| `--login-overlay-mid` | `rgba(2, 56, 89, 0.78)` | Tramo medio (55 %) del mismo degradé |
+| `--login-overlay-end` | `rgba(38, 101, 140, 0.62)` | Último tramo (100 %) del mismo degradé |
+| `--carousel-toggle-bg` | `rgba(1, 28, 64, 0.55)` | Fondo del botón "Pausar animación" |
+| `--carousel-toggle-bg-hover` | `rgba(1, 28, 64, 0.75)` | Fondo del botón de pausa en `:hover` |
+| `--carousel-toggle-border` | `rgba(255, 255, 255, 0.45)` | Borde de 1 px del botón de pausa |
+
+El fallback sólido de los modales reutiliza `--color-background` (`#F3F7FA`) y el del login usa `--color-navy-deep`, ambos opacos.
 
 ---
 
@@ -171,11 +209,12 @@ export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
     },
     {
       path: "/",
-      element: <RootGate clock={clock} />,
+      element: <RootGate />,
       children: [
         {
           element: <AppShell />,
           children: [
+            { index: true, element: <RootRedirect clock={clock} /> },
             { path: "agenda", element: <AgendaPage clock={clock} /> },
             { path: "*", element: <NotFoundPage /> },
           ],
@@ -191,8 +230,9 @@ export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
 ```
 - `routes[0]` sigue siendo `/login`.
 - `routes[1]` sigue teniendo `path: "/"`. El componente `RootGate` evalúa la ruta y el estado de autenticación:
-  - Si `location.pathname === "/"`: si el usuario está autenticado, redirige con replace a `/agenda?date=<hoy>` (`RootRedirect`); si es anónimo, renderiza `<LandingPage />`.
-  - Si `location.pathname !== "/"` (por ejemplo en el test de request protegida `App.test.tsx:186-192` que inyecta `children: [{ path: "agenda", element: <ProtectedTriggerPage /> }]`), `RootGate` actúa como el guardia de autenticación (`RequireAuth`), redirigiendo a `/login` ante sesiones expiradas o anónimas con `state: { from, expired }`.
+  - Si `location.pathname === "/"` y la sesión es anónima, renderiza `<LandingPage />`; si la sesión se está comprobando (`checking`), `<LoadingState />`.
+  - En cualquier otro caso (sesión autenticada en `/`, o cualquier otra ruta como el test de request protegida `App.test.tsx:186-192`, que reemplaza los hijos), `RootGate` actúa como el guardia `RequireAuth` y renderiza su `Outlet`. Así, el `/` autenticado conserva exactamente el árbol anterior (`AppShell` → índice `RootRedirect` con replace a `/agenda?date=<hoy>`), y un anónimo en `/agenda` sigue yendo a `/login` con `state: { from, expired }`.
+  - *Nota de apply*: una primera versión hacía que `RootGate` redirigiera él mismo y quitaba el `AppShell` del `/` autenticado; eso rompía la carrera que usa `Logout.test.tsx` (esperar el nombre de usuario en `/` antes de que la agenda pida datos). Se conservó el índice `RootRedirect` bajo `AppShell` para dejar ese test intacto.
 - Las rutas nuevas (como `/acceso`) se ubican **al final** (`routes[2]`), preservando con exactitud quirúrgica los índices `routes[0]` y `routes[1]` que consumen los tests de `App.test.tsx`.
 
 ### D8 — Desvío documentado: `frontend/src/test/smoke.test.tsx`

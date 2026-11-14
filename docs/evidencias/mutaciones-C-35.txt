@@ -1,0 +1,2817 @@
+Salida generada por docs/evidencias/mutaciones-C-35.py. No editar a mano.
+tests nuevos de C-35 listados por vitest: 22; mutaciones: 22 (una por test)
+SHA-256 de produccion antes: fa35d26689fa3ca3f99681d062cb27bc4e3e97a60c69ba905de809c206fc72e5
+--- linea de base, sin mutaciones (codigo de salida 0) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/shared/components/DialogTheme.test.ts (1 test) 10ms
+ ✓ src/shared/styles/landingTokens.test.ts (4 tests) 17ms
+ ✓ src/features/landing/landingContent.test.ts (3 tests) 10ms
+ ✓ src/features/landing/RevealSection.test.tsx (3 tests) 172ms
+ ✓ src/shared/components/AppShellNavigation.test.tsx (2 tests) 282ms
+ ✓ src/features/landing/LandingPage.test.tsx (3 tests) 211ms
+ ✓ src/features/landing/RootGate.test.tsx (1 test) 223ms
+ ✓ src/features/landing/AccesoPage.test.tsx (2 tests) 250ms
+ ✓ src/features/login/LoginPage.translucido.test.tsx (3 tests) 2295ms
+   ✓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales  724ms
+   ✓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter  1016ms
+   ✓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida  551ms
+
+ Test Files  9 passed (9)
+      Tests  22 passed (22)
+   Start at  20:49:09
+   Duration  6.29s (transform 1.62s, setup 3.96s, collect 6.70s, tests 3.47s, environment 16.98s, prepare 2.75s)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmphmssl2o3/vitest.json
+================================================================================
+[01/22] portada completa para anónimo en /
+test: src/features/landing/LandingPage.test.tsx > portada completa para anónimo en /
+diff:
+--- a/frontend/src/features/landing/LandingPage.tsx
++++ b/frontend/src/features/landing/LandingPage.tsx
+@@ -21,7 +21,7 @@
+         <nav aria-label="Navegación principal">
+           <ul className={styles.navList}>
+             <li>
+-              <Link to="/" className={styles.navLink} aria-current="page">
++              <Link to="/" className={styles.navLink}>
+                 Inicio
+               </Link>
+             </li>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (3 tests | 1 failed | 2 skipped) 223ms
+   × LandingPage > portada completa para anónimo en / 221ms
+     → expect(element).toHaveAttribute("aria-current", "page") // element.getAttribute("aria-current") === "page"
+
+Expected the element to have attribute:
+  aria-current="page"
+Received:
+  null
+   ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
+   ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:49:16
+   Duration  3.89s (transform 618ms, setup 264ms, collect 1.48s, tests 223ms, environment 1.10s, prepare 297ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp66evvrvd/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > portada completa para anónimo en /
+Error: expect(element).toHaveAttribute("aria-current", "page") // element.getAttribute("aria-current") === "page"
+
+Expected the element to have attribute:
+  aria-current="page"
+Received:
+  null
+ ❯ src/features/landing/LandingPage.test.tsx:82:20
+     80|     const clinica = within(nav).queryByRole("link", { name: "La clínic…
+     81|     const acceder = within(nav).queryByRole("link", { name: "Acceder" …
+     82|     expect(inicio).toHaveAttribute("aria-current", "page");
+       |                    ^
+     83|     expect(clinica).toBeInTheDocument();
+     84|     expect(clinica).not.toHaveAttribute("aria-current");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[02/22] usuario autenticado en / redirige a agenda
+test: src/features/landing/RootGate.test.tsx > usuario autenticado en / redirige a agenda
+diff:
+--- a/frontend/src/features/landing/RootGate.tsx
++++ b/frontend/src/features/landing/RootGate.tsx
+@@ -17,7 +17,7 @@
+     if (status === "checking") {
+       return <LoadingState />;
+     }
+-    if (status === "anonymous") {
++    if (status === "anonymous" || status === "authenticated") {
+       return <LandingPage />;
+     }
+   }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RootGate.test.tsx (1 test | 1 failed) 1069ms
+   × RootGate > usuario autenticado en / redirige a agenda 1068ms
+     → expected '/' to be '/agenda?date=2026-11-16' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Navegación principal"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"navList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/"[39m
+                [36m>[39m
+                  [0mInicio[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"#la-clinica"[39m
+                [36m>[39m
+                  [0mLa clínica[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/acceso"[39m
+                [36m>[39m
+                  [0mAcceder[0m
+                [36m</a>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+        [36m</header>[39m
+        [36m<main>[39m
+          [36m<section[39m
+            [33mclass[39m=[32m"hero"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"carousel"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+                [33mdata-active[39m=[32m"true"[39m
+                [33mdata-slide-index[39m=[32m"0"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"1"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"2"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"3"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"4"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"overlay"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"carouselToggle"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPausar animación[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"heroOverlay"[39m
+              [33mdata-landing-overlay[39m=[32m""[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"heroContent"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"logoHeading"[39m
+              [36m>[39m
+                [36m<img[39m
+                  [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+                  [33mclass[39m=[32m"logo"[39m
+                  [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+                [36m/>[39m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"slogan"[39m
+              [36m>[39m
+                [0mClaridad en cada cuidado.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"lead"[39m
+              [36m>[39m
+                [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"demoBadge"[39m
+              [36m>[39m
+                [0mSitio de demostración[0m
+              [36m</p>[39m
+              [36m<hr[39m
+                [33mclass[39m=[32m"rule"[39m
+              [36m/>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"cta"[39m
+                [33mhref[39m=[32m"#la-clinica"[39m
+              [36m>[39m
+                [0mExplorar la clínica [0m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ctaArrow"[39m
+                [36m>[39m
+                  [0m→[0m
+                [36m</span>[39m
+              [36m</a>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sections"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-clinica"[39m
+                [33mclass[39m=[32m"section"[39m
+                [33mid[39m=[32m"la-clinica"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-clinica"[39m
+                [36m>[39m
+                  [0m01 / Quiénes somos[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"sectionLead"[39m
+                  [36m>[39m
+                    [0mAqua es un consultorio odontológico de demostración. Este sitio muestra cómo se ordena una agenda de turnos: profesionales, sillones y prestaciones, sin superposiciones.[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mCada turno tiene un estado claro, y cada cambio queda registrado en su historial.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-servicios"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-servicios"[39m
+                [36m>[39m
+                  [0m02 / Servicios[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mLimpieza[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mProfilaxis y control de sarro.[0m
+                      [0m ([0m
+                      [0m45[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mExtracción[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mExtracciones simples con indicaciones de cuidado.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mRestauración[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRecuperación de piezas dañadas.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mControl[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRevisión general y seguimiento.[0m
+                      [0m ([0m
+                      [0m30[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mBlanqueamiento[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mTratamiento estético.[0m
+                      [0m ([0m
+                      [0m90[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-equipo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-equipo"[39m
+                [36m>[39m
+                  [0m03 / Equipo[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDr. Martín Sosa[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes por la mañana.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Laura Quiroga[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Paula Benítez[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-contacto"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-contacto"[39m
+                [36m>[39m
+                  [0m04 / Horarios y contacto[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p>[39m
+                    [0mLunes a viernes[0m
+                    [0m: [0m
+                    [0m9:00 a 13:00[0m
+                    [0m y [0m
+                    [0m15:00 a 19:00[0m
+                    [0m.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"phone"[39m
+                  [36m>[39m
+                    [0m(0261) 555-0101[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mAv. Ejemplo 1234, Ciudad Demo[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mturnos@aqua-demo.example[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"note"[39m
+                  [36m>[39m
+                    [0mDatos de contacto ficticios, solo para la demostración. No agendar turnos reales.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"statusStrip"[39m
+                  [36m>[39m
+                    [0mEstado actual: demostración funcional[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:49:26
+   Duration  4.12s (transform 559ms, setup 256ms, collect 1.34s, tests 1.07s, environment 930ms, prepare 194ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1hog1w61/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RootGate.test.tsx > RootGate > usuario autenticado en / redirige a agenda
+AssertionError: expected '/' to be '/agenda?date=2026-11-16' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Navegación principal"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"navList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/"[39m
+                [36m>[39m
+                  [0mInicio[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"#la-clinica"[39m
+                [36m>[39m
+                  [0mLa clínica[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"navLink"[39m
+                  [33mhref[39m=[32m"/acceso"[39m
+                [36m>[39m
+                  [0mAcceder[0m
+                [36m</a>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+        [36m</header>[39m
+        [36m<main>[39m
+          [36m<section[39m
+            [33mclass[39m=[32m"hero"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"carousel"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+                [33mdata-active[39m=[32m"true"[39m
+                [33mdata-slide-index[39m=[32m"0"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"1"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"2"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"3"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+              [36m/>[39m
+              [36m<img[39m
+                [33malt[39m=[32m""[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"slide"[39m
+                [33mdata-slide-index[39m=[32m"4"[39m
+                [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"overlay"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"carouselToggle"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPausar animación[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"heroOverlay"[39m
+              [33mdata-landing-overlay[39m=[32m""[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"heroContent"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"logoHeading"[39m
+              [36m>[39m
+                [36m<img[39m
+                  [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+                  [33mclass[39m=[32m"logo"[39m
+                  [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+                [36m/>[39m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"slogan"[39m
+              [36m>[39m
+                [0mClaridad en cada cuidado.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"lead"[39m
+              [36m>[39m
+                [0mTurnos ordenados para que la atención fluya: elegí profesional, sillón y prestación, y el sistema evita superposiciones.[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"demoBadge"[39m
+              [36m>[39m
+                [0mSitio de demostración[0m
+              [36m</p>[39m
+              [36m<hr[39m
+                [33mclass[39m=[32m"rule"[39m
+              [36m/>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"cta"[39m
+                [33mhref[39m=[32m"#la-clinica"[39m
+              [36m>[39m
+                [0mExplorar la clínica [0m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ctaArrow"[39m
+                [36m>[39m
+                  [0m→[0m
+                [36m</span>[39m
+              [36m</a>[39m
+            [36m</div>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sections"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-clinica"[39m
+                [33mclass[39m=[32m"section"[39m
+                [33mid[39m=[32m"la-clinica"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-clinica"[39m
+                [36m>[39m
+                  [0m01 / Quiénes somos[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"sectionLead"[39m
+                  [36m>[39m
+                    [0mAqua es un consultorio odontológico de demostración. Este sitio muestra cómo se ordena una agenda de turnos: profesionales, sillones y prestaciones, sin superposiciones.[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mCada turno tiene un estado claro, y cada cambio queda registrado en su historial.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-servicios"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-servicios"[39m
+                [36m>[39m
+                  [0m02 / Servicios[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mLimpieza[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mProfilaxis y control de sarro.[0m
+                      [0m ([0m
+                      [0m45[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mExtracción[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mExtracciones simples con indicaciones de cuidado.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mRestauración[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRecuperación de piezas dañadas.[0m
+                      [0m ([0m
+                      [0m60[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mControl[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mRevisión general y seguimiento.[0m
+                      [0m ([0m
+                      [0m30[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mBlanqueamiento[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mTratamiento estético.[0m
+                      [0m ([0m
+                      [0m90[0m
+                      [0m min)[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-equipo"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-equipo"[39m
+                [36m>[39m
+                  [0m03 / Equipo[0m
+                [36m</h2>[39m
+                [36m<ul[39m
+                  [33mclass[39m=[32m"list"[39m
+                [36m>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDr. Martín Sosa[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes por la mañana.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Laura Quiroga[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                  [36m<li[39m
+                    [33mclass[39m=[32m"listItem"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemName"[39m
+                    [36m>[39m
+                      [0mDra. Paula Benítez[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"itemDetail"[39m
+                    [36m>[39m
+                      [0mAtiende de lunes a viernes, mañana y tarde.[0m
+                    [36m</span>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"reveal"[39m
+              [33mdata-reveal[39m=[32m"revealed"[39m
+            [36m>[39m
+              [36m<section[39m
+                [33maria-labelledby[39m=[32m"seccion-contacto"[39m
+                [33mclass[39m=[32m"section"[39m
+              [36m>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"sectionTitle"[39m
+                  [33mid[39m=[32m"seccion-contacto"[39m
+                [36m>[39m
+                  [0m04 / Horarios y contacto[0m
+                [36m</h2>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"sectionBody"[39m
+                [36m>[39m
+                  [36m<p>[39m
+                    [0mLunes a viernes[0m
+                    [0m: [0m
+                    [0m9:00 a 13:00[0m
+                    [0m y [0m
+                    [0m15:00 a 19:00[0m
+                    [0m.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"phone"[39m
+                  [36m>[39m
+                    [0m(0261) 555-0101[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mAv. Ejemplo 1234, Ciudad Demo[0m
+                  [36m</p>[39m
+                  [36m<p>[39m
+                    [0mturnos@aqua-demo.example[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"note"[39m
+                  [36m>[39m
+                    [0mDatos de contacto ficticios, solo para la demostración. No agendar turnos reales.[0m
+                  [36m</p>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"statusStrip"[39m
+                  [36m>[39m
+                    [0mEstado actual: demostración funcional[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</section>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+Expected: "/agenda?date=2026-11-16"
+Received: "/"
+
+ ❯ src/features/landing/RootGate.test.tsx:53:82
+     51| 
+     52|     await waitFor(() => {
+     53|       expect(`${router.state.location.pathname}${router.state.location…
+       |                                                                                  ^
+     54|     });
+     55|     expect(router.state.historyAction).toBe("REPLACE");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[03/22] secciones editoriales entran con animación lateral al scrollear
+test: src/features/landing/LandingPage.test.tsx > secciones editoriales entran con animación lateral al scrollear
+diff:
+--- a/frontend/src/features/landing/RevealSection.module.css
++++ b/frontend/src/features/landing/RevealSection.module.css
+@@ -8,7 +8,7 @@
+ 
+ .reveal[data-reveal="pending"] {
+   opacity: 0;
+-  transform: translateX(var(--landing-reveal-offset));
++  transform: translateY(var(--landing-reveal-offset));
+ }
+ 
+ @media (prefers-reduced-motion: reduce) {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (3 tests | 1 failed | 2 skipped) 127ms
+   ↓ LandingPage > portada completa para anónimo en /
+   × LandingPage > secciones editoriales entran con animación lateral al scrollear 125ms
+     → expected 'opacity: 0;\n  transform: translateY(…' to contain 'translateX('
+   ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:49:34
+   Duration  3.08s (transform 546ms, setup 230ms, collect 1.33s, tests 127ms, environment 857ms, prepare 177ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmd1o2nae/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > secciones editoriales entran con animación lateral al scrollear
+AssertionError: expected 'opacity: 0;\n  transform: translateY(…' to contain 'translateX('
+
+- Expected
++ Received
+
+- translateX(
++ opacity: 0;
++   transform: translateY(var(--landing-reveal-offset));
+
+ ❯ src/features/landing/LandingPage.test.tsx:111:67
+    109| 
+    110|     const revealCss = readSrcFile("features/landing/RevealSection.modu…
+    111|     expect(ruleBody(revealCss, '.reveal[data-reveal="pending"]')).toCo…
+       |                                                                   ^
+    112|     const durations = [...ruleBody(revealCss, ".reveal").matchAll(/(\d…
+    113|     expect(durations.length).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[04/22] reduced motion desactiva la animación lateral y deja el contenido visible
+test: src/features/landing/LandingPage.test.tsx > reduced motion desactiva la animación lateral y deja el contenido visible
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -9,7 +9,7 @@
+ }
+ 
+ export function RevealSection({ children, observer, reducedMotion = false }: RevealSectionProps) {
+-  const canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined");
++  const canAnimate = (observer !== undefined || typeof IntersectionObserver !== "undefined");
+   const [revealed, setRevealed] = useState(!canAnimate);
+   const sectionRef = useRef<HTMLDivElement>(null);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/LandingPage.test.tsx (3 tests | 1 failed | 2 skipped) 64ms
+   ↓ LandingPage > portada completa para anónimo en /
+   ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
+   × LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible 62ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:49:42
+   Duration  3.59s (transform 619ms, setup 296ms, collect 1.74s, tests 64ms, environment 957ms, prepare 173ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpz2oyl6ik/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/LandingPage.test.tsx > LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/LandingPage.test.tsx:127:23
+    125|     expect(sections).toHaveLength(4);
+    126|     for (const section of sections) {
+    127|       expect(section).toHaveAttribute("data-reveal", "revealed");
+       |                       ^
+    128|     }
+    129|     expect(harness.observedCount()).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[05/22] navegación desde las tres tarjetas de rol hacia login
+test: src/features/landing/AccesoPage.test.tsx > navegación desde las tres tarjetas de rol hacia login
+diff:
+--- a/frontend/src/features/landing/AccesoPage.tsx
++++ b/frontend/src/features/landing/AccesoPage.tsx
+@@ -10,7 +10,7 @@
+ 
+ const ROLE_CARDS: readonly RoleCard[] = [
+   { id: "recepcion", title: "Recepción", description: "Agenda general y turnos del día.", to: "/login?rol=recepcion" },
+-  { id: "odontologo", title: "Odontología", description: "Tu agenda como profesional.", to: "/login?rol=odontologo" },
++  { id: "odontologo", title: "Odontología", description: "Tu agenda como profesional.", to: "/login?rol=odontologia" },
+   {
+     id: "administrador",
+     title: "Administración",
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 184ms
+   × AccesoPage > navegación desde las tres tarjetas de rol hacia login 182ms
+     → expect(element).toHaveAttribute("href", "/login?rol=odontologo") // element.getAttribute("href") === "/login?rol=odontologo"
+
+Expected the element to have attribute:
+  href="/login?rol=odontologo"
+Received:
+  href="/login?rol=odontologia"
+   ↓ AccesoPage > navegación de retorno con el enlace Volver a Aqua
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  20:49:52
+   Duration  3.42s (transform 547ms, setup 279ms, collect 1.40s, tests 184ms, environment 1.00s, prepare 215ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpeg5ig7nh/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/AccesoPage.test.tsx > AccesoPage > navegación desde las tres tarjetas de rol hacia login
+Error: expect(element).toHaveAttribute("href", "/login?rol=odontologo") // element.getAttribute("href") === "/login?rol=odontologo"
+
+Expected the element to have attribute:
+  href="/login?rol=odontologo"
+Received:
+  href="/login?rol=odontologia"
+ ❯ src/features/landing/AccesoPage.test.tsx:36:65
+     34| 
+     35|     expect(screen.queryByRole("link", { name: "Recepción" })).toHaveAt…
+     36|     expect(screen.queryByRole("link", { name: "Odontología" })).toHave…
+       |                                                                 ^
+     37|     expect(screen.queryByRole("link", { name: "Administración" })).toH…
+     38|       "href",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[06/22] navegación de retorno con el enlace Volver a Aqua
+test: src/features/landing/AccesoPage.test.tsx > navegación de retorno con el enlace Volver a Aqua
+diff:
+--- a/frontend/src/features/landing/AccesoPage.tsx
++++ b/frontend/src/features/landing/AccesoPage.tsx
+@@ -23,7 +23,7 @@
+   return (
+     <main className={styles.page}>
+       <div className={styles.content}>
+-        <Link to="/" className={styles.backLink}>
++        <Link to="/login" className={styles.backLink}>
+           ← Volver a Aqua
+         </Link>
+         <h1 className={styles.title}>¿Cómo querés ingresar?</h1>
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 1228ms
+   ↓ AccesoPage > navegación desde las tres tarjetas de rol hacia login
+   × AccesoPage > navegación de retorno con el enlace Volver a Aqua 1226ms
+     → expected '/login' to be '/' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"carousel carouselBlurred"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+            [33mdata-active[39m=[32m"true"[39m
+            [33mdata-slide-index[39m=[32m"0"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"1"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"2"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"3"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"4"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"overlay"[39m
+          [36m/>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"carouselToggle"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mPausar animación[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"backLink"[39m
+            [33mhref[39m=[32m"/"[39m
+          [36m>[39m
+            [0m← Volver[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+              [33mclass[39m=[32m"logo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+            [36m/>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"tagline"[39m
+            [36m>[39m
+              [0mClaridad en cada cuidado.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"login-heading"[39m
+            [33mclass[39m=[32m"card"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"title"[39m
+                [33mid[39m=[32m"login-heading"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"subtitle"[39m
+              [36m>[39m
+                [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+              [36m</p>[39m
+            [36m</header>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"Iniciar sesión"[39m
+              [33mclass[39m=[32m"form"[39m
+              [33mnovalidate[39m=[32m""[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-username"[39m
+                [36m>[39m
+                  [0mUsuario[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"username"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-username"[39m
+                  [33mmaxlength[39m=[32m"150"[39m
+                  [33mname[39m=[32m"username"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-password"[39m
+                [36m>[39m
+                  [0mContraseña[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"current-password"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-password"[39m
+                  [33mmaxlength[39m=[32m"128"[39m
+                  [33mname[39m=[32m"password"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"password"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-busy[39m=[32m"false"[39m
+                [33mclass[39m=[32m"submit"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mIngresar[0m
+                [0m [0m
+                [36m<span[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"submitArrow"[39m
+                [36m>[39m
+                  [0m→[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</form>[39m
+          [36m</section>[39m
+        [36m</div>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  20:50:00
+   Duration  4.85s (transform 814ms, setup 315ms, collect 1.86s, tests 1.23s, environment 945ms, prepare 179ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpv5xif0eu/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/AccesoPage.test.tsx > AccesoPage > navegación de retorno con el enlace Volver a Aqua
+AssertionError: expected '/login' to be '/' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"page"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"carousel carouselBlurred"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide slideActive kenBurns"[39m
+            [33mdata-active[39m=[32m"true"[39m
+            [33mdata-slide-index[39m=[32m"0"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-1-sala-de-espera.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"1"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-2-consultorio.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"2"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-3-dentista.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"3"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-4-instrumental.webp"[39m
+          [36m/>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"slide"[39m
+            [33mdata-slide-index[39m=[32m"4"[39m
+            [33msrc[39m=[32m"/src/assets/images/hero-5-sillon.webp"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"overlay"[39m
+          [36m/>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"carouselToggle"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mPausar animación[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"backLink"[39m
+            [33mhref[39m=[32m"/"[39m
+          [36m>[39m
+            [0m← Volver[0m
+          [36m</a>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Aqua — Clínica Odontológica"[39m
+              [33mclass[39m=[32m"logo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/logo-aqua-claro.png"[39m
+            [36m/>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"tagline"[39m
+            [36m>[39m
+              [0mClaridad en cada cuidado.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"login-heading"[39m
+            [33mclass[39m=[32m"card"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"title"[39m
+                [33mid[39m=[32m"login-heading"[39m
+              [36m>[39m
+                [0mTurnos Odontología[0m
+              [36m</h1>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"subtitle"[39m
+              [36m>[39m
+                [0mIngresá con tu usuario del consultorio para gestionar la agenda.[0m
+              [36m</p>[39m
+            [36m</header>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"Iniciar sesión"[39m
+              [33mclass[39m=[32m"form"[39m
+              [33mnovalidate[39m=[32m""[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-username"[39m
+                [36m>[39m
+                  [0mUsuario[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"username"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-username"[39m
+                  [33mmaxlength[39m=[32m"150"[39m
+                  [33mname[39m=[32m"username"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"login-password"[39m
+                [36m>[39m
+                  [0mContraseña[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"current-password"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"login-password"[39m
+                  [33mmaxlength[39m=[32m"128"[39m
+                  [33mname[39m=[32m"password"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mtype[39m=[32m"password"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-busy[39m=[32m"false"[39m
+                [33mclass[39m=[32m"submit"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mIngresar[0m
+                [0m [0m
+                [36m<span[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"submitArrow"[39m
+                [36m>[39m
+                  [0m→[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</form>[39m
+          [36m</section>[39m
+        [36m</div>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+Expected: "/"
+Received: "/login"
+
+ ❯ src/features/landing/AccesoPage.test.tsx:63:46
+     61| 
+     62|     await waitFor(() => {
+     63|       expect(router.state.location.pathname).toBe("/");
+       |                                              ^
+     64|     });
+     65|     const heading = screen.queryByRole("heading", { level: 1, name: "A…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[07/22] formulario translúcido en /login con etiqueta de rol y envío de credenciales
+test: src/features/login/LoginPage.translucido.test.tsx > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+diff:
+--- a/frontend/src/features/login/LoginPage.tsx
++++ b/frontend/src/features/login/LoginPage.tsx
+@@ -29,7 +29,7 @@
+   const location = useLocation();
+   const [searchParams] = useSearchParams();
+   const roleParam = searchParams.get("rol");
+-  const roleLabel = roleParam !== null ? (ROLE_LABELS.get(roleParam) ?? null) : null;
++  const roleLabel = roleParam !== null ? null : null;
+   const showExpiredMessage = lastEvent === "expired" || hasExpiredFlag(location.state);
+ 
+   return (
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 102ms
+   × LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales 100ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+   ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+   ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:50:09
+   Duration  2.24s (transform 233ms, setup 240ms, collect 509ms, tests 102ms, environment 853ms, prepare 185ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp_v7hx4dx/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/features/login/LoginPage.translucido.test.tsx:80:45
+     78|     const { router } = renderLogin("/login?rol=recepcion", tokenStore,…
+     79| 
+     80|     expect(screen.queryByText("Recepción")).toBeInTheDocument();
+       |                                             ^
+     81|     expect(screen.queryByRole("link", { name: "← Volver" })).toHaveAtt…
+     82|     expect(screen.queryByRole("img", { name: "Aqua — Clínica Odontológ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[08/22] parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+test: src/features/login/LoginPage.translucido.test.tsx > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+diff:
+--- a/frontend/src/features/login/LoginPage.tsx
++++ b/frontend/src/features/login/LoginPage.tsx
+@@ -29,7 +29,7 @@
+   const location = useLocation();
+   const [searchParams] = useSearchParams();
+   const roleParam = searchParams.get("rol");
+-  const roleLabel = roleParam !== null ? (ROLE_LABELS.get(roleParam) ?? null) : null;
++  const roleLabel = roleParam !== null ? (ROLE_LABELS.get(roleParam) ?? roleParam) : null;
+   const showExpiredMessage = lastEvent === "expired" || hasExpiredFlag(location.state);
+ 
+   return (
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 653ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   × LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter 651ms
+     → expected <p class="roleLabel" data-role-label></p> to be null
+   ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:50:16
+   Duration  3.03s (transform 253ms, setup 237ms, collect 605ms, tests 653ms, environment 975ms, prepare 206ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpqj1zsxax/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+AssertionError: expected <p class="roleLabel" data-role-label></p> to be null
+
+- Expected: 
+null
+
++ Received: 
+<p
+  class="roleLabel"
+  data-role-label=""
+>
+  desconocido
+</p>
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx:116:60
+    114|       const { container, unmount } = renderLogin(entry, createMemoryTo…
+    115| 
+    116|       expect(container.querySelector("[data-role-label]")).toBeNull();
+       |                                                            ^
+    117|       for (const text of ROLE_TEXTS) {
+    118|         expect(screen.queryByText(text)).not.toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[09/22] cierre de sesión y preservación del mensaje literal de sesión vencida
+test: src/features/login/LoginPage.translucido.test.tsx > cierre de sesión y preservación del mensaje literal de sesión vencida
+diff:
+--- a/frontend/src/features/login/LoginPage.tsx
++++ b/frontend/src/features/login/LoginPage.tsx
+@@ -7,7 +7,7 @@
+ 
+ function hasExpiredFlag(state: unknown): boolean {
+   if (typeof state === "object" && state !== null && "expired" in state) {
+-    return (state as { expired?: unknown }).expired === true;
++    return (state as { expired?: unknown }).expired === false;
+   }
+   return false;
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 90ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+   × LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida 89ms
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:50:25
+   Duration  2.40s (transform 242ms, setup 248ms, collect 525ms, tests 90ms, environment 978ms, prepare 247ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvgjdilmb/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/features/login/LoginPage.translucido.test.tsx:151:19
+    149| 
+    150|     const alert = screen.queryByRole("alert");
+    151|     expect(alert).toBeInTheDocument();
+       |                   ^
+    152|     expect(alert).toHaveTextContent(/^La sesión venció\. Iniciá sesión…
+    153|     expect(screen.queryByLabelText("Usuario")).toHaveFocus();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[10/22] tokens de layout y contraste AA de superficies
+test: src/shared/styles/landingTokens.test.ts > tokens de layout y contraste AA de superficies
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -68,7 +68,7 @@
+   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
+ 
+   /* Portada pública y acceso (C-35) */
+-  --landing-hero-min-height: 60vh;
++  --landing-hero-min-height: 50vh;
+   --landing-content-max-width: 1120px;
+   --landing-reveal-offset: 20px;
+   --landing-carousel-blur: 6px;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 21ms
+   ↓ tokens de layout de la portada > define los dos tokens de layout
+   ↓ tokens de layout de la portada > la portada usa los tokens de layout
+   ↓ tokens de layout de la portada > no agrega colores nuevos
+   × tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies 20ms
+     → expected '50vh' to be '60vh' // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  20:50:31
+   Duration  1.84s (transform 70ms, setup 281ms, collect 55ms, tests 21ms, environment 941ms, prepare 156ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4ban4ymb/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
+AssertionError: expected '50vh' to be '60vh' // Object.is equality
+
+Expected: "60vh"
+Received: "50vh"
+
+ ❯ src/shared/styles/landingTokens.test.ts:133:53
+    131|   it("tokens de layout y contraste AA de superficies", () => {
+    132|     const tokens = readCustomProperties(readFileSync(TOKENS_PATH, "utf…
+    133|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
+       |                                                     ^
+    134|     expect(tokens.get("--landing-content-max-width")).toBe("1120px");
+    135| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[11/22] fallback sólido sin soporte de backdrop-filter
+test: src/shared/components/DialogTheme.test.ts > fallback sólido sin soporte de backdrop-filter
+diff:
+--- a/frontend/src/shared/components/Dialog.module.css
++++ b/frontend/src/shared/components/Dialog.module.css
+@@ -31,8 +31,4 @@
+   -webkit-backdrop-filter: blur(var(--blur-backdrop));
+ }
+ 
+-@supports not (backdrop-filter: blur(1px)) {
+-  .dialog::backdrop {
+-    background: var(--scrim-navy-strong);
+-  }
+-}
++
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/DialogTheme.test.ts (1 test | 1 failed) 13ms
+   × tema claro de los modales > fallback sólido sin soporte de backdrop-filter 11ms
+     → expected '' to contain 'background: var(--scrim-navy-strong);'
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:50:37
+   Duration  1.84s (transform 58ms, setup 261ms, collect 35ms, tests 13ms, environment 961ms, prepare 218ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpanx4w3ni/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/DialogTheme.test.ts > tema claro de los modales > fallback sólido sin soporte de backdrop-filter
+AssertionError: expected '' to contain 'background: var(--scrim-navy-strong);'
+
+- Expected
++ Received
+
+- background: var(--scrim-navy-strong);
+
+ ❯ src/shared/components/DialogTheme.test.ts:17:66
+     15|     expect(backdrop).toContain("background: var(--scrim-navy);");
+     16|     expect(backdrop).toContain("backdrop-filter: blur(var(--blur-backd…
+     17|     expect(ruleBody(dialogCss, ".dialog::backdrop", NO_SUPPORT)).toCon…
+       |                                                                  ^
+     18| 
+     19|     for (const { file, selector } of SURFACES) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[12/22] enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+test: src/shared/components/AppShellNavigation.test.tsx > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+diff:
+--- a/frontend/src/shared/components/AppShell.tsx
++++ b/frontend/src/shared/components/AppShell.tsx
+@@ -46,6 +46,7 @@
+                 ) : (
+                   <NavLink
+                     to={item.path}
++                    aria-current="false"
+                     data-menu-item={item.label}
+                     className={({ isActive }) =>
+                       isActive ? `${styles.menuLink} ${styles.menuLinkActive}` : styles.menuLink
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx (2 tests | 1 failed | 1 skipped) 120ms
+   × AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px 118ms
+     → expect(element).toHaveAttribute("aria-current", "page") // element.getAttribute("aria-current") === "page"
+
+Expected the element to have attribute:
+  aria-current="page"
+Received:
+  aria-current="false"
+   ↓ AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  20:50:42
+   Duration  2.19s (transform 200ms, setup 244ms, collect 413ms, tests 120ms, environment 888ms, prepare 187ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd22t5j4x/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/AppShellNavigation.test.tsx > AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+Error: expect(element).toHaveAttribute("aria-current", "page") // element.getAttribute("aria-current") === "page"
+
+Expected the element to have attribute:
+  aria-current="page"
+Received:
+  aria-current="false"
+ ❯ src/shared/components/AppShellNavigation.test.tsx:44:60
+     42|       expect(screen.queryByRole("link", { name: "Agenda" })).toBeInThe…
+     43|     });
+     44|     expect(screen.queryByRole("link", { name: "Agenda" })).toHaveAttri…
+       |                                                            ^
+     45| 
+     46|     const bar = container.querySelector("header");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[13/22] ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+test: src/shared/components/AppShellNavigation.test.tsx > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+diff:
+--- a/frontend/src/shared/components/AppShell.module.css
++++ b/frontend/src/shared/components/AppShell.module.css
+@@ -123,6 +123,7 @@
+ 
+ .badge {
+   display: block;
++  border: 1px solid var(--color-border);
+   color: var(--color-text-muted);
+   font-size: var(--font-size-xs);
+   font-weight: var(--font-weight-regular);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx (2 tests | 1 failed | 1 skipped) 167ms
+   ↓ AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+   × AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad 164ms
+     → .badge: expected 'display: block;\n  border: 1px solid …' not to match /(^|[\s;])border:\s+(?!none|0)/
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  20:50:48
+   Duration  2.53s (transform 236ms, setup 246ms, collect 399ms, tests 167ms, environment 1.16s, prepare 182ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpv0900ada/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/components/AppShellNavigation.test.tsx > AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+AssertionError: .badge: expected 'display: block;\n  border: 1px solid …' not to match /(^|[\s;])border:\s+(?!none|0)/
+
+- Expected: 
+/(^|[\s;])border:\s+(?!none|0)/
+
++ Received: 
+"display: block;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);"
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx:97:34
+     95|       const body = ruleBody(css, selector);
+     96|       expect(body, selector).not.toBe("");
+     97|       expect(body, selector).not.toMatch(BOX_BORDER);
+       |                                  ^
+     98|       expect(body, selector).not.toMatch(BOX_BACKGROUND);
+     99|       expect(body, selector).not.toMatch(/border-radius:\s+var\(--radi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[14/22] define los dos tokens de layout
+test: src/shared/styles/landingTokens.test.ts > define los dos tokens de layout
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -69,7 +69,7 @@
+ 
+   /* Portada pública y acceso (C-35) */
+   --landing-hero-min-height: 60vh;
+-  --landing-content-max-width: 1120px;
++  --landing-content-max-width: 1120;
+   --landing-reveal-offset: 20px;
+   --landing-carousel-blur: 6px;
+   --blur-surface: 12px;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 23ms
+   × tokens de layout de la portada > define los dos tokens de layout 20ms
+     → expected '1120' to match /^\d+(\.\d+)?(px|rem|em|vw|%)$/
+   ↓ tokens de layout de la portada > la portada usa los tokens de layout
+   ↓ tokens de layout de la portada > no agrega colores nuevos
+   ↓ tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  20:50:55
+   Duration  1.91s (transform 79ms, setup 314ms, collect 72ms, tests 23ms, environment 985ms, prepare 208ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2wuezn9j/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de layout de la portada > define los dos tokens de layout
+AssertionError: expected '1120' to match /^\d+(\.\d+)?(px|rem|em|vw|%)$/
+
+- Expected: 
+/^\d+(\.\d+)?(px|rem|em|vw|%)$/
+
++ Received: 
+"1120"
+
+ ❯ src/shared/styles/landingTokens.test.ts:78:55
+     76| 
+     77|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
+     78|     expect(tokens.get("--landing-content-max-width")).toMatch(/^\d+(\.…
+       |                                                       ^
+     79|   });
+     80| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[15/22] la portada usa los tokens de layout
+test: src/shared/styles/landingTokens.test.ts > la portada usa los tokens de layout
+diff:
+--- a/frontend/src/features/landing/LandingPage.module.css
++++ b/frontend/src/features/landing/LandingPage.module.css
+@@ -55,7 +55,7 @@
+   display: flex;
+   align-items: center;
+   min-height: 100vh;
+-  min-height: max(var(--landing-hero-min-height), 100svh);
++  min-height: max(60vh, 100svh);
+   overflow: hidden;
+   background: var(--color-navy-deep);
+ }
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 40ms
+   ↓ tokens de layout de la portada > define los dos tokens de layout
+   × tokens de layout de la portada > la portada usa los tokens de layout 38ms
+     → expected '.page {\n  display: flex;\n  align-it…' to contain 'var(--landing-hero-min-height)'
+   ↓ tokens de layout de la portada > no agrega colores nuevos
+   ↓ tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  20:51:01
+   Duration  2.29s (transform 78ms, setup 314ms, collect 66ms, tests 40ms, environment 1.27s, prepare 211ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgqu67vul/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de layout de la portada > la portada usa los tokens de layout
+AssertionError: expected '.page {\n  display: flex;\n  align-it…' to contain 'var(--landing-hero-min-height)'
+
+- Expected
++ Received
+
+- var(--landing-hero-min-height)
++ .page {
++   display: flex;
++   align-items: center;
++   justify-content: center;
++   min-height: 100vh;
++   box-sizing: border-box;
++   padding: var(--space-6) var(--space-4);
++   background: var(--overlay-hero), var(--color-navy-deep);
++   color: var(--color-primary-contrast);
++   font-family: var(--font-family-body);
++ }
++
++ .content {
++   display: flex;
++   flex-direction: column;
++   align-items: flex-start;
++   gap: var(--space-5);
++   width: 100%;
++   max-width: var(--landing-content-max-width);
++ }
++
++ .backLink {
++   display: inline-flex;
++   align-items: center;
++   min-height: 44px;
++   font-size: var(--font-size-sm);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-ice);
++   text-decoration: none;
++ }
++
++ .backLink:hover {
++   text-decoration: underline;
++   text-decoration-color: var(--color-accent);
++   text-underline-offset: var(--space-1);
++ }
++
++ .backLink:focus-visible {
++   outline: 2px solid var(--color-ice);
++   outline-offset: 4px;
++ }
++
++ .title {
++   margin: 0;
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-display);
++   font-weight: var(--font-weight-medium);
++   line-height: 1.1;
++ }
++
++ .cards {
++   display: grid;
++   grid-template-columns: repeat(3, minmax(0, 1fr));
++   gap: var(--space-4);
++   width: 100%;
++   margin: 0;
++   padding: 0;
++   list-style: none;
++ }
++
++ .card {
++   display: flex;
++   flex-direction: column;
++   gap: var(--space-2);
++   box-sizing: border-box;
++   height: 100%;
++   min-height: 44px;
++   padding: var(--space-5);
++   color: var(--color-primary-contrast);
++   text-decoration: none;
++   background: var(--surface-navy);
++   border: 1px solid var(--border-on-navy);
++   border-radius: var(--radius-md);
++   transition: border-color 160ms ease-out;
++ }
++
++ .card:hover,
++ .card:focus-visible {
++   border-color: var(--color-accent);
++ }
++
++ .card:focus-visible {
++   outline: 2px solid var(--color-ice);
++   outline-offset: 3px;
++ }
++
++ .cardTitle {
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-xl);
++   font-weight: var(--font-weight-medium);
++   overflow-wrap: anywhere;
++ }
++
++ .cardDetail {
++   font-size: var(--font-size-sm);
++   line-height: var(--line-height-base);
++   color: var(--color-border);
++ }
++
++ .cardArrow {
++   margin-top: auto;
++   color: var(--color-accent);
++   transition: transform 160ms ease-out;
++ }
++
++ .card:hover .cardArrow,
++ .card:focus-visible .cardArrow {
++   transform: translateX(var(--space-1));
++ }
++
++ .note {
++   margin: 0;
++   font-size: var(--font-size-sm);
++   color: var(--color-border);
++ }
++
++ @media (max-width: 768px) {
++   .cards {
++     grid-template-columns: minmax(0, 1fr);
++   }
++ }
++
++ @media (prefers-reduced-motion: reduce) {
++   .card,
++   .cardArrow {
++     transition: none;
++   }
++
++   .card:hover .cardArrow,
++   .card:focus-visible .cardArrow {
++     transform: none;
++   }
++ }
++
++ .page {
++   position: relative;
++   background: var(--color-navy-deep);
++   color: var(--color-primary-contrast);
++   font-family: var(--font-family-body);
++ }
++
++ .topBar {
++   position: absolute;
++   top: 0;
++   right: 0;
++   left: 0;
++   z-index: 3;
++   display: flex;
++   justify-content: flex-end;
++   padding: var(--space-3) var(--space-6);
++ }
++
++ .navList {
++   display: flex;
++   align-items: center;
++   gap: var(--space-5);
++   margin: 0;
++   padding: 0;
++   list-style: none;
++ }
++
++ .navLink {
++   display: inline-flex;
++   align-items: center;
++   min-height: 44px;
++   font-size: var(--font-size-sm);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-primary-contrast);
++   text-decoration: none;
++   border-bottom: 1px solid transparent;
++   transition: color 160ms ease-out, border-color 160ms ease-out;
++ }
++
++ .navLink:hover {
++   color: var(--color-ice);
++ }
++
++ .navLink[aria-current="page"] {
++   border-bottom-color: var(--color-accent);
++ }
++
++ .navLink:focus-visible {
++   outline: 2px solid var(--color-ice);
++   outline-offset: 4px;
++ }
++
++ .hero {
++   position: relative;
++   display: flex;
++   align-items: center;
++   min-height: 100vh;
++   min-height: max(60vh, 100svh);
++   overflow: hidden;
++   background: var(--color-navy-deep);
++ }
++
++ .heroOverlay {
++   position: absolute;
++   inset: 0;
++   background: var(--overlay-hero);
++ }
++
++ .heroContent {
++   position: relative;
++   z-index: 2;
++   display: flex;
++   flex-direction: column;
++   align-items: flex-start;
++   gap: var(--space-4);
++   box-sizing: border-box;
++   width: 100%;
++   max-width: var(--landing-content-max-width);
++   margin: 0 auto;
++   padding: var(--space-7) var(--space-6);
++ }
++
++ .logoHeading {
++   margin: 0;
++   line-height: 0;
++ }
++
++ .logo {
++   width: 80%;
++   max-width: 20rem;
++   height: auto;
++ }
++
++ .slogan {
++   margin: 0;
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-display);
++   font-weight: var(--font-weight-medium);
++   line-height: 1.1;
++   color: var(--color-primary-contrast);
++ }
++
++ .lead {
++   max-width: 52ch;
++   margin: 0;
++   font-size: var(--font-size-md);
++   line-height: var(--line-height-base);
++   color: var(--color-border);
++ }
++
++ .demoBadge {
++   margin: 0;
++   font-size: var(--font-size-xs);
++   font-weight: var(--font-weight-bold);
++   letter-spacing: 0.08em;
++   text-transform: uppercase;
++   color: var(--color-ice);
++ }
++
++ .rule {
++   width: 100%;
++   max-width: 15rem;
++   height: 0;
++   margin: 0;
++   border: 0;
++   border-top: 1px solid var(--color-accent);
++ }
++
++ .cta {
++   display: inline-flex;
++   align-items: center;
++   gap: var(--space-2);
++   min-height: 44px;
++   padding: var(--space-3) var(--space-5);
++   font-size: var(--font-size-md);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-primary-contrast);
++   text-decoration: none;
++   background: var(--color-primary);
++   border: 1px solid var(--color-accent);
++   border-radius: var(--radius-sm);
++ }
++
++ .ctaArrow {
++   display: inline-block;
++   transition: transform 160ms ease-out;
++ }
++
++ .cta:hover .ctaArrow,
++ .cta:focus-visible .ctaArrow {
++   transform: translateX(var(--space-1));
++ }
++
++ .cta:focus-visible {
++   outline: 2px solid var(--color-ice);
++   outline-offset: 3px;
++ }
++
++ .sections {
++   display: flex;
++   flex-direction: column;
++   gap: var(--space-7);
++   box-sizing: border-box;
++   width: 100%;
++   max-width: var(--landing-content-max-width);
++   margin: 0 auto;
++   padding: var(--space-7) var(--space-6);
++   overflow-x: clip;
++ }
++
++ .section {
++   display: grid;
++   grid-template-columns: minmax(0, 1fr);
++   gap: var(--space-4);
++   padding-top: var(--space-5);
++   border-top: 1px solid var(--border-on-navy);
++ }
++
++ .sectionTitle {
++   margin: 0;
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-xl);
++   font-weight: var(--font-weight-medium);
++   color: var(--color-ice);
++ }
++
++ .sectionBody {
++   display: flex;
++   flex-direction: column;
++   gap: var(--space-3);
++   min-width: 0;
++   color: var(--color-border);
++   line-height: var(--line-height-base);
++ }
++
++ .sectionBody p {
++   margin: 0;
++ }
++
++ .sectionLead {
++   font-size: var(--font-size-lg);
++   color: var(--color-primary-contrast);
++ }
++
++ .list {
++   display: flex;
++   flex-direction: column;
++   gap: var(--space-3);
++   min-width: 0;
++   margin: 0;
++   padding: 0;
++   list-style: none;
++ }
++
++ .listItem {
++   display: flex;
++   flex-direction: column;
++   gap: var(--space-1);
++   padding-bottom: var(--space-3);
++   border-bottom: 1px solid var(--border-on-navy);
++ }
++
++ .itemName {
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-lg);
++   color: var(--color-primary-contrast);
++ }
++
++ .itemDetail {
++   color: var(--color-border);
++ }
++
++ .phone {
++   font-family: var(--font-family-heading);
++   font-size: var(--font-size-lg);
++   color: var(--color-primary-contrast);
++ }
++
++ .note {
++   font-size: var(--font-size-sm);
++ }
++
++ .statusStrip {
++   align-self: flex-start;
++   padding: var(--space-2) var(--space-3);
++   font-size: var(--font-size-sm);
++   color: var(--color-ice);
++   border-left: 2px solid var(--color-accent);
++ }
++
++ @media (min-width: 900px) {
++   .section {
++     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
++     gap: var(--space-6);
++   }
++ }
++
++ @media (max-width: 480px) {
++   .topBar {
++     padding: var(--space-2) var(--space-4);
++   }
++
++   .navList {
++     gap: var(--space-4);
++   }
++
++   .heroContent {
++     padding: var(--space-7) var(--space-4);
++   }
++
++   .sections {
++     padding: var(--space-6) var(--space-4);
++   }
++ }
++
++ @media (prefers-reduced-motion: reduce) {
++   .navLink,
++   .ctaArrow {
++     transition: none;
++   }
++
++   .cta:hover .ctaArrow,
++   .cta:focus-visible .ctaArrow {
++     transform: none;
++   }
++ }
++
++ .reveal {
++   opacity: 1;
++   transform: none;
++   transition:
++     opacity 220ms ease-out,
++     transform 220ms ease-out;
++ }
++
++ .reveal[data-reveal="pending"] {
++   opacity: 0;
++   transform: translateX(var(--landing-reveal-offset));
++ }
++
++ @media (prefers-reduced-motion: reduce) {
++   .reveal {
++     transition: none;
++   }
++
++   .reveal[data-reveal="pending"] {
++     opacity: 1;
++     transform: none;
++   }
++ }
++
+
+ ❯ src/shared/styles/landingTokens.test.ts:84:17
+     82|     const css = readLandingCss();
+     83| 
+     84|     expect(css).toContain("var(--landing-hero-min-height)");
+       |                 ^
+     85|     expect(css).toContain("var(--landing-content-max-width)");
+     86|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[16/22] no agrega colores nuevos
+test: src/shared/styles/landingTokens.test.ts > no agrega colores nuevos
+diff:
+--- a/frontend/src/shared/styles/tokens.css
++++ b/frontend/src/shared/styles/tokens.css
+@@ -40,6 +40,7 @@
+   --color-accent: #54ACBF;
+   --color-ice: #A7EBF2;
+   --color-navy-deep: #011C40;
++  --color-extra: #123456;
+ 
+   /* Superficies de la portada, el acceso y el login (oscuras) y de los modales (marfil-hielo) */
+   --surface-navy: rgba(1, 28, 64, 0.82);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 26ms
+   ↓ tokens de layout de la portada > define los dos tokens de layout
+   ↓ tokens de layout de la portada > la portada usa los tokens de layout
+   × tokens de layout de la portada > no agrega colores nuevos 24ms
+     → expected [ '--color-extra' ] to deeply equal []
+   ↓ tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  20:51:08
+   Duration  1.86s (transform 61ms, setup 268ms, collect 46ms, tests 26ms, environment 982ms, prepare 173ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzd_4eeov/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/styles/landingTokens.test.ts > tokens de layout de la portada > no agrega colores nuevos
+AssertionError: expected [ '--color-extra' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "--color-extra",
++ ]
+
+ ❯ src/shared/styles/landingTokens.test.ts:95:24
+     93|     const unexpected = colorProperties.filter((name) => !EXISTING_COLO…
+     94| 
+     95|     expect(unexpected).toEqual([]);
+       |                        ^
+     96|     expect(tokens.get("--landing-hero-min-height")).toBeDefined();
+     97|     expect(tokens.get("--landing-content-max-width")).toBeDefined();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[17/22] el equipo coincide con el seed
+test: src/features/landing/landingContent.test.ts > el equipo coincide con el seed
+diff:
+--- a/frontend/src/features/landing/landingContent.ts
++++ b/frontend/src/features/landing/landingContent.ts
+@@ -24,7 +24,7 @@
+     schedule: "Atiende de lunes a viernes, mañana y tarde.",
+   },
+   {
+-    name: "Dra. Paula Benítez",
++    name: "Dra. Paula Benitez",
+     schedule: "Atiende de lunes a viernes, mañana y tarde.",
+   },
+ ];
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 13ms
+   × contenido de la portada > el equipo coincide con el seed 11ms
+     → expected [ 'Dr. Martín Sosa', …(2) ] to deeply equal [ 'Dr. Martín Sosa', …(2) ]
+   ↓ contenido de la portada > los servicios y duraciones coinciden con el seed
+   ↓ contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:51:13
+   Duration  1.75s (transform 68ms, setup 263ms, collect 44ms, tests 13ms, environment 942ms, prepare 204ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbtnej1ym/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/landingContent.test.ts > contenido de la portada > el equipo coincide con el seed
+AssertionError: expected [ 'Dr. Martín Sosa', …(2) ] to deeply equal [ 'Dr. Martín Sosa', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "Dr. Martín Sosa",
+    "Dra. Laura Quiroga",
+-   "Dra. Paula Benítez",
++   "Dra. Paula Benitez",
+  ]
+
+ ❯ src/features/landing/landingContent.test.ts:7:68
+      5|   it("el equipo coincide con el seed", () => {
+      6|     expect(professionals).toHaveLength(3);
+      7|     expect(professionals.map((professional) => professional.name)).toE…
+       |                                                                    ^
+      8|       "Dr. Martín Sosa",
+      9|       "Dra. Laura Quiroga",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[18/22] los servicios y duraciones coinciden con el seed
+test: src/features/landing/landingContent.test.ts > los servicios y duraciones coinciden con el seed
+diff:
+--- a/frontend/src/features/landing/landingContent.ts
++++ b/frontend/src/features/landing/landingContent.ts
+@@ -52,7 +52,7 @@
+   },
+   {
+     name: "Blanqueamiento",
+-    durationMinutes: 90,
++    durationMinutes: 80,
+     description: "Tratamiento estético.",
+   },
+ ];
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 14ms
+   ↓ contenido de la portada > el equipo coincide con el seed
+   × contenido de la portada > los servicios y duraciones coinciden con el seed 12ms
+     → expected [ [ 'Limpieza', 45 ], …(4) ] to deeply equal [ [ 'Limpieza', 45 ], …(4) ]
+   ↓ contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:51:18
+   Duration  1.72s (transform 56ms, setup 243ms, collect 66ms, tests 14ms, environment 883ms, prepare 183ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpujln9rr7/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/landingContent.test.ts > contenido de la portada > los servicios y duraciones coinciden con el seed
+AssertionError: expected [ [ 'Limpieza', 45 ], …(4) ] to deeply equal [ [ 'Limpieza', 45 ], …(4) ]
+
+- Expected
++ Received
+
+@@ -15,8 +15,8 @@
+      "Control",
+      30,
+    ],
+    [
+      "Blanqueamiento",
+-     90,
++     80,
+    ],
+  ]
+
+ ❯ src/features/landing/landingContent.test.ts:18:80
+     16| 
+     17|   it("los servicios y duraciones coinciden con el seed", () => {
+     18|     expect(services.map((service) => [service.name, service.durationMi…
+       |                                                                                ^
+     19|       ["Limpieza", 45],
+     20|       ["Extracción", 60],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[19/22] horarios y contacto son ficticios y coinciden con el seed
+test: src/features/landing/landingContent.test.ts > horarios y contacto son ficticios y coinciden con el seed
+diff:
+--- a/frontend/src/features/landing/landingContent.ts
++++ b/frontend/src/features/landing/landingContent.ts
+@@ -65,7 +65,7 @@
+ 
+ export const contact = {
+   address: "Av. Ejemplo 1234, Ciudad Demo",
+-  phone: "(0261) 555-0101",
++  phone: "(0261) 555-0102",
+   email: "turnos@aqua-demo.example",
+ };
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 14ms
+   ↓ contenido de la portada > el equipo coincide con el seed
+   ↓ contenido de la portada > los servicios y duraciones coinciden con el seed
+   × contenido de la portada > horarios y contacto son ficticios y coinciden con el seed 12ms
+     → expected { …(3) } to deeply equal { …(3) }
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:51:23
+   Duration  1.70s (transform 61ms, setup 231ms, collect 41ms, tests 14ms, environment 925ms, prepare 204ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmprwvvriep/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/landingContent.test.ts > contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+    "address": "Av. Ejemplo 1234, Ciudad Demo",
+    "email": "turnos@aqua-demo.example",
+-   "phone": "(0261) 555-0101",
++   "phone": "(0261) 555-0102",
+  }
+
+ ❯ src/features/landing/landingContent.test.ts:33:21
+     31|       afternoon: "15:00 a 19:00",
+     32|     });
+     33|     expect(contact).toEqual({
+       |                     ^
+     34|       address: "Av. Ejemplo 1234, Ciudad Demo",
+     35|       phone: "(0261) 555-0101",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[20/22] sin IntersectionObserver queda revelada y su contenido es visible
+test: src/features/landing/RevealSection.test.tsx > sin IntersectionObserver queda revelada y su contenido es visible
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -10,7 +10,7 @@
+ 
+ export function RevealSection({ children, observer, reducedMotion = false }: RevealSectionProps) {
+   const canAnimate = !reducedMotion && (observer !== undefined || typeof IntersectionObserver !== "undefined");
+-  const [revealed, setRevealed] = useState(!canAnimate);
++  const [revealed, setRevealed] = useState(false);
+   const sectionRef = useRef<HTMLDivElement>(null);
+ 
+   useEffect(() => {
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (3 tests | 1 failed | 2 skipped) 43ms
+   × RevealSection > sin IntersectionObserver queda revelada y su contenido es visible 40ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+   ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+   ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:51:28
+   Duration  2.23s (transform 161ms, setup 295ms, collect 187ms, tests 43ms, environment 1.08s, prepare 196ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2mht6ykd/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/RevealSection.test.tsx:14:54
+     12|     );
+     13| 
+     14|     expect(container.querySelector("[data-reveal]")).toHaveAttribute("…
+       |                                                      ^
+     15|     expect(screen.getByText("Contenido informativo")).toBeVisible();
+     16|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[21/22] con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+test: src/features/landing/RevealSection.test.tsx > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -32,7 +32,7 @@
+       return;
+     }
+ 
+-    return instance.observe(section, () => {
++    instance.observe(section, () => {
+       setRevealed(true);
+     });
+   }, [canAnimate, observer]);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (3 tests | 1 failed | 2 skipped) 52ms
+   ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+   × RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar 50ms
+     → expected +0 to be 1 // Object.is equality
+   ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:51:34
+   Duration  1.89s (transform 139ms, setup 269ms, collect 152ms, tests 52ms, environment 896ms, prepare 214ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpngxx6_ho/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/features/landing/RevealSection.test.tsx:46:22
+     44| 
+     45|     unmount();
+     46|     expect(cleanups).toBe(1);
+       |                      ^
+     47|   });
+     48| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[22/22] con movimiento reducido no queda pendiente y el contenido está en el DOM
+test: src/features/landing/RevealSection.test.tsx > con movimiento reducido no queda pendiente y el contenido está en el DOM
+diff:
+--- a/frontend/src/features/landing/RevealSection.tsx
++++ b/frontend/src/features/landing/RevealSection.tsx
+@@ -38,7 +38,7 @@
+   }, [canAnimate, observer]);
+ 
+   return (
+-    <div ref={sectionRef} data-reveal={revealed ? "revealed" : "pending"} className={styles.reveal}>
++    <div ref={sectionRef} data-reveal={revealed && !reducedMotion ? "revealed" : "pending"} className={styles.reveal}>
+       {children}
+     </div>
+   );
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/landing/RevealSection.test.tsx (3 tests | 1 failed | 2 skipped) 33ms
+   ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
+   ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+   × RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM 31ms
+     → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  20:51:40
+   Duration  1.90s (transform 129ms, setup 254ms, collect 147ms, tests 33ms, environment 955ms, prepare 153ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpx9ff92ox/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/landing/RevealSection.test.tsx > RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
+Error: expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
+
+Expected the element to have attribute:
+  data-reveal="revealed"
+Received:
+  data-reveal="pending"
+ ❯ src/features/landing/RevealSection.test.tsx:61:53
+     59| 
+     60|     expect(screen.getByText("Contenido sin animación")).toBeInTheDocum…
+     61|     expect(document.querySelector("[data-reveal]")).toHaveAttribute("d…
+       |                                                     ^
+     62|   });
+     63| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+RESUMEN
+mutaciones que hicieron fallar su test: 22
+mutaciones que NO lo hicieron fallar: 0
+mutaciones inválidas: 0
+SHA-256 de produccion despues: fa35d26689fa3ca3f99681d062cb27bc4e3e97a60c69ba905de809c206fc72e5
+SHA-256 sin cambios: si

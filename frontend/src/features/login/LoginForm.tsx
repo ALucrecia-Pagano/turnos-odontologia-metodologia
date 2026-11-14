@@ -108,7 +108,16 @@ export function LoginForm({ onSubmit, initialNotice = null }: LoginFormProps) {
         disabled={isSubmitting}
         aria-busy={isSubmitting ? "true" : "false"}
       >
-        {isSubmitting ? "Ingresando…" : "Ingresar"}
+        {isSubmitting ? (
+          "Ingresando…"
+        ) : (
+          <>
+            Ingresar{" "}
+            <span className={styles.submitArrow} aria-hidden="true">
+              →
+            </span>
+          </>
+        )}
       </button>
     </form>
   );

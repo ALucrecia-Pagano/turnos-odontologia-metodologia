@@ -18,6 +18,7 @@
   --font-size-lg: 20px;
   --font-size-xl: 24px;
   --font-size-2xl: 32px;
+  --font-size-display: clamp(32px, 6vw, 56px);
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
@@ -38,6 +39,26 @@
   --color-navy: #023859;
   --color-accent: #54ACBF;
   --color-ice: #A7EBF2;
+  --color-navy-deep: #011C40;
+
+  /* Superficies de la portada, el acceso y el login (oscuras) y de los modales (marfil-hielo) */
+  --surface-navy: rgba(1, 28, 64, 0.82);
+  --surface-ivory-ice: rgba(243, 247, 250, 0.96);
+  --border-on-navy: rgba(167, 235, 242, 0.22);
+  --border-on-navy-strong: rgba(167, 235, 242, 0.35);
+  --field-on-navy: rgba(1, 28, 64, 0.6);
+  --scrim-navy: rgba(1, 28, 64, 0.45);
+  --scrim-navy-strong: rgba(1, 28, 64, 0.7);
+  --overlay-hero: linear-gradient(180deg, rgba(1, 28, 64, 0.55) 0%, rgba(1, 28, 64, 0.82) 100%);
+  --shadow-on-navy: 0 16px 40px rgba(1, 28, 64, 0.45);
+
+  /* Overlay del carrusel de /login y botón de pausa (valores heredados de C-34) */
+  --login-overlay-start: rgba(1, 28, 64, 0.92);
+  --login-overlay-mid: rgba(2, 56, 89, 0.78);
+  --login-overlay-end: rgba(38, 101, 140, 0.62);
+  --carousel-toggle-bg: rgba(1, 28, 64, 0.55);
+  --carousel-toggle-bg-hover: rgba(1, 28, 64, 0.75);
+  --carousel-toggle-border: rgba(255, 255, 255, 0.45);
 
   /* Radios y sombras */
   --radius-sm: 4px;
@@ -45,6 +66,14 @@
   --radius-pill: 999px;
   --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.08);
   --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
+
+  /* Portada pública y acceso (C-35) */
+  --landing-hero-min-height: 60vh;
+  --landing-content-max-width: 1120px;
+  --landing-reveal-offset: 20px;
+  --landing-carousel-blur: 6px;
+  --blur-surface: 12px;
+  --blur-backdrop: 4px;
 
   /* Agenda diaria */
   --agenda-hour-height: 112px;

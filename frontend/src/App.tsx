@@ -1,22 +1,17 @@
 import { useState } from "react";
-import { createBrowserRouter, Navigate, RouterProvider, type RouteObject } from "react-router-dom";
-import { DEFAULT_AGENDA_TIMEZONE } from "./features/agenda/agendaConfig";
+import { createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
 import { AgendaPage } from "./features/agenda/AgendaPage";
-import { formatLocalDate } from "./features/agenda/agendaTime";
 import { systemClock, type Clock } from "./features/agenda/clock";
 import { AuthProvider } from "./features/auth/AuthContext";
 import { PublicOnlyRoute } from "./features/auth/PublicOnlyRoute";
-import { RequireAuth } from "./features/auth/RequireAuth";
 import type { TokenStore } from "./features/auth/tokenStore";
+import { AccesoPage } from "./features/landing/AccesoPage";
+import { RootGate } from "./features/landing/RootGate";
+import { RootRedirect } from "./features/landing/RootRedirect";
 import { LoginPage } from "./features/login/LoginPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import type { ApiClient, FetchFn } from "./shared/api/client";
 import { AppShell } from "./shared/components/AppShell";
-
-function RootRedirect({ clock }: { readonly clock: Clock }) {
-  const today = formatLocalDate(clock.now(), DEFAULT_AGENDA_TIMEZONE);
-  return <Navigate to={`/agenda?date=${today}`} replace />;
-}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
@@ -28,7 +23,7 @@ export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
     },
     {
       path: "/",
-      element: <RequireAuth />,
+      element: <RootGate />,
       children: [
         {
           element: <AppShell />,
@@ -39,6 +34,10 @@ export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
           ],
         },
       ],
+    },
+    {
+      path: "/acceso",
+      element: <AccesoPage />,
     },
   ];
 }
