@@ -247,6 +247,23 @@
   outline-offset: 2px;
 }
 
+/* Autocompletado del navegador: conserva la superficie oscura (el fondo azul claro de Chrome no se ve). */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;
+  -webkit-text-fill-color: var(--color-primary-contrast);
+  caret-color: var(--color-primary-contrast);
+  transition: background-color 600000s ease-in-out 0s;
+}
+
+.input:autofill {
+  box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;
+  -webkit-text-fill-color: var(--color-primary-contrast);
+  caret-color: var(--color-primary-contrast);
+  transition: background-color 600000s ease-in-out 0s;
+}
+
 .submit {
   display: inline-flex;
   align-items: center;
@@ -287,9 +304,9 @@
 .alert {
   padding: var(--space-3) var(--space-4);
   font-size: var(--font-size-sm);
-  color: var(--color-danger-text);
-  background: var(--color-danger-background);
-  border: 1px solid var(--color-danger-border);
+  color: var(--alert-on-navy-text);
+  background: var(--alert-on-navy-bg);
+  border: 1px solid var(--alert-on-navy-border);
   border-radius: var(--radius-sm);
 }
 

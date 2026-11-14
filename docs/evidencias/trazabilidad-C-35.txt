@@ -27,7 +27,7 @@ V4 [visual] Adaptabilidad de /login en 1440, 768 y 390 px -> capturas/C-35-login
 V5 [visual] Superficie clara suave de modales verificada a 1440, 768 y 390 px -> capturas/C-35-modales-*.png
 V6 [visual] Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> capturas/C-35-appshell-*.png
 
-tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño); no son escenarios, cada uno con su mutación: 13
+tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño y 2 del login); no son escenarios, cada uno con su mutación: 15
 [auxiliar] src/shared/styles/landingTokens.test.ts > define los dos tokens de layout | A01
 [auxiliar] src/shared/styles/landingTokens.test.ts > la portada usa los tokens de layout | A02
 [auxiliar] src/shared/styles/landingTokens.test.ts > no agrega colores nuevos | A03
@@ -41,6 +41,8 @@ tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de dise�
 [auxiliar] src/features/landing/RevealSection.test.tsx > from=right desplaza en positivo y from=left en negativo | M15
 [auxiliar] src/features/landing/LandingPage.test.tsx > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha | M16
 [auxiliar] src/features/landing/LandingPage.test.tsx > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único | M17
+[auxiliar] src/features/login/LoginPage.translucido.test.tsx > los campos del login conservan la superficie oscura cuando el navegador los autocompleta | M18
+[auxiliar] src/features/login/LoginPage.translucido.test.tsx > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback | M19
 
 problemas: 0
 RESULTADO: OK

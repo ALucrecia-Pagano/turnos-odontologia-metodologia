@@ -139,6 +139,8 @@
 - [x] 10.4 **Test 16 / M16** — las secciones 01-04 alternan izquierda, derecha, izquierda, derecha en bloques del 60 % del ancho. Test en `LandingPage.test.tsx`. Evidencia `16-secciones-alternan-lado`.
 - [x] 10.5 **Test 17 / M17** — el CTA "Explorar la clínica →" pasa a enlace fantasma (`data-cta`, `data-variant="ghost"`, sin relleno, línea inferior fina) y sigue siendo el único. Test en `LandingPage.test.tsx`. Evidencia `17-cta-fantasma`.
 - [x] 10.6 Hero de la portada: logo centrado y grande (`--landing-logo-width`), eslogan más chico debajo con el lead discreto, navegación arriba a la izquierda, CTA y badge abajo a la izquierda y "Pausar animación" abajo a la derecha.
+- [x] 10.7 **Test 18 / M18** — autocompletado del navegador en `/login`: reglas `:-webkit-autofill` (con `:hover` y `:focus`) y `:autofill` con `box-shadow` inset, `-webkit-text-fill-color`, `caret-color` y transición larga. Test en `LoginPage.translucido.test.tsx`. Evidencia `18-login-autofill`.
+- [x] 10.8 **Test 19 / M19** — alerta de error oscura solo en el login (`--alert-on-navy-*`), contraste >= 4.5:1 sobre la superficie translúcida (7,58:1) y sobre el fallback `#011C40` (9,86:1), aplicada al alerta real de un login fallido. Evidencia `19-login-alerta-oscura`.
 
 ---
 
@@ -183,5 +185,7 @@ Totales: **24 escenarios** = **13 testeables nuevos** (13 pares RED/GREEN, 13 te
 | E15 | frontend-landing | (adicional) `RevealSection` desde su lado | Adicional | `features/landing/RevealSection.test.tsx` > "from=right desplaza en positivo y from=left en negativo" | M15: `translateX` izquierdo en positivo | `red/green-C-35/15-reveal-lado.txt` |
 | E16 | frontend-landing | (adicional) secciones intercaladas | Adicional | `features/landing/LandingPage.test.tsx` > "las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha" | M16: la sección 02 entra desde la izquierda | `red/green-C-35/16-secciones-alternan-lado.txt` |
 | E17 | frontend-landing | (adicional) CTA fantasma | Adicional | `features/landing/LandingPage.test.tsx` > "el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único" | M17: `.cta` con fondo `--color-primary` | `red/green-C-35/17-cta-fantasma.txt` |
+| E18 | frontend-auth-session | (adicional) autofill del login | Adicional | `features/login/LoginPage.translucido.test.tsx` > "los campos del login conservan la superficie oscura cuando el navegador los autocompleta" | M18: `.input:autofill` con `--color-surface` | `red/green-C-35/18-login-autofill.txt` |
+| E19 | frontend-auth-session | (adicional) alerta oscura del login | Adicional | `features/login/LoginPage.translucido.test.tsx` > "el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback" | M19: texto del alerta con `--color-danger-text` | `red/green-C-35/19-login-alerta-oscura.txt` |
 
 Rutas de test relativas a `frontend/src/`; evidencias relativas a `docs/evidencias/`. Los nombres de los 5 tests históricos se verificaron con `grep` sobre `frontend/src/features/login/LoginPage.test.tsx` de `main` (líneas 75, 118, 176, 233 y 283). El test existente `"el 401 del login no es sesión vencida"` (línea 208) no está asignado a ningún escenario.

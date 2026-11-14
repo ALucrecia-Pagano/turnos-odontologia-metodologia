@@ -161,4 +161,106 @@ describe("LoginPage translúcido", () => {
     });
     expect(screen.queryByTestId("authenticated-name")).toHaveTextContent("Recepción Demo");
   });
+
+  it("los campos del login conservan la superficie oscura cuando el navegador los autocompleta", () => {
+    const css = readSrcFile("features/login/LoginPage.module.css");
+    const webkit = ruleBody(
+      css,
+      ".input:-webkit-autofill, .input:-webkit-autofill:hover, .input:-webkit-autofill:focus",
+    );
+    const standard = ruleBody(css, ".input:autofill");
+
+    for (const rule of [webkit, standard]) {
+      expect(rule).toContain("box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;");
+      expect(rule).toContain("-webkit-text-fill-color: var(--color-primary-contrast);");
+      expect(rule).toContain("caret-color: var(--color-primary-contrast);");
+      expect(rule).toMatch(/transition:\s+background-color\s+\d{4,}s\b/);
+    }
+    // El aspecto de foco (línea fina y contorno) sigue declarado aparte y sin cambios.
+    expect(ruleBody(css, ".input:focus-visible")).toContain("border-color: var(--color-accent);");
+    expect(readSrcFile("shared/styles/tokens.css")).toMatch(/--color-navy-deep:\s*#011C40;/);
+  });
+
+  it("el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback", async () => {
+    const user = userEvent.setup();
+    const fetchFn: FetchFn = async () =>
+      jsonResponse({ code: "INVALID_CREDENTIALS", message: "Usuario o contraseña incorrectos." }, 401);
+    renderLogin("/login", createMemoryTokenStore(), fetchFn);
+
+    await user.type(screen.getByLabelText("Usuario"), "recepcion");
+    await user.type(screen.getByLabelText("Contraseña"), "<contraseña de prueba>");
+    await user.click(screen.getByRole("button", { name: "Ingresar" }));
+    await waitFor(() => {
+      expect(screen.queryByRole("alert")).toHaveTextContent("Usuario o contraseña incorrectos.");
+    });
+    const alert = screen.queryByRole("alert");
+    expect(alert).toHaveAttribute("aria-live", "polite");
+    expect(alert).toHaveClass("alert");
+
+    const css = readSrcFile("features/login/LoginPage.module.css");
+    const rule = ruleBody(css, ".alert");
+    expect(rule).toContain("background: var(--alert-on-navy-bg);");
+    expect(rule).toContain("border: 1px solid var(--alert-on-navy-border);");
+    expect(rule).toContain("color: var(--alert-on-navy-text);");
+
+    const tokens = readSrcFile("shared/styles/tokens.css");
+    const tokenValue = (name: string): string => new RegExp(`${name}:\\s*([^;]+);`).exec(tokens)?.[1]?.trim() ?? "";
+    const text = parseRgb(tokenValue("--alert-on-navy-text"));
+    const alertBg = parseRgba(tokenValue("--alert-on-navy-bg"));
+    const surface = parseRgba(tokenValue("--surface-navy"));
+    expect(text).not.toBeNull();
+    expect(alertBg).not.toBeNull();
+    expect(surface).not.toBeNull();
+    if (text === null || alertBg === null || surface === null) {
+      return;
+    }
+    // Peor caso de la superficie translúcida: la tarjeta sobre una foto blanca; fallback sólido: #011C40.
+    const overTranslucent = composite(alertBg, composite(surface, { rgb: [255, 255, 255], alpha: 1 }));
+    const overFallback = composite(alertBg, parseRgba(`rgba(1, 28, 64, 1)`) ?? alertBg);
+    expect(contrastOf(text, overTranslucent.rgb)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastOf(text, overFallback.rgb)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastOf(text, overTranslucent.rgb).toFixed(2)).toBe("7.58");
+    expect(contrastOf(text, overFallback.rgb).toFixed(2)).toBe("9.86");
+  });
 });
+
+type Rgb = readonly [number, number, number];
+interface Rgba {
+  readonly rgb: Rgb;
+  readonly alpha: number;
+}
+
+function parseRgb(value: string): Rgb | null {
+  const hex = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(value);
+  if (hex === null) {
+    return null;
+  }
+  return [parseInt(hex[1] ?? "0", 16), parseInt(hex[2] ?? "0", 16), parseInt(hex[3] ?? "0", 16)];
+}
+
+function parseRgba(value: string): Rgba | null {
+  const match = /^rgba\(\s*(\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/.exec(value);
+  if (match === null) {
+    return null;
+  }
+  return { rgb: [Number(match[1]), Number(match[2]), Number(match[3])], alpha: Number(match[4]) };
+}
+
+function composite(top: Rgba, bottom: Rgba): Rgba {
+  const mix = (index: 0 | 1 | 2): number => top.rgb[index] * top.alpha + bottom.rgb[index] * (1 - top.alpha);
+  return { rgb: [mix(0), mix(1), mix(2)], alpha: 1 };
+}
+
+function luminanceOf(rgb: Rgb): number {
+  const channel = (value: number): number => {
+    const ratio = value / 255;
+    return ratio <= 0.03928 ? ratio / 12.92 : ((ratio + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * channel(rgb[0]) + 0.7152 * channel(rgb[1]) + 0.0722 * channel(rgb[2]);
+}
+
+function contrastOf(foreground: Rgb, background: Rgb): number {
+  const a = luminanceOf(foreground);
+  const b = luminanceOf(background);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}

@@ -13,7 +13,7 @@ C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\shared\components\Di
 ✖ 3 problems (0 errors, 3 warnings)
 
 exit npx eslint .: 0
---- npm run lint (eslint . --max-warnings 0) ---
+--- npm run lint ---
 
 > turnos-odontologia-frontend@0.1.0 lint
 > eslint . --max-warnings 0

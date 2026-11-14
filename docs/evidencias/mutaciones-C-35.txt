@@ -1,34 +1,32 @@
 Salida generada por docs/evidencias/mutaciones-C-35.py. No editar a mano.
-tests nuevos de C-35 listados por vitest: 26; mutaciones: 26 (una por test)
-SHA-256 de produccion antes: 1538ab369554c377ea8640d309cee5d86efd1f42bc28bc7cee8f9c0fac6357f5
+tests nuevos de C-35 listados por vitest: 28; mutaciones: 28 (una por test)
+SHA-256 de produccion antes: 1ac9b3c96c386ab56272160f302478b0655648dc8fb53614355e24fadf91c497
 --- linea de base, sin mutaciones (codigo de salida 0) ---
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ✓ src/features/landing/landingContent.test.ts (3 tests) 16ms
- ✓ src/shared/components/DialogTheme.test.ts (1 test) 15ms
- ✓ src/shared/styles/landingTokens.test.ts (4 tests) 38ms
- ✓ src/features/landing/RevealSection.test.tsx (4 tests) 234ms
- ✓ src/shared/components/AppShellNavigation.test.tsx (3 tests) 453ms
-   ✓ AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px  390ms
- ✓ src/features/landing/RootGate.test.tsx (1 test) 332ms
-   ✓ RootGate > usuario autenticado en / redirige a agenda  329ms
- ✓ src/features/landing/AccesoPage.test.tsx (2 tests) 496ms
- ✓ src/features/landing/LandingPage.test.tsx (5 tests) 528ms
-   ✓ LandingPage > portada completa para anónimo en /  328ms
- ✓ src/features/login/LoginPage.translucido.test.tsx (3 tests) 2488ms
-   ✓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales  992ms
-   ✓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter  991ms
-   ✓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida  500ms
+ ✓ src/shared/styles/landingTokens.test.ts (4 tests) 27ms
+ ✓ src/features/landing/landingContent.test.ts (3 tests) 14ms
+ ✓ src/shared/components/DialogTheme.test.ts (1 test) 14ms
+ ✓ src/features/landing/RevealSection.test.tsx (4 tests) 172ms
+ ✓ src/shared/components/AppShellNavigation.test.tsx (3 tests) 299ms
+ ✓ src/features/landing/RootGate.test.tsx (1 test) 250ms
+ ✓ src/features/landing/AccesoPage.test.tsx (2 tests) 403ms
+ ✓ src/features/landing/LandingPage.test.tsx (5 tests) 438ms
+ ✓ src/features/login/LoginPage.translucido.test.tsx (5 tests) 2795ms
+   ✓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales  727ms
+   ✓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter  981ms
+   ✓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida  548ms
+   ✓ LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback  533ms
 
  Test Files  9 passed (9)
-      Tests  26 passed (26)
-   Start at  21:23:14
-   Duration  8.72s (transform 3.11s, setup 6.98s, collect 12.47s, tests 4.60s, environment 27.44s, prepare 3.36s)
+      Tests  28 passed (28)
+   Start at  21:53:05
+   Duration  7.79s (transform 2.00s, setup 4.95s, collect 8.50s, tests 4.41s, environment 22.44s, prepare 3.02s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpgwhiablz/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpz7y349ls/vitest.json
 ================================================================================
-[01/26] portada completa para anónimo en /
+[01/28] portada completa para anónimo en /
 test: src/features/landing/LandingPage.test.tsx > portada completa para anónimo en /
 diff:
 --- a/frontend/src/features/landing/LandingPage.tsx
@@ -46,8 +44,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 221ms
-   × LandingPage > portada completa para anónimo en / 218ms
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 253ms
+   × LandingPage > portada completa para anónimo en / 250ms
      → expect(element).toHaveAttribute("aria-current", "page") // element.getAttribute("aria-current") === "page"
 
 Expected the element to have attribute:
@@ -61,10 +59,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  21:23:25
-   Duration  5.18s (transform 835ms, setup 432ms, collect 2.03s, tests 221ms, environment 1.73s, prepare 253ms)
+   Start at  21:53:15
+   Duration  5.07s (transform 827ms, setup 392ms, collect 2.06s, tests 253ms, environment 1.59s, prepare 250ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd8w0d16d/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpbvn8rthb/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -86,7 +84,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[02/26] usuario autenticado en / redirige a agenda
+[02/28] usuario autenticado en / redirige a agenda
 test: src/features/landing/RootGate.test.tsx > usuario autenticado en / redirige a agenda
 diff:
 --- a/frontend/src/features/landing/RootGate.tsx
@@ -104,8 +102,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/RootGate.test.tsx (1 test | 1 failed) 1112ms
-   × RootGate > usuario autenticado en / redirige a agenda 1108ms
+ ❯ src/features/landing/RootGate.test.tsx (1 test | 1 failed) 1111ms
+   × RootGate > usuario autenticado en / redirige a agenda 1107ms
      → expected '/' to be '/agenda?date=2026-11-16' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -519,10 +517,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  21:23:38
-   Duration  6.03s (transform 843ms, setup 419ms, collect 2.15s, tests 1.11s, environment 1.58s, prepare 275ms)
+   Start at  21:53:28
+   Duration  5.81s (transform 794ms, setup 377ms, collect 2.09s, tests 1.11s, environment 1.44s, prepare 234ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp8xhj2jz3/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpazw1pno7/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -955,7 +953,7 @@ Received: "/"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[03/26] secciones editoriales entran con animación lateral al scrollear
+[03/28] secciones editoriales entran con animación lateral al scrollear
 test: src/features/landing/LandingPage.test.tsx > secciones editoriales entran con animación lateral al scrollear
 diff:
 --- a/frontend/src/features/landing/RevealSection.module.css
@@ -973,9 +971,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 244ms
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 224ms
    ↓ LandingPage > portada completa para anónimo en /
-   × LandingPage > secciones editoriales entran con animación lateral al scrollear 241ms
+   × LandingPage > secciones editoriales entran con animación lateral al scrollear 221ms
      → expected 'opacity: 0;\n  transform: translateY(…' to contain 'translateX('
    ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
    ↓ LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
@@ -983,10 +981,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  21:23:52
-   Duration  5.08s (transform 861ms, setup 415ms, collect 2.04s, tests 244ms, environment 1.58s, prepare 316ms)
+   Start at  21:53:41
+   Duration  5.06s (transform 823ms, setup 405ms, collect 2.09s, tests 224ms, environment 1.59s, prepare 280ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc5n5v5l_/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmply6795j9/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1011,7 +1009,7 @@ AssertionError: expected 'opacity: 0;\n  transform: translateY(…' to contain '
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[04/26] reduced motion desactiva la animación lateral y deja el contenido visible
+[04/28] reduced motion desactiva la animación lateral y deja el contenido visible
 test: src/features/landing/LandingPage.test.tsx > reduced motion desactiva la animación lateral y deja el contenido visible
 diff:
 --- a/frontend/src/features/landing/RevealSection.tsx
@@ -1028,10 +1026,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 93ms
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 82ms
    ↓ LandingPage > portada completa para anónimo en /
    ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
-   × LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible 90ms
+   × LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible 79ms
      → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
 
 Expected the element to have attribute:
@@ -1043,10 +1041,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  21:24:05
-   Duration  5.18s (transform 894ms, setup 469ms, collect 2.18s, tests 93ms, environment 1.69s, prepare 261ms)
+   Start at  21:53:54
+   Duration  5.05s (transform 856ms, setup 494ms, collect 2.20s, tests 82ms, environment 1.57s, prepare 241ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpch5iylvd/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmprad87nzr/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1068,7 +1066,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[05/26] navegación desde las tres tarjetas de rol hacia login
+[05/28] navegación desde las tres tarjetas de rol hacia login
 test: src/features/landing/AccesoPage.test.tsx > navegación desde las tres tarjetas de rol hacia login
 diff:
 --- a/frontend/src/features/landing/AccesoPage.tsx
@@ -1086,8 +1084,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 190ms
-   × AccesoPage > navegación desde las tres tarjetas de rol hacia login 187ms
+ ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 201ms
+   × AccesoPage > navegación desde las tres tarjetas de rol hacia login 198ms
      → expect(element).toHaveAttribute("href", "/login?rol=odontologo") // element.getAttribute("href") === "/login?rol=odontologo"
 
 Expected the element to have attribute:
@@ -1098,10 +1096,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  21:24:18
-   Duration  5.49s (transform 853ms, setup 463ms, collect 2.24s, tests 190ms, environment 1.74s, prepare 244ms)
+   Start at  21:54:07
+   Duration  5.31s (transform 823ms, setup 420ms, collect 2.33s, tests 201ms, environment 1.62s, prepare 255ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdmojbu9o/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpv0034v30/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1123,7 +1121,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[06/26] navegación de retorno con el enlace Volver a Aqua
+[06/28] navegación de retorno con el enlace Volver a Aqua
 test: src/features/landing/AccesoPage.test.tsx > navegación de retorno con el enlace Volver a Aqua
 diff:
 --- a/frontend/src/features/landing/AccesoPage.tsx
@@ -1141,9 +1139,9 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 1321ms
+ ❯ src/features/landing/AccesoPage.test.tsx (2 tests | 1 failed | 1 skipped) 1325ms
    ↓ AccesoPage > navegación desde las tres tarjetas de rol hacia login
-   × AccesoPage > navegación de retorno con el enlace Volver a Aqua 1317ms
+   × AccesoPage > navegación de retorno con el enlace Volver a Aqua 1322ms
      → expected '/login' to be '/' // Object.is equality
 
 Ignored nodes: comments, script, style
@@ -1315,10 +1313,10 @@ Ignored nodes: comments, script, style
 
  Test Files  1 failed (1)
       Tests  1 failed | 1 skipped (2)
-   Start at  21:24:32
-   Duration  6.39s (transform 870ms, setup 418ms, collect 2.26s, tests 1.32s, environment 1.60s, prepare 314ms)
+   Start at  21:54:20
+   Duration  6.35s (transform 791ms, setup 427ms, collect 2.26s, tests 1.33s, environment 1.56s, prepare 276ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpme7_zafj/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp6kgqam34/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1509,7 +1507,7 @@ Received: "/login"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[07/26] formulario translúcido en /login con etiqueta de rol y envío de credenciales
+[07/28] formulario translúcido en /login con etiqueta de rol y envío de credenciales
 test: src/features/login/LoginPage.translucido.test.tsx > formulario translúcido en /login con etiqueta de rol y envío de credenciales
 diff:
 --- a/frontend/src/features/login/LoginPage.tsx
@@ -1527,7 +1525,7 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 157ms
+ ❯ src/features/login/LoginPage.translucido.test.tsx (5 tests | 1 failed | 4 skipped) 157ms
    × LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales 154ms
      → expect(received).toBeInTheDocument()
 
@@ -1536,13 +1534,15 @@ Received has type:  Null
 Received has value: null
    ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
    ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+   ↓ LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+   ↓ LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
 
  Test Files  1 failed (1)
-      Tests  1 failed | 2 skipped (3)
-   Start at  21:24:46
-   Duration  3.97s (transform 390ms, setup 459ms, collect 879ms, tests 157ms, environment 1.69s, prepare 243ms)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:54:35
+   Duration  3.84s (transform 363ms, setup 452ms, collect 896ms, tests 157ms, environment 1.59s, prepare 246ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp36yzztnm/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp894httef/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1563,7 +1563,7 @@ Received has value: null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[08/26] parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+[08/28] parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
 test: src/features/login/LoginPage.translucido.test.tsx > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
 diff:
 --- a/frontend/src/features/login/LoginPage.tsx
@@ -1581,18 +1581,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 744ms
+ ❯ src/features/login/LoginPage.translucido.test.tsx (5 tests | 1 failed | 4 skipped) 751ms
    ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
-   × LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter 741ms
+   × LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter 747ms
      → expected <p class="roleLabel" data-role-label></p> to be null
    ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+   ↓ LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+   ↓ LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
 
  Test Files  1 failed (1)
-      Tests  1 failed | 2 skipped (3)
-   Start at  21:24:58
-   Duration  4.64s (transform 415ms, setup 433ms, collect 910ms, tests 744ms, environment 1.77s, prepare 229ms)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:54:46
+   Duration  4.48s (transform 446ms, setup 436ms, collect 942ms, tests 751ms, environment 1.58s, prepare 263ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpd0_1dxo0/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1izslbnj/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1621,7 +1623,7 @@ null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[09/26] cierre de sesión y preservación del mensaje literal de sesión vencida
+[09/28] cierre de sesión y preservación del mensaje literal de sesión vencida
 test: src/features/login/LoginPage.translucido.test.tsx > cierre de sesión y preservación del mensaje literal de sesión vencida
 diff:
 --- a/frontend/src/features/login/LoginPage.tsx
@@ -1639,22 +1641,24 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/login/LoginPage.translucido.test.tsx (3 tests | 1 failed | 2 skipped) 176ms
+ ❯ src/features/login/LoginPage.translucido.test.tsx (5 tests | 1 failed | 4 skipped) 107ms
    ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
    ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
-   × LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida 173ms
+   × LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida 104ms
      → expect(received).toBeInTheDocument()
 
 received value must be an HTMLElement or an SVGElement.
 Received has type:  Null
 Received has value: null
+   ↓ LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+   ↓ LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
 
  Test Files  1 failed (1)
-      Tests  1 failed | 2 skipped (3)
-   Start at  21:25:11
-   Duration  4.03s (transform 411ms, setup 494ms, collect 971ms, tests 176ms, environment 1.63s, prepare 263ms)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:54:57
+   Duration  1.97s (transform 224ms, setup 213ms, collect 534ms, tests 107ms, environment 665ms, prepare 164ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdag7l6ys/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmb279of2/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1675,12 +1679,12 @@ Received has value: null
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[10/26] tokens de layout y contraste AA de superficies
+[10/28] tokens de layout y contraste AA de superficies
 test: src/shared/styles/landingTokens.test.ts > tokens de layout y contraste AA de superficies
 diff:
 --- a/frontend/src/shared/styles/tokens.css
 +++ b/frontend/src/shared/styles/tokens.css
-@@ -68,7 +68,7 @@
+@@ -71,7 +71,7 @@
    --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
  
    /* Portada pública y acceso (C-35) */
@@ -1693,19 +1697,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 28ms
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 13ms
    ↓ tokens de layout de la portada > define los dos tokens de layout
    ↓ tokens de layout de la portada > la portada usa los tokens de layout
    ↓ tokens de layout de la portada > no agrega colores nuevos
-   × tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies 24ms
+   × tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies 11ms
      → expected '50vh' to be '60vh' // Object.is equality
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:25:22
-   Duration  2.95s (transform 103ms, setup 420ms, collect 129ms, tests 28ms, environment 1.55s, prepare 289ms)
+   Start at  21:55:03
+   Duration  1.45s (transform 58ms, setup 187ms, collect 39ms, tests 13ms, environment 719ms, prepare 228ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmplr3m8mfe/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp5hr1ilu4/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1715,18 +1719,18 @@ AssertionError: expected '50vh' to be '60vh' // Object.is equality
 Expected: "60vh"
 Received: "50vh"
 
- ❯ src/shared/styles/landingTokens.test.ts:133:53
-    131|   it("tokens de layout y contraste AA de superficies", () => {
-    132|     const tokens = readCustomProperties(readFileSync(TOKENS_PATH, "utf…
-    133|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
+ ❯ src/shared/styles/landingTokens.test.ts:136:53
+    134|   it("tokens de layout y contraste AA de superficies", () => {
+    135|     const tokens = readCustomProperties(readFileSync(TOKENS_PATH, "utf…
+    136|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
        |                                                     ^
-    134|     expect(tokens.get("--landing-content-max-width")).toBe("1120px");
-    135| 
+    137|     expect(tokens.get("--landing-content-max-width")).toBe("1120px");
+    138| 
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[11/26] fallback sólido sin soporte de backdrop-filter
+[11/28] fallback sólido sin soporte de backdrop-filter
 test: src/shared/components/DialogTheme.test.ts > fallback sólido sin soporte de backdrop-filter
 diff:
 --- a/frontend/src/shared/components/Dialog.module.css
@@ -1745,16 +1749,16 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/DialogTheme.test.ts (1 test | 1 failed) 26ms
-   × tema claro de los modales > fallback sólido sin soporte de backdrop-filter 22ms
+ ❯ src/shared/components/DialogTheme.test.ts (1 test | 1 failed) 9ms
+   × tema claro de los modales > fallback sólido sin soporte de backdrop-filter 7ms
      → expected '' to contain 'background: var(--scrim-navy-strong);'
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
-   Start at  21:25:31
-   Duration  3.06s (transform 168ms, setup 468ms, collect 71ms, tests 26ms, environment 1.71s, prepare 297ms)
+   Start at  21:55:07
+   Duration  1.28s (transform 44ms, setup 187ms, collect 29ms, tests 9ms, environment 649ms, prepare 124ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmptg_69fsw/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp1jxtmzv7/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1777,7 +1781,7 @@ AssertionError: expected '' to contain 'background: var(--scrim-navy-strong);'
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[12/26] enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+[12/28] enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
 test: src/shared/components/AppShellNavigation.test.tsx > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
 diff:
 --- a/frontend/src/shared/components/AppShell.tsx
@@ -1794,8 +1798,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 210ms
-   × AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px 207ms
+ ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 95ms
+   × AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px 94ms
      → expect(element).toHaveAttribute("aria-current", "page") // element.getAttribute("aria-current") === "page"
 
 Expected the element to have attribute:
@@ -1807,10 +1811,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  21:25:40
-   Duration  3.68s (transform 341ms, setup 521ms, collect 565ms, tests 210ms, environment 1.61s, prepare 269ms)
+   Start at  21:55:11
+   Duration  1.64s (transform 153ms, setup 202ms, collect 269ms, tests 95ms, environment 637ms, prepare 148ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4hgtzj6c/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzgbq8ulc/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1832,7 +1836,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[13/26] ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+[13/28] ítems deshabilitados con Próximamente conservan semántica y accesibilidad
 test: src/shared/components/AppShellNavigation.test.tsx > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
 diff:
 --- a/frontend/src/shared/components/AppShell.module.css
@@ -1849,18 +1853,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 277ms
+ ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 123ms
    ↓ AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
-   × AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad 273ms
+   × AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad 121ms
      → .badge: expected 'display: block;\n  border: 1px solid …' not to match /(^|[\s;])border:\s+(?!none|0)/
    ↓ AppShell navegación sin cajas > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  21:25:50
-   Duration  3.64s (transform 321ms, setup 418ms, collect 584ms, tests 277ms, environment 1.61s, prepare 237ms)
+   Start at  21:55:20
+   Duration  1.80s (transform 170ms, setup 252ms, collect 287ms, tests 123ms, environment 709ms, prepare 146ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpwgw9ue8i/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpmndqyayw/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1888,12 +1892,12 @@ AssertionError: .badge: expected 'display: block;\n  border: 1px solid …' not 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[14/26] define los dos tokens de layout
+[14/28] define los dos tokens de layout
 test: src/shared/styles/landingTokens.test.ts > define los dos tokens de layout
 diff:
 --- a/frontend/src/shared/styles/tokens.css
 +++ b/frontend/src/shared/styles/tokens.css
-@@ -69,7 +69,7 @@
+@@ -72,7 +72,7 @@
  
    /* Portada pública y acceso (C-35) */
    --landing-hero-min-height: 60vh;
@@ -1906,8 +1910,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 19ms
-   × tokens de layout de la portada > define los dos tokens de layout 15ms
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 8ms
+   × tokens de layout de la portada > define los dos tokens de layout 7ms
      → expected '1120' to match /^\d+(\.\d+)?(px|rem|em|vw|%)$/
    ↓ tokens de layout de la portada > la portada usa los tokens de layout
    ↓ tokens de layout de la portada > no agrega colores nuevos
@@ -1915,10 +1919,10 @@ diff:
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:26:00
-   Duration  3.03s (transform 110ms, setup 454ms, collect 91ms, tests 19ms, environment 1.63s, prepare 253ms)
+   Start at  21:55:28
+   Duration  3.25s (transform 49ms, setup 201ms, collect 37ms, tests 8ms, environment 801ms, prepare 145ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpfy0_07lu/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpe7yo7sew/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -1931,18 +1935,18 @@ AssertionError: expected '1120' to match /^\d+(\.\d+)?(px|rem|em|vw|%)$/
 + Received: 
 "1120"
 
- ❯ src/shared/styles/landingTokens.test.ts:78:55
-     76| 
-     77|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
-     78|     expect(tokens.get("--landing-content-max-width")).toMatch(/^\d+(\.…
+ ❯ src/shared/styles/landingTokens.test.ts:81:55
+     79| 
+     80|     expect(tokens.get("--landing-hero-min-height")).toBe("60vh");
+     81|     expect(tokens.get("--landing-content-max-width")).toMatch(/^\d+(\.…
        |                                                       ^
-     79|   });
-     80| 
+     82|   });
+     83| 
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[15/26] la portada usa los tokens de layout
+[15/28] la portada usa los tokens de layout
 test: src/shared/styles/landingTokens.test.ts > la portada usa los tokens de layout
 diff:
 --- a/frontend/src/features/landing/LandingPage.module.css
@@ -1960,19 +1964,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 38ms
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 13ms
    ↓ tokens de layout de la portada > define los dos tokens de layout
-   × tokens de layout de la portada > la portada usa los tokens de layout 35ms
+   × tokens de layout de la portada > la portada usa los tokens de layout 12ms
      → expected '.page {\n  display: flex;\n  align-it…' to contain 'var(--landing-hero-min-height)'
    ↓ tokens de layout de la portada > no agrega colores nuevos
    ↓ tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:26:09
-   Duration  3.12s (transform 115ms, setup 415ms, collect 121ms, tests 38ms, environment 1.58s, prepare 421ms)
+   Start at  21:55:34
+   Duration  5.80s (transform 104ms, setup 211ms, collect 34ms, tests 13ms, environment 4.82s, prepare 406ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpe4yxc_n7/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmptzc8_12z/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2470,18 +2474,18 @@ AssertionError: expected '.page {\n  display: flex;\n  align-it…' to contain '
 + }
 +
 
- ❯ src/shared/styles/landingTokens.test.ts:84:17
-     82|     const css = readLandingCss();
-     83| 
-     84|     expect(css).toContain("var(--landing-hero-min-height)");
+ ❯ src/shared/styles/landingTokens.test.ts:87:17
+     85|     const css = readLandingCss();
+     86| 
+     87|     expect(css).toContain("var(--landing-hero-min-height)");
        |                 ^
-     85|     expect(css).toContain("var(--landing-content-max-width)");
-     86|   });
+     88|     expect(css).toContain("var(--landing-content-max-width)");
+     89|   });
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[16/26] no agrega colores nuevos
+[16/28] no agrega colores nuevos
 test: src/shared/styles/landingTokens.test.ts > no agrega colores nuevos
 diff:
 --- a/frontend/src/shared/styles/tokens.css
@@ -2498,19 +2502,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 27ms
+ ❯ src/shared/styles/landingTokens.test.ts (4 tests | 1 failed | 3 skipped) 10ms
    ↓ tokens de layout de la portada > define los dos tokens de layout
    ↓ tokens de layout de la portada > la portada usa los tokens de layout
-   × tokens de layout de la portada > no agrega colores nuevos 23ms
+   × tokens de layout de la portada > no agrega colores nuevos 9ms
      → expected [ '--color-extra' ] to deeply equal []
    ↓ tokens de superficie y contraste de C-35 > tokens de layout y contraste AA de superficies
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:26:18
-   Duration  2.96s (transform 112ms, setup 481ms, collect 89ms, tests 27ms, environment 1.55s, prepare 305ms)
+   Start at  21:55:42
+   Duration  5.80s (transform 229ms, setup 189ms, collect 35ms, tests 10ms, environment 1.83s, prepare 1.60s)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuuv98ykz/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2coxdy4r/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2525,18 +2529,18 @@ AssertionError: expected [ '--color-extra' ] to deeply equal []
 +   "--color-extra",
 + ]
 
- ❯ src/shared/styles/landingTokens.test.ts:95:24
-     93|     const unexpected = colorProperties.filter((name) => !EXISTING_COLO…
-     94| 
-     95|     expect(unexpected).toEqual([]);
+ ❯ src/shared/styles/landingTokens.test.ts:98:24
+     96|     const unexpected = colorProperties.filter((name) => !EXISTING_COLO…
+     97| 
+     98|     expect(unexpected).toEqual([]);
        |                        ^
-     96|     expect(tokens.get("--landing-hero-min-height")).toBeDefined();
-     97|     expect(tokens.get("--landing-content-max-width")).toBeDefined();
+     99|     expect(tokens.get("--landing-hero-min-height")).toBeDefined();
+    100|     expect(tokens.get("--landing-content-max-width")).toBeDefined();
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[17/26] el equipo coincide con el seed
+[17/28] el equipo coincide con el seed
 test: src/features/landing/landingContent.test.ts > el equipo coincide con el seed
 diff:
 --- a/frontend/src/features/landing/landingContent.ts
@@ -2554,18 +2558,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 26ms
-   × contenido de la portada > el equipo coincide con el seed 22ms
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 10ms
+   × contenido de la portada > el equipo coincide con el seed 9ms
      → expected [ 'Dr. Martín Sosa', …(2) ] to deeply equal [ 'Dr. Martín Sosa', …(2) ]
    ↓ contenido de la portada > los servicios y duraciones coinciden con el seed
    ↓ contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  21:26:27
-   Duration  3.05s (transform 90ms, setup 415ms, collect 83ms, tests 26ms, environment 1.63s, prepare 263ms)
+   Start at  21:55:50
+   Duration  1.26s (transform 38ms, setup 164ms, collect 20ms, tests 10ms, environment 628ms, prepare 133ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpwqrqjqmt/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp82z3iz4f/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2593,7 +2597,7 @@ AssertionError: expected [ 'Dr. Martín Sosa', …(2) ] to deeply equal [ 'Dr. M
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[18/26] los servicios y duraciones coinciden con el seed
+[18/28] los servicios y duraciones coinciden con el seed
 test: src/features/landing/landingContent.test.ts > los servicios y duraciones coinciden con el seed
 diff:
 --- a/frontend/src/features/landing/landingContent.ts
@@ -2611,18 +2615,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 29ms
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 11ms
    ↓ contenido de la portada > el equipo coincide con el seed
-   × contenido de la portada > los servicios y duraciones coinciden con el seed 25ms
+   × contenido de la portada > los servicios y duraciones coinciden con el seed 9ms
      → expected [ [ 'Limpieza', 45 ], …(4) ] to deeply equal [ [ 'Limpieza', 45 ], …(4) ]
    ↓ contenido de la portada > horarios y contacto son ficticios y coinciden con el seed
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  21:26:36
-   Duration  2.90s (transform 91ms, setup 437ms, collect 74ms, tests 29ms, environment 1.55s, prepare 274ms)
+   Start at  21:55:54
+   Duration  5.77s (transform 51ms, setup 185ms, collect 27ms, tests 11ms, environment 5.10s, prepare 144ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpo7iwo80p/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpzb7_dhf3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2654,7 +2658,7 @@ AssertionError: expected [ [ 'Limpieza', 45 ], …(4) ] to deeply equal [ [ 'Lim
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[19/26] horarios y contacto son ficticios y coinciden con el seed
+[19/28] horarios y contacto son ficticios y coinciden con el seed
 test: src/features/landing/landingContent.test.ts > horarios y contacto son ficticios y coinciden con el seed
 diff:
 --- a/frontend/src/features/landing/landingContent.ts
@@ -2671,18 +2675,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 33ms
+ ❯ src/features/landing/landingContent.test.ts (3 tests | 1 failed | 2 skipped) 14ms
    ↓ contenido de la portada > el equipo coincide con el seed
    ↓ contenido de la portada > los servicios y duraciones coinciden con el seed
-   × contenido de la portada > horarios y contacto son ficticios y coinciden con el seed 29ms
+   × contenido de la portada > horarios y contacto son ficticios y coinciden con el seed 12ms
      → expected { …(3) } to deeply equal { …(3) }
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  21:26:45
-   Duration  3.29s (transform 103ms, setup 475ms, collect 108ms, tests 33ms, environment 1.73s, prepare 275ms)
+   Start at  21:56:02
+   Duration  1.39s (transform 51ms, setup 229ms, collect 25ms, tests 14ms, environment 674ms, prepare 170ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpq__k4l1g/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpdm53r6c0/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2710,7 +2714,7 @@ AssertionError: expected { …(3) } to deeply equal { …(3) }
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[20/26] sin IntersectionObserver queda revelada y su contenido es visible
+[20/28] sin IntersectionObserver queda revelada y su contenido es visible
 test: src/features/landing/RevealSection.test.tsx > sin IntersectionObserver queda revelada y su contenido es visible
 diff:
 --- a/frontend/src/features/landing/RevealSection.tsx
@@ -2728,8 +2732,8 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 52ms
-   × RevealSection > sin IntersectionObserver queda revelada y su contenido es visible 49ms
+ ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 24ms
+   × RevealSection > sin IntersectionObserver queda revelada y su contenido es visible 23ms
      → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
 
 Expected the element to have attribute:
@@ -2742,10 +2746,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:26:54
-   Duration  3.29s (transform 279ms, setup 443ms, collect 311ms, tests 52ms, environment 1.66s, prepare 266ms)
+   Start at  21:56:07
+   Duration  5.84s (transform 99ms, setup 189ms, collect 113ms, tests 24ms, environment 5.10s, prepare 138ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpevk42j9v/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpvrsbxg1l/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2767,7 +2771,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[21/26] con observador inyectado pasa de pendiente a revelada y limpia al desmontar
+[21/28] con observador inyectado pasa de pendiente a revelada y limpia al desmontar
 test: src/features/landing/RevealSection.test.tsx > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
 diff:
 --- a/frontend/src/features/landing/RevealSection.tsx
@@ -2785,19 +2789,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 67ms
+ ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 35ms
    ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
-   × RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar 63ms
+   × RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar 33ms
      → expected +0 to be 1 // Object.is equality
    ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
    ↓ RevealSection > from=right desplaza en positivo y from=left en negativo
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:27:03
-   Duration  3.28s (transform 236ms, setup 416ms, collect 276ms, tests 67ms, environment 1.66s, prepare 290ms)
+   Start at  21:56:16
+   Duration  1.41s (transform 106ms, setup 212ms, collect 120ms, tests 35ms, environment 625ms, prepare 150ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpuo2a1aru/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp2msmt689/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2821,7 +2825,7 @@ AssertionError: expected +0 to be 1 // Object.is equality
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[22/26] con movimiento reducido no queda pendiente y el contenido está en el DOM
+[22/28] con movimiento reducido no queda pendiente y el contenido está en el DOM
 test: src/features/landing/RevealSection.test.tsx > con movimiento reducido no queda pendiente y el contenido está en el DOM
 diff:
 --- a/frontend/src/features/landing/RevealSection.tsx
@@ -2839,10 +2843,10 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 65ms
+ ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 29ms
    ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
    ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
-   × RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM 62ms
+   × RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM 28ms
      → expect(element).toHaveAttribute("data-reveal", "revealed") // element.getAttribute("data-reveal") === "revealed"
 
 Expected the element to have attribute:
@@ -2853,10 +2857,10 @@ Received:
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:27:12
-   Duration  3.25s (transform 243ms, setup 470ms, collect 289ms, tests 65ms, environment 1.62s, prepare 285ms)
+   Start at  21:56:20
+   Duration  1.65s (transform 115ms, setup 211ms, collect 129ms, tests 29ms, environment 828ms, prepare 160ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmph0ja71za/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmplxs0dqg3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2878,7 +2882,7 @@ Received:
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[23/26] los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces
+[23/28] los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces
 test: src/shared/components/AppShellNavigation.test.tsx > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces
 diff:
 --- a/frontend/src/shared/components/AppShell.module.css
@@ -2895,18 +2899,18 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 22ms
+ ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 1 failed | 2 skipped) 16ms
    ↓ AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
    ↓ AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
-   × AppShell navegación sin cajas > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces 19ms
+   × AppShell navegación sin cajas > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces 14ms
      → expected 'display: inline-flex;\n  flex-directi…' to contain 'border: 0;'
 
  Test Files  1 failed (1)
       Tests  1 failed | 2 skipped (3)
-   Start at  21:27:21
-   Duration  3.45s (transform 333ms, setup 483ms, collect 543ms, tests 22ms, environment 1.57s, prepare 283ms)
+   Start at  21:56:25
+   Duration  1.67s (transform 164ms, setup 199ms, collect 296ms, tests 16ms, environment 733ms, prepare 126ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpe_9_849j/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpu3amnp1o/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2944,7 +2948,7 @@ AssertionError: expected 'display: inline-flex;\n  flex-directi…' to contain '
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[24/26] from=right desplaza en positivo y from=left en negativo
+[24/28] from=right desplaza en positivo y from=left en negativo
 test: src/features/landing/RevealSection.test.tsx > from=right desplaza en positivo y from=left en negativo
 diff:
 --- a/frontend/src/features/landing/RevealSection.module.css
@@ -2962,19 +2966,19 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 56ms
+ ❯ src/features/landing/RevealSection.test.tsx (4 tests | 1 failed | 3 skipped) 34ms
    ↓ RevealSection > sin IntersectionObserver queda revelada y su contenido es visible
    ↓ RevealSection > con observador inyectado pasa de pendiente a revelada y limpia al desmontar
    ↓ RevealSection > con movimiento reducido no queda pendiente y el contenido está en el DOM
-   × RevealSection > from=right desplaza en positivo y from=left en negativo 53ms
+   × RevealSection > from=right desplaza en positivo y from=left en negativo 33ms
      → expected 'transform: translateX(var(--landing-r…' to contain 'translateX(calc(-1 * var(--landing-re…'
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 skipped (4)
-   Start at  21:27:31
-   Duration  3.18s (transform 220ms, setup 400ms, collect 266ms, tests 56ms, environment 1.59s, prepare 255ms)
+   Start at  21:56:29
+   Duration  1.50s (transform 114ms, setup 218ms, collect 126ms, tests 34ms, environment 681ms, prepare 138ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpc4_7e5w5/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpz93svp9x/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -2995,7 +2999,7 @@ Received: "transform: translateX(var(--landing-reveal-offset));"
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[25/26] las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
+[25/28] las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
 test: src/features/landing/LandingPage.test.tsx > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
 diff:
 --- a/frontend/src/features/landing/LandingPage.tsx
@@ -3013,20 +3017,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 100ms
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 286ms
    ↓ LandingPage > portada completa para anónimo en /
    ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
    ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
-   × LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha 96ms
+   × LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha 268ms
      → expected [ 'left', 'left', 'left', 'right' ] to deeply equal [ 'left', 'right', 'left', 'right' ]
    ↓ LandingPage > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  21:27:40
-   Duration  5.20s (transform 931ms, setup 431ms, collect 2.15s, tests 100ms, environment 1.72s, prepare 250ms)
+   Start at  21:56:34
+   Duration  6.85s (transform 1.72s, setup 256ms, collect 5.14s, tests 286ms, environment 708ms, prepare 158ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmpet0zjsph/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpo9ewp6_3/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3055,7 +3059,7 @@ AssertionError: expected [ 'left', 'left', 'left', 'right' ] to deeply equal [ '
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
-[26/26] el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único
+[26/28] el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único
 test: src/features/landing/LandingPage.test.tsx > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único
 diff:
 --- a/frontend/src/features/landing/LandingPage.module.css
@@ -3073,20 +3077,20 @@ diff:
 
  RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
 
- ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 122ms
+ ❯ src/features/landing/LandingPage.test.tsx (5 tests | 1 failed | 4 skipped) 39ms
    ↓ LandingPage > portada completa para anónimo en /
    ↓ LandingPage > secciones editoriales entran con animación lateral al scrollear
    ↓ LandingPage > reduced motion desactiva la animación lateral y deja el contenido visible
    ↓ LandingPage > las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha
-   × LandingPage > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único 119ms
+   × LandingPage > el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único 38ms
      → expected 'display: inline-flex;\n  align-items:…' to contain 'background: transparent;'
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 skipped (5)
-   Start at  21:27:53
-   Duration  5.00s (transform 836ms, setup 467ms, collect 2.07s, tests 122ms, environment 1.54s, prepare 290ms)
+   Start at  21:56:45
+   Duration  2.52s (transform 458ms, setup 210ms, collect 1.12s, tests 39ms, environment 675ms, prepare 179ms)
 
-JSON report written to C:/Users/hp/AppData/Local/Temp/tmp3mh_1j__/vitest.json
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpyepl5zm6/vitest.json
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -3121,9 +3125,127 @@ AssertionError: expected 'display: inline-flex;\n  align-items:…' to contain '
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 restaurado: test en verde
 ================================================================================
+[27/28] los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+test: src/features/login/LoginPage.translucido.test.tsx > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+diff:
+--- a/frontend/src/features/login/LoginPage.module.css
++++ b/frontend/src/features/login/LoginPage.module.css
+@@ -258,7 +258,7 @@
+ }
+ 
+ .input:autofill {
+-  box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;
++  box-shadow: 0 0 0 1000px var(--color-surface) inset;
+   -webkit-text-fill-color: var(--color-primary-contrast);
+   caret-color: var(--color-primary-contrast);
+   transition: background-color 600000s ease-in-out 0s;
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (5 tests | 1 failed | 4 skipped) 12ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+   ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+   × LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta 11ms
+     → expected 'box-shadow: 0 0 0 1000px var(--color-…' to contain 'box-shadow: 0 0 0 1000px var(--color-…'
+   ↓ LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:56:55
+   Duration  1.75s (transform 198ms, setup 183ms, collect 451ms, tests 12ms, environment 659ms, prepare 151ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmpg2p9l263/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+AssertionError: expected 'box-shadow: 0 0 0 1000px var(--color-…' to contain 'box-shadow: 0 0 0 1000px var(--color-…'
+
+- Expected
++ Received
+
+- box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;
++ box-shadow: 0 0 0 1000px var(--color-surface) inset;
++   -webkit-text-fill-color: var(--color-primary-contrast);
++   caret-color: var(--color-primary-contrast);
++   transition: background-color 600000s ease-in-out 0s;
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx:174:20
+    172| 
+    173|     for (const rule of [webkit, standard]) {
+    174|       expect(rule).toContain("box-shadow: 0 0 0 1000px var(--color-nav…
+       |                    ^
+    175|       expect(rule).toContain("-webkit-text-fill-color: var(--color-pri…
+    176|       expect(rule).toContain("caret-color: var(--color-primary-contras…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
+[28/28] el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
+test: src/features/login/LoginPage.translucido.test.tsx > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
+diff:
+--- a/frontend/src/features/login/LoginPage.module.css
++++ b/frontend/src/features/login/LoginPage.module.css
+@@ -304,7 +304,7 @@
+ .alert {
+   padding: var(--space-3) var(--space-4);
+   font-size: var(--font-size-sm);
+-  color: var(--alert-on-navy-text);
++  color: var(--color-danger-text);
+   background: var(--alert-on-navy-bg);
+   border: 1px solid var(--alert-on-navy-border);
+   border-radius: var(--radius-sm);
+--- salida mutada (codigo de salida 1) ---
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (5 tests | 1 failed | 4 skipped) 623ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+   ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+   ↓ LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+   × LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback 621ms
+     → expected 'padding: var(--space-3) var(--space-4…' to contain 'color: var(--alert-on-navy-text);'
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:57:01
+   Duration  2.48s (transform 210ms, setup 220ms, collect 482ms, tests 623ms, environment 708ms, prepare 127ms)
+
+JSON report written to C:/Users/hp/AppData/Local/Temp/tmp4d4_oohm/vitest.json
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
+AssertionError: expected 'padding: var(--space-3) var(--space-4…' to contain 'color: var(--alert-on-navy-text);'
+
+- Expected
++ Received
+
+- color: var(--alert-on-navy-text);
++ padding: var(--space-3) var(--space-4);
++   font-size: var(--font-size-sm);
++   color: var(--color-danger-text);
++   background: var(--alert-on-navy-bg);
++   border: 1px solid var(--alert-on-navy-border);
++   border-radius: var(--radius-sm);
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx:204:18
+    202|     expect(rule).toContain("background: var(--alert-on-navy-bg);");
+    203|     expect(rule).toContain("border: 1px solid var(--alert-on-navy-bord…
+    204|     expect(rule).toContain("color: var(--alert-on-navy-text);");
+       |                  ^
+    205| 
+    206|     const tokens = readSrcFile("shared/styles/tokens.css");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+restaurado: test en verde
+================================================================================
 RESUMEN
-mutaciones que hicieron fallar su test: 26
+mutaciones que hicieron fallar su test: 28
 mutaciones que NO lo hicieron fallar: 0
 mutaciones inválidas: 0
-SHA-256 de produccion despues: 1538ab369554c377ea8640d309cee5d86efd1f42bc28bc7cee8f9c0fac6357f5
+SHA-256 de produccion despues: 1ac9b3c96c386ab56272160f302478b0655648dc8fb53614355e24fadf91c497
 SHA-256 sin cambios: si

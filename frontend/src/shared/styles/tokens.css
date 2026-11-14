@@ -50,6 +50,9 @@
   --scrim-navy: rgba(1, 28, 64, 0.45);
   --scrim-navy-strong: rgba(1, 28, 64, 0.7);
   --overlay-hero: linear-gradient(180deg, rgba(1, 28, 64, 0.55) 0%, rgba(1, 28, 64, 0.82) 100%);
+  --alert-on-navy-bg: rgba(127, 29, 29, 0.55);
+  --alert-on-navy-border: rgba(252, 165, 165, 0.45);
+  --alert-on-navy-text: #FECACA;
   --shadow-on-navy: 0 16px 40px rgba(1, 28, 64, 0.45);
 
   /* Overlay del carrusel de /login y botón de pausa (valores heredados de C-34) */

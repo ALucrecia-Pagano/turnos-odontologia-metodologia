@@ -1,0 +1,37 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx (5 tests | 1 failed | 4 skipped) 23ms
+   ↓ LoginPage translúcido > formulario translúcido en /login con etiqueta de rol y envío de credenciales
+   ↓ LoginPage translúcido > parámetro rol inválido o ausente no muestra etiqueta y fallback sólido sin backdrop-filter
+   ↓ LoginPage translúcido > cierre de sesión y preservación del mensaje literal de sesión vencida
+   × LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta 19ms
+     → expected '' to contain 'box-shadow: 0 0 0 1000px var(--color-…'
+   ↓ LoginPage translúcido > el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/login/LoginPage.translucido.test.tsx > LoginPage translúcido > los campos del login conservan la superficie oscura cuando el navegador los autocompleta
+AssertionError: expected '' to contain 'box-shadow: 0 0 0 1000px var(--color-…'
+
+- Expected
++ Received
+
+- box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;
+
+ ❯ src/features/login/LoginPage.translucido.test.tsx:174:20
+    172| 
+    173|     for (const rule of [webkit, standard]) {
+    174|       expect(rule).toContain("box-shadow: 0 0 0 1000px var(--color-nav…
+       |                    ^
+    175|       expect(rule).toContain("-webkit-text-fill-color: var(--color-pri…
+    176|       expect(rule).toContain("caret-color: var(--color-primary-contras…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  21:40:30
+   Duration  5.05s (transform 436ms, setup 579ms, collect 1.07s, tests 23ms, environment 2.56s, prepare 329ms)
+

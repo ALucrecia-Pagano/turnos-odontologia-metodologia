@@ -100,6 +100,18 @@ El diseño de la portada, `/acceso` y `/login` utiliza una estética oscura edit
 
 Los seis `rgba(...)` que `LoginPage.module.css` tenía escritos a mano se movieron a `tokens.css` sin cambiar ningún valor: el degradé del overlay usa `--login-overlay-start`, `--login-overlay-mid` y `--login-overlay-end`, y el botón de pausa usa `--carousel-toggle-bg`, `--carousel-toggle-bg-hover` y `--carousel-toggle-border` (valores en la tabla "Tokens nuevos de C-35"). Ningún CSS Module de C-35 conserva HEX ni `rgba`.
 
+### Autocompletado y alerta de error en `/login` (detectados en el navegador)
+
+- **Autocompletado**: Chrome pinta los campos autocompletados con un fondo azul claro propio. `LoginPage.module.css` declara para `.input:-webkit-autofill` (y sus variantes `:hover` y `:focus`) y, en una regla aparte, para el estándar `.input:autofill`: `box-shadow: 0 0 0 1000px var(--color-navy-deep) inset`, `-webkit-text-fill-color` y `caret-color` con `--color-primary-contrast`, y `transition: background-color 600000s` para que no parpadee. Las dos reglas van separadas porque un selector desconocido invalida toda la lista. Como el fondo de los campos (`--field-on-navy`) es translúcido y el `box-shadow` inset debe ser opaco para tapar el azul, se usa `--color-navy-deep`: el campo (navy 0,6) sobre la tarjeta (navy 0,82) queda prácticamente en ese mismo navy. La línea fina y el foco (`:focus-visible`) no cambian.
+- **Alerta de error**: solo en el login, `.alert` de `LoginPage.module.css` usa la variante oscura (`--alert-on-navy-bg`, `--alert-on-navy-border`, `--alert-on-navy-text`) en lugar del rosa claro de la aplicación. El mensaje, el `role="alert"` y el `aria-live` no cambian; el estilo de alerta del resto de la aplicación (`--color-danger-*`) no se toca porque la clase vive en el CSS Module del login.
+
+| Texto `#FECACA` sobre el fondo compuesto | Fondo compuesto | Contraste |
+|---|---|---|
+| Superficie translúcida (peor caso: tarjeta `rgba(1, 28, 64, 0.82)` sobre una foto blanca) | `rgb(91, 47, 60)` aprox. | **7,58:1** (AA y AAA) |
+| Fallback sólido `#011C40` (sin `backdrop-filter`) | `rgb(70, 29, 45)` aprox. | **9,86:1** (AAA) |
+
+El test del escenario adicional (`LoginPage.translucido.test.tsx`) calcula ambos ratios componiendo el alfa del alerta sobre cada fondo.
+
 ### Tokens nuevos de C-35 (`frontend/src/shared/styles/tokens.css`)
 
 Todo color, sombra y medida de la portada, `/acceso`, `/login`, los modales y el `AppShell` sale de estas variables; los CSS Modules no llevan HEX ni `rgba` propios (sin excepciones: el overlay del carrusel y el botón de pausa heredados de C-34 también pasaron a tokens con los mismos valores).
@@ -124,6 +136,9 @@ Todo color, sombra y medida de la portada, `/acceso`, `/login`, los modales y el
 | `--scrim-navy-strong` | `rgba(1, 28, 64, 0.7)` | `::backdrop` sin soporte de `backdrop-filter` |
 | `--overlay-hero` | degradé navy `0.55 → 0.82` | Capa de legibilidad sobre el carrusel de la portada y fondo de `/acceso` |
 | `--shadow-on-navy` | `0 16px 40px rgba(1, 28, 64, 0.45)` | Sombra de la tarjeta de login |
+| `--alert-on-navy-bg` | `rgba(127, 29, 29, 0.55)` | Fondo del alerta de error del login (rojo oscuro translúcido) |
+| `--alert-on-navy-border` | `rgba(252, 165, 165, 0.45)` | Borde de 1 px rojo suave del alerta del login |
+| `--alert-on-navy-text` | `#FECACA` | Texto rosa claro del alerta del login |
 | `--login-overlay-start` | `rgba(1, 28, 64, 0.92)` | Primer tramo (0 %) del degradé que oscurece el carrusel de `/login` |
 | `--login-overlay-mid` | `rgba(2, 56, 89, 0.78)` | Tramo medio (55 %) del mismo degradé |
 | `--login-overlay-end` | `rgba(38, 101, 140, 0.62)` | Último tramo (100 %) del mismo degradé |

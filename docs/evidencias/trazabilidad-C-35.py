@@ -16,7 +16,7 @@ Termina con código distinto de 0 si:
   (c) un escenario histórico no encuentra, con búsqueda literal, su test en LoginPage.test.tsx;
   (d) el total no es 13 nuevos + 5 históricos + 6 visuales = 24, o un escenario del spec no está
       mapeado, o el mapa tiene un escenario que el spec no declara;
-  (e) alguno de los 13 tests auxiliares o adicionales no está listado por Vitest o no tiene mutación (A01-A09, M14-M17).
+  (e) alguno de los 15 tests auxiliares o adicionales no está listado por Vitest o no tiene mutación (A01-A09, M14-M19).
 """
 
 from __future__ import annotations
@@ -164,6 +164,15 @@ AUXILIARY: tuple[tuple[str, str], ...] = (
     (
         "src/features/landing/LandingPage.test.tsx",
         "el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único",
+    ),
+    # Tests adicionales de los ajustes del login (M18-M19)
+    (
+        "src/features/login/LoginPage.translucido.test.tsx",
+        "los campos del login conservan la superficie oscura cuando el navegador los autocompleta",
+    ),
+    (
+        "src/features/login/LoginPage.translucido.test.tsx",
+        "el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback",
     ),
 )
 
@@ -330,7 +339,7 @@ def main() -> int:
         "",
         *lines,
         "",
-        f"tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño); no son escenarios, cada uno con su mutación: {len(AUXILIARY)}",
+        f"tests auxiliares (9 recuperados de cea858b) y adicionales (4 del ajuste de diseño y 2 del login); no son escenarios, cada uno con su mutación: {len(AUXILIARY)}",
         *aux_lines,
         "",
         f"problemas: {len(problems)}",

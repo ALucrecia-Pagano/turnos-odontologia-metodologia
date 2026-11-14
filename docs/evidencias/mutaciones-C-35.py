@@ -99,6 +99,7 @@ P_SHELL_TSX = "frontend/src/shared/components/AppShell.tsx"
 P_SHELL_CSS = "frontend/src/shared/components/AppShell.module.css"
 P_CONTENT = "frontend/src/features/landing/landingContent.ts"
 P_LANDING_CSS = "frontend/src/features/landing/LandingPage.module.css"
+P_LOGIN_CSS = "frontend/src/features/login/LoginPage.module.css"
 
 PRODUCTION_FILES = (
     P_LANDING,
@@ -113,6 +114,7 @@ PRODUCTION_FILES = (
     P_SHELL_CSS,
     P_CONTENT,
     P_LANDING_CSS,
+    P_LOGIN_CSS,
 )
 
 
@@ -328,6 +330,21 @@ MUTATIONS: tuple[Mutation, ...] = (
         P_LANDING_CSS,
         "  background: transparent;\n  border-bottom: 1px solid var(--border-on-navy-strong);",
         "  background: var(--color-primary);\n  border-bottom: 1px solid var(--border-on-navy-strong);",
+    ),
+    # M18-M19 - tests adicionales de los ajustes del login (autofill y alerta oscura)
+    Mutation(
+        T_LOGIN,
+        "los campos del login conservan la superficie oscura cuando el navegador los autocompleta",
+        P_LOGIN_CSS,
+        ".input:autofill {\n  box-shadow: 0 0 0 1000px var(--color-navy-deep) inset;",
+        ".input:autofill {\n  box-shadow: 0 0 0 1000px var(--color-surface) inset;",
+    ),
+    Mutation(
+        T_LOGIN,
+        "el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback",
+        P_LOGIN_CSS,
+        "  color: var(--alert-on-navy-text);\n  background: var(--alert-on-navy-bg);",
+        "  color: var(--color-danger-text);\n  background: var(--alert-on-navy-bg);",
     ),
 )
 

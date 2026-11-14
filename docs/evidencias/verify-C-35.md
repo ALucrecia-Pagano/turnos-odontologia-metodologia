@@ -5,9 +5,9 @@
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8, sin BOM).
 
 - **Tareas**: fases 1 a 8 y 10 (ajustes de diseño) implementadas según [tasks.md](../../openspec/changes/ui-portada-y-acceso/tasks.md). La fase 9 (capturas en navegador real a 1440, 768 y 390 px) queda sin marcar, a cargo de Claude/la orquestación.
-- **Vitest**: línea base de 232 tests en 55 archivos ([baseline-C-35.txt](baseline-C-35.txt)); suite final de **258 tests en 64 archivos**, todos en verde ([test-suite-C-35.txt](test-suite-C-35.txt)). 258 = 232 + 26: 13 tests de escenario nuevos, 9 auxiliares recuperados de `cea858b` (3 de `landingContent.test.ts`, 3 de `RevealSection.test.tsx`, 3 de `landingTokens.test.ts`) y 4 tests adicionales del ajuste de diseño (nuevos de esta ronda: 1 en `AppShellNavigation.test.tsx`, 1 en `RevealSection.test.tsx` y 2 en `LandingPage.test.tsx`); los 26 llevan mutación propia.
-- **Mutaciones**: 26 de 26 (M01-M13 de escenarios, A01-A09 de los 9 auxiliares y M14-M17 de los 4 tests del ajuste de diseño) hicieron fallar su test por aserción; sobrevivientes 0; inválidas 0; SHA-256 sin cambios: sí ([mutaciones-C-35.txt](mutaciones-C-35.txt), generado por [mutaciones-C-35.py](mutaciones-C-35.py)).
-- **Trazabilidad**: 24 escenarios = 13 nuevos + 5 históricos + 6 visuales, más 13 tests auxiliares/adicionales listados con su mutación (A01-A09 y M14-M17), 0 problemas ([trazabilidad-C-35.txt](trazabilidad-C-35.txt), generado por [trazabilidad-C-35.py](trazabilidad-C-35.py)).
+- **Vitest**: línea base de 232 tests en 55 archivos ([baseline-C-35.txt](baseline-C-35.txt)); suite final de **260 tests en 64 archivos**, todos en verde ([test-suite-C-35.txt](test-suite-C-35.txt)). 260 = 232 + 28: 13 tests de escenario nuevos, 9 auxiliares recuperados de `cea858b` (3 de `landingContent.test.ts`, 3 de `RevealSection.test.tsx`, 3 de `landingTokens.test.ts`) 4 tests adicionales del ajuste de diseño y 2 del login (autofill y alerta oscura, nuevos de esta ronda, ambos en `LoginPage.translucido.test.tsx`) (nuevos de esta ronda: 1 en `AppShellNavigation.test.tsx`, 1 en `RevealSection.test.tsx` y 2 en `LandingPage.test.tsx`); los 28 llevan mutación propia.
+- **Mutaciones**: 28 de 28 (M01-M13 de escenarios, A01-A09 de los 9 auxiliares, M14-M17 del ajuste de diseño y M18-M19 del login) hicieron fallar su test por aserción; sobrevivientes 0; inválidas 0; SHA-256 sin cambios: sí ([mutaciones-C-35.txt](mutaciones-C-35.txt), generado por [mutaciones-C-35.py](mutaciones-C-35.py)).
+- **Trazabilidad**: 24 escenarios = 13 nuevos + 5 históricos + 6 visuales, más 15 tests auxiliares/adicionales listados con su mutación (A01-A09 y M14-M19), 0 problemas ([trazabilidad-C-35.txt](trazabilidad-C-35.txt), generado por [trazabilidad-C-35.py](trazabilidad-C-35.py)).
 - **Calidad**: `tsc --noEmit` exit 0; `npx eslint .` exit 0 (0 errores, 3 advertencias previas); `npm run lint` exit 1 por esas 3 advertencias (ver Desvíos); `npm run build` exit 0 ([tooling-C-35.txt](tooling-C-35.txt), [build-C-35.txt](build-C-35.txt)).
 - **OpenSpec**: `openspec validate ui-portada-y-acceso --strict` y `openspec validate --all --strict` exit 0 ([validate-C-35.txt](validate-C-35.txt)).
 - **Tests existentes**: único modificado `frontend/src/test/smoke.test.tsx` ([diff-tests-existentes-C-35.txt](diff-tests-existentes-C-35.txt)).
@@ -61,9 +61,11 @@ Tests auxiliares y adicionales (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 | M15 | `src/features/landing/RevealSection.test.tsx` | from=right desplaza en positivo y from=left en negativo |
 | M16 | `src/features/landing/LandingPage.test.tsx` | las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha |
 | M17 | `src/features/landing/LandingPage.test.tsx` | el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único |
+| M18 | `src/features/login/LoginPage.translucido.test.tsx` | los campos del login conservan la superficie oscura cuando el navegador los autocompleta |
+| M19 | `src/features/login/LoginPage.translucido.test.tsx` | el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback |
 <!-- trazabilidad:fin -->
 
-## Mutaciones (M01–M13, A01–A09, M14–M17)
+## Mutaciones (M01–M13, A01–A09, M14–M19)
 
 <!-- mutaciones:inicio -->
 | # | Test | Archivo | Mutación | Primera línea del fallo |
@@ -94,6 +96,8 @@ Tests auxiliares y adicionales (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 | M15 | `from=right desplaza en positivo y from=left en negativo` | `frontend/src/features/landing/RevealSection.module.css` | `-  transform: translateX(calc(-1 * var(--landing-reveal-offset))); +  transform: translate` | `AssertionError: expected 'transform: translateX(var(--landing-r…' to contain 'translateX(c` |
 | M16 | `las secciones editoriales alternan de lado: 01 izquierda, 02 derecha, 03 izquierda, 04 derecha` | `frontend/src/features/landing/LandingPage.tsx` | `-          <RevealSection observer={observer} reducedMotion={motionReduced} from="right"> ` | `AssertionError: expected [ 'left', 'left', 'left', 'right' ] to deeply equal [ 'left', 'ri` |
 | M17 | `el CTA de la portada es un enlace fantasma sin relleno y sigue siendo el único` | `frontend/src/features/landing/LandingPage.module.css` | `-  background: transparent; +  background: var(--color-primary);` | `AssertionError: expected 'display: inline-flex;\n  align-items:…' to contain 'background: ` |
+| M18 | `los campos del login conservan la superficie oscura cuando el navegador los autocompleta` | `frontend/src/features/login/LoginPage.module.css` | `-  box-shadow: 0 0 0 1000px var(--color-navy-deep) inset; +  box-shadow: 0 0 0 1000px var(` | `AssertionError: expected 'box-shadow: 0 0 0 1000px var(--color-…' to contain 'box-shadow: ` |
+| M19 | `el alerta de error del login usa la variante oscura con contraste AA sobre la superficie translúcida y el fallback` | `frontend/src/features/login/LoginPage.module.css` | `-  color: var(--alert-on-navy-text); +  color: var(--color-danger-text);` | `AssertionError: expected 'padding: var(--space-3) var(--space-4…' to contain 'color: var(-` |
 <!-- mutaciones:fin -->
 
 ## Tokens nuevos (de `tokens.css`)
@@ -112,6 +116,7 @@ Tests auxiliares y adicionales (no son escenarios; 24 = 13 + 5 + 6 no cambia):
 | `--field-on-navy` | `rgba(1, 28, 64, 0.6)` |
 | `--scrim-navy` / `--scrim-navy-strong` | `rgba(1, 28, 64, 0.45)` / `rgba(1, 28, 64, 0.7)` |
 | `--overlay-hero` | `linear-gradient(180deg, rgba(1, 28, 64, 0.55) 0%, rgba(1, 28, 64, 0.82) 100%)` |
+| `--alert-on-navy-bg` / `--alert-on-navy-border` / `--alert-on-navy-text` | `rgba(127, 29, 29, 0.55)` / `rgba(252, 165, 165, 0.45)` / `#FECACA` |
 | `--shadow-on-navy` | `0 16px 40px rgba(1, 28, 64, 0.45)` |
 | `--login-overlay-start` / `-mid` / `-end` | `rgba(1, 28, 64, 0.92)` / `rgba(2, 56, 89, 0.78)` / `rgba(38, 101, 140, 0.62)` |
 | `--carousel-toggle-bg` / `-bg-hover` / `-border` | `rgba(1, 28, 64, 0.55)` / `rgba(1, 28, 64, 0.75)` / `rgba(255, 255, 255, 0.45)` |
@@ -141,6 +146,9 @@ Color hardcodeado restante en los CSS Modules de C-35 y en `LoginPage.module.css
 | 16 | [red](red-C-35/16-secciones-alternan-lado.txt) | [green](green-C-35/16-secciones-alternan-lado.txt) | Por aserción: las 4 secciones eran `right` (adicional, M16) |
 | 17 | [red](red-C-35/17-cta-fantasma.txt) | [green](green-C-35/17-cta-fantasma.txt) | Por aserción: el CTA no tenía `data-cta` ni variante fantasma (adicional, M17) |
 
+| 18 | [red](red-C-35/18-login-autofill.txt) | [green](green-C-35/18-login-autofill.txt) | Por aserción: sin reglas de autofill (adicional, M18) |
+| 19 | [red](red-C-35/19-login-alerta-oscura.txt) | [green](green-C-35/19-login-alerta-oscura.txt) | Por aserción: el alerta usaba los tokens claros de peligro (adicional, M19) |
+
 Regresiones sin par nuevo: [login](green-C-35/login-regresion.txt), [modales](green-C-35/modales-regresion.txt), [appshell](green-C-35/appshell-regresion.txt), [smoke](green-C-35/smoke.txt); auxiliares: [contenido](green-C-35/aux-contenido-datos.txt) y [reveal](green-C-35/aux-reveal-section.txt).
 
 ## Desvíos
@@ -164,3 +172,5 @@ Regresiones sin par nuevo: [login](green-C-35/login-regresion.txt), [modales](gr
 17. **Ajustes de diseño pedidos tras la revisión visual: hero centrado, nav y CTA a la izquierda, secciones intercaladas.** Logo grande en el centro, eslogan más chico y lead discreto debajo, navegación arriba a la izquierda, CTA "Explorar la clínica →" como enlace fantasma abajo a la izquierda junto al badge, "Pausar animación" abajo a la derecha; secciones 01 y 03 a la izquierda, 02 y 04 a la derecha (bloques del 60 %, entrada desde su lado, ancho completo y mitad de desplazamiento hasta 768 px). Se actualizaron `specs/frontend-landing/spec.md` (requisitos de 491 y 450 caracteres; título del escenario visual V2), `specs/frontend-foundation/spec.md` (requisito de AppShell, 450 caracteres), `design.md` (D1, D5, D6) y `tasks.md` (fase 10 y tabla). Nuevo token `--landing-logo-width`. Los 4 tests nuevos no son escenarios: se listan como adicionales con mutación M14-M17; 24 = 13 + 5 + 6 no cambia.
 18. **Corrección de `.menuButton`**: el `<button>` heredaba el borde por defecto del navegador; ahora `border: 0; border-bottom: 2px solid transparent;`, alineado con `.menuLink` (test 14, M14).
 19. **Disposición sin comprobar a ojo**: la composición del hero y las secciones intercaladas solo está cubierta por tests de estructura y CSS; las capturas a 1440/768/390 px (fase 9) las hará la usuaria.
+20. **Autofill y alerta oscura del login detectados por la dueña en su navegador.** (a) Las reglas `.input:-webkit-autofill` (con `:hover` y `:focus`) y `.input:autofill` mantienen la superficie oscura (`box-shadow` inset con `--color-navy-deep`, texto y cursor claros, transición de 600000 s). (b) El alerta del login (`.alert` de `LoginPage.module.css`) usa tokens `--alert-on-navy-*`: texto `#FECACA`, contraste 7,58:1 sobre la superficie translúcida (peor caso, tarjeta sobre foto blanca) y 9,86:1 sobre el fallback `#011C40`; mensaje, `role="alert"` y `aria-live` sin cambios. El alerta por defecto de la aplicación (`--color-danger-*`) no cambió: la clase vive en el CSS Module del login. Tests 18 y 19 (adicionales, M18 y M19); se numeran 18 y 19 para que la trazabilidad no repita número.
+21. **Fallo intermedio de lint**: un `\s` innecesario en un literal de plantilla del test 19 dio un error de `no-useless-escape`; se corrigió y se volvieron a correr las mutaciones y toda la verificación.
