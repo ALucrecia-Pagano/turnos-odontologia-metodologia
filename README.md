@@ -71,126 +71,71 @@ de un comando. Solo se define en el entorno de la máquina.
 
 ## Estado actual
 
-- **Implementado:** el dominio de C-01 (fundación del backend y guardia de
-  dependencias del dominio), C-02 (crear un turno sin solapamientos por
-  profesional y por sillón), C-03 (validar la duración completa y que el
-  paciente, el profesional, el sillón y la prestación existan y estén activos),
-  C-04 (hora local: inicio en la grilla de 5 minutos y turno dentro de un
-  solo día local, evaluados en la zona horaria recibida), C-05 (horario de
-  atención: el turno cae completo dentro de los tramos del profesional para su
-  día local, y validación del conjunto de tramos) y C-06 (bloqueos de agenda: el
-  turno no pisa ningún bloqueo del profesional, comparado en instantes; validación
-  de un bloqueo y lista de los turnos que pisa, sin cancelarlos) y C-07 (no dar
-  turnos en el pasado: el inicio no puede ser anterior al momento actual
-  inyectado; la guardia verifica que el dominio no lee el reloj del sistema), C-08
-  (mensajes en español con el nombre del profesional o sillón y el rango en hora
-  local, intervalo en conflicto en UTC y todas las violaciones del primer grupo
-  que falla) y C-09 (altas puras de catálogo y pacientes, validación de nombres
-  y DNI, activación inmutable y datos ficticios reutilizables) y C-10
-  (transiciones de estado con tabla única, cancelación sin anticipación mínima,
-  atendido y ausente desde el inicio con reloj inyectado, permisos por rol y
-  propiedad y copias inmutables; sin historial), C-11 (reprogramación de
-  turnos en el dominio, con revalidación completa, auto-exclusión, permisos y
-  retorno a reservado), C-12 (historial funcional inmutable de transiciones de
-  estado del turno en el dominio, con detalle de reprogramación), C-13
-  (Docker Compose con PostgreSQL, Redis, configuración segura, sesión SQLAlchemy
-  síncrona en UTC y tests de integración aislados), C-14 (migraciones Alembic
-  con línea de base, configuración segura, metadata con convención estable y
-  ciclo reversible probado) y C-15 (persistencia de catálogos y pacientes,
-  repositorios tipados, índices normalizados, CHECK de DNI y seed idempotente),
-  C-16 (persistencia de horarios de atención y bloqueos, repositorios tipados,
-  validación previa, reemplazo transaccional, turnos afectados y seed idempotente),
-  C-17 (persistencia de turnos e historial con servicios transaccionales, bloqueo
-  de filas en orden fijo, historial de solo inserción protegido por triggers y
-  lector SQL de turnos),
-  C-18 (API base con FastAPI: `GET /api/health` con chequeo de la base, errores
-  uniformes `409`, `422`, `403` y `400`, CORS limitado a `CORS_ORIGIN`, sesión
-  por request sin `commit` implícito, Swagger en `/api/docs` y servicio
-  `backend` en el Compose),
-  C-19 (autenticación con JWT y Argon2id: `POST /api/auth/login`,
-  `GET /api/auth/me`, mismo `401` ante credenciales inválidas, usuario releído en
-  cada request, matriz RBAC como tabla de datos con rechazo por defecto y un
-  usuario ficticio por rol en el seed),
-  C-20 (endpoints de catálogos y pacientes: profesionales, sillones, prestaciones y
-  pacientes con la matriz RBAC, edición con unicidad que excluye al propio
-  registro, desactivación y reactivación por POST, 404 NOT_FOUND y búsqueda de
-  pacientes por nombre y por prefijo de DNI),
-  C-21 (endpoints de horario de atención y bloqueos: `GET/PUT
-  /api/professionals/{id}/working-hours` y `GET/POST
-  /api/professionals/{id}/blocks`, `DELETE /api/blocks/{block_id}`, con RBAC por
-  profesional, horarios en `HH:MM` local y bloqueos en UTC, turnos fuera de
-  horario y afectados informados sin cancelar, y bloqueo de la fila del
-  profesional para serializar con el alta de turnos),
-  C-22 (endpoint para dar turnos: `POST /api/appointments` para recepción y
-  administrador, duración informada o la de la prestación, conflictos de agenda
-  en 409 y reglas de validez en 422 con todas las violaciones del dominio,
-  turno e historial en una sola transacción y un solo turno cuando dos altas
-  simultáneas piden el mismo hueco),
-  C-23 (ciclo de vida del turno por API: `POST /api/appointments/{id}/cancel`,
-  `/reschedule` y `/status` y `GET /api/appointments/{id}/history`, con
-  cancelación y reprogramación solo para recepción y administrador, cambio de
-  estado del odontólogo solo sobre sus turnos, historial propio de solo lectura
-  y rechazos del dominio en 409 y 422),
-  C-24 (consulta de agenda y detalle de turno por API: `GET /api/agenda` con
-  ventana local en `APP_TIMEZONE` de hasta 31 días, filtros combinables por
-  profesional y por sillón, sobre único con turnos enriquecidos con nombres —
-  incluidos los cancelados —, plantilla semanal de horarios y bloqueos del
-  rango, y `GET /api/appointments/{id}` con `200`/`404`, ambos en solo lectura
-  para los tres roles),
-  C-25 (base del frontend en React 18 + TypeScript `strict` + Vite 5: estructura
-  `features/shared/pages`, router mínimo, tokens de diseño y paleta con
-  contraste AA para los cinco estados del turno, `StatusBadge`, `LoadingState`,
-  `EmptyState`, `ErrorState` y `PageShell` presentacionales, cliente HTTP tipado
-  con `fetch` inyectado por parámetro y las cuatro formas de error sin
-  reformular mensajes del dominio, costura de token para C-26, servicio
-  `frontend` en Docker Compose en el puerto `5173` con HMR en Windows y sin
-  recibir secretos del `.env`, y suite Vitest + Testing Library con mutaciones y
-  trazabilidad) y
-  C-26 (login y sesión en el frontend con gobernanza ALTO: `TokenStore`
-  confinado a `src/features/auth/tokenStore.ts` sobre `sessionStorage` con
-  fallback en memoria, pantalla `/login` accesible contra `POST /api/auth/login`
-  con mensaje genérico en `401` y limpieza inmediata de contraseña, arranque de
-  sesión contra `GET /api/auth/me` con estados `checking`/`authenticated`/
-  `anonymous` y reintento ante fallo de red, rutas protegidas con `RequireAuth`
-  y `PublicOnlyRoute` validando el destino interno con `safeInternalPath`,
-  header `Authorization: Bearer <token>`, cierre automático con mensaje de
-  sesión vencida ante `401` protegido, preservación de sesión ante `403`,
-  menú por rol derivado de `/me` con ítems futuros deshabilitados bajo
-  `"Próximamente"` y cierre de sesión directo en `AppShell`) y
-  C-27 (agenda diaria de solo lectura sobre `GET /api/agenda` con gobernanza
-  BAJO: ruta `/agenda` protegida para los tres roles y `/` redirigiendo a
-  `/agenda`, carga inyectable de turnos, profesionales y sillones con `Clock`
-  inyectado, formateo en hora local según el `timezone` de la respuesta del
-  servidor, grilla diaria con eje de horas y minutos proporcionales, bandas de
-  horarios de atención y bloqueos rayados, tarjetas coloreadas por estado con
-  cancelados atenuados pero visibles y formato compacto en dos líneas ante
-  carriles divididos o columnas angostas, filtros combinables por profesional y
-  sillón en la URL con ayuda informativa, navegación por días con
-  `Anterior`/`Siguiente`/`Hoy`/selector, estados de carga, vacío y error con
-  reintento, delegación de `401` en C-26 y `403` visible sin cerrar sesión, y
-  alternancia a tabla semántica accesible con anuncio `aria-live`) y
-  C-28 (agenda semanal por profesional sobre `GET /api/agenda` con rango de 7
-  días en una sola llamada y gobernanza BAJO: alternancia entre vista diaria y
-  semanal mediante control `[ Día | Semana ]` en `AgendaToolbar` preservando fecha
-  y filtros, 7 columnas de lunes a domingo distribuidas simultáneamente en escritorio
-  a 1440 px sin scroll horizontal gracias al token `--agenda-week-column-min-width: 140px;`,
-  scroll horizontal en tablet con columna de horas sticky, preselección automática
-  por rol enviando `professionalId` a la API sin mezclar profesionales en contador
-  ni en lista, encabezado con rango semanal y cruce de mes/año con `formatWeekLabel`,
-  indicador accesible "Hoy" con texto visible y `aria-current="date"`, semana vacía
-  con grilla y avisos informativos según filtros activos, tarjetas compactas en 2
-  líneas con etiquetas y textos acotados con ellipsis para carriles estrechos de hasta
-  ~70 px, y vista de lista con columna Fecha y orden cronológico),
-  C-29 (dar turnos desde la agenda para recepción y administración con los errores del dominio:
-  modal accesible `Dialog`, formulario modal con fecha contextual, selección de paciente con
-  radio buttons accesibles, duración sugerida y editable, cálculo de offset horario nativo de la API,
-  renderizado de rechazos 409 y 422 en alert superior con códigos y referencias intactas, errores 400
-  mapeados a campos con `aria-invalid`, y alta exitosa 201 con refresco de agenda y anuncio de estado accesible) y
-  C-30 (gestión interactiva del ciclo de vida del turno desde la agenda: ver detalle con datos en hora local e historial cronológico con desglose anterior/nuevo, confirmar turno, marcar atendido o ausente con alertas accesibles y foco ante rechazos 422, cancelar con subvista de confirmación in-dialog y reprogramar con validación de conflictos y solapamientos 409/422, con permisos por rol y anuncios accesibles con `role="status"`) y
-  C-35 (portada pública editorial con secciones intercaladas, página de acceso por rol, login translúcido con autofill y alertas oscuras, modales claros suaves y navegación sin cajas).
-- **Planificado:** el resto de las pantallas del frontend (C-31 a C-33). La persistencia de
-  entidades y la API REST ya están implementadas. El plan completo
-  está en [CHANGES.md](CHANGES.md).
+**32 changes archivados** (C-01 a C-30, C-34 y C-35). El detalle de cada uno está en
+[CHANGES.md](CHANGES.md) y en su carpeta de [openspec/changes/archive/](openspec/changes/archive/).
+
+### Dominio (reglas de negocio puras, sin base ni HTTP)
+
+| Change | Qué resuelve |
+|---|---|
+| C-01 | Fundación del backend y guardia de dependencias del dominio |
+| C-02 | Crear un turno sin solapamientos por profesional ni por sillón |
+| C-03 | Duración completa y paciente, profesional, sillón y prestación existentes y activos |
+| C-04 | Hora local: inicio en la grilla de 5 minutos y turno dentro de un solo día |
+| C-05 | El turno cae completo dentro del horario de atención del profesional |
+| C-06 | El turno no pisa ningún bloqueo de agenda del profesional |
+| C-07 | No se dan turnos en el pasado (reloj inyectado, nunca el del sistema) |
+| C-08 | Mensajes de error en español con nombres y rangos en hora local |
+| C-09 | Altas de catálogo y pacientes con validación de nombres y DNI |
+| C-10 | Transiciones de estado del turno con tabla única y permisos por rol |
+| C-11 | Reprogramación con revalidación completa y retorno a "reservado" |
+| C-12 | Historial inmutable de cambios de estado y reprogramaciones |
+
+### Infraestructura y persistencia
+
+| Change | Qué resuelve |
+|---|---|
+| C-13 | Docker Compose con PostgreSQL y Redis, configuración segura, sesión en UTC |
+| C-14 | Migraciones Alembic con ciclo reversible probado |
+| C-15 | Persistencia de catálogos y pacientes, con seed idempotente |
+| C-16 | Persistencia de horarios de atención y bloqueos |
+| C-17 | Persistencia de turnos e historial transaccional, protegido por triggers |
+
+### API REST (FastAPI)
+
+| Change | Qué resuelve |
+|---|---|
+| C-18 | API base: `/api/health`, errores uniformes (400, 403, 409, 422), CORS y Swagger |
+| C-19 | Login con JWT y Argon2id, `/api/auth/me` y matriz RBAC por rol |
+| C-20 | Endpoints de profesionales, sillones, prestaciones y pacientes |
+| C-21 | Endpoints de horarios de atención y bloqueos por profesional |
+| C-22 | `POST /api/appointments`: dar turnos con todas las violaciones del dominio |
+| C-23 | Cancelar, reprogramar, cambiar estado e historial del turno |
+| C-24 | `GET /api/agenda` con filtros y `GET /api/appointments/{id}` |
+
+### Frontend (React 18 + TypeScript + Vite)
+
+| Change | Qué resuelve |
+|---|---|
+| C-25 | Base del frontend: tokens de diseño, componentes de estado y cliente HTTP tipado |
+| C-26 | Login, sesión, rutas protegidas y menú por rol |
+| C-27 | Agenda diaria con horarios, bloqueos, filtros y vista de lista accesible |
+| C-28 | Agenda semanal por profesional |
+| C-34 | Identidad visual Aqua: paleta, tipografías, logo y carrusel del login |
+| C-29 | Dar turnos desde la agenda, con los errores del dominio en pantalla |
+| C-30 | Detalle e historial del turno; confirmar, atender, ausente, cancelar y reprogramar |
+| C-35 | Portada pública, acceso por rol, login translúcido y modales claros |
+
+### Pendiente
+
+| Change | Qué falta |
+|---|---|
+| C-36 | Celular de la app (agenda, barra y modales) y tema oscuro |
+| C-31 | Vista de recepción por sillón con huecos libres visibles |
+| C-32 | Pantalla de horarios de atención y bloqueos |
+| C-33 | Pantallas de catálogos y pacientes |
+
+La API de C-32 y C-33 ya está implementada (C-20 y C-21); lo pendiente es la pantalla.
 
 ## Requisitos
 
