@@ -685,18 +685,29 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/06_funcionalidades.md` §US-050
 
 ### [C-36] `ui-tema-oscuro-y-movil`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-14 en [openspec/changes/archive/2026-11-14-ui-tema-oscuro-y-movil/](openspec/changes/archive/2026-11-14-ui-tema-oscuro-y-movil/))
 - **Scope**:
-  - Tema oscuro siguiendo `prefers-color-scheme`, más un botón que alterna el tema sin guardar la elección (no persiste en `localStorage` ni en cookie).
-  - Responsive para celular de la portada y del diálogo de acceso: hero, secciones, equipo, contacto y formulario legibles y sin overflow horizontal a 390 px.
-  - Tokens de tema oscuro en `tokens.css`/variantes, sin colores fuera de la paleta Aqua; contraste AA en texto real.
-  - Tests de componentes: tema según la preferencia, el botón alterna sin persistir y la estructura se mantiene en viewport angosto (lo medible en jsdom); capturas 1440/768/390 px a cargo de Claude.
+  - Reenfoque en la experiencia móvil de la aplicación autenticada (≤ 640 px):
+    - `AppShell`: cabecera compacta con marca y controles de sesión en una fila, y botón interactivo "Menú" fuera de `<nav>` con `aria-expanded` y `aria-controls="main-menu"`. Al estar expandido despliega la navegación vertical a ancho completo; tecla `Escape` cierra el menú y devuelve el foco al botón. Con menú cerrado, los enlaces quedan inertes. En tablet y escritorio permanece visible en línea.
+    - `AgendaToolbar`: compactada en 3 filas sin saltos indeseados: Fila 1 con selectores de vista `[Día | Semana]` + controles de navegación Anterior (`‹`), Hoy y Siguiente (`›`) conservando el nombre accesible completo; Fila 2 con selector de fecha a ancho disponible + botón "Nuevo turno"; Fila 3 con botón "Filtros" que expone contador dinámico (`Filtros (1)`) y panel accesible plegable, más botón "Actualizar agenda" (`↻`). En escritorio y tablet permanece horizontal.
+    - `AgendaGrid`: contenedor con `scroll-snap-type: x mandatory` y columnas de 292 px dimensionadas al ancho útil mediante container queries (`100cqi`), mostrando una columna completa por paso tanto en día como en semana. Columna del eje de horas fija (`position: sticky; left: 0`) con fondo de superficie sólido y `z-index` elevado, impidiendo que tarjetas pasen por encima al deslizar.
+    - Modales (`Dialog`, `AppointmentFormDialog`, `AppointmentDetailDialog`, `AppointmentRescheduleDialog`): renderizados como hoja inferior (*bottom sheet*) pegada al borde inferior a ancho completo (390 px) con esquinas redondeadas superiores, `max-height: 90dvh`, scroll interno y botones táctiles a 44 px de altura mínima sin recortes. En tablet y escritorio se preserva el modal flotante centrado de 580 px.
+    - `PageShell`: espaciados compactados con tokens para maximizar el área visible de la grilla en pantallas móviles.
+    - Tema oscuro de la aplicación: trasladado al backlog post-entrega (contradice la decisión A de C-35 que fijó superficies claras marfil-hielo en la app y modales; la portada y el login ya son oscuros).
+  - Scope original `[reemplazado]`:
+    - *[reemplazado]* Tema oscuro siguiendo `prefers-color-scheme`, más un botón que alterna el tema sin guardar la elección (no persiste en `localStorage` ni en cookie).
+    - *[reemplazado]* Responsive para celular de la portada y del diálogo de acceso: hero, secciones, equipo, contacto y formulario legibles y sin overflow horizontal a 390 px (resuelto previamente en C-35).
+    - *[reemplazado]* Tokens de tema oscuro en `tokens.css`/variantes, sin colores fuera de la paleta Aqua; contraste AA en texto real.
+    - *[reemplazado]* Tests de componentes: tema según la preferencia, el botón alterna sin persistir y la estructura se mantiene en viewport angosto (lo medible en jsdom); capturas 1440/768/390 px a cargo de Claude.
+  - Tests: 12 tests nuevos en 5 archivos aislados (`AppShell.mobile.test.tsx`, `AgendaToolbar.mobile.test.tsx`, `AgendaGrid.mobile.test.tsx`, `Dialog.bottomSheet.test.tsx`, `AgendaSpacing.mobile.test.tsx`) con 12 mutaciones eliminadas (12/12) y suite total de 272 tests en verde.
+  - Evidencias: RED/GREEN para cada test, 12 mutaciones con SHA-256 intacto, matriz de trazabilidad 12 (8 testeables + 4 visuales), validación OpenSpec estricta exit 0, y 15 capturas reales en `docs/evidencias/capturas/C-36-*.png`.
 - **Dependencias**: `C-35`
 - **Governance**: BAJO
-- **Preparación**: skill `appointment-frontend-ux` y MCP `context7` antes de implementar (React 18, Vite 5, Vitest 3).
+- **Preparación**: skill `appointment-frontend-ux` y MCP `context7` antes de implementar (React 18, Vite 5, Vitest 3, CSS Container Queries y Scroll Snap).
 - **Leer antes**:
-  - `docs/evidencias/explore-portada-y-acceso.md` §6.2 y §7
-  - `openspec/changes/archive/2026-11-13-ui-portada-y-acceso/design.md` §D9, §Riesgos
+  - `docs/evidencias/explore-C-36.md`
+  - `openspec/changes/archive/2026-11-14-ui-tema-oscuro-y-movil/proposal.md` y `design.md`
+  - `docs/evidencias/verify-C-36.md`
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado
 
 ### [C-29] `ui-dar-turno-con-errores`

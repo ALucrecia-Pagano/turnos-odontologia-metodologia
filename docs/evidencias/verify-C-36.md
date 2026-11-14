@@ -4,7 +4,7 @@
 
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8).
 
-- **Tareas**: Fases 1 a 6 implementadas y verificadas de forma autónoma según [tasks.md](../../openspec/changes/ui-tema-oscuro-y-movil/tasks.md); fase 7 (capturas visuales multi-resolución) preparada y delegada a Claude.
+- **Tareas**: Fases 1 a 7 implementadas y verificadas según [tasks.md](../../openspec/changes/archive/2026-11-14-ui-tema-oscuro-y-movil/tasks.md); fase 7 (verificación visual multi-resolución a 1440 px, 768 px y 390 px) completada con 15 capturas reales en [capturas/](capturas/).
 - **Vitest**: Línea base de **260 tests en 64 archivos**; suite final de **272 tests en 69 archivos**, todos en verde ([test-suite-C-36.txt](test-suite-C-36.txt)). Los 12 tests nuevos se encuentran en 5 archivos aislados (`AppShell.mobile.test.tsx`, `AgendaToolbar.mobile.test.tsx`, `AgendaGrid.mobile.test.tsx`, `Dialog.bottomSheet.test.tsx`, `AgendaSpacing.mobile.test.tsx`); cada uno cuenta con su par RED/GREEN documentado.
 - **Mutaciones**: **12 de 12 mutaciones eliminadas** (M01–M12) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 sin cambios: sí** ([mutaciones-C-36.txt](mutaciones-C-36.txt), generado por [mutaciones-C-36.py](mutaciones-C-36.py)).
 - **Trazabilidad**: **12 escenarios** declarados en specs delta (8 testeables 1:1 + 4 visuales a cargo de Claude), 0 inconsistencias ([trazabilidad-C-36.txt](trazabilidad-C-36.txt), generado por [trazabilidad-C-36.py](trazabilidad-C-36.py)).
@@ -12,7 +12,7 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
   - `npx tsc --noEmit` exit 0 (0 errores de tipos).
   - `npx eslint .` exit 0 (0 errores, 3 advertencias preexistentes heredadas de C-29/C-30 documentadas en Desvíos; ver [tooling-C-36.txt](tooling-C-36.txt)).
   - `npm run build` exit 0 ([build-C-36.txt](build-C-36.txt)).
-- **OpenSpec**: `openspec validate --all --strict` exit 0 con 19 especificaciones válidas ([validate-C-36.txt](validate-C-36.txt)).
+- **OpenSpec**: `openspec validate --all --strict` exit 0 con 18 elementos válidos (17 specs + 1 change activo; [validate-C-36.txt](validate-C-36.txt)).
 - **Tests existentes intocables**: `git diff main --diff-filter=M --stat -- "*.test.ts" "*.test.tsx"` devuelve vacío ([diff-tests-existentes-C-36.txt](diff-tests-existentes-C-36.txt)).
 - **Skill y Context7**: Consulta documentada en [C-36-context7.md](../skills-mcp/evidencias/C-36-context7.md) sobre soporte de `scroll-snap-type: x mandatory`, `scroll-padding-left` y `90dvh`. Aplicada la skill `appointment-frontend-ux`.
 
@@ -84,12 +84,29 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 
 ---
 
-## Verificación Visual Multi-Resolución a cargo de Claude (Fase 7)
+## Verificación en navegador real (Claude)
 
-Checklist preparado para validación con capturas reales a 1440 px, 768 px y 390 px:
+Se validaron en navegador real (Chromium contra la API local de backend y frontend) todas las pantallas, componentes e interacciones visuales del change a 1440 px, 768 px y 390 px, con un total de 15 capturas en [capturas/](capturas/):
 
-- [ ] 7.1 Tomar capturas reales a 1440 px, 768 px y 390 px de `AppShell` y Menú móvil desplegado.
-- [ ] 7.2 Tomar capturas reales a 1440 px, 768 px y 390 px de `AgendaToolbar` compacta y panel de filtros.
-- [ ] 7.3 Tomar capturas reales a 1440 px, 768 px y 390 px de `AgendaGrid` con scroll-snap en vista diaria y semanal.
-- [ ] 7.4 Tomar capturas reales a 1440 px, 768 px y 390 px de los modales de turnos como hoja inferior sin botones cortados.
-- [ ] 7.5 Consolidar capturas en `docs/evidencias/capturas/` y registrar enlaces definitivos.
+- **Navegación y cabecera (`AppShell`)**: en celular (390 px), cabecera compacta en una sola fila con marca a la izquierda y controles de sesión a la derecha; botón "Menú" fuera de `<nav>` con `aria-expanded` y `aria-controls="main-menu"`. Al pulsar despliega la navegación vertical a ancho completo; al presionar `Escape` el menú se cierra y el foco regresa al botón "Menú". Con el menú cerrado, los enlaces de la navegación no reciben foco mediante Tab (`inert`). En tablet (768 px) y escritorio (1440 px), la navegación permanece visible en línea sin botón de menú (`C-36-menu-abierto-390.png`, `C-36-agenda-dia-{1440,768,390}.png`).
+- **Toolbar de agenda (`AgendaToolbar`)**: en celular (390 px), organizada estrictamente en 3 filas sin saltos indeseados:
+  - Fila 1: selectores de vista `[Día | Semana]` + controles de navegación Anterior (`‹`), Hoy y Siguiente (`›`), conservando su nombre accesible intacto ("Anterior" / "Siguiente") para lectores de pantalla y tests;
+  - Fila 2: fecha actual visible ocupando el ancho disponible junto al botón "Nuevo turno";
+  - Fila 3: botón "Filtros" con contador de filtros activos en texto (`Filtros (1)`) y botón de refresco "Actualizar agenda" (`↻`), conservando su nombre accesible. En escritorio (1440 px) y tablet (768 px), la toolbar se mantiene en su distribución horizontal tradicional (`C-36-agenda-dia-390.png`, `C-36-filtros-abiertos-390.png`).
+- **Grilla de turnos (`AgendaGrid`)**:
+  - En celular (390 px), columnas de 292 px iguales al ancho útil real de la grilla (356 px - 64 px de eje horario) mediante container queries (`100cqi`), con desplazamiento horizontal fluido y `scroll-snap-type: x mandatory` que alinea exactamente una columna completa por paso, tanto en vista diaria por sillones como en vista semanal;
+  - La columna fija del eje horario (`timeGutter` y `cornerCell`) cuenta con fondo de superficie sólido y `z-index` elevado, garantizando que al deslizar horizontalmente las tarjetas de la columna anterior no pasen por encima de las horas fijas (`C-36-agenda-dia-snap-390.png`, `C-36-agenda-semana-{1440,768,390}.png`).
+- **Modales de turnos (`Dialog`)**:
+  - En celular (390 px), se despliegan como hoja inferior (*bottom sheet*) a ancho completo (390 px), pegados al borde inferior de la pantalla con bordes superiores redondeados, scroll interno accesible y botones de acción a 44 px de altura mínima sin recortes;
+  - En tablet (768 px) y escritorio (1440 px), se preserva el modal centrado flotante de 580 px con desenfoque marfil-hielo (`C-36-detalle-{1440,768,390}.png`, `C-36-nuevo-turno-{1440,768,390}.png`).
+- **Adaptabilidad y desbordes**: `scrollWidth` exactamente igual al ancho de la ventana (`innerWidth`) en los tres anchos de pantalla (1440 px, 768 px y 390 px), sin desbordes horizontales globales en la ventana.
+- **Escritorio intacto**: la interfaz de escritorio a 1440 px y tablet a 768 px no presenta alteraciones visuales ni regresiones funcionales respecto a C-30/C-35.
+
+### Defectos encontrados y corregidos
+
+1. **Columna cortada por cálculo con 100vw**: La regla original utilizaba `calc(100vw - 64px - 2 * var(--space-4)) = 294 px`, pero el ancho útil dentro de la grilla es 340 - 64 = 276 px (sin considerar padding y borde de la página). La columna quedaba cortada 18 px y el snap no mostraba una columna entera. Se corrigió estableciendo `container-type: inline-size` en `.gridScrollContainer` y dimensionando las columnas con `calc(100cqi - var(--agenda-time-gutter-width, 64px))`, eliminando `100vw`.
+2. **Toolbar en 4 filas**: La distribución anterior en móvil colapsaba en 4 filas desordenadas. Se reestructuró en 3 filas compactas: Fila 1 (navegación y vistas), Fila 2 (fecha y nuevo turno), Fila 3 (filtros y actualizar) con botones compactos "‹", "›" y "↻" que preservan su nombre accesible.
+3. **Espaciado de la página**: Exceso de separación vertical entre título y toolbar y falta de margen sobre la fecha. Se compactaron los paddings de `PageShell.module.css` con tokens (`var(--space-2)` en móvil) y se agregó margen superior a la barra de fecha en `AgendaView.module.css`.
+4. **Tarjetas sobre la columna de horas al deslizar**: Al scrollear horizontalmente, las tarjetas de las columnas anteriores se montaban sobre el eje de horas. Se asignó fondo de superficie y `z-index: 5` a `.timeGutter` y `z-index: 6` a `.cornerCell` en móvil.
+
+> **Nota sobre historial Git**: El archivo `docs/evidencias/explore-C-31.md` entró por error en el commit `1e1d7f9` de C-36; es evidencia de C-31 y no afecta a este change.

@@ -65,11 +65,11 @@
 
 ## 7. Verificación Visual Multi-Resolución a cargo de Claude
 
-- [ ] 7.1 Tomar capturas reales a 1440 px, 768 px y 390 px de `AppShell` y Menú móvil desplegado.
-- [ ] 7.2 Tomar capturas reales a 1440 px, 768 px y 390 px de `AgendaToolbar` compacta y panel de filtros.
-- [ ] 7.3 Tomar capturas reales a 1440 px, 768 px y 390 px de `AgendaGrid` con scroll-snap en vista diaria y semanal.
-- [ ] 7.4 Tomar capturas reales a 1440 px, 768 px y 390 px de los modales de turnos como hoja inferior sin botones cortados.
-- [ ] 7.5 Consolidar informe de verificación en `docs/evidencias/verify-C-36.md`.
+- [x] 7.1 Tomar capturas reales a 1440 px, 768 px y 390 px de `AppShell` y Menú móvil desplegado (`docs/evidencias/capturas/C-36-menu-abierto-390.png` y `docs/evidencias/capturas/C-36-agenda-dia-{1440,768,390}.png`).
+- [x] 7.2 Tomar capturas reales a 1440 px, 768 px y 390 px de `AgendaToolbar` compacta y panel de filtros (`docs/evidencias/capturas/C-36-agenda-dia-390.png` y `docs/evidencias/capturas/C-36-filtros-abiertos-390.png`).
+- [x] 7.3 Tomar capturas reales a 1440 px, 768 px y 390 px de `AgendaGrid` con scroll-snap en vista diaria y semanal (`docs/evidencias/capturas/C-36-agenda-dia-snap-390.png` y `docs/evidencias/capturas/C-36-agenda-semana-{1440,768,390}.png`).
+- [x] 7.4 Tomar capturas reales a 1440 px, 768 px y 390 px de los modales de turnos como hoja inferior sin botones cortados (`docs/evidencias/capturas/C-36-detalle-{1440,768,390}.png` y `docs/evidencias/capturas/C-36-nuevo-turno-{1440,768,390}.png`).
+- [x] 7.5 Consolidar informe de verificación en `docs/evidencias/verify-C-36.md`.
 
 ---
 
@@ -79,16 +79,16 @@
 |---|---|---|---|---|---|---|
 | 1 | `frontend-foundation` | AppShell en celular con botón Menú | Cabecera compacta y apertura de menú en celular | Testeable | `AppShell.mobile.test.tsx` | M01: Omitir botón Menú o atributo `aria-controls` en móvil |
 | 2 | `frontend-foundation` | AppShell en celular con botón Menú | Cierre del menú con Escape y retorno de foco al botón | Testeable | `AppShell.mobile.test.tsx` | M02: No retornar el foco al botón Menú al presionar Escape |
-| 3 | `frontend-foundation` | AppShell en celular con botón Menú | Navegación de AppShell y menú verificados a 1440, 768 y 390 px | Visual | Capturas 1440 / 768 / 390 px | V01: Desborde o rotura de cabecera en captura real |
+| 3 | `frontend-foundation` | AppShell en celular con botón Menú | Navegación de AppShell y menú verificados a 1440, 768 y 390 px | Visual | `C-36-menu-abierto-390.png`, `C-36-agenda-dia-{1440,768,390}.png` | V01: Desborde o rotura de cabecera en captura real |
 | 4 | `frontend-foundation` | Modales como hoja inferior en celular | Hoja inferior a ancho completo con scroll interno en celular | Testeable | `Dialog.bottomSheet.test.tsx` | M03: Omitir clase o estilo de hoja inferior en <= 640 px |
 | 5 | `frontend-foundation` | Modales como hoja inferior en celular | Preservación de modal centrado flotante en tablet y escritorio | Testeable | `Dialog.bottomSheet.test.tsx` | M04: Aplicar hoja inferior en pantallas >= 768 px |
-| 6 | `frontend-foundation` | Modales como hoja inferior en celular | Modales de turnos verificados a 1440, 768 y 390 px | Visual | Capturas 1440 / 768 / 390 px | V02: Botones cortados en borde inferior de pantalla móvil |
+| 6 | `frontend-foundation` | Modales como hoja inferior en celular | Modales de turnos verificados a 1440, 768 y 390 px | Visual | `C-36-detalle-{1440,768,390}.png`, `C-36-nuevo-turno-{1440,768,390}.png` | V02: Botones cortados en borde inferior de pantalla móvil |
 | 7 | `frontend-agenda` | Toolbar de agenda compacta con filtros plegables | Organización compacta de navegación y fecha en celular | Testeable | `AgendaToolbar.mobile.test.tsx` | M05: Mantener controles en fila única sin distribución en 2 filas |
 | 8 | `frontend-agenda` | Toolbar de agenda compacta con filtros plegables | Botón Filtros con contador de filtros activos y panel accesible | Testeable | `AgendaToolbar.mobile.test.tsx` | M06: Omitir contador de filtros activos en el botón Filtros |
-| 9 | `frontend-agenda` | Toolbar de agenda compacta con filtros plegables | Toolbar de agenda verificada a 1440, 768 y 390 px | Visual | Capturas 1440 / 768 / 390 px | V03: Altura de toolbar > 110 px en captura de 390 px |
+| 9 | `frontend-agenda` | Toolbar de agenda compacta con filtros plegables | Toolbar de agenda verificada a 1440, 768 y 390 px | Visual | `C-36-agenda-dia-390.png`, `C-36-filtros-abiertos-390.png` | V03: Altura de toolbar > 110 px en captura de 390 px |
 | 10 | `frontend-agenda` | Grilla de agenda con scroll-snap y columna completa | Desplazamiento horizontal fluido con scroll-snap y horas fijas | Testeable | `AgendaGrid.mobile.test.tsx` | M07: Omitir `scroll-snap-type` en contenedor de grilla |
 | 11 | `frontend-agenda` | Grilla de agenda con scroll-snap y columna completa | Columna completa al ancho útil y preservación de grilla por defecto | Testeable | `AgendaGrid.mobile.test.tsx` | M08: Cambiar el modo por defecto de `AgendaView` a lista |
-| 12 | `frontend-agenda` | Grilla de agenda con scroll-snap y columna completa | Grilla de agenda verificada a 1440, 768 y 390 px | Visual | Capturas 1440 / 768 / 390 px | V04: Columna recortada o ilegible en captura de 390 px |
+| 12 | `frontend-agenda` | Grilla de agenda con scroll-snap y columna completa | Grilla de agenda verificada a 1440, 768 y 390 px | Visual | `C-36-agenda-dia-snap-390.png`, `C-36-agenda-semana-{1440,768,390}.png` | V04: Columna recortada o ilegible en captura de 390 px |
 
 ---
 

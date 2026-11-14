@@ -15,8 +15,7 @@ $ openspec validate --all --strict
 ✓ spec/frontend-auth-session
 ✓ spec/frontend-foundation
 ✓ spec/frontend-landing
-✓ change/ui-tema-oscuro-y-movil
 ✓ change/ui-vista-de-recepcion-por-sillon
 ✓ spec/working-hours-and-blocks-api
-Totals: 19 passed, 0 failed (19 items)
+Totals: 18 passed, 0 failed (18 items)
 Exit code: 0
