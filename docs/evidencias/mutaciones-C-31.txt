@@ -1,0 +1,383 @@
+================================================================================
+VERIFICACION POR MUTACION DE C-31 (MODO SILLONES)
+SHA-256 inicial de archivos de produccion: cbf6074eff587884051e480441926c701fa4d99438a1b300343bd4ae78aaca41
+================================================================================
+Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
+================================================================================
+[M01] src/features/agenda/AgendaPage.porSillon.test.tsx > Activar Sillones conserva fecha y filtros: activar Sillones conserva fecha y filtros
+    Archivo: frontend/src/features/agenda/AgendaPage.tsx
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -206,5 +206,5 @@
+       params.set("view", "week");
+     } else if (nextView === "chair") {
+-      params.set("view", "chair");
++      // params.set("view", "chair");
+     }
+     const nextProf =
+    Estado: Matada
+    Fallo:  AssertionError: expected '?date=2026-11-16&professionalId=00000…' to contain 'view=chair'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M02] src/features/agenda/AgendaPage.porSillon.test.tsx > Un view desconocido sigue cayendo a Día: view desconocido cae a Día
+    Archivo: frontend/src/features/agenda/AgendaPage.tsx
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -53,5 +53,5 @@
+     rawView === "week"
+       ? "week"
+-      : rawView === "chair" && !isOdontologo
++      : !isOdontologo
+         ? "chair"
+         : "day";
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveAttribute("aria-pressed", "true") // element.getAttribute("aria-pressed") === "true"
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M03] src/features/agenda/AgendaView.chair.test.tsx > Turnos de distintos profesionales en la misma columna: dos profesionales en una columna de sillón
+    Archivo: frontend/src/features/agenda/AgendaView.tsx
+--- a/frontend/src/features/agenda/AgendaView.tsx
++++ b/frontend/src/features/agenda/AgendaView.tsx
+@@ -98,5 +98,5 @@
+ 
+   const columns =
+-    isChairView
++    false
+       ? groupByChair({
+           chairs: chairs ?? [],
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M04] src/features/agenda/AgendaView.chair.test.tsx > Sillón sin turnos: sillón sin turnos muestra Libre y Fuera de horario
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -371,5 +371,5 @@
+   });
+ 
+-  return chairList.map((chair) => {
++  return chairList.filter((chair) => appointments.some((a) => a.chairId === chair.id)).map((chair) => {
+     const chairAppts = appointments.filter((appt) => {
+       if (appt.chairId !== chair.id) {
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M05] src/features/agenda/AgendaPage.porSillon.test.tsx > Filtro de un solo sillón: chairId deja una sola columna
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -353,5 +353,5 @@
+ 
+   let chairList = Array.from(byId.values());
+-  if (filterChairId !== null && filterChairId !== "") {
++  if (false && filterChairId !== null && filterChairId !== "") {
+     chairList = chairList.filter((c) => c.id === filterChairId);
+   }
+    Estado: Matada
+    Fallo:  AssertionError: expected [ <div …(2)>…(1)</div>, …(1) ] to have a length of 1 but got 2
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M06] src/features/agenda/agendaChairLayout.test.ts > Sillón inactivo visible: sillón inactivo con sufijo (inactivo)
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -405,5 +405,5 @@
+       fullName: chair.name,
+       active: chair.active,
+-      displayLabel: chair.active ? chair.name : `${chair.name} (inactivo)`,
++      displayLabel: chair.name,
+       date,
+       workingHours: syntheticWorkingHours,
+    Estado: Matada
+    Fallo:  AssertionError: expected [ 'Sillón A', 'Sillón B', 'Sillón C' ] to deeply equal [ 'Sillón A (inactivo)', …(2) ]
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M07] src/features/agenda/agendaChairLayout.test.ts > Hueco libre entre dos turnos: hueco 10:30–11:00 entre dos turnos
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -181,5 +181,5 @@
+     let cursor = att.startMinute;
+ 
+-    for (const occ of mergedOccupied) {
++    for (const occ of [] as MinuteRange[]) {
+       if (occ.endMinute <= cursor || occ.startMinute >= att.endMinute) {
+         continue;
+    Estado: Matada
+    Fallo:  AssertionError: expected undefined to be defined
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M08] src/features/agenda/agendaChairLayout.test.ts > Un cancelado no ocupa el sillón: cancelado libera el tramo
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -142,5 +142,6 @@
+       appt.status !== "reservado" &&
+       appt.status !== "confirmado" &&
+-      appt.status !== "atendido"
++      appt.status !== "atendido" &&
++      appt.status !== "cancelado"
+     ) {
+       continue;
+    Estado: Matada
+    Fallo:  AssertionError: expected undefined to be defined
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M09] src/features/agenda/agendaChairStyles.test.ts > La disponibilidad no depende sólo del color: bandas con texto y sin HEX
+    Archivo: frontend/src/features/agenda/AgendaGrid.tsx
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -181,5 +181,5 @@
+                       }}
+                     >
+-                      <span>{slot.label}</span>
++                      {/* slot label removed */}
+                     </div>
+                   );
+    Estado: Matada
+    Fallo:  AssertionError: expected 'import { useEffect, useState } from "…' to contain '<span>{slot.label}</span>'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M10] src/features/agenda/agendaChairLayout.test.ts > Eje con la unión de horarios del día: eje 09:00–19:00 y gap 13:00–15:00
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -68,4 +68,5 @@
+     if (end > start) {
+       parsedRanges.push({ startMinute: start, endMinute: end });
++      break;
+     }
+   }
+    Estado: Matada
+    Fallo:  AssertionError: expected [ Array(1) ] to deeply equal [ { startMinute: 540, …(1) }, …(1) ]
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M11] src/features/agenda/agendaChairLayout.test.ts > Día sin horarios de atención: sin horarios usa 08:00–20:00 sin Libre
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -268,5 +268,5 @@
+ 
+   if (attention.length === 0 && apptRanges.length === 0) {
+-    const fallbackStart = AGENDA_DEFAULT_START_MINUTE; // 480 (08:00)
++    const fallbackStart = 540;
+     const fallbackEnd = AGENDA_DEFAULT_END_MINUTE;     // 1200 (20:00)
+     const hours: string[] = [];
+    Estado: Matada
+    Fallo:  AssertionError: expected 540 to be 480 // Object.is equality
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M12] src/features/agenda/AgendaPage.porSillon.test.tsx > Día por defecto desde el Clock: view=chair sin date usa el Clock
+    Archivo: frontend/src/features/agenda/AgendaPage.tsx
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -44,5 +44,5 @@
+ 
+   const rawDate = searchParams.get("date");
+-  const fallbackToday = todayInTimeZone(clock.now(), DEFAULT_AGENDA_TIMEZONE);
++  const fallbackToday = "2099-01-01";
+   const hasValidDate = isValidLocalDate(rawDate);
+   const effectiveDate = hasValidDate ? rawDate : fallbackToday;
+    Estado: Matada
+    Fallo:  AssertionError: expected '?date=2099-01-01&view=chair' to contain 'date=2026-11-16'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M13] src/features/agenda/AgendaPage.porSillon.test.tsx > Navegación de un día: Siguiente suma un día en view=chair
+    Archivo: frontend/src/features/agenda/AgendaPage.tsx
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -259,5 +259,5 @@
+         onClearFilters={handleClearFilters}
+         onPrevDay={() => navigateToDate(addDays(effectiveDate, isWeek ? -7 : -1))}
+-        onNextDay={() => navigateToDate(addDays(effectiveDate, isWeek ? 7 : 1))}
++        onNextDay={() => navigateToDate(addDays(effectiveDate, 7))}
+         onToday={() => navigateToDate(todayInTimeZone(clock.now(), state.timezone))}
+         onSelectDate={navigateToDate}
+    Estado: Matada
+    Fallo:  AssertionError: expected '?date=2026-11-23&view=chair' to contain 'date=2026-11-17'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M14] src/features/agenda/AgendaView.chair.test.tsx > Clic en la tarjeta abre el detalle: clic en tarjeta abre AppointmentDetailDialog
+    Archivo: frontend/src/features/agenda/AgendaView.tsx
+--- a/frontend/src/features/agenda/AgendaView.tsx
++++ b/frontend/src/features/agenda/AgendaView.tsx
+@@ -226,5 +226,5 @@
+             view={view}
+             showProfessional={isChairView}
+-            onSelectAppointment={onSelectAppointment}
++            onSelectAppointment={isChairView ? undefined : onSelectAppointment}
+           />
+         </>
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M15] src/features/agenda/AgendaView.chair.test.tsx > Nombre accesible completo en la tarjeta: aria-label incluye hora, paciente, profesional, sillón, prestación y estado
+    Archivo: frontend/src/features/agenda/AgendaGrid.tsx
+--- a/frontend/src/features/agenda/AgendaGrid.tsx
++++ b/frontend/src/features/agenda/AgendaGrid.tsx
+@@ -276,5 +276,5 @@
+                   const isCompact = item.durationMinutes < 45;
+                   const isSplitLane = item.laneCount > 1;
+-                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
++                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.chairName}, ${statusLabel}`;
+                   const cardClassName = [
+                     styles.appointmentCard,
+    Estado: Matada
+    Fallo:  AssertionError: expected '10:00–10:30, Ana Pérez, Control, Sill…' to contain 'Dra. Laura Quiroga'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M16] src/features/agenda/AgendaToolbar.chair.test.tsx > Recepción y administración ven el control: Sillones visible para recepcion y administrador
+    Archivo: frontend/src/features/agenda/AgendaToolbar.tsx
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -69,5 +69,5 @@
+   const isWeekView = view === "week";
+   const isChairView = view === "chair";
+-  const canViewChairs = userRole === "recepcion" || userRole === "administrador";
++  const canViewChairs = false;
+   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
+   const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M17] src/features/agenda/AgendaPage.porSillon.test.tsx > Odontólogo sin acceso: odontólogo con view=chair cae a Día
+    Archivo: frontend/src/features/agenda/AgendaPage.tsx
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -162,5 +162,5 @@
+     const needsProfNorm = rawProfessionalId !== null && explicitProfessionalId === null;
+     const needsChairNorm = rawChairId !== null && chairId === null;
+-    const needsChairViewNorm = rawView === "chair" && isOdontologo;
++    const needsChairViewNorm = false;
+     if (!needsDateNorm && !needsProfNorm && !needsChairNorm && !needsChairViewNorm) {
+       return;
+    Estado: Matada
+    Fallo:  AssertionError: expected '?date=2026-11-16&view=chair' not to contain 'view=chair'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M18] src/features/agenda/AgendaPage.porSillon.test.tsx > El filtro de sillón reduce las columnas: aplicar el filtro Sillón 2 actualiza la URL y reduce a una columna
+    Archivo: frontend/src/features/agenda/AgendaPage.tsx
+--- a/frontend/src/features/agenda/AgendaPage.tsx
++++ b/frontend/src/features/agenda/AgendaPage.tsx
+@@ -236,6 +236,6 @@
+   };
+ 
+-  const handleSelectChair = (nextChairId: string | null) => {
+-    setSearchParams(buildParams({ chairId: nextChairId }), { replace: false });
++  const handleSelectChair = (_nextChairId: string | null) => {
++    setSearchParams(buildParams({ chairId: null }), { replace: false });
+   };
+    Estado: Matada
+    Fallo:  AssertionError: expected '?date=2026-11-16&view=chair' to contain 'chairId=00000000-0000-0000-0000-00000…'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M19] src/features/agenda/agendaChairLayout.test.ts > El filtro de profesional recalcula los horarios: professionalId de Sosa deja unión 09:00–13:00
+    Archivo: frontend/src/features/agenda/agendaChairLayout.ts
+--- a/frontend/src/features/agenda/agendaChairLayout.ts
++++ b/frontend/src/features/agenda/agendaChairLayout.ts
+@@ -56,5 +56,5 @@
+       return false;
+     }
+-    if (professionalId !== null && professionalId !== undefined && professionalId !== "") {
++    if (false && professionalId !== null && professionalId !== undefined && professionalId !== "") {
+       return wh.professionalId === professionalId;
+     }
+    Estado: Matada
+    Fallo:  AssertionError: expected [ { startMinute: 540, …(1) }, …(1) ] to deeply equal [ Array(1) ]
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M20] src/features/agenda/AgendaToolbar.chair.test.tsx > La ayuda del filtro de sillón se adapta: en view=chair muestra CHAIR_VIEW_HELP_TEXT
+    Archivo: frontend/src/features/agenda/AgendaToolbar.tsx
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -374,5 +374,5 @@
+       )}
+       {hasChairFilter && !isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
+-      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_VIEW_HELP_TEXT}</p>}
++      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
+     </div>
+   );
+    Estado: Matada
+    Fallo:  AssertionError: expected <p class="helpText"></p> to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M21] src/features/agenda/AgendaView.chair.test.tsx > La lista sigue disponible: Ver como lista con columna Sillón
+    Archivo: frontend/src/features/agenda/AgendaView.tsx
+--- a/frontend/src/features/agenda/AgendaView.tsx
++++ b/frontend/src/features/agenda/AgendaView.tsx
+@@ -161,14 +161,16 @@
+           </span>
+           {isRefreshing && <span className={styles.liveRegion}>Actualizando…</span>}
+-          <button
+-            type="button"
+-            className={styles.toggleButton}
+-            aria-pressed={viewMode === "list"}
+-            onClick={() =>
+-              setViewMode((current) => (current === "grid" ? "list" : "grid"))
+-            }
+-          >
+-            Ver como lista
+-          </button>
++          {!isChairView && (
++            <button
++              type="button"
++              className={styles.toggleButton}
++              aria-pressed={viewMode === "list"}
++              onClick={() =>
++                setViewMode((current) => (current === "grid" ? "list" : "grid"))
++              }
++            >
++              Ver como lista
++            </button>
++          )}
+         </div>
+       </div>
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M22] src/features/agenda/AgendaView.chair.test.tsx > Un día sin turnos conserva la grilla: día sin turnos mantiene grilla y aviso
+    Archivo: frontend/src/features/agenda/AgendaView.tsx
+--- a/frontend/src/features/agenda/AgendaView.tsx
++++ b/frontend/src/features/agenda/AgendaView.tsx
+@@ -181,5 +181,5 @@
+           description="No se encontraron sillones en el catálogo."
+         />
+-      ) : !isWeekView && !isChairView && agenda.appointments.length === 0 && !hasActiveFilter ? (
++      ) : !isWeekView && agenda.appointments.length === 0 && !hasActiveFilter ? (
+         <EmptyState
+           title="No hay turnos para este día"
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M23] src/features/agenda/AgendaView.chair.test.tsx > Catálogo de sillones vacío: sin sillones muestra No hay sillones configurados
+    Archivo: frontend/src/features/agenda/AgendaView.tsx
+--- a/frontend/src/features/agenda/AgendaView.tsx
++++ b/frontend/src/features/agenda/AgendaView.tsx
+@@ -176,5 +176,5 @@
+         <div className={styles.bannerNote}>{catalogWarning}</div>
+       )}
+-      {isChairView && (!chairs || chairs.length === 0) ? (
++      {false ? (
+         <EmptyState
+           title="No hay sillones configurados"
+    Estado: Matada
+    Fallo:  AssertionError: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+================================================================================
+RESUMEN DE MUTACIONES
+Mutaciones totales:    23
+Matadas por asercion:  23
+Invalidas:             0
+SHA-256 inicial:       cbf6074eff587884051e480441926c701fa4d99438a1b300343bd4ae78aaca41
+SHA-256 final:         cbf6074eff587884051e480441926c701fa4d99438a1b300343bd4ae78aaca41
+SHA-256 sin cambios:   si
+================================================================================
+EXITO: todas las mutaciones fueron detectadas limpiamente.
+exit: 0 

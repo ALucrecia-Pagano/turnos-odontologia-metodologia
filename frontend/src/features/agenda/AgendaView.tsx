@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { EmptyState } from "../../shared/components/EmptyState";
-import type { AgendaAppointment, AgendaResponse, Professional } from "./agendaApi";
+import type { AgendaAppointment, AgendaResponse, Chair, Professional } from "./agendaApi";
 import { AgendaGrid } from "./AgendaGrid";
+import { computeChairAxis, groupByChair } from "./agendaChairLayout";
 import {
   computeAxis,
   computeWeekAxis,
@@ -17,7 +18,8 @@ export interface AgendaViewProps {
   readonly timezone: string;
   readonly agenda: AgendaResponse;
   readonly professionals: readonly Professional[];
-  readonly view?: "day" | "week";
+  readonly chairs?: readonly Chair[];
+  readonly view?: "day" | "week" | "chair";
   readonly selectedProfessionalId?: string | null;
   readonly todayDate?: string;
   readonly filterProfessionalId?: string | null;
@@ -32,6 +34,7 @@ export function AgendaView({
   timezone,
   agenda,
   professionals,
+  chairs,
   view = "day",
   selectedProfessionalId = null,
   todayDate,
@@ -43,6 +46,7 @@ export function AgendaView({
 }: AgendaViewProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const isWeekView = view === "week";
+  const isChairView = view === "chair";
   const dayLabel = formatDayLabel(date);
   const weekLabel = isWeekView ? formatWeekLabel(date) : "";
   const weekday = weekdayOf(date);
@@ -59,46 +63,72 @@ export function AgendaView({
           (!effectiveProfessionalId || a.professionalId === effectiveProfessionalId) &&
           (!filterChairId || a.chairId === filterChairId),
       )
-    : agenda.appointments;
+    : isChairView
+      ? agenda.appointments.filter(
+          (a) =>
+            (!filterChairId || a.chairId === filterChairId) &&
+            (!effectiveProfessionalId || a.professionalId === effectiveProfessionalId),
+        )
+      : agenda.appointments;
 
   const axis =
-    isWeekView && week !== null
-      ? computeWeekAxis({
-          mondayDate: week.monday,
-          timezone,
+    isChairView
+      ? computeChairAxis({
           workingHours: agenda.workingHours,
-          blocks: agenda.blocks,
+          weekday,
+          professionalId: effectiveProfessionalId,
           appointments: agenda.appointments,
-        })
-      : computeAxis({
           date,
           timezone,
-          workingHours: agenda.workingHours,
-          blocks: agenda.blocks,
-          appointments: agenda.appointments,
-        });
+        })
+      : isWeekView && week !== null
+        ? computeWeekAxis({
+            mondayDate: week.monday,
+            timezone,
+            workingHours: agenda.workingHours,
+            blocks: agenda.blocks,
+            appointments: agenda.appointments,
+          })
+        : computeAxis({
+            date,
+            timezone,
+            workingHours: agenda.workingHours,
+            blocks: agenda.blocks,
+            appointments: agenda.appointments,
+          });
 
   const columns =
-    isWeekView && week !== null
-      ? groupByDayForProfessional({
-          professionalId: effectiveProfessionalId ?? "",
-          mondayDate: week.monday,
-          timezone,
-          todayDate,
-          workingHours: agenda.workingHours,
-          blocks: agenda.blocks,
-          appointments: filterChairId
-            ? agenda.appointments.filter((a) => a.chairId === filterChairId)
-            : agenda.appointments,
-        })
-      : groupByProfessional({
-          professionals,
-          workingHours: agenda.workingHours,
-          blocks: agenda.blocks,
+    isChairView
+      ? groupByChair({
+          chairs: chairs ?? [],
           appointments: agenda.appointments,
+          workingHours: agenda.workingHours,
+          date,
+          timezone,
           weekday,
-          filterProfessionalId,
-        });
+          filterChairId,
+          filterProfessionalId: effectiveProfessionalId,
+        })
+      : isWeekView && week !== null
+        ? groupByDayForProfessional({
+            professionalId: effectiveProfessionalId ?? "",
+            mondayDate: week.monday,
+            timezone,
+            todayDate,
+            workingHours: agenda.workingHours,
+            blocks: agenda.blocks,
+            appointments: filterChairId
+              ? agenda.appointments.filter((a) => a.chairId === filterChairId)
+              : agenda.appointments,
+          })
+        : groupByProfessional({
+            professionals,
+            workingHours: agenda.workingHours,
+            blocks: agenda.blocks,
+            appointments: agenda.appointments,
+            weekday,
+            filterProfessionalId,
+          });
 
   const hasActiveFilter =
     (filterProfessionalId !== null && filterProfessionalId !== "") ||
@@ -109,7 +139,13 @@ export function AgendaView({
   return (
     <section
       className={styles.agendaView}
-      aria-label={isWeekView ? "Vista de agenda semanal" : "Vista de agenda diaria"}
+      aria-label={
+        isChairView
+          ? "Vista de agenda por sillón"
+          : isWeekView
+            ? "Vista de agenda semanal"
+            : "Vista de agenda diaria"
+      }
       aria-busy={isRefreshing}
     >
       <div className={styles.headerBar}>
@@ -122,7 +158,7 @@ export function AgendaView({
           >
             {isWeekView
               ? `Turnos de la semana: ${filteredAppointments.length}`
-              : `Turnos del ${dayLabel}: ${agenda.appointments.length}`}
+              : `Turnos del ${dayLabel}: ${isChairView ? filteredAppointments.length : agenda.appointments.length}`}
           </span>
           {isRefreshing && <span className={styles.liveRegion}>Actualizando…</span>}
           <button
@@ -140,7 +176,12 @@ export function AgendaView({
       {catalogWarning !== null && (
         <div className={styles.bannerNote}>{catalogWarning}</div>
       )}
-      {!isWeekView && agenda.appointments.length === 0 && !hasActiveFilter ? (
+      {isChairView && (!chairs || chairs.length === 0) ? (
+        <EmptyState
+          title="No hay sillones configurados"
+          description="No se encontraron sillones en el catálogo."
+        />
+      ) : !isWeekView && !isChairView && agenda.appointments.length === 0 && !hasActiveFilter ? (
         <EmptyState
           title="No hay turnos para este día"
           description="No se registraron turnos en la agenda para esta fecha."
@@ -163,8 +204,13 @@ export function AgendaView({
         )
       ) : (
         <>
-          {!isWeekView && agenda.appointments.length === 0 && (
+          {!isWeekView && !isChairView && agenda.appointments.length === 0 && (
             <div className={styles.bannerNote}>Sin turnos para este filtro</div>
+          )}
+          {isChairView && agenda.appointments.length === 0 && (
+            <div className={styles.bannerNote}>
+              No hay turnos para este día; los sillones se muestran libres
+            </div>
           )}
           {isWeekView && filteredAppointments.length === 0 && (
             <div className={styles.bannerNote}>
@@ -179,6 +225,7 @@ export function AgendaView({
             axis={axis}
             columns={columns}
             view={view}
+            showProfessional={isChairView}
             onSelectAppointment={onSelectAppointment}
           />
         </>

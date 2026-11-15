@@ -1,0 +1,15 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run AgendaToolbar.chair
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/agenda/AgendaToolbar.chair.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 115[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 18:45:15
+[2m   Duration [22m 2.85s[2m (transform 142ms, setup 299ms, collect 207ms, tests 115ms, environment 1.54s, prepare 273ms)[22m
+
+exit: 0 

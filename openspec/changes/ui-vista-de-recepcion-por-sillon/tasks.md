@@ -13,57 +13,57 @@
 
 ## 1. Preflight y línea base
 
-- [ ] 1.1 Confirmar que C-36 (`ui-tema-oscuro-y-movil`) está archivado en `openspec/changes/archive/` y que `main` no tiene cambios sin commitear; verificar con `openspec list --json` y `git status`. Si C-36 no está archivado, detenerse y reportar.
-- [ ] 1.2 Crear la rama `c31-apply` desde `main` y verificar con `git branch --show-current`.
-- [ ] 1.3 Correr la línea base en `frontend/` con `npm run test:run`, `npm run typecheck` y `npm run lint`; registrar el número de tests que pasan y confirmar que no hay fallos preexistentes. Si hay fallos, detenerse y reportarlos sin corregirlos.
-- [ ] 1.4 Confirmar el contrato heredado de C-36 leyendo el contenedor de grilla vigente y la toolbar compacta; anotar en la evidencia qué clases/props se reutilizan y verificar que C-31 no crea contenedor, scroll ni selector móvil propios.
+- [x] 1.1 Confirmar que C-36 (`ui-tema-oscuro-y-movil`) está archivado en `openspec/changes/archive/` y que `main` no tiene cambios sin commitear; verificar con `openspec list --json` y `git status`. Si C-36 no está archivado, detenerse y reportar.
+- [x] 1.2 Crear la rama `c31-apply` desde `main` y verificar con `git branch --show-current`.
+- [x] 1.3 Correr la línea base en `frontend/` con `npm run test:run`, `npm run typecheck` y `npm run lint`; registrar el número de tests que pasan y confirmar que no hay fallos preexistentes. Si hay fallos, detenerse y reportarlos sin corregirlos.
+- [x] 1.4 Confirmar el contrato heredado de C-36 leyendo el contenedor de grilla vigente y la toolbar compacta; anotar en la evidencia qué clases/props se reutilizan y verificar que C-31 no crea contenedor, scroll ni selector móvil propios.
 
 ## 2. Módulo puro `agendaChairLayout.ts`
 
-- [ ] 2.1 RED: escribir `agendaChairLayout.test.ts` con los casos de unión de horarios (Quiroga/Benítez 09:00–13:00 y 15:00–19:00; Sosa sólo 09:00–13:00), ejecutar `npm run test:run -- agendaChairLayout` y confirmar que falla porque el módulo no existe.
-- [ ] 2.2 GREEN: crear `agendaChairLayout.ts` con `unionAttentionIntervals`, `computeChairFreeSlots`, `computeChairAxis` y los tipos `ChairFreeSlot`/`ChairColumn`; ejecutar el test y confirmar que pasa.
-- [ ] 2.3 RED: agregar casos de huecos libres entre turnos, huecos menores a 15 minutos, `cancelado`/`ausente` que liberan agenda y gaps internos "Fuera de horario"; confirmar RED con la implementación incompleta.
-- [ ] 2.4 GREEN: completar la resta de ocupación y los gaps; verificar que los casos nuevos y los anteriores pasan.
-- [ ] 2.5 RED: agregar casos de eje (unión 09:00–19:00; día sin horarios → 08:00–20:00) y verificar RED.
-- [ ] 2.6 GREEN: implementar `computeChairAxis` sin margen artificial y con fallback de 08:00–20:00; verificar GREEN.
-- [ ] 2.7 RED: agregar casos de `groupByChair` (unión defensiva catálogo + turnos, orden por nombre, "(inactivo)", filtro `chairId`, filtro `professionalId`, `blocks: []`) y verificar RED.
-- [ ] 2.8 GREEN: implementar `groupByChair`; verificar todos los tests del módulo y correr `npm run typecheck` sin errores.
+- [x] 2.1 RED: escribir `agendaChairLayout.test.ts` con los casos de unión de horarios (Quiroga/Benítez 09:00–13:00 y 15:00–19:00; Sosa sólo 09:00–13:00), ejecutar `npm run test:run -- agendaChairLayout` y confirmar que falla porque el módulo no existe.
+- [x] 2.2 GREEN: crear `agendaChairLayout.ts` con `unionAttentionIntervals`, `computeChairFreeSlots`, `computeChairAxis` y los tipos `ChairFreeSlot`/`ChairColumn`; ejecutar el test y confirmar que pasa.
+- [x] 2.3 RED: agregar casos de huecos libres entre turnos, huecos menores a 15 minutos, `cancelado`/`ausente` que liberan agenda y gaps internos "Fuera de horario"; confirmar RED con la implementación incompleta.
+- [x] 2.4 GREEN: completar la resta de ocupación y los gaps; verificar que los casos nuevos y los anteriores pasan.
+- [x] 2.5 RED: agregar casos de eje (unión 09:00–19:00; día sin horarios → 08:00–20:00) y verificar RED.
+- [x] 2.6 GREEN: implementar `computeChairAxis` sin margen artificial y con fallback de 08:00–20:00; verificar GREEN.
+- [x] 2.7 RED: agregar casos de `groupByChair` (unión defensiva catálogo + turnos, orden por nombre, "(inactivo)", filtro `chairId`, filtro `professionalId`, `blocks: []`) y verificar RED.
+- [x] 2.8 GREEN: implementar `groupByChair`; verificar todos los tests del módulo y correr `npm run typecheck` sin errores.
 
 ## 3. Modo "Sillones" en la toolbar
 
-- [ ] 3.1 RED: crear `AgendaToolbar.chair.test.tsx` y verificar que falla: "Sillones" visible para `recepcion` y `administrador`, ausente para `odontologo`, y en `view=chair` el botón "Día" no está presionado (`aria-pressed="false"`, "Sillones" `true`).
-- [ ] 3.2 GREEN: extender `view` y `onSelectView` a `"chair"` en `AgendaToolbar.tsx`, agregar el tercer botón con gating de rol y cambiar "Día" a `view === "day"`; verificar el archivo nuevo y correr el test existente `AgendaToolbar.test.tsx` sin modificarlo.
-- [ ] 3.3 RED: agregar el caso de ayuda adaptada (sin `CHAIR_FILTER_HELP_TEXT` en `view=chair`, con `CHAIR_VIEW_HELP_TEXT`) y la conservación de "Anterior"/"Siguiente"; verificar RED.
-- [ ] 3.4 GREEN: implementar la ayuda adaptada y exportar `CHAIR_VIEW_HELP_TEXT`; verificar que el test nuevo y el existente pasan, y correr `npm run typecheck`.
+- [x] 3.1 RED: crear `AgendaToolbar.chair.test.tsx` y verificar que falla: "Sillones" visible para `recepcion` y `administrador`, ausente para `odontologo`, y en `view=chair` el botón "Día" no está presionado (`aria-pressed="false"`, "Sillones" `true`).
+- [x] 3.2 GREEN: extender `view` y `onSelectView` a `"chair"` en `AgendaToolbar.tsx`, agregar el tercer botón con gating de rol y cambiar "Día" a `view === "day"`; verificar el archivo nuevo y correr el test existente `AgendaToolbar.test.tsx` sin modificarlo.
+- [x] 3.3 RED: agregar el caso de ayuda adaptada (sin `CHAIR_FILTER_HELP_TEXT` en `view=chair`, con `CHAIR_VIEW_HELP_TEXT`) y la conservación de "Anterior"/"Siguiente"; verificar RED.
+- [x] 3.4 GREEN: implementar la ayuda adaptada y exportar `CHAIR_VIEW_HELP_TEXT`; verificar que el test nuevo y el existente pasan, y correr `npm run typecheck`.
 
 ## 4. Render de columnas por sillón reusando el contenedor de grilla
 
-- [ ] 4.1 RED: crear `AgendaView.chair.test.tsx` con un caso que verifica tres columnas ("Sillón 1", "Sillón 2", "Sillón 3"), dos turnos de profesionales distintos en la misma columna y el profesional visible en cada tarjeta; verificar RED.
-- [ ] 4.2 GREEN: extender `AgendaView` con `view="chair"`, `groupByChair`, `computeChairAxis`, título/aria-label y contador; verificar el test nuevo y que `AgendaView.test.tsx` y `AgendaPage.test.tsx` siguen pasando sin cambios.
-- [ ] 4.3 RED: agregar casos de sillón sin turnos ("Libre 09:00–13:00", "Libre 15:00–19:00", "Fuera de horario 13:00–15:00") y de hueco libre entre turnos con texto y `aria-label`; verificar RED.
-- [ ] 4.4 GREEN: extender `AgendaGrid` con `freeSlots` y las bandas de disponibilidad detrás de las tarjetas; agregar las clases y tokens en `AgendaGrid.module.css` y `tokens.css`; verificar GREEN y que no se modificó el comportamiento por defecto (`showProfessional` ausente).
-- [ ] 4.5 RED: agregar el caso de cancelado que no ocupa (tramo "Libre") y el caso de "Fuera de horario" en el eje; verificar RED.
-- [ ] 4.6 GREEN: ajustar el cálculo de huecos y el render de bandas; verificar GREEN.
-- [ ] 4.7 RED: agregar casos de filtros (`chairId` deja una columna; `professionalId` de Sosa recalcula a 09:00–13:00 y sin "Libre" de tarde) y de sillón inactivo; verificar RED.
-- [ ] 4.8 GREEN: cablear `filterChairId`/`filterProfessionalId` en `groupByChair`; verificar GREEN y correr `npm run typecheck`.
-- [ ] 4.9 RED: crear `AgendaPage.porSillon.test.tsx` con `view=chair`, día por defecto desde `Clock`, una única llamada `from=to=2026-11-16`, navegación ±1 día, gating de rol (odontólogo cae a Día y URL sin `view=chair`) y persistencia de `date`/filtros al alternar; verificar RED.
-- [ ] 4.10 GREEN: extender `AgendaPage` (`view`, parseo/gating, normalización, `buildParams`, título) y `AgendaTable` (tipo `view`); verificar el test nuevo y que `AgendaPage.test.tsx` sigue pasando sin cambios.
+- [x] 4.1 RED: crear `AgendaView.chair.test.tsx` con un caso que verifica tres columnas ("Sillón 1", "Sillón 2", "Sillón 3"), dos turnos de profesionales distintos en la misma columna y el profesional visible en cada tarjeta; verificar RED.
+- [x] 4.2 GREEN: extender `AgendaView` con `view="chair"`, `groupByChair`, `computeChairAxis`, título/aria-label y contador; verificar el test nuevo y que `AgendaView.test.tsx` y `AgendaPage.test.tsx` siguen pasando sin cambios.
+- [x] 4.3 RED: agregar casos de sillón sin turnos ("Libre 09:00–13:00", "Libre 15:00–19:00", "Fuera de horario 13:00–15:00") y de hueco libre entre turnos con texto y `aria-label`; verificar RED.
+- [x] 4.4 GREEN: extender `AgendaGrid` con `freeSlots` y las bandas de disponibilidad detrás de las tarjetas; agregar las clases y tokens en `AgendaGrid.module.css` y `tokens.css`; verificar GREEN y que no se modificó el comportamiento por defecto (`showProfessional` ausente).
+- [x] 4.5 RED: agregar el caso de cancelado que no ocupa (tramo "Libre") y el caso de "Fuera de horario" en el eje; verificar RED.
+- [x] 4.6 GREEN: ajustar el cálculo de huecos y el render de bandas; verificar GREEN.
+- [x] 4.7 RED: agregar casos de filtros (`chairId` deja una columna; `professionalId` de Sosa recalcula a 09:00–13:00 y sin "Libre" de tarde) y de sillón inactivo; verificar RED.
+- [x] 4.8 GREEN: cablear `filterChairId`/`filterProfessionalId` en `groupByChair`; verificar GREEN y correr `npm run typecheck`.
+- [x] 4.9 RED: crear `AgendaPage.porSillon.test.tsx` con `view=chair`, día por defecto desde `Clock`, una única llamada `from=to=2026-11-16`, navegación ±1 día, gating de rol (odontólogo cae a Día y URL sin `view=chair`) y persistencia de `date`/filtros al alternar; verificar RED.
+- [x] 4.10 GREEN: extender `AgendaPage` (`view`, parseo/gating, normalización, `buildParams`, título) y `AgendaTable` (tipo `view`); verificar el test nuevo y que `AgendaPage.test.tsx` sigue pasando sin cambios.
 
 ## 5. Integración con detalle, lista y estado vacío
 
-- [ ] 5.1 RED: agregar al test de `AgendaView.chair.test.tsx` el clic en la tarjeta que abre `AppointmentDetailDialog`, el nombre accesible completo y el formato compacto con profesional + estado; verificar RED donde corresponda.
-- [ ] 5.2 GREEN: cablear `onSelectAppointment` en la vista por sillón y el formato de tarjeta con `showProfessional`; verificar GREEN y que el detalle de C-30 se abre con el turno correcto.
-- [ ] 5.3 RED: agregar casos de "Ver como lista" con columna Sillón, día sin turnos con grilla y bandas "Libre" (aviso informativo, sin `EmptyState`) y catálogo vacío ("No hay sillones configurados"); verificar RED.
-- [ ] 5.4 GREEN: implementar el vacío adaptado y la lista en modo sillón; verificar GREEN y correr `npm run typecheck`.
-- [ ] 5.5 Crear `agendaChairStyles.test.ts` (RED/GREEN) para exigir los tokens nuevos, cero HEX en TSX, foco visible y que la disponibilidad no dependa sólo del color; ejecutar y verificar.
+- [x] 5.1 RED: agregar al test de `AgendaView.chair.test.tsx` el clic en la tarjeta que abre `AppointmentDetailDialog`, el nombre accesible completo y el formato compacto con profesional + estado; verificar RED donde corresponda.
+- [x] 5.2 GREEN: cablear `onSelectAppointment` en la vista por sillón y el formato de tarjeta con `showProfessional`; verificar GREEN y que el detalle de C-30 se abre con el turno correcto.
+- [x] 5.3 RED: agregar casos de "Ver como lista" con columna Sillón, día sin turnos con grilla y bandas "Libre" (aviso informativo, sin `EmptyState`) y catálogo vacío ("No hay sillones configurados"); verificar RED.
+- [x] 5.4 GREEN: implementar el vacío adaptado y la lista en modo sillón; verificar GREEN y correr `npm run typecheck`.
+- [x] 5.5 Crear `agendaChairStyles.test.ts` (RED/GREEN) para exigir los tokens nuevos, cero HEX en TSX, foco visible y que la disponibilidad no dependa sólo del color; ejecutar y verificar.
 
 ## 6. Verificación
 
-- [ ] 6.1 Correr `npm run test:run` completo en `frontend/` y confirmar que la línea base más los tests nuevos pasan, sin tests existentes modificados.
-- [ ] 6.2 Correr `npm run typecheck` y `npm run lint` (`--max-warnings 0`) y confirmar cero errores y cero warnings.
-- [ ] 6.3 Verificar la trazabilidad escenario → test → mutación: cada escenario del delta tiene un único test y cada mutación de la tabla final pone ese test en RED (detector de mutaciones inválidas sin casos aceptados por error).
-- [ ] 6.4 Verificar con `git diff --stat` que sólo se tocaron los archivos del plan y que no se modificaron tests existentes, `backend/`, `openspec/specs/`, `CHANGES.md`, `README.md`, `AGENTS.md`, `CLAUDE.md`, `.env` ni `.codex/`.
-- [ ] 6.5 Correr `openspec validate ui-vista-de-recepcion-por-sillon --strict` y confirmar que pasa.
+- [x] 6.1 Correr `npm run test:run` completo en `frontend/` y confirmar que la línea base más los tests nuevos pasan, sin tests existentes modificados.
+- [x] 6.2 Correr `npm run typecheck` y `npm run lint` (`--max-warnings 0`) y confirmar cero errores y cero warnings.
+- [x] 6.3 Verificar la trazabilidad escenario → test → mutación: cada escenario del delta tiene un único test y cada mutación de la tabla final pone ese test en RED (detector de mutaciones inválidas sin casos aceptados por error).
+- [x] 6.4 Verificar con `git diff --stat` que sólo se tocaron los archivos del plan y que no se modificaron tests existentes, `backend/`, `openspec/specs/`, `CHANGES.md`, `README.md`, `AGENTS.md`, `CLAUDE.md`, `.env` ni `.codex/`.
+- [x] 6.5 Correr `openspec validate ui-vista-de-recepcion-por-sillon --strict` y confirmar que pasa.
 
 ## 7. Capturas (a cargo de Claude)
 

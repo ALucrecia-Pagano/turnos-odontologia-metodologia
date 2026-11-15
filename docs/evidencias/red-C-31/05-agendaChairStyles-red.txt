@@ -1,0 +1,396 @@
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run agendaChairStyles
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaChairStyles.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 19[2mms[22m[39m
+[31m   [31m×[31m agendaChairStyles (C-31)[2m > [22mLa disponibilidad no depende sólo del color: bandas con texto y sin HEX[39m[32m 18[2mms[22m[39m
+[31m     → expected 'import { useEffect, useState } from "…' to contain '<span>{slot.label}</span>'[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaChairStyles.test.ts[2m > [22magendaChairStyles (C-31)[2m > [22mLa disponibilidad no depende sólo del color: bandas con texto y sin HEX
+[31m[1mAssertionError[22m: expected 'import { useEffect, useState } from "…' to contain '<span>{slot.label}</span>'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- <span>{slot.label}</span>[39m
+[31m+ import { useEffect, useState } from "react";[39m
+[31m+ import { StatusBadge } from "../../shared/components/StatusBadge";[39m
+[31m+ import type { AppointmentStatus } from "../../shared/styles/appointmentStatusTokens";[39m
+[31m+ import type {[39m
+[31m+   AgendaAppointment,[39m
+[31m+   AgendaBlock,[39m
+[31m+   AgendaWorkingHours,[39m
+[31m+ } from "./agendaApi";[39m
+[31m+ import type { ChairFreeSlot } from "./agendaChairLayout";[39m
+[31m+ import {[39m
+[31m+   appointmentRange,[39m
+[31m+   assignLanes,[39m
+[31m+   type AgendaAxis,[39m
+[31m+   type ProfessionalColumn,[39m
+[31m+ } from "./agendaLayout";[39m
+[31m+ import { formatLocalTime, formatMinutesToHHMM, parseHHMM } from "./agendaTime";[39m
+[31m+ import styles from "./AgendaGrid.module.css";[39m
+[31m+ [39m
+[31m+ export interface AgendaGridProps {[39m
+[31m+   readonly date: string;[39m
+[31m+   readonly timezone: string;[39m
+[31m+   readonly axis: AgendaAxis;[39m
+[31m+   readonly columns: readonly (ProfessionalColumn<[39m
+[31m+     AgendaAppointment,[39m
+[31m+     AgendaWorkingHours,[39m
+[31m+     AgendaBlock[39m
+[31m+   > & {[39m
+[31m+     readonly freeSlots?: readonly ChairFreeSlot[];[39m
+[31m+   })[];[39m
+[31m+   readonly view?: "day" | "week" | "chair";[39m
+[31m+   readonly isWeek?: boolean;[39m
+[31m+   readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;[39m
+[31m+   readonly isMobile?: boolean;[39m
+[31m+   readonly showProfessional?: boolean;[39m
+[31m+ }[39m
+[31m+ [39m
+[31m+ const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {[39m
+[31m+   reservado: "Reservado",[39m
+[31m+   confirmado: "Confirmado",[39m
+[31m+   atendido: "Atendido",[39m
+[31m+   ausente: "Ausente",[39m
+[31m+   cancelado: "Cancelado",[39m
+[31m+ };[39m
+[31m+ [39m
+[31m+ export function AgendaGrid({[39m
+[31m+   date,[39m
+[31m+   timezone,[39m
+[31m+   axis,[39m
+[31m+   columns,[39m
+[31m+   view,[39m
+[31m+   isWeek,[39m
+[31m+   onSelectAppointment,[39m
+[31m+   isMobile,[39m
+[31m+   showProfessional = false,[39m
+[31m+ }: AgendaGridProps) {[39m
+[31m+   const isWeekView = isWeek ?? view === "week";[39m
+[31m+   const axisSpan = Math.max(1, axis.endMinute - axis.startMinute);[39m
+[31m+ [39m
+[31m+   const [isMobileDevice, setIsMobileDevice] = useState(() => {[39m
+[31m+     if (typeof window !== "undefined" && typeof window.matchMedia === "function") {[39m
+[31m+       return window.matchMedia("(max-width: 640px)").matches;[39m
+[31m+     }[39m
+[31m+     return false;[39m
+[31m+   });[39m
+[31m+ [39m
+[31m+   const isMobileEffective = isMobile ?? isMobileDevice;[39m
+[31m+ [39m
+[31m+   useEffect(() => {[39m
+[31m+     if (isMobile !== undefined) {[39m
+[31m+       return;[39m
+[31m+     }[39m
+[31m+     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {[39m
+[31m+       return;[39m
+[31m+     }[39m
+[31m+     const mql = window.matchMedia("(max-width: 640px)");[39m
+[31m+     const handler = (e: MediaQueryListEvent) => {[39m
+[31m+       setIsMobileDevice(e.matches);[39m
+[31m+     };[39m
+[31m+     if (typeof mql.addEventListener === "function") {[39m
+[31m+       mql.addEventListener("change", handler);[39m
+[31m+       return () => mql.removeEventListener("change", handler);[39m
+[31m+     }[39m
+[31m+   }, [isMobile]);[39m
+[31m+ [39m
+[31m+   return ([39m
+[31m+     <div[39m
+[31m+       className={`${styles.gridScrollContainer} ${isMobileEffective ? styles.gridScrollMobile : ""}`}[39m
+[31m+       data-testid="agenda-grid-scroll"[39m
+[31m+       data-scroll-snap={isMobileEffective ? "mandatory" : undefined}[39m
+[31m+     >[39m
+[31m+       <div className={styles.gridTable}>[39m
+[31m+         <div className={styles.headerRow}>[39m
+[31m+           <div className={`${styles.cornerCell} ${isMobileEffective ? styles.cornerCellMobile : ""}`}>Hora</div>[39m
+[31m+           {columns.map((col) => {[39m
+[31m+             const isToday = Boolean(col.isToday);[39m
+[31m+             return ([39m
+[31m+               <div[39m
+[31m+                 key={col.id}[39m
+[31m+                 className={`${styles.columnHeader} ${isWeekView ? styles.weekColumnHeader : ""} ${isMobileEffective ? styles.columnHeaderMobile : ""}`}[39m
+[31m+                 data-testid="agenda-column-header"[39m
+[31m+                 data-snap-align={isMobileEffective ? "start" : undefined}[39m
+[31m+                 aria-current={isToday ? "date" : undefined}[39m
+[31m+               >[39m
+[31m+                 <span>{col.displayLabel}</span>[39m
+[31m+                 {isToday && <span className={styles.todayTag}>Hoy</span>}[39m
+[31m+               </div>[39m
+[31m+             );[39m
+[31m+           })}[39m
+[31m+         </div>[39m
+[31m+ [39m
+[31m+         <div className={styles.bodyRow}>[39m
+[31m+           <div[39m
+[31m+             className={`${styles.timeGutter} ${isMobileEffective ? styles.timeGutterMobile : ""}`}[39m
+[31m+             data-testid="agenda-time-gutter"[39m
+[31m+           >[39m
+[31m+             {axis.hours.map((hour) => ([39m
+[31m+               <div[39m
+[31m+                 key={hour}[39m
+[31m+                 className={styles.hourTick}[39m
+[31m+                 data-testid="agenda-axis-hour"[39m
+[31m+               >[39m
+[31m+                 {hour}[39m
+[31m+               </div>[39m
+[31m+             ))}[39m
+[31m+           </div>[39m
+[31m+ [39m
+[31m+           {columns.map((col) => {[39m
+[31m+             const columnDate = col.date ?? date;[39m
+[31m+             const positioned = assignLanes(col.appointments, {[39m
+[31m+               date: columnDate,[39m
+[31m+               timezone,[39m
+[31m+               axisStartMinute: axis.startMinute,[39m
+[31m+               axisEndMinute: axis.endMinute,[39m
+[31m+             });[39m
+[31m+ [39m
+[31m+             return ([39m
+[31m+               <div[39m
+[31m+                 key={col.id}[39m
+[31m+                 className={`${styles.columnTrack} ${isWeekView ? styles.weekColumnTrack : ""} ${isMobileEffective ? styles.columnTrackMobile : ""}`}[39m
+[31m+                 data-testid={`agenda-column-${col.id}`}[39m
+[31m+                 data-snap-align={isMobileEffective ? "start" : undefined}[39m
+[31m+                 data-mobile-column={isMobileEffective ? "true" : undefined}[39m
+[31m+               >[39m
+[31m+                 {col.appointments.length === 0 &&[39m
+[31m+                   (!col.freeSlots || col.freeSlots.length === 0) && ([39m
+[31m+                     <div className={styles.emptyColumnNote}>Sin turnos</div>[39m
+[31m+                   )}[39m
+[31m+ [39m
+[31m+                 {col.freeSlots?.map((slot, sIdx) => {[39m
+[31m+                   const startMinute = Math.max([39m
+[31m+                     axis.startMinute,[39m
+[31m+                     Math.min(axis.endMinute, slot.startMinute),[39m
+[31m+                   );[39m
+[31m+                   const endMinute = Math.max([39m
+[31m+                     startMinute,[39m
+[31m+                     Math.min(axis.endMinute, slot.endMinute),[39m
+[31m+                   );[39m
+[31m+                   if (endMinute <= startMinute) {[39m
+[31m+                     return null;[39m
+[31m+                   }[39m
+[31m+                   const offsetMinutes = startMinute - axis.startMinute;[39m
+[31m+                   const durationMinutes = endMinute - startMinute;[39m
+[31m+                   const topPercent = (offsetMinutes / axisSpan) * 100;[39m
+[31m+                   const heightPercent = (durationMinutes / axisSpan) * 100;[39m
+[31m+                   const isOutside = slot.type === "outside";[39m
+[31m+                   const bandClass = isOutside[39m
+[31m+                     ? `${styles.availabilityBand} ${styles.availabilityOutside}`[39m
+[31m+                     : `${styles.availabilityBand} ${styles.availabilityFree}`;[39m
+[31m+ [39m
+[31m+                   return ([39m
+[31m+                     <div[39m
+[31m+                       key={`slot-${slot.type}-${slot.startMinute}-${slot.endMinute}-${sIdx}`}[39m
+[31m+                       className={bandClass}[39m
+[31m+                       aria-label={slot.ariaLabel}[39m
+[31m+                       data-testid={isOutside ? "agenda-outside-band" : "agenda-free-band"}[39m
+[31m+                       data-offset-minutes={offsetMinutes}[39m
+[31m+                       data-duration-minutes={durationMinutes}[39m
+[31m+                       style={{[39m
+[31m+                         top: `${topPercent}%`,[39m
+[31m+                         height: `${heightPercent}%`,[39m
+[31m+                       }}[39m
+[31m+                     >[39m
+[31m+                     </div>[39m
+[31m+                   );[39m
+[31m+                 })}[39m
+[31m+ [39m
+[31m+                 {col.workingHours.map((wh, index) => {[39m
+[31m+                   const startMinute = Math.max([39m
+[31m+                     axis.startMinute,[39m
+[31m+                     Math.min(axis.endMinute, parseHHMM(wh.start)),[39m
+[31m+                   );[39m
+[31m+                   const endMinute = Math.max([39m
+[31m+                     startMinute,[39m
+[31m+                     Math.min(axis.endMinute, parseHHMM(wh.end)),[39m
+[31m+                   );[39m
+[31m+                   if (endMinute <= startMinute) {[39m
+[31m+                     return null;[39m
+[31m+                   }[39m
+[31m+                   const offsetMinutes = startMinute - axis.startMinute;[39m
+[31m+                   const durationMinutes = endMinute - startMinute;[39m
+[31m+                   const topPercent = (offsetMinutes / axisSpan) * 100;[39m
+[31m+                   const heightPercent = (durationMinutes / axisSpan) * 100;[39m
+[31m+ [39m
+[31m+                   return ([39m
+[31m+                     <div[39m
+[31m+                       key={`${wh.professionalId}-${wh.weekday}-${wh.start}-${wh.end}-${index}`}[39m
+[31m+                       className={styles.workingHourBand}[39m
+[31m+                       aria-label={`Horario de atención: ${wh.start} a ${wh.end}`}[39m
+[31m+                       data-offset-minutes={offsetMinutes}[39m
+[31m+                       data-duration-minutes={durationMinutes}[39m
+[31m+                       style={{[39m
+[31m+                         top: `${topPercent}%`,[39m
+[31m+                         height: `${heightPercent}%`,[39m
+[31m+                       }}[39m
+[31m+                     />[39m
+[31m+                   );[39m
+[31m+                 })}[39m
+[31m+ [39m
+[31m+                 {col.blocks.map((block) => {[39m
+[31m+                   const range = appointmentRange(block.startAt, block.endAt, columnDate, timezone);[39m
+[31m+                   if (range === null) {[39m
+[31m+                     return null;[39m
+[31m+                   }[39m
+[31m+                   const startMinute = Math.max([39m
+[31m+                     axis.startMinute,[39m
+[31m+                     Math.min(axis.endMinute, range.startMinute),[39m
+[31m+                   );[39m
+[31m+                   const endMinute = Math.max([39m
+[31m+                     startMinute,[39m
+[31m+                     Math.min(axis.endMinute, range.endMinute),[39m
+[31m+                   );[39m
+[31m+                   if (endMinute <= startMinute) {[39m
+[31m+                     return null;[39m
+[31m+                   }[39m
+[31m+                   const offsetMinutes = startMinute - axis.startMinute;[39m
+[31m+                   const durationMinutes = endMinute - startMinute;[39m
+[31m+                   const topPercent = (offsetMinutes / axisSpan) * 100;[39m
+[31m+                   const heightPercent = (durationMinutes / axisSpan) * 100;[39m
+[31m+                   const startLabel = formatMinutesToHHMM(startMinute);[39m
+[31m+                   const endLabel = formatMinutesToHHMM(endMinute);[39m
+[31m+                   const reasonText =[39m
+[31m+                     block.reason !== null && block.reason !== "" ? block.reason : "Bloqueo";[39m
+[31m+                   const ariaLabel =[39m
+[31m+                     block.reason !== null && block.reason !== ""[39m
+[31m+                       ? `Bloqueo: ${block.reason}, de ${startLabel} a ${endLabel}`[39m
+[31m+                       : `Bloqueo, de ${startLabel} a ${endLabel}`;[39m
+[31m+ [39m
+[31m+                   return ([39m
+[31m+                     <div[39m
+[31m+                       key={block.id}[39m
+[31m+                       className={styles.blockBand}[39m
+[31m+                       aria-label={ariaLabel}[39m
+[31m+                       data-testid={`agenda-block-${block.id}`}[39m
+[31m+                       data-offset-minutes={offsetMinutes}[39m
+[31m+                       data-duration-minutes={durationMinutes}[39m
+[31m+                       style={{[39m
+[31m+                         top: `${topPercent}%`,[39m
+[31m+                         height: `${heightPercent}%`,[39m
+[31m+                       }}[39m
+[31m+                     >[39m
+[31m+                       <span>{reasonText}</span>[39m
+[31m+                     </div>[39m
+[31m+                   );[39m
+[31m+                 })}[39m
+[31m+ [39m
+[31m+                 {positioned.map((item) => {[39m
+[31m+                   const appt = item.appointment;[39m
+[31m+                   const startLabel = formatLocalTime(appt.startAt, timezone);[39m
+[31m+                   const endLabel = formatLocalTime(appt.endAt, timezone);[39m
+[31m+                   const timeLabel = `${startLabel}–${endLabel}`;[39m
+[31m+                   const widthPercent = 100 / item.laneCount;[39m
+[31m+                   const leftPercent = item.lane * widthPercent;[39m
+[31m+                   const isCancelled = appt.status === "cancelado";[39m
+[31m+                   const statusLabel = STATUS_LABELS[appt.status];[39m
+[31m+                   const isCompact = item.durationMinutes < 45;[39m
+[31m+                   const isSplitLane = item.laneCount > 1;[39m
+[31m+                   const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;[39m
+[31m+                   const cardClassName = [[39m
+[31m+                     styles.appointmentCard,[39m
+[31m+                     isCancelled ? styles.appointmentCancelled : null,[39m
+[31m+                     isSplitLane ? styles.appointmentSplit : null,[39m
+[31m+                   ][39m
+[31m+                     .filter((name): name is string => name !== null && name !== undefined)[39m
+[31m+                     .join(" ");[39m
+[31m+ [39m
+[31m+                   return ([39m
+[31m+                     <button[39m
+[31m+                       type="button"[39m
+[31m+                       key={appt.id}[39m
+[31m+                       aria-label={cardAriaLabel}[39m
+[31m+                       title={isCompact ? appt.serviceName : undefined}[39m
+[31m+                       className={cardClassName}[39m
+[31m+                       data-testid={`agenda-appointment-${appt.id}`}[39m
+[31m+                       data-status={appt.status}[39m
+[31m+                       data-offset-minutes={item.offsetMinutes}[39m
+[31m+                       data-duration-minutes={item.durationMinutes}[39m
+[31m+                       data-effective-minutes={item.effectiveMinutes}[39m
+[31m+                       data-lane={item.lane}[39m
+[31m+                       data-lane-count={item.laneCount}[39m
+[31m+                       style={{[39m
+[31m+                         top: `${item.topPercent}%`,[39m
+[31m+                         height: `${item.heightPercent}%`,[39m
+[31m+                         left: `${leftPercent}%`,[39m
+[31m+                         width: `${widthPercent}%`,[39m
+[31m+                       }}[39m
+[31m+                       onClick={() => onSelectAppointment?.(appt)}[39m
+[31m+                     >[39m
+[31m+                       {isCompact ? ([39m
+[31m+                         // La hora y el paciente tienen prioridad: en carriles divididos (y en[39m
+[31m+                         // columnas de menos de 260 px, por container query) la etiqueta de[39m
+[31m+                         // estado baja a una segunda línea en tamaño reducido.[39m
+[31m+                         <div[39m
+[31m+                           className={[39m
+[31m+                             isSplitLane[39m
+[31m+                               ? `${styles.cardCompactRow} ${styles.cardCompactStacked}`[39m
+[31m+                               : styles.cardCompactRow[39m
+[31m+                           }[39m
+[31m+                           title={appt.serviceName}[39m
+[31m+                         >[39m
+[31m+                           <span className={styles.cardCompactText}>[39m
+[31m+                             {`${startLabel} · ${appt.patientName}`}[39m
+[31m+                           </span>[39m
+[31m+                           {showProfessional && ([39m
+[31m+                             <span className={styles.cardProfessional}>[39m
+[31m+                               {appt.professionalName}[39m
+[31m+                             </span>[39m
+[31m+                           )}[39m
+[31m+                           <span className={styles.statusBadgeWrap}>[39m
+[31m+                             <StatusBadge status={appt.status} />[39m
+[31m+                           </span>[39m
+[31m+                         </div>[39m
+[31m+                       ) : ([39m
+[31m+                         <>[39m
+[31m+                           <div className={styles.cardTopRow}>[39m
+[31m+                             <span className={styles.cardTime}>{timeLabel}</span>[39m
+[31m+                             <StatusBadge status={appt.status} />[39m
+[31m+                           </div>[39m
+[31m+                           <div className={styles.cardPatient}>{appt.patientName}</div>[39m
+[31m+                           {showProfessional && ([39m
+[31m+                             <div className={styles.cardProfessional}>[39m
+[31m+                               {appt.professionalName}[39m
+[31m+                             </div>[39m
+[31m+                           )}[39m
+[31m+                           <div className={styles.cardMeta}>{appt.serviceName}</div>[39m
+[31m+                         </>[39m
+[31m+                       )}[39m
+[31m+                     </button>[39m
+[31m+                   );[39m
+[31m+                 })}[39m
+[31m+               </div>[39m
+[31m+             );[39m
+[31m+           })}[39m
+[31m+         </div>[39m
+[31m+       </div>[39m
+[31m+     </div>[39m
+[31m+   );[39m
+[31m+ }[39m
+[31m+[39m
+
+[36m [2m❯[22m src/features/agenda/agendaChairStyles.test.ts:[2m37:21[22m[39m
+    [90m 35| [39m
+    [90m 36| [39m    [35mconst[39m gridTsx [33m=[39m [34mreadFileSync[39m([33mGRID_TSX_PATH[39m[33m,[39m [32m"utf-8"[39m)[33m;[39m
+    [90m 37| [39m    [34mexpect[39m(gridTsx)[33m.[39m[34mtoContain[39m([32m"<span>{slot.label}</span>"[39m)[33m;[39m
+    [90m   | [39m                    [31m^[39m
+    [90m 38| [39m    [34mexpect[39m(gridTsx)[33m.[39m[34mtoContain[39m([32m"aria-label={slot.ariaLabel}"[39m)[33m;[39m
+    [90m 39| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 18:56:48
+[2m   Duration [22m 2.62s[2m (transform 52ms, setup 322ms, collect 34ms, tests 19ms, environment 1.53s, prepare 303ms)[22m
+
+exit: 0 

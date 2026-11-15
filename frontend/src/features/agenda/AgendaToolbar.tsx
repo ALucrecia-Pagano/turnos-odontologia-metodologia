@@ -7,9 +7,12 @@ import styles from "./AgendaToolbar.module.css";
 export const CHAIR_FILTER_HELP_TEXT =
   "El filtro por sillón solo afecta los turnos; los horarios y bloqueos se siguen mostrando.";
 
+export const CHAIR_VIEW_HELP_TEXT =
+  "Cada columna es un sillón; el filtro de sillón reduce las columnas y el de profesional recalcula los horarios.";
+
 export interface AgendaToolbarProps {
   readonly date: string;
-  readonly view?: "day" | "week";
+  readonly view?: "day" | "week" | "chair";
   readonly professionalId: string | null;
   readonly chairId: string | null;
   readonly professionals: readonly Professional[];
@@ -22,7 +25,7 @@ export interface AgendaToolbarProps {
   readonly onToday?: () => void;
   readonly onSelectDate?: (nextDate: string) => void;
   readonly onRefresh?: () => void;
-  readonly onSelectView?: (view: "day" | "week") => void;
+  readonly onSelectView?: (view: "day" | "week" | "chair") => void;
   readonly invalidDateNotice?: string | null;
   readonly userRole?: UserRole | null;
   readonly onNewAppointment?: () => void;
@@ -64,6 +67,8 @@ export function AgendaToolbar({
   const sortedChairs = [...chairs].sort(compareChairs);
   const hasChairFilter = chairId !== null && chairId !== "";
   const isWeekView = view === "week";
+  const isChairView = view === "chair";
+  const canViewChairs = userRole === "recepcion" || userRole === "administrador";
   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
   const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
   const canCreateAppointment =
@@ -112,8 +117,8 @@ export function AgendaToolbar({
     >
       <button
         type="button"
-        className={isWeekView ? styles.viewToggleButton : styles.viewToggleButtonActive}
-        aria-pressed={!isWeekView}
+        className={view === "day" ? styles.viewToggleButtonActive : styles.viewToggleButton}
+        aria-pressed={view === "day"}
         onClick={() => onSelectView?.("day")}
       >
         Día
@@ -126,6 +131,16 @@ export function AgendaToolbar({
       >
         Semana
       </button>
+      {canViewChairs && (
+        <button
+          type="button"
+          className={isChairView ? styles.viewToggleButtonActive : styles.viewToggleButton}
+          aria-pressed={isChairView}
+          onClick={() => onSelectView?.("chair")}
+        >
+          Sillones
+        </button>
+      )}
     </div>
   );
 
@@ -357,7 +372,8 @@ export function AgendaToolbar({
       {invalidDateNotice !== null && (
         <p className={styles.helpText}>{invalidDateNotice}</p>
       )}
-      {hasChairFilter && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
+      {hasChairFilter && !isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
+      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_VIEW_HELP_TEXT}</p>}
     </div>
   );
 }

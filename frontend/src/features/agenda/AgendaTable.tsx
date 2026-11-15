@@ -14,7 +14,7 @@ export interface AgendaTableProps {
   readonly date: string;
   readonly timezone: string;
   readonly appointments: readonly AgendaAppointment[];
-  readonly view?: "day" | "week";
+  readonly view?: "day" | "week" | "chair";
   readonly caption?: string;
   readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;
 }

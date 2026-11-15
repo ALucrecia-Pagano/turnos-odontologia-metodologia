@@ -1,0 +1,11 @@
+================================================================================
+TRAZABILIDAD C-31 (ui-vista-de-recepcion-por-sillon) — SPEC -> TEST -> EVIDENCIA -> MUTACIÓN
+================================================================================
+Escenarios declarados en specs: 24 (esperados: 24)
+Validación de correspondencia 1:1: OK
+Validación de evidencias RED/GREEN: OK (23/23 pares presentes)
+================================================================================
+TOTAL: 23 testeables + 1 visuales = 24 escenarios mapeados
+EXITO: Trazabilidad 100% verificada.
+================================================================================
+exit: 0 

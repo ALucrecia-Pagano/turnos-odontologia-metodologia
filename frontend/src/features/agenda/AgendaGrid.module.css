@@ -350,6 +350,51 @@
   }
 }
 
+.availabilityBand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  padding: var(--space-1) var(--space-2);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.availabilityFree {
+  background-color: var(--agenda-free-bg);
+  border-top: 1px solid var(--agenda-free-border);
+  border-bottom: 1px solid var(--agenda-free-border);
+  color: var(--agenda-free-text);
+}
+
+.availabilityOutside {
+  background-color: var(--agenda-outside-bg);
+  border-top: 1px solid var(--agenda-outside-border);
+  border-bottom: 1px solid var(--agenda-outside-border);
+  color: var(--agenda-outside-text);
+}
+
+.cardProfessional {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardCompactSecondRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  width: 100%;
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .gridScrollContainer {
     scroll-snap-type: x mandatory;

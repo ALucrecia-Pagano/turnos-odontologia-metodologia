@@ -48,8 +48,15 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
   const effectiveDate = hasValidDate ? rawDate : fallbackToday;
 
   const rawView = searchParams.get("view");
-  const view: "day" | "week" = rawView === "week" ? "week" : "day";
+  const isOdontologo = user?.role === "odontologo";
+  const view: "day" | "week" | "chair" =
+    rawView === "week"
+      ? "week"
+      : rawView === "chair" && !isOdontologo
+        ? "chair"
+        : "day";
   const isWeek = view === "week";
+  const isChair = view === "chair";
 
   const [invalidDateNotice, setInvalidDateNotice] = useState<string | null>(() =>
     rawDate !== null && !hasValidDate ? INVALID_DATE_NOTICE : null,
@@ -154,13 +161,16 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     const needsDateNorm = rawDate === null || !hasValidDate;
     const needsProfNorm = rawProfessionalId !== null && explicitProfessionalId === null;
     const needsChairNorm = rawChairId !== null && chairId === null;
-    if (!needsDateNorm && !needsProfNorm && !needsChairNorm) {
+    const needsChairViewNorm = rawView === "chair" && isOdontologo;
+    if (!needsDateNorm && !needsProfNorm && !needsChairNorm && !needsChairViewNorm) {
       return;
     }
     const normalized = new URLSearchParams();
     normalized.set("date", effectiveDate);
     if (view === "week") {
       normalized.set("view", "week");
+    } else if (view === "chair") {
+      normalized.set("view", "chair");
     }
     if (explicitProfessionalId !== null) {
       normalized.set("professionalId", explicitProfessionalId);
@@ -177,13 +187,15 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     explicitProfessionalId,
     rawChairId,
     chairId,
+    rawView,
+    isOdontologo,
     view,
     setSearchParams,
   ]);
 
   const buildParams = (next: {
     readonly date?: string;
-    readonly view?: "day" | "week";
+    readonly view?: "day" | "week" | "chair";
     readonly professionalId?: string | null;
     readonly chairId?: string | null;
   }): URLSearchParams => {
@@ -192,6 +204,8 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     const nextView = next.view !== undefined ? next.view : view;
     if (nextView === "week") {
       params.set("view", "week");
+    } else if (nextView === "chair") {
+      params.set("view", "chair");
     }
     const nextProf =
       next.professionalId !== undefined ? next.professionalId : explicitProfessionalId;
@@ -213,7 +227,7 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
     setSearchParams(buildParams({ date: nextDate }), { replace: false });
   };
 
-  const handleSelectView = (nextView: "day" | "week") => {
+  const handleSelectView = (nextView: "day" | "week" | "chair") => {
     setSearchParams(buildParams({ view: nextView }), { replace: false });
   };
 
@@ -230,7 +244,9 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
   };
 
   return (
-    <PageShell title={isWeek ? "Agenda semanal" : "Agenda diaria"}>
+    <PageShell
+      title={isChair ? "Agenda por sillón" : isWeek ? "Agenda semanal" : "Agenda diaria"}
+    >
       <AgendaToolbar
         date={effectiveDate}
         view={view}
@@ -267,6 +283,7 @@ export function AgendaPage({ clock = systemClock }: AgendaPageProps) {
           timezone={state.timezone}
           agenda={state.agenda}
           professionals={state.professionals}
+          chairs={state.chairs}
           filterProfessionalId={effectiveProfessionalId}
           filterChairId={chairId}
           isRefreshing={state.phase === "refreshing"}

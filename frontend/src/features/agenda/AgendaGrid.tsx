@@ -6,6 +6,7 @@ import type {
   AgendaBlock,
   AgendaWorkingHours,
 } from "./agendaApi";
+import type { ChairFreeSlot } from "./agendaChairLayout";
 import {
   appointmentRange,
   assignLanes,
@@ -19,15 +20,18 @@ export interface AgendaGridProps {
   readonly date: string;
   readonly timezone: string;
   readonly axis: AgendaAxis;
-  readonly columns: readonly ProfessionalColumn<
+  readonly columns: readonly (ProfessionalColumn<
     AgendaAppointment,
     AgendaWorkingHours,
     AgendaBlock
-  >[];
-  readonly view?: "day" | "week";
+  > & {
+    readonly freeSlots?: readonly ChairFreeSlot[];
+  })[];
+  readonly view?: "day" | "week" | "chair";
   readonly isWeek?: boolean;
   readonly onSelectAppointment?: (appointment: AgendaAppointment) => void;
   readonly isMobile?: boolean;
+  readonly showProfessional?: boolean;
 }
 
 const STATUS_LABELS: Readonly<Record<AppointmentStatus, string>> = {
@@ -47,6 +51,7 @@ export function AgendaGrid({
   isWeek,
   onSelectAppointment,
   isMobile,
+  showProfessional = false,
 }: AgendaGridProps) {
   const isWeekView = isWeek ?? view === "week";
   const axisSpan = Math.max(1, axis.endMinute - axis.startMinute);
@@ -136,9 +141,49 @@ export function AgendaGrid({
                 data-snap-align={isMobileEffective ? "start" : undefined}
                 data-mobile-column={isMobileEffective ? "true" : undefined}
               >
-                {col.appointments.length === 0 && (
-                  <div className={styles.emptyColumnNote}>Sin turnos</div>
-                )}
+                {col.appointments.length === 0 &&
+                  (!col.freeSlots || col.freeSlots.length === 0) && (
+                    <div className={styles.emptyColumnNote}>Sin turnos</div>
+                  )}
+
+                {col.freeSlots?.map((slot, sIdx) => {
+                  const startMinute = Math.max(
+                    axis.startMinute,
+                    Math.min(axis.endMinute, slot.startMinute),
+                  );
+                  const endMinute = Math.max(
+                    startMinute,
+                    Math.min(axis.endMinute, slot.endMinute),
+                  );
+                  if (endMinute <= startMinute) {
+                    return null;
+                  }
+                  const offsetMinutes = startMinute - axis.startMinute;
+                  const durationMinutes = endMinute - startMinute;
+                  const topPercent = (offsetMinutes / axisSpan) * 100;
+                  const heightPercent = (durationMinutes / axisSpan) * 100;
+                  const isOutside = slot.kind === "outside";
+                  const bandClass = isOutside
+                    ? `${styles.availabilityBand} ${styles.availabilityOutside}`
+                    : `${styles.availabilityBand} ${styles.availabilityFree}`;
+
+                  return (
+                    <div
+                      key={`slot-${slot.kind}-${slot.startMinute}-${slot.endMinute}-${sIdx}`}
+                      className={bandClass}
+                      aria-label={slot.ariaLabel}
+                      data-testid={isOutside ? "agenda-outside-band" : "agenda-free-band"}
+                      data-offset-minutes={offsetMinutes}
+                      data-duration-minutes={durationMinutes}
+                      style={{
+                        top: `${topPercent}%`,
+                        height: `${heightPercent}%`,
+                      }}
+                    >
+                      <span>{slot.label}</span>
+                    </div>
+                  );
+                })}
 
                 {col.workingHours.map((wh, index) => {
                   const startMinute = Math.max(
@@ -276,6 +321,11 @@ export function AgendaGrid({
                           <span className={styles.cardCompactText}>
                             {`${startLabel} · ${appt.patientName}`}
                           </span>
+                          {showProfessional && (
+                            <span className={styles.cardProfessional}>
+                              {appt.professionalName}
+                            </span>
+                          )}
                           <span className={styles.statusBadgeWrap}>
                             <StatusBadge status={appt.status} />
                           </span>
@@ -287,6 +337,11 @@ export function AgendaGrid({
                             <StatusBadge status={appt.status} />
                           </div>
                           <div className={styles.cardPatient}>{appt.patientName}</div>
+                          {showProfessional && (
+                            <div className={styles.cardProfessional}>
+                              {appt.professionalName}
+                            </div>
+                          )}
                           <div className={styles.cardMeta}>{appt.serviceName}</div>
                         </>
                       )}
