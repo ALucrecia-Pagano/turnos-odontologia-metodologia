@@ -9,7 +9,7 @@ import type { Violation } from "../../shared/api/types";
 import type { AgendaAppointment, Chair, Professional } from "../agenda/agendaApi";
 import { formatLocalDate, formatLocalTime } from "../agenda/agendaTime";
 import { Dialog } from "../../shared/components/Dialog";
-import { buildStartAtIso } from "./AppointmentFormDialog";
+import { buildStartAtIso } from "./appointmentFormTime";
 import {
   rescheduleAppointment,
   type AppointmentResponse,

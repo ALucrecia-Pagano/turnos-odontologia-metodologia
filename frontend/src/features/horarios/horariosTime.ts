@@ -1,5 +1,5 @@
 import { formatLocalDate, formatLocalTime } from "../agenda/agendaTime";
-import { buildStartAtIso } from "../appointments/AppointmentFormDialog";
+import { buildStartAtIso } from "../appointments/appointmentFormTime";
 
 export interface WeekdayOption {
   readonly weekday: number;

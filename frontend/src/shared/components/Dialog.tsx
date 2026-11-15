@@ -93,12 +93,13 @@ export function Dialog({
   }, [open, returnFocusRef]);
 
   useEffect(() => {
+    const returnFocusEl = returnFocusRef?.current;
     return () => {
       if (wasOpenRef.current) {
-        returnFocusRef?.current?.focus();
+        returnFocusEl?.focus();
       }
     };
-  }, []);
+  }, [returnFocusRef]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
     if (event.key !== "Escape") {

@@ -2,7 +2,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useRef, useState } from "react";
 import { describe, expect, it } from "vitest";
 import { createApiClient } from "../../shared/api/client";
-import { AppointmentFormDialog, buildStartAtIso } from "./AppointmentFormDialog";
+import { AppointmentFormDialog } from "./AppointmentFormDialog";
+import { buildStartAtIso } from "./appointmentFormTime";
 
 const PROFESSIONALS = [
   { id: "00000000-0000-0000-0000-000000000001", fullName: "Dra. Laura Quiroga", licenseNumber: "MN-1234", active: true },
