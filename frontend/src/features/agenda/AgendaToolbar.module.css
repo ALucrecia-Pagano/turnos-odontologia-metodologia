@@ -204,7 +204,7 @@
 }
 
 .primaryButton:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-navy);
 }
 
 .primaryButton:focus-visible {
