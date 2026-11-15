@@ -745,13 +745,23 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/05_reglas_de_negocio.md` §RN-TU-02
 
 ### [C-31] `ui-vista-de-recepcion-por-sillon`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-14 en [openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/](openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/))
+- **Nota**: etiqueta del modo cambiada de 'Por sillón' a 'Sillones' por espacio en la toolbar del celular.
 - **Scope**: diferenciador del MVP (D.3).
-  - Vista de recepción con una columna por sillón con los turnos de todos los profesionales; los huecos libres son visibles (US-041 CA-1 y CA-2).
-  - Tests de componentes: turnos de distintos profesionales en la misma columna, hueco libre entre dos turnos.
+  - Vista de recepción con una columna por sillón con los turnos de todos los profesionales; los huecos libres son visibles con borde discontinuo (`1px dashed var(--agenda-free-border)`) y fondo de tinte claro (`#F3F7FA`), identificados con texto accesible y rotulado «Libre HH:MM–HH:MM» y «Fuera de horario HH:MM–HH:MM» (US-041 CA-1 y CA-2).
+  - Toolbar compactada con selector de vistas `[Día | Semana | Sillones]` para roles `recepcion` y `administrador`; rol `odontologo` no ve "Sillones" y con `view=chair` en URL normaliza a vista Día.
+  - Alternancia a vista lista («Ver como lista») disponible en modo sillón.
+  - Clic en tarjeta abre el diálogo de detalle (`AppointmentDetailDialog`) heredado de C-30.
+  - Responsive a 1440 px, 768 px y 390 px con scroll-snap y contenedor heredado de C-36.
+  - Tests: 25 tests nuevos en 5 archivos aislados (`agendaChairLayout.test.ts`, `AgendaToolbar.chair.test.tsx`, `AgendaView.chair.test.tsx`, `AgendaPage.porSillon.test.tsx`, `agendaChairStyles.test.ts`) con 25 mutaciones eliminadas (25/25) y suite total de 297 tests en verde.
+  - Evidencias: RED/GREEN para cada test, 25 mutaciones con SHA-256 intacto, matriz de trazabilidad 24 (23 testeables + 1 visual), validación OpenSpec estricta exit 0, y 7 capturas reales en `docs/evidencias/capturas/C-31-*.png`.
 - **Dependencias**: `C-27`
 - **Governance**: BAJO
+- **Preparación**: skill `appointment-frontend-ux` antes de implementar.
 - **Leer antes**:
+  - `docs/evidencias/explore-C-31.md`
+  - `openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/proposal.md` y `design.md`
+  - `docs/evidencias/verify-C-31.md`
   - `knowledge-base/06_funcionalidades.md` §US-041
   - `knowledge-base/08_arquitectura_propuesta.md` §Frontend cuidado (referencias DentalBox y Open Dental)
   - `knowledge-base/01_vision_y_objetivos.md`

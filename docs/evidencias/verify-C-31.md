@@ -4,7 +4,7 @@
 
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8).
 
-- **Tareas**: Fases 1 a 6 implementadas y verificadas según [tasks.md](../../openspec/changes/ui-vista-de-recepcion-por-sillon/tasks.md).
+- **Tareas**: Fases 1 a 7 implementadas y verificadas según [tasks.md](../../openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/tasks.md); fase 7 (verificación visual multi-resolución a 1440 px, 768 px y 390 px) completada con 7 capturas reales en [capturas/](capturas/).
 - **Línea base unificada**: [baseline-C-31.txt](baseline-C-31.txt) (tests:run 272 tests pasados, tsc exit 0, eslint 0 errores 3 warnings, lint exit 0).
 - **Vitest**: Suite final con todos los tests en verde ([test-suite-C-31.txt](test-suite-C-31.txt)): **297 tests pasados** (272 heredados + 25 tests nuevos de C-31). Los 25 tests nuevos se encuentran en 5 archivos aislados (`agendaChairLayout.test.ts`, `AgendaToolbar.chair.test.tsx`, `AgendaView.chair.test.tsx`, `AgendaPage.porSillon.test.tsx`, `agendaChairStyles.test.ts`); cada uno cuenta con su par RED/GREEN documentado.
 - **Mutaciones**: **25 de 25 mutaciones eliminadas** (M01–M25) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 sin cambios: sí** ([mutaciones-C-31.txt](mutaciones-C-31.txt), generado por [mutaciones-C-31.py](mutaciones-C-31.py)). Pre-check: [mutaciones-check-C-31.txt](mutaciones-check-C-31.txt).
@@ -86,14 +86,37 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 
 ---
 
+## Verificación en navegador real (Claude)
+
+Verificación visual e interactiva realizada sobre Chromium real contra la API y documentada en las 7 capturas de [docs/evidencias/capturas/](capturas/):
+
+1. **Columnas por sillón y disponibilidad (1440 px)**:
+   - Vista de tres columnas: Sillón 1, Sillón 2 y Sillón 3 ([C-31-sillones-1440.png](capturas/C-31-sillones-1440.png)).
+   - Huecos «Libre HH:MM–HH:MM» claramente visibles con fondo de tinte claro (`#F3F7FA`) y borde discontinuo de 1 px (`1px dashed var(--agenda-free-border)`), por ejemplo en **Sillón 3**: `Libre 09:00–10:00`, turno `10:00` Ana Pérez · Dr. Martín Sosa, `Libre 10:30–13:00`.
+   - Tramos sin atención rotulados «Fuera de horario HH:MM–HH:MM» con contraste AA verificado.
+2. **Detalle de turno integrado**:
+   - Clic sobre la tarjeta abre el diálogo `AppointmentDetailDialog` heredado de C-30 con los datos del paciente, profesional, sillón y prestación ([C-31-sillones-detalle-1440.png](capturas/C-31-sillones-detalle-1440.png)).
+3. **Alternancia a lista**:
+   - Botón «Ver como lista» disponible en modo sillón; renderiza la tabla con columna «Sillón» y 3 filas correspondientes a los turnos del día ([C-31-sillones-lista-1440.png](capturas/C-31-sillones-lista-1440.png)).
+4. **Control de acceso por rol**:
+   - Sesión con rol `odontologo`: el botón «Sillones» no se muestra en la toolbar. Al ingresar directamente con `view=chair` en la URL, la aplicación normaliza a la vista Día ([C-31-odontologo-sin-sillones-1440.png](capturas/C-31-odontologo-sin-sillones-1440.png)).
+5. **Comportamiento responsive (768 px y 390 px)**:
+   - A 768 px tablet ([C-31-sillones-768.png](capturas/C-31-sillones-768.png)): la toolbar compacta distribuye filtros y vista sin solapamientos.
+   - A 390 px móvil ([C-31-sillones-390.png](capturas/C-31-sillones-390.png)): columnas de 292 px de ancho útil (`calc(100cqi - var(--agenda-time-gutter-width))`), con scroll-snap horizontal heredado de C-36 ([C-31-sillones-snap-390.png](capturas/C-31-sillones-snap-390.png)).
+   - En los tres anchos evaluados (1440, 768 y 390 px), el `scrollWidth` del documento es idéntico al `innerWidth` de la ventana (cero scroll horizontal en la página).
+6. **Defecto detectado y corregido**:
+   - Durante la inspección visual inicial con `document.elementFromPoint`, se detectó que `.workingHourBand` quedaba por encima de `.availabilityBand` tapando los textos «Libre...», y que `--agenda-free-bg` se mimetizaba con el fondo blanco. Se solucionó con Strict TDD asignando `z-index: 1` a `.availabilityBand`, omitiendo `.workingHourBand` en la vista sillón, y aplicando borde discontinuo y token `--agenda-free-bg: var(--color-background);` con contraste WCAG AA comprobado.
+
+---
+
 ## Desvíos y Hallazgos Analizados
 
 1. **Toolbar móvil a 390 px con modo Sillones**:
-   - *Hallazgo*: A 390 px de ancho, con el selector de 3 botones `[Día | Semana | Sillones]`, los controles se distribuyen sin overflow ni saltos indeseados preservando el contrato visual de C-36:
-     - **Fila 1 (`navRow`)**: selector de vistas `[Día | Semana | Sillones]` y botones de navegación rápida `‹ Hoy ›`.
-     - **Fila 2 (`dateRow`)**: etiqueta de fecha y botón de acción principal `Nuevo turno`.
-     - **Fila 3 (`actionRow`)**: botón disparador de `Filtros (N)` y botón de refresco `↻`.
-   - *Resolución*: Se aplicó padding compactado mediante tokens (`var(--space-2)`). El ancho resultante del grupo en fila 1 es de ~308 px dentro de los 374 px útiles de la pantalla, sin scroll horizontal de la página.
+   - *Hallazgo*: A 390 px de ancho, con el selector de 3 botones `[Día | Semana | Sillones]`, los controles se distribuyen sin overflow ni scroll horizontal:
+     - **Fila 1 (`navRow`)**: `[Día | Semana | Sillones]` y `‹ Hoy ›` (entra justo, termina en x=365 de 365 px disponibles).
+     - **Fila 2 (`dateRow`)**: selector de FECHA (input) + "Nuevo turno".
+     - **Fila 3 (`actionRow`)**: "Filtros (N)" + "↻".
+   - *Resolución*: Se aplicó padding compactado mediante tokens (`var(--space-2)`). El ancho resultante del grupo en fila 1 no genera desborde y el `scrollWidth` de la página es exactamente igual al ancho del viewport (390 px).
 2. **Advertencias preexistentes de ESLint**:
    - *Causa*: Existen 3 advertencias preexistentes heredadas de C-29 y C-30 (`AppointmentFormDialog.tsx:36` por exportar `buildStartAtIso` junto con el componente, y 2 en `Dialog.tsx` por el ref `returnFocusRef`).
    - *Resolución*: Se mantienen sin tocar según la regla dura de no modificar código fuera del change; `npx eslint .` finaliza con código 0 y 0 errores.

@@ -69,8 +69,8 @@
 
 ## 7. Capturas (a cargo de Claude)
 
-- [ ] 7.1 Levantar la app y tomar capturas de la vista por sillón a 1440, 768 y 390 px; guardarlas en `docs/evidencias/capturas/` en UTF-8 y verificar visualmente: tres columnas y gutter a 1440, toolbar envuelta y tres columnas a 768, columna completa con scroll-snap y tarjetas legibles a 390.
-- [ ] 7.2 Registrar el resultado de la verificación visual en la evidencia del change (sin tocar `docs/evidencias/explore-C-31.md`).
+- [x] 7.1 Levantar la app y tomar capturas de la vista por sillón a 1440, 768 y 390 px; guardarlas en `docs/evidencias/capturas/` en UTF-8 y verificar visualmente: tres columnas y gutter a 1440, toolbar envuelta y tres columnas a 768, columna completa con scroll-snap y tarjetas legibles a 390. Verificadas las 7 capturas: `C-31-sillones-1440.png`, `C-31-sillones-768.png`, `C-31-sillones-390.png`, `C-31-sillones-snap-390.png`, `C-31-sillones-detalle-1440.png`, `C-31-sillones-lista-1440.png` y `C-31-odontologo-sin-sillones-1440.png`.
+- [x] 7.2 Registrar el resultado de la verificación visual en la evidencia del change (sin tocar `docs/evidencias/explore-C-31.md`). Documentado en `docs/evidencias/verify-C-31.md` en la sección «Verificación en navegador real (Claude)».
 
 ## Workflow follow-up
 
@@ -106,6 +106,6 @@
 | Catálogo de sillones vacío | `AgendaView.chair.test.tsx` — "sin sillones muestra No hay sillones configurados" | Mostrar grilla vacía en vez del vacío | Revertir: EmptyState correcto → verde |
 | Apilamiento de disponibilidad | `agendaChairStyles.test.ts` — "apilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas" | Cambiar `z-index: 1` a `z-index: 0` en `.availabilityBand` | Revertir: z-index 1 > 0 y omisión de workingHourBand en sillones → verde |
 | Distinción visual de disponibilidad | `agendaChairStyles.test.ts` — "distinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo" | Cambiar borde `dashed` a `solid` en `.availabilityFree` | Revertir: borde dashed y fondo `--agenda-free-bg` → verde |
-| Capturas a 1440, 768 y 390 px | — (verificación manual; no es test) | — (no aplica) | Capturas en `docs/evidencias/capturas/`; contenedor heredado y tarjetas legibles |
+| Capturas a 1440, 768 y 390 px | — (verificación manual; no es test) | — (no aplica) | Capturas en `docs/evidencias/capturas/C-31-sillones-{1440,768,390}.png` y `C-31-sillones-snap-390.png`; contenedor heredado y tarjetas legibles |
 
 > La fila de capturas es verificación manual, no test ni mutación; se adjunta en `docs/evidencias/capturas/` antes de archivar.
