@@ -68,9 +68,37 @@ Ver "Contrato heredado". C-31 no agrega contenedor ni comportamiento móvil.
 
 Columnas = catálogo `GET /chairs` (`useAgenda` ya lo carga) unido con los `chairId`/`chairName` que aparezcan en turnos del día. Orden por nombre (`localeCompare` es, desempate por id). Inactivos se muestran "Sillón N (inactivo)". Si el catálogo falla, `CATALOG_FALLBACK_WARNING` ya avisa y los turnos igual se pintan. Con `chairId` en la URL queda una sola columna.
 
-### D9 — Capas y estados
+### D9 — Capas, apilamiento y distinción visual de disponibilidad
 
-Bandas de atención y disponibilidad en `z-index: 0`, bloqueos en `1` (no existen en columnas de sillón) y tarjetas en `2`; el foco de tarjeta sube a `3`. Un cancelado puede quedar sobre una banda "Libre" y su texto "Cancelado" explica el estado. No se descuentan cancelados/ausentes del hueco.
+**Apilamiento (z-index):**
+En `view=chair`, las capas se ordenan explícitamente:
+- `.workingHourBand`: `z-index: 0` (franjas base de horario).
+- `.availabilityBand`: `z-index: 1` (por encima de `.workingHourBand` y de las líneas de la grilla; por debajo de las tarjetas).
+- `.appointmentCard`: `z-index: 2` (las tarjetas permanecen clickeables por encima de la disponibilidad; su foco visible sube a `z-index: 3`).
+- `.timeGutter`: `z-index: 2` en escritorio y `z-index: 5` en móvil (la columna de horas sticky permanece siempre por encima de tarjetas y bandas).
+- *Decisión adicional de apilamiento*: en `AgendaGrid.tsx`, cuando la columna tiene `freeSlots` (modo sillón), `.workingHourBand` **no se renderiza**, ya que la disponibilidad la expresan completamente las bandas de `Libre` y `Fuera de horario`. Esto evita cualquier solapamiento o intercepción de eventos por franjas blancas en navegadores reales.
+
+**Distinción visual y contraste WCAG AA (nunca sólo por color):**
+La disponibilidad comunica su estado siempre con texto visible (`Libre HH:MM–HH:MM` y `Fuera de horario HH:MM–HH:MM`) y además se distingue visualmente mediante tokens compuestos (sin agregar valores HEX ni rgba nuevos a `tokens.css`, preservando `landingTokens.test.ts`):
+- **Banda Libre (`.availabilityFree`)**:
+  - Fondo: `--agenda-free-bg: var(--color-background);` (resuelve a `#F3F7FA`, tinte claro sutil del acento/hielo sobre blanco puro).
+  - Borde: `1px dashed var(--agenda-free-border);` (`--agenda-free-border: var(--color-accent);` `#54ACBF`), diferenciándolo de las tarjetas que tienen borde continuo.
+  - Texto: `--agenda-free-text: var(--color-text);` (`#011C40`).
+  - **Cálculo de contraste WCAG AA**:
+    - Luminancia relativa de fondo `#F3F7FA` (243, 247, 250): $L_{bg} = 0.9254$.
+    - Luminancia relativa de texto `#011C40` (1, 28, 64): $L_{text} = 0.0120$.
+    - Ratio de contraste: $\frac{0.9254 + 0.05}{0.0120 + 0.05} = \frac{0.9754}{0.0620} = 15.73:1$.
+    - Cumple ampliamente el requisito WCAG AA (mínimo 4.5:1).
+- **Banda Fuera de horario (`.availabilityOutside`)**:
+  - Fondo: `--agenda-outside-bg: var(--agenda-offhours-bg);` (`#F3F4F6`, tono apagado de franja fuera de horario).
+  - Borde: `--agenda-outside-border: var(--agenda-grid-line);` (`#E5E7EB`).
+  - Texto: `--agenda-outside-text: var(--color-text-muted);` (`#4A5F78`).
+  - **Cálculo de contraste WCAG AA**:
+    - Luminancia relativa de fondo `#F3F4F6` (243, 244, 246): $L_{bg} = 0.9034$.
+    - Luminancia relativa de texto `#4A5F78` (74, 95, 120): $L_{text} = 0.1115$.
+    - Ratio de contraste: $\frac{0.9034 + 0.05}{0.1115 + 0.05} = \frac{0.9534}{0.1615} = 5.90:1$.
+    - Cumple WCAG AA (mínimo 4.5:1).
+- Un turno cancelado o ausente permanece visible sobre la banda libre; su texto visible ("Cancelado") y borde discontinuo identifican su estado sin descontar el hueco.
 
 ### D10 — Filtros y ayuda adaptada
 

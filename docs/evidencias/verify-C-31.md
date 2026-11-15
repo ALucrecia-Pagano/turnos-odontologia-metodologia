@@ -5,8 +5,9 @@
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8).
 
 - **Tareas**: Fases 1 a 6 implementadas y verificadas según [tasks.md](../../openspec/changes/ui-vista-de-recepcion-por-sillon/tasks.md).
-- **Vitest**: Suite final con todos los tests en verde ([test-suite-C-31.txt](test-suite-C-31.txt)). Los 23 tests nuevos se encuentran en 5 archivos aislados (`agendaChairLayout.test.ts`, `AgendaToolbar.chair.test.tsx`, `AgendaView.chair.test.tsx`, `AgendaPage.porSillon.test.tsx`, `agendaChairStyles.test.ts`); cada uno cuenta con su par RED/GREEN documentado.
-- **Mutaciones**: 23 de 23 mutaciones eliminadas (M01–M23) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 sin cambios: sí** ([mutaciones-C-31.txt](mutaciones-C-31.txt), generado por [mutaciones-C-31.py](mutaciones-C-31.py)).
+- **Línea base unificada**: [baseline-C-31.txt](baseline-C-31.txt) (tests:run 272 tests pasados, tsc exit 0, eslint 0 errores 3 warnings, lint exit 0).
+- **Vitest**: Suite final con todos los tests en verde ([test-suite-C-31.txt](test-suite-C-31.txt)): **297 tests pasados** (272 heredados + 25 tests nuevos de C-31). Los 25 tests nuevos se encuentran en 5 archivos aislados (`agendaChairLayout.test.ts`, `AgendaToolbar.chair.test.tsx`, `AgendaView.chair.test.tsx`, `AgendaPage.porSillon.test.tsx`, `agendaChairStyles.test.ts`); cada uno cuenta con su par RED/GREEN documentado.
+- **Mutaciones**: **25 de 25 mutaciones eliminadas** (M01–M25) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 sin cambios: sí** ([mutaciones-C-31.txt](mutaciones-C-31.txt), generado por [mutaciones-C-31.py](mutaciones-C-31.py)). Pre-check: [mutaciones-check-C-31.txt](mutaciones-check-C-31.txt).
 - **Trazabilidad**: **24 escenarios** declarados en specs delta (23 testeables 1:1 + 1 visual a cargo de Claude), 0 inconsistencias ([trazabilidad-C-31.txt](trazabilidad-C-31.txt), generado por [trazabilidad-C-31.py](trazabilidad-C-31.py)).
 - **Calidad y Tooling**:
   - `npx tsc --noEmit` exit 0 (0 errores de tipos).
@@ -79,6 +80,8 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | M21 | `AgendaView.chair.test.tsx` | `La lista sigue disponible` | Matada | `AssertionError: expected null not to be null` |
 | M22 | `AgendaView.chair.test.tsx` | `Un día sin turnos conserva la grilla` | Matada | `AssertionError: expected null not to be null` |
 | M23 | `AgendaView.chair.test.tsx` | `Catálogo de sillones vacío` | Matada | `AssertionError: expected null not to be null` |
+| M24 | `agendaChairStyles.test.ts` | `apilamiento de disponibilidad` | Matada | `AssertionError: expected 0 to be greater than 0` |
+| M25 | `agendaChairStyles.test.ts` | `distinción visual de disponibilidad` | Matada | `AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' to match /\.availabilityFree\s*\{[^}]*border:\s…/` |
 <!-- mutaciones:fin -->
 
 ---
@@ -86,10 +89,24 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 ## Desvíos y Hallazgos Analizados
 
 1. **Toolbar móvil a 390 px con modo Sillones**:
-   - *Hallazgo*: A 390 px de ancho, con el selector de 3 botones `[Día | Semana | Sillones]`, la fila 1 de navegación de C-36 (`navRow`) contiene `[Día | Semana | Sillones]` y `‹ Hoy ›`. Para evitar overflow o saltos de línea sin violar los tests existentes de C-36 (`AgendaToolbar.mobile.test.tsx:49`), se mantuvieron los controles en `navRow` aplicando padding compactado mediante tokens (`var(--space-2)`). El ancho resultante del grupo es de ~308 px dentro de los 374 px útiles de la pantalla, sin scroll horizontal de la página.
+   - *Hallazgo*: A 390 px de ancho, con el selector de 3 botones `[Día | Semana | Sillones]`, los controles se distribuyen sin overflow ni saltos indeseados preservando el contrato visual de C-36:
+     - **Fila 1 (`navRow`)**: selector de vistas `[Día | Semana | Sillones]` y botones de navegación rápida `‹ Hoy ›`.
+     - **Fila 2 (`dateRow`)**: etiqueta de fecha y botón de acción principal `Nuevo turno`.
+     - **Fila 3 (`actionRow`)**: botón disparador de `Filtros (N)` y botón de refresco `↻`.
+   - *Resolución*: Se aplicó padding compactado mediante tokens (`var(--space-2)`). El ancho resultante del grupo en fila 1 es de ~308 px dentro de los 374 px útiles de la pantalla, sin scroll horizontal de la página.
 2. **Advertencias preexistentes de ESLint**:
    - *Causa*: Existen 3 advertencias preexistentes heredadas de C-29 y C-30 (`AppointmentFormDialog.tsx:36` por exportar `buildStartAtIso` junto con el componente, y 2 en `Dialog.tsx` por el ref `returnFocusRef`).
    - *Resolución*: Se mantienen sin tocar según la regla dura de no modificar código fuera del change; `npx eslint .` finaliza con código 0 y 0 errores.
 3. **Consolidación de pruebas auxiliares de layout en 6 tests 1:1**:
-   - *Causa*: La regla C1 exige correspondencia 1:1 entre escenarios y tests para mantener N tests = N mutaciones (23 vs 23).
-   - *Resolución*: Las aserciones auxiliares de intervalos de atención y huecos < 15 min se integraron en los tests de los escenarios de eje horario y huecos libres correspondientes, garantizando exactamente 6 tests en `agendaChairLayout.test.ts` y 23 tests en total.
+   - *Causa*: La regla C1 exige correspondencia 1:1 entre escenarios y tests para mantener N tests = N mutaciones en el suite de dominio/layout.
+   - *Resolución*: Las aserciones auxiliares de intervalos de atención y huecos < 15 min se integraron en los tests de los escenarios de eje horario y huecos libres correspondientes, garantizando exactamente 6 tests en `agendaChairLayout.test.ts`.
+4. **Bandas de disponibilidad tapadas por .workingHourBand y fondo blanco (detectado en navegador real)**:
+   - *Causa*: En verificación sobre Chromium real contra la API, los bloques de disponibilidad tenían sus textos en el DOM pero `document.elementFromPoint` devolvía `div._workingHourBand`. Ambas capas tenían `z-index: 0` y la franja blanca pintaba por encima. Adicionalmente, `--agenda-free-bg` resolvía a `#FFFFFF`, mimetizándose con el fondo de la grilla.
+   - *Resolución*:
+     - **Apilamiento**: se fijó `z-index: 1` en `.availabilityBand` (por encima de `.workingHourBand` `z-index: 0` y líneas de grilla; por debajo de `.appointmentCard` `z-index: 2` y de la columna sticky `.timeGutter` `z-index: 2` / `5`). En `AgendaGrid.tsx`, cuando la columna tiene `freeSlots` (vista sillón), `.workingHourBand` directamente **no se renderiza**, garantizando que ninguna franja blanca interfiera con las bandas de disponibilidad.
+     - **Distinción visual**: `.availabilityFree` utiliza `--agenda-free-bg: var(--color-background);` (`#F3F7FA`, tinte sutil sobre blanco) y `border: 1px dashed var(--agenda-free-border);` (`#54ACBF`). `.availabilityOutside` utiliza `--agenda-outside-bg: var(--agenda-offhours-bg);` (`#F3F4F6`) y `--agenda-outside-text: var(--color-text-muted);` (`#4A5F78`).
+     - **Contraste WCAG AA**: se calculó y documentó en `design.md` (15.73:1 en libre y 5.90:1 en fuera de horario, superando el mínimo 4.5:1).
+     - **TDD y mutaciones**: se implementaron 2 tests nuevos (`agendaChairStyles.test.ts`) con RED y GREEN comprobados y 2 mutaciones correspondientes (M24 y M25).
+5. **Atributo de solo lectura en tests durante apply**:
+   - *Causa*: En una fase intermedia del apply anterior se asignó el atributo `+r` a `agendaChairLayout.test.ts` para evitar sobreescritura accidental por procesos en segundo plano.
+   - *Resolución*: El usuario lo restauró a editable (`-r`). Se verificó con `Get-ChildItem -Recurse | Where-Object { $_.IsReadOnly }` que ningún archivo de `frontend/` se encuentre en solo lectura. Se eliminó cualquier manipulación de atributos o permisos en los scripts y procesos.

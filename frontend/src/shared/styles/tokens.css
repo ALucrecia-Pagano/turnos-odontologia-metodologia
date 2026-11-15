@@ -109,7 +109,7 @@
   --agenda-cancelled-bg: #F9FAFB;
 
   /* Bandas de disponibilidad por sillón (C-31) */
-  --agenda-free-bg: var(--color-surface);
+  --agenda-free-bg: var(--color-background);
   --agenda-free-border: var(--color-accent);
   --agenda-free-text: var(--color-text);
   --agenda-outside-bg: var(--agenda-offhours-bg);

@@ -354,7 +354,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 0;
+  z-index: 1;
   padding: var(--space-1) var(--space-2);
   box-sizing: border-box;
   overflow: hidden;
@@ -366,8 +366,7 @@
 
 .availabilityFree {
   background-color: var(--agenda-free-bg);
-  border-top: 1px solid var(--agenda-free-border);
-  border-bottom: 1px solid var(--agenda-free-border);
+  border: 1px dashed var(--agenda-free-border);
   color: var(--agenda-free-text);
 }
 

@@ -1,19 +1,19 @@
 ================================================================================
 VERIFICACION POR MUTACION DE C-31 (MODO SILLONES)
-SHA-256 inicial de archivos de produccion: cbf6074eff587884051e480441926c701fa4d99438a1b300343bd4ae78aaca41
+SHA-256 inicial de archivos de produccion: 13c4507756cc1dd4d6fe1d109ea847bb3fe9bfed2a5b490d17e91299139994ee
 ================================================================================
-Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
+Correspondencia 1:1 verificada: 25 tests nuevos vs 25 mutaciones.
 ================================================================================
 [M01] src/features/agenda/AgendaPage.porSillon.test.tsx > Activar Sillones conserva fecha y filtros: activar Sillones conserva fecha y filtros
     Archivo: frontend/src/features/agenda/AgendaPage.tsx
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -206,5 +206,5 @@
-       params.set("view", "week");
-     } else if (nextView === "chair") {
--      params.set("view", "chair");
-+      // params.set("view", "chair");
-     }
+       params.set("view", "week");
+     } else if (nextView === "chair") {
+-      params.set("view", "chair");
++      // params.set("view", "chair");
+     }
      const nextProf =
     Estado: Matada
     Fallo:  AssertionError: expected '?date=2026-11-16&professionalId=00000…' to contain 'view=chair'
@@ -24,11 +24,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -53,5 +53,5 @@
-     rawView === "week"
-       ? "week"
--      : rawView === "chair" && !isOdontologo
-+      : !isOdontologo
-         ? "chair"
+     rawView === "week"
+       ? "week"
+-      : rawView === "chair" && !isOdontologo
++      : !isOdontologo
+         ? "chair"
          : "day";
     Estado: Matada
     Fallo:  Error: expect(element).toHaveAttribute("aria-pressed", "true") // element.getAttribute("aria-pressed") === "true"
@@ -38,12 +38,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/AgendaView.tsx
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -98,5 +98,5 @@
- 
-   const columns =
--    isChairView
-+    false
-       ? groupByChair({
+@@ -99,5 +99,5 @@
+ 
+   const columns =
+-    isChairView
++    false
+       ? groupByChair({
            chairs: chairs ?? [],
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -53,12 +53,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/agendaChairLayout.ts
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
-@@ -371,5 +371,5 @@
-   });
- 
--  return chairList.map((chair) => {
-+  return chairList.filter((chair) => appointments.some((a) => a.chairId === chair.id)).map((chair) => {
-     const chairAppts = appointments.filter((appt) => {
+@@ -373,5 +373,5 @@
+   });
+ 
+-  return chairList.map((chair) => {
++  return chairList.filter((chair) => appointments.some((a) => a.chairId === chair.id)).map((chair) => {
+     const chairAppts = appointments.filter((appt) => {
        if (appt.chairId !== chair.id) {
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -68,12 +68,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/agendaChairLayout.ts
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
-@@ -353,5 +353,5 @@
- 
-   let chairList = Array.from(byId.values());
--  if (filterChairId !== null && filterChairId !== "") {
-+  if (false && filterChairId !== null && filterChairId !== "") {
-     chairList = chairList.filter((c) => c.id === filterChairId);
+@@ -355,5 +355,5 @@
+ 
+   let chairList = Array.from(byId.values());
+-  if (filterChairId !== null && filterChairId !== "") {
++  if (false && filterChairId !== null && filterChairId !== "") {
+     chairList = chairList.filter((c) => c.id === filterChairId);
    }
     Estado: Matada
     Fallo:  AssertionError: expected [ <div …(2)>…(1)</div>, …(1) ] to have a length of 1 but got 2
@@ -83,12 +83,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/agendaChairLayout.ts
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
-@@ -405,5 +405,5 @@
-       fullName: chair.name,
-       active: chair.active,
--      displayLabel: chair.active ? chair.name : `${chair.name} (inactivo)`,
-+      displayLabel: chair.name,
-       date,
+@@ -407,5 +407,5 @@
+       fullName: chair.name,
+       active: chair.active,
+-      displayLabel: chair.active ? chair.name : `${chair.name} (inactivo)`,
++      displayLabel: chair.name,
+       date,
        workingHours: syntheticWorkingHours,
     Estado: Matada
     Fallo:  AssertionError: expected [ 'Sillón A', 'Sillón B', 'Sillón C' ] to deeply equal [ 'Sillón A (inactivo)', …(2) ]
@@ -99,11 +99,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
 @@ -181,5 +181,5 @@
-     let cursor = att.startMinute;
- 
--    for (const occ of mergedOccupied) {
-+    for (const occ of [] as MinuteRange[]) {
-       if (occ.endMinute <= cursor || occ.startMinute >= att.endMinute) {
+     let cursor = att.startMinute;
+ 
+-    for (const occ of mergedOccupied) {
++    for (const occ of [] as MinuteRange[]) {
+       if (occ.endMinute <= cursor || occ.startMinute >= att.endMinute) {
          continue;
     Estado: Matada
     Fallo:  AssertionError: expected undefined to be defined
@@ -114,12 +114,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
 @@ -142,5 +142,6 @@
-       appt.status !== "reservado" &&
-       appt.status !== "confirmado" &&
--      appt.status !== "atendido"
-+      appt.status !== "atendido" &&
-+      appt.status !== "cancelado"
-     ) {
+       appt.status !== "reservado" &&
+       appt.status !== "confirmado" &&
+-      appt.status !== "atendido"
++      appt.status !== "atendido" &&
++      appt.status !== "cancelado"
+     ) {
        continue;
     Estado: Matada
     Fallo:  AssertionError: expected undefined to be defined
@@ -130,11 +130,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
 +++ b/frontend/src/features/agenda/AgendaGrid.tsx
 @@ -181,5 +181,5 @@
-                       }}
-                     >
--                      <span>{slot.label}</span>
-+                      {/* slot label removed */}
-                     </div>
+                       }}
+                     >
+-                      <span>{slot.label}</span>
++                      {/* slot label removed */}
+                     </div>
                    );
     Estado: Matada
     Fallo:  AssertionError: expected 'import { useEffect, useState } from "…' to contain '<span>{slot.label}</span>'
@@ -145,10 +145,10 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
 @@ -68,4 +68,5 @@
-     if (end > start) {
-       parsedRanges.push({ startMinute: start, endMinute: end });
-+      break;
-     }
+     if (end > start) {
+       parsedRanges.push({ startMinute: start, endMinute: end });
++      break;
+     }
    }
     Estado: Matada
     Fallo:  AssertionError: expected [ Array(1) ] to deeply equal [ { startMinute: 540, …(1) }, …(1) ]
@@ -158,12 +158,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/agendaChairLayout.ts
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
-@@ -268,5 +268,5 @@
- 
-   if (attention.length === 0 && apptRanges.length === 0) {
--    const fallbackStart = AGENDA_DEFAULT_START_MINUTE; // 480 (08:00)
-+    const fallbackStart = 540;
-     const fallbackEnd = AGENDA_DEFAULT_END_MINUTE;     // 1200 (20:00)
+@@ -270,5 +270,5 @@
+ 
+   if (attention.length === 0 && apptRanges.length === 0) {
+-    const fallbackStart = AGENDA_DEFAULT_START_MINUTE; // 480 (08:00)
++    const fallbackStart = 540;
+     const fallbackEnd = AGENDA_DEFAULT_END_MINUTE;     // 1200 (20:00)
      const hours: string[] = [];
     Estado: Matada
     Fallo:  AssertionError: expected 540 to be 480 // Object.is equality
@@ -174,11 +174,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -44,5 +44,5 @@
- 
-   const rawDate = searchParams.get("date");
--  const fallbackToday = todayInTimeZone(clock.now(), DEFAULT_AGENDA_TIMEZONE);
-+  const fallbackToday = "2099-01-01";
-   const hasValidDate = isValidLocalDate(rawDate);
+ 
+   const rawDate = searchParams.get("date");
+-  const fallbackToday = todayInTimeZone(clock.now(), DEFAULT_AGENDA_TIMEZONE);
++  const fallbackToday = "2099-01-01";
+   const hasValidDate = isValidLocalDate(rawDate);
    const effectiveDate = hasValidDate ? rawDate : fallbackToday;
     Estado: Matada
     Fallo:  AssertionError: expected '?date=2099-01-01&view=chair' to contain 'date=2026-11-16'
@@ -189,11 +189,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -259,5 +259,5 @@
-         onClearFilters={handleClearFilters}
-         onPrevDay={() => navigateToDate(addDays(effectiveDate, isWeek ? -7 : -1))}
--        onNextDay={() => navigateToDate(addDays(effectiveDate, isWeek ? 7 : 1))}
-+        onNextDay={() => navigateToDate(addDays(effectiveDate, 7))}
-         onToday={() => navigateToDate(todayInTimeZone(clock.now(), state.timezone))}
+         onClearFilters={handleClearFilters}
+         onPrevDay={() => navigateToDate(addDays(effectiveDate, isWeek ? -7 : -1))}
+-        onNextDay={() => navigateToDate(addDays(effectiveDate, isWeek ? 7 : 1))}
++        onNextDay={() => navigateToDate(addDays(effectiveDate, 7))}
+         onToday={() => navigateToDate(todayInTimeZone(clock.now(), state.timezone))}
          onSelectDate={navigateToDate}
     Estado: Matada
     Fallo:  AssertionError: expected '?date=2026-11-23&view=chair' to contain 'date=2026-11-17'
@@ -203,12 +203,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/AgendaView.tsx
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -226,5 +226,5 @@
-             view={view}
-             showProfessional={isChairView}
--            onSelectAppointment={onSelectAppointment}
-+            onSelectAppointment={isChairView ? undefined : onSelectAppointment}
-           />
+@@ -227,5 +227,5 @@
+             view={view}
+             showProfessional={isChairView}
+-            onSelectAppointment={onSelectAppointment}
++            onSelectAppointment={isChairView ? undefined : onSelectAppointment}
+           />
          </>
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -218,12 +218,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/AgendaGrid.tsx
 --- a/frontend/src/features/agenda/AgendaGrid.tsx
 +++ b/frontend/src/features/agenda/AgendaGrid.tsx
-@@ -276,5 +276,5 @@
-                   const isCompact = item.durationMinutes < 45;
-                   const isSplitLane = item.laneCount > 1;
--                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
-+                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.chairName}, ${statusLabel}`;
-                   const cardClassName = [
+@@ -277,5 +277,5 @@
+                   const isCompact = item.durationMinutes < 45;
+                   const isSplitLane = item.laneCount > 1;
+-                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.professionalName}, ${appt.chairName}, ${statusLabel}`;
++                  const cardAriaLabel = `${timeLabel}, ${appt.patientName}, ${appt.serviceName}, ${appt.chairName}, ${statusLabel}`;
+                   const cardClassName = [
                      styles.appointmentCard,
     Estado: Matada
     Fallo:  AssertionError: expected '10:00–10:30, Ana Pérez, Control, Sill…' to contain 'Dra. Laura Quiroga'
@@ -234,11 +234,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
 +++ b/frontend/src/features/agenda/AgendaToolbar.tsx
 @@ -69,5 +69,5 @@
-   const isWeekView = view === "week";
-   const isChairView = view === "chair";
--  const canViewChairs = userRole === "recepcion" || userRole === "administrador";
-+  const canViewChairs = false;
-   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
+   const isWeekView = view === "week";
+   const isChairView = view === "chair";
+-  const canViewChairs = userRole === "recepcion" || userRole === "administrador";
++  const canViewChairs = false;
+   const prevLabel = isWeekView ? "Semana anterior" : "Anterior";
    const nextLabel = isWeekView ? "Semana siguiente" : "Siguiente";
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -249,11 +249,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -162,5 +162,5 @@
-     const needsProfNorm = rawProfessionalId !== null && explicitProfessionalId === null;
-     const needsChairNorm = rawChairId !== null && chairId === null;
--    const needsChairViewNorm = rawView === "chair" && isOdontologo;
-+    const needsChairViewNorm = false;
-     if (!needsDateNorm && !needsProfNorm && !needsChairNorm && !needsChairViewNorm) {
+     const needsProfNorm = rawProfessionalId !== null && explicitProfessionalId === null;
+     const needsChairNorm = rawChairId !== null && chairId === null;
+-    const needsChairViewNorm = rawView === "chair" && isOdontologo;
++    const needsChairViewNorm = false;
+     if (!needsDateNorm && !needsProfNorm && !needsChairNorm && !needsChairViewNorm) {
        return;
     Estado: Matada
     Fallo:  AssertionError: expected '?date=2026-11-16&view=chair' not to contain 'view=chair'
@@ -264,12 +264,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaPage.tsx
 +++ b/frontend/src/features/agenda/AgendaPage.tsx
 @@ -236,6 +236,6 @@
-   };
- 
--  const handleSelectChair = (nextChairId: string | null) => {
--    setSearchParams(buildParams({ chairId: nextChairId }), { replace: false });
-+  const handleSelectChair = (_nextChairId: string | null) => {
-+    setSearchParams(buildParams({ chairId: null }), { replace: false });
+   };
+ 
+-  const handleSelectChair = (nextChairId: string | null) => {
+-    setSearchParams(buildParams({ chairId: nextChairId }), { replace: false });
++  const handleSelectChair = (_nextChairId: string | null) => {
++    setSearchParams(buildParams({ chairId: null }), { replace: false });
    };
     Estado: Matada
     Fallo:  AssertionError: expected '?date=2026-11-16&view=chair' to contain 'chairId=00000000-0000-0000-0000-00000…'
@@ -280,11 +280,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/agendaChairLayout.ts
 +++ b/frontend/src/features/agenda/agendaChairLayout.ts
 @@ -56,5 +56,5 @@
-       return false;
-     }
--    if (professionalId !== null && professionalId !== undefined && professionalId !== "") {
-+    if (false && professionalId !== null && professionalId !== undefined && professionalId !== "") {
-       return wh.professionalId === professionalId;
+       return false;
+     }
+-    if (professionalId !== null && professionalId !== undefined && professionalId !== "") {
++    if (false && professionalId !== null && professionalId !== undefined && professionalId !== "") {
+       return wh.professionalId === professionalId;
      }
     Estado: Matada
     Fallo:  AssertionError: expected [ { startMinute: 540, …(1) }, …(1) ] to deeply equal [ Array(1) ]
@@ -295,11 +295,11 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
 --- a/frontend/src/features/agenda/AgendaToolbar.tsx
 +++ b/frontend/src/features/agenda/AgendaToolbar.tsx
 @@ -374,5 +374,5 @@
-       )}
-       {hasChairFilter && !isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
--      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_VIEW_HELP_TEXT}</p>}
-+      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
-     </div>
+       )}
+       {hasChairFilter && !isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
+-      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_VIEW_HELP_TEXT}</p>}
++      {hasChairFilter && isChairView && <p className={styles.helpText}>{CHAIR_FILTER_HELP_TEXT}</p>}
+     </div>
    );
     Estado: Matada
     Fallo:  AssertionError: expected <p class="helpText"></p> to be null
@@ -309,32 +309,32 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/AgendaView.tsx
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -161,14 +161,16 @@
-           </span>
-           {isRefreshing && <span className={styles.liveRegion}>Actualizando…</span>}
--          <button
--            type="button"
--            className={styles.toggleButton}
--            aria-pressed={viewMode === "list"}
--            onClick={() =>
--              setViewMode((current) => (current === "grid" ? "list" : "grid"))
--            }
--          >
--            Ver como lista
--          </button>
-+          {!isChairView && (
-+            <button
-+              type="button"
-+              className={styles.toggleButton}
-+              aria-pressed={viewMode === "list"}
-+              onClick={() =>
-+                setViewMode((current) => (current === "grid" ? "list" : "grid"))
-+              }
-+            >
-+              Ver como lista
-+            </button>
-+          )}
-         </div>
+@@ -162,14 +162,16 @@
+           </span>
+           {isRefreshing && <span className={styles.liveRegion}>Actualizando…</span>}
+-          <button
+-            type="button"
+-            className={styles.toggleButton}
+-            aria-pressed={viewMode === "list"}
+-            onClick={() =>
+-              setViewMode((current) => (current === "grid" ? "list" : "grid"))
+-            }
+-          >
+-            Ver como lista
+-          </button>
++          {!isChairView && (
++            <button
++              type="button"
++              className={styles.toggleButton}
++              aria-pressed={viewMode === "list"}
++              onClick={() =>
++                setViewMode((current) => (current === "grid" ? "list" : "grid"))
++              }
++            >
++              Ver como lista
++            </button>
++          )}
+         </div>
        </div>
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -344,12 +344,12 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/AgendaView.tsx
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -181,5 +181,5 @@
-           description="No se encontraron sillones en el catálogo."
-         />
--      ) : !isWeekView && !isChairView && agenda.appointments.length === 0 && !hasActiveFilter ? (
-+      ) : !isWeekView && agenda.appointments.length === 0 && !hasActiveFilter ? (
-         <EmptyState
+@@ -182,5 +182,5 @@
+           description="No se encontraron sillones en el catálogo."
+         />
+-      ) : !isWeekView && !isChairView && agenda.appointments.length === 0 && !hasActiveFilter ? (
++      ) : !isWeekView && agenda.appointments.length === 0 && !hasActiveFilter ? (
+         <EmptyState
            title="No hay turnos para este día"
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -359,24 +359,54 @@ Correspondencia 1:1 verificada: 23 tests nuevos vs 23 mutaciones.
     Archivo: frontend/src/features/agenda/AgendaView.tsx
 --- a/frontend/src/features/agenda/AgendaView.tsx
 +++ b/frontend/src/features/agenda/AgendaView.tsx
-@@ -176,5 +176,5 @@
-         <div className={styles.bannerNote}>{catalogWarning}</div>
-       )}
--      {isChairView && (!chairs || chairs.length === 0) ? (
-+      {false ? (
-         <EmptyState
+@@ -177,5 +177,5 @@
+         <div className={styles.bannerNote}>{catalogWarning}</div>
+       )}
+-      {isChairView && (!chairs || chairs.length === 0) ? (
++      {false ? (
+         <EmptyState
            title="No hay sillones configurados"
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
     Restaurado a verde: si
 --------------------------------------------------------------------------------
+[M24] src/features/agenda/agendaChairStyles.test.ts > apilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas
+    Archivo: frontend/src/features/agenda/AgendaGrid.module.css
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -355,5 +355,5 @@
+   left: 0;
+   right: 0;
+-  z-index: 1;
++  z-index: 0;
+   padding: var(--space-1) var(--space-2);
+   box-sizing: border-box;
+    Estado: Matada
+    Fallo:  AssertionError: expected 0 to be greater than 0
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M25] src/features/agenda/agendaChairStyles.test.ts > distinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo
+    Archivo: frontend/src/features/agenda/AgendaGrid.module.css
+--- a/frontend/src/features/agenda/AgendaGrid.module.css
++++ b/frontend/src/features/agenda/AgendaGrid.module.css
+@@ -367,5 +367,5 @@
+ .availabilityFree {
+   background-color: var(--agenda-free-bg);
+-  border: 1px dashed var(--agenda-free-border);
++  border: 1px solid var(--agenda-free-border);
+   color: var(--agenda-free-text);
+ }
+    Estado: Matada
+    Fallo:  AssertionError: expected '.gridScrollContainer {\r\n  overflow-…' to match /\.availabilityFree\s*\{[^}]*border:\s…/
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
 ================================================================================
 RESUMEN DE MUTACIONES
-Mutaciones totales:    23
-Matadas por asercion:  23
+Mutaciones totales:    25
+Matadas por asercion:  25
 Invalidas:             0
-SHA-256 inicial:       cbf6074eff587884051e480441926c701fa4d99438a1b300343bd4ae78aaca41
-SHA-256 final:         cbf6074eff587884051e480441926c701fa4d99438a1b300343bd4ae78aaca41
+SHA-256 inicial:       13c4507756cc1dd4d6fe1d109ea847bb3fe9bfed2a5b490d17e91299139994ee
+SHA-256 final:         13c4507756cc1dd4d6fe1d109ea847bb3fe9bfed2a5b490d17e91299139994ee
 SHA-256 sin cambios:   si
 ================================================================================
 EXITO: todas las mutaciones fueron detectadas limpiamente.

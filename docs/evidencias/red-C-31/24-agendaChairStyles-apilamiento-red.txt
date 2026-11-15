@@ -1,0 +1,169 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/agendaChairStyles.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 95[2mms[22m[39m
+   [32m✓[39m agendaChairStyles (C-31)[2m > [22mLa disponibilidad no depende sólo del color: bandas con texto y sin HEX[32m 79[2mms[22m[39m
+[31m   [31m×[31m agendaChairStyles (C-31)[2m > [22mapilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas[39m[32m 11[2mms[22m[39m
+[31m     → expected 0 to be greater than 0[39m
+[31m   [31m×[31m agendaChairStyles (C-31)[2m > [22mdistinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo[39m[32m 4[2mms[22m[39m
+[31m     → expected ':root {\r\n  /* Espaciado */\r\n  --s…' to match /--agenda-free-bg:\s*var\(--color-back…/[39m
+ [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 294[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaChairStyles.test.ts[2m > [22magendaChairStyles (C-31)[2m > [22mapilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas
+[31m[1mAssertionError[22m: expected 0 to be greater than 0[39m
+[36m [2m❯[22m src/features/agenda/agendaChairStyles.test.ts:[2m73:25[22m[39m
+    [90m 71| [39m    [35mconst[39m gutterZIndex [33m=[39m [33mNumber[39m(gutterMatch[33m?.[39m[[34m1[39m])[33m;[39m
+    [90m 72| [39m
+    [90m 73| [39m    [34mexpect[39m(availZIndex)[33m.[39m[34mtoBeGreaterThan[39m(whZIndex)[33m;[39m
+    [90m   | [39m                        [31m^[39m
+    [90m 74| [39m    [34mexpect[39m(availZIndex)[33m.[39m[34mtoBeLessThan[39m(cardZIndex)[33m;[39m
+    [90m 75| [39m    [34mexpect[39m(availZIndex)[33m.[39m[34mtoBeLessThan[39m(gutterZIndex)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/agendaChairStyles.test.ts[2m > [22magendaChairStyles (C-31)[2m > [22mdistinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo
+[31m[1mAssertionError[22m: expected ':root {\r\n  /* Espaciado */\r\n  --s…' to match /--agenda-free-bg:\s*var\(--color-back…/[39m
+
+[32m- Expected:[39m 
+/--agenda-free-bg:\s*var\(--color-background\);/
+
+[31m+ Received:[39m 
+":root {
+  /* Espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Tipografía */
+  --font-family-base: system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;
+  --font-family-heading: \"Jost Variable\", system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;
+  --font-family-body: \"Manrope Variable\", system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+  --font-size-display: clamp(32px, 6vw, 56px);
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height-base: 1.5;
+
+  /* Color */
+  --color-text: #011C40;
+  --color-text-muted: #4A5F78;
+  --color-background: #F3F7FA;
+  --color-surface: #FFFFFF;
+  --color-border: #C9DDE4;
+  --color-primary: #26658C;
+  --color-primary-contrast: #FFFFFF;
+  --color-danger-text: #B91C1C;
+  --color-danger-background: #FEE2E2;
+  --color-danger-border: #FCA5A5;
+  --color-focus: #26658C;
+  --color-navy: #023859;
+  --color-accent: #54ACBF;
+  --color-ice: #A7EBF2;
+  --color-navy-deep: #011C40;
+
+  /* Superficies de la portada, el acceso y el login (oscuras) y de los modales (marfil-hielo) */
+  --surface-navy: rgba(1, 28, 64, 0.82);
+  --surface-ivory-ice: rgba(243, 247, 250, 0.96);
+  --border-on-navy: rgba(167, 235, 242, 0.22);
+  --border-on-navy-strong: rgba(167, 235, 242, 0.35);
+  --field-on-navy: rgba(1, 28, 64, 0.6);
+  --scrim-navy: rgba(1, 28, 64, 0.45);
+  --scrim-navy-strong: rgba(1, 28, 64, 0.7);
+  --overlay-hero: linear-gradient(180deg, rgba(1, 28, 64, 0.55) 0%, rgba(1, 28, 64, 0.82) 100%);
+  --alert-on-navy-bg: rgba(127, 29, 29, 0.55);
+  --alert-on-navy-border: rgba(252, 165, 165, 0.45);
+  --alert-on-navy-text: #FECACA;
+  --shadow-on-navy: 0 16px 40px rgba(1, 28, 64, 0.45);
+
+  /* Overlay del carrusel de /login y botón de pausa (valores heredados de C-34) */
+  --login-overlay-start: rgba(1, 28, 64, 0.92);
+  --login-overlay-mid: rgba(2, 56, 89, 0.78);
+  --login-overlay-end: rgba(38, 101, 140, 0.62);
+  --carousel-toggle-bg: rgba(1, 28, 64, 0.55);
+  --carousel-toggle-bg-hover: rgba(1, 28, 64, 0.75);
+  --carousel-toggle-border: rgba(255, 255, 255, 0.45);
+
+  /* Radios y sombras */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.08);
+  --shadow-md: 0 4px 12px rgb(17 24 39 / 0.12);
+
+  /* Layout móvil y hojas inferiores (C-36) */
+  --breakpoint-mobile: 640px;
+  --sheet-max-height: 90dvh;
+  --sheet-max-height-fallback: 90vh;
+  --sheet-drag-handle-width: 36px;
+  --sheet-drag-handle-height: 4px;
+
+  /* Portada pública y acceso (C-35) */
+  --landing-hero-min-height: 60vh;
+  --landing-content-max-width: 1120px;
+  --landing-reveal-offset: 20px;
+  --landing-logo-width: min(520px, 72vw);
+  --landing-carousel-blur: 6px;
+  --blur-surface: 12px;
+  --blur-backdrop: 4px;
+
+  /* Agenda diaria */
+  --agenda-hour-height: 112px;
+  --agenda-time-gutter-width: 64px;
+  --agenda-column-min-width: 220px;
+  --agenda-week-column-min-width: 140px;
+  --agenda-column-header-height: 48px;
+  --agenda-grid-line: #E5E7EB;
+  --agenda-working-bg: #FFFFFF;
+  --agenda-offhours-bg: #F3F4F6;
+  --agenda-block-bg: repeating-linear-gradient(
+    -45deg,
+    #FEF3C7,
+    #FEF3C7 8px,
+    #FDE68A 8px,
+    #FDE68A 16px
+  );
+  --agenda-block-border: #D97706;
+  --agenda-card-radius: 6px;
+  --agenda-card-min-height: 24px;
+  --agenda-cancelled-bg: #F9FAFB;
+
+  /* Bandas de disponibilidad por sillón (C-31) */
+  --agenda-free-bg: var(--color-surface);
+  --agenda-free-border: var(--color-accent);
+  --agenda-free-text: var(--color-text);
+  --agenda-outside-bg: var(--agenda-offhours-bg);
+  --agenda-outside-border: var(--agenda-grid-line);
+  --agenda-outside-text: var(--color-text-muted);
+}
+"
+
+[36m [2m❯[22m src/features/agenda/agendaChairStyles.test.ts:[2m89:23[22m[39m
+    [90m 87| [39m
+    [90m 88| [39m    // --agenda-free-bg usa var(--color-background) (#F3F7FA) distingu…
+    [90m 89| [39m    expect(tokensCss).toMatch(/--agenda-free-bg:\s*var\(--color-backgr…
+    [90m   | [39m                      [31m^[39m
+    [90m 90| [39m    expect(tokensCss).not.toMatch(/--agenda-free-bg:\s*var\(--color-su…
+    [90m 91| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m7 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 21:33:18
+[2m   Duration [22m 25.27s[2m (transform 1.16s, setup 8.18s, collect 1.37s, tests 390ms, environment 35.57s, prepare 1.82s)[22m
+
+exit: 0 

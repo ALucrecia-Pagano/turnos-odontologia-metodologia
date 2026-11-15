@@ -1,0 +1,11 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/agenda/agendaChairStyles.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 21:34:39
+[2m   Duration [22m 2.86s[2m (transform 66ms, setup 448ms, collect 42ms, tests 12ms, environment 1.64s, prepare 309ms)[22m
+
+exit: 0 

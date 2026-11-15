@@ -49,4 +49,53 @@ describe("agendaChairStyles (C-31)", () => {
     }
     expect(hexOffenders).toEqual([]);
   });
+
+  it("apilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas", () => {
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8");
+
+    // availabilityBand tiene z-index: 1 (por encima de workingHourBand y por debajo de appointmentCard)
+    const availMatch = /\.availabilityBand\s*\{[^}]*z-index:\s*(\d+);/s.exec(gridCss);
+    expect(availMatch).not.toBeNull();
+    const availZIndex = Number(availMatch?.[1]);
+
+    const whMatch = /\.workingHourBand\s*\{[^}]*z-index:\s*(\d+);/s.exec(gridCss);
+    expect(whMatch).not.toBeNull();
+    const whZIndex = Number(whMatch?.[1]);
+
+    const cardMatch = /\.appointmentCard\s*\{[^}]*z-index:\s*(\d+);/s.exec(gridCss);
+    expect(cardMatch).not.toBeNull();
+    const cardZIndex = Number(cardMatch?.[1]);
+
+    const gutterMatch = /\.timeGutter\s*\{[^}]*z-index:\s*(\d+);/s.exec(gridCss);
+    expect(gutterMatch).not.toBeNull();
+    const gutterZIndex = Number(gutterMatch?.[1]);
+
+    expect(availZIndex).toBeGreaterThan(whZIndex);
+    expect(availZIndex).toBeLessThan(cardZIndex);
+    expect(availZIndex).toBeLessThan(gutterZIndex);
+
+    // En AgendaGrid.tsx, workingHourBand no se renderiza si existen freeSlots en la columna
+    const gridTsx = readFileSync(GRID_TSX_PATH, "utf-8");
+    expect(gridTsx).toMatch(
+      /\(!col\.freeSlots\s*\|\|\s*col\.freeSlots\.length\s*===\s*0\)\s*&&\s*col\.workingHours\.map/,
+    );
+  });
+
+  it("distinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo", () => {
+    const tokensCss = readFileSync(TOKENS_PATH, "utf-8");
+    const gridCss = readFileSync(GRID_CSS_PATH, "utf-8");
+
+    // --agenda-free-bg usa var(--color-background) (#F3F7FA) distinguiéndose del blanco puro de superficie
+    expect(tokensCss).toMatch(/--agenda-free-bg:\s*var\(--color-background\);/);
+    expect(tokensCss).not.toMatch(/--agenda-free-bg:\s*var\(--color-surface\);/);
+
+    // .availabilityFree aplica borde discontinuo (dashed) y fondo del token
+    expect(gridCss).toMatch(
+      /\.availabilityFree\s*\{[^}]*border:\s*1px\s+dashed\s+var\(--agenda-free-border\);/,
+    );
+    expect(gridCss).toMatch(
+      /\.availabilityFree\s*\{[^}]*background-color:\s*var\(--agenda-free-bg\);/,
+    );
+  });
 });
+

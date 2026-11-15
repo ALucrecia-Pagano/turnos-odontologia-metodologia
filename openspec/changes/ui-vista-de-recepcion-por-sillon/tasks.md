@@ -56,6 +56,8 @@
 - [x] 5.3 RED: agregar casos de "Ver como lista" con columna Sillón, día sin turnos con grilla y bandas "Libre" (aviso informativo, sin `EmptyState`) y catálogo vacío ("No hay sillones configurados"); verificar RED.
 - [x] 5.4 GREEN: implementar el vacío adaptado y la lista en modo sillón; verificar GREEN y correr `npm run typecheck`.
 - [x] 5.5 Crear `agendaChairStyles.test.ts` (RED/GREEN) para exigir los tokens nuevos, cero HEX en TSX, foco visible y que la disponibilidad no dependa sólo del color; ejecutar y verificar.
+- [x] 5.6 RED/GREEN: verificar apilamiento de capas en modo sillón (`.availabilityBand` con z-index superior a `.workingHourBand` y menor a tarjeta y horas; omisión de `workingHourBand` en sillones).
+- [x] 5.7 RED/GREEN: verificar distinción visual de disponibilidad libre con fondo de tinte claro (`--agenda-free-bg` a `var(--color-background)`) y borde discontinuo; cálculo de contraste WCAG AA documentado.
 
 ## 6. Verificación
 
@@ -102,6 +104,8 @@
 | La lista sigue disponible | `AgendaView.chair.test.tsx` — "Ver como lista con columna Sillón" | Ocultar el toggle en modo sillón | Revertir: tabla con columna Sillón → verde |
 | Un día sin turnos conserva la grilla | `AgendaView.chair.test.tsx` — "día sin turnos mantiene grilla y aviso" | Reutilizar el `EmptyState` de día | Revertir: grilla con bandas y aviso → verde |
 | Catálogo de sillones vacío | `AgendaView.chair.test.tsx` — "sin sillones muestra No hay sillones configurados" | Mostrar grilla vacía en vez del vacío | Revertir: EmptyState correcto → verde |
+| Apilamiento de disponibilidad | `agendaChairStyles.test.ts` — "apilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas" | Cambiar `z-index: 1` a `z-index: 0` en `.availabilityBand` | Revertir: z-index 1 > 0 y omisión de workingHourBand en sillones → verde |
+| Distinción visual de disponibilidad | `agendaChairStyles.test.ts` — "distinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo" | Cambiar borde `dashed` a `solid` en `.availabilityFree` | Revertir: borde dashed y fondo `--agenda-free-bg` → verde |
 | Capturas a 1440, 768 y 390 px | — (verificación manual; no es test) | — (no aplica) | Capturas en `docs/evidencias/capturas/`; contenedor heredado y tarjetas legibles |
 
 > La fila de capturas es verificación manual, no test ni mutación; se adjunta en `docs/evidencias/capturas/` antes de archivar.

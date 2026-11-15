@@ -292,6 +292,22 @@ MUTATIONS: tuple[Mutation, ...] = (
         "      {isChairView && (!chairs || chairs.length === 0) ? (\n        <EmptyState\n          title=\"No hay sillones configurados\"\n          description=\"No se encontraron sillones en el catálogo.\"\n        />",
         "      {false ? (\n        <EmptyState\n          title=\"No hay sillones configurados\"\n          description=\"No se encontraron sillones en el catálogo.\"\n        />",
     ),
+    # M24 - Apilamiento de disponibilidad
+    Mutation(
+        T_STYLES,
+        "apilamiento de disponibilidad: z-index superior a workingHourBand y menor a tarjeta y horas",
+        P_GRID_CSS,
+        ".availabilityBand {\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1;",
+        ".availabilityBand {\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 0;",
+    ),
+    # M25 - Distinción visual de disponibilidad
+    Mutation(
+        T_STYLES,
+        "distinción visual de disponibilidad: libre con fondo de tinte y borde discontinuo",
+        P_GRID_CSS,
+        "  background-color: var(--agenda-free-bg);\n  border: 1px dashed var(--agenda-free-border);",
+        "  background-color: var(--agenda-free-bg);\n  border: 1px solid var(--agenda-free-border);",
+    ),
 )
 
 
@@ -485,10 +501,9 @@ def update_verify_markdown(rows: list[str]) -> None:
         "|---|---|---|---|---|\n"
     )
     new_table = f"{TABLE_START}\n{header}" + "\n".join(rows) + f"\n{TABLE_END}"
-    pattern = re.compile(
-        re.escape(TABLE_START) + r".*?" + re.escape(TABLE_END), re.DOTALL
-    )
-    VERIFY.write_text(pattern.sub(new_table, content), encoding="utf-8")
+    before, rest = content.split(TABLE_START, 1)
+    _, after = rest.split(TABLE_END, 1)
+    VERIFY.write_text(f"{before}{new_table}{after}", encoding="utf-8")
 
 
 def run_all(report: Report) -> int:
@@ -517,7 +532,8 @@ def run_all(report: Report) -> int:
         report.write(f"    Archivo: {mutation.file}")
 
         target_path = REPO / mutation.file
-        original_content = target_path.read_text(encoding="utf-8")
+        original_bytes = target_path.read_bytes()
+        original_content = original_bytes.decode("utf-8")
         mutated_content = apply_mutation(mutation, original_content)
         if mutated_content == original_content:
             report.write("    FALLO: el mutante no cambio el archivo.")
@@ -525,11 +541,11 @@ def run_all(report: Report) -> int:
 
         print_diff(mutation, original_content, mutated_content, report)
 
-        target_path.write_text(mutated_content, encoding="utf-8")
+        target_path.write_bytes(mutated_content.encode("utf-8"))
         try:
             res_mutated, rep_mutated = run_single(mutation)
         finally:
-            target_path.write_text(original_content, encoding="utf-8")
+            target_path.write_bytes(original_bytes)
 
         res_restored, rep_restored = run_single(mutation)
 

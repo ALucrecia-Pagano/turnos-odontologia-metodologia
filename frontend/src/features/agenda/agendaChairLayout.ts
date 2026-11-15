@@ -242,6 +242,7 @@ export function computeChairFreeSlots({
 export interface ComputeChairAxisInput {
   readonly workingHours: readonly AxisWorkingHourInput[];
   readonly weekday: number;
+  readonly professionalId?: string | null;
   readonly appointments?: readonly AxisAppointmentInput[];
   readonly date?: string;
   readonly timezone?: string;
@@ -250,11 +251,12 @@ export interface ComputeChairAxisInput {
 export function computeChairAxis({
   workingHours,
   weekday,
+  professionalId,
   appointments = [],
   date,
   timezone,
 }: ComputeChairAxisInput): AgendaAxis {
-  const attention = unionAttentionIntervals({ workingHours, weekday });
+  const attention = unionAttentionIntervals({ workingHours, weekday, professionalId });
 
   const apptRanges: MinuteRange[] = [];
   if (date !== undefined && timezone !== undefined) {
@@ -292,7 +294,7 @@ export function computeChairAxis({
   const minStart = Math.min(...allStarts);
   const maxEnd = Math.max(...allEnds);
 
-  let startMinute = Math.floor(minStart / 60) * 60;
+  const startMinute = Math.floor(minStart / 60) * 60;
   let endMinute = Math.ceil(maxEnd / 60) * 60;
 
   if (endMinute - startMinute < AGENDA_MIN_AXIS_MINUTES) {

@@ -185,37 +185,38 @@ export function AgendaGrid({
                   );
                 })}
 
-                {col.workingHours.map((wh, index) => {
-                  const startMinute = Math.max(
-                    axis.startMinute,
-                    Math.min(axis.endMinute, parseHHMM(wh.start)),
-                  );
-                  const endMinute = Math.max(
-                    startMinute,
-                    Math.min(axis.endMinute, parseHHMM(wh.end)),
-                  );
-                  if (endMinute <= startMinute) {
-                    return null;
-                  }
-                  const offsetMinutes = startMinute - axis.startMinute;
-                  const durationMinutes = endMinute - startMinute;
-                  const topPercent = (offsetMinutes / axisSpan) * 100;
-                  const heightPercent = (durationMinutes / axisSpan) * 100;
+                {(!col.freeSlots || col.freeSlots.length === 0) &&
+                  col.workingHours.map((wh, index) => {
+                    const startMinute = Math.max(
+                      axis.startMinute,
+                      Math.min(axis.endMinute, parseHHMM(wh.start)),
+                    );
+                    const endMinute = Math.max(
+                      startMinute,
+                      Math.min(axis.endMinute, parseHHMM(wh.end)),
+                    );
+                    if (endMinute <= startMinute) {
+                      return null;
+                    }
+                    const offsetMinutes = startMinute - axis.startMinute;
+                    const durationMinutes = endMinute - startMinute;
+                    const topPercent = (offsetMinutes / axisSpan) * 100;
+                    const heightPercent = (durationMinutes / axisSpan) * 100;
 
-                  return (
-                    <div
-                      key={`${wh.professionalId}-${wh.weekday}-${wh.start}-${wh.end}-${index}`}
-                      className={styles.workingHourBand}
-                      aria-label={`Horario de atención: ${wh.start} a ${wh.end}`}
-                      data-offset-minutes={offsetMinutes}
-                      data-duration-minutes={durationMinutes}
-                      style={{
-                        top: `${topPercent}%`,
-                        height: `${heightPercent}%`,
-                      }}
-                    />
-                  );
-                })}
+                    return (
+                      <div
+                        key={`${wh.professionalId}-${wh.weekday}-${wh.start}-${wh.end}-${index}`}
+                        className={styles.workingHourBand}
+                        aria-label={`Horario de atención: ${wh.start} a ${wh.end}`}
+                        data-offset-minutes={offsetMinutes}
+                        data-duration-minutes={durationMinutes}
+                        style={{
+                          top: `${topPercent}%`,
+                          height: `${heightPercent}%`,
+                        }}
+                      />
+                    );
+                  })}
 
                 {col.blocks.map((block) => {
                   const range = appointmentRange(block.startAt, block.endAt, columnDate, timezone);

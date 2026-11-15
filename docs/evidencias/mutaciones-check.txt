@@ -1,2 +1,0 @@
-OK: 23 tests nuevos coinciden 1:1 con las 23 mutaciones.
-exit: 0 

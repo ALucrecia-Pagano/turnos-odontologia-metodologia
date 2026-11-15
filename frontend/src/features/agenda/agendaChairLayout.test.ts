@@ -112,8 +112,44 @@ describe("agendaChairLayout — Módulo puro", () => {
     expect(outside?.label).toBe("Fuera de horario 13:00–15:00");
 
     // Huecos menores a 15 minutos no se rotulan como libres
-    const smallSlot = slots.find(
-      (s) => s.kind === "free" && s.endMinute - s.startMinute < 15,
+    const smallSlots = computeChairFreeSlots({
+      attention: [{ startMinute: 540, endMinute: 780 }],
+      appointments: [
+        {
+          id: "appt-s1",
+          patientId: "00000000-0000-0000-0000-0000000000p1",
+          patientName: "Ana Pérez",
+          professionalId: "00000000-0000-0000-0000-000000000001",
+          professionalName: "Dra. Laura Quiroga",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000s1",
+          serviceName: "Control",
+          startAt: "2026-11-16T12:00:00Z", // 09:00
+          endAt: "2026-11-16T12:50:00Z",   // 09:50
+          status: "confirmado",
+        },
+        {
+          id: "appt-s2",
+          patientId: "00000000-0000-0000-0000-0000000000p2",
+          patientName: "Carlos Gómez",
+          professionalId: "00000000-0000-0000-0000-000000000002",
+          professionalName: "Dr. Martín Sosa",
+          chairId: "00000000-0000-0000-0000-0000000000b1",
+          chairName: "Sillón 1",
+          serviceId: "00000000-0000-0000-0000-0000000000s2",
+          serviceName: "Limpieza",
+          startAt: "2026-11-16T13:00:00Z", // 10:00 (hueco 09:50-10:00 = 10 min)
+          endAt: "2026-11-16T13:30:00Z",
+          status: "confirmado",
+        },
+      ],
+      date: "2026-11-16",
+      timezone: "America/Argentina/Buenos_Aires",
+      chairName: "Sillón 1",
+    });
+    const smallSlot = smallSlots.find(
+      (s) => s.kind === "free" && s.startMinute === 590 && s.endMinute === 600,
     );
     expect(smallSlot).toBeUndefined();
   });
