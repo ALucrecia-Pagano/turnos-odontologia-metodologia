@@ -767,7 +767,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/01_vision_y_objetivos.md`
 
 ### [C-32] `ui-horarios-y-bloqueos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-15 en [openspec/changes/archive/2026-11-15-ui-horarios-y-bloqueos/](openspec/changes/archive/2026-11-15-ui-horarios-y-bloqueos/))
 - **Scope**:
   - Pantalla para que el odontólogo (y el administrador) cargue sus tramos por día de la semana y sus bloqueos; recepción solo lectura.
   - Al guardar un bloqueo o un horario que pisa turnos, muestra la lista de turnos afectados (US-010 CA-3, US-011 CA-3).

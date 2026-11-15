@@ -4,7 +4,7 @@
 
 ### Requirement: Navegación de AppShell sin cajas
 
-La barra de `AppShell` SHALL presentar navegación de texto sin cajas ni fondos de botón, con línea fina inferior en el enlace activo (`aria-current="page"`). El ítem "Horarios y bloqueos" SHALL ser un enlace activo hacia `/horarios` para los roles que lo utilizan (administrador, recepción y odontólogo). Los ítems de pantallas futuras SHALL ser botones deshabilitados con `data-menu-item`, `border: 0` y la etiqueta "Próximamente" como texto plano. En 1440 px, el bloque de sesión MUST alinearse en la misma línea que la marca y la navegación.
+La barra de `AppShell` SHALL presentar navegación de texto sin cajas ni fondos de botón, con línea fina inferior en el enlace activo (`aria-current="page"`). El ítem "Horarios y bloqueos" SHALL ser un enlace activo hacia `/horarios` para roles autorizados (administrador, recepción y odontólogo). Los ítems futuros SHALL ser botones deshabilitados con `data-menu-item`, `border: 0` y la etiqueta "Próximamente" en texto plano. En 1440 px, la sesión MUST compartir línea con la navegación.
 
 #### Scenario: Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
 

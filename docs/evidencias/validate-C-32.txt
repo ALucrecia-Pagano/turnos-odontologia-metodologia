@@ -18,3 +18,23 @@
 ✓ spec/working-hours-and-blocks-api
 Totals: 18 passed, 0 failed (18 items)
 exit: 0
+✓ spec/agenda-api
+✓ spec/api-foundation
+✓ spec/appointment-lifecycle
+✓ spec/appointment-scheduling
+✓ spec/appointments-api
+✓ spec/authentication-and-rbac
+✓ spec/backend-toolchain
+✓ spec/catalog-and-patients
+✓ spec/database-infrastructure
+✓ spec/domain-dependency-guard
+✓ spec/frontend-agenda
+✓ spec/frontend-appointment-actions
+✓ spec/frontend-appointment-form
+✓ spec/frontend-auth-session
+✓ spec/frontend-foundation
+✓ spec/frontend-landing
+✓ spec/frontend-working-hours-and-blocks
+✓ spec/working-hours-and-blocks-api
+Totals: 18 passed, 0 failed (18 items)
+exit: 0

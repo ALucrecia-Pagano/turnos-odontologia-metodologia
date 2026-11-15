@@ -91,9 +91,9 @@
 
 ## 9. Capturas visuales multi-resolución a cargo de Claude
 
-- [ ] 9.1 Tomar capturas reales en escritorio a 1440 px: vista en 2 columnas con horarios y bloqueos (`docs/evidencias/capturas/C-32-horarios-1440.png`), diálogo de nuevo bloqueo (`docs/evidencias/capturas/C-32-nuevo-bloqueo-1440.png`), diálogo de confirmación de eliminación (`docs/evidencias/capturas/C-32-eliminar-bloqueo-1440.png`), aviso de turnos afectados (`docs/evidencias/capturas/C-32-turnos-afectados-1440.png`) y vista de recepción solo lectura (`docs/evidencias/capturas/C-32-recepcion-1440.png`).
-- [ ] 9.2 Tomar capturas reales en tablet a 768 px: vista en columna única apilada (`docs/evidencias/capturas/C-32-horarios-768.png`).
-- [ ] 9.3 Tomar capturas reales en móvil a 390 px: vista apilada sin scroll horizontal (`docs/evidencias/capturas/C-32-horarios-390.png`) y diálogo de bloqueo como hoja inferior (`docs/evidencias/capturas/C-32-nuevo-bloqueo-390.png`).
+- [x] 9.1 Tomar capturas reales en escritorio a 1440 px: vista en 2 columnas con horarios y bloqueos (`docs/evidencias/capturas/C-32-horarios-1440.png`), diálogo de nuevo bloqueo (`docs/evidencias/capturas/C-32-nuevo-bloqueo-1440.png`), diálogo de confirmación de eliminación (`docs/evidencias/capturas/C-32-eliminar-bloqueo-1440.png`), aviso de turnos afectados (`docs/evidencias/capturas/C-32-turnos-afectados-1440.png`) y vista de recepción solo lectura (`docs/evidencias/capturas/C-32-recepcion-1440.png`).
+- [x] 9.2 Tomar capturas reales en tablet a 768 px: vista en columna única apilada (`docs/evidencias/capturas/C-32-horarios-768.png`).
+- [x] 9.3 Tomar capturas reales en móvil a 390 px: vista apilada sin scroll horizontal (`docs/evidencias/capturas/C-32-horarios-390.png`) y diálogo de bloqueo como hoja inferior (`docs/evidencias/capturas/C-32-nuevo-bloqueo-390.png`).
 
 ## 10. Corrección post-verificación (A–E)
 

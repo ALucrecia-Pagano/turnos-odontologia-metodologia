@@ -48,8 +48,8 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | 22 | `frontend-working-hours-and-blocks` | Eliminar bloqueo oculta su panel de turnos afectados | Testeable | `BlocksSection.test.tsx` | `Eliminar bloqueo oculta su panel de turnos afectados` | `23-delete-block-clears-affected.txt` | `23-delete-block-clears-affected.txt` | `M24` |
 | 23 | `frontend-working-hours-and-blocks` | Un solo mensaje de estado vigente entre acciones sin desmontar la región | Testeable | `HorariosPage.test.tsx` | `Un solo mensaje de estado vigente entre acciones sin desmontar la región` | `24-single-status-message.txt` | `24-single-status-message.txt` | `M25` |
 | 24 | `frontend-working-hours-and-blocks` | Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar | Testeable | `AffectedAppointments.test.tsx` | `Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar` | `25-dates-local-format.txt` | `25-dates-local-format.txt` | `M26` |
-| V01 | `frontend-working-hours-and-blocks` | Verificación visual multi-resolución en 1440, 768 y 390 px | Visual | `C-32-horarios-{1440,768,390}.png` | — | — | — | — |
-| V02 | `frontend-foundation` | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | `C-32-appshell-{768,390}.png` | — | — | — | — |
+| V01 | `frontend-working-hours-and-blocks` | Verificación visual multi-resolución en 1440, 768 y 390 px | Visual | [C-32-horarios-1440.png](capturas/C-32-horarios-1440.png), [C-32-horarios-768.png](capturas/C-32-horarios-768.png), [C-32-horarios-390.png](capturas/C-32-horarios-390.png) | — | — | — | — |
+| V02 | `frontend-foundation` | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | [C-32-appshell-768.png](capturas/C-32-appshell-768.png), [C-32-appshell-390.png](capturas/C-32-appshell-390.png) | — | — | — | — |
 
 Tests auxiliares de contrato y enrutamiento (con par RED/GREEN y mutación propia):
 
@@ -126,6 +126,35 @@ Durante la verificación manual en navegador con la API real se detectaron 5 pun
    - *Problema*: En la lista de turnos afectados (`AffectedAppointments.tsx`), la lista de bloqueos (`BlocksSection.tsx`) y el modal de eliminar (`BlockDeleteDialog.tsx`), la fecha se mostraba en ISO (`"2026-11-17"`).
    - *Solución*: En `horariosTime.ts`, `formatLocalRangeInZone` ahora formatea las fechas con `new Intl.DateTimeFormat("es-AR", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric", timeZone }).format(new Date(instant))` (`formatDisplayDateInZone`), reutilizando la `timezone` obtenida de `GET /api/agenda` sin constantes hardcodeadas (`"mar, 17/11/2026"` para `"2026-11-17T15:00:00Z"` en `America/Argentina/Buenos_Aires`).
    - *Test y mutación*: `AffectedAppointments.test.tsx` :: `"Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar"` ([red-C-32/25-dates-local-format.txt](red-C-32/25-dates-local-format.txt), [green-C-32/25-dates-local-format.txt](green-C-32/25-dates-local-format.txt), mutación `M26`).
+
+---
+
+## Verificación visual en navegador real (Claude / Playwright)
+
+Verificación visual e interactiva realizada sobre Chromium real contra la API backend en ejecución, documentada en las 13 capturas de [docs/evidencias/capturas/](capturas/):
+
+1. `C-32-horarios-1440.png`: Desktop (1440 px) con rol odontóloga (sin selector de profesional) y edición de tramos y bloqueos habilitada, sin scroll horizontal (`scrollWidth == innerWidth`).
+2. `C-32-horarios-768.png`: Tablet (768 px) con vista de horarios semanales y bloqueos adaptada en columna fluida, sin scroll horizontal.
+3. `C-32-horarios-390.png`: Celular (390 px) con vista compacta vertical y espaciados móviles, sin scroll horizontal.
+4. `C-32-appshell-768.png`: Tablet (768 px) con cabecera y barra de navegación de AppShell mostrando enlace activo a "Horarios y bloqueos".
+5. `C-32-appshell-390.png`: Celular (390 px) con navegación de AppShell adaptada a pantalla angosta con acceso directo a "Horarios y bloqueos".
+6. `C-32-solapamiento-1440.png`: Desktop (1440 px) con rechazo de guardado mostrando el mensaje literal de solapamiento del backend en alerta accesible (`role="alert"`).
+7. `C-32-guardado-1440.png`: Desktop (1440 px) con confirmación de guardado exitoso de horarios mostrando mensaje de estado accesible (`role="status"`).
+8. `C-32-bloqueo-form-1440.png`: Desktop (1440 px) con diálogo modal de nuevo bloqueo con campos de fecha, hora inicio, hora fin y motivo.
+9. `C-32-bloqueo-invalido-1440.png`: Desktop (1440 px) con rechazo de creación de bloqueo inválido mostrando mensaje literal del backend en alerta accesible.
+10. `C-32-turnos-afectados-1440.png`: Desktop (1440 px) con panel de aviso mostrando la lista de turnos existentes solapados con el bloqueo creado, sin cancelarlos.
+11. `C-32-bloqueo-eliminar-1440.png`: Desktop (1440 px) con diálogo de confirmación para eliminar bloqueo con foco contenido y retorno seguro con Escape.
+12. `C-32-bloqueo-hoja-390.png`: Celular (390 px) con diálogo de nuevo bloqueo presentado como hoja inferior (bottom sheet) adaptado a pantalla táctil.
+13. `C-32-admin-selector-1440.png`: Desktop (1440 px) con rol administrador mostrando selector de profesional activo sincronizado con la URL (`?professionalId=`) y controles de edición.
+
+Aclaraciones clave de la verificación visual:
+- **Odontóloga sin selector y con edición**: accede directamente a sus horarios sin selector de profesional y con edición de tramos y creación/eliminación de bloqueos habilitada.
+- **Admin con selector (`?professionalId=`)**: dispone de selector de profesional sincronizado con el query param `?professionalId=` y capacidad de edición.
+- **Recepción en solo lectura**: visualiza información completa de horarios y bloqueos sin controles de edición (sin botones de agregar/quitar tramos, guardar horarios ni nuevo/eliminar bloqueo).
+- **Mensaje literal de solapamiento**: los mensajes de error y solapamiento devueltos por la API se muestran literalmente en un contenedor accesible con `role="alert"`.
+- **Turnos afectados sin cancelar**: si el backend informa turnos preexistentes solapados con un nuevo bloqueo o fuera del horario, se muestran informativamente en una lista accesible sin cancelarlos.
+- **Hoja inferior a 390 px**: a 390 px los diálogos de bloqueo adoptan presentación de bottom sheet pegada al borde inferior, con bordes redondeados superiores y ancho completo.
+- **Sin scroll horizontal en 1440/768/390**: en las tres resoluciones evaluadas, el ancho de contenido se ajusta estrictamente al viewport sin provocar desbordamiento lateral (`scrollWidth <= innerWidth`).
 
 ---
 
