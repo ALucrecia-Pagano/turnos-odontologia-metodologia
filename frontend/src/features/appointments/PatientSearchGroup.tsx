@@ -13,6 +13,7 @@ export interface PatientSearchGroupProps {
   selectedPatientId: string | null;
   onSelectPatient: (patientId: string) => void;
   inputRef?: { current: HTMLInputElement | null };
+  errorMessage?: string | null;
 }
 
 export function PatientSearchGroup({
@@ -20,6 +21,7 @@ export function PatientSearchGroup({
   selectedPatientId,
   onSelectPatient,
   inputRef,
+  errorMessage,
 }: PatientSearchGroupProps) {
   const [query, setQuery] = useState("");
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -76,6 +78,12 @@ export function PatientSearchGroup({
           {isLoading ? "Buscando..." : "Buscar paciente"}
         </button>
       </div>
+
+      {errorMessage && (
+        <p className={styles.errorMessage} role="alert">
+          {errorMessage}
+        </p>
+      )}
 
       {hasSearched && patients.length === 0 && !isLoading && (
         <p className={styles.notice} role="status">

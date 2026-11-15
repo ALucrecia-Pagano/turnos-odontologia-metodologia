@@ -1,0 +1,37 @@
+Comando: npm run test:run src/features/agenda/AgendaToolbar.test.tsx
+Codigo de salida: 1
+
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/agenda/AgendaToolbar.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 200[2mms[22m[39m
+   [32m✓[39m AgendaToolbar[2m > [22mrenderiza selectores de Profesional y Sillón con opción Todos, marca (inactivo), ayuda de sillón y Limpiar filtros[32m 151[2mms[22m[39m
+   [32m✓[39m AgendaToolbar[2m > [22mrenderiza el selector de vista [ Día | Semana ], dispara onSelectView y adapta los botones de navegación a Semana anterior y Semana siguiente[32m 31[2mms[22m[39m
+[31m   [31m×[31m AgendaToolbar[2m > [22men vista semana no existe la opción Todos en Profesional; en vista día sí existe[39m[32m 16[2mms[22m[39m
+[31m     → expected [ 'Todos', 'Dr. Martín Sosa', …(2) ] to not include 'Todos'[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 18:29:50
+[2m   Duration [22m 3.18s[2m (transform 210ms, setup 569ms, collect 318ms, tests 200ms, environment 1.42s, prepare 245ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/agenda/AgendaToolbar.test.tsx[2m > [22mAgendaToolbar[2m > [22men vista semana no existe la opción Todos en Profesional; en vista día sí existe
+[31m[1mAssertionError[22m: expected [ 'Todos', 'Dr. Martín Sosa', …(2) ] to not include 'Todos'[39m
+[36m [2m❯[22m src/features/agenda/AgendaToolbar.test.tsx:[2m183:59[22m[39m
+    [90m181| [39m    const profSelectWeek = screen.getByLabelText("Profesional") as HTM…
+    [90m182| [39m    const weekOptions = within(profSelectWeek).queryAllByRole("option"…
+    [90m183| [39m    expect(weekOptions.map((opt) => opt.textContent)).not.toContain("T…
+    [90m   | [39m                                                          [31m^[39m
+    [90m184| [39m    expect(within(profSelectWeek).queryByRole("option", { name: "Todos…
+    [90m185| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

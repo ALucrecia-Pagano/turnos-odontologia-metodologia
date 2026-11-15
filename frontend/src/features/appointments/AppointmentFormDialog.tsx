@@ -61,6 +61,7 @@ export function AppointmentFormDialog({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [violations, setViolations] = useState<Violation[]>([]);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [patientError, setPatientError] = useState<string | null>(null);
 
   const patientSearchInputRef = useRef<HTMLInputElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
@@ -77,6 +78,7 @@ export function AppointmentFormDialog({
       setPatientId(null);
       setViolations([]);
       setFieldErrors({});
+      setPatientError(null);
     }
   }
 
@@ -111,7 +113,14 @@ export function AppointmentFormDialog({
     setViolations([]);
     setFieldErrors({});
 
-    if (!patientId || !professionalId || !chairId || !serviceId || !date || !time) {
+    if (!patientId) {
+      setPatientError("Elegí un paciente de la lista.");
+      patientSearchInputRef.current?.focus();
+      return;
+    }
+    setPatientError(null);
+
+    if (!professionalId || !chairId || !serviceId || !date || !time) {
       return;
     }
 
@@ -209,8 +218,12 @@ export function AppointmentFormDialog({
           <PatientSearchGroup
             client={client}
             selectedPatientId={patientId}
-            onSelectPatient={setPatientId}
+            onSelectPatient={(id) => {
+              setPatientId(id);
+              setPatientError(null);
+            }}
             inputRef={patientSearchInputRef}
+            errorMessage={patientError}
           />
 
           <div className={styles.gridTwoCols}>

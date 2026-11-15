@@ -1,0 +1,42 @@
+================================================================================
+MUTACIONES AJUSTES FINALES — VERIFICACIÓN AUTOMATIZADA
+================================================================================
+SHA-256 inicial: 58b29bbfdec24248d21b864525e4fe5a527d47acf0956cbb4f8e1481046ee7de
+================================================================================
+
+[M01] src/features/appointments/AppointmentFormDialog.test.tsx > con todos los campos completos salvo el paciente, al pulsar Crear turno aparece mensaje de alerta y no se envía POST
+--- a/frontend/src/features/appointments/AppointmentFormDialog.tsx
++++ b/frontend/src/features/appointments/AppointmentFormDialog.tsx
+@@ -115,5 +115,5 @@
+ 
+     if (!patientId) {
+-      setPatientError("Elegí un paciente de la lista.");
++      // setPatientError("Elegí un paciente de la lista.");
+       patientSearchInputRef.current?.focus();
+       return;
+RESULTADO: ELIMINADA
+Aserción: TestingLibraryElementError: Unable to find an accessible element with the role "alert"
+
+[M02] src/features/agenda/AgendaToolbar.test.tsx > en vista semana no existe la opción Todos en Profesional; en vista día sí existe
+--- a/frontend/src/features/agenda/AgendaToolbar.tsx
++++ b/frontend/src/features/agenda/AgendaToolbar.tsx
+@@ -160,5 +160,5 @@
+           }}
+         >
+-          {!isWeekView && <option value="">Todos</option>}
++          <option value="">Todos</option>
+           {sortedProfessionals.map((prof) => (
+             <option key={prof.id} value={prof.id}>
+RESULTADO: ELIMINADA
+Aserción: AssertionError: expected [ 'Todos', 'Dr. Martín Sosa', …(2) ] to not include 'Todos'
+
+================================================================================
+RESUMEN DE MUTACIONES AJUSTES FINALES
+================================================================================
+Total mutaciones: 2
+Eliminadas:       2
+Supervivientes:   0
+Inválidas:        0
+SHA-256 inicial:  58b29bbfdec24248d21b864525e4fe5a527d47acf0956cbb4f8e1481046ee7de
+SHA-256 final:    58b29bbfdec24248d21b864525e4fe5a527d47acf0956cbb4f8e1481046ee7de
+SHA-256 sin cambios: si

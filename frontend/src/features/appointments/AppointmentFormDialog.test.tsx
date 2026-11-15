@@ -862,4 +862,57 @@ describe("AppointmentFormDialog", () => {
     expect(document.activeElement).toBe(trigger);
     document.body.removeChild(trigger);
   });
+
+  it("con todos los campos completos salvo el paciente, al pulsar Crear turno aparece mensaje de alerta y no se envía POST", async () => {
+    let postCalled = false;
+    const client = createApiClient({
+      fetchFn: async (_input, init) => {
+        if (init?.method === "POST") {
+          postCalled = true;
+        }
+        return new Response("[]");
+      },
+    });
+
+    const services = [
+      { id: "00000000-0000-0000-0000-0000000000d1", name: "Extracción", defaultDurationMin: 60, active: true },
+    ];
+
+    render(
+      <AppointmentFormDialog
+        open={true}
+        onClose={() => undefined}
+        client={client}
+        timezone="America/Argentina/Buenos_Aires"
+        effectiveDate="2026-11-16"
+        initialProfessionalId="00000000-0000-0000-0000-000000000001"
+        initialChairId="00000000-0000-0000-0000-0000000000b1"
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        services={services}
+      />,
+    );
+
+    // Completar los campos requeridos salvo el paciente
+    const timeInput = screen.getByLabelText<HTMLInputElement>("Hora");
+    fireEvent.change(timeInput, { target: { value: "10:00" } });
+
+    const serviceSelect = screen.getByLabelText<HTMLSelectElement>("Prestación");
+    fireEvent.change(serviceSelect, { target: { value: "00000000-0000-0000-0000-0000000000d1" } });
+
+    // Pulsar "Crear turno"
+    const submitBtn = screen.getByRole("button", { name: "Crear turno" });
+    fireEvent.click(submitBtn);
+
+    // Debe mostrar "Elegí un paciente de la lista." con role="alert"
+    const alert = screen.getByRole("alert");
+    expect(alert).toHaveTextContent("Elegí un paciente de la lista.");
+
+    // Debe mover el foco al campo de búsqueda
+    const searchInput = screen.getByRole("searchbox", { name: /buscar paciente/i });
+    expect(searchInput).toHaveFocus();
+
+    // No se envía ningún POST
+    expect(postCalled).toBe(false);
+  });
 });

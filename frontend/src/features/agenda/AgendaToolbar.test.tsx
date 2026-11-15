@@ -162,4 +162,43 @@ describe("AgendaToolbar", () => {
     expect(screen.queryByRole("button", { name: "Anterior" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Siguiente" })).toBeNull();
   });
+
+  it("en vista semana no existe la opción Todos en Profesional; en vista día sí existe", () => {
+    const { rerender } = render(
+      <AgendaToolbar
+        date="2026-11-16"
+        view="week"
+        professionalId="00000000-0000-0000-0000-000000000001"
+        chairId={null}
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        onSelectProfessional={() => {}}
+        onSelectChair={() => {}}
+        onClearFilters={() => {}}
+      />,
+    );
+
+    const profSelectWeek = screen.getByLabelText("Profesional") as HTMLSelectElement;
+    const weekOptions = within(profSelectWeek).queryAllByRole("option");
+    expect(weekOptions.map((opt) => opt.textContent)).not.toContain("Todos");
+    expect(within(profSelectWeek).queryByRole("option", { name: "Todos" })).toBeNull();
+
+    // En vista día sí existe
+    rerender(
+      <AgendaToolbar
+        date="2026-11-16"
+        view="day"
+        professionalId={null}
+        chairId={null}
+        professionals={PROFESSIONALS}
+        chairs={CHAIRS}
+        onSelectProfessional={() => {}}
+        onSelectChair={() => {}}
+        onClearFilters={() => {}}
+      />,
+    );
+
+    const profSelectDay = screen.getByLabelText("Profesional") as HTMLSelectElement;
+    expect(within(profSelectDay).queryByRole("option", { name: "Todos" })).not.toBeNull();
+  });
 });

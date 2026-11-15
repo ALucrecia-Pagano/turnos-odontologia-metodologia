@@ -159,7 +159,7 @@ export function AgendaToolbar({
             onSelectProfessional(value === "" ? null : value);
           }}
         >
-          <option value="">Todos</option>
+          {!isWeekView && <option value="">Todos</option>}
           {sortedProfessionals.map((prof) => (
             <option key={prof.id} value={prof.id}>
               {formatProfessionalLabel(prof)}

@@ -1,0 +1,852 @@
+Comando: npm run test:run src/features/appointments/AppointmentFormDialog.test.tsx
+Codigo de salida: 1
+
+
+> turnos-odontologia-frontend@0.1.0 test:run
+> vitest run src/features/appointments/AppointmentFormDialog.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m15 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1197[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mapertura y foco inicial[32m 107[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mprellenado con fecha y filtros activos[32m 15[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22msin filtros activos los selectores quedan sin selección[32m 11[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mduración sugerida al elegir prestación[32m 21[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22medición manual de duración se conserva[32m 12[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22marmado de startAt con offset exacto para la fecha elegida y timezone de la API[32m 75[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22menvío exitoso 201 cierra el modal, llama onSuccess con los datos del turno y devuelve foco[32m 107[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mrespuesta 409 con violaciones múltiples muestra alert superior intacto con badges y referencias[32m 176[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mrechazo 422 con IN_THE_PAST y UNKNOWN_REFERENCE muestra violaciones en alert superior sin mapeo a campos[32m 142[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mmapea errores 400 a los campos del formulario con aria-invalid y mensaje inline[32m 124[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mrespuesta 403 FORBIDDEN_OPERATION muestra mensaje de permiso denegado en alert sin cerrar sesión[32m 126[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mfoco al resumen de alerta ante fallo[32m 107[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mpulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura[32m 72[2mms[22m[39m
+   [32m✓[39m AppointmentFormDialog[2m > [22mEscape cierra sin enviar solicitudes y devuelve el foco[32m 31[2mms[22m[39m
+[31m   [31m×[31m AppointmentFormDialog[2m > [22mcon todos los campos completos salvo el paciente, al pulsar Crear turno aparece mensaje de alerta y no se envía POST[39m[32m 69[2mms[22m[39m
+[31m     → Unable to find an accessible element with the role "alert"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "Nuevo turno":
+  [36m<dialog[31m
+    [33maria-labelledby[31m=[32m"appointment-dialog-title"[31m
+    [33maria-modal[31m=[32m"true"[31m
+    [33mclass[31m=[32m"dialog "[31m
+    [33mopen[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Nuevo turno":
+  [36m<h2[31m
+    [33mclass[31m=[32m"title"[31m
+    [33mid[31m=[32m"appointment-dialog-title"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  searchbox:
+
+  Name "Buscar paciente":
+  [36m<input[31m
+    [33maria-label[31m=[32m"Buscar paciente"[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"patient-search-input"[31m
+    [33mplaceholder[31m=[32m"Buscar por nombre o DNI..."[31m
+    [33mtype[31m=[32m"search"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Buscar paciente":
+  [36m<button[31m
+    [33mclass[31m=[32m"searchButton"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Cancelar":
+  [36m<button[31m
+    [33mclass[31m=[32m"secondaryButton"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Crear turno":
+  [36m<button[31m
+    [33mclass[31m=[32m"primaryButton"[31m
+    [33mtype[31m=[32m"submit"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  combobox:
+
+  Name "Profesional":
+  [36m<select[31m
+    [33mclass[31m=[32m"select"[31m
+    [33mid[31m=[32m"appointment-professional"[31m
+    [33mrequired[31m=[32m""[31m
+  [36m/>[31m
+
+  Name "Sillón":
+  [36m<select[31m
+    [33mclass[31m=[32m"select"[31m
+    [33mid[31m=[32m"appointment-chair"[31m
+    [33mrequired[31m=[32m""[31m
+  [36m/>[31m
+
+  Name "Prestación":
+  [36m<select[31m
+    [33mclass[31m=[32m"select"[31m
+    [33mid[31m=[32m"appointment-service"[31m
+    [33mrequired[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  option:
+
+  Name "Seleccionar profesional...":
+  [36m<option[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  Name "Dra. Laura Quiroga":
+  [36m<option[31m
+    [33mvalue[31m=[32m"00000000-0000-0000-0000-000000000001"[31m
+  [36m/>[31m
+
+  Name "Dr. Martín Sosa":
+  [36m<option[31m
+    [33mvalue[31m=[32m"00000000-0000-0000-0000-000000000002"[31m
+  [36m/>[31m
+
+  Name "Seleccionar sillón...":
+  [36m<option[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  Name "Sillón 1":
+  [36m<option[31m
+    [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000b1"[31m
+  [36m/>[31m
+
+  Name "Sillón 2":
+  [36m<option[31m
+    [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000b2"[31m
+  [36m/>[31m
+
+  Name "Seleccionar prestación...":
+  [36m<option[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  Name "Extracción":
+  [36m<option[31m
+    [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000d1"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  spinbutton:
+
+  Name "Duración (minutos)":
+  [36m<input[31m
+    [33mclass[31m=[32m"input"[31m
+    [33mid[31m=[32m"appointment-duration"[31m
+    [33mmax[31m=[32m"480"[31m
+    [33mmin[31m=[32m"5"[31m
+    [33mstep[31m=[32m"5"[31m
+    [33mtype[31m=[32m"number"[31m
+    [33mvalue[31m=[32m"60"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<dialog[31m
+      [33maria-labelledby[31m=[32m"appointment-dialog-title"[31m
+      [33maria-modal[31m=[32m"true"[31m
+      [33mclass[31m=[32m"dialog "[31m
+      [33mopen[31m=[32m""[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"modalContent"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mclass[31m=[32m"title"[31m
+          [33mid[31m=[32m"appointment-dialog-title"[31m
+        [36m>[31m
+          [0mNuevo turno[0m
+        [36m</h2>[31m
+        [36m<form[31m
+          [33mclass[31m=[32m"form"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"container"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"searchRow"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"field"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"label"[31m
+                  [33mfor[31m=[32m"patient-search-input"[31m
+                [36m>[31m
+                  [0mPaciente[0m
+                [36m</label>[31m
+                [36m<input[31m
+                  [33maria-label[31m=[32m"Buscar paciente"[31m
+                  [33mclass[31m=[32m"input"[31m
+                  [33mid[31m=[32m"patient-search-input"[31m
+                  [33mplaceholder[31m=[32m"Buscar por nombre o DNI..."[31m
+                  [33mtype[31m=[32m"search"[31m
+                  [33mvalue[31m=[32m""[31m
+                [36m/>[31m
+              [36m</div>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"searchButton"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0mBuscar paciente[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"gridTwoCols"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"appointment-date"[31m
+              [36m>[31m
+                [0mFecha[0m
+              [36m</label>[31m
+              [36m<input[31m
+                [33mclass[31m=[32m"input"[31m
+                [33mid[31m=[32m"appointment-date"[31m
+                [33mrequired[31m=[32m""[31m
+                [33mtype[31m=[32m"date"[31m
+                [33mvalue[31m=[32m"2026-11-16"[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"appointment-time"[31m
+              [36m>[31m
+                [0mHora[0m
+              [36m</label>[31m
+              [36m<input[31m
+                [33mclass[31m=[32m"input"[31m
+                [33mid[31m=[32m"appointment-time"[31m
+                [33mrequired[31m=[32m""[31m
+                [33mstep[31m=[32m"300"[31m
+                [33mtype[31m=[32m"time"[31m
+                [33mvalue[31m=[32m"10:00"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"gridTwoCols"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"appointment-professional"[31m
+              [36m>[31m
+                [0mProfesional[0m
+              [36m</label>[31m
+              [36m<select[31m
+                [33mclass[31m=[32m"select"[31m
+                [33mid[31m=[32m"appointment-professional"[31m
+                [33mrequired[31m=[32m""[31m
+              [36m>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m""[31m
+                [36m>[31m
+                  [0mSeleccionar profesional...[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"00000000-0000-0000-0000-000000000001"[31m
+                [36m>[31m
+                  [0mDra. Laura Quiroga[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"00000000-0000-0000-0000-000000000002"[31m
+                [36m>[31m
+                  [0mDr. Martín Sosa[0m
+                [36m</option>[31m
+              [36m</select>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"appointment-chair"[31m
+              [36m>[31m
+                [0mSillón[0m
+              [36m</label>[31m
+              [36m<select[31m
+                [33mclass[31m=[32m"select"[31m
+                [33mid[31m=[32m"appointment-chair"[31m
+                [33mrequired[31m=[32m""[31m
+              [36m>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m""[31m
+                [36m>[31m
+                  [0mSeleccionar sillón...[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000b1"[31m
+                [36m>[31m
+                  [0mSillón 1[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000b2"[31m
+                [36m>[31m
+                  [0mSillón 2[0m
+                [36m</option>[31m
+              [36m</select>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"gridTwoCols"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"appointment-service"[31m
+              [36m>[31m
+                [0mPrestación[0m
+              [36m</label>[31m
+              [36m<select[31m
+                [33mclass[31m=[32m"select"[31m
+                [33mid[31m=[32m"appointment-service"[31m
+                [33mrequired[31m=[32m""[31m
+              [36m>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m""[31m
+                [36m>[31m
+                  [0mSeleccionar prestación...[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"00000000-0000-0000-0000-0000000000d1"[31m
+                [36m>[31m
+                  [0mExtracción[0m
+                [36m</option>[31m
+              [36m</select>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"field"[31m
+            [36m>[31m
+              [36m<label[31m
+                [33mclass[31m=[32m"label"[31m
+                [33mfor[31m=[32m"appointment-duration"[31m
+              [36m>[31m
+                [0mDuración (minutos)[0m
+              [36m</label>[31m
+              [36m<input[31m
+                [33mclass[31m=[32m"input"[31m
+                [33mid[31m=[32m"appointment-duration"[31m
+                [33mmax[31m=[32m"480"[31m
+                [33mmin[31m=[32m"5"[31m
+                [33mstep[31m=[32m"5"[31m
+                [33mtype[31m=[32m"number"[31m
+                [33mvalue[31m=[32m"60"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"actionsRow"[31m
+          [36m>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"secondaryButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCancelar[0m
+            [36m</button>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"primaryButton"[31m
+              [33mtype[31m=[32m"submit"[31m
+            [36m>[31m
+              [0mCrear turno[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</form>[31m
+      [36m</div>[31m
+    [36m</dialog>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m14 passed[39m[22m[90m (15)[39m
+[2m   Start at [22m 18:27:11
+[2m   Duration [22m 4.53s[2m (transform 235ms, setup 452ms, collect 328ms, tests 1.20s, environment 1.69s, prepare 291ms)[22m
+
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:14:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mprellenado con fecha y filtros activos
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:14:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2msin filtros activos los selectores quedan sin selección
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:14:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mpulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:14:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mEscape cierra sin enviar solicitudes y devuelve el foco
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:14:3)
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22mAppointmentFormDialog[2m > [22mcon todos los campos completos salvo el paciente, al pulsar Crear turno aparece mensaje de alerta y no se envía POST
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an accessible element with the role "alert"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "Nuevo turno":
+  [36m<dialog[39m
+    [33maria-labelledby[39m=[32m"appointment-dialog-title"[39m
+    [33maria-modal[39m=[32m"true"[39m
+    [33mclass[39m=[32m"dialog "[39m
+    [33mopen[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Nuevo turno":
+  [36m<h2[39m
+    [33mclass[39m=[32m"title"[39m
+    [33mid[39m=[32m"appointment-dialog-title"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  searchbox:
+
+  Name "Buscar paciente":
+  [36m<input[39m
+    [33maria-label[39m=[32m"Buscar paciente"[39m
+    [33mclass[39m=[32m"input"[39m
+    [33mid[39m=[32m"patient-search-input"[39m
+    [33mplaceholder[39m=[32m"Buscar por nombre o DNI..."[39m
+    [33mtype[39m=[32m"search"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Buscar paciente":
+  [36m<button[39m
+    [33mclass[39m=[32m"searchButton"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Cancelar":
+  [36m<button[39m
+    [33mclass[39m=[32m"secondaryButton"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Crear turno":
+  [36m<button[39m
+    [33mclass[39m=[32m"primaryButton"[39m
+    [33mtype[39m=[32m"submit"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  combobox:
+
+  Name "Profesional":
+  [36m<select[39m
+    [33mclass[39m=[32m"select"[39m
+    [33mid[39m=[32m"appointment-professional"[39m
+    [33mrequired[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "Sillón":
+  [36m<select[39m
+    [33mclass[39m=[32m"select"[39m
+    [33mid[39m=[32m"appointment-chair"[39m
+    [33mrequired[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "Prestación":
+  [36m<select[39m
+    [33mclass[39m=[32m"select"[39m
+    [33mid[39m=[32m"appointment-service"[39m
+    [33mrequired[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "Seleccionar profesional...":
+  [36m<option[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "Dra. Laura Quiroga":
+  [36m<option[39m
+    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000001"[39m
+  [36m/>[39m
+
+  Name "Dr. Martín Sosa":
+  [36m<option[39m
+    [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000002"[39m
+  [36m/>[39m
+
+  Name "Seleccionar sillón...":
+  [36m<option[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "Sillón 1":
+  [36m<option[39m
+    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b1"[39m
+  [36m/>[39m
+
+  Name "Sillón 2":
+  [36m<option[39m
+    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b2"[39m
+  [36m/>[39m
+
+  Name "Seleccionar prestación...":
+  [36m<option[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "Extracción":
+  [36m<option[39m
+    [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000d1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  spinbutton:
+
+  Name "Duración (minutos)":
+  [36m<input[39m
+    [33mclass[39m=[32m"input"[39m
+    [33mid[39m=[32m"appointment-duration"[39m
+    [33mmax[39m=[32m"480"[39m
+    [33mmin[39m=[32m"5"[39m
+    [33mstep[39m=[32m"5"[39m
+    [33mtype[39m=[32m"number"[39m
+    [33mvalue[39m=[32m"60"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<dialog[39m
+      [33maria-labelledby[39m=[32m"appointment-dialog-title"[39m
+      [33maria-modal[39m=[32m"true"[39m
+      [33mclass[39m=[32m"dialog "[39m
+      [33mopen[39m=[32m""[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"modalContent"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"title"[39m
+          [33mid[39m=[32m"appointment-dialog-title"[39m
+        [36m>[39m
+          [0mNuevo turno[0m
+        [36m</h2>[39m
+        [36m<form[39m
+          [33mclass[39m=[32m"form"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"container"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"searchRow"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"patient-search-input"[39m
+                [36m>[39m
+                  [0mPaciente[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33maria-label[39m=[32m"Buscar paciente"[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"patient-search-input"[39m
+                  [33mplaceholder[39m=[32m"Buscar por nombre o DNI..."[39m
+                  [33mtype[39m=[32m"search"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"searchButton"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mBuscar paciente[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"gridTwoCols"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"appointment-date"[39m
+              [36m>[39m
+                [0mFecha[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"appointment-date"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mtype[39m=[32m"date"[39m
+                [33mvalue[39m=[32m"2026-11-16"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"appointment-time"[39m
+              [36m>[39m
+                [0mHora[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"appointment-time"[39m
+                [33mrequired[39m=[32m""[39m
+                [33mstep[39m=[32m"300"[39m
+                [33mtype[39m=[32m"time"[39m
+                [33mvalue[39m=[32m"10:00"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"gridTwoCols"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"appointment-professional"[39m
+              [36m>[39m
+                [0mProfesional[0m
+              [36m</label>[39m
+              [36m<select[39m
+                [33mclass[39m=[32m"select"[39m
+                [33mid[39m=[32m"appointment-professional"[39m
+                [33mrequired[39m=[32m""[39m
+              [36m>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m>[39m
+                  [0mSeleccionar profesional...[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000001"[39m
+                [36m>[39m
+                  [0mDra. Laura Quiroga[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"00000000-0000-0000-0000-000000000002"[39m
+                [36m>[39m
+                  [0mDr. Martín Sosa[0m
+                [36m</option>[39m
+              [36m</select>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"appointment-chair"[39m
+              [36m>[39m
+                [0mSillón[0m
+              [36m</label>[39m
+              [36m<select[39m
+                [33mclass[39m=[32m"select"[39m
+                [33mid[39m=[32m"appointment-chair"[39m
+                [33mrequired[39m=[32m""[39m
+              [36m>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m>[39m
+                  [0mSeleccionar sillón...[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b1"[39m
+                [36m>[39m
+                  [0mSillón 1[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000b2"[39m
+                [36m>[39m
+                  [0mSillón 2[0m
+                [36m</option>[39m
+              [36m</select>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"gridTwoCols"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"appointment-service"[39m
+              [36m>[39m
+                [0mPrestación[0m
+              [36m</label>[39m
+              [36m<select[39m
+                [33mclass[39m=[32m"select"[39m
+                [33mid[39m=[32m"appointment-service"[39m
+                [33mrequired[39m=[32m""[39m
+              [36m>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m>[39m
+                  [0mSeleccionar prestación...[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"00000000-0000-0000-0000-0000000000d1"[39m
+                [36m>[39m
+                  [0mExtracción[0m
+                [36m</option>[39m
+              [36m</select>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"field"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"label"[39m
+                [33mfor[39m=[32m"appointment-duration"[39m
+              [36m>[39m
+                [0mDuración (minutos)[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33mclass[39m=[32m"input"[39m
+                [33mid[39m=[32m"appointment-duration"[39m
+                [33mmax[39m=[32m"480"[39m
+                [33mmin[39m=[32m"5"[39m
+                [33mstep[39m=[32m"5"[39m
+                [33mtype[39m=[32m"number"[39m
+                [33mvalue[39m=[32m"60"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actionsRow"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"secondaryButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCancelar[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"primaryButton"[39m
+              [33mtype[39m=[32m"submit"[39m
+            [36m>[39m
+              [0mCrear turno[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</form>[39m
+      [36m</div>[39m
+    [36m</dialog>[39m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/features/appointments/AppointmentFormDialog.test.tsx:[2m908:26[22m[39m
+    [90m906| [39m
+    [90m907| [39m    [90m// Debe mostrar "Elegí un paciente de la lista." con role="alert"[39m
+    [90m908| [39m    [35mconst[39m alert [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m"alert"[39m)[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m909| [39m    [34mexpect[39m(alert)[33m.[39m[34mtoHaveTextContent[39m([32m"Elegí un paciente de la lista."[39m)[33m;[39m
+    [90m910| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
