@@ -465,21 +465,39 @@ ENTRIES: tuple[Entry, ...] = (
         "frontend-catalogs-and-patients",
         "Pantallas verificadas a 1440, 768 y 390 px",
         "V01",
-        visual="C-33-*-{1440,768,390}.png",
+        visual=(
+            "[C-33-pacientes-1440.png](capturas/C-33-pacientes-1440.png), "
+            "[C-33-paciente-editado-1440.png](capturas/C-33-paciente-editado-1440.png), "
+            "[C-33-paciente-409-1440.png](capturas/C-33-paciente-409-1440.png), "
+            "[C-33-paciente-422-1440.png](capturas/C-33-paciente-422-1440.png), "
+            "[C-33-prestacion-409-1440.png](capturas/C-33-prestacion-409-1440.png), "
+            "[C-33-sillon-confirmar-1440.png](capturas/C-33-sillon-confirmar-1440.png), "
+            "[C-33-catalogos-inactivo-1440.png](capturas/C-33-catalogos-inactivo-1440.png), "
+            "[C-33-pacientes-768.png](capturas/C-33-pacientes-768.png), "
+            "[C-33-catalogos-768.png](capturas/C-33-catalogos-768.png), "
+            "[C-33-pacientes-390.png](capturas/C-33-pacientes-390.png), "
+            "[C-33-catalogos-390.png](capturas/C-33-catalogos-390.png)"
+        ),
     ),
     Entry(
         "visual",
         "frontend-catalogs-and-patients",
         "Diálogo como hoja inferior verificado a 390 px",
         "V02",
-        visual="C-33-*-dialogo-390.png",
+        visual=(
+            "[C-33-paciente-dialogo-390.png](capturas/C-33-paciente-dialogo-390.png), "
+            "[C-33-prestacion-dialogo-390.png](capturas/C-33-prestacion-dialogo-390.png)"
+        ),
     ),
     Entry(
         "visual",
         "frontend-foundation",
         "Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px)",
         "V03",
-        visual="C-33-appshell-{768,390}.png",
+        visual=(
+            "[C-33-appshell-768.png](capturas/C-33-appshell-768.png), "
+            "[C-33-appshell-390.png](capturas/C-33-appshell-390.png)"
+        ),
     ),
 )
 
@@ -674,7 +692,7 @@ def main() -> int:
     table_rows: list[str] = []
     for e in ENTRIES:
         if e.kind == "visual":
-            row = f"| {e.number} | `{e.spec}` | {e.scenario} | Visual | `{e.visual}` | — | — | — | — |"
+            row = f"| {e.number} | `{e.spec}` | {e.scenario} | Visual | {e.visual} | — | — | — | — |"
             lines.append(f"  [{e.number}] ({e.spec}) {e.scenario} -> Visual ({e.visual})")
         else:
             tf_base = Path(e.test_file).name if e.test_file else "—"

@@ -780,7 +780,7 @@ C-01 → C-02 → C-04 → C-05 → C-08 → C-11 → C-12 → C-17 → C-22 →
   - `knowledge-base/03_actores_y_roles.md` §RBAC
 
 ### [C-33] `ui-catalogos-y-pacientes`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (archivado el 2026-11-15 en [openspec/changes/archive/2026-11-15-ui-catalogos-y-pacientes/](openspec/changes/archive/2026-11-15-ui-catalogos-y-pacientes/))
 - **Scope**:
   - Pantallas del administrador para profesionales, sillones y prestaciones (con duración) y de recepción/administrador para pacientes (nombre, DNI, teléfono, obra social como texto); sin campos clínicos.
   - Tests de componentes: validaciones mostradas, DNI duplicado, desactivar.

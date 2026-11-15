@@ -4,12 +4,12 @@
 
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8).
 
-- **Tareas**: Fases 1 a 6 y Fase 8 implementadas y verificadas según [tasks.md](../../openspec/changes/ui-catalogos-y-pacientes/tasks.md); Fase 7 (capturas visuales multi-resolución a 1440 px, 768 px y 390 px a cargo de Claude) queda pendiente (`[ ]` en `tasks.md`, no inventadas ni marcadas hechas).
+- **Tareas**: Fases 1 a 6, Fase 7 (15 capturas visuales multi-resolución a 1440 px, 768 px y 390 px a cargo de Claude con Playwright contra la API real en [capturas/](capturas/)) y Fase 8 implementadas y verificadas según [tasks.md](../../openspec/changes/ui-catalogos-y-pacientes/tasks.md).
 - **Plan B**: No se aplicó. Se completaron íntegramente las Fases 1 a 4 sin recortes de alcance.
 - **Línea base unificada**: [baseline-C-33.txt](baseline-C-33.txt) (82 archivos de test, 321 tests pasados, exit 0).
 - **Vitest**: Suite final con todos los tests en verde ([test-suite-C-33.txt](test-suite-C-33.txt)): **93 archivos de test pasados (353 tests en total: 321 heredados + 32 tests nuevos de C-33)**. En el conteo se distinguen **32 tests nuevos** y **2 tests existentes modificados (12 y 13)**, distribuidos en 11 archivos dedicados (`PacientesPage.test.tsx` [6], `PatientFormDialog.test.tsx` [7], `CatalogosPage.test.tsx` [3], `CatalogFormDialog.test.tsx` [5], `CatalogFormDialog.mobile.test.tsx` [1], `CatalogConfirmDialog.test.tsx` [2], `CatalogosPacientesRoutes.test.tsx` [1], `catalogosPacientesStyles.test.ts` [4], `AppShellCatalogosPacientes.test.tsx` [1], `DialogModalCard.test.tsx` [1], `TableActionsHeader.test.tsx` [1]), más las aserciones de menú adaptadas en `AppShellNavigation.test.tsx`. Cada escenario testeable cuenta con su par RED/GREEN en `red-C-33/` (`01`..`34`) y `green-C-33/` (`01`..`34`).
 - **Mutaciones**: **34 de 34 mutaciones eliminadas** (`M01`–`M34`: 32 tests nuevos y 2 tests existentes modificados [12 y 13]) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 inicial: 14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00**, **SHA-256 final: 14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00**, **SHA-256 sin cambios: sí** ([mutaciones-C-33.txt](mutaciones-C-33.txt), generado por [mutaciones-C-33.py](mutaciones-C-33.py)).
-- **Trazabilidad**: **37 escenarios** declarados en las specs delta (34 testeables 1:1 numerados de corrido `01`..`34` [32 tests nuevos y 2 tests existentes modificados (12 y 13)] + 3 visuales `V01`, `V02`, `V03` a cargo de Claude), 0 inconsistencias, 0 tests compartidos ([trazabilidad-C-33.txt](trazabilidad-C-33.txt), generado por [trazabilidad-C-33.py](trazabilidad-C-33.py)).
+- **Trazabilidad**: **37 escenarios** declarados en las specs delta (34 testeables 1:1 numerados de corrido `01`..`34` [32 tests nuevos y 2 tests existentes modificados (12 y 13)] + 3 visuales `V01`, `V02`, `V03` con sus capturas enlazadas), 0 inconsistencias, 0 tests compartidos ([trazabilidad-C-33.txt](trazabilidad-C-33.txt), generado por [trazabilidad-C-33.py](trazabilidad-C-33.py)).
 - **Calidad y Tooling**:
   - `npm run typecheck` exit 0 (0 errores de tipos).
   - `npx eslint src/features/pacientes src/features/catalogos src/features/auth/menuFor.ts src/shared/components/AppShellNavigation.test.tsx src/shared/components/AppShellCatalogosPacientes.test.tsx` exit 0 (0 errores, 0 warnings en archivos de C-33; ver [tooling-C-33.txt](tooling-C-33.txt)).
@@ -60,9 +60,9 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | 32 | `frontend-catalogs-and-patients` | Las tablas tienen encabezado para la columna de acciones | Testeable | `TableActionsHeader.test.tsx` | `Las tablas tienen encabezado para la columna de acciones` | `32-tablas-header-acciones.txt` | `32-tablas-header-acciones.txt` | `M32` |
 | 33 | `frontend-catalogs-and-patients` | Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible | Testeable | `catalogosPacientesStyles.test.ts` | `Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible` | `33-tabla-apilada-caption-thead.txt` | `33-tabla-apilada-caption-thead.txt` | `M33` |
 | 34 | `frontend-catalogs-and-patients` | Búsqueda sin resultados muestra un único mensaje | Testeable | `PacientesPage.test.tsx` | `Búsqueda sin resultados muestra un único mensaje` | `34-pacientes-busqueda-mensaje-unico.txt` | `34-pacientes-busqueda-mensaje-unico.txt` | `M34` |
-| V01 | `frontend-catalogs-and-patients` | Pantallas verificadas a 1440, 768 y 390 px | Visual | `C-33-*-{1440,768,390}.png` | — | — | — | — |
-| V02 | `frontend-catalogs-and-patients` | Diálogo como hoja inferior verificado a 390 px | Visual | `C-33-*-dialogo-390.png` | — | — | — | — |
-| V03 | `frontend-foundation` | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | `C-33-appshell-{768,390}.png` | — | — | — | — |
+| V01 | `frontend-catalogs-and-patients` | Pantallas verificadas a 1440, 768 y 390 px | Visual | [C-33-pacientes-1440.png](capturas/C-33-pacientes-1440.png), [C-33-paciente-editado-1440.png](capturas/C-33-paciente-editado-1440.png), [C-33-paciente-409-1440.png](capturas/C-33-paciente-409-1440.png), [C-33-paciente-422-1440.png](capturas/C-33-paciente-422-1440.png), [C-33-prestacion-409-1440.png](capturas/C-33-prestacion-409-1440.png), [C-33-sillon-confirmar-1440.png](capturas/C-33-sillon-confirmar-1440.png), [C-33-catalogos-inactivo-1440.png](capturas/C-33-catalogos-inactivo-1440.png), [C-33-pacientes-768.png](capturas/C-33-pacientes-768.png), [C-33-catalogos-768.png](capturas/C-33-catalogos-768.png), [C-33-pacientes-390.png](capturas/C-33-pacientes-390.png), [C-33-catalogos-390.png](capturas/C-33-catalogos-390.png) | — | — | — | — |
+| V02 | `frontend-catalogs-and-patients` | Diálogo como hoja inferior verificado a 390 px | Visual | [C-33-paciente-dialogo-390.png](capturas/C-33-paciente-dialogo-390.png), [C-33-prestacion-dialogo-390.png](capturas/C-33-prestacion-dialogo-390.png) | — | — | — | — |
+| V03 | `frontend-foundation` | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | [C-33-appshell-768.png](capturas/C-33-appshell-768.png), [C-33-appshell-390.png](capturas/C-33-appshell-390.png) | — | — | — | — |
 <!-- trazabilidad:fin -->
 
 ---
@@ -125,7 +125,7 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
    - *Resolución*: Se mantienen intactas las líneas preexistentes cumpliendo la regla de no alterar código fuera del scope.
 
 3. **Sección 7 (Capturas visuales reales a 1440, 768 y 390 px)**:
-   - *Estado*: Las tareas 7.1, 7.2 y 7.3 quedan pendientes a cargo de Claude (`[ ]` en `tasks.md`). No se generaron capturas simuladas ni se marcaron como completadas por el agente.
+   - *Estado*: Las tareas 7.1, 7.2 y 7.3 fueron completadas por Claude mediante Playwright contra la API backend en ejecución (`[x]` en `tasks.md`), generando las 15 capturas en `docs/evidencias/capturas/C-33-*.png`.
 
 ---
 
@@ -152,4 +152,36 @@ Tras la verificación con la API real, se identificaron y corrigieron cuatro asp
   - *Causa*: Al buscar un paciente sin coincidencias, la pantalla renderizaba simultáneamente el título "No se encontraron pacientes." y la descripción secundaria "No hay resultados para la búsqueda realizada.", contraviniendo el texto exacto de la spec.
   - *Solución*: En `PacientesPage.tsx`, cuando la búsqueda no arroja resultados (`activeQuery` activo y lista vacía), se omite la descripción secundaria en `EmptyState`, mostrando única y exclusivamente el mensaje "No se encontraron pacientes.".
   - *Evidencia*: Escenario 34 (`34-pacientes-busqueda-mensaje-unico.txt`, `PacientesPage.test.tsx`, mutación `M34`).
+
+---
+
+## Verificación visual en navegador real (Claude / Playwright)
+
+Verificación visual e interactiva realizada sobre Chromium real contra la API backend en ejecución, documentada en las 15 capturas de [docs/evidencias/capturas/](capturas/):
+
+1. `C-33-pacientes-1440.png`: Desktop (1440 px) con listado de pacientes, barra de búsqueda y botón "Nuevo paciente".
+2. `C-33-paciente-editado-1440.png`: Desktop (1440 px) con formulario de edición de paciente con datos precargados.
+3. `C-33-paciente-409-1440.png`: Desktop (1440 px) con rechazo por DNI duplicado mostrando el mensaje literal del backend en alerta accesible.
+4. `C-33-paciente-422-1440.png`: Desktop (1440 px) con rechazo por DNI inválido (422) mostrando el mensaje literal del backend.
+5. `C-33-prestacion-409-1440.png`: Desktop (1440 px) con rechazo por nombre duplicado en el catálogo de prestaciones (409) mostrando mensaje literal del backend.
+6. `C-33-sillon-confirmar-1440.png`: Desktop (1440 px) con diálogo de confirmación interna para desactivar un sillón.
+7. `C-33-catalogos-inactivo-1440.png`: Desktop (1440 px) con catálogo mostrando ítem con estado "Inactivo" en texto visible y botón de reactivación.
+8. `C-33-pacientes-768.png`: Tablet (768 px) con listado de pacientes adaptado sin scroll horizontal.
+9. `C-33-catalogos-768.png`: Tablet (768 px) con vista de catálogos y pestañas de sección adaptadas a tablet.
+10. `C-33-appshell-768.png`: Tablet (768 px) con barra de navegación de AppShell mostrando enlaces activos a "Catálogos" y "Pacientes" en dos renglones como máximo.
+11. `C-33-pacientes-390.png`: Celular (390 px) con tabla apilada verticalmente, caption a todo el ancho y thead oculto accesible, sin scroll horizontal.
+12. `C-33-catalogos-390.png`: Celular (390 px) con tabla de catálogo apilada verticalmente con foco visible y controles táctiles, sin scroll horizontal.
+13. `C-33-appshell-390.png`: Celular (390 px) con navegación móvil de AppShell desplegada incluyendo accesos a "Catálogos" y "Pacientes".
+14. `C-33-paciente-dialogo-390.png`: Celular (390 px) con diálogo de paciente presentado como hoja inferior (bottom sheet) con tarjeta contenedora y botones táctiles accesibles.
+15. `C-33-prestacion-dialogo-390.png`: Celular (390 px) con diálogo de prestación presentado como hoja inferior (bottom sheet) con tarjeta contenedora y botones táctiles accesibles.
+
+Aclaraciones clave de la verificación visual:
+- **Admin con todas las acciones**: dispone de alta, edición y desactivación/reactivación tanto en pacientes como en los tres catálogos (profesionales, sillones, prestaciones).
+- **Recepción edita pacientes y ve catálogos en "Solo lectura"**: puede dar de alta y editar pacientes, pero en catálogos visualiza las tablas con etiqueta de "Solo lectura" y sin botones de nuevo/editar/desactivar.
+- **Odontóloga sin botones de escritura**: consulta pacientes y catálogos en solo lectura, sin botones de nuevo ni acciones de modificación.
+- **Mensajes literales de 409 (DNI y nombre) y 422 (DNI)**: los rechazos del backend se presentan íntegros y textuales en contenedores accesibles con `role="alert"`.
+- **Desactivar con confirmación y estado "Inactivo"**: la desactivación requiere confirmación explícita mediante diálogo modal dedicado, reflejando el estado "Inactivo" en texto visible (sin depender solo de color).
+- **Diálogos con tarjeta centrada a 1440 y hoja inferior a 390**: los tres diálogos (`PatientFormDialog`, `CatalogFormDialog`, `CatalogConfirmDialog`) cuentan con tarjeta contenedora (`data-modal-card` y `.modalContent`), centrados en desktop y como bottom sheet en viewport móvil (390 px).
+- **Tabla apilada a 390 px**: a 390 px las tablas se apilan verticalmente con `data-label` por celda, caption a ancho completo (100%) y thead oculto de forma accesible con patrón visually-hidden.
+- **Sin scroll horizontal en 1440/768/390**: en los tres viewports evaluados no existe desbordamiento horizontal (`scrollWidth <= innerWidth`).
 

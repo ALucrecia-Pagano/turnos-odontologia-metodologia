@@ -84,9 +84,9 @@
 
 ## 7. Capturas reales a 1440, 768 y 390 px (a cargo de Claude, no del agente)
 
-- [ ] 7.1 Claude toma capturas a 1440 px de `/pacientes`, `/catalogos` con un ítem inactivo, un formulario con un error 409 y la confirmación de desactivar, en `docs/evidencias/capturas/C-33-*-1440.png`. Verificación: archivos presentes y sin scroll horizontal.
-- [ ] 7.2 Claude toma capturas a 768 px de `/pacientes` y `/catalogos`, y de la barra de navegación con los nuevos enlaces, en `docs/evidencias/capturas/C-33-*-768.png`. Verificación: archivos presentes, sin scroll horizontal y la barra en dos renglones como máximo.
-- [ ] 7.3 Claude toma capturas a 390 px de `/pacientes` y `/catalogos` con las tablas apiladas, y de los diálogos "Nuevo paciente" y "Nueva prestación" como hoja inferior, en `docs/evidencias/capturas/C-33-*-390.png`. Verificación: sin scroll horizontal de página, `Dialog` como hoja inferior con los botones visibles y datos solo ficticios.
+- [x] 7.1 Claude toma capturas a 1440 px de `/pacientes`, `/catalogos` con un ítem inactivo, un formulario con un error 409 y la confirmación de desactivar, en `docs/evidencias/capturas/C-33-*-1440.png`. Verificación: archivos presentes y sin scroll horizontal.
+- [x] 7.2 Claude toma capturas a 768 px de `/pacientes` y `/catalogos`, y de la barra de navegación con los nuevos enlaces, en `docs/evidencias/capturas/C-33-*-768.png`. Verificación: archivos presentes, sin scroll horizontal y la barra en dos renglones como máximo.
+- [x] 7.3 Claude toma capturas a 390 px de `/pacientes` y `/catalogos` con las tablas apiladas, y de los diálogos "Nuevo paciente" y "Nueva prestación" como hoja inferior, en `docs/evidencias/capturas/C-33-*-390.png`. Verificación: sin scroll horizontal de página, `Dialog` como hoja inferior con los botones visibles y datos solo ficticios.
 
 ## 8. Fase 8: Corrección post-verificación (escenarios 31-34)
 

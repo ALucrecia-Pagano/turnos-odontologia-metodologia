@@ -73,7 +73,7 @@ de un comando. Solo se define en el entorno de la máquina.
 
 ## Estado actual
 
-**35 changes archivados** (C-01 a C-32 y C-34 a C-36). El detalle de cada uno está en
+**36 changes archivados** (C-01 a C-36). El detalle de cada uno está en
 [CHANGES.md](CHANGES.md) y en su carpeta de [openspec/changes/archive/](openspec/changes/archive/).
 
 ### Dominio (reglas de negocio puras, sin base ni HTTP)
@@ -130,14 +130,7 @@ de un comando. Solo se define en el entorno de la máquina.
 | C-35 | Portada pública, acceso por rol, login translúcido y modales claros |
 | C-36 | App usable en celular: menú, toolbar compacta, grilla deslizable y modales como hoja inferior |
 | C-32 | Pantalla de horarios semanales y bloqueos por profesional, con turnos afectados |
-
-### Pendiente
-
-| Change | Qué falta |
-|---|---|
-| C-33 | Pantallas de catálogos y pacientes |
-
-La API de C-33 ya está implementada (C-20); lo pendiente es la pantalla.
+| C-33 | Pantallas de catálogos —profesionales, sillones y prestaciones— y pacientes, con alta, edición y desactivación según rol |
 
 ## Requisitos
 
