@@ -5,9 +5,7 @@ Uso, desde la raíz del repo o desde frontend/:
     python docs/evidencias/mutaciones-C-32.py [--check]
 
 Cada mutación es (archivo de test, nombre del test, archivo de producción, texto_original, texto_mutado).
-Hay UNA mutación (M01-M20) por cada uno de los 18 escenarios testeables de C-32 más los 2 tests auxiliares
-(horariosApi.test.ts y HorariosRoute.test.tsx): antes de mutar se cuentan los tests con `vitest list --json`
-y se exige una correspondencia uno a uno con los 20 tests de C-32.
+Hay UNA mutación (M01-M26) por cada uno de los 24 escenarios testeables de C-32 (22 en tests nuevos + 2 en tests existentes modificados de AppShellNavigation.test.tsx) más los 2 tests auxiliares (horariosApi.test.ts y HorariosRoute.test.tsx): antes de mutar se cuentan los tests con `vitest list --json` y se exige una correspondencia uno a uno con los 26 tests evaluados en C-32.
 
 Por cada mutación: comprueba que el original aparezca exactamente una vez y que el mutante cambie el archivo
 (respetando LF o CRLF), aplica la mutación, corre Vitest solo para ese test (`vitest run <archivo> -t <nombre>$`),
@@ -67,6 +65,7 @@ T_MOBILE = "src/features/horarios/BlockFormDialog.mobile.test.tsx"
 T_NAVIGATION = "src/shared/components/AppShellNavigation.test.tsx"
 T_API = "src/features/horarios/horariosApi.test.ts"
 T_ROUTE = "src/features/horarios/HorariosRoute.test.tsx"
+T_STYLES = "src/features/horarios/horariosStyles.test.ts"
 
 C32_TEST_FILES = (
     T_PAGE,
@@ -77,6 +76,7 @@ C32_TEST_FILES = (
     T_NAVIGATION,
     T_API,
     T_ROUTE,
+    T_STYLES,
 )
 
 # Test preexistente de C-35 en AppShellNavigation.test.tsx que no fue modificado ni pertenece a C-32
@@ -168,8 +168,8 @@ MUTATIONS: tuple[Mutation, ...] = (
         T_HOURS,
         "Guardado exitoso de tramos semanales: envía PUT con los tramos en orden visual y anuncia Horario guardado.",
         P_HOURS_TSX,
-        '      setStatusMessage("Horario guardado.");',
-        "      setStatusMessage(null);",
+        '      updateStatus("Horario guardado.");',
+        "      updateStatus(null);",
     ),
     # M05 - Edición interactiva de tramos en la interfaz
     Mutation(
@@ -216,16 +216,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         T_BLOCKS,
         "Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.",
         P_BLOCKS_TSX,
-        '    setStatusMessage("Bloqueo creado.");',
-        "    setStatusMessage(null);",
+        '    updateStatus("Bloqueo creado.");',
+        "    updateStatus(null);",
     ),
     # M11 - Eliminación de bloqueo con confirmación in-dialog
     Mutation(
         T_BLOCKS,
         "Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado.",
         P_BLOCKS_TSX,
-        '      setStatusMessage("Bloqueo eliminado.");',
-        "      setStatusMessage(null);",
+        '      updateStatus("Bloqueo eliminado.");',
+        "      updateStatus(null);",
     ),
     # M12 - Cancelación del borrado con Escape
     Mutation(
@@ -298,6 +298,54 @@ MUTATIONS: tuple[Mutation, ...] = (
         P_APP_TSX,
         '            { path: "horarios", element: <HorariosPage clock={clock} /> },',
         '            { path: "horarios-disabled", element: <HorariosPage clock={clock} /> },',
+    ),
+    # M21 - Todas las variables CSS de horarios existen en tokens.css
+    Mutation(
+        T_STYLES,
+        "Todas las variables CSS de horarios existen en tokens.css: cada var(--x) usado en los .module.css de horarios está definido en tokens.css",
+        P_HOURS_CSS,
+        "  box-shadow: var(--shadow-sm);",
+        "  box-shadow: var(--shadow-xs);",
+    ),
+    # M22 - Encabezado y estilos de HorariosPage sin tokens de fondo oscuro
+    Mutation(
+        T_STYLES,
+        "Encabezado y estilos de HorariosPage sin tokens de fondo oscuro: HorariosPage.module.css usa tokens de superficie clara y no contiene --color-ice ni *-on-navy",
+        P_PAGE_CSS,
+        ".selector {\n  font-family: inherit;\n  font-size: var(--font-size-sm);\n  color: var(--color-text);\n  background: var(--color-background);",
+        ".selector {\n  font-family: inherit;\n  font-size: var(--font-size-sm);\n  color: var(--color-ice);\n  background: var(--field-on-navy);",
+    ),
+    # M23 - Título de PageShell Horarios y bloqueos con único h1
+    Mutation(
+        T_PAGE,
+        "Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1",
+        P_PAGE_TSX,
+        '    <PageShell title="Horarios y bloqueos">',
+        '    <PageShell title="Turnos Odontología">',
+    ),
+    # M24 - Eliminar bloqueo oculta su panel de turnos afectados
+    Mutation(
+        T_BLOCKS,
+        "Eliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados",
+        P_BLOCKS_TSX,
+        '      setAffectedAppointments([]);\n      updateStatus("Bloqueo eliminado.");',
+        '      updateStatus("Bloqueo eliminado.");',
+    ),
+    # M25 - Un solo mensaje de estado vigente entre acciones sin desmontar la región
+    Mutation(
+        T_PAGE,
+        "Un solo mensaje de estado vigente entre acciones sin desmontar la región: reemplaza Horario guardado por Bloqueo eliminado y mantiene una única región role=status montada",
+        P_PAGE_TSX,
+        "                onStatusChange={setStatusMessage}\n              />\n              <BlocksSection",
+        "              />\n              <BlocksSection",
+    ),
+    # M26 - Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar
+    Mutation(
+        T_AFFECTED,
+        "Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO",
+        P_TIME_TS,
+        "  const startDate = formatDisplayDateInZone(startAt, timeZone);\n  const endDate = formatDisplayDateInZone(endAt, timeZone);",
+        "  const startDate = formatLocalDate(startAt, timeZone);\n  const endDate = formatLocalDate(endAt, timeZone);",
     ),
 )
 
@@ -509,7 +557,7 @@ def run_all(report: Report) -> int:
 
     test_count = check_one_to_one()
     report.write(
-        f"Correspondencia 1:1 verificada: {test_count} tests nuevos vs {len(MUTATIONS)} mutaciones."
+        f"Correspondencia 1:1 verificada: {test_count} tests evaluados (24 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs {len(MUTATIONS)} mutaciones."
     )
     report.write(SEPARATOR)
 
@@ -606,7 +654,7 @@ def main() -> int:
         for m in MUTATIONS:
             check_definition(m)
         count = check_one_to_one()
-        print(f"OK: {count} tests nuevos coinciden 1:1 con las {len(MUTATIONS)} mutaciones.")
+        print(f"OK: {count} tests evaluados (24 nuevos + 2 modificados en AppShellNavigation.test.tsx) coinciden 1:1 con las {len(MUTATIONS)} mutaciones.")
         return 0
 
     EVIDENCE.mkdir(parents=True, exist_ok=True)

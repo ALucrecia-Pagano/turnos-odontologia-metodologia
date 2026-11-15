@@ -20,6 +20,7 @@ export interface BlocksSectionProps {
   readonly initialBlocks: readonly ProfessionalBlock[];
   readonly readOnly?: boolean;
   readonly defaultDate?: string;
+  readonly onStatusChange?: (message: string | null) => void;
 }
 
 export function BlocksSection({
@@ -30,6 +31,7 @@ export function BlocksSection({
   initialBlocks,
   readOnly = false,
   defaultDate,
+  onStatusChange,
 }: BlocksSectionProps) {
   const [prevKey, setPrevKey] = useState({ initialBlocks, professionalId });
   const [blocks, setBlocks] = useState<readonly ProfessionalBlock[]>(initialBlocks);
@@ -42,6 +44,11 @@ export function BlocksSection({
   >([]);
   const newBlockButtonRef = useRef<HTMLButtonElement | null>(null);
   const activeDeleteButtonRef = useRef<HTMLElement | null>(null);
+
+  const updateStatus = (message: string | null) => {
+    setStatusMessage(message);
+    onStatusChange?.(message);
+  };
 
   if (
     prevKey.initialBlocks !== initialBlocks ||
@@ -57,7 +64,7 @@ export function BlocksSection({
     setBlocks((prev) =>
       [...prev, response.block].sort((a, b) => a.startAt.localeCompare(b.startAt)),
     );
-    setStatusMessage("Bloqueo creado.");
+    updateStatus("Bloqueo creado.");
     setAffectedAppointments(response.affectedAppointments);
   };
 
@@ -67,12 +74,14 @@ export function BlocksSection({
     }
     const targetId = blockToDelete.id;
     setIsDeleting(true);
+    updateStatus(null);
     const result = await deleteBlock(client, targetId);
     setIsDeleting(false);
     if (result.ok) {
       setBlocks((prev) => prev.filter((item) => item.id !== targetId));
       setBlockToDelete(null);
-      setStatusMessage("Bloqueo eliminado.");
+      setAffectedAppointments([]);
+      updateStatus("Bloqueo eliminado.");
     }
   };
 
@@ -91,7 +100,7 @@ export function BlocksSection({
             type="button"
             className={styles.newBlockButton}
             onClick={() => {
-              setStatusMessage(null);
+              updateStatus(null);
               setIsFormOpen(true);
             }}
           >
@@ -100,9 +109,13 @@ export function BlocksSection({
         )}
       </div>
 
-      {statusMessage !== null && (
-        <div role="status" aria-live="polite" className={styles.statusBanner}>
-          {statusMessage}
+      {onStatusChange === undefined && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={statusMessage !== null ? styles.statusBanner : styles.statusEmpty}
+        >
+          {statusMessage ?? ""}
         </div>
       )}
 
@@ -139,7 +152,7 @@ export function BlocksSection({
                     className={styles.deleteButton}
                     onClick={(e) => {
                       activeDeleteButtonRef.current = e.currentTarget;
-                      setStatusMessage(null);
+                      updateStatus(null);
                       setBlockToDelete(block);
                     }}
                   >

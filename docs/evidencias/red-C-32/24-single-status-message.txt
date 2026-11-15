@@ -1,0 +1,41 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/HorariosPage.test.tsx (7 tests | 1 failed) 602ms
+   ✓ HorariosPage > Odontólogo accede a sus propios horarios: carga tramos y bloqueos de su professionalId sin mostrar selector de profesional 230ms
+   ✓ HorariosPage > Administrador selecciona profesional activo: lista solo activos, selecciona el primero por defecto y al cambiar actualiza datos y ?professionalId= 111ms
+   ✓ HorariosPage > Odontólogo consulta profesional ajeno y recibe 403: muestra en role=alert el mensaje literal del backend sin controles de edición ni cerrar sesión 34ms
+   ✓ HorariosPage > Recepción visualiza información completa sin controles de edición: muestra selector, tramos y bloqueos pero oculta Agregar tramo, Quitar, Guardar horario, Nuevo bloqueo y Eliminar bloqueo 74ms
+   ✓ HorariosPage > Zona horaria leída desde GET /api/agenda: consulta GET /api/agenda una sola vez, reutiliza su timezone al cambiar de profesional y formatea bloqueos según esa zona 73ms
+   ✓ HorariosPage > Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1 33ms
+   × HorariosPage > Un solo mensaje de estado vigente entre acciones sin desmontar la región: reemplaza Horario guardado por Bloqueo eliminado y mantiene una única región role=status montada 44ms
+     → expected [] to have a length of 1 but got +0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/HorariosPage.test.tsx > HorariosPage > Un solo mensaje de estado vigente entre acciones sin desmontar la región: reemplaza Horario guardado por Bloqueo eliminado y mantiene una única región role=status montada
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/features/horarios/HorariosPage.test.tsx:719:45
+    717|     });
+    718| 
+    719|     expect(screen.queryAllByRole("status")).toHaveLength(1);
+       |                                             ^
+    720|     expect(screen.getByRole("status").textContent).toBe("");
+    721| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  02:35:11
+   Duration  5.26s (transform 804ms, setup 313ms, collect 2.00s, tests 602ms, environment 1.64s, prepare 239ms)
+
+exit: 1

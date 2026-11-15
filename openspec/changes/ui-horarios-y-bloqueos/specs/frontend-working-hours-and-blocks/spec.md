@@ -27,6 +27,11 @@ La ruta `/horarios` SHALL resolver el profesional según el rol del usuario aute
 - **THEN** el backend responde con código 403 y la violación `FORBIDDEN_OPERATION`
 - **AND** la pantalla muestra en `role="alert"` el mensaje literal "No tiene permiso para leer horarios." sin controles de edición ni cerrar sesión
 
+#### Scenario: Título de PageShell Horarios y bloqueos con único h1
+- **GIVEN** un usuario autenticado que navega a `/horarios`
+- **WHEN** se renderiza `HorariosPage`
+- **THEN** `PageShell` muestra el encabezado de marca `"Horarios y bloqueos"` y la pantalla mantiene un único elemento `<h1>` con `"Horarios y bloqueos"`
+
 ### Requirement: Gestión y guardado de tramos semanales
 
 La sección de horarios SHALL listar los días de la semana con sus tramos en formato de texto `HH:MM–HH:MM`. Los usuarios con permiso MUST poder agregar tramos con "Agregar tramo" y quitarlos con "Quitar". El botón "Guardar horario" MUST enviar la semana completa como un arreglo de tramos mediante `PUT /api/professionals/{id}/working-hours` en el orden visual de la pantalla. Tras un guardado exitoso, la pantalla SHALL anunciar "Horario guardado." en una región accesible `role="status"`.
@@ -41,6 +46,11 @@ La sección de horarios SHALL listar los días de la semana con sus tramos en fo
 - **GIVEN** la sección de horarios para un día sin tramos
 - **WHEN** el usuario hace clic en "Agregar tramo" para el día martes y luego en "Quitar"
 - **THEN** se añade una fila editable con inputs de texto para inicio y fin y se remueve al pulsar "Quitar"
+
+#### Scenario: Un solo mensaje de estado vigente entre acciones sin desmontar la región
+- **GIVEN** un usuario con permisos de edición en `/horarios` que acaba de guardar el horario semanal viendo `"Horario guardado."` en `role="status"`
+- **WHEN** inicia o completa otra acción como crear o eliminar un bloqueo
+- **THEN** el mensaje anterior se limpia o reemplaza por el de la nueva acción sin que coexistan dos mensajes de estado distintos y la región `role="status"` permanece montada en el DOM
 
 ### Requirement: Validación de tramos y errores de solapamiento
 
@@ -59,7 +69,7 @@ La validación de consistencia y solapamiento de tramos SHALL realizarse en el b
 
 ### Requirement: Aviso de turnos afectados sin cancelación
 
-Cuando el guardado de horarios o el alta de bloqueos devuelve turnos afectados (`appointmentsOutsideHours` o `affectedAppointments`), la pantalla SHALL mostrar una lista con `role="alert"` que detalle fecha, hora local, paciente, profesional y estado con texto visible (`StatusBadge`). La interfaz MUST informar con una nota fija que los turnos afectados no se cancelan automáticamente y deben reprogramarse o gestionarse desde la agenda.
+Cuando el guardado de horarios o el alta de bloqueos devuelve turnos afectados (`appointmentsOutsideHours` o `affectedAppointments`), la pantalla SHALL mostrar una lista con `role="alert"` con fecha, hora local, paciente, profesional y estado (`StatusBadge`), informando que los turnos no se cancelan automáticamente. Al eliminar un bloqueo, el panel de turnos solapados de ese bloqueo MUST ocultarse.
 
 #### Scenario: Turnos futuros fuera del horario al guardar tramos
 - **GIVEN** un `PUT` exitoso de horarios que incluye turnos en `appointmentsOutsideHours`
@@ -71,6 +81,11 @@ Cuando el guardado de horarios o el alta de bloqueos devuelve turnos afectados (
 - **GIVEN** la creación de un bloqueo que se superpone con turnos existentes y devuelve `affectedAppointments`
 - **WHEN** el backend responde 201
 - **THEN** se muestra en `role="alert"` la advertencia de turnos solapados con paciente, fecha, hora local y estado
+
+#### Scenario: Eliminar bloqueo oculta su panel de turnos afectados
+- **GIVEN** un bloqueo recién creado que mostró el panel `"Turnos existentes solapados con el bloqueo creado"` en `role="alert"`
+- **WHEN** el usuario elimina ese bloqueo y confirma en el diálogo
+- **THEN** el panel `"Turnos existentes solapados con el bloqueo creado"` desaparece de la pantalla
 
 ### Requirement: Creación y eliminación de bloqueos con hora local
 
@@ -110,12 +125,31 @@ El rol recepción SHALL contar con acceso estrictamente de solo lectura a la ges
 
 ### Requirement: Obtención y reutilización de zona horaria desde la API
 
-La pantalla SHALL obtener la zona horaria de la aplicación consultando una sola vez el endpoint `GET /api/agenda` al cargar. El valor obtenido MUST reutilizarse para todas las conversiones y formateos de fecha y hora local de horarios y bloqueos. El código productivo MUST NOT contener constantes de zona horaria hardcodeadas.
+La pantalla SHALL obtener la zona horaria de la aplicación consultando una sola vez el endpoint `GET /api/agenda` al cargar. El valor obtenido MUST reutilizarse para todas las conversiones y formateos de fecha y hora local de horarios y bloqueos, mostrando las fechas con `Intl.DateTimeFormat("es-AR", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric", timeZone })`. El código productivo MUST NOT contener constantes de zona horaria hardcodeadas.
 
 #### Scenario: Zona horaria leída desde GET /api/agenda
 - **GIVEN** la carga inicial de `/horarios`
 - **WHEN** la pantalla consulta `GET /api/agenda`
 - **THEN** extrae el campo `timezone` de la respuesta y formatea todas las fechas y horas locales de acuerdo a ese identificador
+
+#### Scenario: Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar
+- **GIVEN** la zona horaria obtenida desde `GET /api/agenda` y una fecha `"2026-11-17T15:00:00Z"` en `America/Argentina/Buenos_Aires`
+- **WHEN** se renderizan la lista de turnos afectados, la lista de bloqueos y el texto de confirmación del modal de eliminar
+- **THEN** la fecha se formatea con `Intl.DateTimeFormat("es-AR", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric", timeZone })` como `"mar, 17/11/2026"` y no se muestra en formato ISO `"2026-11-17"`
+
+### Requirement: Uso exclusivo de tokens definidos y superficie clara en estilos de horarios
+
+Las hojas de estilo `.module.css` de `frontend/src/features/horarios/` SHALL emplear únicamente variables CSS definidas en `frontend/src/shared/styles/tokens.css` sin agregar tokens nuevos. `HorariosPage.module.css` MUST usar tokens de texto y de campo de superficie clara y MUST NOT usar `--color-ice` ni tokens `*-on-navy` propios de cabeceras oscuras.
+
+#### Scenario: Todas las variables CSS de horarios existen en tokens.css
+- **GIVEN** los archivos `.module.css` dentro de `frontend/src/features/horarios/` y el archivo `frontend/src/shared/styles/tokens.css`
+- **WHEN** se inspeccionan todas las referencias `var(--x)` empleadas en los estilos del módulo de horarios
+- **THEN** cada variable `--x` está declarada en `tokens.css` sin variables inexistentes
+
+#### Scenario: Encabezado y estilos de HorariosPage sin tokens de fondo oscuro
+- **GIVEN** la hoja de estilos `frontend/src/features/horarios/HorariosPage.module.css` sobre fondo claro
+- **WHEN** se inspeccionan las reglas de `.title`, `.subtitle`, `.selectorLabel`, `.selector` y `.alertBanner`
+- **THEN** utilizan tokens de superficie clara (`--color-text`, `--color-text-muted`, `--color-background`, `--color-border`, `--color-danger-*`) y no emplean `--color-ice` ni tokens `*-on-navy`
 
 ### Requirement: Adaptabilidad móvil y responsive en 1440, 768 y 390 px
 

@@ -1,2 +1,2 @@
-OK: 20 tests nuevos coinciden 1:1 con las 20 mutaciones.
+OK: 26 tests evaluados (24 nuevos + 2 modificados en AppShellNavigation.test.tsx) coinciden 1:1 con las 26 mutaciones.
 exit: 0

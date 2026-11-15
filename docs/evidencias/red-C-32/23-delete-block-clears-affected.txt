@@ -1,0 +1,41 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/BlocksSection.test.tsx (5 tests | 1 failed) 1842ms
+   ✓ BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.  770ms
+   ✓ BlocksSection > Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado. 103ms
+   ✓ BlocksSection > Cancelación del borrado con Escape: cierra el diálogo al pulsar Escape o Volver sin enviar DELETE y restaura el foco 169ms
+   ✓ BlocksSection > Bloqueo inválido muestra mensaje literal del backend: mantiene el diálogo abierto y muestra role=alert literal ante error 422  316ms
+   × BlocksSection > Eliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados 480ms
+     → expected <strong></strong> to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/BlocksSection.test.tsx > BlocksSection > Eliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados
+AssertionError: expected <strong></strong> to be null
+
+- Expected: 
+null
+
++ Received: 
+<strong>
+  Turnos existentes solapados con el bloqueo creado:
+</strong>
+
+ ❯ src/features/horarios/BlocksSection.test.tsx:279:7
+    277|     expect(
+    278|       screen.queryByText(/Turnos existentes solapados con el bloqueo c…
+    279|     ).toBeNull();
+       |       ^
+    280|     expect(screen.queryByRole("alert")).toBeNull();
+    281|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  02:32:50
+   Duration  4.91s (transform 340ms, setup 391ms, collect 793ms, tests 1.84s, environment 1.20s, prepare 255ms)
+
+exit: 1

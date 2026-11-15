@@ -1,14 +1,14 @@
 ================================================================================
 VERIFICACION POR MUTACION DE C-32 (UI HORARIOS Y BLOQUEOS)
-SHA-256 inicial de archivos de produccion: 8db576d9097e38de8f21360a44501f18b31a0e8fa9e120c0ce68442b3e47ff93
+SHA-256 inicial de archivos de produccion: 6e6fe13efdccc682c83f3a4f03546ef741d6f3f01eb5d16bcfc35bc209bcd018
 ================================================================================
-Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
+Correspondencia 1:1 verificada: 26 tests evaluados (24 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs 26 mutaciones.
 ================================================================================
 [M01] src/features/horarios/HorariosPage.test.tsx > Odontólogo accede a sus propios horarios: carga tramos y bloqueos de su professionalId sin mostrar selector de profesional
     Archivo: frontend/src/features/horarios/HorariosPage.tsx
 --- a/frontend/src/features/horarios/HorariosPage.tsx
 +++ b/frontend/src/features/horarios/HorariosPage.tsx
-@@ -35,5 +35,5 @@
+@@ -36,5 +36,5 @@
    const isDentist = user?.role === "odontologo";
    const isReadOnly = user?.role === "recepcion";
 -  const showSelector = !isDentist;
@@ -23,7 +23,7 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/HorariosPage.tsx
 --- a/frontend/src/features/horarios/HorariosPage.tsx
 +++ b/frontend/src/features/horarios/HorariosPage.tsx
-@@ -54,5 +54,5 @@
+@@ -55,5 +55,5 @@
        }
        if (profsRes !== null && profsRes.ok) {
 -        setProfessionals(profsRes.data.filter((p) => p.active));
@@ -38,7 +38,7 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/HorariosPage.tsx
 --- a/frontend/src/features/horarios/HorariosPage.tsx
 +++ b/frontend/src/features/horarios/HorariosPage.tsx
-@@ -88,5 +88,5 @@
+@@ -89,5 +89,5 @@
        if (!hoursRes.ok) {
          clearActionErrors();
 -        setPageError(getApiErrorMessages(hoursRes.error).join(" "));
@@ -53,27 +53,27 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/WorkingHoursSection.tsx
 --- a/frontend/src/features/horarios/WorkingHoursSection.tsx
 +++ b/frontend/src/features/horarios/WorkingHoursSection.tsx
-@@ -120,5 +120,5 @@
+@@ -127,5 +127,5 @@
        setSlots(toEditableSlots(result.data.workingHours));
        setOutsideAppointments(result.data.appointmentsOutsideHours);
--      setStatusMessage("Horario guardado.");
-+      setStatusMessage(null);
+-      updateStatus("Horario guardado.");
++      updateStatus(null);
        return;
      }
     Estado: Matada
-    Fallo:  Error: expect(received).toHaveTextContent()
+    Fallo:  Error: expect(element).toHaveTextContent()
     Restaurado a verde: si
 --------------------------------------------------------------------------------
 [M05] src/features/horarios/WorkingHoursSection.test.tsx > Edición interactiva de tramos en la interfaz: agrega una fila editable para el día martes y la quita al pulsar Quitar
     Archivo: frontend/src/features/horarios/WorkingHoursSection.tsx
 --- a/frontend/src/features/horarios/WorkingHoursSection.tsx
 +++ b/frontend/src/features/horarios/WorkingHoursSection.tsx
-@@ -82,5 +82,5 @@
+@@ -89,5 +89,5 @@
  
    const handleRemoveSlot = (rowId: string) => {
 -    setSlots((prev) => prev.filter((item) => item.rowId !== rowId));
 +    setSlots((prev) => prev);
-     setStatusMessage(null);
+     updateStatus(null);
      setViolations([]);
     Estado: Matada
     Fallo:  AssertionError: expected <input type="text" …(5)></input> to be null
@@ -83,7 +83,7 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/WorkingHoursSection.tsx
 --- a/frontend/src/features/horarios/WorkingHoursSection.tsx
 +++ b/frontend/src/features/horarios/WorkingHoursSection.tsx
-@@ -68,5 +68,5 @@
+@@ -75,5 +75,5 @@
    useEffect(() => {
      if (violations.length > 0 || fieldErrors.length > 0) {
 -      alertRef.current?.focus();
@@ -98,7 +98,7 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/WorkingHoursSection.tsx
 --- a/frontend/src/features/horarios/WorkingHoursSection.tsx
 +++ b/frontend/src/features/horarios/WorkingHoursSection.tsx
-@@ -220,5 +220,5 @@
+@@ -231,5 +231,5 @@
                            className={styles.timeInput}
                            value={slot.start}
 -                          aria-invalid={isFieldInvalid(slot.rowId, "start") ? "true" : undefined}
@@ -113,12 +113,12 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/WorkingHoursSection.tsx
 --- a/frontend/src/features/horarios/WorkingHoursSection.tsx
 +++ b/frontend/src/features/horarios/WorkingHoursSection.tsx
-@@ -119,5 +119,5 @@
+@@ -126,5 +126,5 @@
      if (result.ok) {
        setSlots(toEditableSlots(result.data.workingHours));
 -      setOutsideAppointments(result.data.appointmentsOutsideHours);
 +      setOutsideAppointments([]);
-       setStatusMessage("Horario guardado.");
+       updateStatus("Horario guardado.");
        return;
     Estado: Matada
     Fallo:  AssertionError: expected null not to be null
@@ -128,9 +128,9 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/BlocksSection.tsx
 --- a/frontend/src/features/horarios/BlocksSection.tsx
 +++ b/frontend/src/features/horarios/BlocksSection.tsx
-@@ -59,5 +59,5 @@
+@@ -66,5 +66,5 @@
      );
-     setStatusMessage("Bloqueo creado.");
+     updateStatus("Bloqueo creado.");
 -    setAffectedAppointments(response.affectedAppointments);
 +    setAffectedAppointments([]);
    };
@@ -142,30 +142,30 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/BlocksSection.tsx
 --- a/frontend/src/features/horarios/BlocksSection.tsx
 +++ b/frontend/src/features/horarios/BlocksSection.tsx
-@@ -58,5 +58,5 @@
+@@ -65,5 +65,5 @@
        [...prev, response.block].sort((a, b) => a.startAt.localeCompare(b.startAt)),
      );
--    setStatusMessage("Bloqueo creado.");
-+    setStatusMessage(null);
+-    updateStatus("Bloqueo creado.");
++    updateStatus(null);
      setAffectedAppointments(response.affectedAppointments);
    };
     Estado: Matada
-    Fallo:  Error: expect(received).toHaveTextContent()
+    Fallo:  Error: expect(element).toHaveTextContent()
     Restaurado a verde: si
 --------------------------------------------------------------------------------
 [M11] src/features/horarios/BlocksSection.test.tsx > Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado.
     Archivo: frontend/src/features/horarios/BlocksSection.tsx
 --- a/frontend/src/features/horarios/BlocksSection.tsx
 +++ b/frontend/src/features/horarios/BlocksSection.tsx
-@@ -73,5 +73,5 @@
-       setBlocks((prev) => prev.filter((item) => item.id !== targetId));
+@@ -82,5 +82,5 @@
        setBlockToDelete(null);
--      setStatusMessage("Bloqueo eliminado.");
-+      setStatusMessage(null);
+       setAffectedAppointments([]);
+-      updateStatus("Bloqueo eliminado.");
++      updateStatus(null);
      }
    };
     Estado: Matada
-    Fallo:  Error: expect(received).toHaveTextContent()
+    Fallo:  Error: expect(element).toHaveTextContent()
     Restaurado a verde: si
 --------------------------------------------------------------------------------
 [M12] src/features/horarios/BlocksSection.test.tsx > Cancelación del borrado con Escape: cierra el diálogo al pulsar Escape o Volver sin enviar DELETE y restaura el foco
@@ -202,7 +202,7 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/HorariosPage.tsx
 --- a/frontend/src/features/horarios/HorariosPage.tsx
 +++ b/frontend/src/features/horarios/HorariosPage.tsx
-@@ -34,5 +34,5 @@
+@@ -35,5 +35,5 @@
  
    const isDentist = user?.role === "odontologo";
 -  const isReadOnly = user?.role === "recepcion";
@@ -216,7 +216,7 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Archivo: frontend/src/features/horarios/HorariosPage.tsx
 --- a/frontend/src/features/horarios/HorariosPage.tsx
 +++ b/frontend/src/features/horarios/HorariosPage.tsx
-@@ -51,5 +51,5 @@
+@@ -52,5 +52,5 @@
        }
        if (agendaRes.ok) {
 -        setTimezone(agendaRes.data.timezone);
@@ -302,13 +302,105 @@ Correspondencia 1:1 verificada: 20 tests nuevos vs 20 mutaciones.
     Fallo:  AssertionError: expected null not to be null
     Restaurado a verde: si
 --------------------------------------------------------------------------------
+[M21] src/features/horarios/horariosStyles.test.ts > Todas las variables CSS de horarios existen en tokens.css: cada var(--x) usado en los .module.css de horarios está definido en tokens.css
+    Archivo: frontend/src/features/horarios/WorkingHoursSection.module.css
+--- a/frontend/src/features/horarios/WorkingHoursSection.module.css
++++ b/frontend/src/features/horarios/WorkingHoursSection.module.css
+@@ -4,5 +4,5 @@
+   border-radius: var(--radius-lg);
+   padding: var(--space-5);
+-  box-shadow: var(--shadow-sm);
++  box-shadow: var(--shadow-xs);
+   display: flex;
+   flex-direction: column;
+    Estado: Matada
+    Fallo:  AssertionError: expected [ Array(1) ] to deeply equal []
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M22] src/features/horarios/horariosStyles.test.ts > Encabezado y estilos de HorariosPage sin tokens de fondo oscuro: HorariosPage.module.css usa tokens de superficie clara y no contiene --color-ice ni *-on-navy
+    Archivo: frontend/src/features/horarios/HorariosPage.module.css
+--- a/frontend/src/features/horarios/HorariosPage.module.css
++++ b/frontend/src/features/horarios/HorariosPage.module.css
+@@ -53,6 +53,6 @@
+   font-family: inherit;
+   font-size: var(--font-size-sm);
+-  color: var(--color-text);
+-  background: var(--color-background);
++  color: var(--color-ice);
++  background: var(--field-on-navy);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-md);
+    Estado: Matada
+    Fallo:  AssertionError: expected '.page {\n  width: 100%;\n  max-width:…' not to match /--color-ice/
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M23] src/features/horarios/HorariosPage.test.tsx > Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1
+    Archivo: frontend/src/features/horarios/HorariosPage.tsx
+--- a/frontend/src/features/horarios/HorariosPage.tsx
++++ b/frontend/src/features/horarios/HorariosPage.tsx
+@@ -123,5 +123,5 @@
+ 
+   return (
+-    <PageShell title="Horarios y bloqueos">
++    <PageShell title="Turnos Odontología">
+       <div className={styles.page}>
+         <header className={styles.header}>
+    Estado: Matada
+    Fallo:  AssertionError: expected [] to have a length of 1 but got +0
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M24] src/features/horarios/BlocksSection.test.tsx > Eliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados
+    Archivo: frontend/src/features/horarios/BlocksSection.tsx
+--- a/frontend/src/features/horarios/BlocksSection.tsx
++++ b/frontend/src/features/horarios/BlocksSection.tsx
+@@ -81,5 +81,4 @@
+       setBlocks((prev) => prev.filter((item) => item.id !== targetId));
+       setBlockToDelete(null);
+-      setAffectedAppointments([]);
+       updateStatus("Bloqueo eliminado.");
+     }
+    Estado: Matada
+    Fallo:  AssertionError: expected <strong></strong> to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M25] src/features/horarios/HorariosPage.test.tsx > Un solo mensaje de estado vigente entre acciones sin desmontar la región: reemplaza Horario guardado por Bloqueo eliminado y mantiene una única región role=status montada
+    Archivo: frontend/src/features/horarios/HorariosPage.tsx
+--- a/frontend/src/features/horarios/HorariosPage.tsx
++++ b/frontend/src/features/horarios/HorariosPage.tsx
+@@ -186,5 +186,4 @@
+                 initialSlots={workingHours}
+                 readOnly={isReadOnly}
+-                onStatusChange={setStatusMessage}
+               />
+               <BlocksSection
+    Estado: Matada
+    Fallo:  AssertionError: expected [ Array(2) ] to have a length of 1 but got 2
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M26] src/features/horarios/AffectedAppointments.test.tsx > Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO
+    Archivo: frontend/src/features/horarios/horariosTime.ts
+--- a/frontend/src/features/horarios/horariosTime.ts
++++ b/frontend/src/features/horarios/horariosTime.ts
+@@ -51,6 +51,6 @@
+   timeZone: string,
+ ): { readonly dateLabel: string; readonly timeLabel: string } {
+-  const startDate = formatDisplayDateInZone(startAt, timeZone);
+-  const endDate = formatDisplayDateInZone(endAt, timeZone);
++  const startDate = formatLocalDate(startAt, timeZone);
++  const endDate = formatLocalDate(endAt, timeZone);
+   const startTime = formatLocalTime(startAt, timeZone);
+   const endTime = formatLocalTime(endAt, timeZone);
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveTextContent()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
 ================================================================================
 RESUMEN DE MUTACIONES
-Mutaciones totales:    20
-Matadas por asercion:  20
+Mutaciones totales:    26
+Matadas por asercion:  26
 Invalidas:             0
-SHA-256 inicial:       8db576d9097e38de8f21360a44501f18b31a0e8fa9e120c0ce68442b3e47ff93
-SHA-256 final:         8db576d9097e38de8f21360a44501f18b31a0e8fa9e120c0ce68442b3e47ff93
+SHA-256 inicial:       6e6fe13efdccc682c83f3a4f03546ef741d6f3f01eb5d16bcfc35bc209bcd018
+SHA-256 final:         6e6fe13efdccc682c83f3a4f03546ef741d6f3f01eb5d16bcfc35bc209bcd018
 SHA-256 sin cambios:   si
 ================================================================================
 EXITO: todas las mutaciones fueron detectadas limpiamente.

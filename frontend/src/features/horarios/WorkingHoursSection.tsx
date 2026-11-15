@@ -17,6 +17,7 @@ export interface WorkingHoursSectionProps {
   readonly timezone?: string;
   readonly initialSlots: readonly WorkingHoursSlot[];
   readonly readOnly?: boolean;
+  readonly onStatusChange?: (message: string | null) => void;
 }
 
 interface EditableSlot {
@@ -42,6 +43,7 @@ export function WorkingHoursSection({
   timezone = "",
   initialSlots,
   readOnly = false,
+  onStatusChange,
 }: WorkingHoursSectionProps) {
   const [prevKey, setPrevKey] = useState({ initialSlots, professionalId });
   const [slots, setSlots] = useState<EditableSlot[]>(() => toEditableSlots(initialSlots));
@@ -54,6 +56,11 @@ export function WorkingHoursSection({
   const [fieldErrors, setFieldErrors] = useState<FieldError[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const alertRef = useRef<HTMLDivElement | null>(null);
+
+  const updateStatus = (message: string | null) => {
+    setStatusMessage(message);
+    onStatusChange?.(message);
+  };
 
   if (prevKey.initialSlots !== initialSlots || prevKey.professionalId !== professionalId) {
     setPrevKey({ initialSlots, professionalId });
@@ -75,14 +82,14 @@ export function WorkingHoursSection({
     const rowId = `slot-${weekday}-${nextRowSeq}`;
     setNextRowSeq((prev) => prev + 1);
     setSlots((prev) => [...prev, { rowId, weekday, start: "", end: "" }]);
-    setStatusMessage(null);
+    updateStatus(null);
     setViolations([]);
     setFieldErrors([]);
   };
 
   const handleRemoveSlot = (rowId: string) => {
     setSlots((prev) => prev.filter((item) => item.rowId !== rowId));
-    setStatusMessage(null);
+    updateStatus(null);
     setViolations([]);
     setFieldErrors([]);
   };
@@ -91,14 +98,14 @@ export function WorkingHoursSection({
     setSlots((prev) =>
       prev.map((item) => (item.rowId === rowId ? { ...item, [field]: value } : item)),
     );
-    setStatusMessage(null);
+    updateStatus(null);
     setViolations([]);
     setFieldErrors([]);
   };
 
   const handleSave = async () => {
     setIsSaving(true);
-    setStatusMessage(null);
+    updateStatus(null);
     setOutsideAppointments([]);
     setViolations([]);
     setFieldErrors([]);
@@ -119,7 +126,7 @@ export function WorkingHoursSection({
     if (result.ok) {
       setSlots(toEditableSlots(result.data.workingHours));
       setOutsideAppointments(result.data.appointmentsOutsideHours);
-      setStatusMessage("Horario guardado.");
+      updateStatus("Horario guardado.");
       return;
     }
     if (result.error.kind === "validation") {
@@ -173,9 +180,13 @@ export function WorkingHoursSection({
         </div>
       )}
 
-      {statusMessage !== null && (
-        <div role="status" aria-live="polite" className={styles.statusBanner}>
-          {statusMessage}
+      {onStatusChange === undefined && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={statusMessage !== null ? styles.statusBanner : styles.statusEmpty}
+        >
+          {statusMessage ?? ""}
         </div>
       )}
 

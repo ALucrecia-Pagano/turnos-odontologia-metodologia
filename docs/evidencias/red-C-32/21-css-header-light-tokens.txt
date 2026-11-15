@@ -1,0 +1,155 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/horariosStyles.test.ts (2 tests | 1 failed) 19ms
+   ✓ horariosStyles > Todas las variables CSS de horarios existen en tokens.css: cada var(--x) usado en los .module.css de horarios está definido en tokens.css 5ms
+   × horariosStyles > Encabezado y estilos de HorariosPage sin tokens de fondo oscuro: HorariosPage.module.css usa tokens de superficie clara y no contiene --color-ice ni *-on-navy 11ms
+     → expected '.page {\n  width: 100%;\n  max-width:…' not to match /--color-ice/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/horariosStyles.test.ts > horariosStyles > Encabezado y estilos de HorariosPage sin tokens de fondo oscuro: HorariosPage.module.css usa tokens de superficie clara y no contiene --color-ice ni *-on-navy
+AssertionError: expected '.page {\n  width: 100%;\n  max-width:…' not to match /--color-ice/
+
+- Expected: 
+/--color-ice/
+
++ Received: 
+".page {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-ice);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-ice);
+}
+
+.selectorGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.selectorLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ice);
+}
+
+.selector {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-ice);
+  background: var(--field-on-navy);
+  border: 1px solid var(--border-on-navy-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  min-width: 220px;
+  max-width: 100%;
+}
+
+.selector:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.alertBanner {
+  background: var(--alert-on-navy-bg);
+  border: 1px solid var(--alert-on-navy-border);
+  border-radius: var(--radius-md);
+  color: var(--alert-on-navy-text);
+  padding: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.alertBanner:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: var(--space-4);
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .selectorGroup {
+    width: 100%;
+  }
+
+  .selector {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .grid {
+    gap: var(--space-4);
+  }
+}
+"
+
+ ❯ src/features/horarios/horariosStyles.test.ts:36:21
+     34|     const css = readSrcFile("features/horarios/HorariosPage.module.css…
+     35| 
+     36|     expect(css).not.toMatch(/--color-ice/);
+       |                     ^
+     37|     expect(css).not.toMatch(/on-navy/);
+     38|     expect(ruleBody(css, ".title")).toContain("var(--color-text)");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  02:26:07
+   Duration  2.50s (transform 85ms, setup 371ms, collect 87ms, tests 19ms, environment 1.29s, prepare 199ms)
+
+exit: 1

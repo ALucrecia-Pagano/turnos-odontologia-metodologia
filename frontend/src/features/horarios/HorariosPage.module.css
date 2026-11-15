@@ -26,14 +26,14 @@
   font-family: var(--font-family-heading);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-ice);
+  color: var(--color-text);
   line-height: 1.2;
 }
 
 .subtitle {
   margin: 0;
   font-size: var(--font-size-sm);
-  color: var(--color-ice);
+  color: var(--color-text-muted);
 }
 
 .selectorGroup {
@@ -46,38 +46,51 @@
 .selectorLabel {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-ice);
+  color: var(--color-text);
 }
 
 .selector {
   font-family: inherit;
   font-size: var(--font-size-sm);
-  color: var(--color-ice);
-  background: var(--field-on-navy);
-  border: 1px solid var(--border-on-navy-strong);
-  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
   min-width: 220px;
   max-width: 100%;
 }
 
 .selector:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
 .alertBanner {
-  background: var(--alert-on-navy-bg);
-  border: 1px solid var(--alert-on-navy-border);
+  background: var(--color-danger-background);
+  border: 1px solid var(--color-danger-border);
   border-radius: var(--radius-md);
-  color: var(--alert-on-navy-text);
+  color: var(--color-danger-text);
   padding: var(--space-4);
   font-size: var(--font-size-sm);
 }
 
 .alertBanner:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+.statusBanner {
+  background: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.statusEmpty {
+  min-height: 0;
 }
 
 .grid {

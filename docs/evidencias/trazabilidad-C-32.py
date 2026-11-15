@@ -5,15 +5,15 @@ Uso, desde la raíz del repo o desde frontend/:
     python docs/evidencias/trazabilidad-C-32.py
 
 Lee los escenarios de los spec.md del change `ui-horarios-y-bloqueos`
-(frontend-working-hours-and-blocks y frontend-foundation), exige 20 escenarios
-(18 testeables 1:1 + 2 visuales a cargo de Claude) y genera trazabilidad-C-32.txt
+(frontend-working-hours-and-blocks y frontend-foundation), exige 26 escenarios
+(24 testeables 1:1 + 2 visuales a cargo de Claude) y genera trazabilidad-C-32.txt
 y la matriz de verify-C-32.md (entre las marcas trazabilidad:inicio / trazabilidad:fin).
 
 Termina con código distinto de 0 si:
   (a) dos escenarios comparten el mismo test (archivo + nombre);
   (b) un escenario testeable no tiene test listado por Vitest, evidencia red-C-32/NN-*.txt,
       evidencia green-C-32/NN-*.txt o mutación definida en mutaciones-C-32.py;
-  (c) el total no es 18 testeables + 2 visuales = 20, o un escenario del spec no está
+  (c) el total no es 24 testeables + 2 visuales = 26, o un escenario del spec no está
       mapeado, o el mapa tiene un escenario que el spec no declara;
   (d) alguno de los 2 tests auxiliares (horariosApi.test.ts y HorariosRoute.test.tsx)
       no está listado por Vitest o no tiene evidencia RED/GREEN o mutación (M19-M20).
@@ -41,7 +41,7 @@ TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str(FRONTEND / "node_modules" / "vitest" / "vitest.mjs")]
 
-EXPECTED_TESTEABLE = 18
+EXPECTED_TESTEABLE = 24
 EXPECTED_VISUAL = 2
 
 T_PAGE = "src/features/horarios/HorariosPage.test.tsx"
@@ -52,6 +52,7 @@ T_MOBILE = "src/features/horarios/BlockFormDialog.mobile.test.tsx"
 T_NAVIGATION = "src/shared/components/AppShellNavigation.test.tsx"
 T_API = "src/features/horarios/horariosApi.test.ts"
 T_ROUTE = "src/features/horarios/HorariosRoute.test.tsx"
+T_STYLES = "src/features/horarios/horariosStyles.test.ts"
 
 C32_TEST_FILES = (
     T_PAGE,
@@ -62,6 +63,7 @@ C32_TEST_FILES = (
     T_NAVIGATION,
     T_API,
     T_ROUTE,
+    T_STYLES,
 )
 
 
@@ -257,17 +259,10 @@ ENTRIES: tuple[Entry, ...] = (
         "M16",
     ),
     Entry(
-        "visual",
-        "frontend-working-hours-and-blocks",
-        "Verificación visual multi-resolución en 1440, 768 y 390 px",
-        "V01",
-        visual="C-32-horarios-{1440,768,390}.png",
-    ),
-    Entry(
         "testeable",
         "frontend-foundation",
         "Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px",
-        "18",
+        "17",
         T_NAVIGATION,
         "enlaces de navegación activos y bloque de sesión en misma línea en 1440 px",
         "03-menu-pre.txt",
@@ -278,12 +273,85 @@ ENTRIES: tuple[Entry, ...] = (
         "testeable",
         "frontend-foundation",
         "Ítems deshabilitados con Próximamente conservan semántica y accesibilidad",
-        "19",
+        "18",
         T_NAVIGATION,
         "ítems deshabilitados con Próximamente conservan semántica y accesibilidad",
         "03-menu-pre.txt",
         "03-menu-ok.txt",
         "M18",
+    ),
+    Entry(
+        "testeable",
+        "frontend-working-hours-and-blocks",
+        "Todas las variables CSS de horarios existen en tokens.css",
+        "19",
+        T_STYLES,
+        "Todas las variables CSS de horarios existen en tokens.css: cada var(--x) usado en los .module.css de horarios está definido en tokens.css",
+        "20-css-tokens-exist.txt",
+        "20-css-tokens-exist.txt",
+        "M21",
+    ),
+    Entry(
+        "testeable",
+        "frontend-working-hours-and-blocks",
+        "Encabezado y estilos de HorariosPage sin tokens de fondo oscuro",
+        "20",
+        T_STYLES,
+        "Encabezado y estilos de HorariosPage sin tokens de fondo oscuro: HorariosPage.module.css usa tokens de superficie clara y no contiene --color-ice ni *-on-navy",
+        "21-css-header-light-tokens.txt",
+        "21-css-header-light-tokens.txt",
+        "M22",
+    ),
+    Entry(
+        "testeable",
+        "frontend-working-hours-and-blocks",
+        "Título de PageShell Horarios y bloqueos con único h1",
+        "21",
+        T_PAGE,
+        "Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1",
+        "22-pageshell-title-h1.txt",
+        "22-pageshell-title-h1.txt",
+        "M23",
+    ),
+    Entry(
+        "testeable",
+        "frontend-working-hours-and-blocks",
+        "Eliminar bloqueo oculta su panel de turnos afectados",
+        "22",
+        T_BLOCKS,
+        "Eliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados",
+        "23-delete-block-clears-affected.txt",
+        "23-delete-block-clears-affected.txt",
+        "M24",
+    ),
+    Entry(
+        "testeable",
+        "frontend-working-hours-and-blocks",
+        "Un solo mensaje de estado vigente entre acciones sin desmontar la región",
+        "23",
+        T_PAGE,
+        "Un solo mensaje de estado vigente entre acciones sin desmontar la región: reemplaza Horario guardado por Bloqueo eliminado y mantiene una única región role=status montada",
+        "24-single-status-message.txt",
+        "24-single-status-message.txt",
+        "M25",
+    ),
+    Entry(
+        "testeable",
+        "frontend-working-hours-and-blocks",
+        "Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar",
+        "24",
+        T_AFFECTED,
+        "Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO",
+        "25-dates-local-format.txt",
+        "25-dates-local-format.txt",
+        "M26",
+    ),
+    Entry(
+        "visual",
+        "frontend-working-hours-and-blocks",
+        "Verificación visual multi-resolución en 1440, 768 y 390 px",
+        "V01",
+        visual="C-32-horarios-{1440,768,390}.png",
     ),
     Entry(
         "visual",
@@ -388,7 +456,8 @@ def check_evidence_file(folder: str, filename: str, is_red: bool) -> str | None:
     path = EVIDENCE / folder / filename
     if not path.is_file():
         return f"Falta evidencia {folder}/{filename}"
-    text = path.read_text(encoding="utf-8", errors="replace")
+    raw_text = path.read_text(encoding="utf-8", errors="replace")
+    text = re.sub(r"\x1b\[[0-9;]*m", "", raw_text)
     if is_red and not ASSERTION_RE.search(text):
         return f"{folder}/{filename} no contiene fallo por aserción (AssertionError / Error: expect)"
     if not is_red and not re.search(r"Tests\s+\d+ passed", text):

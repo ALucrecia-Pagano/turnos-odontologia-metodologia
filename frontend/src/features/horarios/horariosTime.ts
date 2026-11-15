@@ -35,13 +35,23 @@ export function formatLocalTimeInZone(instant: string, timeZone: string): string
   return formatLocalTime(instant, timeZone);
 }
 
+export function formatDisplayDateInZone(instant: string, timeZone: string): string {
+  return new Intl.DateTimeFormat("es-AR", {
+    weekday: "short",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone,
+  }).format(new Date(instant));
+}
+
 export function formatLocalRangeInZone(
   startAt: string,
   endAt: string,
   timeZone: string,
 ): { readonly dateLabel: string; readonly timeLabel: string } {
-  const startDate = formatLocalDate(startAt, timeZone);
-  const endDate = formatLocalDate(endAt, timeZone);
+  const startDate = formatDisplayDateInZone(startAt, timeZone);
+  const endDate = formatDisplayDateInZone(endAt, timeZone);
   const startTime = formatLocalTime(startAt, timeZone);
   const endTime = formatLocalTime(endAt, timeZone);
   const dateLabel = startDate === endDate ? startDate : `${startDate} a ${endDate}`;

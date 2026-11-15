@@ -1,9 +1,9 @@
 ================================================================================
 TRAZABILIDAD C-32 (ui-horarios-y-bloqueos) — SPEC -> TEST -> EVIDENCIA -> MUTACIÓN
 ================================================================================
-Escenarios declarados en specs: 20 (18 testeables + 2 visuales = 20)
+Escenarios declarados en specs: 26 (24 testeables + 2 visuales = 26)
 Validación de correspondencia 1:1 (cero tests compartidos): OK
-Validación de evidencias RED/GREEN: OK (18 escenarios + 2 auxiliares)
+Validación de evidencias RED/GREEN: OK (24 escenarios + 2 auxiliares)
   [01] (frontend-working-hours-and-blocks) Odontólogo accede a sus propios horarios -> HorariosPage.test.tsx :: Odontólogo accede a sus propios horarios [RED: 15-role-dentist-own.txt | GREEN: 15-role-dentist-own.txt | MUT: M01]
   [02] (frontend-working-hours-and-blocks) Administrador selecciona profesional activo -> HorariosPage.test.tsx :: Administrador selecciona profesional activo [RED: 16-role-admin-selector.txt | GREEN: 16-role-admin-selector.txt | MUT: M02]
   [03] (frontend-working-hours-and-blocks) Odontólogo consulta profesional ajeno y recibe 403 -> HorariosPage.test.tsx :: Odontólogo consulta profesional ajeno y recibe 403 [RED: 17-role-dentist-403.txt | GREEN: 17-role-dentist-403.txt | MUT: M03]
@@ -20,14 +20,20 @@ Validación de evidencias RED/GREEN: OK (18 escenarios + 2 auxiliares)
   [14] (frontend-working-hours-and-blocks) Recepción visualiza información completa sin controles de edición -> HorariosPage.test.tsx :: Recepción visualiza información completa sin controles de edición [RED: 18-role-reception-readonly.txt | GREEN: 18-role-reception-readonly.txt | MUT: M14]
   [15] (frontend-working-hours-and-blocks) Zona horaria leída desde GET /api/agenda -> HorariosPage.test.tsx :: Zona horaria leída desde GET /api/agenda [RED: 19-timezone-api.txt | GREEN: 19-timezone-api.txt | MUT: M15]
   [16] (frontend-working-hours-and-blocks) Presentación de modal como hoja inferior en móvil -> BlockFormDialog.mobile.test.tsx :: Presentación de modal como hoja inferior en móvil [RED: 12-block-bottom-sheet.txt | GREEN: 12-block-bottom-sheet.txt | MUT: M16]
+  [17] (frontend-foundation) Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px -> AppShellNavigation.test.tsx :: enlaces de navegación activos y bloque de sesión en misma línea en 1440 px [RED: 03-menu-pre.txt | GREEN: 03-menu-ok.txt | MUT: M17]
+  [18] (frontend-foundation) Ítems deshabilitados con Próximamente conservan semántica y accesibilidad -> AppShellNavigation.test.tsx :: ítems deshabilitados con Próximamente conservan semántica y accesibilidad [RED: 03-menu-pre.txt | GREEN: 03-menu-ok.txt | MUT: M18]
+  [19] (frontend-working-hours-and-blocks) Todas las variables CSS de horarios existen en tokens.css -> horariosStyles.test.ts :: Todas las variables CSS de horarios existen en tokens.css [RED: 20-css-tokens-exist.txt | GREEN: 20-css-tokens-exist.txt | MUT: M21]
+  [20] (frontend-working-hours-and-blocks) Encabezado y estilos de HorariosPage sin tokens de fondo oscuro -> horariosStyles.test.ts :: Encabezado y estilos de HorariosPage sin tokens de fondo oscuro [RED: 21-css-header-light-tokens.txt | GREEN: 21-css-header-light-tokens.txt | MUT: M22]
+  [21] (frontend-working-hours-and-blocks) Título de PageShell Horarios y bloqueos con único h1 -> HorariosPage.test.tsx :: Título de PageShell Horarios y bloqueos con único h1 [RED: 22-pageshell-title-h1.txt | GREEN: 22-pageshell-title-h1.txt | MUT: M23]
+  [22] (frontend-working-hours-and-blocks) Eliminar bloqueo oculta su panel de turnos afectados -> BlocksSection.test.tsx :: Eliminar bloqueo oculta su panel de turnos afectados [RED: 23-delete-block-clears-affected.txt | GREEN: 23-delete-block-clears-affected.txt | MUT: M24]
+  [23] (frontend-working-hours-and-blocks) Un solo mensaje de estado vigente entre acciones sin desmontar la región -> HorariosPage.test.tsx :: Un solo mensaje de estado vigente entre acciones sin desmontar la región [RED: 24-single-status-message.txt | GREEN: 24-single-status-message.txt | MUT: M25]
+  [24] (frontend-working-hours-and-blocks) Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar -> AffectedAppointments.test.tsx :: Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar [RED: 25-dates-local-format.txt | GREEN: 25-dates-local-format.txt | MUT: M26]
   [V01] (frontend-working-hours-and-blocks) Verificación visual multi-resolución en 1440, 768 y 390 px -> Visual (C-32-horarios-{1440,768,390}.png)
-  [18] (frontend-foundation) Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px -> AppShellNavigation.test.tsx :: enlaces de navegación activos y bloque de sesión en misma línea en 1440 px [RED: 03-menu-pre.txt | GREEN: 03-menu-ok.txt | MUT: M17]
-  [19] (frontend-foundation) Ítems deshabilitados con Próximamente conservan semántica y accesibilidad -> AppShellNavigation.test.tsx :: ítems deshabilitados con Próximamente conservan semántica y accesibilidad [RED: 03-menu-pre.txt | GREEN: 03-menu-ok.txt | MUT: M18]
   [V02] (frontend-foundation) Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> Visual (C-32-appshell-{768,390}.png)
   [M19] (auxiliar) horariosApi.test.ts :: parsea respuestas exitosas de getWorkingHours, replaceWorkingHours, listBlocks, createBlock y deleteBlock [RED: 01-api-ok.txt | GREEN: 01-api-ok.txt]
   [M20] (auxiliar) HorariosRoute.test.tsx :: renderiza el contenedor principal de Horarios y bloqueos en /horarios para usuario autenticado y redirige a /login si es anónimo [RED: 02-route.txt | GREEN: 02-route.txt]
 ================================================================================
-TOTAL: 18 testeables + 2 visuales = 20 escenarios mapeados (+ 2 tests auxiliares con mutación)
+TOTAL: 24 testeables + 2 visuales = 26 escenarios mapeados (+ 2 tests auxiliares con mutación)
 EXITO: Trazabilidad 100% verificada.
 ================================================================================
 exit: 0

@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/horarios/AffectedAppointments.test.tsx (3 tests) 897ms
+   ✓ AffectedAppointments > Turnos solapados al crear un bloqueo: muestra en role=alert la advertencia de turnos solapados con paciente, fecha, hora local y estado  304ms
+   ✓ AffectedAppointments > Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO  353ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  02:40:33
+   Duration  4.03s (transform 322ms, setup 315ms, collect 808ms, tests 897ms, environment 1.26s, prepare 207ms)
+
+exit: 0

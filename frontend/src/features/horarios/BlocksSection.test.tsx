@@ -201,4 +201,82 @@ describe("BlocksSection", () => {
     expect(screen.queryByRole("dialog")).not.toBeNull();
     expect(screen.queryByDisplayValue("16:00")).not.toBeNull();
   });
+
+  it("Eliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados", async () => {
+    const user = userEvent.setup();
+    const fetchFn: FetchFn = async (url, init) => {
+      if ((init?.method ?? "GET") === "POST" && url.endsWith(`/professionals/${PROF_ID}/blocks`)) {
+        return new Response(
+          JSON.stringify({
+            block: {
+              id: BLOCK_ID,
+              professionalId: PROF_ID,
+              startAt: "2026-05-06T12:00:00-03:00",
+              endAt: "2026-05-06T16:00:00-03:00",
+              reason: "Capacitación",
+            },
+            affectedAppointments: [
+              {
+                id: "00000000-0000-0000-0000-0000000000a2",
+                patientId: "00000000-0000-0000-0000-0000000000c2",
+                patientName: "Martín Pereyra",
+                chairId: "00000000-0000-0000-0000-0000000000d1",
+                startAt: "2026-05-06T17:00:00Z",
+                endAt: "2026-05-06T17:30:00Z",
+                status: "reservado",
+              },
+            ],
+          }),
+          { status: 201, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if ((init?.method ?? "GET") === "DELETE" && url.endsWith(`/blocks/${BLOCK_ID}`)) {
+        return new Response(
+          JSON.stringify({
+            id: BLOCK_ID,
+            professionalId: PROF_ID,
+            startAt: "2026-05-06T12:00:00-03:00",
+            endAt: "2026-05-06T16:00:00-03:00",
+            reason: "Capacitación",
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      return new Response(null, { status: 500 });
+    };
+    const client = createApiClient({ baseUrl: "http://localhost:8000/api", fetchFn });
+
+    render(
+      <BlocksSection
+        client={client}
+        professionalId={PROF_ID}
+        professionalName="Dra. Laura Quiroga"
+        timezone="America/Argentina/Buenos_Aires"
+        initialBlocks={[]}
+        defaultDate="2026-05-06"
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Nuevo bloqueo" }));
+    await user.type(screen.getByLabelText("Hora de inicio"), "12:00");
+    await user.type(screen.getByLabelText("Hora de fin"), "16:00");
+    await user.click(screen.getByRole("button", { name: "Guardar bloqueo" }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText(/Turnos existentes solapados con el bloqueo creado/),
+      ).not.toBeNull();
+    });
+
+    await user.click(screen.getByRole("button", { name: "Eliminar bloqueo" }));
+    await user.click(screen.getByRole("button", { name: "Sí, eliminar bloqueo" }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).toBeNull();
+    });
+    expect(
+      screen.queryByText(/Turnos existentes solapados con el bloqueo creado/),
+    ).toBeNull();
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
 });

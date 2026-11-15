@@ -41,7 +41,7 @@
   font-family: inherit;
   padding: var(--space-2) var(--space-4);
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   background-color: var(--color-danger-text);
   color: var(--color-primary-contrast);
   border: 0;
@@ -51,8 +51,8 @@
 }
 
 .dangerButton:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .secondaryButton {
@@ -69,8 +69,8 @@
 }
 
 .secondaryButton:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 @media (max-width: 640px) {

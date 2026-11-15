@@ -51,7 +51,7 @@ describe("AffectedAppointments", () => {
       expect(screen.queryByRole("alert")).not.toBeNull();
     });
     const alert = screen.getByRole("alert");
-    expect(alert).toHaveTextContent("2026-05-04");
+    expect(alert).toHaveTextContent("lun, 04/05/2026");
     expect(alert).toHaveTextContent("15:00 a 15:30");
     expect(alert).toHaveTextContent("Lucía Gómez");
     expect(alert).toHaveTextContent("Dra. Laura Quiroga");
@@ -114,10 +114,75 @@ describe("AffectedAppointments", () => {
     });
     const alert = screen.getByRole("alert");
     expect(alert).toHaveTextContent("Turnos existentes solapados con el bloqueo creado:");
-    expect(alert).toHaveTextContent("2026-05-06");
+    expect(alert).toHaveTextContent("mié, 06/05/2026");
     expect(alert).toHaveTextContent("14:00 a 14:30");
     expect(alert).toHaveTextContent("Martín Pereyra");
     expect(alert).toHaveTextContent("Dra. Laura Quiroga");
     expect(alert).toHaveTextContent("Reservado");
+  });
+
+  it("Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO", async () => {
+    const user = userEvent.setup();
+    const fetchFn: FetchFn = async (url, init) => {
+      if (url.endsWith(`/professionals/${PROF_ID}/blocks`) && init?.method === "POST") {
+        return new Response(
+          JSON.stringify({
+            block: {
+              id: BLOCK_ID,
+              professionalId: PROF_ID,
+              startAt: "2026-11-17T15:00:00Z",
+              endAt: "2026-11-17T19:00:00Z",
+              reason: "Jornada clínica",
+            },
+            affectedAppointments: [
+              {
+                id: "00000000-0000-0000-0000-0000000000a3",
+                patientId: "00000000-0000-0000-0000-0000000000c3",
+                patientName: "Elena Vázquez",
+                chairId: "00000000-0000-0000-0000-0000000000d1",
+                startAt: "2026-11-17T16:00:00Z",
+                endAt: "2026-11-17T16:30:00Z",
+                status: "confirmado",
+              },
+            ],
+          }),
+          { status: 201, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      return new Response("Not Found", { status: 404 });
+    };
+    const client = createApiClient({ baseUrl: "http://localhost:8000/api", fetchFn });
+
+    render(
+      <BlocksSection
+        client={client}
+        professionalId={PROF_ID}
+        professionalName="Dra. Laura Quiroga"
+        timezone="America/Argentina/Buenos_Aires"
+        initialBlocks={[]}
+        defaultDate="2026-11-17"
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Nuevo bloqueo" }));
+    await user.type(screen.getByLabelText("Hora de inicio"), "12:00");
+    await user.type(screen.getByLabelText("Hora de fin"), "16:00");
+    await user.click(screen.getByRole("button", { name: "Guardar bloqueo" }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("alert")).not.toBeNull();
+    });
+    const alert = screen.getByRole("alert");
+    expect(alert).toHaveTextContent("mar, 17/11/2026");
+    expect(alert).not.toHaveTextContent("2026-11-17");
+
+    expect(screen.queryByText("mar, 17/11/2026 · 12:00 a 16:00")).not.toBeNull();
+
+    await user.click(screen.getByRole("button", { name: "Eliminar bloqueo" }));
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toHaveTextContent(
+      "¿Eliminar este bloqueo del mar, 17/11/2026 de 12:00 a 16:00?",
+    );
+    expect(dialog).not.toHaveTextContent("2026-11-17");
   });
 });

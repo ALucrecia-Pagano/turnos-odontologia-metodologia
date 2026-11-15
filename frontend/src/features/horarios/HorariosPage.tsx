@@ -30,6 +30,7 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
   const [workingHours, setWorkingHours] = useState<readonly WorkingHoursSlot[]>([]);
   const [blocks, setBlocks] = useState<readonly ProfessionalBlock[]>([]);
   const [pageError, setPageError] = useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [settledTargetId, setSettledTargetId] = useState<string | null>(null);
 
   const isDentist = user?.role === "odontologo";
@@ -98,6 +99,7 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
         return;
       }
       setPageError(null);
+      setStatusMessage(null);
       setWorkingHours(hoursRes.data);
       setBlocks(blocksRes.data);
       setSettledTargetId(targetProfessionalId);
@@ -120,7 +122,7 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
     timezone !== null ? formatLocalDateInZone(clock.now().toISOString(), timezone) : undefined;
 
   return (
-    <PageShell title="Turnos Odontología">
+    <PageShell title="Horarios y bloqueos">
       <div className={styles.page}>
         <header className={styles.header}>
           <div className={styles.titleGroup}>
@@ -144,6 +146,7 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
                 value={targetProfessionalId ?? ""}
                 onChange={(e) => {
                   const nextId = e.target.value;
+                  setStatusMessage(null);
                   setSearchParams({ professionalId: nextId });
                 }}
               >
@@ -156,6 +159,14 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
             </div>
           )}
         </header>
+
+        <div
+          role="status"
+          aria-live="polite"
+          className={statusMessage !== null ? styles.statusBanner : styles.statusEmpty}
+        >
+          {statusMessage ?? ""}
+        </div>
 
         {!catalogLoaded || loadingData ? (
           <LoadingState label="Cargando horarios y bloqueos…" />
@@ -174,6 +185,7 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
                 timezone={timezone}
                 initialSlots={workingHours}
                 readOnly={isReadOnly}
+                onStatusChange={setStatusMessage}
               />
               <BlocksSection
                 client={client}
@@ -183,6 +195,7 @@ export function HorariosPage({ clock = systemClock }: HorariosPageProps = {}) {
                 initialBlocks={blocks}
                 readOnly={isReadOnly}
                 defaultDate={defaultDate}
+                onStatusChange={setStatusMessage}
               />
             </div>
           )

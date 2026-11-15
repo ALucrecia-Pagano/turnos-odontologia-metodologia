@@ -1,0 +1,40 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/HorariosPage.test.tsx (6 tests | 1 failed) 501ms
+   ✓ HorariosPage > Odontólogo accede a sus propios horarios: carga tramos y bloqueos de su professionalId sin mostrar selector de profesional 256ms
+   ✓ HorariosPage > Administrador selecciona profesional activo: lista solo activos, selecciona el primero por defecto y al cambiar actualiza datos y ?professionalId= 81ms
+   ✓ HorariosPage > Odontólogo consulta profesional ajeno y recibe 403: muestra en role=alert el mensaje literal del backend sin controles de edición ni cerrar sesión 32ms
+   ✓ HorariosPage > Recepción visualiza información completa sin controles de edición: muestra selector, tramos y bloqueos pero oculta Agregar tramo, Quitar, Guardar horario, Nuevo bloqueo y Eliminar bloqueo 60ms
+   ✓ HorariosPage > Zona horaria leída desde GET /api/agenda: consulta GET /api/agenda una sola vez, reutiliza su timezone al cambiar de profesional y formatea bloqueos según esa zona 40ms
+   × HorariosPage > Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1 30ms
+     → expected [] to have a length of 1 but got +0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/HorariosPage.test.tsx > HorariosPage > Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/features/horarios/HorariosPage.test.tsx:605:80
+    603|     });
+    604| 
+    605|     expect(screen.queryAllByText("Horarios y bloqueos", { selector: "s…
+       |                                                                                ^
+    606|     const headingsH1 = screen.getAllByRole("heading", { level: 1 });
+    607|     expect(headingsH1).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  02:28:47
+   Duration  5.35s (transform 846ms, setup 463ms, collect 2.02s, tests 501ms, environment 1.61s, prepare 257ms)
+
+exit: 1

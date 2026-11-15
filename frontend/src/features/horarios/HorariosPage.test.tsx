@@ -540,15 +540,202 @@ describe("HorariosPage", () => {
       expect(screen.queryByRole("heading", { name: "Bloqueos de agenda" })).not.toBeNull();
     });
 
-    expect(screen.queryByText(/2026-05-06 · 15:00 a 19:00/)).not.toBeNull();
+    expect(screen.queryByText(/mié, 06\/05\/2026 · 15:00 a 19:00/)).not.toBeNull();
     expect(agendaCalls).toBe(1);
 
     const select = screen.getByLabelText("Profesional");
     fireEvent.change(select, { target: { value: PROF_SOSA } });
 
     await waitFor(() => {
-      expect(screen.queryByText(/2026-05-08 · 10:00 a 12:00/)).not.toBeNull();
+      expect(screen.queryByText(/vie, 08\/05\/2026 · 10:00 a 12:00/)).not.toBeNull();
     });
     expect(agendaCalls).toBe(1);
+  });
+
+  it("Título de PageShell Horarios y bloqueos con único h1: pasa title Horarios y bloqueos a PageShell y mantiene un solo h1", async () => {
+    const fetchFn: FetchFn = async (url) => {
+      if (url.endsWith("/auth/me")) {
+        return new Response(
+          JSON.stringify({
+            id: "00000000-0000-0000-0000-0000000000e3",
+            username: "quiroga",
+            displayName: "Dra. Laura Quiroga",
+            role: "odontologo",
+            professionalId: PROF_QUIROGA,
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.includes("/agenda?")) {
+        return new Response(
+          JSON.stringify({
+            from: "2026-05-04",
+            to: "2026-05-04",
+            timezone: "America/Argentina/Buenos_Aires",
+            appointments: [],
+            workingHours: [],
+            blocks: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    };
+
+    const clock = createFixedClock(FIXED_NOW);
+    const client = createApiClient({ baseUrl: "http://localhost:8000/api", fetchFn });
+    const router = createMemoryRouter(createAppRoutes(clock), {
+      initialEntries: ["/horarios"],
+      future: { v7_relativeSplatPath: true },
+    });
+
+    render(
+      <AuthProvider tokenStore={createMemoryTokenStore("token-odontologo")} client={client}>
+        <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      </AuthProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByRole("heading", { name: "Horarios semanales" })).not.toBeNull();
+    });
+
+    expect(screen.queryAllByText("Horarios y bloqueos", { selector: "span" })).toHaveLength(1);
+    const headingsH1 = screen.getAllByRole("heading", { level: 1 });
+    expect(headingsH1).toHaveLength(1);
+    expect(headingsH1[0]?.textContent).toBe("Horarios y bloqueos");
+  });
+
+  it("Un solo mensaje de estado vigente entre acciones sin desmontar la región: reemplaza Horario guardado por Bloqueo eliminado y mantiene una única región role=status montada", async () => {
+    const fetchFn: FetchFn = async (url, init) => {
+      const method = init?.method ?? "GET";
+      if (url.endsWith("/auth/me")) {
+        return new Response(
+          JSON.stringify({
+            id: "00000000-0000-0000-0000-0000000000e3",
+            username: "quiroga",
+            displayName: "Dra. Laura Quiroga",
+            role: "odontologo",
+            professionalId: PROF_QUIROGA,
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.includes("/agenda?")) {
+        return new Response(
+          JSON.stringify({
+            from: "2026-05-04",
+            to: "2026-05-04",
+            timezone: "America/Argentina/Buenos_Aires",
+            appointments: [],
+            workingHours: [],
+            blocks: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.endsWith(`/professionals/${PROF_QUIROGA}/working-hours`) && method === "GET") {
+        return new Response(
+          JSON.stringify([
+            {
+              id: "wh-1",
+              professionalId: PROF_QUIROGA,
+              weekday: 1,
+              start: "09:00",
+              end: "13:00",
+            },
+          ]),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.endsWith(`/professionals/${PROF_QUIROGA}/working-hours`) && method === "PUT") {
+        return new Response(
+          JSON.stringify({
+            workingHours: [
+              {
+                id: "wh-1",
+                professionalId: PROF_QUIROGA,
+                weekday: 1,
+                start: "09:00",
+                end: "13:00",
+              },
+            ],
+            appointmentsOutsideHours: [],
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.endsWith(`/professionals/${PROF_QUIROGA}/blocks`) && method === "GET") {
+        return new Response(
+          JSON.stringify([
+            {
+              id: "blk-1",
+              professionalId: PROF_QUIROGA,
+              startAt: "2026-05-06T15:00:00Z",
+              endAt: "2026-05-06T19:00:00Z",
+              reason: "Congreso anual",
+            },
+          ]),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.endsWith("/blocks/blk-1") && method === "DELETE") {
+        return new Response(
+          JSON.stringify({
+            id: "blk-1",
+            professionalId: PROF_QUIROGA,
+            startAt: "2026-05-06T15:00:00Z",
+            endAt: "2026-05-06T19:00:00Z",
+            reason: "Congreso anual",
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    };
+
+    const clock = createFixedClock(FIXED_NOW);
+    const client = createApiClient({ baseUrl: "http://localhost:8000/api", fetchFn });
+    const router = createMemoryRouter(createAppRoutes(clock), {
+      initialEntries: ["/horarios"],
+      future: { v7_relativeSplatPath: true },
+    });
+
+    render(
+      <AuthProvider tokenStore={createMemoryTokenStore("token-odontologo")} client={client}>
+        <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      </AuthProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByRole("heading", { name: "Horarios semanales" })).not.toBeNull();
+    });
+
+    expect(screen.queryAllByRole("status")).toHaveLength(1);
+    expect(screen.getByRole("status").textContent).toBe("");
+
+    fireEvent.click(screen.getByRole("button", { name: "Guardar horario" }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("status")).toHaveTextContent("Horario guardado.");
+    });
+    expect(screen.queryAllByRole("status")).toHaveLength(1);
+
+    fireEvent.click(screen.getByRole("button", { name: "Eliminar bloqueo" }));
+    expect(screen.queryAllByRole("status")).toHaveLength(1);
+    expect(screen.getByRole("status").textContent).toBe("");
+
+    fireEvent.click(screen.getByRole("button", { name: "Sí, eliminar bloqueo" }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("status")).toHaveTextContent("Bloqueo eliminado.");
+    });
+    expect(screen.queryAllByRole("status")).toHaveLength(1);
+    expect(screen.queryByText("Horario guardado.")).toBeNull();
   });
 });

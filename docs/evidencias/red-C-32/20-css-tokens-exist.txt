@@ -1,0 +1,96 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/horariosStyles.test.ts (1 test | 1 failed) 25ms
+   × horariosStyles > Todas las variables CSS de horarios existen en tokens.css: cada var(--x) usado en los .module.css de horarios está definido en tokens.css 23ms
+     → expected [ …(60) ] to deeply equal []
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/horariosStyles.test.ts > horariosStyles > Todas las variables CSS de horarios existen en tokens.css: cada var(--x) usado en los .module.css de horarios está definido en tokens.css
+AssertionError: expected [ …(60) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "features/horarios/WorkingHoursSection.module.css: --shadow-xs",
++   "features/horarios/WorkingHoursSection.module.css: --font-weight-semibold",
++   "features/horarios/WorkingHoursSection.module.css: --color-surface-muted",
++   "features/horarios/WorkingHoursSection.module.css: --font-weight-semibold",
++   "features/horarios/WorkingHoursSection.module.css: --color-border-strong",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-width",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-color",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-offset",
++   "features/horarios/WorkingHoursSection.module.css: --color-danger-bg",
++   "features/horarios/WorkingHoursSection.module.css: --color-border-strong",
++   "features/horarios/WorkingHoursSection.module.css: --color-primary-soft",
++   "features/horarios/WorkingHoursSection.module.css: --color-danger-bg",
++   "features/horarios/WorkingHoursSection.module.css: --color-primary-hover",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-width",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-color",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-offset",
++   "features/horarios/WorkingHoursSection.module.css: --color-danger-bg",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-width",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-color",
++   "features/horarios/WorkingHoursSection.module.css: --focus-ring-offset",
++   "features/horarios/WorkingHoursSection.module.css: --color-success-bg",
++   "features/horarios/WorkingHoursSection.module.css: --color-success-text",
++   "features/horarios/WorkingHoursSection.module.css: --color-success-border",
++   "features/horarios/BlocksSection.module.css: --shadow-xs",
++   "features/horarios/BlocksSection.module.css: --font-weight-semibold",
++   "features/horarios/BlocksSection.module.css: --font-weight-semibold",
++   "features/horarios/BlocksSection.module.css: --color-primary-hover",
++   "features/horarios/BlocksSection.module.css: --focus-ring-width",
++   "features/horarios/BlocksSection.module.css: --focus-ring-color",
++   "features/horarios/BlocksSection.module.css: --focus-ring-offset",
++   "features/horarios/BlocksSection.module.css: --color-success-bg",
++   "features/horarios/BlocksSection.module.css: --color-success-text",
++   "features/horarios/BlocksSection.module.css: --color-success-border",
++   "features/horarios/BlocksSection.module.css: --color-surface-muted",
++   "features/horarios/BlocksSection.module.css: --font-weight-semibold",
++   "features/horarios/BlocksSection.module.css: --color-danger-bg",
++   "features/horarios/BlocksSection.module.css: --focus-ring-width",
++   "features/horarios/BlocksSection.module.css: --focus-ring-color",
++   "features/horarios/BlocksSection.module.css: --focus-ring-offset",
++   "features/horarios/BlockFormDialog.module.css: --color-danger-bg",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-width",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-color",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-offset",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-width",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-color",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-offset",
++   "features/horarios/BlockFormDialog.module.css: --color-danger-bg",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-width",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-color",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-offset",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-width",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-color",
++   "features/horarios/BlockFormDialog.module.css: --focus-ring-offset",
++   "features/horarios/BlockDeleteDialog.module.css: --font-weight-semibold",
++   "features/horarios/BlockDeleteDialog.module.css: --focus-ring-width",
++   "features/horarios/BlockDeleteDialog.module.css: --focus-ring-color",
++   "features/horarios/BlockDeleteDialog.module.css: --focus-ring-offset",
++   "features/horarios/BlockDeleteDialog.module.css: --focus-ring-width",
++   "features/horarios/BlockDeleteDialog.module.css: --focus-ring-color",
++   "features/horarios/BlockDeleteDialog.module.css: --focus-ring-offset",
++ ]
+
+ ❯ src/features/horarios/horariosStyles.test.ts:30:27
+     28|     }
+     29| 
+     30|     expect(missingTokens).toEqual([]);
+       |                           ^
+     31|   });
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  02:23:40
+   Duration  3.59s (transform 106ms, setup 509ms, collect 84ms, tests 25ms, environment 2.03s, prepare 273ms)
+
+exit: 1

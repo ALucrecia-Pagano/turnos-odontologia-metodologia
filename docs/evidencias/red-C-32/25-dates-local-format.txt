@@ -1,0 +1,40 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/AffectedAppointments.test.tsx (3 tests | 1 failed) 919ms
+   ✓ AffectedAppointments > Turnos futuros fuera del horario al guardar tramos: muestra en role=alert fecha, hora local, paciente, profesional, StatusBadge y aviso de no cancelación 244ms
+   ✓ AffectedAppointments > Turnos solapados al crear un bloqueo: muestra en role=alert la advertencia de turnos solapados con paciente, fecha, hora local y estado  335ms
+   × AffectedAppointments > Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO 337ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  mar, 17/11/2026
+Received:
+  Turnos existentes solapados con el bloqueo creado:2026-11-17 · 13:00 a 13:30 · Elena Vázquez · Dra. Laura Quiroga · ConfirmadoLos turnos no se cancelan automáticamente; deben reprogramarse o cancelarse desde la agenda.
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/AffectedAppointments.test.tsx > AffectedAppointments > Fechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  mar, 17/11/2026
+Received:
+  Turnos existentes solapados con el bloqueo creado:2026-11-17 · 13:00 a 13:30 · Elena Vázquez · Dra. Laura Quiroga · ConfirmadoLos turnos no se cancelan automáticamente; deben reprogramarse o cancelarse desde la agenda.
+ ❯ src/features/horarios/AffectedAppointments.test.tsx:176:19
+    174|     });
+    175|     const alert = screen.getByRole("alert");
+    176|     expect(alert).toHaveTextContent("mar, 17/11/2026");
+       |                   ^
+    177|     expect(alert).not.toHaveTextContent("2026-11-17");
+    178| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  02:39:30
+   Duration  4.35s (transform 410ms, setup 360ms, collect 902ms, tests 919ms, environment 1.44s, prepare 198ms)
+
+exit: 1

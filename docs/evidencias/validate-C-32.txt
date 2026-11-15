@@ -17,4 +17,4 @@
 ✓ change/ui-horarios-y-bloqueos
 ✓ spec/working-hours-and-blocks-api
 Totals: 18 passed, 0 failed (18 items)
-exit: 0 
+exit: 0
