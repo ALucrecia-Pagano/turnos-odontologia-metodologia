@@ -1,0 +1,58 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+[90mstderr[2m | src/shared/components/AppShell.mobile.test.tsx[2m > [22m[2mAppShell — Móvil (≤ 640 px)[2m > [22m[2m01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [32m✓[39m src/shared/components/AppShellCatalogosPacientes.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 352[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShellCatalogosPacientes[2m > [22mCatálogos y Pacientes habilitados para los tres roles [33m 349[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 431[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 309[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.mobile.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 518[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell — Móvil (≤ 640 px)[2m > [22m01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación [33m 337[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentRescheduleDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 564[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 531[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Detalle e Historial[2m > [22m3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar [33m 317[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentCancel.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 655[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Cancelación[2m > [22m5.1 cancelar turno muestra subvista de confirmación in-dialog [33m 339[2mms[22m[39m
+ [32m✓[39m src/features/horarios/WorkingHoursSection.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 611[2mms[22m[39m
+   [33m[2m✓[22m[39m WorkingHoursSection[2m > [22mGuardado exitoso de tramos semanales: envía PUT con los tramos en orden visual y anuncia Horario guardado. [33m 353[2mms[22m[39m
+[90mstderr[2m | src/features/pacientes/PatientFormDialog.test.tsx[2m > [22m[2mPatientFormDialog[2m > [22m[2mAlta de paciente
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [32m✓[39m src/features/horarios/BlocksSection.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 2214[2mms[22m[39m
+   [33m[2m✓[22m[39m BlocksSection[2m > [22mCreación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado. [33m 1017[2mms[22m[39m
+   [33m[2m✓[22m[39m BlocksSection[2m > [22mBloqueo inválido muestra mensaje literal del backend: mantiene el diálogo abierto y muestra role=alert literal ante error 422 [33m 312[2mms[22m[39m
+   [33m[2m✓[22m[39m BlocksSection[2m > [22mEliminar bloqueo oculta su panel de turnos afectados: al confirmar la eliminación del bloqueo desaparece la alerta de turnos solapados [33m 529[2mms[22m[39m
+ [32m✓[39m src/features/landing/LandingPage.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 488[2mms[22m[39m
+   [33m[2m✓[22m[39m LandingPage[2m > [22mportada completa para anónimo en / [33m 301[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.acciones.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 2104[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial [33m 603[2mms[22m[39m
+ [32m✓[39m src/features/pacientes/PatientFormDialog.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 3632[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mAlta de paciente [33m 981[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mEdición de paciente con valores precargados [33m 382[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mDNI duplicado muestra el mensaje literal del backend [33m 543[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mDNI inválido muestra el mensaje literal del backend (422 INVALID_DNI) [33m 507[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mEl mensaje de estado se reemplaza entre acciones sin desmontar la región [33m 869[2mms[22m[39m
+ [32m✓[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 364[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellNavigation.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 358[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 409[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 327[2mms[22m[39m
+ [32m✓[39m src/features/login/LoginCarousel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 429[2mms[22m[39m
+   [33m[2m✓[22m[39m LoginCarousel[2m > [22mpausa y reanuda el avance sin aria-pressed [33m 301[2mms[22m[39m
+ [32m✓[39m src/features/landing/RootGate.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 262[2mms[22m[39m
+ [32m✓[39m src/features/landing/AccesoPage.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 469[2mms[22m[39m
+ [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 155[2mms[22m[39m
+ [32m✓[39m src/features/landing/RevealSection.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 145[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 83[2mms[22m[39m
+ [32m✓[39m src/shared/styles/landingTokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaChairLayout.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/features/landing/landingContent.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m      Tests [22m [1m[32m102 passed[39m[22m[90m (102)[39m
+[2m   Start at [22m 13:12:21
+[2m   Duration [22m 16.05s[2m (transform 2.87s, setup 20.69s, collect 18.12s, tests 15.20s, environment 81.05s, prepare 10.23s)[22m
+

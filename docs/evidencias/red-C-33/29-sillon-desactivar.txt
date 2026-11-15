@@ -1,0 +1,37 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+[90mstderr[2m | src/features/catalogos/CatalogConfirmDialog.test.tsx[2m > [22m[2mCatalogConfirmDialog[2m > [22m[2mDesactivar un sillón exige confirmación interna
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/catalogos/CatalogConfirmDialog.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 233[2mms[22m[39m
+[31m   [31m×[31m CatalogConfirmDialog[2m > [22mDesactivar un sillón exige confirmación interna[39m[32m 231[2mms[22m[39m
+[31m     → expected 1 to be +0 // Object.is equality[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/CatalogConfirmDialog.test.tsx[2m > [22mCatalogConfirmDialog[2m > [22mDesactivar un sillón exige confirmación interna
+[31m[1mAssertionError[22m: expected 1 to be +0 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 1[39m
+
+[36m [2m❯[22m src/features/catalogos/CatalogConfirmDialog.test.tsx:[2m106:33[22m[39m
+    [90m104| [39m
+    [90m105| [39m    [90m// Debe haberse cerrado sin ninguna petición POST[39m
+    [90m106| [39m    [34mexpect[39m(postDeactivateCalls)[33m.[39m[34mtoBe[39m([34m0[39m)[33m;[39m
+    [90m   | [39m                                [31m^[39m
+    [90m107| [39m
+    [90m108| [39m    [90m// Paso 2: Pulsar de nuevo "Desactivar" y luego "Sí, desactivar"[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 13:39:21
+[2m   Duration [22m 4.34s[2m (transform 665ms, setup 395ms, collect 1.82s, tests 233ms, environment 1.24s, prepare 261ms)[22m
+

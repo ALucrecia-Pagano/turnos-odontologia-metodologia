@@ -1,0 +1,21 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/landing/landingContent.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 84[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 300[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 384[2mms[22m[39m
+[90mstderr[2m | src/features/catalogos/CatalogFormDialog.test.tsx[2m > [22m[2mCatalogFormDialog[2m > [22m[2mAlta de prestación con duración numérica
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [32m✓[39m src/features/catalogos/CatalogFormDialog.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 1769[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mAlta de prestación con duración numérica [33m 398[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mDuración no entera no se envía [33m 449[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mDuración inválida muestra el mensaje literal del backend [33m 343[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mNombre duplicado en el catálogo genérico muestra el mensaje literal del backend (409 DUPLICATE_NAME) [33m 390[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m21 passed[39m[22m[90m (21)[39m
+[2m   Start at [22m 13:26:56
+[2m   Duration [22m 7.14s[2m (transform 1.09s, setup 2.78s, collect 3.14s, tests 2.54s, environment 10.74s, prepare 1.60s)[22m
+

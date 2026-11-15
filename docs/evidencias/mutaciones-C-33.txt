@@ -1,0 +1,460 @@
+================================================================================
+VERIFICACION POR MUTACION DE C-33 (UI CATALOGOS Y PACIENTES)
+SHA-256 inicial de archivos de produccion: 880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f
+================================================================================
+Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs 30 mutaciones.
+================================================================================
+[M01] src/features/pacientes/PacientesPage.test.tsx > Listado de pacientes con sus cuatro datos
+    Archivo: frontend/src/features/pacientes/PacientesPage.tsx
+--- a/frontend/src/features/pacientes/PacientesPage.tsx
++++ b/frontend/src/features/pacientes/PacientesPage.tsx
+@@ -137,7 +137,7 @@
+                     Teléfono
+                   </th>
+-                  <th scope="col" className={styles.th}>
++                  {/* M01 */ false && <th scope="col" className={styles.th}>
+                     Obra social
+-                  </th>
++                  </th>}
+                 </tr>
+               </thead>
+    Estado: Matada
+    Fallo:  AssertionError: expected [ 'Nombre', 'DNI', 'Teléfono' ] to deeply equal [ 'Nombre', 'DNI', 'Teléfono', …(1) ]
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M02] src/features/pacientes/PacientesPage.test.tsx > Búsqueda envía la consulta codificada y muestra el resultado
+    Archivo: frontend/src/features/pacientes/pacientesApi.ts
+--- a/frontend/src/features/pacientes/pacientesApi.ts
++++ b/frontend/src/features/pacientes/pacientesApi.ts
+@@ -80,5 +80,5 @@
+ ): Promise<ApiResult<readonly PatientItem[]>> {
+   const trimmed = query?.trim() ?? "";
+-  const path = trimmed ? `/patients?query=${encodeURIComponent(trimmed)}` : "/patients";
++  const path = trimmed ? `/patients?query=${trimmed}` : "/patients";
+   const result = await client.request(path, { method: "GET" });
+   if (!result.ok) {
+    Estado: Matada
+    Fallo:  AssertionError: expected [ …(3) ] to include 'http://localhost:8000/api/patients?qu…'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M03] src/features/pacientes/PacientesPage.test.tsx > Búsqueda sin resultados
+    Archivo: frontend/src/features/pacientes/PacientesPage.tsx
+--- a/frontend/src/features/pacientes/PacientesPage.tsx
++++ b/frontend/src/features/pacientes/PacientesPage.tsx
+@@ -36,5 +36,5 @@
+         setPatients([]);
+       } else {
+-        setPatients(res.data);
++        if (res.data.length > 0) setPatients(res.data);
+       }
+       setLoading(false);
+    Estado: Matada
+    Fallo:  Error: expect(received).toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M04] src/features/pacientes/PacientesPage.test.tsx > Error de carga de pacientes con reintento
+    Archivo: frontend/src/features/pacientes/PacientesPage.tsx
+--- a/frontend/src/features/pacientes/PacientesPage.tsx
++++ b/frontend/src/features/pacientes/PacientesPage.tsx
+@@ -49,5 +49,5 @@
+     setLoading(true);
+     setErrorMessages(null);
+-    setReloadToken((prev) => prev + 1);
++    // setReloadToken((prev) => prev + 1);
+   };
+    Estado: Matada
+    Fallo:  Error: expect(received).toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M05] src/features/catalogos/catalogosPacientesStyles.test.ts > Toda variable CSS de las pantallas existe en tokens.css
+    Archivo: frontend/src/features/pacientes/PacientesPage.module.css
+--- a/frontend/src/features/pacientes/PacientesPage.module.css
++++ b/frontend/src/features/pacientes/PacientesPage.module.css
+@@ -20,5 +20,5 @@
+   font-size: var(--font-size-2xl);
+   font-weight: var(--font-weight-bold);
+-  color: var(--color-text);
++  color: var(--color-inexistente);
+   line-height: var(--line-height-base);
+ }
+    Estado: Matada
+    Fallo:  AssertionError: expected [ Array(1) ] to deeply equal []
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M06] src/features/catalogos/catalogosPacientesStyles.test.ts > Sin tokens de fondo oscuro en las pantallas
+    Archivo: frontend/src/features/pacientes/PacientesPage.module.css
+--- a/frontend/src/features/pacientes/PacientesPage.module.css
++++ b/frontend/src/features/pacientes/PacientesPage.module.css
+@@ -81,5 +81,5 @@
+ .statusBanner {
+   padding: var(--space-3) var(--space-4);
+-  background: var(--color-surface);
++  background: var(--color-ice);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-md);
+    Estado: Matada
+    Fallo:  AssertionError: expected [ Array(1) ] to deeply equal []
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M07] src/features/catalogos/CatalogosPage.test.tsx > Profesionales por defecto con estado en texto
+    Archivo: frontend/src/features/catalogos/catalogosApi.ts
+--- a/frontend/src/features/catalogos/catalogosApi.ts
++++ b/frontend/src/features/catalogos/catalogosApi.ts
+@@ -88,5 +88,5 @@
+       : sectionKey === "prestaciones"
+         ? "/services"
+-        : "/professionals";
++        : "/professionals?active=true";
+ 
+   const result = await client.request(path, { method: "GET" });
+    Estado: Matada
+    Fallo:  AssertionError: expected [ …(2) ] to include 'http://localhost:8000/api/professiona…'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M08] src/features/catalogos/CatalogosPage.test.tsx > Cambio a la sección de prestaciones
+    Archivo: frontend/src/features/catalogos/CatalogosPage.tsx
+--- a/frontend/src/features/catalogos/CatalogosPage.tsx
++++ b/frontend/src/features/catalogos/CatalogosPage.tsx
+@@ -22,5 +22,5 @@
+   const [searchParams] = useSearchParams();
+   const rawSection = searchParams.get("seccion");
+-  const config = resolveCatalogConfig(rawSection);
++  const config = resolveCatalogConfig(null);
+ 
+   const [items, setItems] = useState<readonly AnyCatalogItem[]>([]);
+    Estado: Matada
+    Fallo:  AssertionError: expected [ …(2) ] to include 'http://localhost:8000/api/services'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M09] src/features/catalogos/CatalogosPacientesRoutes.test.tsx > Pacientes y Catálogos con su título y un único h1
+    Archivo: frontend/src/features/catalogos/CatalogosPage.tsx
+--- a/frontend/src/features/catalogos/CatalogosPage.tsx
++++ b/frontend/src/features/catalogos/CatalogosPage.tsx
+@@ -68,5 +68,5 @@
+ 
+   return (
+-    <PageShell title="Catálogos">
++    <PageShell title="Turnos Odontología">
+       <div className={styles.page}>
+         <header className={styles.header}>
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveTextContent()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M10] src/features/catalogos/catalogosPacientesStyles.test.ts > Tablas apiladas en celular, controles táctiles y foco visible
+    Archivo: frontend/src/features/catalogos/CatalogosPage.module.css
+--- a/frontend/src/features/catalogos/CatalogosPage.module.css
++++ b/frontend/src/features/catalogos/CatalogosPage.module.css
+@@ -168,5 +168,5 @@
+ }
+ 
+-@media (max-width: 640px) {
++@media (max-width: 0px) {
+   .table,
+   .table tbody,
+    Estado: Matada
+    Fallo:  AssertionError: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\catalogos\CatalogosPage.module.css debe tener media query a 640px: expected '.page {\n  width: 100%;\n  box-sizing…' to match /@media\s*\(\s*max-width\s*:\s*640px\s…/
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M11] src/shared/components/AppShellCatalogosPacientes.test.tsx > Catálogos y Pacientes habilitados para los tres roles
+    Archivo: frontend/src/features/auth/menuFor.ts
+--- a/frontend/src/features/auth/menuFor.ts
++++ b/frontend/src/features/auth/menuFor.ts
+@@ -58,5 +58,4 @@
+   "agenda",
+   "horarios-y-bloqueos",
+-  "catalogos",
+   "pacientes",
+ ];
+    Estado: Matada
+    Fallo:  AssertionError: Catálogos debe ser un enlace para administrador: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M12] src/shared/components/AppShellNavigation.test.tsx > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+    Archivo: frontend/src/features/auth/menuFor.ts
+--- a/frontend/src/features/auth/menuFor.ts
++++ b/frontend/src/features/auth/menuFor.ts
+@@ -59,5 +59,4 @@
+   "horarios-y-bloqueos",
+   "catalogos",
+-  "pacientes",
+ ];
+    Estado: Matada
+    Fallo:  AssertionError: expected [ <a …(4)></a>, <a …(3)></a>, …(1) ] to have a length of 4 but got 3
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M13] src/shared/components/AppShellNavigation.test.tsx > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+    Archivo: frontend/src/features/auth/menuFor.ts
+--- a/frontend/src/features/auth/menuFor.ts
++++ b/frontend/src/features/auth/menuFor.ts
+@@ -57,4 +57,5 @@
+ const ENABLED_MENU_IDS: readonly string[] = [
+   "agenda",
++  "turnos",
+   "horarios-y-bloqueos",
+   "catalogos",
+    Estado: Matada
+    Fallo:  AssertionError: expected [ …(1) ] to have a length of 2 but got 1
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M14] src/features/pacientes/PatientFormDialog.test.tsx > Alta de paciente
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -85,5 +85,5 @@
+       fullName,
+       dni,
+-      phone: phone.trim() === "" ? null : phone.trim(),
++      phone: phone.trim() === "" ? "" : phone.trim(),
+       healthInsurance: healthInsurance.trim() === "" ? null : healthInsurance.trim(),
+     };
+    Estado: Matada
+    Fallo:  AssertionError: expected { fullName: 'Carla Medina', …(3) } to deeply equal { fullName: 'Carla Medina', …(3) }
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M15] src/features/pacientes/PatientFormDialog.test.tsx > El formulario de paciente tiene solo los cuatro datos mínimos
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -235,5 +235,5 @@
+         </div>
+ 
+-        <div className={styles.actions}>
++        <div className={styles.fieldGroup}><label className={styles.label}>Observaciones</label><input className={styles.input} /></div><div className={styles.actions}>
+           <button
+             type="button"
+    Estado: Matada
+    Fallo:  AssertionError: expected <input …(5)></input>
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M16] src/features/pacientes/PatientFormDialog.test.tsx > Edición de paciente con valores precargados
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -57,5 +57,5 @@
+         setDni(patient.dni);
+         setPhone(patient.phone ?? "");
+-        setHealthInsurance(patient.healthInsurance ?? "");
++        setHealthInsurance("");
+       } else {
+         setFullName("");
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveValue(OSDE)
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M17] src/features/pacientes/PatientFormDialog.test.tsx > DNI duplicado muestra el mensaje literal del backend
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -115,4 +115,5 @@
+       } else {
+         setGeneralAlert(getApiErrorMessages(res.error));
++        if (res.error.status === 409) setFieldErrors({ dni: "Error" });
+       }
+     }
+    Estado: Matada
+    Fallo:  Error: expect(element).not.toHaveAttribute("aria-invalid") // element.hasAttribute("aria-invalid")
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M18] src/features/pacientes/PatientFormDialog.test.tsx > DNI inválido muestra el mensaje literal del backend (422 INVALID_DNI)
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -114,5 +114,5 @@
+         }
+       } else {
+-        setGeneralAlert(getApiErrorMessages(res.error));
++        setGeneralAlert(["DNI inválido."]);
+       }
+     }
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveTextContent()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M19] src/features/pacientes/PatientFormDialog.test.tsx > Error 400 por campo marca el campo con aria-invalid
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -104,5 +104,5 @@
+         for (const err of res.error.errors) {
+           if (err.field) {
+-            errorsByField[err.field] = err.message;
++            // errorsByField[err.field] = err.message;
+           } else {
+             general.push(err.message);
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveAttribute("aria-invalid", "true") // element.getAttribute("aria-invalid") === "true"
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M20] src/features/pacientes/PacientesPage.test.tsx > Odontólogo consulta pacientes en solo lectura
+    Archivo: frontend/src/features/pacientes/PacientesPage.tsx
+--- a/frontend/src/features/pacientes/PacientesPage.tsx
++++ b/frontend/src/features/pacientes/PacientesPage.tsx
+@@ -23,5 +23,5 @@
+   const [reloadToken, setReloadToken] = useState(0);
+ 
+-  const canEdit = user?.role === "administrador" || user?.role === "recepcion";
++  const canEdit = true;
+ 
+   useEffect(() => {
+    Estado: Matada
+    Fallo:  Error: expect(element).not.toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M21] src/features/pacientes/PatientFormDialog.test.tsx > El mensaje de estado se reemplaza entre acciones sin desmontar la región
+    Archivo: frontend/src/features/pacientes/PacientesPage.tsx
+--- a/frontend/src/features/pacientes/PacientesPage.tsx
++++ b/frontend/src/features/pacientes/PacientesPage.tsx
+@@ -183,5 +183,5 @@
+           onClose={() => setDialogOpen(false)}
+           onSuccess={(msg) => {
+-            setStatusMessage(msg);
++            setStatusMessage((prev) => (prev ? `${prev} ${msg}` : msg));
+             setReloadToken((prev) => prev + 1);
+           }}
+    Estado: Matada
+    Fallo:  AssertionError: expected 'Paciente creado. Paciente actualizado.' to be 'Paciente actualizado.' // Object.is equality
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M22] src/features/catalogos/CatalogFormDialog.test.tsx > Alta de prestación con duración numérica
+    Archivo: frontend/src/features/catalogos/catalogConfigs.ts
+--- a/frontend/src/features/catalogos/catalogConfigs.ts
++++ b/frontend/src/features/catalogos/catalogConfigs.ts
+@@ -141,5 +141,5 @@
+   toPayload: (formData) => ({
+     name: formData["name"] ?? "",
+-    defaultDurationMin: Number(formData["defaultDurationMin"]),
++    defaultDurationMin: String(formData["defaultDurationMin"]),
+   }),
+   toFormData: (item) => ({
+    Estado: Matada
+    Fallo:  AssertionError: expected { name: 'Extracción', …(1) } to deeply equal { name: 'Extracción', …(1) }
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M23] src/features/catalogos/CatalogFormDialog.test.tsx > Duración no entera no se envía
+    Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
+--- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
++++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
+@@ -79,5 +79,5 @@
+     if (config.key === "prestaciones") {
+       const rawDuration = formData["defaultDurationMin"]?.trim() ?? "";
+-      if (!/^\d+$/.test(rawDuration)) {
++      if (false && !/^\d+$/.test(rawDuration)) {
+         newFieldErrors["defaultDurationMin"] =
+           "La duración debe ser un número entero de minutos.";
+    Estado: Matada
+    Fallo:  AssertionError: expected true to be false // Object.is equality
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M24] src/features/catalogos/CatalogFormDialog.test.tsx > Duración inválida muestra el mensaje literal del backend
+    Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
+--- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
++++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
+@@ -123,4 +123,5 @@
+       } else {
+         setGeneralAlert(getApiErrorMessages(res.error));
++        onClose();
+       }
+     }
+    Estado: Matada
+    Fallo:  Error: expect(received).toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M25] src/features/catalogos/CatalogFormDialog.test.tsx > Nombre duplicado en el catálogo genérico muestra el mensaje literal del backend (409 DUPLICATE_NAME)
+    Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
+--- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
++++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
+@@ -123,4 +123,5 @@
+       } else {
+         setGeneralAlert(getApiErrorMessages(res.error));
++        if (res.error.status === 409) setFieldErrors({ name: "Error" });
+       }
+     }
+    Estado: Matada
+    Fallo:  Error: expect(element).not.toHaveAttribute("aria-invalid", "true") // element.getAttribute("aria-invalid") === "true"
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M26] src/features/catalogos/CatalogFormDialog.test.tsx > Edición de profesional con matrícula vacía
+    Archivo: frontend/src/features/catalogos/catalogConfigs.ts
+--- a/frontend/src/features/catalogos/catalogConfigs.ts
++++ b/frontend/src/features/catalogos/catalogConfigs.ts
+@@ -79,5 +79,5 @@
+   toPayload: (formData) => ({
+     fullName: formData["fullName"] ?? "",
+-    licenseNumber: formData["licenseNumber"]?.trim() ? formData["licenseNumber"].trim() : null,
++    licenseNumber: formData["licenseNumber"]?.trim() ? formData["licenseNumber"].trim() : "",
+   }),
+   toFormData: (item) => ({
+    Estado: Matada
+    Fallo:  AssertionError: expected { Object (fullName, licenseNumber) } to deeply equal { Object (fullName, licenseNumber) }
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M27] src/features/catalogos/CatalogosPage.test.tsx > Recepción y odontólogo consultan catálogos en solo lectura
+    Archivo: frontend/src/features/catalogos/CatalogosPage.tsx
+--- a/frontend/src/features/catalogos/CatalogosPage.tsx
++++ b/frontend/src/features/catalogos/CatalogosPage.tsx
+@@ -36,5 +36,5 @@
+   const [confirmAction, setConfirmAction] = useState<"deactivate" | "reactivate">("deactivate");
+ 
+-  const isAdmin = user?.role === "administrador";
++  const isAdmin = user?.role === "administrador" || user?.role === "recepcion";
+ 
+   const [reloadToken, setReloadToken] = useState(0);
+    Estado: Matada
+    Fallo:  Error: expect(received).toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M28] src/features/catalogos/CatalogFormDialog.mobile.test.tsx > Formulario de catálogo como hoja inferior en celular
+    Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
+--- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
++++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
+@@ -139,5 +139,5 @@
+       labelledBy={titleId}
+       returnFocusRef={returnFocusRef}
+-      isMobile={isMobile}
++      isMobile={false}
+     >
+       <form onSubmit={handleSubmit} noValidate className={styles.form}>
+    Estado: Matada
+    Fallo:  Error: expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M29] src/features/catalogos/CatalogConfirmDialog.test.tsx > Desactivar un sillón exige confirmación interna
+    Archivo: frontend/src/features/catalogos/CatalogosPage.tsx
+--- a/frontend/src/features/catalogos/CatalogosPage.tsx
++++ b/frontend/src/features/catalogos/CatalogosPage.tsx
+@@ -180,4 +180,5 @@
+                               onClick={() => {
+                                 setStatusMessage(null);
++                                void client.request(`/chairs/${item.id}/deactivate`, { method: "POST" });
+                                 setConfirmItem(item);
+                                 setConfirmAction("deactivate");
+    Estado: Matada
+    Fallo:  AssertionError: expected 1 to be +0 // Object.is equality
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M30] src/features/catalogos/CatalogConfirmDialog.test.tsx > Reactivar una prestación inactiva
+    Archivo: frontend/src/features/catalogos/CatalogConfirmDialog.tsx
+--- a/frontend/src/features/catalogos/CatalogConfirmDialog.tsx
++++ b/frontend/src/features/catalogos/CatalogConfirmDialog.tsx
+@@ -56,5 +56,5 @@
+     const res = isDeactivate
+       ? await deactivateCatalogItem(client, config.key, item.id)
+-      : await reactivateCatalogItem(client, config.key, item.id);
++      : await deactivateCatalogItem(client, config.key, item.id);
+ 
+     setSubmitting(false);
+    Estado: Matada
+    Fallo:  Error: expect(element).not.toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+================================================================================
+RESUMEN DE MUTACIONES
+Mutaciones totales:    30
+Matadas por asercion:  30
+Invalidas:             0
+SHA-256 inicial:       880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f
+SHA-256 final:         880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f
+SHA-256 sin cambios:   si
+================================================================================
+EXITO: todas las mutaciones fueron detectadas limpiamente.

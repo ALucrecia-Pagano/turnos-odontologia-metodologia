@@ -1,0 +1,48 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/landing/landingContent.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 81[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 267[2mms[22m[39m
+ [32m✓[39m src/features/auth/AuthContext.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 386[2mms[22m[39m
+[90mstderr[2m | src/features/catalogos/CatalogFormDialog.test.tsx[2m > [22m[2mCatalogFormDialog[2m > [22m[2mAlta de prestación con duración numérica
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/catalogos/CatalogFormDialog.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1817[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mAlta de prestación con duración numérica [33m 458[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mDuración no entera no se envía [33m 467[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mDuración inválida muestra el mensaje literal del backend [33m 324[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogFormDialog[2m > [22mNombre duplicado en el catálogo genérico muestra el mensaje literal del backend (409 DUPLICATE_NAME) [33m 403[2mms[22m[39m
+[31m   [31m×[31m CatalogFormDialog[2m > [22mEdición de profesional con matrícula vacía[39m[32m 164[2mms[22m[39m
+[31m     → expected { Object (fullName, licenseNumber) } to deeply equal { Object (fullName, licenseNumber) }[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/CatalogFormDialog.test.tsx[2m > [22mCatalogFormDialog[2m > [22mEdición de profesional con matrícula vacía
+[31m[1mAssertionError[22m: expected { Object (fullName, licenseNumber) } to deeply equal { Object (fullName, licenseNumber) }[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "fullName": "Dra. Laura Quiroga",[22m
+[32m-   "licenseNumber": null,[39m
+[31m+   "licenseNumber": "",[39m
+[2m  }[22m
+
+[36m [2m❯[22m src/features/catalogos/CatalogFormDialog.test.tsx:[2m327:21[22m[39m
+    [90m325| [39m
+    [90m326| [39m    [34mexpect[39m(putBody)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m327| [39m    [34mexpect[39m(putBody)[33m.[39m[34mtoEqual[39m({
+    [90m   | [39m                    [31m^[39m
+    [90m328| [39m      fullName[33m:[39m [32m"Dra. Laura Quiroga"[39m[33m,[39m
+    [90m329| [39m      licenseNumber[33m:[39m [35mnull[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m20 passed[39m[22m[90m (21)[39m
+[2m   Start at [22m 13:26:27
+[2m   Duration [22m 7.17s[2m (transform 1.04s, setup 2.76s, collect 3.01s, tests 2.56s, environment 10.87s, prepare 1.63s)[22m
+

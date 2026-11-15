@@ -1,0 +1,47 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/catalogos/catalogosPacientesStyles.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[32m 11[2mms[22m[39m
+   [2m[90m↓[39m[22m catalogosPacientesStyles[2m > [22mToda variable CSS de las pantallas existe en tokens.css
+[31m   [31m×[31m catalogosPacientesStyles[2m > [22mSin tokens de fondo oscuro en las pantallas[39m[32m 10[2mms[22m[39m
+[31m     → expected [ Array(1) ] to deeply equal [][39m
+npx.cmd : 
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/catalogos/catalogosPacien ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/catalogosPacientesStyles.test.ts[2m > 
+[22mcatalogosPacientesStyles[2m > [22mSin tokens de fondo oscuro en las pantallas
+[31m[1mAssertionError[22m: expected [ Array(1) ] to deeply equal [][39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   
+"C:\\Users\\hp\\METODOLOGIA_TPS\\turnos-odontologia\\frontend\\src\\features\\pacientes\\PacientesPage.module.css: 
+contains --color-ice",[39m
+[31m+ ][39m
+
+[36m [2m❯[22m src/features/catalogos/catalogosPacientesStyles.test.ts:[2m76:30[22m[39m
+    [90m 74| [39m    }
+    [90m 75| [39m
+    [90m 76| [39m    [34mexpect[39m(darkTokenMatches)[33m.[39m[34mtoEqual[39m([])[33m;[39m
+    [90m   | [39m                             [31m^[39m
+    [90m 77| [39m  })[33m;[39m
+    [90m 78| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m1 skipped[39m[90m (2)[39m
+[2m   Start at [22m 12:43:50
+[2m   Duration [22m 2.55s[2m (transform 62ms, setup 385ms, collect 48ms, tests 11ms, environment 1.41s, prepare 257ms)[22m
+
+exit: 1

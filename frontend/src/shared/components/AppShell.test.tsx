@@ -65,11 +65,9 @@ describe("AppShell", () => {
     expect(agendaLink).toHaveAttribute("aria-current", "page");
 
     const adminButtons = within(nav).getAllByRole("button");
-    expect(adminButtons).toHaveLength(4);
+    expect(adminButtons).toHaveLength(2);
     expect(adminButtons.map((btn) => btn.getAttribute("data-menu-item"))).toEqual([
       "Turnos",
-      "Catálogos",
-      "Pacientes",
       "Usuarios y roles",
     ]);
     for (const button of adminButtons) {
@@ -101,7 +99,7 @@ describe("AppShell", () => {
       within(recepcionNav)
         .getAllByRole("button")
         .map((btn) => btn.getAttribute("data-menu-item")),
-    ).toEqual(["Turnos", "Catálogos", "Pacientes"]);
+    ).toEqual(["Turnos"]);
 
     recepcionView.unmount();
 
@@ -123,9 +121,9 @@ describe("AppShell", () => {
     );
     expect(
       within(odontologoNav)
-        .getAllByRole("button")
+        .queryAllByRole("button")
         .map((btn) => btn.getAttribute("data-menu-item")),
-    ).toEqual(["Catálogos", "Pacientes"]);
+    ).toEqual([]);
   });
 
   it("muestra en un alerta del shell la violación de un 403 sin cerrar la sesión", async () => {

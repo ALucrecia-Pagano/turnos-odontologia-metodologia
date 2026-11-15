@@ -1,0 +1,456 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[32m 14[2mms[22m[39m
+[31m   [31m×[31m menuFor[2m > [22mmenú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente[39m[32m 10[2mms[22m[39m
+[31m     → expected false to be true // Object.is equality[39m
+[31m   [31m×[31m menuFor[2m > [22mmenú de recepción habilita Agenda y no incluye Usuarios y roles[39m[32m 1[2mms[22m[39m
+[31m     → expected false to be true // Object.is equality[39m
+[31m   [31m×[31m menuFor[2m > [22mmenú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles[39m[32m 1[2mms[22m[39m
+[31m     → expected false to be true // Object.is equality[39m
+ [31m❯[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 203[2mms[22m[39m
+[31m   [31m×[31m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente[39m[32m 113[2mms[22m[39m
+[31m     → expected [ <button …(4)>…(2)</button>, …(1) ] to have a length of 4 but got 2[39m
+   [32m✓[39m AppShell[2m > [22mmuestra en un alerta del shell la violación de un 403 sin cerrar la sesión[32m 89[2mms[22m[39m
+ [31m❯[39m src/shared/components/AppShellNavigation.test.tsx [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 1139[2mms[22m[39m
+[31m   [31m×[31m AppShell navegación sin cajas[2m > [22menlaces de navegación activos y bloque de sesión en misma línea en 1440 px[39m[32m 119[2mms[22m[39m
+[31m     → expected [ <a …(4)></a>, <a …(3)></a>, …(2) ] to have a length of 2 but got 4[39m
+[31m   [31m×[31m AppShell navegación sin cajas[2m > [22mítems deshabilitados con Próximamente conservan semántica y accesibilidad[39m[33m 1018[2mms[22m[39m
+[31m     → expected [ <button …(4)>…(2)</button>, …(1) ] to have a length of 4 but got 2
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"brand"[31m
+            [33mdata-brand[31m=[32m"aqua"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33mclass[31m=[32m"brandLogo"[31m
+              [33msrc[31m=[32m"/src/assets/brand/isotipo-aqua.png"[31m
+            [36m/>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brandText"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"brandName"[31m
+              [36m>[31m
+                [0mAqua[0m
+              [36m</span>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"brandSubtitle"[31m
+              [36m>[31m
+                [0mClínica Odontológica[0m
+              [36m</span>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav "[31m
+            [33mid[31m=[32m"main-menu"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33maria-current[31m=[32m"page"[31m
+                  [33mclass[31m=[32m"menuLink menuLinkActive"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33mclass[31m=[32m"menuLink"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mhref[31m=[32m"/horarios"[31m
+                [36m>[31m
+                  [0mHorarios y bloqueos[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33mclass[31m=[32m"menuLink"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mhref[31m=[32m"/catalogos"[31m
+                [36m>[31m
+                  [0mCatálogos[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33mclass[31m=[32m"menuLink"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mhref[31m=[32m"/pacientes"[31m
+                [36m>[31m
+                  [0mPacientes[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Usuarios y roles"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mUsuarios y roles[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mAdministración Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<p>[31m
+            [0mContenido principal[0m
+          [36m</p>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+   [32m✓[39m AppShell navegación sin cajas[2m > [22mlos ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces[32m 1[2mms[22m[39m
+npx.cmd : 
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/auth/menuFor.test.ts src/ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 6 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del administrador 
+incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m src/features/auth/menuFor.test.ts:[2m22:161[22m[39m
+    [90m 20| [39m      badge[33m:[39m [35mnull[39m[33m,[39m
+    [90m 21| [39m    })[33m;[39m
+    [90m 22| [39m    expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+    [90m   | [39m                                                                                                    
+                                                            [31m^[39m
+    [90m 23| [39m    expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+    [90m 24| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú de recepción habilita 
+Agenda y no incluye Usuarios y roles
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m src/features/auth/menuFor.test.ts:[2m38:170[22m[39m
+    [90m 36| [39m    
+[34mexpect[39m(items[[34m0[39m][33m?.[39mdisabled)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 37| [39m    [34mexpect[39m(items[[34m0[39m][33m?.[39mbadge)[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m 38| [39m    expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+    [90m   | [39m                                                                                                    
+                                                                     [31m^[39m
+    [90m 39| [39m      [35mtrue[39m[33m,[39m
+    [90m 40| [39m    )[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/features/auth/menuFor.test.ts[2m > [22mmenuFor[2m > [22mmenú del odontólogo habilita 
+Agenda y no incluye Turnos ni Usuarios y roles
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m src/features/auth/menuFor.test.ts:[2m55:170[22m[39m
+    [90m 53| [39m    
+[34mexpect[39m(items[[34m0[39m][33m?.[39mdisabled)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 54| [39m    [34mexpect[39m(items[[34m0[39m][33m?.[39mbadge)[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m 55| [39m    expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+    [90m   | [39m                                                                                                    
+                                                                     [31m^[39m
+    [90m 56| [39m      [35mtrue[39m[33m,[39m
+    [90m 57| [39m    )[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShell.test.tsx[2m > [22mAppShell[2m > [22mrenderiza Agenda como 
+enlace habilitado en los tres roles y el resto deshabilitado con Próximamente
+[31m[1mAssertionError[22m: expected [ <button …(4)>…(2)</button>, …(1) ] to have a length of 4 but got 2[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 4[39m
+[31m+ 2[39m
+
+[36m [2m❯[22m src/shared/components/AppShell.test.tsx:[2m68:26[22m[39m
+    [90m 66| [39m
+    [90m 67| [39m    [35mconst[39m adminButtons [33m=[39m 
+[34mwithin[39m(nav)[33m.[39m[34mgetAllByRole[39m([32m"button"[39m)[33m;[39m
+    [90m 68| [39m    [34mexpect[39m(adminButtons)[33m.[39m[34mtoHaveLength[39m([34m4[39m)[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m 69| [39m    expect(adminButtons.map((btn) => btn.getAttribute("data-menu-item"…
+    [90m 70| [39m      [32m"Turnos"[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShellNavigation.test.tsx[2m > [22mAppShell navegación sin 
+cajas[2m > [22menlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+[31m[1mAssertionError[22m: expected [ <a …(4)></a>, <a …(3)></a>, …(2) ] to have a length of 2 but got 4[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 2[39m
+[31m+ 4[39m
+
+[36m [2m❯[22m src/shared/components/AppShellNavigation.test.tsx:[2m56:50[22m[39m
+    [90m 54| [39m    expect(logout?.parentElement).toHaveTextContent("Administración De…
+    [90m 55| [39m    [35mif[39m (nav [33m!==[39m [35mnull[39m) {
+    [90m 56| [39m      [34mexpect[39m([34mwithin[39m(nav)[33m.[39m[34mqueryAllByRole[39m([32m"link"[39m))[
+33m.[39m[34mtoHaveLength[39m([34m2[39m)[33m;[39m
+    [90m   | [39m                                                 [31m^[39m
+    [90m 57| [39m    }
+    [90m 58| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShellNavigation.test.tsx[2m > [22mAppShell navegación sin 
+cajas[2m > [22mítems deshabilitados con Próximamente conservan semántica y accesibilidad
+[31m[1mAssertionError[22m[39m: expected [ <button …(4)>…(2)</button>, …(1) ] to have a length of 4 but got 2
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+            [33mdata-brand[39m=[32m"aqua"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33mclass[39m=[32m"brandLogo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brandText"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandName"[39m
+              [36m>[39m
+                [0mAqua[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandSubtitle"[39m
+              [36m>[39m
+                [0mClínica Odontológica[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav "[39m
+            [33mid[39m=[32m"main-menu"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"menuLink menuLinkActive"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mhref[39m=[32m"/horarios"[39m
+                [36m>[39m
+                  [0mHorarios y bloqueos[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mhref[39m=[32m"/catalogos"[39m
+                [36m>[39m
+                  [0mCatálogos[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mhref[39m=[32m"/pacientes"[39m
+                [36m>[39m
+                  [0mPacientes[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Usuarios y roles"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mUsuarios y roles[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mAdministración Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<p>[39m
+            [0mContenido principal[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 4[39m
+[31m+ 2[39m
+
+[36m [2m❯[22m src/shared/components/AppShellNavigation.test.tsx:[2m77:73[22m[39m
+    [90m 75| [39m    })[33m;[39m
+    [90m 76| [39m    [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m 77| [39m      expect(screen.queryAllByRole("button", { name: /Próximamente/ })…
+    [90m   | [39m                                                                        [31m^[39m
+    [90m 78| [39m    })[33m;[39m
+    [90m 79| [39m    const nav = screen.getByRole("navigation", { name: "Menú principal…
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled 
+node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback 
+node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 12:52:44
+[2m   Duration [22m 4.56s[2m (transform 334ms, setup 1.50s, collect 985ms, tests 1.36s, environment 5.27s, prepare 792ms)[22m
+
+exit: 1

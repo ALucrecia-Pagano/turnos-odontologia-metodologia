@@ -53,7 +53,7 @@ describe("AppShell navegación sin cajas", () => {
     expect(logout?.parentElement?.parentElement).toBe(bar);
     expect(logout?.parentElement).toHaveTextContent("Administración Demo");
     if (nav !== null) {
-      expect(within(nav).queryAllByRole("link")).toHaveLength(2);
+      expect(within(nav).queryAllByRole("link")).toHaveLength(4);
     }
 
     const css = readSrcFile("shared/components/AppShell.module.css");
@@ -74,14 +74,12 @@ describe("AppShell navegación sin cajas", () => {
       expect(screen.queryByRole("navigation", { name: "Menú principal" })).toBeInTheDocument();
     });
     await waitFor(() => {
-      expect(screen.queryAllByRole("button", { name: /Próximamente/ })).toHaveLength(4);
+      expect(screen.queryAllByRole("button", { name: /Próximamente/ })).toHaveLength(2);
     });
     const nav = screen.getByRole("navigation", { name: "Menú principal" });
     const buttons = within(nav).getAllByRole("button");
     expect(buttons.map((button) => button.getAttribute("data-menu-item"))).toEqual([
       "Turnos",
-      "Catálogos",
-      "Pacientes",
       "Usuarios y roles",
     ]);
     for (const button of buttons) {

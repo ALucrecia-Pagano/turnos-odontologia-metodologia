@@ -1,0 +1,57 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+npx.cmd : [90mstderr[2m | src/features/pacientes/PatientFormDialog.test.tsx[2m > [22m[2mPatientFormDialog[2m > 
+[22m[2mDNI duplicado muestra el mensaje literal del backend
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/pacientes/PatientFormDial ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...ral del backend:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in 
+`React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, 
+see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/pacientes/PatientFormDialog.test.tsx [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m3 skipped[39m[2m)[22m[33m 515[2mms[22m[39m
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mAlta de paciente
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mEl formulario de paciente tiene solo los cuatro datos mínimos
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mEdición de paciente con valores precargados
+[31m   [31m×[31m PatientFormDialog[2m > [22mDNI duplicado muestra el mensaje literal del backend[39m[33m 514[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).not.toHaveAttribute([22m[32m[32m"aria-invalid"[32m[31m[2m) // element.hasAttribute("aria-invalid")[22m
+
+Expected the element not to have attribute:
+[32m  aria-invalid[31m
+Received:
+[31m  aria-invalid="true"[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/pacientes/PatientFormDialog.test.tsx[2m > [22mPatientFormDialog[2m > 
+[22mDNI duplicado muestra el mensaje literal del backend
+[31m[1mError[22m: 
+[2mexpect([22m[31melement[31m[2m).not.toHaveAttribute([22m[32m[32m"aria-invalid"[32m[31m[2m) // 
+element.hasAttribute("aria-invalid")[22m
+
+Expected the element not to have attribute:
+[32m  aria-invalid[31m
+Received:
+[31m  aria-invalid="true"[31m[39m
+[36m [2m❯[22m src/features/pacientes/PatientFormDialog.test.tsx:[2m321:26[22m[39m
+    [90m319| [39m    [34mexpect[39m(alert)[33m.[39m[34mtoHaveFocus[39m()[33m;[39m
+    [90m320| [39m
+    [90m321| [39m    
+[34mexpect[39m(dniInput)[33m.[39mnot[33m.[39m[34mtoHaveAttribute[39m([32m"aria-invalid"[39m)[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m322| [39m  })[33m;[39m
+    [90m323| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m3 skipped[39m[90m (4)[39m
+[2m   Start at [22m 13:05:09
+[2m   Duration [22m 4.63s[2m (transform 656ms, setup 385ms, collect 1.78s, tests 515ms, environment 1.28s, prepare 282ms)[22m
+
+exit: 1

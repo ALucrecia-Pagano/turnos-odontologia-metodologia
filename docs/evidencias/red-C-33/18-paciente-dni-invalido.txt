@@ -1,0 +1,56 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+npx.cmd : [90mstderr[2m | src/features/pacientes/PatientFormDialog.test.tsx[2m > [22m[2mPatientFormDialog[2m > 
+[22m[2mDNI inválido muestra el mensaje literal del backend (422 INVALID_DNI)
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/pacientes/PatientFormDial ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...22 INVALID_DNI):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in 
+`React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, 
+see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/pacientes/PatientFormDialog.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 509[2mms[22m[39m
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mAlta de paciente
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mEl formulario de paciente tiene solo los cuatro datos mínimos
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mEdición de paciente con valores precargados
+   [2m[90m↓[39m[22m PatientFormDialog[2m > [22mDNI duplicado muestra el mensaje literal del backend
+[31m   [31m×[31m PatientFormDialog[2m > [22mDNI inválido muestra el mensaje literal del backend (422 INVALID_DNI)[39m[33m 508[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  El DNI no es válido (se recibió "1234"): debe tener 7 u 8 dígitos, con o sin puntos.[31m
+Received:
+[31m  DNI inválido.[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/pacientes/PatientFormDialog.test.tsx[2m > [22mPatientFormDialog[2m > 
+[22mDNI inválido muestra el mensaje literal del backend (422 INVALID_DNI)
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  El DNI no es válido (se recibió "1234"): debe tener 7 u 8 dígitos, con o sin puntos.[31m
+Received:
+[31m  DNI inválido.[31m[39m
+[36m [2m❯[22m src/features/pacientes/PatientFormDialog.test.tsx:[2m393:19[22m[39m
+    [90m391| [39m
+    [90m392| [39m    [35mconst[39m alert [33m=[39m 
+screen[33m.[39m[34mgetByRole[39m([32m"alert"[39m)[33m;[39m
+    [90m393| [39m    expect(alert).toHaveTextContent('El DNI no es válido (se recibió "…
+    [90m   | [39m                  [31m^[39m
+    [90m394| [39m    [34mexpect[39m(alert)[33m.[39m[34mtoHaveFocus[39m()[33m;[39m
+    [90m395| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m4 skipped[39m[90m (5)[39m
+[2m   Start at [22m 13:06:27
+[2m   Duration [22m 4.63s[2m (transform 655ms, setup 417ms, collect 1.77s, tests 509ms, environment 1.25s, prepare 275ms)[22m
+
+exit: 1

@@ -1,0 +1,605 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+npx.cmd : [90mstderr[2m | src/features/pacientes/PacientesPage.test.tsx[2m > [22m[2mPacientesPage[2m > 
+[22m[2mListado de pacientes con sus cuatro datos
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/pacientes/PacientesPage.t ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...us cuatro datos:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in 
+`React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, 
+see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/pacientes/PacientesPage.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1052[2mms[22m[39m
+[31m   [31m×[31m PacientesPage[2m > [22mListado de pacientes con sus cuatro datos[39m[33m 1050[2mms[22m[39m
+[31m     → Unable to find role="table"
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"appShell"[31m
+    [36m>[31m
+      [36m<header[31m
+        [33mclass[31m=[32m"topBar"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"brand"[31m
+          [33mdata-brand[31m=[32m"aqua"[31m
+        [36m>[31m
+          [36m<img[31m
+            [33malt[31m=[32m""[31m
+            [33mclass[31m=[32m"brandLogo"[31m
+            [33msrc[31m=[32m"/src/assets/brand/isotipo-aqua.png"[31m
+          [36m/>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"brandText"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"brandName"[31m
+            [36m>[31m
+              [0mAqua[0m
+            [36m</span>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"brandSubtitle"[31m
+            [36m>[31m
+              [0mClínica Odontológica[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<nav[31m
+          [33maria-label[31m=[32m"Menú principal"[31m
+          [33mclass[31m=[32m"nav "[31m
+          [33mid[31m=[32m"main-menu"[31m
+        [36m>[31m
+          [36m<ul[31m
+            [33mclass[31m=[32m"menuList"[31m
+          [36m>[31m
+            [36m<li>[31m
+              [36m<a[31m
+                [33mclass[31m=[32m"menuLink"[31m
+                [33mdata-menu-item[31m=[32m"Agenda"[31m
+                [33mhref[31m=[32m"/agenda"[31m
+              [36m>[31m
+                [0mAgenda[0m
+              [36m</a>[31m
+            [36m</li>[31m
+            [36m<li>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"menuButton"[31m
+                [33mdata-menu-item[31m=[32m"Turnos"[31m
+                [33mdisabled[31m=[32m""[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [36m<span>[31m
+                  [0mTurnos[0m
+                [36m</span>[31m
+                [36m<span[31m
+                  [33mclass[31m=[32m"badge"[31m
+                [36m>[31m
+                  [0mPróximamente[0m
+                [36m</span>[31m
+              [36m</button>[31m
+            [36m</li>[31m
+            [36m<li>[31m
+              [36m<a[31m
+                [33mclass[31m=[32m"menuLink"[31m
+                [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                [33mhref[31m=[32m"/horarios"[31m
+              [36m>[31m
+                [0mHorarios y bloqueos[0m
+              [36m</a>[31m
+            [36m</li>[31m
+            [36m<li>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"menuButton"[31m
+                [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                [33mdisabled[31m=[32m""[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [36m<span>[31m
+                  [0mCatálogos[0m
+                [36m</span>[31m
+                [36m<span[31m
+                  [33mclass[31m=[32m"badge"[31m
+                [36m>[31m
+                  [0mPróximamente[0m
+                [36m</span>[31m
+              [36m</button>[31m
+            [36m</li>[31m
+            [36m<li>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"menuButton"[31m
+                [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                [33mdisabled[31m=[32m""[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [36m<span>[31m
+                  [0mPacientes[0m
+                [36m</span>[31m
+                [36m<span[31m
+                  [33mclass[31m=[32m"badge"[31m
+                [36m>[31m
+                  [0mPróximamente[0m
+                [36m</span>[31m
+              [36m</button>[31m
+            [36m</li>[31m
+          [36m</ul>[31m
+        [36m</nav>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"sessionControls"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"userName"[31m
+          [36m>[31m
+            [0mRecepción Demo[0m
+          [36m</span>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"logoutButton"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [0mCerrar sesión[0m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</header>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"content"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [0mPacientes[0m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"appShell"[31m
+      [36m>[31m
+        [36m<header[31m
+          [33mclass[31m=[32m"topBar"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"brand"[31m
+            [33mdata-brand[31m=[32m"aqua"[31m
+          [36m>[31m
+            [36m<img[31m
+              [33malt[31m=[32m""[31m
+              [33mclass[31m=[32m"brandLogo"[31m
+              [33msrc[31m=[32m"/src/assets/brand/isotipo-aqua.png"[31m
+            [36m/>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"brandText"[31m
+            [36m>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"brandName"[31m
+              [36m>[31m
+                [0mAqua[0m
+              [36m</span>[31m
+              [36m<span[31m
+                [33mclass[31m=[32m"brandSubtitle"[31m
+              [36m>[31m
+                [0mClínica Odontológica[0m
+              [36m</span>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<nav[31m
+            [33maria-label[31m=[32m"Menú principal"[31m
+            [33mclass[31m=[32m"nav "[31m
+            [33mid[31m=[32m"main-menu"[31m
+          [36m>[31m
+            [36m<ul[31m
+              [33mclass[31m=[32m"menuList"[31m
+            [36m>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33mclass[31m=[32m"menuLink"[31m
+                  [33mdata-menu-item[31m=[32m"Agenda"[31m
+                  [33mhref[31m=[32m"/agenda"[31m
+                [36m>[31m
+                  [0mAgenda[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Turnos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mTurnos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<a[31m
+                  [33mclass[31m=[32m"menuLink"[31m
+                  [33mdata-menu-item[31m=[32m"Horarios y bloqueos"[31m
+                  [33mhref[31m=[32m"/horarios"[31m
+                [36m>[31m
+                  [0mHorarios y bloqueos[0m
+                [36m</a>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Catálogos"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mCatálogos[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+              [36m<li>[31m
+                [36m<button[31m
+                  [33mclass[31m=[32m"menuButton"[31m
+                  [33mdata-menu-item[31m=[32m"Pacientes"[31m
+                  [33mdisabled[31m=[32m""[31m
+                  [33mtype[31m=[32m"button"[31m
+                [36m>[31m
+                  [36m<span>[31m
+                    [0mPacientes[0m
+                  [36m</span>[31m
+                  [36m<span[31m
+                    [33mclass[31m=[32m"badge"[31m
+                  [36m>[31m
+                    [0mPróximamente[0m
+                  [36m</span>[31m
+                [36m</button>[31m
+              [36m</li>[31m
+            [36m</ul>[31m
+          [36m</nav>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"sessionControls"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"userName"[31m
+            [36m>[31m
+              [0mRecepción Demo[0m
+            [36m</span>[31m
+            [36m<button[31m
+              [33mclass[31m=[32m"logoutButton"[31m
+              [33mtype[31m=[32m"button"[31m
+            [36m>[31m
+              [0mCerrar sesión[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</header>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"content"[31m
+        [36m>[31m
+          [36m<div>[31m
+            [0mPacientes[0m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/pacientes/PacientesPage.test.tsx[2m > [22mPacientesPage[2m > [22mListado de 
+pacientes con sus cuatro datos
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find role="table"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"appShell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"topBar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"brand"[39m
+          [33mdata-brand[39m=[32m"aqua"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m""[39m
+            [33mclass[39m=[32m"brandLogo"[39m
+            [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brandText"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"brandName"[39m
+            [36m>[39m
+              [0mAqua[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"brandSubtitle"[39m
+            [36m>[39m
+              [0mClínica Odontológica[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Menú principal"[39m
+          [33mclass[39m=[32m"nav "[39m
+          [33mid[39m=[32m"main-menu"[39m
+        [36m>[39m
+          [36m<ul[39m
+            [33mclass[39m=[32m"menuList"[39m
+          [36m>[39m
+            [36m<li>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"menuLink"[39m
+                [33mdata-menu-item[39m=[32m"Agenda"[39m
+                [33mhref[39m=[32m"/agenda"[39m
+              [36m>[39m
+                [0mAgenda[0m
+              [36m</a>[39m
+            [36m</li>[39m
+            [36m<li>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"menuButton"[39m
+                [33mdata-menu-item[39m=[32m"Turnos"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mTurnos[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"badge"[39m
+                [36m>[39m
+                  [0mPróximamente[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</li>[39m
+            [36m<li>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"menuLink"[39m
+                [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                [33mhref[39m=[32m"/horarios"[39m
+              [36m>[39m
+                [0mHorarios y bloqueos[0m
+              [36m</a>[39m
+            [36m</li>[39m
+            [36m<li>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"menuButton"[39m
+                [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mCatálogos[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"badge"[39m
+                [36m>[39m
+                  [0mPróximamente[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</li>[39m
+            [36m<li>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"menuButton"[39m
+                [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mPacientes[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"badge"[39m
+                [36m>[39m
+                  [0mPróximamente[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</li>[39m
+          [36m</ul>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"sessionControls"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"userName"[39m
+          [36m>[39m
+            [0mRecepción Demo[0m
+          [36m</span>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"logoutButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mCerrar sesión[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"content"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [0mPacientes[0m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+            [33mdata-brand[39m=[32m"aqua"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33mclass[39m=[32m"brandLogo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brandText"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandName"[39m
+              [36m>[39m
+                [0mAqua[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandSubtitle"[39m
+              [36m>[39m
+                [0mClínica Odontológica[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav "[39m
+            [33mid[39m=[32m"main-menu"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mhref[39m=[32m"/horarios"[39m
+                [36m>[39m
+                  [0mHorarios y bloqueos[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mRecepción Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [0mPacientes[0m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+[90m [2m❯[22m Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[36m [2m❯[22m src/features/pacientes/PacientesPage.test.tsx:[2m63:11[22m[39m
+    [90m 61| [39m    [34mrenderPacientes[39m([32m"recepcion"[39m[33m,[39m fetchFn)[33m;[39m
+    [90m 62| [39m
+    [90m 63| [39m    [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m   | [39m          [31m^[39m
+    [90m 64| [39m      [34mexpect[39m(screen[33m.[39m[34mgetByRole[39m([32m"table"[39m))[33m.[39m[34mtoBeI
+nTheDocument[39m()[33m;[39m
+    [90m 65| [39m    })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 12:34:42
+[2m   Duration [22m 5.66s[2m (transform 697ms, setup 540ms, collect 1.57s, tests 1.05s, environment 1.70s, prepare 353ms)[22m
+
+exit: 1

@@ -1,0 +1,52 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+npx.cmd : [90mstderr[2m | src/features/catalogos/CatalogosPacientesRoutes.test.tsx[2m > 
+[22m[2mCatalogosPacientesRoutes[2m > [22m[2mPacientes y Catálogos con su título y un único h1
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/catalogos/CatalogosPacien ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...o y un único h1:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in 
+`React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, 
+see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/catalogos/CatalogosPacientesRoutes.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 133[2mms[22m[39m
+[31m   [31m×[31m CatalogosPacientesRoutes[2m > [22mPacientes y Catálogos con su título y un único h1[39m[32m 131[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  Catálogos[31m
+Received:
+[31m  Turnos Odontología[31m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/CatalogosPacientesRoutes.test.tsx[2m > 
+[22mCatalogosPacientesRoutes[2m > [22mPacientes y Catálogos con su título y un único h1
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveTextContent()[22m
+
+Expected element to have text content:
+[32m  Catálogos[31m
+Received:
+[31m  Turnos Odontología[31m[39m
+[36m [2m❯[22m src/features/catalogos/CatalogosPacientesRoutes.test.tsx:[2m82:38[22m[39m
+    [90m 80| [39m    [90m// PageShell header contains "Catálogos"[39m
+    [90m 81| [39m    const pageShellHeaderCatalogos = viewCatalogos.container.querySele…
+    [90m 82| [39m    
+[34mexpect[39m(pageShellHeaderCatalogos)[33m.[39m[34mtoHaveTextContent[39m([32m"Catálogos"[39m)[33m;[39m
+    [90m   | [39m                                     [31m^[39m
+    [90m 83| [39m  })[33m;[39m
+    [90m 84| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 12:50:13
+[2m   Duration [22m 4.14s[2m (transform 623ms, setup 419ms, collect 1.55s, tests 133ms, environment 1.38s, prepare 251ms)[22m
+
+exit: 1

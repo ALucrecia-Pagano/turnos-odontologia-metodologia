@@ -1,0 +1,54 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+npx.cmd : [90mstderr[2m | src/features/pacientes/PatientFormDialog.test.tsx[2m > [22m[2mPatientFormDialog[2m > 
+[22m[2mAlta de paciente
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/pacientes/PatientFormDial ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...lta de paciente:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in 
+`React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, 
+see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/pacientes/PatientFormDialog.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 550[2mms[22m[39m
+[31m   [31m×[31m PatientFormDialog[2m > [22mAlta de paciente[39m[33m 548[2mms[22m[39m
+[31m     → expected { fullName: 'Carla Medina', …(3) } to deeply equal { fullName: 'Carla Medina', …(3) }[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/pacientes/PatientFormDialog.test.tsx[2m > [22mPatientFormDialog[2m > 
+[22mAlta de paciente
+[31m[1mAssertionError[22m: expected { fullName: 'Carla Medina', …(3) } to deeply equal { fullName: 'Carla Medina', 
+…(3) }[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "dni": "27.123.456",[22m
+[2m    "fullName": "Carla Medina",[22m
+[2m    "healthInsurance": null,[22m
+[32m-   "phone": null,[39m
+[31m+   "phone": "",[39m
+[2m  }[22m
+
+[36m [2m❯[22m src/features/pacientes/PatientFormDialog.test.tsx:[2m89:29[22m[39m
+    [90m 87| [39m
+    [90m 88| [39m    [34mexpect[39m(postedBodies)[33m.[39m[34mtoHaveLength[39m([34m1[39m)[33m;[39m
+    [90m 89| [39m    [34mexpect[39m(postedBodies[[34m0[39m])[33m.[39m[34mtoEqual[39m({
+    [90m   | [39m                            [31m^[39m
+    [90m 90| [39m      fullName[33m:[39m [32m"Carla Medina"[39m[33m,[39m
+    [90m 91| [39m      dni[33m:[39m [32m"27.123.456"[39m[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 13:01:59
+[2m   Duration [22m 4.82s[2m (transform 658ms, setup 371ms, collect 1.78s, tests 550ms, environment 1.44s, prepare 268ms)[22m
+
+exit: 1

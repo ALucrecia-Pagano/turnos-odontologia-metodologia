@@ -1,0 +1,197 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mapertura y foco inicial
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mprellenado con fecha y filtros activos
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2msin filtros activos los selectores quedan sin selección
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+ [31m❯[39m src/features/catalogos/CatalogFormDialog.mobile.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 190[2mms[22m[39m
+[31m   [31m×[31m CatalogFormDialog — Móvil[2m > [22mFormulario de catálogo como hoja inferior en celular[39m[32m 188[2mms[22m[39m
+[31m     → [2mexpect([22m[31melement[31m[2m).toHaveAttribute([22m[32m[32m"data-mobile-sheet"[32m[31m[2m, [22m[32m[32m"true"[32m[31m[2m) // element.getAttribute("data-mobile-sheet") === "true"[22m
+
+Expected the element to have attribute:
+[32m  data-mobile-sheet="true"[31m
+Received:
+[31m  null[31m[39m
+ [32m✓[39m src/features/appointments/AppointmentStatusActions.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 545[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Cambios de estado[2m > [22m4.1 botones contextuales según estado y rol [33m 363[2mms[22m[39m
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mpulsar Cancelar cierra el diálogo sin enviar solicitudes y devuelve el foco al elemento de apertura
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+[90mstderr[2m | src/features/appointments/AppointmentFormDialog.test.tsx[2m > [22m[2mAppointmentFormDialog[2m > [22m[2mEscape cierra sin enviar solicitudes y devuelve el foco
+[22m[39mWarning: An update to AppointmentFormDialog inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at AppointmentFormDialog (C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\appointments\AppointmentFormDialog.tsx:30:3)
+
+ [32m✓[39m src/features/agenda/AgendaView.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 819[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentFormDialog.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 1014[2mms[22m[39m
+ [32m✓[39m src/features/horarios/AffectedAppointments.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 1100[2mms[22m[39m
+   [33m[2m✓[22m[39m AffectedAppointments[2m > [22mTurnos futuros fuera del horario al guardar tramos: muestra en role=alert fecha, hora local, paciente, profesional, StatusBadge y aviso de no cancelación [33m 377[2mms[22m[39m
+   [33m[2m✓[22m[39m AffectedAppointments[2m > [22mTurnos solapados al crear un bloqueo: muestra en role=alert la advertencia de turnos solapados con paciente, fecha, hora local y estado [33m 344[2mms[22m[39m
+   [33m[2m✓[22m[39m AffectedAppointments[2m > [22mFechas en formato local es-AR en turnos afectados, bloqueos y modal de eliminar: formatea 2026-11-17 como mar, 17/11/2026 con la timezone de la API y no muestra ISO [33m 376[2mms[22m[39m
+[90mstderr[2m | src/features/pacientes/PatientFormDialog.test.tsx[2m > [22m[2mPatientFormDialog[2m > [22m[2mAlta de paciente
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+[90mstderr[2m | src/features/pacientes/PacientesPage.test.tsx[2m > [22m[2mPacientesPage[2m > [22m[2mListado de pacientes con sus cuatro datos
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [32m✓[39m src/features/agenda/AgendaPage.nuevoTurno.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 969[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración con AppointmentFormDialog[2m > [22mal pulsar Nuevo turno abre el diálogo y tras alta exitosa (201) cierra y refresca la agenda [33m 709[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.porSillon.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 1156[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Modo Sillones[2m > [22mActivar Sillones conserva fecha y filtros: activar Sillones conserva fecha y filtros [33m 500[2mms[22m[39m
+ [32m✓[39m src/features/pacientes/PacientesPage.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 1178[2mms[22m[39m
+   [33m[2m✓[22m[39m PacientesPage[2m > [22mListado de pacientes con sus cuatro datos [33m 332[2mms[22m[39m
+   [33m[2m✓[22m[39m PacientesPage[2m > [22mBúsqueda envía la consulta codificada y muestra el resultado [33m 453[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.acciones.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 2191[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage — Integración de Acciones[2m > [22m7.1 restringir acciones de odontólogo en turnos propios a cambios de estado e historial [33m 652[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaPage.test.tsx [2m([22m[2m17 tests[22m[2m)[22m[33m 2436[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mcarga con fetch y Clock inyectados y al filtrar por Sillón 2 conserva horarios y bloqueos con ayuda visible [33m 508[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mfiltra las tres colecciones por profesional, muestra Sin turnos para este filtro al combinar y Limpiar filtros conserva la fecha [33m 433[2mms[22m[39m
+   [33m[2m✓[22m[39m AgendaPage[2m > [22mnavega con Anterior, Siguiente, Hoy y el selector de fecha usando push en la URL [33m 319[2mms[22m[39m
+ [32m✓[39m src/features/pacientes/PatientFormDialog.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 3565[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mAlta de paciente [33m 910[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mEdición de paciente con valores precargados [33m 457[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mDNI duplicado muestra el mensaje literal del backend [33m 546[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mDNI inválido muestra el mensaje literal del backend (422 INVALID_DNI) [33m 418[2mms[22m[39m
+   [33m[2m✓[22m[39m PatientFormDialog[2m > [22mEl mensaje de estado se reemplaza entre acciones sin desmontar la región [33m 858[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentRescheduleDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 548[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaView.chair.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 536[2mms[22m[39m
+[90mstderr[2m | src/shared/components/AppShell.mobile.test.tsx[2m > [22m[2mAppShell — Móvil (≤ 640 px)[2m > [22m[2m01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [32m✓[39m src/features/appointments/AppointmentCancel.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 646[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Cancelación[2m > [22m5.1 cancelar turno muestra subvista de confirmación in-dialog [33m 321[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.mobile.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 442[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell — Móvil (≤ 640 px)[2m > [22m01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación [33m 318[2mms[22m[39m
+ [32m✓[39m src/features/appointments/AppointmentDetailDialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 540[2mms[22m[39m
+   [33m[2m✓[22m[39m AppointmentDetailDialog — Detalle e Historial[2m > [22m3.1 detalle renderiza datos completos en hora local con StatusBadge y botón cerrar [33m 313[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.mobile.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 384[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellNavigation.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 353[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell navegación sin cajas[2m > [22menlaces de navegación activos y bloque de sesión en misma línea en 1440 px [33m 303[2mms[22m[39m
+[90mstderr[2m | src/features/catalogos/CatalogosPacientesRoutes.test.tsx[2m > [22m[2mCatalogosPacientesRoutes[2m > [22m[2mPacientes y Catálogos con su título y un único h1
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [32m✓[39m src/features/catalogos/CatalogosPacientesRoutes.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 360[2mms[22m[39m
+   [33m[2m✓[22m[39m CatalogosPacientesRoutes[2m > [22mPacientes y Catálogos con su título y un único h1 [33m 357[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 313[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShell.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 462[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShell[2m > [22mrenderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente [33m 314[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 344[2mms[22m[39m
+ [32m✓[39m src/features/agenda/useAgenda.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 333[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.chair.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 327[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellCatalogosPacientes.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 309[2mms[22m[39m
+   [33m[2m✓[22m[39m AppShellCatalogosPacientes[2m > [22mCatálogos y Pacientes habilitados para los tres roles [33m 305[2mms[22m[39m
+ [32m✓[39m src/features/appointments/PatientSearchGroup.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 404[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 250[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaToolbar.nuevoTurno.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 273[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaGrid.mobile.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 318[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaTable.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 298[2mms[22m[39m
+ [32m✓[39m src/shared/components/ErrorState.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 302[2mms[22m[39m
+ [32m✓[39m src/shared/components/EmptyState.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 267[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.escape.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 171[2mms[22m[39m
+ [32m✓[39m src/shared/components/AppShellBrand.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 311[2mms[22m[39m
+ [32m✓[39m src/shared/components/Dialog.bottomSheet.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 229[2mms[22m[39m
+ [32m✓[39m src/shared/components/StatusBadge.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 180[2mms[22m[39m
+ [32m✓[39m src/shared/components/PageShell.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 191[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaGrid.accionable.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 160[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaConfig.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 126[2mms[22m[39m
+ [32m✓[39m src/shared/components/LoadingState.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 136[2mms[22m[39m
+ [32m✓[39m src/features/agenda/clock.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 126[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaLayout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 106[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTime.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 65[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaChairLayout.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaTimeGuard.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 53[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaApi.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m src/shared/styles/landingTokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaStyles.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m src/features/catalogos/catalogosPacientesStyles.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m src/features/agenda/agendaChairStyles.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m src/shared/api/client.violations.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/shared/components/DialogTheme.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/features/auth/tokenStore.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/shared/styles/tokens.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m src/features/auth/menuFor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/features/agenda/AgendaSpacing.mobile.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/features/landing/landingContent.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m src/shared/styles/appointmentStatusTokens.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/CatalogFormDialog.mobile.test.tsx[2m > [22mCatalogFormDialog — Móvil[2m > [22mFormulario de catálogo como hoja inferior en celular
+[31m[1mError[22m: [2mexpect([22m[31melement[31m[2m).toHaveAttribute([22m[32m[32m"data-mobile-sheet"[32m[31m[2m, [22m[32m[32m"true"[32m[31m[2m) // element.getAttribute("data-mobile-sheet") === "true"[22m
+
+Expected the element to have attribute:
+[32m  data-mobile-sheet="true"[31m
+Received:
+[31m  null[31m[39m
+[36m [2m❯[22m src/features/catalogos/CatalogFormDialog.mobile.test.tsx:[2m30:20[22m[39m
+    [90m 28| [39m
+    [90m 29| [39m    [35mconst[39m dialog [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m"dialog"[39m)[33m;[39m
+    [90m 30| [39m    [34mexpect[39m(dialog)[33m.[39m[34mtoHaveAttribute[39m([32m"data-mobile-sheet"[39m[33m,[39m [32m"true"[39m)[33m;[39m
+    [90m   | [39m                   [31m^[39m
+    [90m 31| [39m    [34mexpect[39m(dialog[33m.[39mclassName)[33m.[39m[34mtoContain[39m([32m"dialogBottomSheet"[39m)[33m;[39m
+    [90m 32| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m58 passed[39m[22m[90m (59)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m239 passed[39m[22m[90m (240)[39m
+[2m   Start at [22m 13:32:17
+[2m   Duration [22m 30.88s[2m (transform 3.97s, setup 44.75s, collect 25.39s, tests 25.30s, environment 181.12s, prepare 20.98s)[22m
+

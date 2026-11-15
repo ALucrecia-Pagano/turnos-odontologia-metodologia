@@ -54,9 +54,16 @@ const MENU_DEFINITIONS: readonly MenuDefinition[] = [
   },
 ];
 
+const ENABLED_MENU_IDS: readonly string[] = [
+  "agenda",
+  "horarios-y-bloqueos",
+  "catalogos",
+  "pacientes",
+];
+
 export function menuFor(role: UserRole): readonly MenuItem[] {
   return MENU_DEFINITIONS.filter((item) => item.roles.includes(role)).map((item) => {
-    const enabled = item.id === "agenda" || item.id === "horarios-y-bloqueos";
+    const enabled = ENABLED_MENU_IDS.includes(item.id);
     return {
       id: item.id,
       label: item.label,

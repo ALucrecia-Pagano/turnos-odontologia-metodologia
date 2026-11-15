@@ -1,0 +1,37 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/shared/components/AppShellCatalogosPacientes.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 88[2mms[22m[39m
+[31m   [31m×[31m AppShellCatalogosPacientes[2m > [22mCatálogos y Pacientes habilitados para los tres roles[39m[32m 86[2mms[22m[39m
+[31m     → Catálogos debe ser un enlace para administrador: expected null not to be null[39m
+npx.cmd : 
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/shared/components/AppShellCatalogo ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/shared/components/AppShellCatalogosPacientes.test.tsx[2m > 
+[22mAppShellCatalogosPacientes[2m > [22mCatálogos y Pacientes habilitados para los tres roles
+[31m[1mAssertionError[22m: Catálogos debe ser un enlace para administrador: expected null not to be null[39m
+[36m [2m❯[22m src/shared/components/AppShellCatalogosPacientes.test.tsx:[2m59:78[22m[39m
+    [90m 57| [39m
+    [90m 58| [39m      const linkCatalogos = within(nav).queryByRole("link", { name: "C…
+    [90m 59| [39m      expect(linkCatalogos, `Catálogos debe ser un enlace para ${role}…
+    [90m   | [39m                                                                             [31m^[39m
+    [90m 60| [39m      
+[34mexpect[39m(linkCatalogos)[33m.[39m[34mtoHaveAttribute[39m([32m"href"[39m[33m,[39m 
+[32m"/catalogos"[39m)[33m;[39m
+    [90m 61| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 12:51:59
+[2m   Duration [22m 2.84s[2m (transform 183ms, setup 410ms, collect 315ms, tests 88ms, environment 1.37s, prepare 268ms)[22m
+
+exit: 1

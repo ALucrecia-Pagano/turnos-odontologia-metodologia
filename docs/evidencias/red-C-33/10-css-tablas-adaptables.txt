@@ -1,0 +1,218 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/catalogos/catalogosPacientesStyles.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m2 skipped[39m[2m)[22m[32m 10[2mms[22m[39m
+   [2m[90m↓[39m[22m catalogosPacientesStyles[2m > [22mToda variable CSS de las pantallas existe en tokens.css
+   [2m[90m↓[39m[22m catalogosPacientesStyles[2m > [22mSin tokens de fondo oscuro en las pantallas
+[31m   [31m×[31m catalogosPacientesStyles[2m > [22mTablas apiladas en celular, controles táctiles y foco visible[39m[32m 9[2mms[22m[39m
+[31m     → C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\catalogos\CatalogosPage.module.css debe tener media query a 640px: expected '.page {\n  width: 100%;\n  box-sizing…' to match /@media\s*\(\s*max-width\s*:\s*640px\s…/[39m
+npx.cmd : 
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/catalogos/catalogosPacien ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/catalogosPacientesStyles.test.ts[2m > 
+[22mcatalogosPacientesStyles[2m > [22mTablas apiladas en celular, controles táctiles y foco visible
+[31m[1mAssertionError[22m: 
+C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\catalogos\CatalogosPage.module.css debe tener 
+media query a 640px: expected '.page {\n  width: 100%;\n  box-sizing…' to match 
+/@media\s*\(\s*max-width\s*:\s*640px\s…/[39m
+
+[32m- Expected:[39m 
+/@media\s*\(\s*max-width\s*:\s*640px\s*\)/
+
+[31m+ Received:[39m 
+".page {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: var(--line-height-base);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.navLink {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.navLinkActive {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  border-bottom: 2px solid var(--color-primary);
+  border-radius: 0;
+}
+
+.statusBanner {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.statusEmpty {
+  display: none;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.readOnlyBadge {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.primaryButton {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-contrast);
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.primaryButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.caption {
+  padding: var(--space-3) var(--space-4);
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.th {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-background);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.actionButton {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* removed for M10 */
+"
+
+[36m [2m❯[22m src/features/catalogos/catalogosPacientesStyles.test.ts:[2m88:61[22m[39m
+    [90m 86| [39m      [35mconst[39m css [33m=[39m [34mreadFileSync[39m(file[33m,[39m 
+[32m"utf8"[39m)[33m;[39m
+    [90m 87| [39m
+    [90m 88| [39m      expect(css, `${file} debe tener media query a 640px`).toMatch(/@…
+    [90m   | [39m                                                            [31m^[39m
+    [90m 89| [39m      expect(css, `${file} debe usar data-label en responsive`).toCont…
+    [90m 90| [39m      expect(css, `${file} debe declarar min-height de 44px`).toMatch(…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m2 skipped[39m[90m (3)[39m
+[2m   Start at [22m 12:51:06
+[2m   Duration [22m 2.47s[2m (transform 65ms, setup 424ms, collect 71ms, tests 10ms, environment 1.30s, prepare 245ms)[22m
+
+exit: 1

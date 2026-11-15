@@ -1,0 +1,42 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+npx.cmd : [90mstderr[2m | src/features/catalogos/CatalogosPage.test.tsx[2m > [22m[2mCatalogosPage[2m > 
+[22m[2mProfesionales por defecto con estado en texto
+En línea: 2 Carácter: 14
++ ... redOutput = npx.cmd vitest run src/features/catalogos/CatalogosPage.t ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...estado en texto:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in 
+`React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, 
+see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+
+ [31m❯[39m src/features/catalogos/CatalogosPage.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 149[2mms[22m[39m
+[31m   [31m×[31m CatalogosPage[2m > [22mProfesionales por defecto con estado en texto[39m[32m 147[2mms[22m[39m
+[31m     → expected [ …(2) ] to include 'http://localhost:8000/api/professiona…'[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/CatalogosPage.test.tsx[2m > [22mCatalogosPage[2m > 
+[22mProfesionales por defecto con estado en texto
+[31m[1mAssertionError[22m: expected [ …(2) ] to include 'http://localhost:8000/api/professiona…'[39m
+[36m [2m❯[22m src/features/catalogos/CatalogosPage.test.tsx:[2m82:27[22m[39m
+    [90m 80| [39m    
+[34mexpect[39m(rowFerreyra)[33m.[39m[34mtoHaveTextContent[39m([32m"Inactivo"[39m)[33m;[39m
+    [90m 81| [39m
+    [90m 82| [39m    expect(requestedUrls).toContain("http://localhost:8000/api/profess…
+    [90m   | [39m                          [31m^[39m
+    [90m 83| [39m    expect(requestedUrls.some((u) => u.includes("active="))).toBe(fals…
+    [90m 84| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 12:47:36
+[2m   Duration [22m 4.51s[2m (transform 679ms, setup 409ms, collect 1.65s, tests 149ms, environment 1.55s, prepare 301ms)[22m
+
+exit: 1

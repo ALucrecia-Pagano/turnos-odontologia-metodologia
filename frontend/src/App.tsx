@@ -6,6 +6,8 @@ import { AuthProvider } from "./features/auth/AuthContext";
 import { PublicOnlyRoute } from "./features/auth/PublicOnlyRoute";
 import type { TokenStore } from "./features/auth/tokenStore";
 import { HorariosPage } from "./features/horarios/HorariosPage";
+import { CatalogosPage } from "./features/catalogos/CatalogosPage";
+import { PacientesPage } from "./features/pacientes/PacientesPage";
 import { AccesoPage } from "./features/landing/AccesoPage";
 import { RootGate } from "./features/landing/RootGate";
 import { RootRedirect } from "./features/landing/RootRedirect";
@@ -32,6 +34,8 @@ export function createAppRoutes(clock: Clock = systemClock): RouteObject[] {
             { index: true, element: <RootRedirect clock={clock} /> },
             { path: "agenda", element: <AgendaPage clock={clock} /> },
             { path: "horarios", element: <HorariosPage clock={clock} /> },
+            { path: "catalogos", element: <CatalogosPage /> },
+            { path: "pacientes", element: <PacientesPage /> },
             { path: "*", element: <NotFoundPage /> },
           ],
         },
