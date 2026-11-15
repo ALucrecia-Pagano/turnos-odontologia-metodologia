@@ -1,0 +1,15 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [32m✓[39m src/features/pacientes/PacientesPage.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 399[2mms[22m[39m
+   [33m[2m✓[22m[39m PacientesPage[2m > [22mBúsqueda sin resultados muestra un único mensaje [33m 397[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 14:42:13
+[2m   Duration [22m 4.70s[2m (transform 689ms, setup 440ms, collect 1.89s, tests 399ms, environment 1.27s, prepare 269ms)[22m
+
+
+[90mstderr[2m | src/features/pacientes/PacientesPage.test.tsx[2m > [22m[2mPacientesPage[2m > [22m[2mBúsqueda sin resultados muestra un único mensaje
+[22m[39m⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+

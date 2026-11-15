@@ -4,6 +4,7 @@ import { getApiErrorMessages } from "../../shared/api/errors";
 import { Dialog } from "../../shared/components/Dialog";
 import type { AnyCatalogItem, CatalogConfig } from "./catalogConfigs";
 import { deactivateCatalogItem, reactivateCatalogItem } from "./catalogosApi";
+import modalCardStyles from "./modalCard.module.css";
 import styles from "./CatalogConfirmDialog.module.css";
 
 export interface CatalogConfirmDialogProps {
@@ -79,7 +80,7 @@ export function CatalogConfirmDialog({
       returnFocusRef={returnFocusRef}
       isMobile={isMobile}
     >
-      <div className={styles.content}>
+      <div className={`${modalCardStyles.modalContent} ${styles.content}`} data-modal-card="catalog-confirm">
         <h2 id={titleId} className={styles.title}>
           {dialogTitle}
         </h2>

@@ -66,7 +66,7 @@ describe("PacientesPage", () => {
     });
 
     const headers = screen.getAllByRole("columnheader").map((th) => th.textContent);
-    expect(headers).toEqual(["Nombre", "DNI", "Teléfono", "Obra social"]);
+    expect(headers).toEqual(["Nombre", "DNI", "Teléfono", "Obra social", "Acciones"]);
 
     const rowAna = screen.getByRole("row", { name: /Ana Pérez/ });
     expect(rowAna).toHaveTextContent("30111222");
@@ -307,5 +307,64 @@ describe("PacientesPage", () => {
     expect(screen.getByLabelText("Buscar por nombre o DNI")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Nuevo paciente" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Editar" })).not.toBeInTheDocument();
+  });
+
+  it("Búsqueda sin resultados muestra un único mensaje", async () => {
+    const user = userEvent.setup();
+
+    const fetchFn: FetchFn = async (url) => {
+      if (url.endsWith("/auth/me")) {
+        return new Response(
+          JSON.stringify({
+            id: "00000000-0000-0000-0000-0000000000e2",
+            username: "recepcion",
+            displayName: "Recepción Demo",
+            role: "recepcion",
+            professionalId: null,
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.endsWith("/patients")) {
+        return new Response(
+          JSON.stringify([
+            {
+              id: "p-1",
+              fullName: "Ana Pérez",
+              dni: "30111222",
+              phone: "11-4444-5555",
+              healthInsurance: "OSDE",
+            },
+          ]),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      if (url.includes("/patients?query=sin-coincidencia")) {
+        return new Response(JSON.stringify([]), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+      return new Response("Not found", { status: 404 });
+    };
+
+    renderPacientes(fetchFn);
+
+    await waitFor(() => {
+      expect(screen.getByRole("row", { name: /Ana Pérez/ })).toBeInTheDocument();
+    });
+
+    const searchInput = screen.getByLabelText("Buscar por nombre o DNI");
+    await user.type(searchInput, "sin-coincidencia");
+    await user.click(screen.getByRole("button", { name: "Buscar" }));
+
+    await waitFor(() => {
+      expect(screen.queryByText("No se encontraron pacientes.")).toBeInTheDocument();
+    });
+
+    expect(
+      screen.queryByText("No hay resultados para la búsqueda realizada."),
+      "No debe mostrar el mensaje descriptivo secundario",
+    ).not.toBeInTheDocument();
   });
 });

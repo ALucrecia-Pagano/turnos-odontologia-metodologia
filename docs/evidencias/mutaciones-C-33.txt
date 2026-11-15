@@ -1,8 +1,8 @@
 ================================================================================
 VERIFICACION POR MUTACION DE C-33 (UI CATALOGOS Y PACIENTES)
-SHA-256 inicial de archivos de produccion: 880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f
+SHA-256 inicial de archivos de produccion: 14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00
 ================================================================================
-Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs 30 mutaciones.
+Correspondencia 1:1 verificada: 34 tests evaluados (32 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs 34 mutaciones.
 ================================================================================
 [M01] src/features/pacientes/PacientesPage.test.tsx > Listado de pacientes con sus cuatro datos
     Archivo: frontend/src/features/pacientes/PacientesPage.tsx
@@ -16,10 +16,10 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
                      Obra social
 -                  </th>
 +                  </th>}
-                 </tr>
-               </thead>
+                   {canEdit && (
+                     <th scope="col" className={styles.th}>
     Estado: Matada
-    Fallo:  AssertionError: expected [ 'Nombre', 'DNI', 'Teléfono' ] to deeply equal [ 'Nombre', 'DNI', 'Teléfono', …(1) ]
+    Fallo:  AssertionError: expected [ 'Nombre', 'DNI', 'Teléfono', …(1) ] to deeply equal [ 'Nombre', 'DNI', 'Teléfono', …(2) ]
     Restaurado a verde: si
 --------------------------------------------------------------------------------
 [M02] src/features/pacientes/PacientesPage.test.tsx > Búsqueda envía la consulta codificada y muestra el resultado
@@ -150,8 +150,8 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
  
 -@media (max-width: 640px) {
 +@media (max-width: 0px) {
-   .table,
-   .table tbody,
+   .caption {
+     display: block;
     Estado: Matada
     Fallo:  AssertionError: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\catalogos\CatalogosPage.module.css debe tener media query a 640px: expected '.page {\n  width: 100%;\n  box-sizing…' to match /@media\s*\(\s*max-width\s*:\s*640px\s…/
     Restaurado a verde: si
@@ -201,7 +201,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
 --- a/frontend/src/features/pacientes/PatientFormDialog.tsx
 +++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
-@@ -85,5 +85,5 @@
+@@ -86,5 +86,5 @@
        fullName,
        dni,
 -      phone: phone.trim() === "" ? null : phone.trim(),
@@ -216,7 +216,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
 --- a/frontend/src/features/pacientes/PatientFormDialog.tsx
 +++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
-@@ -235,5 +235,5 @@
+@@ -237,5 +237,5 @@
          </div>
  
 -        <div className={styles.actions}>
@@ -231,7 +231,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
 --- a/frontend/src/features/pacientes/PatientFormDialog.tsx
 +++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
-@@ -57,5 +57,5 @@
+@@ -58,5 +58,5 @@
          setDni(patient.dni);
          setPhone(patient.phone ?? "");
 -        setHealthInsurance(patient.healthInsurance ?? "");
@@ -246,7 +246,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
 --- a/frontend/src/features/pacientes/PatientFormDialog.tsx
 +++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
-@@ -115,4 +115,5 @@
+@@ -116,4 +116,5 @@
        } else {
          setGeneralAlert(getApiErrorMessages(res.error));
 +        if (res.error.status === 409) setFieldErrors({ dni: "Error" });
@@ -260,7 +260,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
 --- a/frontend/src/features/pacientes/PatientFormDialog.tsx
 +++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
-@@ -114,5 +114,5 @@
+@@ -115,5 +115,5 @@
          }
        } else {
 -        setGeneralAlert(getApiErrorMessages(res.error));
@@ -275,7 +275,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
 --- a/frontend/src/features/pacientes/PatientFormDialog.tsx
 +++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
-@@ -104,5 +104,5 @@
+@@ -105,5 +105,5 @@
          for (const err of res.error.errors) {
            if (err.field) {
 -            errorsByField[err.field] = err.message;
@@ -305,7 +305,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/pacientes/PacientesPage.tsx
 --- a/frontend/src/features/pacientes/PacientesPage.tsx
 +++ b/frontend/src/features/pacientes/PacientesPage.tsx
-@@ -183,5 +183,5 @@
+@@ -188,5 +188,5 @@
            onClose={() => setDialogOpen(false)}
            onSuccess={(msg) => {
 -            setStatusMessage(msg);
@@ -335,7 +335,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
 --- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
 +++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
-@@ -79,5 +79,5 @@
+@@ -80,5 +80,5 @@
      if (config.key === "prestaciones") {
        const rawDuration = formData["defaultDurationMin"]?.trim() ?? "";
 -      if (!/^\d+$/.test(rawDuration)) {
@@ -350,7 +350,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
 --- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
 +++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
-@@ -123,4 +123,5 @@
+@@ -124,4 +124,5 @@
        } else {
          setGeneralAlert(getApiErrorMessages(res.error));
 +        onClose();
@@ -364,7 +364,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
 --- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
 +++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
-@@ -123,4 +123,5 @@
+@@ -124,4 +124,5 @@
        } else {
          setGeneralAlert(getApiErrorMessages(res.error));
 +        if (res.error.status === 409) setFieldErrors({ name: "Error" });
@@ -408,13 +408,13 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/catalogos/CatalogFormDialog.tsx
 --- a/frontend/src/features/catalogos/CatalogFormDialog.tsx
 +++ b/frontend/src/features/catalogos/CatalogFormDialog.tsx
-@@ -139,5 +139,5 @@
+@@ -140,5 +140,5 @@
        labelledBy={titleId}
        returnFocusRef={returnFocusRef}
 -      isMobile={isMobile}
 +      isMobile={false}
      >
-       <form onSubmit={handleSubmit} noValidate className={styles.form}>
+       <div className={modalCardStyles.modalContent} data-modal-card="catalog-form">
     Estado: Matada
     Fallo:  Error: expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"
     Restaurado a verde: si
@@ -423,7 +423,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/catalogos/CatalogosPage.tsx
 --- a/frontend/src/features/catalogos/CatalogosPage.tsx
 +++ b/frontend/src/features/catalogos/CatalogosPage.tsx
-@@ -180,4 +180,5 @@
+@@ -185,4 +185,5 @@
                                onClick={() => {
                                  setStatusMessage(null);
 +                                void client.request(`/chairs/${item.id}/deactivate`, { method: "POST" });
@@ -437,7 +437,7 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Archivo: frontend/src/features/catalogos/CatalogConfirmDialog.tsx
 --- a/frontend/src/features/catalogos/CatalogConfirmDialog.tsx
 +++ b/frontend/src/features/catalogos/CatalogConfirmDialog.tsx
-@@ -56,5 +56,5 @@
+@@ -57,5 +57,5 @@
      const res = isDeactivate
        ? await deactivateCatalogItem(client, config.key, item.id)
 -      : await reactivateCatalogItem(client, config.key, item.id);
@@ -448,13 +448,82 @@ Correspondencia 1:1 verificada: 30 tests evaluados (28 nuevos + 2 modificados en
     Fallo:  Error: expect(element).not.toBeInTheDocument()
     Restaurado a verde: si
 --------------------------------------------------------------------------------
+[M31] src/features/catalogos/DialogModalCard.test.tsx > Los tres diálogos muestran su contenido en una tarjeta
+    Archivo: frontend/src/features/pacientes/PatientFormDialog.tsx
+--- a/frontend/src/features/pacientes/PatientFormDialog.tsx
++++ b/frontend/src/features/pacientes/PatientFormDialog.tsx
+@@ -128,5 +128,5 @@
+       isMobile={isMobile}
+     >
+-      <div className={modalCardStyles.modalContent} data-modal-card="patient-form">
++      <div className={modalCardStyles.modalContent} data-modal-card-inexistente="patient-form">
+         <form className={styles.form} onSubmit={handleSubmit} noValidate>
+         <h2 id={titleId} className={styles.title}>
+    Estado: Matada
+    Fallo:  AssertionError: PatientFormDialog debe contener un elemento con [data-modal-card]: expected null not to be null
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M32] src/features/catalogos/TableActionsHeader.test.tsx > Las tablas tienen encabezado para la columna de acciones
+    Archivo: frontend/src/features/catalogos/CatalogosPage.tsx
+--- a/frontend/src/features/catalogos/CatalogosPage.tsx
++++ b/frontend/src/features/catalogos/CatalogosPage.tsx
+@@ -147,5 +147,5 @@
+                     Estado
+                   </th>
+-                  {isAdmin && (
++                  {/* M32 */ false && isAdmin && (
+                     <th scope="col" className={styles.th}>
+                       Acciones
+    Estado: Matada
+    Fallo:  AssertionError: La tabla de catálogos debe incluir encabezado Acciones: expected [ 'Nombre', 'Matrícula', 'Estado' ] to include 'Acciones'
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M33] src/features/catalogos/catalogosPacientesStyles.test.ts > Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible
+    Archivo: frontend/src/features/pacientes/PacientesPage.module.css
+--- a/frontend/src/features/pacientes/PacientesPage.module.css
++++ b/frontend/src/features/pacientes/PacientesPage.module.css
+@@ -184,14 +184,6 @@
+   }
+ 
+-  .table thead {
+-    position: absolute;
+-    width: 1px;
+-    height: 1px;
+-    padding: 0;
+-    margin: -1px;
+-    overflow: hidden;
+-    clip: rect(0, 0, 0, 0);
+-    white-space: nowrap;
+-    border: 0;
++  .th {
++    display: none;
+   }
+    Estado: Matada
+    Fallo:  AssertionError: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\pacientes\PacientesPage.module.css debe ocultar thead de forma accesible con position: absolute: expected '.page {\n  width: 100%;\n  box-sizing…' to match /thead[\s\S]*?position:\s*absolute/
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
+[M34] src/features/pacientes/PacientesPage.test.tsx > Búsqueda sin resultados muestra un único mensaje
+    Archivo: frontend/src/features/pacientes/PacientesPage.tsx
+--- a/frontend/src/features/pacientes/PacientesPage.tsx
++++ b/frontend/src/features/pacientes/PacientesPage.tsx
+@@ -118,5 +118,5 @@
+             description={
+               activeQuery
+-                ? undefined
++                ? "No hay resultados para la búsqueda realizada."
+                 : "Aún no hay pacientes registrados en el sistema."
+             }
+    Estado: Matada
+    Fallo:  Error: expect(element).not.toBeInTheDocument()
+    Restaurado a verde: si
+--------------------------------------------------------------------------------
 ================================================================================
 RESUMEN DE MUTACIONES
-Mutaciones totales:    30
-Matadas por asercion:  30
+Mutaciones totales:    34
+Matadas por asercion:  34
 Invalidas:             0
-SHA-256 inicial:       880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f
-SHA-256 final:         880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f
+SHA-256 inicial:       14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00
+SHA-256 final:         14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00
 SHA-256 sin cambios:   si
 ================================================================================
 EXITO: todas las mutaciones fueron detectadas limpiamente.

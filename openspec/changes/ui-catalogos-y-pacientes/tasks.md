@@ -88,6 +88,15 @@
 - [ ] 7.2 Claude toma capturas a 768 px de `/pacientes` y `/catalogos`, y de la barra de navegación con los nuevos enlaces, en `docs/evidencias/capturas/C-33-*-768.png`. Verificación: archivos presentes, sin scroll horizontal y la barra en dos renglones como máximo.
 - [ ] 7.3 Claude toma capturas a 390 px de `/pacientes` y `/catalogos` con las tablas apiladas, y de los diálogos "Nuevo paciente" y "Nueva prestación" como hoja inferior, en `docs/evidencias/capturas/C-33-*-390.png`. Verificación: sin scroll horizontal de página, `Dialog` como hoja inferior con los botones visibles y datos solo ficticios.
 
+## 8. Fase 8: Corrección post-verificación (escenarios 31-34)
+
+- [x] 8.1 Actualizar la spec delta `frontend-catalogs-and-patients` y `tasks.md` con los escenarios 31 a 34 y la fase 8.
+- [x] 8.2 **31 RED/GREEN**: en `features/catalogos/DialogModalCard.test.tsx`, "Los tres diálogos muestran su contenido en una tarjeta" (`[data-modal-card]` en el `<dialog>` y `.modalContent` con `background-color`, `border` y `max-width`). Evidencia `red-C-33/31-dialogo-tarjeta.txt` y `green-C-33/31-dialogo-tarjeta.txt`.
+- [x] 8.3 **32 RED/GREEN**: en `features/catalogos/TableActionsHeader.test.tsx`, "Las tablas tienen encabezado para la columna de acciones" (`<th scope="col">Acciones</th>` visible cuando hay acciones). Evidencia `red-C-33/32-tablas-header-acciones.txt` y `green-C-33/32-tablas-header-acciones.txt`.
+- [x] 8.4 **33 RED/GREEN**: en `features/catalogos/catalogosPacientesStyles.test.ts`, "Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible" (`.caption` `display: block` y `width: 100%`, `thead` visually-hidden sin `display: none` y sin bordes sueltos). Evidencia `red-C-33/33-tabla-apilada-caption-thead.txt` y `green-C-33/33-tabla-apilada-caption-thead.txt`.
+- [x] 8.5 **34 RED/GREEN**: en `features/pacientes/PacientesPage.test.tsx`, "Búsqueda sin resultados muestra un único mensaje" ("No se encontraron pacientes." sin mensaje secundario). Evidencia `red-C-33/34-pacientes-busqueda-mensaje-unico.txt` y `green-C-33/34-pacientes-busqueda-mensaje-unico.txt`.
+- [x] 8.6 **Regenerar verificaciones**: mutaciones M01..M34 (34 matadas, 0 inválidas), trazabilidad 01..34 + V01..V03, suite completa, tooling, build, validate y consolidar `verify-C-33.md`.
+
 ---
 
 ## Tabla: Escenario → Test → Mutación
@@ -124,17 +133,21 @@
 | 28 | `frontend-catalogs-and-patients` | Diseño adaptable a 1440, 768 y 390 px | Formulario de catálogo como hoja inferior en celular | Testeable | `CatalogFormDialog.mobile.test.tsx` | M28: no propagar `isMobile` de `CatalogFormDialog` a `Dialog` |
 | 29 | `frontend-catalogs-and-patients` | Desactivar y reactivar con confirmación | Desactivar un sillón exige confirmación interna | Testeable | `CatalogConfirmDialog.test.tsx` | M29: enviar el POST al pulsar "Desactivar", sin confirmar |
 | 30 | `frontend-catalogs-and-patients` | Desactivar y reactivar con confirmación | Reactivar una prestación inactiva | Testeable | `CatalogConfirmDialog.test.tsx` | M30: llamar a `/deactivate` en vez de `/reactivate` |
+| 31 | `frontend-catalogs-and-patients` | Tarjeta de diálogo para modales | Los tres diálogos muestran su contenido en una tarjeta | Testeable | `DialogModalCard.test.tsx` | M31: quitar `data-modal-card` de `PatientFormDialog` |
+| 32 | `frontend-catalogs-and-patients` | Encabezado para la columna de acciones | Las tablas tienen encabezado para la columna de acciones | Testeable | `TableActionsHeader.test.tsx` | M32: omitir `<th scope="col">Acciones</th>` en `CatalogosPage.tsx` |
+| 33 | `frontend-catalogs-and-patients` | Adaptación accesible de tablas en celular | Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible | Testeable | `catalogosPacientesStyles.test.ts` | M33: ocultar `thead` con `display: none` en vez de visually-hidden en `PacientesPage.module.css` |
+| 34 | `frontend-catalogs-and-patients` | Mensaje único en búsqueda de pacientes | Búsqueda sin resultados muestra un único mensaje | Testeable | `PacientesPage.test.tsx` | M34: restaurar descripción secundaria en búsqueda sin resultados en `PacientesPage.tsx` |
 | V01 | `frontend-catalogs-and-patients` | Diseño adaptable a 1440, 768 y 390 px | Pantallas verificadas a 1440, 768 y 390 px | Visual | `C-33-*-{1440,768,390}.png` | V01: scroll horizontal o tabla no apilada en una captura |
 | V02 | `frontend-catalogs-and-patients` | Diseño adaptable a 1440, 768 y 390 px | Diálogo como hoja inferior verificado a 390 px | Visual | `C-33-*-dialogo-390.png` | V02: diálogo centrado o botones recortados a 390 px |
 | V03 | `frontend-foundation` | Navegación de AppShell sin cajas | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | `C-33-appshell-{768,390}.png` | V03: la barra supera dos renglones a 768 px con los enlaces nuevos |
 
-Conteo: 28 tests nuevos (01-11 y 14-30) y 2 tests existentes con cambio de requisito (12 y 13). Las aserciones de `menuFor.test.ts`, `AppShell.test.tsx` y los demás tests de menú afectados no son escenarios propios: su conteo real por archivo sale del `git diff` del apply (tarea 6.5) y se declara como desvío en `verify-C-33.md`. Con Plan B: 11 tests nuevos (01-11), 12-13 y V01/V03 sobre lo entregado.
+Conteo: 32 tests nuevos (01-11, 14-34) y 2 tests existentes con cambio de requisito (12 y 13). Las aserciones de `menuFor.test.ts`, `AppShell.test.tsx` y los demás tests de menú afectados no son escenarios propios: su conteo real por archivo sale del `git diff` del apply (tarea 6.5) y se declara como desvío en `verify-C-33.md`. Con Plan B: 11 tests nuevos (01-11), 12-13 y V01/V03 sobre lo entregado.
 
 ---
 
 ## Tabla: ID → spec → título del escenario
 
-Cada `#### Scenario` de las dos specs delta tiene exactamente un ID, y cada ID corresponde a un escenario real. Numeración corrida, sin saltos: 01..30 testeables y V01..V03 visuales. Totales: `frontend-catalogs-and-patients` 29 escenarios (27 testeables y 2 visuales); `frontend-foundation` 4 escenarios (3 testeables y 1 visual).
+Cada `#### Scenario` de las dos specs delta tiene exactamente un ID, y cada ID corresponde a un escenario real. Numeración corrida, sin saltos: 01..34 testeables y V01..V03 visuales. Totales: `frontend-catalogs-and-patients` 33 escenarios (31 testeables y 2 visuales); `frontend-foundation` 4 escenarios (3 testeables y 1 visual). Total 37 escenarios (34 testeables + 3 visuales).
 
 | ID | Spec | Título del escenario |
 |---|---|---|
@@ -168,6 +181,10 @@ Cada `#### Scenario` de las dos specs delta tiene exactamente un ID, y cada ID c
 | 28 | `frontend-catalogs-and-patients` | Formulario de catálogo como hoja inferior en celular |
 | 29 | `frontend-catalogs-and-patients` | Desactivar un sillón exige confirmación interna |
 | 30 | `frontend-catalogs-and-patients` | Reactivar una prestación inactiva |
+| 31 | `frontend-catalogs-and-patients` | Los tres diálogos muestran su contenido en una tarjeta |
+| 32 | `frontend-catalogs-and-patients` | Las tablas tienen encabezado para la columna de acciones |
+| 33 | `frontend-catalogs-and-patients` | Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible |
+| 34 | `frontend-catalogs-and-patients` | Búsqueda sin resultados muestra un único mensaje |
 | V01 | `frontend-catalogs-and-patients` | Pantallas verificadas a 1440, 768 y 390 px |
 | V02 | `frontend-catalogs-and-patients` | Diálogo como hoja inferior verificado a 390 px |
 | V03 | `frontend-foundation` | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) |

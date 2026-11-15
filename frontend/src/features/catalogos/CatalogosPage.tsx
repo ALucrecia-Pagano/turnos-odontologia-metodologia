@@ -146,6 +146,11 @@ export function CatalogosPage() {
                   <th scope="col" className={styles.th}>
                     Estado
                   </th>
+                  {isAdmin && (
+                    <th scope="col" className={styles.th}>
+                      Acciones
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody>

@@ -1,0 +1,241 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/catalogos/catalogosPacientesStyles.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m3 skipped[39m[2m)[22m[32m 11[2mms[22m[39m
+   [2m[90m↓[39m[22m catalogosPacientesStyles[2m > [22mToda variable CSS de las pantallas existe en tokens.css
+   [2m[90m↓[39m[22m catalogosPacientesStyles[2m > [22mSin tokens de fondo oscuro en las pantallas
+   [2m[90m↓[39m[22m catalogosPacientesStyles[2m > [22mTablas apiladas en celular, controles táctiles y foco visible
+[31m   [31m×[31m catalogosPacientesStyles[2m > [22mTabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible[39m[32m 9[2mms[22m[39m
+[31m     → C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\pacientes\PacientesPage.module.css debe ocultar thead de forma accesible con position: absolute: expected '.page {\n  width: 100%;\n  box-sizing…' to match /thead[\s\S]*?position:\s*absolute/[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m3 skipped[39m[90m (4)[39m
+[2m   Start at [22m 14:40:08
+[2m   Duration [22m 2.61s[2m (transform 70ms, setup 488ms, collect 66ms, tests 11ms, environment 1.36s, prepare 255ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/catalogosPacientesStyles.test.ts[2m > [22mcatalogosPacientesStyles[2m > [22mTabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible
+[31m[1mAssertionError[22m: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\pacientes\PacientesPage.module.css debe ocultar thead de forma accesible con position: absolute: expected '.page {\n  width: 100%;\n  box-sizing…' to match /thead[\s\S]*?position:\s*absolute/[39m
+
+[32m- Expected:[39m 
+/thead[\s\S]*?position:\s*absolute/
+
+[31m+ Received:[39m 
+".page {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: var(--line-height-base);
+}
+
+.searchForm {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.searchGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.searchLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.searchInput {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  min-width: 240px;
+  box-sizing: border-box;
+}
+
+.searchInput:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.searchButton {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-contrast);
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.searchButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.statusBanner {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.statusEmpty {
+  display: none;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.caption {
+  padding: var(--space-3) var(--space-4);
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.th {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-background);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.actionButton {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.primaryButton {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-contrast);
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.primaryButton:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .th {
+    display: none;
+  }
+
+  .table tr {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-3) 0;
+  }
+
+  .td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .td::before {
+    content: attr(data-label);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    margin-right: var(--space-3);
+  }
+}
+"
+
+[36m [2m❯[22m src/features/catalogos/catalogosPacientesStyles.test.ts:[2m108:91[22m[39m
+    [90m106| [39m        [36m/\.caption[\s\S]*?display:\s*block[\s\S]*?width:\s*100%/[39m[33m,[39m
+    [90m107| [39m      )[33m;[39m
+    [90m108| [39m      expect(css, `${file} debe ocultar thead de forma accesible con p…
+    [90m   | [39m                                                                                          [31m^[39m
+    [90m109| [39m        [36m/thead[\s\S]*?position:\s*absolute/[39m[33m,[39m
+    [90m110| [39m      )[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

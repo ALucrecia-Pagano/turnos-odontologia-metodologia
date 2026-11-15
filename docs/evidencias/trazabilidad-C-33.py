@@ -38,7 +38,7 @@ TABLE_START = "<!-- trazabilidad:inicio -->"
 TABLE_END = "<!-- trazabilidad:fin -->"
 VITEST = ["node", str((FRONTEND / "node_modules" / "vitest" / "vitest.mjs").resolve())]
 
-EXPECTED_TESTEABLE = 30
+EXPECTED_TESTEABLE = 34
 EXPECTED_VISUAL = 3
 
 # Archivos de test de C-33
@@ -52,6 +52,8 @@ T_CATALOGOS_MOBILE = "src/features/catalogos/CatalogFormDialog.mobile.test.tsx"
 T_CONFIRM = "src/features/catalogos/CatalogConfirmDialog.test.tsx"
 T_SHELL_NEW = "src/shared/components/AppShellCatalogosPacientes.test.tsx"
 T_SHELL_NAV = "src/shared/components/AppShellNavigation.test.tsx"
+T_DIALOG_MODAL_CARD = "src/features/catalogos/DialogModalCard.test.tsx"
+T_TABLE_ACTIONS = "src/features/catalogos/TableActionsHeader.test.tsx"
 
 C33_TEST_FILES = (
     T_PACIENTES_PAGE,
@@ -64,6 +66,8 @@ C33_TEST_FILES = (
     T_CONFIRM,
     T_SHELL_NEW,
     T_SHELL_NAV,
+    T_DIALOG_MODAL_CARD,
+    T_TABLE_ACTIONS,
 )
 
 
@@ -413,6 +417,50 @@ ENTRIES: tuple[Entry, ...] = (
         "M30",
     ),
     Entry(
+        "testeable",
+        "frontend-catalogs-and-patients",
+        "Los tres diálogos muestran su contenido en una tarjeta",
+        "31",
+        T_DIALOG_MODAL_CARD,
+        "Los tres diálogos muestran su contenido en una tarjeta",
+        "31-dialogo-tarjeta.txt",
+        "31-dialogo-tarjeta.txt",
+        "M31",
+    ),
+    Entry(
+        "testeable",
+        "frontend-catalogs-and-patients",
+        "Las tablas tienen encabezado para la columna de acciones",
+        "32",
+        T_TABLE_ACTIONS,
+        "Las tablas tienen encabezado para la columna de acciones",
+        "32-tablas-header-acciones.txt",
+        "32-tablas-header-acciones.txt",
+        "M32",
+    ),
+    Entry(
+        "testeable",
+        "frontend-catalogs-and-patients",
+        "Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible",
+        "33",
+        T_CATALOGOS_STYLES,
+        "Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible",
+        "33-tabla-apilada-caption-thead.txt",
+        "33-tabla-apilada-caption-thead.txt",
+        "M33",
+    ),
+    Entry(
+        "testeable",
+        "frontend-catalogs-and-patients",
+        "Búsqueda sin resultados muestra un único mensaje",
+        "34",
+        T_PACIENTES_PAGE,
+        "Búsqueda sin resultados muestra un único mensaje",
+        "34-pacientes-busqueda-mensaje-unico.txt",
+        "34-pacientes-busqueda-mensaje-unico.txt",
+        "M34",
+    ),
+    Entry(
         "visual",
         "frontend-catalogs-and-patients",
         "Pantallas verificadas a 1440, 768 y 390 px",
@@ -645,7 +693,7 @@ def main() -> int:
 
     lines.append("=" * 80)
     lines.append(
-        f"TOTAL: {len(testable_entries)} testeables (28 tests nuevos + 2 tests existentes modificados (12 y 13)) + {len(visual_entries)} visuales = "
+        f"TOTAL: {len(testable_entries)} testeables (32 tests nuevos + 2 tests existentes modificados (12 y 13)) + {len(visual_entries)} visuales = "
         f"{len(ENTRIES)} escenarios mapeados."
     )
     lines.append("EXITO: Trazabilidad 100% verificada.")

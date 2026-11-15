@@ -7,7 +7,7 @@ export interface EmptyStateAction {
 
 export interface EmptyStateProps {
   title: string;
-  description: string;
+  description?: string;
   action?: EmptyStateAction;
 }
 
@@ -15,7 +15,7 @@ export function EmptyState({ title, description, action }: EmptyStateProps) {
   return (
     <section className={styles.empty}>
       <h2 className={styles.title}>{title}</h2>
-      <p className={styles.description}>{description}</p>
+      {description ? <p className={styles.description}>{description}</p> : null}
       {action !== undefined && (
         <button type="button" className={styles.action} onClick={action.onClick}>
           {action.label}

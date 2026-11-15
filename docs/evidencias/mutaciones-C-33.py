@@ -5,8 +5,8 @@ Uso, desde la raíz del repo o desde frontend/:
     python docs/evidencias/mutaciones-C-33.py [--check]
 
 Cada mutación es (archivo de test, nombre del test, archivo de producción, texto_original, texto_mutado).
-Hay UNA mutación (M01-M30) por cada uno de los 30 escenarios testeables de C-33
-(28 en tests nuevos + 2 en tests existentes modificados de AppShellNavigation.test.tsx).
+Hay UNA mutación (M01-M34) por cada uno de los 34 escenarios testeables de C-33
+(32 en tests nuevos + 2 en tests existentes modificados de AppShellNavigation.test.tsx).
 """
 
 from __future__ import annotations
@@ -53,6 +53,8 @@ T_CATALOGOS_MOBILE = "src/features/catalogos/CatalogFormDialog.mobile.test.tsx"
 T_CONFIRM = "src/features/catalogos/CatalogConfirmDialog.test.tsx"
 T_SHELL_NEW = "src/shared/components/AppShellCatalogosPacientes.test.tsx"
 T_SHELL_NAV = "src/shared/components/AppShellNavigation.test.tsx"
+T_DIALOG_MODAL_CARD = "src/features/catalogos/DialogModalCard.test.tsx"
+T_TABLE_ACTIONS = "src/features/catalogos/TableActionsHeader.test.tsx"
 
 C33_TEST_FILES = (
     T_PACIENTES_PAGE,
@@ -65,6 +67,8 @@ C33_TEST_FILES = (
     T_CONFIRM,
     T_SHELL_NEW,
     T_SHELL_NAV,
+    T_DIALOG_MODAL_CARD,
+    T_TABLE_ACTIONS,
 )
 
 PREEXISTING_TESTS: frozenset[tuple[str, str]] = frozenset(
@@ -92,6 +96,7 @@ P_CONFIGS_TS = "frontend/src/features/catalogos/catalogConfigs.ts"
 P_CATALOGOS_API_TS = "frontend/src/features/catalogos/catalogosApi.ts"
 P_ACTIVE_BADGE_TSX = "frontend/src/features/catalogos/ActiveBadge.tsx"
 P_ACTIVE_BADGE_CSS = "frontend/src/features/catalogos/ActiveBadge.module.css"
+P_MODAL_CARD_CSS = "frontend/src/features/catalogos/modalCard.module.css"
 P_MENU_TS = "frontend/src/features/auth/menuFor.ts"
 P_APP_TSX = "frontend/src/App.tsx"
 
@@ -111,6 +116,7 @@ PRODUCTION_FILES = (
     P_CATALOGOS_API_TS,
     P_ACTIVE_BADGE_TSX,
     P_ACTIVE_BADGE_CSS,
+    P_MODAL_CARD_CSS,
     P_MENU_TS,
     P_APP_TSX,
 )
@@ -411,6 +417,38 @@ MUTATIONS: tuple[Mutation, ...] = (
         '    const res = isDeactivate\n      ? await deactivateCatalogItem(client, config.key, item.id)\n      : await reactivateCatalogItem(client, config.key, item.id);',
         '    const res = isDeactivate\n      ? await deactivateCatalogItem(client, config.key, item.id)\n      : await deactivateCatalogItem(client, config.key, item.id);',
     ),
+    # M31 - Los tres diálogos muestran su contenido en una tarjeta
+    Mutation(
+        T_DIALOG_MODAL_CARD,
+        "Los tres diálogos muestran su contenido en una tarjeta",
+        P_PATIENT_FORM_TSX,
+        '<div className={modalCardStyles.modalContent} data-modal-card="patient-form">',
+        '<div className={modalCardStyles.modalContent} data-modal-card-inexistente="patient-form">',
+    ),
+    # M32 - Las tablas tienen encabezado para la columna de acciones
+    Mutation(
+        T_TABLE_ACTIONS,
+        "Las tablas tienen encabezado para la columna de acciones",
+        P_CATALOGOS_PAGE_TSX,
+        '                  {isAdmin && (\n                    <th scope="col" className={styles.th}>\n                      Acciones\n                    </th>\n                  )}',
+        '                  {/* M32 */ false && isAdmin && (\n                    <th scope="col" className={styles.th}>\n                      Acciones\n                    </th>\n                  )}',
+    ),
+    # M33 - Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible
+    Mutation(
+        T_CATALOGOS_STYLES,
+        "Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible",
+        P_PACIENTES_PAGE_CSS,
+        '  .table thead {\n    position: absolute;\n    width: 1px;\n    height: 1px;\n    padding: 0;\n    margin: -1px;\n    overflow: hidden;\n    clip: rect(0, 0, 0, 0);\n    white-space: nowrap;\n    border: 0;\n  }',
+        '  .th {\n    display: none;\n  }',
+    ),
+    # M34 - Búsqueda sin resultados muestra un único mensaje
+    Mutation(
+        T_PACIENTES_PAGE,
+        "Búsqueda sin resultados muestra un único mensaje",
+        P_PACIENTES_PAGE_TSX,
+        '        ) : patients.length === 0 ? (\n          <EmptyState\n            title="No se encontraron pacientes."\n            description={\n              activeQuery\n                ? undefined\n                : "Aún no hay pacientes registrados en el sistema."\n            }\n          />',
+        '        ) : patients.length === 0 ? (\n          <EmptyState\n            title="No se encontraron pacientes."\n            description={\n              activeQuery\n                ? "No hay resultados para la búsqueda realizada."\n                : "Aún no hay pacientes registrados en el sistema."\n            }\n          />',
+    ),
 )
 
 
@@ -641,7 +679,7 @@ def run_all(report: Report) -> int:
 
     test_count = check_one_to_one()
     report.write(
-        f"Correspondencia 1:1 verificada: {test_count} tests evaluados (28 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs {len(MUTATIONS)} mutaciones."
+        f"Correspondencia 1:1 verificada: {test_count} tests evaluados (32 nuevos + 2 modificados en AppShellNavigation.test.tsx) vs {len(MUTATIONS)} mutaciones."
     )
     report.write(SEPARATOR)
 
@@ -738,7 +776,7 @@ def main() -> int:
         for m in MUTATIONS:
             check_definition(m)
         count = check_one_to_one()
-        print(f"OK: {count} tests evaluados (28 nuevos + 2 modificados en AppShellNavigation.test.tsx) coinciden 1:1 con las {len(MUTATIONS)} mutaciones.")
+        print(f"OK: {count} tests evaluados (32 nuevos + 2 modificados en AppShellNavigation.test.tsx) coinciden 1:1 con las {len(MUTATIONS)} mutaciones.")
         return 0
 
     EVIDENCE.mkdir(parents=True, exist_ok=True)

@@ -4,12 +4,12 @@
 
 Todos los números provienen de ejecuciones reales y de los archivos de evidencia enlazados (texto plano UTF-8).
 
-- **Tareas**: Fases 1 a 6 implementadas y verificadas según [tasks.md](../../openspec/changes/ui-catalogos-y-pacientes/tasks.md); Fase 7 (capturas visuales multi-resolución a 1440 px, 768 px y 390 px a cargo de Claude) queda pendiente (`[ ]` en `tasks.md`, no inventadas ni marcadas hechas).
+- **Tareas**: Fases 1 a 6 y Fase 8 implementadas y verificadas según [tasks.md](../../openspec/changes/ui-catalogos-y-pacientes/tasks.md); Fase 7 (capturas visuales multi-resolución a 1440 px, 768 px y 390 px a cargo de Claude) queda pendiente (`[ ]` en `tasks.md`, no inventadas ni marcadas hechas).
 - **Plan B**: No se aplicó. Se completaron íntegramente las Fases 1 a 4 sin recortes de alcance.
 - **Línea base unificada**: [baseline-C-33.txt](baseline-C-33.txt) (82 archivos de test, 321 tests pasados, exit 0).
-- **Vitest**: Suite final con todos los tests en verde ([test-suite-C-33.txt](test-suite-C-33.txt)): **91 archivos de test pasados (349 tests en total: 321 heredados + 28 tests nuevos de C-33)**. En el conteo se distinguen **28 tests nuevos** y **2 tests existentes modificados (12 y 13)**, distribuidos en 9 archivos dedicados (`PacientesPage.test.tsx` [5], `PatientFormDialog.test.tsx` [7], `CatalogosPage.test.tsx` [3], `CatalogFormDialog.test.tsx` [5], `CatalogFormDialog.mobile.test.tsx` [1], `CatalogConfirmDialog.test.tsx` [2], `CatalogosPacientesRoutes.test.tsx` [1], `catalogosPacientesStyles.test.ts` [3], `AppShellCatalogosPacientes.test.tsx` [1]), más las aserciones de menú adaptadas en `AppShellNavigation.test.tsx`. Cada escenario testeable cuenta con su par RED/GREEN en `red-C-33/` (`01`..`30`) y `green-C-33/` (`01`..`30`).
-- **Mutaciones**: **30 de 30 mutaciones eliminadas** (`M01`–`M30`: 28 tests nuevos y 2 tests existentes modificados [12 y 13]) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 inicial: 880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f**, **SHA-256 final: 880701013106445f2e838faf0f1f05d43ee0d5e550b6dfa0b803f069961c4e4f**, **SHA-256 sin cambios: sí** ([mutaciones-C-33.txt](mutaciones-C-33.txt), generado por [mutaciones-C-33.py](mutaciones-C-33.py)).
-- **Trazabilidad**: **33 escenarios** declarados en las specs delta (30 testeables 1:1 numerados de corrido `01`..`30` [28 tests nuevos y 2 tests existentes modificados (12 y 13)] + 3 visuales `V01`, `V02`, `V03` a cargo de Claude), 0 inconsistencias, 0 tests compartidos ([trazabilidad-C-33.txt](trazabilidad-C-33.txt), generado por [trazabilidad-C-33.py](trazabilidad-C-33.py)).
+- **Vitest**: Suite final con todos los tests en verde ([test-suite-C-33.txt](test-suite-C-33.txt)): **93 archivos de test pasados (353 tests en total: 321 heredados + 32 tests nuevos de C-33)**. En el conteo se distinguen **32 tests nuevos** y **2 tests existentes modificados (12 y 13)**, distribuidos en 11 archivos dedicados (`PacientesPage.test.tsx` [6], `PatientFormDialog.test.tsx` [7], `CatalogosPage.test.tsx` [3], `CatalogFormDialog.test.tsx` [5], `CatalogFormDialog.mobile.test.tsx` [1], `CatalogConfirmDialog.test.tsx` [2], `CatalogosPacientesRoutes.test.tsx` [1], `catalogosPacientesStyles.test.ts` [4], `AppShellCatalogosPacientes.test.tsx` [1], `DialogModalCard.test.tsx` [1], `TableActionsHeader.test.tsx` [1]), más las aserciones de menú adaptadas en `AppShellNavigation.test.tsx`. Cada escenario testeable cuenta con su par RED/GREEN en `red-C-33/` (`01`..`34`) y `green-C-33/` (`01`..`34`).
+- **Mutaciones**: **34 de 34 mutaciones eliminadas** (`M01`–`M34`: 32 tests nuevos y 2 tests existentes modificados [12 y 13]) por aserción; 0 supervivientes; 0 inválidas; **SHA-256 inicial: 14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00**, **SHA-256 final: 14ee465f9447e6eefdbe8f2f9b94a683dedebd2b5fe6fd791ed7c39a11480e00**, **SHA-256 sin cambios: sí** ([mutaciones-C-33.txt](mutaciones-C-33.txt), generado por [mutaciones-C-33.py](mutaciones-C-33.py)).
+- **Trazabilidad**: **37 escenarios** declarados en las specs delta (34 testeables 1:1 numerados de corrido `01`..`34` [32 tests nuevos y 2 tests existentes modificados (12 y 13)] + 3 visuales `V01`, `V02`, `V03` a cargo de Claude), 0 inconsistencias, 0 tests compartidos ([trazabilidad-C-33.txt](trazabilidad-C-33.txt), generado por [trazabilidad-C-33.py](trazabilidad-C-33.py)).
 - **Calidad y Tooling**:
   - `npm run typecheck` exit 0 (0 errores de tipos).
   - `npx eslint src/features/pacientes src/features/catalogos src/features/auth/menuFor.ts src/shared/components/AppShellNavigation.test.tsx src/shared/components/AppShellCatalogosPacientes.test.tsx` exit 0 (0 errores, 0 warnings en archivos de C-33; ver [tooling-C-33.txt](tooling-C-33.txt)).
@@ -56,6 +56,10 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | 28 | `frontend-catalogs-and-patients` | Formulario de catálogo como hoja inferior en celular | Testeable | `CatalogFormDialog.mobile.test.tsx` | `Formulario de catálogo como hoja inferior en celular` | `28-catalogo-hoja-inferior.txt` | `28-catalogo-hoja-inferior.txt` | `M28` |
 | 29 | `frontend-catalogs-and-patients` | Desactivar un sillón exige confirmación interna | Testeable | `CatalogConfirmDialog.test.tsx` | `Desactivar un sillón exige confirmación interna` | `29-sillon-desactivar.txt` | `29-sillon-desactivar.txt` | `M29` |
 | 30 | `frontend-catalogs-and-patients` | Reactivar una prestación inactiva | Testeable | `CatalogConfirmDialog.test.tsx` | `Reactivar una prestación inactiva` | `30-prestacion-reactivar.txt` | `30-prestacion-reactivar.txt` | `M30` |
+| 31 | `frontend-catalogs-and-patients` | Los tres diálogos muestran su contenido en una tarjeta | Testeable | `DialogModalCard.test.tsx` | `Los tres diálogos muestran su contenido en una tarjeta` | `31-dialogo-tarjeta.txt` | `31-dialogo-tarjeta.txt` | `M31` |
+| 32 | `frontend-catalogs-and-patients` | Las tablas tienen encabezado para la columna de acciones | Testeable | `TableActionsHeader.test.tsx` | `Las tablas tienen encabezado para la columna de acciones` | `32-tablas-header-acciones.txt` | `32-tablas-header-acciones.txt` | `M32` |
+| 33 | `frontend-catalogs-and-patients` | Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible | Testeable | `catalogosPacientesStyles.test.ts` | `Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible` | `33-tabla-apilada-caption-thead.txt` | `33-tabla-apilada-caption-thead.txt` | `M33` |
+| 34 | `frontend-catalogs-and-patients` | Búsqueda sin resultados muestra un único mensaje | Testeable | `PacientesPage.test.tsx` | `Búsqueda sin resultados muestra un único mensaje` | `34-pacientes-busqueda-mensaje-unico.txt` | `34-pacientes-busqueda-mensaje-unico.txt` | `M34` |
 | V01 | `frontend-catalogs-and-patients` | Pantallas verificadas a 1440, 768 y 390 px | Visual | `C-33-*-{1440,768,390}.png` | — | — | — | — |
 | V02 | `frontend-catalogs-and-patients` | Diálogo como hoja inferior verificado a 390 px | Visual | `C-33-*-dialogo-390.png` | — | — | — | — |
 | V03 | `frontend-foundation` | Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) | Visual | `C-33-appshell-{768,390}.png` | — | — | — | — |
@@ -68,7 +72,7 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 <!-- mutaciones:inicio -->
 | ID | Archivo de test | Test | Estado | Mensaje de fallo |
 |---|---|---|---|---|
-| M01 | `PacientesPage.test.tsx` | `Listado de pacientes con sus cuatro datos` | Matada | `AssertionError: expected [ 'Nombre', 'DNI', 'Teléfono' ] to deeply equal [ 'Nombre', 'DNI', 'Teléfono', …(1) ]` |
+| M01 | `PacientesPage.test.tsx` | `Listado de pacientes con sus cuatro datos` | Matada | `AssertionError: expected [ 'Nombre', 'DNI', 'Teléfono', …(1) ] to deeply equal [ 'Nombre', 'DNI', 'Teléfono', …(2) ]` |
 | M02 | `PacientesPage.test.tsx` | `Búsqueda envía la consulta codificada y muestra el resultado` | Matada | `AssertionError: expected [ …(3) ] to include 'http://localhost:8000/api/patients?qu…'` |
 | M03 | `PacientesPage.test.tsx` | `Búsqueda sin resultados` | Matada | `Error: expect(received).toBeInTheDocument()` |
 | M04 | `PacientesPage.test.tsx` | `Error de carga de pacientes con reintento` | Matada | `Error: expect(received).toBeInTheDocument()` |
@@ -98,6 +102,10 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 | M28 | `CatalogFormDialog.mobile.test.tsx` | `Formulario de catálogo como hoja inferior en celular` | Matada | `Error: expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"` |
 | M29 | `CatalogConfirmDialog.test.tsx` | `Desactivar un sillón exige confirmación interna` | Matada | `AssertionError: expected 1 to be +0 // Object.is equality` |
 | M30 | `CatalogConfirmDialog.test.tsx` | `Reactivar una prestación inactiva` | Matada | `Error: expect(element).not.toBeInTheDocument()` |
+| M31 | `DialogModalCard.test.tsx` | `Los tres diálogos muestran su contenido en una tarjeta` | Matada | `AssertionError: PatientFormDialog debe contener un elemento con [data-modal-card]: expected null not to be null` |
+| M32 | `TableActionsHeader.test.tsx` | `Las tablas tienen encabezado para la columna de acciones` | Matada | `AssertionError: La tabla de catálogos debe incluir encabezado Acciones: expected [ 'Nombre', 'Matrícula', 'Estado' ] to include 'Acciones'` |
+| M33 | `catalogosPacientesStyles.test.ts` | `Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible` | Matada | `AssertionError: C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\features\pacientes\PacientesPage.module.css debe ocultar thead de forma accesible con position: absolute: expected '.page {\n  width: 100%;\n  box-sizing…' to match /thead[\s\S]*?position:\s*absolute/` |
+| M34 | `PacientesPage.test.tsx` | `Búsqueda sin resultados muestra un único mensaje` | Matada | `Error: expect(element).not.toBeInTheDocument()` |
 <!-- mutaciones:fin -->
 
 ---
@@ -118,3 +126,30 @@ Todos los números provienen de ejecuciones reales y de los archivos de evidenci
 
 3. **Sección 7 (Capturas visuales reales a 1440, 768 y 390 px)**:
    - *Estado*: Las tareas 7.1, 7.2 y 7.3 quedan pendientes a cargo de Claude (`[ ]` en `tasks.md`). No se generaron capturas simuladas ni se marcaron como completadas por el agente.
+
+---
+
+## Corrección post-verificación
+
+Tras la verificación con la API real, se identificaron y corrigieron cuatro aspectos mediante Strict TDD (escenarios 31 a 34, mutaciones `M31` a `M34`):
+
+- **A) Tarjeta contenedora en los tres diálogos (`PatientFormDialog`, `CatalogFormDialog`, `CatalogConfirmDialog`)**:
+  - *Causa*: El componente compartido `Dialog` actúa únicamente como primitivo modal (`<dialog>`), sin aportar superficie ni fondo visual. Cada feature debe envolver su contenido en una tarjeta (`data-modal-card="<nombre>"` y `.modalContent`). Al faltar este contenedor, los tres modales ocupaban todo el ancho sobre el fondo sin borde, radio ni padding, y a 390 px no se manifestaba visualmente la hoja inferior.
+  - *Solución*: Siguiendo el patrón de `BlockFormDialog.tsx`, se extrajo la tarjeta compartida a `frontend/src/features/catalogos/modalCard.module.css` (con fondo `--surface-ivory-ice`, borde `--color-border`, sombra `--shadow-md`, `max-width: 520px` y hoja inferior en `@media (max-width: 640px)`). Los tres diálogos envuelven ahora su formulario/contenido con `data-modal-card="patient-form"`, `data-modal-card="catalog-form"` y `data-modal-card="catalog-confirm"`.
+  - *Evidencia*: Escenario 31 (`31-dialogo-tarjeta.txt`, `DialogModalCard.test.tsx`, mutación `M31`).
+
+- **B) Encabezado para la columna de acciones en tablas de pacientes y catálogos**:
+  - *Causa*: Las tablas generaban `<td data-label="Acciones">` para cada fila con botones de acción ("Editar", "Desactivar", "Reactivar"), pero el `<thead>` carecía del `<th scope="col">` correspondiente. El encabezado gris se cortaba antes de la última columna.
+  - *Solución*: Se agregó `<th scope="col" className={styles.th}>Acciones</th>` condicionado a los permisos de edición (`canEdit` en pacientes, `isAdmin` en catálogos), garantizando que el encabezado cubra la totalidad de las columnas.
+  - *Evidencia*: Escenario 32 (`32-tablas-header-acciones.txt`, `TableActionsHeader.test.tsx`, mutación `M32`).
+
+- **C) Tabla apilada en celular con caption a ancho completo y thead oculto de forma accesible**:
+  - *Causa*: En viewport móvil (390 px), el `<caption>` de la tabla se comprimía en una columna angosta de tres renglones por no tener `display: block; width: 100%`, mientras que el `<thead>` se ocultaba con `display: none` perdiendo semántica accesible y dejando líneas sueltas de bordes.
+  - *Solución*: En el bloque `@media (max-width: 640px)` de `PacientesPage.module.css` y `CatalogosPage.module.css`, la clase `.caption` declara `display: block; width: 100%; box-sizing: border-box;`, y `thead` se oculta mediante el patrón estándar visually-hidden (`position: absolute; width: 1px; height: 1px; clip: rect(0, 0, 0, 0); overflow: hidden; border: 0`).
+  - *Evidencia*: Escenario 33 (`33-tabla-apilada-caption-thead.txt`, `catalogosPacientesStyles.test.ts`, mutación `M33`).
+
+- **D) Búsqueda de pacientes sin resultados con mensaje único**:
+  - *Causa*: Al buscar un paciente sin coincidencias, la pantalla renderizaba simultáneamente el título "No se encontraron pacientes." y la descripción secundaria "No hay resultados para la búsqueda realizada.", contraviniendo el texto exacto de la spec.
+  - *Solución*: En `PacientesPage.tsx`, cuando la búsqueda no arroja resultados (`activeQuery` activo y lista vacía), se omite la descripción secundaria en `EmptyState`, mostrando única y exclusivamente el mensaje "No se encontraron pacientes.".
+  - *Evidencia*: Escenario 34 (`34-pacientes-busqueda-mensaje-unico.txt`, `PacientesPage.test.tsx`, mutación `M34`).
+

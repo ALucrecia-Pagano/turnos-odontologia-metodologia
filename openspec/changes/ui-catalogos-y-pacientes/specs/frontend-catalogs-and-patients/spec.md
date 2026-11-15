@@ -243,6 +243,49 @@ Las tablas SHALL ser `<table>` con `<caption>` y `scope="col"`. Hasta 640 px, ca
 - **Cuando (WHEN)** se evalúa el DOM
 - **Entonces (THEN)** el `<dialog>` tiene `data-mobile-sheet="true"` y la clase de hoja inferior de `Dialog`
 
+### Requirement: Tarjeta de diálogo para modales
+
+Los tres diálogos de la interfaz (`PatientFormDialog`, `CatalogFormDialog`, `CatalogConfirmDialog`) SHALL envolver su contenido en una tarjeta con fondo propio, borde, sombra y ancho máximo, identificada con `data-modal-card="<nombre>"`. En pantallas móviles (hasta 640 px), la tarjeta MUST ocupar el ancho completo adaptándose como hoja inferior.
+
+#### Scenario: Los tres diálogos muestran su contenido en una tarjeta
+
+- **Dado (GIVEN)** los tres diálogos de la interfaz (`PatientFormDialog`, `CatalogFormDialog` y `CatalogConfirmDialog`)
+- **Cuando (WHEN)** cada diálogo se abre
+- **Entonces (THEN)** dentro del elemento `<dialog>` existe un contenedor con el atributo `data-modal-card`
+- **Y** los estilos de `.modalContent` definen `background-color`, `border` y `max-width`
+
+### Requirement: Encabezado para la columna de acciones
+
+Las tablas de pacientes y de catálogos SHALL incluir un encabezado `<th scope="col">Acciones</th>` visible siempre que las filas ofrezcan acciones de edición, desactivación o reactivación, garantizando que el encabezado cubra la totalidad de las columnas de la tabla.
+
+#### Scenario: Las tablas tienen encabezado para la columna de acciones
+
+- **Dado (GIVEN)** las pantallas `/pacientes` y `/catalogos` consultadas por un usuario con permisos de edición (`administrador` o `recepcion`)
+- **Cuando (WHEN)** se visualiza la tabla con filas que contienen botones de acción
+- **Entonces (THEN)** el elemento `<thead>` contiene un `<th scope="col">` con el texto visible "Acciones" alineado con la columna correspondiente
+
+### Requirement: Adaptación accesible de tablas en celular
+
+En pantallas estrechas (hasta 640 px), las tablas de pacientes y catálogos SHALL mostrar su `<caption>` a todo el ancho del contenedor. El encabezado `<thead>` MUST ocultarse de forma accesible mediante el patrón visually-hidden (sin `display: none`) y sin líneas o bordes sueltos residuales.
+
+#### Scenario: Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible
+
+- **Dado (GIVEN)** los archivos `.module.css` de las tablas de pacientes y de catálogos
+- **Cuando (WHEN)** se evalúa el bloque `@media (max-width: 640px)`
+- **Entonces (THEN)** la clase `.caption` declara `display: block` y `width: 100%`
+- **Y** el encabezado `<thead>` se oculta mediante posicionamiento absoluto y recorte accesible (patrón visually-hidden, no `display: none`) sin bordes sueltos
+
+### Requirement: Mensaje único en búsqueda de pacientes
+
+Cuando una búsqueda en `/pacientes` no arroja resultados, la pantalla SHALL mostrar un único mensaje de estado indicando "No se encontraron pacientes.", sin superponer ni concatenar mensajes descriptivos secundarios.
+
+#### Scenario: Búsqueda sin resultados muestra un único mensaje
+
+- **Dado (GIVEN)** un usuario en `/pacientes` que busca una consulta sin coincidencias
+- **Cuando (WHEN)** la API devuelve una lista vacía de pacientes
+- **Entonces (THEN)** la pantalla muestra únicamente "No se encontraron pacientes."
+- **Y** no se muestra el mensaje secundario "No hay resultados para la búsqueda realizada."
+
 #### Scenario: Pantallas verificadas a 1440, 768 y 390 px
 
 - **Dado (GIVEN)** la aplicación en ejecución con datos ficticios del seed

@@ -1,0 +1,28 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend[39m
+
+ [31m❯[39m src/features/catalogos/DialogModalCard.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 54[2mms[22m[39m
+[31m   [31m×[31m DialogModalCard[2m > [22mLos tres diálogos muestran su contenido en una tarjeta[39m[32m 52[2mms[22m[39m
+[31m     → PatientFormDialog debe contener un elemento con [data-modal-card]: expected null not to be null[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 14:34:55
+[2m   Duration [22m 3.94s[2m (transform 333ms, setup 526ms, collect 594ms, tests 54ms, environment 1.98s, prepare 308ms)[22m
+
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/features/catalogos/DialogModalCard.test.tsx[2m > [22mDialogModalCard[2m > [22mLos tres diálogos muestran su contenido en una tarjeta
+[31m[1mAssertionError[22m: PatientFormDialog debe contener un elemento con [data-modal-card]: expected null not to be null[39m
+[36m [2m❯[22m src/features/catalogos/DialogModalCard.test.tsx:[2m31:98[22m[39m
+    [90m 29| [39m    expect(patientDialog, "PatientFormDialog debe tener dialog abierto…
+    [90m 30| [39m    const patientCard = patientDialog?.querySelector("[data-modal-card…
+    [90m 31| [39m    expect(patientCard, "PatientFormDialog debe contener un elemento c…
+    [90m   | [39m                                                                                                 [31m^[39m
+    [90m 32| [39m    expect(patientCard?.getAttribute("data-modal-card")).toBe("patient…
+    [90m 33| [39m    [34munmountPatient[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

@@ -70,7 +70,7 @@ describe("CatalogosPage", () => {
     expect(profLink).toHaveAttribute("aria-current", "page");
 
     const headers = screen.getAllByRole("columnheader").map((th) => th.textContent);
-    expect(headers).toEqual(["Nombre", "Matrícula", "Estado"]);
+    expect(headers).toEqual(["Nombre", "Matrícula", "Estado", "Acciones"]);
 
     const rowQuiroga = screen.getByRole("row", { name: /Dra\. Laura Quiroga/ });
     expect(rowQuiroga).toHaveTextContent("MN 1234");
@@ -167,7 +167,7 @@ describe("CatalogosPage", () => {
     expect(prestacionesLink).toHaveAttribute("aria-current", "page");
 
     const headers = screen.getAllByRole("columnheader").map((th) => th.textContent);
-    expect(headers).toEqual(["Nombre", "Duración (min)", "Estado"]);
+    expect(headers).toEqual(["Nombre", "Duración (min)", "Estado", "Acciones"]);
 
     const rowLimpieza = screen.getByRole("row", { name: /Limpieza/ });
     expect(rowLimpieza).toHaveTextContent("45");

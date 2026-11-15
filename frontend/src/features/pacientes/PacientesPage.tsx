@@ -117,7 +117,7 @@ export function PacientesPage() {
             title="No se encontraron pacientes."
             description={
               activeQuery
-                ? "No hay resultados para la búsqueda realizada."
+                ? undefined
                 : "Aún no hay pacientes registrados en el sistema."
             }
           />
@@ -139,6 +139,11 @@ export function PacientesPage() {
                   <th scope="col" className={styles.th}>
                     Obra social
                   </th>
+                  {canEdit && (
+                    <th scope="col" className={styles.th}>
+                      Acciones
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody>

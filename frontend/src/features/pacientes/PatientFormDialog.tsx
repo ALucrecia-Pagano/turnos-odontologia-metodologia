@@ -14,6 +14,7 @@ import {
   type PatientItem,
   type PatientPayload,
 } from "./pacientesApi";
+import modalCardStyles from "../catalogos/modalCard.module.css";
 import styles from "./PatientFormDialog.module.css";
 
 export interface PatientFormDialogProps {
@@ -126,7 +127,8 @@ export function PatientFormDialog({
       returnFocusRef={returnFocusRef}
       isMobile={isMobile}
     >
-      <form className={styles.form} onSubmit={handleSubmit} noValidate>
+      <div className={modalCardStyles.modalContent} data-modal-card="patient-form">
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <h2 id={titleId} className={styles.title}>
           {isEdit ? "Editar paciente" : "Nuevo paciente"}
         </h2>
@@ -251,6 +253,7 @@ export function PatientFormDialog({
           </button>
         </div>
       </form>
-    </Dialog>
+    </div>
+  </Dialog>
   );
 }

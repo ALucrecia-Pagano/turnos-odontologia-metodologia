@@ -1,9 +1,9 @@
 ================================================================================
 TRAZABILIDAD C-33 (ui-catalogos-y-pacientes) — SPEC -> TEST -> EVIDENCIA -> MUTACIÓN
 ================================================================================
-Escenarios declarados en specs: 33 (30 testeables + 3 visuales = 33)
+Escenarios declarados en specs: 37 (34 testeables + 3 visuales = 37)
 Validación de correspondencia 1:1 (cero tests compartidos): OK
-Validación de evidencias RED/GREEN: OK (30 escenarios)
+Validación de evidencias RED/GREEN: OK (34 escenarios)
   [01] (frontend-catalogs-and-patients) Listado de pacientes con sus cuatro datos -> PacientesPage.test.tsx :: Listado de pacientes con sus cuatro datos [RED: 01-pacientes-listado.txt | GREEN: 01-pacientes-listado.txt | MUT: M01]
   [02] (frontend-catalogs-and-patients) Búsqueda envía la consulta codificada y muestra el resultado -> PacientesPage.test.tsx :: Búsqueda envía la consulta codificada y muestra el resultado [RED: 02-pacientes-busqueda.txt | GREEN: 02-pacientes-busqueda.txt | MUT: M02]
   [03] (frontend-catalogs-and-patients) Búsqueda sin resultados -> PacientesPage.test.tsx :: Búsqueda sin resultados [RED: 03-pacientes-sin-resultados.txt | GREEN: 03-pacientes-sin-resultados.txt | MUT: M03]
@@ -34,10 +34,14 @@ Validación de evidencias RED/GREEN: OK (30 escenarios)
   [28] (frontend-catalogs-and-patients) Formulario de catálogo como hoja inferior en celular -> CatalogFormDialog.mobile.test.tsx :: Formulario de catálogo como hoja inferior en celular [RED: 28-catalogo-hoja-inferior.txt | GREEN: 28-catalogo-hoja-inferior.txt | MUT: M28]
   [29] (frontend-catalogs-and-patients) Desactivar un sillón exige confirmación interna -> CatalogConfirmDialog.test.tsx :: Desactivar un sillón exige confirmación interna [RED: 29-sillon-desactivar.txt | GREEN: 29-sillon-desactivar.txt | MUT: M29]
   [30] (frontend-catalogs-and-patients) Reactivar una prestación inactiva -> CatalogConfirmDialog.test.tsx :: Reactivar una prestación inactiva [RED: 30-prestacion-reactivar.txt | GREEN: 30-prestacion-reactivar.txt | MUT: M30]
+  [31] (frontend-catalogs-and-patients) Los tres diálogos muestran su contenido en una tarjeta -> DialogModalCard.test.tsx :: Los tres diálogos muestran su contenido en una tarjeta [RED: 31-dialogo-tarjeta.txt | GREEN: 31-dialogo-tarjeta.txt | MUT: M31]
+  [32] (frontend-catalogs-and-patients) Las tablas tienen encabezado para la columna de acciones -> TableActionsHeader.test.tsx :: Las tablas tienen encabezado para la columna de acciones [RED: 32-tablas-header-acciones.txt | GREEN: 32-tablas-header-acciones.txt | MUT: M32]
+  [33] (frontend-catalogs-and-patients) Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible -> catalogosPacientesStyles.test.ts :: Tabla apilada en celular con el título a todo el ancho y el encabezado oculto de forma accesible [RED: 33-tabla-apilada-caption-thead.txt | GREEN: 33-tabla-apilada-caption-thead.txt | MUT: M33]
+  [34] (frontend-catalogs-and-patients) Búsqueda sin resultados muestra un único mensaje -> PacientesPage.test.tsx :: Búsqueda sin resultados muestra un único mensaje [RED: 34-pacientes-busqueda-mensaje-unico.txt | GREEN: 34-pacientes-busqueda-mensaje-unico.txt | MUT: M34]
   [V01] (frontend-catalogs-and-patients) Pantallas verificadas a 1440, 768 y 390 px -> Visual (C-33-*-{1440,768,390}.png)
   [V02] (frontend-catalogs-and-patients) Diálogo como hoja inferior verificado a 390 px -> Visual (C-33-*-dialogo-390.png)
   [V03] (frontend-foundation) Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> Visual (C-33-appshell-{768,390}.png)
 ================================================================================
-TOTAL: 30 testeables (28 tests nuevos + 2 tests existentes modificados (12 y 13)) + 3 visuales = 33 escenarios mapeados.
+TOTAL: 34 testeables (32 tests nuevos + 2 tests existentes modificados (12 y 13)) + 3 visuales = 37 escenarios mapeados.
 EXITO: Trazabilidad 100% verificada.
 ================================================================================

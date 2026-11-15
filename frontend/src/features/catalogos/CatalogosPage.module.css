@@ -168,6 +168,12 @@
 }
 
 @media (max-width: 640px) {
+  .caption {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .table,
   .table tbody,
   .table tr,
@@ -177,8 +183,20 @@
     box-sizing: border-box;
   }
 
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .th {
-    display: none;
+    border: 0;
   }
 
   .table tr {

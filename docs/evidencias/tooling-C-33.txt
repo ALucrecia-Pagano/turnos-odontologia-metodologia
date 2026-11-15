@@ -3,9 +3,11 @@
 > turnos-odontologia-frontend@0.1.0 typecheck
 > tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json
 
-  
+
+
 === npx eslint en archivos C-33 ===  
-  
+
+
 === npm run lint ===  
 
 > turnos-odontologia-frontend@0.1.0 lint
@@ -20,5 +22,6 @@ C:\Users\hp\METODOLOGIA_TPS\turnos-odontologia\frontend\src\shared\components\Di
   101:6   warning  React Hook useEffect has a missing dependency: 'returnFocusRef'. Either include it or remove the dependency array                                                                                                                                                            react-hooks/exhaustive-deps
 
 ✖ 3 problems (0 errors, 3 warnings)
+
 
 ESLint found too many warnings (maximum: 0).

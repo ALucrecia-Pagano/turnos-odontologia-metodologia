@@ -16,6 +16,7 @@ import {
   createCatalogItem,
   updateCatalogItem,
 } from "./catalogosApi";
+import modalCardStyles from "./modalCard.module.css";
 import styles from "./CatalogFormDialog.module.css";
 
 export interface CatalogFormDialogProps {
@@ -140,7 +141,8 @@ export function CatalogFormDialog({
       returnFocusRef={returnFocusRef}
       isMobile={isMobile}
     >
-      <form onSubmit={handleSubmit} noValidate className={styles.form}>
+      <div className={modalCardStyles.modalContent} data-modal-card="catalog-form">
+        <form onSubmit={handleSubmit} noValidate className={styles.form}>
         <h2 id={titleId} className={styles.title}>
           {dialogTitle}
         </h2>
@@ -215,6 +217,7 @@ export function CatalogFormDialog({
           </button>
         </div>
       </form>
-    </Dialog>
+    </div>
+  </Dialog>
   );
 }
