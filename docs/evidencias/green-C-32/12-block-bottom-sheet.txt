@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/horarios/BlockFormDialog.mobile.test.tsx (1 test) 96ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  00:40:09
+   Duration  3.34s (transform 259ms, setup 416ms, collect 465ms, tests 96ms, environment 1.64s, prepare 281ms)
+
+exit: 0 

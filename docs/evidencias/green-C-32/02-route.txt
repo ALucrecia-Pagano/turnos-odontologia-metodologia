@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/horarios/HorariosRoute.test.tsx (1 test) 154ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  01:26:44
+   Duration  4.77s (transform 717ms, setup 388ms, collect 1.70s, tests 154ms, environment 1.65s, prepare 357ms)
+
+exit: 0 

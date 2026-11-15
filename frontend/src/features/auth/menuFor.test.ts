@@ -19,8 +19,8 @@ describe("menuFor", () => {
       disabled: false,
       badge: null,
     });
-    expect(items.slice(1).every((item) => item.disabled === true)).toBe(true);
-    expect(items.slice(1).every((item) => item.badge === "Próximamente")).toBe(true);
+    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? item.disabled === false && item.path === "/horarios" : item.disabled === true))).toBe(true);
+    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? item.badge === null : item.badge === "Próximamente"))).toBe(true);
   });
 
   it("menú de recepción habilita Agenda y no incluye Usuarios y roles", () => {
@@ -35,7 +35,7 @@ describe("menuFor", () => {
     expect(items.some((item) => item.label === "Usuarios y roles")).toBe(false);
     expect(items[0]?.disabled).toBe(false);
     expect(items[0]?.badge).toBeNull();
-    expect(items.slice(1).every((item) => item.disabled && item.badge === "Próximamente")).toBe(
+    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? !item.disabled && item.badge === null : item.disabled && item.badge === "Próximamente"))).toBe(
       true,
     );
   });
@@ -52,7 +52,7 @@ describe("menuFor", () => {
     expect(items.some((item) => item.label === "Usuarios y roles")).toBe(false);
     expect(items[0]?.disabled).toBe(false);
     expect(items[0]?.badge).toBeNull();
-    expect(items.slice(1).every((item) => item.disabled && item.badge === "Próximamente")).toBe(
+    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? !item.disabled && item.badge === null : item.disabled && item.badge === "Próximamente"))).toBe(
       true,
     );
   });

@@ -1,0 +1,33 @@
+================================================================================
+TRAZABILIDAD C-32 (ui-horarios-y-bloqueos) — SPEC -> TEST -> EVIDENCIA -> MUTACIÓN
+================================================================================
+Escenarios declarados en specs: 20 (18 testeables + 2 visuales = 20)
+Validación de correspondencia 1:1 (cero tests compartidos): OK
+Validación de evidencias RED/GREEN: OK (18 escenarios + 2 auxiliares)
+  [01] (frontend-working-hours-and-blocks) Odontólogo accede a sus propios horarios -> HorariosPage.test.tsx :: Odontólogo accede a sus propios horarios [RED: 15-role-dentist-own.txt | GREEN: 15-role-dentist-own.txt | MUT: M01]
+  [02] (frontend-working-hours-and-blocks) Administrador selecciona profesional activo -> HorariosPage.test.tsx :: Administrador selecciona profesional activo [RED: 16-role-admin-selector.txt | GREEN: 16-role-admin-selector.txt | MUT: M02]
+  [03] (frontend-working-hours-and-blocks) Odontólogo consulta profesional ajeno y recibe 403 -> HorariosPage.test.tsx :: Odontólogo consulta profesional ajeno y recibe 403 [RED: 17-role-dentist-403.txt | GREEN: 17-role-dentist-403.txt | MUT: M03]
+  [04] (frontend-working-hours-and-blocks) Guardado exitoso de tramos semanales -> WorkingHoursSection.test.tsx :: Guardado exitoso de tramos semanales [RED: 04-hours-save-ok.txt | GREEN: 04-hours-save-ok.txt | MUT: M04]
+  [05] (frontend-working-hours-and-blocks) Edición interactiva de tramos en la interfaz -> WorkingHoursSection.test.tsx :: Edición interactiva de tramos en la interfaz [RED: 05-hours-add-remove.txt | GREEN: 05-hours-add-remove.txt | MUT: M05]
+  [06] (frontend-working-hours-and-blocks) Rechazo por tramos solapados muestra mensaje literal del backend -> WorkingHoursSection.test.tsx :: Rechazo por tramos solapados muestra mensaje literal del backend [RED: 06-hours-overlap-422.txt | GREEN: 06-hours-overlap-422.txt | MUT: M06]
+  [07] (frontend-working-hours-and-blocks) Error 400 marca campos con aria-invalid -> WorkingHoursSection.test.tsx :: Error 400 marca campos con aria-invalid [RED: 07-hours-format-400.txt | GREEN: 07-hours-format-400.txt | MUT: M07]
+  [08] (frontend-working-hours-and-blocks) Turnos futuros fuera del horario al guardar tramos -> AffectedAppointments.test.tsx :: Turnos futuros fuera del horario al guardar tramos [RED: 13-affected-hours.txt | GREEN: 13-affected-hours.txt | MUT: M08]
+  [09] (frontend-working-hours-and-blocks) Turnos solapados al crear un bloqueo -> AffectedAppointments.test.tsx :: Turnos solapados al crear un bloqueo [RED: 14-affected-block.txt | GREEN: 14-affected-block.txt | MUT: M09]
+  [10] (frontend-working-hours-and-blocks) Creación exitosa de bloqueo con offset -> BlocksSection.test.tsx :: Creación exitosa de bloqueo con offset [RED: 08-block-create-ok.txt | GREEN: 08-block-create-ok.txt | MUT: M10]
+  [11] (frontend-working-hours-and-blocks) Eliminación de bloqueo con confirmación in-dialog -> BlocksSection.test.tsx :: Eliminación de bloqueo con confirmación in-dialog [RED: 09-block-delete-ok.txt | GREEN: 09-block-delete-ok.txt | MUT: M11]
+  [12] (frontend-working-hours-and-blocks) Cancelación del borrado con Escape -> BlocksSection.test.tsx :: Cancelación del borrado con Escape [RED: 10-block-delete-escape.txt | GREEN: 10-block-delete-escape.txt | MUT: M12]
+  [13] (frontend-working-hours-and-blocks) Bloqueo inválido muestra mensaje literal del backend -> BlocksSection.test.tsx :: Bloqueo inválido muestra mensaje literal del backend [RED: 11-block-invalid-422.txt | GREEN: 11-block-invalid-422.txt | MUT: M13]
+  [14] (frontend-working-hours-and-blocks) Recepción visualiza información completa sin controles de edición -> HorariosPage.test.tsx :: Recepción visualiza información completa sin controles de edición [RED: 18-role-reception-readonly.txt | GREEN: 18-role-reception-readonly.txt | MUT: M14]
+  [15] (frontend-working-hours-and-blocks) Zona horaria leída desde GET /api/agenda -> HorariosPage.test.tsx :: Zona horaria leída desde GET /api/agenda [RED: 19-timezone-api.txt | GREEN: 19-timezone-api.txt | MUT: M15]
+  [16] (frontend-working-hours-and-blocks) Presentación de modal como hoja inferior en móvil -> BlockFormDialog.mobile.test.tsx :: Presentación de modal como hoja inferior en móvil [RED: 12-block-bottom-sheet.txt | GREEN: 12-block-bottom-sheet.txt | MUT: M16]
+  [V01] (frontend-working-hours-and-blocks) Verificación visual multi-resolución en 1440, 768 y 390 px -> Visual (C-32-horarios-{1440,768,390}.png)
+  [18] (frontend-foundation) Enlaces de navegación activos y bloque de sesión en misma línea en 1440 px -> AppShellNavigation.test.tsx :: enlaces de navegación activos y bloque de sesión en misma línea en 1440 px [RED: 03-menu-pre.txt | GREEN: 03-menu-ok.txt | MUT: M17]
+  [19] (frontend-foundation) Ítems deshabilitados con Próximamente conservan semántica y accesibilidad -> AppShellNavigation.test.tsx :: ítems deshabilitados con Próximamente conservan semántica y accesibilidad [RED: 03-menu-pre.txt | GREEN: 03-menu-ok.txt | MUT: M18]
+  [V02] (frontend-foundation) Navegación de AppShell adaptada a tablet (768 px) y móvil (390 px) -> Visual (C-32-appshell-{768,390}.png)
+  [M19] (auxiliar) horariosApi.test.ts :: parsea respuestas exitosas de getWorkingHours, replaceWorkingHours, listBlocks, createBlock y deleteBlock [RED: 01-api-ok.txt | GREEN: 01-api-ok.txt]
+  [M20] (auxiliar) HorariosRoute.test.tsx :: renderiza el contenedor principal de Horarios y bloqueos en /horarios para usuario autenticado y redirige a /login si es anónimo [RED: 02-route.txt | GREEN: 02-route.txt]
+================================================================================
+TOTAL: 18 testeables + 2 visuales = 20 escenarios mapeados (+ 2 tests auxiliares con mutación)
+EXITO: Trazabilidad 100% verificada.
+================================================================================
+exit: 0

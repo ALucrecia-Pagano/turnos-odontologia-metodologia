@@ -1,0 +1,19 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/auth/menuFor.test.ts (3 tests) 10ms
+stderr | src/shared/components/AppShell.mobile.test.tsx > AppShell — Móvil (≤ 640 px) > 01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/shared/components/AppShellNavigation.test.tsx (3 tests) 314ms
+ ✓ src/shared/components/AppShell.test.tsx (2 tests) 344ms
+ ✓ src/shared/components/AppShell.mobile.test.tsx (2 tests) 438ms
+   ✓ AppShell — Móvil (≤ 640 px) > 01-cabecera-compacta-y-apertura-menu: expone botón Menú fuera de nav con aria-expanded y aria-controls, y al pulsar despliega la navegación  311ms
+
+ Test Files  4 passed (4)
+      Tests  10 passed (10)
+   Start at  00:18:02
+   Duration  4.87s (transform 580ms, setup 2.97s, collect 2.07s, tests 1.11s, environment 8.92s, prepare 1.23s)
+
+exit: 0 

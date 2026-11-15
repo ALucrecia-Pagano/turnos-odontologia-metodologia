@@ -1,0 +1,28 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/HorariosRoute.test.tsx (1 test | 1 failed) 128ms
+   × Ruta /horarios bajo AppShell > renderiza el contenedor principal de Horarios y bloqueos en /horarios para usuario autenticado y redirige a /login si es anónimo 126ms
+     → expected null not to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/HorariosRoute.test.tsx > Ruta /horarios bajo AppShell > renderiza el contenedor principal de Horarios y bloqueos en /horarios para usuario autenticado y redirige a /login si es anónimo
+AssertionError: expected null not to be null
+ ❯ src/features/horarios/HorariosRoute.test.tsx:75:80
+     73|       expect(screen.queryByRole("navigation", { name: "Menú principal"…
+     74|     });
+     75|     expect(screen.queryByRole("heading", { name: "Horarios y bloqueos"…
+       |                                                                                ^
+     76| 
+     77|     view.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:14:01
+   Duration  5.02s (transform 663ms, setup 357ms, collect 2.01s, tests 128ms, environment 1.72s, prepare 336ms)
+
+exit: 1 

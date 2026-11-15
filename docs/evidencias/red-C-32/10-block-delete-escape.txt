@@ -1,0 +1,79 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/BlocksSection.test.tsx (3 tests | 1 failed) 902ms
+   ✓ BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.  701ms
+   ✓ BlocksSection > Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado. 95ms
+   × BlocksSection > Cancelación del borrado con Escape: cierra el diálogo al pulsar Escape o Volver sin enviar DELETE y restaura el foco 105ms
+     → expected <dialog …(4)>…(1)</dialog> to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/BlocksSection.test.tsx > BlocksSection > Cancelación del borrado con Escape: cierra el diálogo al pulsar Escape o Volver sin enviar DELETE y restaura el foco
+AssertionError: expected <dialog …(4)>…(1)</dialog> to be null
+
+- Expected: 
+null
+
++ Received: 
+<dialog
+  aria-labelledby="block-delete-dialog-title"
+  aria-modal="true"
+  class="dialog "
+  open=""
+>
+  <div
+    class="modalContent"
+    data-modal-card="block-delete"
+  >
+    <h2
+      class="title"
+      id="block-delete-dialog-title"
+    >
+      Confirmar eliminación de bloqueo
+    </h2>
+    <p
+      class="prompt"
+    >
+      ¿Eliminar este bloqueo del 
+      2026-05-06
+       de 
+      14:00 a 16:00
+      ?
+    </p>
+    <div
+      class="actionsRow"
+    >
+      <button
+        class="secondaryButton"
+        type="button"
+      >
+        Volver
+      </button>
+      <button
+        class="dangerButton"
+        type="button"
+      >
+        Sí, eliminar bloqueo
+      </button>
+    </div>
+  </div>
+</dialog>
+
+ ❯ src/features/horarios/BlocksSection.test.tsx:151:42
+    149|     await user.keyboard("{Escape}");
+    150| 
+    151|     expect(screen.queryByRole("dialog")).toBeNull();
+       |                                          ^
+    152|     expect(deleteCalled).toBe(false);
+    153|     expect(document.activeElement).toBe(deleteTrigger);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:35:34
+   Duration  4.18s (transform 246ms, setup 357ms, collect 583ms, tests 902ms, environment 1.56s, prepare 317ms)
+
+exit: 1 

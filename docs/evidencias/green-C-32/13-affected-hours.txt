@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/horarios/AffectedAppointments.test.tsx (1 test) 221ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  00:42:32
+   Duration  4.04s (transform 231ms, setup 409ms, collect 596ms, tests 221ms, environment 2.04s, prepare 335ms)
+
+exit: 0 

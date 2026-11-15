@@ -31,7 +31,7 @@ const MENU_DEFINITIONS: readonly MenuDefinition[] = [
   {
     id: "horarios-y-bloqueos",
     label: "Horarios y bloqueos",
-    path: "/horarios-y-bloqueos",
+    path: "/horarios",
     roles: ["administrador", "recepcion", "odontologo"],
   },
   {
@@ -56,7 +56,7 @@ const MENU_DEFINITIONS: readonly MenuDefinition[] = [
 
 export function menuFor(role: UserRole): readonly MenuItem[] {
   return MENU_DEFINITIONS.filter((item) => item.roles.includes(role)).map((item) => {
-    const enabled = item.id === "agenda";
+    const enabled = item.id === "agenda" || item.id === "horarios-y-bloqueos";
     return {
       id: item.id,
       label: item.label,

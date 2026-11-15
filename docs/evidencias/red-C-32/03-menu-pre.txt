@@ -1,0 +1,483 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/auth/menuFor.test.ts (3 tests | 3 failed) 22ms
+   × menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente 16ms
+     → expected false to be true // Object.is equality
+   × menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles 2ms
+     → expected false to be true // Object.is equality
+   × menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles 2ms
+     → expected false to be true // Object.is equality
+ ❯ src/shared/components/AppShell.test.tsx (2 tests | 1 failed) 279ms
+   × AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente 167ms
+     → expected [ <button …(4)>…(2)</button>, …(4) ] to have a length of 4 but got 5
+   ✓ AppShell > muestra en un alerta del shell la violación de un 403 sin cerrar la sesión 110ms
+ ❯ src/shared/components/AppShellNavigation.test.tsx (3 tests | 2 failed) 1273ms
+   × AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px 227ms
+     → expected [ Array(1) ] to have a length of 2 but got 1
+   × AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad 1041ms
+     → expected [ <button …(4)>…(2)</button>, …(4) ] to have a length of 4 but got 5
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+            [33mdata-brand[39m=[32m"aqua"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33mclass[39m=[32m"brandLogo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brandText"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandName"[39m
+              [36m>[39m
+                [0mAqua[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandSubtitle"[39m
+              [36m>[39m
+                [0mClínica Odontológica[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav "[39m
+            [33mid[39m=[32m"main-menu"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"menuLink menuLinkActive"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Usuarios y roles"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mUsuarios y roles[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mAdministración Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<p>[39m
+            [0mContenido principal[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ✓ AppShell navegación sin cajas > los ítems deshabilitados anulan el borde por defecto del navegador y alinean la línea inferior con los enlaces 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/menuFor.test.ts > menuFor > menú del administrador incluye Agenda habilitada y los otros 5 ítems deshabilitados con Próximamente
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/features/auth/menuFor.test.ts:22:161
+     20|       badge: null,
+     21|     });
+     22|     expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+       |                                                                                                                                                                 ^
+     23|     expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+     24|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/features/auth/menuFor.test.ts > menuFor > menú de recepción habilita Agenda y no incluye Usuarios y roles
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/features/auth/menuFor.test.ts:38:170
+     36|     expect(items[0]?.disabled).toBe(false);
+     37|     expect(items[0]?.badge).toBeNull();
+     38|     expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+       |                                                                                                                                                                          ^
+     39|       true,
+     40|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/features/auth/menuFor.test.ts > menuFor > menú del odontólogo habilita Agenda y no incluye Turnos ni Usuarios y roles
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/features/auth/menuFor.test.ts:55:170
+     53|     expect(items[0]?.disabled).toBe(false);
+     54|     expect(items[0]?.badge).toBeNull();
+     55|     expect(items.slice(1).every((item) => (item.id === "horarios-y-blo…
+       |                                                                                                                                                                          ^
+     56|       true,
+     57|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/shared/components/AppShell.test.tsx > AppShell > renderiza Agenda como enlace habilitado en los tres roles y el resto deshabilitado con Próximamente
+AssertionError: expected [ <button …(4)>…(2)</button>, …(4) ] to have a length of 4 but got 5
+
+- Expected
++ Received
+
+- 4
++ 5
+
+ ❯ src/shared/components/AppShell.test.tsx:68:26
+     66| 
+     67|     const adminButtons = within(nav).getAllByRole("button");
+     68|     expect(adminButtons).toHaveLength(4);
+       |                          ^
+     69|     expect(adminButtons.map((btn) => btn.getAttribute("data-menu-item"…
+     70|       "Turnos",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/shared/components/AppShellNavigation.test.tsx > AppShell navegación sin cajas > enlaces de navegación activos y bloque de sesión en misma línea en 1440 px
+AssertionError: expected [ Array(1) ] to have a length of 2 but got 1
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx:56:50
+     54|     expect(logout?.parentElement).toHaveTextContent("Administración De…
+     55|     if (nav !== null) {
+     56|       expect(within(nav).queryAllByRole("link")).toHaveLength(2);
+       |                                                  ^
+     57|     }
+     58| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/shared/components/AppShellNavigation.test.tsx > AppShell navegación sin cajas > ítems deshabilitados con Próximamente conservan semántica y accesibilidad
+AssertionError: expected [ <button …(4)>…(2)</button>, …(4) ] to have a length of 4 but got 5
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+            [33mdata-brand[39m=[32m"aqua"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33mclass[39m=[32m"brandLogo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brandText"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandName"[39m
+              [36m>[39m
+                [0mAqua[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandSubtitle"[39m
+              [36m>[39m
+                [0mClínica Odontológica[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav "[39m
+            [33mid[39m=[32m"main-menu"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"menuLink menuLinkActive"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Turnos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mTurnos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mHorarios y bloqueos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Usuarios y roles"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mUsuarios y roles[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mAdministración Demo[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<p>[39m
+            [0mContenido principal[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+- Expected
++ Received
+
+- 4
++ 5
+
+ ❯ src/shared/components/AppShellNavigation.test.tsx:77:73
+     75|     });
+     76|     await waitFor(() => {
+     77|       expect(screen.queryAllByRole("button", { name: /Próximamente/ })…
+       |                                                                         ^
+     78|     });
+     79|     const nav = screen.getByRole("navigation", { name: "Menú principal…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  6 failed | 2 passed (8)
+   Start at  00:17:20
+   Duration  5.00s (transform 384ms, setup 1.29s, collect 1.56s, tests 1.57s, environment 5.84s, prepare 1.03s)
+
+exit: 1 

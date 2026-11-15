@@ -1,0 +1,29 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/BlocksSection.test.tsx (2 tests | 1 failed) 906ms
+   ✓ BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.  843ms
+   × BlocksSection > Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado. 61ms
+     → expected null not to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/BlocksSection.test.tsx > BlocksSection > Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado.
+AssertionError: expected null not to be null
+ ❯ src/features/horarios/BlocksSection.test.tsx:106:46
+    104|     await user.click(screen.getByRole("button", { name: "Eliminar bloq…
+    105|     expect(deleteCalled).toBe(false);
+    106|     expect(screen.queryByRole("dialog")).not.toBeNull();
+       |                                              ^
+    107| 
+    108|     await user.click(screen.getByRole("button", { name: "Sí, eliminar …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:33:52
+   Duration  5.14s (transform 370ms, setup 540ms, collect 968ms, tests 906ms, environment 1.90s, prepare 361ms)
+
+exit: 1 

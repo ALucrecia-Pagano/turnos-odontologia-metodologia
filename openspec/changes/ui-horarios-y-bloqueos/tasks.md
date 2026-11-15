@@ -17,77 +17,77 @@
 
 ## 1. Línea base y preparación
 
-- [ ] 1.1 Crear la rama `c32-apply` desde `main` y verificar que la suite completa de frontend pasa intacta (línea base de 297 tests pasando en 74 archivos) guardando salida en `docs/evidencias/baseline-C-32.txt`.
-- [ ] 1.2 Aplicar skill `appointment-frontend-ux` y consultar MCP `context7` (documentación pública sobre formularios y validaciones en React Router v6) registrando la justificación y consultas en `docs/skills-mcp/evidencias/C-32-skill-mcp.md`.
-- [ ] 1.3 Crear la estructura de carpetas `frontend/src/features/horarios/` y definir los tipos del contrato de horarios y bloqueos en `frontend/src/features/horarios/horariosApi.ts`.
+- [x] 1.1 Crear la rama `c32-apply` desde `main` y verificar que la suite completa de frontend pasa intacta (línea base de 297 tests pasando en 74 archivos) guardando salida en `docs/evidencias/baseline-C-32.txt`.
+- [x] 1.2 Aplicar skill `appointment-frontend-ux` y consultar MCP `context7` (documentación pública sobre formularios y validaciones en React Router v6) registrando la justificación y consultas en `docs/skills-mcp/evidencias/C-32-skill-mcp.md`.
+- [x] 1.3 Crear la estructura de carpetas `frontend/src/features/horarios/` y definir los tipos del contrato de horarios y bloqueos en `frontend/src/features/horarios/horariosApi.ts`.
 
 ## 2. Cliente de API de horarios y bloqueos
 
-- [ ] 2.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/horariosApi.test.ts` para parseo estricto de respuestas exitosas de `getWorkingHours`, `replaceWorkingHours`, `listBlocks`, `createBlock` y `deleteBlock`. Evidencia: `docs/evidencias/red-C-32/01-api-ok.txt`.
-- [ ] 2.2 **GREEN**: Implementar funciones tipadas en `horariosApi.ts` consumiendo `ApiClient` y gestionando errores HTTP (`400`, `403`, `422`). Evidencia: `docs/evidencias/green-C-32/01-api-ok.txt`.
-- [ ] 2.3 **REFACTOR**: Limpiar parseo y verificar que los tests pasan sin `any`.
+- [x] 2.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/horariosApi.test.ts` para parseo estricto de respuestas exitosas de `getWorkingHours`, `replaceWorkingHours`, `listBlocks`, `createBlock` y `deleteBlock`. Evidencia: `docs/evidencias/red-C-32/01-api-ok.txt`.
+- [x] 2.2 **GREEN**: Implementar funciones tipadas en `horariosApi.ts` consumiendo `ApiClient` y gestionando errores HTTP (`400`, `403`, `422`). Evidencia: `docs/evidencias/green-C-32/01-api-ok.txt`.
+- [x] 2.3 **REFACTOR**: Limpiar parseo y verificar que los tests pasan sin `any`.
 
 ## 3. Enrutamiento, página y menú
 
-- [ ] 3.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosRoute.test.tsx` verificando que `/horarios` renderiza el contenedor principal bajo `AppShell` para usuarios autenticados y redirige a login si es anónimo. Evidencia: `docs/evidencias/red-C-32/02-route.txt`.
-- [ ] 3.2 **GREEN**: Registrar la ruta `horarios` en `frontend/src/App.tsx` y conectar `HorariosPage`. Evidencia: `docs/evidencias/green-C-32/02-route.txt`.
-- [ ] 3.3 **RED**: Ejecutar tests de menú (`menuFor.test.ts`, `AppShell.test.tsx`, `AppShellNavigation.test.tsx`) comprobando el fallo esperado al habilitar "Horarios y bloqueos". Evidencia: `docs/evidencias/red-C-32/03-menu-pre.txt`.
-- [ ] 3.4 **GREEN**: Actualizar `menuFor.ts` (`path: "/horarios"`, habilitado para administrador, recepción y odontólogo) y actualizar las 4 aserciones específicas en `menuFor.test.ts`, `AppShell.test.tsx`, `AppShellNavigation.test.tsx` y `AppShell.mobile.test.tsx`. Evidencia: `docs/evidencias/green-C-32/03-menu-ok.txt`.
-- [ ] 3.5 **REFACTOR**: Confirmar que el diff de tests existentes muestra únicamente las 4 líneas autorizadas de cambio de requerimiento.
+- [x] 3.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosRoute.test.tsx` verificando que `/horarios` renderiza el contenedor principal bajo `AppShell` para usuarios autenticados y redirige a login si es anónimo. Evidencia: `docs/evidencias/red-C-32/02-route.txt`.
+- [x] 3.2 **GREEN**: Registrar la ruta `horarios` en `frontend/src/App.tsx` y conectar `HorariosPage`. Evidencia: `docs/evidencias/green-C-32/02-route.txt`.
+- [x] 3.3 **RED**: Ejecutar tests de menú (`menuFor.test.ts`, `AppShell.test.tsx`, `AppShellNavigation.test.tsx`) comprobando el fallo esperado al habilitar "Horarios y bloqueos". Evidencia: `docs/evidencias/red-C-32/03-menu-pre.txt`.
+- [x] 3.4 **GREEN**: Actualizar `menuFor.ts` (`path: "/horarios"`, habilitado para administrador, recepción y odontólogo) y actualizar las 4 aserciones específicas en `menuFor.test.ts`, `AppShell.test.tsx`, `AppShellNavigation.test.tsx` y `AppShell.mobile.test.tsx`. Evidencia: `docs/evidencias/green-C-32/03-menu-ok.txt`.
+- [x] 3.5 **REFACTOR**: Confirmar que el diff de tests existentes muestra únicamente las 4 líneas autorizadas de cambio de requerimiento.
 
 ## 4. Tramos semanales y validación de solapes
 
-- [ ] 4.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para el guardado exitoso de tramos semanales enviando `PUT` crudo y anunciando "Horario guardado." en `role="status"`. Evidencia: `docs/evidencias/red-C-32/04-hours-save-ok.txt`.
-- [ ] 4.2 **GREEN**: Implementar `WorkingHoursSection.tsx` con grilla de 7 días, inputs de texto `HH:MM`, soporte de `24:00` en fin y botón "Guardar horario". Evidencia: `docs/evidencias/green-C-32/04-hours-save-ok.txt`.
-- [ ] 4.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para la adición y eliminación dinámica de tramos con los botones "Agregar tramo" y "Quitar". Evidencia: `docs/evidencias/red-C-32/05-hours-add-remove.txt`.
-- [ ] 4.4 **GREEN**: Implementar handlers locales de agregado y borrado de filas en `WorkingHoursSection.tsx`. Evidencia: `docs/evidencias/green-C-32/05-hours-add-remove.txt`.
-- [ ] 4.5 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para el rechazo 422 `OVERLAPPING_WORKING_HOURS` mostrando el mensaje literal del backend en `role="alert"` con foco automático. Evidencia: `docs/evidencias/red-C-32/06-hours-overlap-422.txt`.
-- [ ] 4.6 **GREEN**: Manejar violaciones 422 en `WorkingHoursSection.tsx` renderizando el mensaje en alerta accesible y trasladando el foco con `ref`. Evidencia: `docs/evidencias/green-C-32/06-hours-overlap-422.txt`.
-- [ ] 4.7 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para errores 400 de formato marcando inputs con `aria-invalid="true"`. Evidencia: `docs/evidencias/red-C-32/07-hours-format-400.txt`.
-- [ ] 4.8 **GREEN**: Conectar marcado accesible `aria-invalid` ante respuestas 400. Evidencia: `docs/evidencias/green-C-32/07-hours-format-400.txt`.
+- [x] 4.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para el guardado exitoso de tramos semanales enviando `PUT` crudo y anunciando "Horario guardado." en `role="status"`. Evidencia: `docs/evidencias/red-C-32/04-hours-save-ok.txt`.
+- [x] 4.2 **GREEN**: Implementar `WorkingHoursSection.tsx` con grilla de 7 días, inputs de texto `HH:MM`, soporte de `24:00` en fin y botón "Guardar horario". Evidencia: `docs/evidencias/green-C-32/04-hours-save-ok.txt`.
+- [x] 4.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para la adición y eliminación dinámica de tramos con los botones "Agregar tramo" y "Quitar". Evidencia: `docs/evidencias/red-C-32/05-hours-add-remove.txt`.
+- [x] 4.4 **GREEN**: Implementar handlers locales de agregado y borrado de filas en `WorkingHoursSection.tsx`. Evidencia: `docs/evidencias/green-C-32/05-hours-add-remove.txt`.
+- [x] 4.5 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para el rechazo 422 `OVERLAPPING_WORKING_HOURS` mostrando el mensaje literal del backend en `role="alert"` con foco automático. Evidencia: `docs/evidencias/red-C-32/06-hours-overlap-422.txt`.
+- [x] 4.6 **GREEN**: Manejar violaciones 422 en `WorkingHoursSection.tsx` renderizando el mensaje en alerta accesible y trasladando el foco con `ref`. Evidencia: `docs/evidencias/green-C-32/06-hours-overlap-422.txt`.
+- [x] 4.7 **RED**: Escribir test unitario en `frontend/src/features/horarios/WorkingHoursSection.test.tsx` para errores 400 de formato marcando inputs con `aria-invalid="true"`. Evidencia: `docs/evidencias/red-C-32/07-hours-format-400.txt`.
+- [x] 4.8 **GREEN**: Conectar marcado accesible `aria-invalid` ante respuestas 400. Evidencia: `docs/evidencias/green-C-32/07-hours-format-400.txt`.
 
 ## 5. Bloqueos de agenda y confirmación in-dialog
 
-- [ ] 5.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` para creación exitosa de bloqueo enviando `POST` con instantes ISO con offset (`buildStartAtIso`), cierre de diálogo y anuncio "Bloqueo creado." en `role="status"`. Evidencia: `docs/evidencias/red-C-32/08-block-create-ok.txt`.
-- [ ] 5.2 **GREEN**: Construir `BlocksSection.tsx` y `BlockFormDialog.tsx` sobre `Dialog.tsx`. Evidencia: `docs/evidencias/green-C-32/08-block-create-ok.txt`.
-- [ ] 5.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` para eliminación de bloqueo con confirmación in-dialog enviando `DELETE` tras confirmar y anunciando "Bloqueo eliminado." en `role="status"`. Evidencia: `docs/evidencias/red-C-32/09-block-delete-ok.txt`.
-- [ ] 5.4 **GREEN**: Construir `BlockDeleteDialog.tsx` con confirmación destructiva y feedback accesible. Evidencia: `docs/evidencias/green-C-32/09-block-delete-ok.txt`.
-- [ ] 5.5 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` verificando que presionar Escape o pulsar "Volver" en el diálogo de eliminación no envía ninguna petición `DELETE` y conserva el bloqueo. Evidencia: `docs/evidencias/red-C-32/10-block-delete-escape.txt`.
-- [ ] 5.6 **GREEN**: Conectar manejo de Escape y cancelación en `BlockDeleteDialog.tsx`. Evidencia: `docs/evidencias/green-C-32/10-block-delete-escape.txt`.
-- [ ] 5.7 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` para bloqueo inválido rechazado con 422 `INVALID_BLOCK` manteniendo el diálogo abierto con el mensaje literal en `role="alert"`. Evidencia: `docs/evidencias/red-C-32/11-block-invalid-422.txt`.
-- [ ] 5.8 **GREEN**: Procesar respuesta 422 en `BlockFormDialog.tsx` sin cerrar el diálogo. Evidencia: `docs/evidencias/green-C-32/11-block-invalid-422.txt`.
-- [ ] 5.9 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlockFormDialog.mobile.test.tsx` comprobando que a ≤ 640 px el modal adopta la clase y estilos de hoja inferior (bottom sheet). Evidencia: `docs/evidencias/red-C-32/12-block-bottom-sheet.txt`.
-- [ ] 5.10 **GREEN**: Aplicar estilos responsivos en `BlockFormDialog.module.css` heredando la hoja inferior de C-36. Evidencia: `docs/evidencias/green-C-32/12-block-bottom-sheet.txt`.
+- [x] 5.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` para creación exitosa de bloqueo enviando `POST` con instantes ISO con offset (`buildStartAtIso`), cierre de diálogo y anuncio "Bloqueo creado." en `role="status"`. Evidencia: `docs/evidencias/red-C-32/08-block-create-ok.txt`.
+- [x] 5.2 **GREEN**: Construir `BlocksSection.tsx` y `BlockFormDialog.tsx` sobre `Dialog.tsx`. Evidencia: `docs/evidencias/green-C-32/08-block-create-ok.txt`.
+- [x] 5.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` para eliminación de bloqueo con confirmación in-dialog enviando `DELETE` tras confirmar y anunciando "Bloqueo eliminado." en `role="status"`. Evidencia: `docs/evidencias/red-C-32/09-block-delete-ok.txt`.
+- [x] 5.4 **GREEN**: Construir `BlockDeleteDialog.tsx` con confirmación destructiva y feedback accesible. Evidencia: `docs/evidencias/green-C-32/09-block-delete-ok.txt`.
+- [x] 5.5 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` verificando que presionar Escape o pulsar "Volver" en el diálogo de eliminación no envía ninguna petición `DELETE` y conserva el bloqueo. Evidencia: `docs/evidencias/red-C-32/10-block-delete-escape.txt`.
+- [x] 5.6 **GREEN**: Conectar manejo de Escape y cancelación en `BlockDeleteDialog.tsx`. Evidencia: `docs/evidencias/green-C-32/10-block-delete-escape.txt`.
+- [x] 5.7 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlocksSection.test.tsx` para bloqueo inválido rechazado con 422 `INVALID_BLOCK` manteniendo el diálogo abierto con el mensaje literal en `role="alert"`. Evidencia: `docs/evidencias/red-C-32/11-block-invalid-422.txt`.
+- [x] 5.8 **GREEN**: Procesar respuesta 422 en `BlockFormDialog.tsx` sin cerrar el diálogo. Evidencia: `docs/evidencias/green-C-32/11-block-invalid-422.txt`.
+- [x] 5.9 **RED**: Escribir test unitario en `frontend/src/features/horarios/BlockFormDialog.mobile.test.tsx` comprobando que a ≤ 640 px el modal adopta la clase y estilos de hoja inferior (bottom sheet). Evidencia: `docs/evidencias/red-C-32/12-block-bottom-sheet.txt`.
+- [x] 5.10 **GREEN**: Aplicar estilos responsivos en `BlockFormDialog.module.css` heredando la hoja inferior de C-36. Evidencia: `docs/evidencias/green-C-32/12-block-bottom-sheet.txt`.
 
 ## 6. Aviso de turnos afectados
 
-- [ ] 6.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/AffectedAppointments.test.tsx` para aviso de turnos futuros fuera de horario al guardar tramos (`appointmentsOutsideHours`), verificando renderizado de fecha, hora local, paciente, profesional, `StatusBadge` y nota de no cancelación en `role="alert"`. Evidencia: `docs/evidencias/red-C-32/13-affected-hours.txt`.
-- [ ] 6.2 **GREEN**: Implementar componente `AffectedAppointments.tsx` y formateadores de fecha en `horariosTime.ts`. Evidencia: `docs/evidencias/green-C-32/13-affected-hours.txt`.
-- [ ] 6.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/AffectedAppointments.test.tsx` para aviso de turnos solapados al crear un bloqueo (`affectedAppointments`). Evidencia: `docs/evidencias/red-C-32/14-affected-block.txt`.
-- [ ] 6.4 **GREEN**: Conectar `AffectedAppointments` a `BlocksSection.tsx` tras el alta de bloqueos. Evidencia: `docs/evidencias/green-C-32/14-affected-block.txt`.
+- [x] 6.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/AffectedAppointments.test.tsx` para aviso de turnos futuros fuera de horario al guardar tramos (`appointmentsOutsideHours`), verificando renderizado de fecha, hora local, paciente, profesional, `StatusBadge` y nota de no cancelación en `role="alert"`. Evidencia: `docs/evidencias/red-C-32/13-affected-hours.txt`.
+- [x] 6.2 **GREEN**: Implementar componente `AffectedAppointments.tsx` y formateadores de fecha en `horariosTime.ts`. Evidencia: `docs/evidencias/green-C-32/13-affected-hours.txt`.
+- [x] 6.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/AffectedAppointments.test.tsx` para aviso de turnos solapados al crear un bloqueo (`affectedAppointments`). Evidencia: `docs/evidencias/red-C-32/14-affected-block.txt`.
+- [x] 6.4 **GREEN**: Conectar `AffectedAppointments` a `BlocksSection.tsx` tras el alta de bloqueos. Evidencia: `docs/evidencias/green-C-32/14-affected-block.txt`.
 
 ## 7. Roles, permisos y control de acceso
 
-- [ ] 7.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para odontólogo accediendo a sus propios horarios (`user.professionalId`) sin selector visible. Evidencia: `docs/evidencias/red-C-32/15-role-dentist-own.txt`.
-- [ ] 7.2 **GREEN**: Conectar resolución de target en `HorariosPage.tsx` para el rol odontólogo. Evidencia: `docs/evidencias/green-C-32/15-role-dentist-own.txt`.
-- [ ] 7.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para administrador seleccionando profesional activo en el desplegable y sincronizando `?professionalId=`. Evidencia: `docs/evidencias/red-C-32/16-role-admin-selector.txt`.
-- [ ] 7.4 **GREEN**: Implementar selector de profesionales activos para administrador en `HorariosPage.tsx`. Evidencia: `docs/evidencias/green-C-32/16-role-admin-selector.txt`.
-- [ ] 7.5 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para odontólogo intentando consultar profesional ajeno por URL recibiendo 403 `FORBIDDEN_OPERATION` y mostrando el error literal en `role="alert"` sin cerrar sesión. Evidencia: `docs/evidencias/red-C-32/17-role-dentist-403.txt`.
-- [ ] 7.6 **GREEN**: Gestionar rechazo 403 en `HorariosPage.tsx` manteniendo la sesión activa. Evidencia: `docs/evidencias/green-C-32/17-role-dentist-403.txt`.
-- [ ] 7.7 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para rol recepción verificando modo de solo lectura (selector y listas visibles; botones "Agregar tramo", "Quitar", "Guardar horario", "Nuevo bloqueo" y "Eliminar bloqueo" ausentes). Evidencia: `docs/evidencias/red-C-32/18-role-reception-readonly.txt`.
-- [ ] 7.8 **GREEN**: Condicionar visibilidad de acciones de mutación según rol en `HorariosPage.tsx`, `WorkingHoursSection.tsx` y `BlocksSection.tsx`. Evidencia: `docs/evidencias/green-C-32/18-role-reception-readonly.txt`.
-- [ ] 7.9 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` verificando la lectura de `timezone` desde `GET /api/agenda` una sola vez y su reutilización. Evidencia: `docs/evidencias/red-C-32/19-timezone-api.txt`.
-- [ ] 7.10 **GREEN**: Implementar consulta inicial a `GET /api/agenda` en `HorariosPage.tsx` y propagar la zona horaria a los submódulos. Evidencia: `docs/evidencias/green-C-32/19-timezone-api.txt`.
+- [x] 7.1 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para odontólogo accediendo a sus propios horarios (`user.professionalId`) sin selector visible. Evidencia: `docs/evidencias/red-C-32/15-role-dentist-own.txt`.
+- [x] 7.2 **GREEN**: Conectar resolución de target en `HorariosPage.tsx` para el rol odontólogo. Evidencia: `docs/evidencias/green-C-32/15-role-dentist-own.txt`.
+- [x] 7.3 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para administrador seleccionando profesional activo en el desplegable y sincronizando `?professionalId=`. Evidencia: `docs/evidencias/red-C-32/16-role-admin-selector.txt`.
+- [x] 7.4 **GREEN**: Implementar selector de profesionales activos para administrador en `HorariosPage.tsx`. Evidencia: `docs/evidencias/green-C-32/16-role-admin-selector.txt`.
+- [x] 7.5 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para odontólogo intentando consultar profesional ajeno por URL recibiendo 403 `FORBIDDEN_OPERATION` y mostrando el error literal en `role="alert"` sin cerrar sesión. Evidencia: `docs/evidencias/red-C-32/17-role-dentist-403.txt`.
+- [x] 7.6 **GREEN**: Gestionar rechazo 403 en `HorariosPage.tsx` manteniendo la sesión activa. Evidencia: `docs/evidencias/green-C-32/17-role-dentist-403.txt`.
+- [x] 7.7 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` para rol recepción verificando modo de solo lectura (selector y listas visibles; botones "Agregar tramo", "Quitar", "Guardar horario", "Nuevo bloqueo" y "Eliminar bloqueo" ausentes). Evidencia: `docs/evidencias/red-C-32/18-role-reception-readonly.txt`.
+- [x] 7.8 **GREEN**: Condicionar visibilidad de acciones de mutación según rol en `HorariosPage.tsx`, `WorkingHoursSection.tsx` y `BlocksSection.tsx`. Evidencia: `docs/evidencias/green-C-32/18-role-reception-readonly.txt`.
+- [x] 7.9 **RED**: Escribir test unitario en `frontend/src/features/horarios/HorariosPage.test.tsx` verificando la lectura de `timezone` desde `GET /api/agenda` una sola vez y su reutilización. Evidencia: `docs/evidencias/red-C-32/19-timezone-api.txt`.
+- [x] 7.10 **GREEN**: Implementar consulta inicial a `GET /api/agenda` en `HorariosPage.tsx` y propagar la zona horaria a los submódulos. Evidencia: `docs/evidencias/green-C-32/19-timezone-api.txt`.
 
 ## 8. Verificación integral, mutaciones y trazabilidad
 
-- [ ] 8.1 Ejecutar suite completa de Vitest (línea base de 297 tests + nuevos tests = tests en verde) y registrar salida en `docs/evidencias/test-suite-C-32.txt`.
-- [ ] 8.2 Ejecutar `tsc --noEmit` y `npm run lint` verificando código de salida 0 en `docs/evidencias/tooling-C-32.txt`.
-- [ ] 8.3 Ejecutar `npm run build` verificando compilación de producción limpia en `docs/evidencias/build-C-32.txt`.
-- [ ] 8.4 Implementar y ejecutar script de mutaciones `docs/evidencias/mutaciones-C-32.py` garantizando que cada mutación sea eliminada por su test asociado (0 supervivientes, 0 inválidas) en `docs/evidencias/mutaciones-C-32.txt`.
-- [ ] 8.5 Implementar y ejecutar script de trazabilidad `docs/evidencias/trazabilidad-C-32.py` certificando relación 1:1 estricta entre escenarios y tests en `docs/evidencias/trazabilidad-C-32.txt`.
-- [ ] 8.6 Verificar que el diff de tests existentes (`git diff main --stat -- 'frontend/**/*.test.ts' 'frontend/**/*.test.tsx'`) refleje estrictamente las 4 líneas del cambio de requerimiento del menú en `docs/evidencias/diff-tests-existentes-C-32.txt`.
-- [ ] 8.7 Consolidar informe de verificación en `docs/evidencias/verify-C-32.md`.
+- [x] 8.1 Ejecutar suite completa de Vitest (línea base de 297 tests + nuevos tests = tests en verde) y registrar salida en `docs/evidencias/test-suite-C-32.txt`.
+- [x] 8.2 Ejecutar `tsc --noEmit` y `npm run lint` verificando código de salida 0 en `docs/evidencias/tooling-C-32.txt`.
+- [x] 8.3 Ejecutar `npm run build` verificando compilación de producción limpia en `docs/evidencias/build-C-32.txt`.
+- [x] 8.4 Implementar y ejecutar script de mutaciones `docs/evidencias/mutaciones-C-32.py` garantizando que cada mutación sea eliminada por su test asociado (0 supervivientes, 0 inválidas) en `docs/evidencias/mutaciones-C-32.txt`.
+- [x] 8.5 Implementar y ejecutar script de trazabilidad `docs/evidencias/trazabilidad-C-32.py` certificando relación 1:1 estricta entre escenarios y tests en `docs/evidencias/trazabilidad-C-32.txt`.
+- [x] 8.6 Verificar que el diff de tests existentes (`git diff main --stat -- 'frontend/**/*.test.ts' 'frontend/**/*.test.tsx'`) refleje estrictamente las 4 líneas del cambio de requerimiento del menú en `docs/evidencias/diff-tests-existentes-C-32.txt`.
+- [x] 8.7 Consolidar informe de verificación en `docs/evidencias/verify-C-32.md`.
 
 ## 9. Capturas visuales multi-resolución a cargo de Claude
 

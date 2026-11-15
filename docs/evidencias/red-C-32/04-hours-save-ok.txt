@@ -1,0 +1,112 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/WorkingHoursSection.test.tsx (1 test | 1 failed) 1141ms
+   × WorkingHoursSection > Guardado exitoso de tramos semanales: envía PUT con los tramos en orden visual y anuncia Horario guardado. 1139ms
+     → expected null to deeply equal [ Array(1) ]
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"working-hours-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"title"[39m
+            [33mid[39m=[32m"working-hours-heading"[39m
+          [36m>[39m
+            [0mHorarios semanales[0m
+          [36m</h2>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actionsFooter"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"saveButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mGuardar horario[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</section>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/WorkingHoursSection.test.tsx > WorkingHoursSection > Guardado exitoso de tramos semanales: envía PUT con los tramos en orden visual y anuncia Horario guardado.
+AssertionError: expected null to deeply equal [ Array(1) ]
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"working-hours-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"title"[39m
+            [33mid[39m=[32m"working-hours-heading"[39m
+          [36m>[39m
+            [0mHorarios semanales[0m
+          [36m</h2>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"actionsFooter"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"saveButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mGuardar horario[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</section>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+- Expected: 
+[
+  {
+    "end": "13:00",
+    "start": "09:00",
+    "weekday": 1,
+  },
+]
+
++ Received: 
+null
+
+ ❯ src/features/horarios/WorkingHoursSection.test.tsx:39:23
+     37| 
+     38|     await waitFor(() => {
+     39|       expect(putBody).toEqual([{ weekday: 1, start: "09:00", end: "13:…
+       |                       ^
+     40|     });
+     41|     expect(screen.queryByRole("status")).toHaveTextContent("Horario gu…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:22:46
+   Duration  4.07s (transform 139ms, setup 330ms, collect 325ms, tests 1.14s, environment 1.47s, prepare 325ms)
+
+exit: 1 

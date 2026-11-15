@@ -1,0 +1,33 @@
+
+> turnos-odontologia-frontend@0.1.0 build
+> npm run typecheck && vite build
+
+
+> turnos-odontologia-frontend@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json
+
+vite v5.4.21 building for production...
+transforming...
+✓ 127 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                              0.41 kB │ gzip:   0.28 kB
+dist/assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2    8.52 kB
+dist/assets/manrope-greek-wght-normal-DL7QRZyv.woff2         9.44 kB
+dist/assets/jost-cyrillic-wght-normal-CjwCQKo9.woff2        10.14 kB
+dist/assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2     14.50 kB
+dist/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2    15.12 kB
+dist/assets/jost-latin-ext-wght-normal-BDUtSsKd.woff2       17.10 kB
+dist/assets/manrope-latin-wght-normal-DHIcAJRg.woff2        24.84 kB
+dist/assets/hero-4-instrumental-BKeEhkZB.webp               25.62 kB
+dist/assets/jost-latin-wght-normal-ObQm3Zd1.woff2           26.58 kB
+dist/assets/isotipo-aqua-DDGz4Tnj.png                       37.47 kB
+dist/assets/hero-3-dentista-DjrTII6e.webp                   64.65 kB
+dist/assets/hero-1-sala-de-espera-CrJ8hMIY.webp             72.41 kB
+dist/assets/hero-5-sillon-13gnaYe-.webp                     95.66 kB
+dist/assets/hero-2-consultorio-CnjHP-hs.webp                95.95 kB
+dist/assets/logo-aqua-claro-tLeNvrJR.png                   113.12 kB
+dist/assets/index-g8vbXRha.css                              80.91 kB │ gzip:  14.37 kB
+dist/assets/index-drsGHdve.js                              322.10 kB │ gzip: 100.11 kB
+✓ built in 2.88s
+exit: 0 

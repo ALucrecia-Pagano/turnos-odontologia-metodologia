@@ -1,0 +1,98 @@
+warning: in the working copy of 'frontend/src/features/auth/menuFor.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/shared/components/AppShell.test.tsx', LF will be replaced by CRLF the next time Git touches it
+diff --git a/frontend/src/features/auth/menuFor.test.ts b/frontend/src/features/auth/menuFor.test.ts
+index 68750d9..db23f17 100644
+--- a/frontend/src/features/auth/menuFor.test.ts
++++ b/frontend/src/features/auth/menuFor.test.ts
+@@ -19,8 +19,8 @@ describe("menuFor", () => {
+       disabled: false,
+       badge: null,
+     });
+-    expect(items.slice(1).every((item) => item.disabled === true)).toBe(true);
+-    expect(items.slice(1).every((item) => item.badge === "Próximamente")).toBe(true);
++    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? item.disabled === false && item.path === "/horarios" : item.disabled === true))).toBe(true);
++    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? item.badge === null : item.badge === "Próximamente"))).toBe(true);
+   });
+ 
+   it("menú de recepción habilita Agenda y no incluye Usuarios y roles", () => {
+@@ -35,7 +35,7 @@ describe("menuFor", () => {
+     expect(items.some((item) => item.label === "Usuarios y roles")).toBe(false);
+     expect(items[0]?.disabled).toBe(false);
+     expect(items[0]?.badge).toBeNull();
+-    expect(items.slice(1).every((item) => item.disabled && item.badge === "Próximamente")).toBe(
++    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? !item.disabled && item.badge === null : item.disabled && item.badge === "Próximamente"))).toBe(
+       true,
+     );
+   });
+@@ -52,7 +52,7 @@ describe("menuFor", () => {
+     expect(items.some((item) => item.label === "Usuarios y roles")).toBe(false);
+     expect(items[0]?.disabled).toBe(false);
+     expect(items[0]?.badge).toBeNull();
+-    expect(items.slice(1).every((item) => item.disabled && item.badge === "Próximamente")).toBe(
++    expect(items.slice(1).every((item) => (item.id === "horarios-y-bloqueos" ? !item.disabled && item.badge === null : item.disabled && item.badge === "Próximamente"))).toBe(
+       true,
+     );
+   });
+diff --git a/frontend/src/shared/components/AppShell.test.tsx b/frontend/src/shared/components/AppShell.test.tsx
+index e54051b..53a259d 100644
+--- a/frontend/src/shared/components/AppShell.test.tsx
++++ b/frontend/src/shared/components/AppShell.test.tsx
+@@ -65,10 +65,9 @@ describe("AppShell", () => {
+     expect(agendaLink).toHaveAttribute("aria-current", "page");
+ 
+     const adminButtons = within(nav).getAllByRole("button");
+-    expect(adminButtons).toHaveLength(5);
++    expect(adminButtons).toHaveLength(4);
+     expect(adminButtons.map((btn) => btn.getAttribute("data-menu-item"))).toEqual([
+       "Turnos",
+-      "Horarios y bloqueos",
+       "Catálogos",
+       "Pacientes",
+       "Usuarios y roles",
+@@ -102,7 +101,7 @@ describe("AppShell", () => {
+       within(recepcionNav)
+         .getAllByRole("button")
+         .map((btn) => btn.getAttribute("data-menu-item")),
+-    ).toEqual(["Turnos", "Horarios y bloqueos", "Catálogos", "Pacientes"]);
++    ).toEqual(["Turnos", "Catálogos", "Pacientes"]);
+ 
+     recepcionView.unmount();
+ 
+@@ -126,7 +125,7 @@ describe("AppShell", () => {
+       within(odontologoNav)
+         .getAllByRole("button")
+         .map((btn) => btn.getAttribute("data-menu-item")),
+-    ).toEqual(["Horarios y bloqueos", "Catálogos", "Pacientes"]);
++    ).toEqual(["Catálogos", "Pacientes"]);
+   });
+ 
+   it("muestra en un alerta del shell la violación de un 403 sin cerrar la sesión", async () => {
+diff --git a/frontend/src/shared/components/AppShellNavigation.test.tsx b/frontend/src/shared/components/AppShellNavigation.test.tsx
+index 0a8d94f..d5cbbbc 100644
+--- a/frontend/src/shared/components/AppShellNavigation.test.tsx
++++ b/frontend/src/shared/components/AppShellNavigation.test.tsx
+@@ -53,7 +53,7 @@ describe("AppShell navegación sin cajas", () => {
+     expect(logout?.parentElement?.parentElement).toBe(bar);
+     expect(logout?.parentElement).toHaveTextContent("Administración Demo");
+     if (nav !== null) {
+-      expect(within(nav).queryAllByRole("link")).toHaveLength(1);
++      expect(within(nav).queryAllByRole("link")).toHaveLength(2);
+     }
+ 
+     const css = readSrcFile("shared/components/AppShell.module.css");
+@@ -74,13 +74,12 @@ describe("AppShell navegación sin cajas", () => {
+       expect(screen.queryByRole("navigation", { name: "Menú principal" })).toBeInTheDocument();
+     });
+     await waitFor(() => {
+-      expect(screen.queryAllByRole("button", { name: /Próximamente/ })).toHaveLength(5);
++      expect(screen.queryAllByRole("button", { name: /Próximamente/ })).toHaveLength(4);
+     });
+     const nav = screen.getByRole("navigation", { name: "Menú principal" });
+     const buttons = within(nav).getAllByRole("button");
+     expect(buttons.map((button) => button.getAttribute("data-menu-item"))).toEqual([
+       "Turnos",
+-      "Horarios y bloqueos",
+       "Catálogos",
+       "Pacientes",
+       "Usuarios y roles",
+exit: 0 

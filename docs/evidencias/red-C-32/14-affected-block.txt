@@ -1,0 +1,180 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/AffectedAppointments.test.tsx (2 tests | 1 failed) 1552ms
+   ✓ AffectedAppointments > Turnos futuros fuera del horario al guardar tramos: muestra en role=alert fecha, hora local, paciente, profesional, StatusBadge y aviso de no cancelación 242ms
+   × AffectedAppointments > Turnos solapados al crear un bloqueo: muestra en role=alert la advertencia de turnos solapados con paciente, fecha, hora local y estado 1308ms
+     → expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"blocks-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"blocks-heading"[39m
+            [36m>[39m
+              [0mBloqueos de agenda[0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mAusencias puntuales, feriados y licencias[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"newBlockButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mNuevo bloqueo[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33maria-live[39m=[32m"polite"[39m
+          [33mclass[39m=[32m"statusBanner"[39m
+          [33mrole[39m=[32m"status"[39m
+        [36m>[39m
+          [0mBloqueo creado.[0m
+        [36m</div>[39m
+        [36m<ul[39m
+          [33mclass[39m=[32m"blocksList"[39m
+        [36m>[39m
+          [36m<li[39m
+            [33mclass[39m=[32m"blockCard"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"blockDetails"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"blockSchedule"[39m
+              [36m>[39m
+                [0m2026-05-06[0m
+                [0m · [0m
+                [0m12:00 a 16:00[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"blockReason"[39m
+              [36m>[39m
+                [0mCapacitación[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"deleteButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mEliminar bloqueo[0m
+            [36m</button>[39m
+          [36m</li>[39m
+        [36m</ul>[39m
+      [36m</section>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/AffectedAppointments.test.tsx > AffectedAppointments > Turnos solapados al crear un bloqueo: muestra en role=alert la advertencia de turnos solapados con paciente, fecha, hora local y estado
+AssertionError: expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"blocks-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"blocks-heading"[39m
+            [36m>[39m
+              [0mBloqueos de agenda[0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mAusencias puntuales, feriados y licencias[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"newBlockButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mNuevo bloqueo[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33maria-live[39m=[32m"polite"[39m
+          [33mclass[39m=[32m"statusBanner"[39m
+          [33mrole[39m=[32m"status"[39m
+        [36m>[39m
+          [0mBloqueo creado.[0m
+        [36m</div>[39m
+        [36m<ul[39m
+          [33mclass[39m=[32m"blocksList"[39m
+        [36m>[39m
+          [36m<li[39m
+            [33mclass[39m=[32m"blockCard"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"blockDetails"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"blockSchedule"[39m
+              [36m>[39m
+                [0m2026-05-06[0m
+                [0m · [0m
+                [0m12:00 a 16:00[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"blockReason"[39m
+              [36m>[39m
+                [0mCapacitación[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"deleteButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mEliminar bloqueo[0m
+            [36m</button>[39m
+          [36m</li>[39m
+        [36m</ul>[39m
+      [36m</section>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/horarios/AffectedAppointments.test.tsx:113:47
+    111| 
+    112|     await waitFor(() => {
+    113|       expect(screen.queryByRole("alert")).not.toBeNull();
+       |                                               ^
+    114|     });
+    115|     const alert = screen.getByRole("alert");
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:43:27
+   Duration  5.04s (transform 355ms, setup 354ms, collect 845ms, tests 1.55s, environment 1.53s, prepare 290ms)
+
+exit: 1 

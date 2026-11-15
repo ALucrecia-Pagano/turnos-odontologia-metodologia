@@ -1,0 +1,861 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/HorariosPage.test.tsx (3 tests | 1 failed) 1241ms
+   ✓ HorariosPage > Odontólogo accede a sus propios horarios: carga tramos y bloqueos de su professionalId sin mostrar selector de profesional 135ms
+   ✓ HorariosPage > Administrador selecciona profesional activo: lista solo activos, selecciona el primero por defecto y al cambiar actualiza datos y ?professionalId= 73ms
+   × HorariosPage > Odontólogo consulta profesional ajeno y recibe 403: muestra en role=alert el mensaje literal del backend sin controles de edición ni cerrar sesión 1032ms
+     → expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+            [33mdata-brand[39m=[32m"aqua"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33mclass[39m=[32m"brandLogo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brandText"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandName"[39m
+              [36m>[39m
+                [0mAqua[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandSubtitle"[39m
+              [36m>[39m
+                [0mClínica Odontológica[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav "[39m
+            [33mid[39m=[32m"main-menu"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"menuLink menuLinkActive"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mhref[39m=[32m"/horarios"[39m
+                [36m>[39m
+                  [0mHorarios y bloqueos[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mDra. Laura Quiroga[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m/>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"page"[39m
+              [36m>[39m
+                [36m<header[39m
+                  [33mclass[39m=[32m"header"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"titleGroup"[39m
+                  [36m>[39m
+                    [36m<h1[39m
+                      [33mclass[39m=[32m"title"[39m
+                      [33mid[39m=[32m"horarios-page-title"[39m
+                    [36m>[39m
+                      [0mHorarios y bloqueos[0m
+                    [36m</h1>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"subtitle"[39m
+                    [36m>[39m
+                      [0mGestión de horarios semanales de atención y ausencias programadas[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</header>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"grid"[39m
+                [36m>[39m
+                  [36m<section[39m
+                    [33maria-labelledby[39m=[32m"working-hours-heading"[39m
+                    [33mclass[39m=[32m"section"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"header"[39m
+                    [36m>[39m
+                      [36m<div>[39m
+                        [36m<h2[39m
+                          [33mclass[39m=[32m"title"[39m
+                          [33mid[39m=[32m"working-hours-heading"[39m
+                        [36m>[39m
+                          [0mHorarios semanales[0m
+                        [36m</h2>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"hint"[39m
+                        [36m>[39m
+                          [0mFormato HH:MM (el fin admite 24:00)[0m
+                        [36m</p>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"daysList"[39m
+                    [36m>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mLunes[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Lunes"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mMartes[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Martes"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mMiércoles[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Miércoles"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mJueves[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Jueves"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mViernes[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Viernes"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mSábado[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Sábado"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mDomingo[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Domingo"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"actionsFooter"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"saveButton"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [0mGuardar horario[0m
+                      [36m</button>[39m
+                    [36m</div>[39m
+                  [36m</section>[39m
+                  [36m<section[39m
+                    [33maria-labelledby[39m=[32m"blocks-heading"[39m
+                    [33mclass[39m=[32m"section"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"header"[39m
+                    [36m>[39m
+                      [36m<div>[39m
+                        [36m<h2[39m
+                          [33mclass[39m=[32m"title"[39m
+                          [33mid[39m=[32m"blocks-heading"[39m
+                        [36m>[39m
+                          [0mBloqueos de agenda[0m
+                        [36m</h2>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"subtitle"[39m
+                        [36m>[39m
+                          [0mAusencias puntuales, feriados y licencias[0m
+                        [36m</p>[39m
+                      [36m</div>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"newBlockButton"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [0mNuevo bloqueo[0m
+                      [36m</button>[39m
+                    [36m</div>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"emptyBlocks"[39m
+                    [36m>[39m
+                      [0mNo hay bloqueos registrados.[0m
+                    [36m</p>[39m
+                  [36m</section>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/HorariosPage.test.tsx > HorariosPage > Odontólogo consulta profesional ajeno y recibe 403: muestra en role=alert el mensaje literal del backend sin controles de edición ni cerrar sesión
+AssertionError: expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"appShell"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"topBar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"brand"[39m
+            [33mdata-brand[39m=[32m"aqua"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m""[39m
+              [33mclass[39m=[32m"brandLogo"[39m
+              [33msrc[39m=[32m"/src/assets/brand/isotipo-aqua.png"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"brandText"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandName"[39m
+              [36m>[39m
+                [0mAqua[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brandSubtitle"[39m
+              [36m>[39m
+                [0mClínica Odontológica[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Menú principal"[39m
+            [33mclass[39m=[32m"nav "[39m
+            [33mid[39m=[32m"main-menu"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"menuList"[39m
+            [36m>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"menuLink"[39m
+                  [33mdata-menu-item[39m=[32m"Agenda"[39m
+                  [33mhref[39m=[32m"/agenda"[39m
+                [36m>[39m
+                  [0mAgenda[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<a[39m
+                  [33maria-current[39m=[32m"page"[39m
+                  [33mclass[39m=[32m"menuLink menuLinkActive"[39m
+                  [33mdata-menu-item[39m=[32m"Horarios y bloqueos"[39m
+                  [33mhref[39m=[32m"/horarios"[39m
+                [36m>[39m
+                  [0mHorarios y bloqueos[0m
+                [36m</a>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Catálogos"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mCatálogos[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+              [36m<li>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"menuButton"[39m
+                  [33mdata-menu-item[39m=[32m"Pacientes"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mPacientes[0m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"badge"[39m
+                  [36m>[39m
+                    [0mPróximamente[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+          [36m</nav>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"sessionControls"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"userName"[39m
+            [36m>[39m
+              [0mDra. Laura Quiroga[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"logoutButton"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mCerrar sesión[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"content"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shell"[39m
+          [36m>[39m
+            [36m<header[39m
+              [33mclass[39m=[32m"header"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"brand"[39m
+              [36m/>[39m
+            [36m</header>[39m
+            [36m<main[39m
+              [33mclass[39m=[32m"main"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"page"[39m
+              [36m>[39m
+                [36m<header[39m
+                  [33mclass[39m=[32m"header"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"titleGroup"[39m
+                  [36m>[39m
+                    [36m<h1[39m
+                      [33mclass[39m=[32m"title"[39m
+                      [33mid[39m=[32m"horarios-page-title"[39m
+                    [36m>[39m
+                      [0mHorarios y bloqueos[0m
+                    [36m</h1>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"subtitle"[39m
+                    [36m>[39m
+                      [0mGestión de horarios semanales de atención y ausencias programadas[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</header>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"grid"[39m
+                [36m>[39m
+                  [36m<section[39m
+                    [33maria-labelledby[39m=[32m"working-hours-heading"[39m
+                    [33mclass[39m=[32m"section"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"header"[39m
+                    [36m>[39m
+                      [36m<div>[39m
+                        [36m<h2[39m
+                          [33mclass[39m=[32m"title"[39m
+                          [33mid[39m=[32m"working-hours-heading"[39m
+                        [36m>[39m
+                          [0mHorarios semanales[0m
+                        [36m</h2>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"hint"[39m
+                        [36m>[39m
+                          [0mFormato HH:MM (el fin admite 24:00)[0m
+                        [36m</p>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"daysList"[39m
+                    [36m>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mLunes[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Lunes"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mMartes[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Martes"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mMiércoles[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Miércoles"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mJueves[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Jueves"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mViernes[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Viernes"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mSábado[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Sábado"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                      [36m<fieldset[39m
+                        [33mclass[39m=[32m"dayFieldset"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"dayHeader"[39m
+                        [36m>[39m
+                          [36m<legend[39m
+                            [33mclass[39m=[32m"dayLegend"[39m
+                          [36m>[39m
+                            [0mDomingo[0m
+                          [36m</legend>[39m
+                          [36m<button[39m
+                            [33maria-label[39m=[32m"Agregar tramo Domingo"[39m
+                            [33mclass[39m=[32m"addButton"[39m
+                            [33mtype[39m=[32m"button"[39m
+                          [36m>[39m
+                            [0mAgregar tramo[0m
+                          [36m</button>[39m
+                        [36m</div>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"emptyDay"[39m
+                        [36m>[39m
+                          [0mSin atención configurada[0m
+                        [36m</p>[39m
+                      [36m</fieldset>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"actionsFooter"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"saveButton"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [0mGuardar horario[0m
+                      [36m</button>[39m
+                    [36m</div>[39m
+                  [36m</section>[39m
+                  [36m<section[39m
+                    [33maria-labelledby[39m=[32m"blocks-heading"[39m
+                    [33mclass[39m=[32m"section"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"header"[39m
+                    [36m>[39m
+                      [36m<div>[39m
+                        [36m<h2[39m
+                          [33mclass[39m=[32m"title"[39m
+                          [33mid[39m=[32m"blocks-heading"[39m
+                        [36m>[39m
+                          [0mBloqueos de agenda[0m
+                        [36m</h2>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"subtitle"[39m
+                        [36m>[39m
+                          [0mAusencias puntuales, feriados y licencias[0m
+                        [36m</p>[39m
+                      [36m</div>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"newBlockButton"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [0mNuevo bloqueo[0m
+                      [36m</button>[39m
+                    [36m</div>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"emptyBlocks"[39m
+                    [36m>[39m
+                      [0mNo hay bloqueos registrados.[0m
+                    [36m</p>[39m
+                  [36m</section>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</main>[39m
+            [36m<footer[39m
+              [33mclass[39m=[32m"footer"[39m
+            [36m>[39m
+              [0mConsultorio odontológico · agenda de turnos[0m
+            [36m</footer>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/horarios/HorariosPage.test.tsx:319:47
+    317| 
+    318|     await waitFor(() => {
+    319|       expect(screen.queryByRole("alert")).not.toBeNull();
+       |                                               ^
+    320|     });
+    321| 
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  01:15:14
+   Duration  5.55s (transform 610ms, setup 382ms, collect 1.52s, tests 1.24s, environment 1.66s, prepare 326ms)
+
+exit: 1 

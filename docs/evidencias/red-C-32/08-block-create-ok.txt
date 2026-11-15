@@ -1,0 +1,28 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/BlocksSection.test.tsx (1 test | 1 failed) 176ms
+   × BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado. 174ms
+     → expected null not to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/BlocksSection.test.tsx > BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.
+AssertionError: expected null not to be null
+ ❯ src/features/horarios/BlocksSection.test.tsx:46:46
+     44| 
+     45|     await user.click(screen.getByRole("button", { name: "Nuevo bloqueo…
+     46|     expect(screen.queryByRole("dialog")).not.toBeNull();
+       |                                              ^
+     47| 
+     48|     await user.type(screen.getByLabelText("Hora de inicio"), "14:00");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:31:43
+   Duration  3.48s (transform 229ms, setup 405ms, collect 540ms, tests 176ms, environment 1.60s, prepare 339ms)
+
+exit: 1 

@@ -1,0 +1,338 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/BlocksSection.test.tsx (4 tests | 1 failed) 2406ms
+   ✓ BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.  784ms
+   ✓ BlocksSection > Eliminación de bloqueo con confirmación in-dialog: exige confirmación antes de enviar DELETE y anuncia Bloqueo eliminado. 110ms
+   ✓ BlocksSection > Cancelación del borrado con Escape: cierra el diálogo al pulsar Escape o Volver sin enviar DELETE y restaura el foco 217ms
+   × BlocksSection > Bloqueo inválido muestra mensaje literal del backend: mantiene el diálogo abierto y muestra role=alert literal ante error 422 1293ms
+     → expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"blocks-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"blocks-heading"[39m
+            [36m>[39m
+              [0mBloqueos de agenda[0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mAusencias puntuales, feriados y licencias[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"newBlockButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mNuevo bloqueo[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"emptyBlocks"[39m
+        [36m>[39m
+          [0mNo hay bloqueos registrados.[0m
+        [36m</p>[39m
+        [36m<dialog[39m
+          [33maria-labelledby[39m=[32m"block-form-dialog-title"[39m
+          [33maria-modal[39m=[32m"true"[39m
+          [33mclass[39m=[32m"dialog "[39m
+          [33mopen[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"modalContent"[39m
+            [33mdata-modal-card[39m=[32m"block-form"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"block-form-dialog-title"[39m
+            [36m>[39m
+              [0mNuevo bloqueo[0m
+            [36m</h2>[39m
+            [36m<form[39m
+              [33mclass[39m=[32m"form"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"block-date"[39m
+                [36m>[39m
+                  [0mFecha[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"block-date"[39m
+                  [33mtype[39m=[32m"date"[39m
+                  [33mvalue[39m=[32m"2026-05-06"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"gridTwoCols"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"field"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"label"[39m
+                    [33mfor[39m=[32m"block-start-time"[39m
+                  [36m>[39m
+                    [0mHora de inicio[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"input"[39m
+                    [33mid[39m=[32m"block-start-time"[39m
+                    [33minputmode[39m=[32m"numeric"[39m
+                    [33mplaceholder[39m=[32m"HH:MM"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"16:00"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"field"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"label"[39m
+                    [33mfor[39m=[32m"block-end-time"[39m
+                  [36m>[39m
+                    [0mHora de fin[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"input"[39m
+                    [33mid[39m=[32m"block-end-time"[39m
+                    [33minputmode[39m=[32m"numeric"[39m
+                    [33mplaceholder[39m=[32m"HH:MM"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"14:00"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"block-reason"[39m
+                [36m>[39m
+                  [0mMotivo (opcional)[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"block-reason"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actionsRow"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"secondaryButton"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mCancelar[0m
+                [36m</button>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"primaryButton"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [0mGuardar bloqueo[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+        [36m</dialog>[39m
+      [36m</section>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/BlocksSection.test.tsx > BlocksSection > Bloqueo inválido muestra mensaje literal del backend: mantiene el diálogo abierto y muestra role=alert literal ante error 422
+AssertionError: expected null not to be null
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"blocks-heading"[39m
+        [33mclass[39m=[32m"section"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"blocks-heading"[39m
+            [36m>[39m
+              [0mBloqueos de agenda[0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mAusencias puntuales, feriados y licencias[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"newBlockButton"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mNuevo bloqueo[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"emptyBlocks"[39m
+        [36m>[39m
+          [0mNo hay bloqueos registrados.[0m
+        [36m</p>[39m
+        [36m<dialog[39m
+          [33maria-labelledby[39m=[32m"block-form-dialog-title"[39m
+          [33maria-modal[39m=[32m"true"[39m
+          [33mclass[39m=[32m"dialog "[39m
+          [33mopen[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"modalContent"[39m
+            [33mdata-modal-card[39m=[32m"block-form"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"title"[39m
+              [33mid[39m=[32m"block-form-dialog-title"[39m
+            [36m>[39m
+              [0mNuevo bloqueo[0m
+            [36m</h2>[39m
+            [36m<form[39m
+              [33mclass[39m=[32m"form"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"block-date"[39m
+                [36m>[39m
+                  [0mFecha[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"block-date"[39m
+                  [33mtype[39m=[32m"date"[39m
+                  [33mvalue[39m=[32m"2026-05-06"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"gridTwoCols"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"field"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"label"[39m
+                    [33mfor[39m=[32m"block-start-time"[39m
+                  [36m>[39m
+                    [0mHora de inicio[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"input"[39m
+                    [33mid[39m=[32m"block-start-time"[39m
+                    [33minputmode[39m=[32m"numeric"[39m
+                    [33mplaceholder[39m=[32m"HH:MM"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"16:00"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"field"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"label"[39m
+                    [33mfor[39m=[32m"block-end-time"[39m
+                  [36m>[39m
+                    [0mHora de fin[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"input"[39m
+                    [33mid[39m=[32m"block-end-time"[39m
+                    [33minputmode[39m=[32m"numeric"[39m
+                    [33mplaceholder[39m=[32m"HH:MM"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"14:00"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"field"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"label"[39m
+                  [33mfor[39m=[32m"block-reason"[39m
+                [36m>[39m
+                  [0mMotivo (opcional)[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mclass[39m=[32m"input"[39m
+                  [33mid[39m=[32m"block-reason"[39m
+                  [33mtype[39m=[32m"text"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"actionsRow"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"secondaryButton"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mCancelar[0m
+                [36m</button>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"primaryButton"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [0mGuardar bloqueo[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+        [36m</dialog>[39m
+      [36m</section>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/horarios/BlocksSection.test.tsx:196:47
+    194| 
+    195|     await waitFor(() => {
+    196|       expect(screen.queryByRole("alert")).not.toBeNull();
+       |                                               ^
+    197|     });
+    198|     expect(screen.getByRole("alert")).toHaveTextContent(
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  00:37:45
+   Duration  5.71s (transform 259ms, setup 368ms, collect 622ms, tests 2.41s, environment 1.59s, prepare 306ms)
+
+exit: 1 

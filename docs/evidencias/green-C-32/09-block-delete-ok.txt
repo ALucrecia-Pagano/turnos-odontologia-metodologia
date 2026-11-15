@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/horarios/BlocksSection.test.tsx (2 tests) 868ms
+   ✓ BlocksSection > Creación exitosa de bloqueo con offset: convierte fecha y hora local a ISO con offset, cierra el diálogo y anuncia Bloqueo creado.  767ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  00:34:51
+   Duration  4.66s (transform 302ms, setup 396ms, collect 725ms, tests 868ms, environment 1.89s, prepare 308ms)
+
+exit: 0 

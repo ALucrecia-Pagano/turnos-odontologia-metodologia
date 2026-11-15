@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ✓ src/features/horarios/HorariosPage.test.tsx (3 tests) 448ms
+   ✓ HorariosPage > Odontólogo accede a sus propios horarios: carga tramos y bloqueos de su professionalId sin mostrar selector de profesional  319ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  01:19:23
+   Duration  5.90s (transform 943ms, setup 492ms, collect 2.11s, tests 448ms, environment 2.09s, prepare 299ms)
+
+exit: 0 

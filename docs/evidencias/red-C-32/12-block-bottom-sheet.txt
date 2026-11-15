@@ -1,0 +1,38 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/BlockFormDialog.mobile.test.tsx (1 test | 1 failed) 107ms
+   × BlockFormDialog — Móvil (≤ 640 px) > Presentación de modal como hoja inferior en móvil: aplica clase y atributos de hoja inferior a ≤ 640 px ocupando el 100% del ancho útil 106ms
+     → expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"
+
+Expected the element to have attribute:
+  data-mobile-sheet="true"
+Received:
+  null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/BlockFormDialog.mobile.test.tsx > BlockFormDialog — Móvil (≤ 640 px) > Presentación de modal como hoja inferior en móvil: aplica clase y atributos de hoja inferior a ≤ 640 px ocupando el 100% del ancho útil
+Error: expect(element).toHaveAttribute("data-mobile-sheet", "true") // element.getAttribute("data-mobile-sheet") === "true"
+
+Expected the element to have attribute:
+  data-mobile-sheet="true"
+Received:
+  null
+ ❯ src/features/horarios/BlockFormDialog.mobile.test.tsx:29:20
+     27| 
+     28|     const dialog = screen.getByRole("dialog");
+     29|     expect(dialog).toHaveAttribute("data-mobile-sheet", "true");
+       |                    ^
+     30|     expect(dialog.className).toContain("dialogBottomSheet");
+     31| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:39:30
+   Duration  3.30s (transform 282ms, setup 357ms, collect 523ms, tests 107ms, environment 1.59s, prepare 308ms)
+
+exit: 1 

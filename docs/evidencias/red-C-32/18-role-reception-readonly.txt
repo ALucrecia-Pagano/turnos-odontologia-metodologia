@@ -1,0 +1,38 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/HorariosPage.test.tsx (4 tests | 1 failed) 335ms
+   ✓ HorariosPage > Odontólogo accede a sus propios horarios: carga tramos y bloqueos de su professionalId sin mostrar selector de profesional 162ms
+   ✓ HorariosPage > Administrador selecciona profesional activo: lista solo activos, selecciona el primero por defecto y al cambiar actualiza datos y ?professionalId= 83ms
+   ✓ HorariosPage > Odontólogo consulta profesional ajeno y recibe 403: muestra en role=alert el mensaje literal del backend sin controles de edición ni cerrar sesión 25ms
+   × HorariosPage > Recepción visualiza información completa sin controles de edición: muestra selector, tramos y bloqueos pero oculta Agregar tramo, Quitar, Guardar horario, Nuevo bloqueo y Eliminar bloqueo 63ms
+     → expected [ <button …(3)></button>, …(6) ] to have a length of +0 but got 7
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/HorariosPage.test.tsx > HorariosPage > Recepción visualiza información completa sin controles de edición: muestra selector, tramos y bloqueos pero oculta Agregar tramo, Quitar, Guardar horario, Nuevo bloqueo y Eliminar bloqueo
+AssertionError: expected [ <button …(3)></button>, …(6) ] to have a length of +0 but got 7
+
+- Expected
++ Received
+
+- 0
++ 7
+
+ ❯ src/features/horarios/HorariosPage.test.tsx:424:73
+    422|     expect(screen.queryByLabelText("Profesional")).not.toBeNull();
+    423|     expect(screen.getByText("Reunión clínica")).not.toBeNull();
+    424|     expect(screen.queryAllByRole("button", { name: /Agregar tramo/i })…
+       |                                                                         ^
+    425|     expect(screen.queryAllByRole("button", { name: /Quitar/i })).toHav…
+    426|     expect(screen.queryByRole("button", { name: "Guardar horario" })).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  01:20:58
+   Duration  4.86s (transform 634ms, setup 421ms, collect 1.56s, tests 335ms, environment 1.83s, prepare 301ms)
+
+exit: 1 

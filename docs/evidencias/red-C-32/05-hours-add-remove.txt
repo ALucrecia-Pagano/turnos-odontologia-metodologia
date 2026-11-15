@@ -1,0 +1,29 @@
+
+ RUN  v3.2.7 C:/Users/hp/METODOLOGIA_TPS/turnos-odontologia/frontend
+
+ ❯ src/features/horarios/WorkingHoursSection.test.tsx (2 tests | 1 failed) 240ms
+   ✓ WorkingHoursSection > Guardado exitoso de tramos semanales: envía PUT con los tramos en orden visual y anuncia Horario guardado. 156ms
+   × WorkingHoursSection > Edición interactiva de tramos en la interfaz: agrega una fila editable para el día martes y la quita al pulsar Quitar 82ms
+     → expected null not to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/horarios/WorkingHoursSection.test.tsx > WorkingHoursSection > Edición interactiva de tramos en la interfaz: agrega una fila editable para el día martes y la quita al pulsar Quitar
+AssertionError: expected null not to be null
+ ❯ src/features/horarios/WorkingHoursSection.test.tsx:62:66
+     60|     await user.click(screen.getByRole("button", { name: "Agregar tramo…
+     61| 
+     62|     expect(screen.queryByLabelText("Inicio Martes tramo 1")).not.toBeN…
+       |                                                                  ^
+     63|     expect(screen.queryByLabelText("Fin Martes tramo 1")).not.toBeNull…
+     64| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:24:24
+   Duration  3.64s (transform 226ms, setup 411ms, collect 591ms, tests 240ms, environment 1.66s, prepare 288ms)
+
+exit: 1 
