@@ -1,0 +1,15 @@
+$ pytest -q
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+895 passed, 524 deselected, 2 warnings in 26.54s
+exit: 0
+
+$ pytest -q -m integration
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+524 passed, 895 deselected, 1 warning in 159.12s (0:02:39)
+exit: 0
+
+$ mypy
+Success: no issues found in 184 source files
+exit: 0

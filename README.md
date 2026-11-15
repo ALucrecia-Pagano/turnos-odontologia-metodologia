@@ -176,16 +176,30 @@ cd turnos-odontologia-metodologia
 
 ### 3. Variables de entorno
 
-Copiá `.env.example` a `.env` y cambiá los tres placeholders por valores locales propios (sin subir los valores reales al repositorio):
-
 ```bash
 cp .env.example .env
 ```
 
-Los tres placeholders a cambiar son:
-- `cambiar-por-una-clave-local` (en `POSTGRES_PASSWORD` y en `DATABASE_URL`).
-- `cambiar-por-una-cadena-larga-y-aleatoria` (en `JWT_SECRET`).
-- `cambiar-por-una-clave-de-demo` (en `SEED_USER_PASSWORD`).
+Completá `.env` con estos valores de ejemplo (los tres marcados como secreto los elegís vos y no se suben al repo):
+
+| Variable | Valor de ejemplo | Nota |
+|---|---|---|
+| APP_ENV | development | |
+| API_PORT | 8000 | |
+| POSTGRES_USER | turnos | |
+| POSTGRES_PASSWORD | (elegí una clave local) | secreto |
+| POSTGRES_DB | turnos | |
+| DATABASE_URL | postgresql+psycopg://turnos:<POSTGRES_PASSWORD>@localhost:5432/turnos | usa la misma clave |
+| REDIS_URL | redis://localhost:6379/0 | |
+| JWT_SECRET | (cadena aleatoria de 32 caracteres o más) | secreto; mínimo 32 caracteres |
+| JWT_ALGORITHM | HS256 | |
+| JWT_EXPIRES_MIN | 60 | |
+| SEED_USER_PASSWORD | (elegí una clave de demo) | secreto; es la contraseña de los usuarios de prueba |
+| APP_TIMEZONE | America/Argentina/Buenos_Aires | |
+| CORS_ORIGIN | http://localhost:5173 | |
+| VITE_API_URL | http://localhost:8000/api | |
+
+Por qué `.env.example` no trae valores: lo exige la spec database-infrastructure (C-13) y lo controla `backend/tests/test_config.py`.
 
 ### 4. Levantar servicios en Docker
 
