@@ -68,6 +68,8 @@ de un comando. Solo se define en el entorno de la máquina.
 ### Evidencias de uso
 
 - **C-31**: aplicación de la skill `appointment-frontend-ux` (tokens, accesibilidad, huecos libres y regla C1) en [docs/skills-mcp/evidencias/C-31-skill-appointment-frontend-ux.md](docs/skills-mcp/evidencias/C-31-skill-appointment-frontend-ux.md).
+- **C-32**: consultas a Context7 (React Router v6 useSearchParams y createMemoryRouter) y aplicación de la skill `appointment-frontend-ux` (tokens, accesibilidad, zona horaria y regla C1) en [docs/skills-mcp/evidencias/C-32-skill-mcp.md](docs/skills-mcp/evidencias/C-32-skill-mcp.md).
+- **C-33**: aplicación de la skill `appointment-frontend-ux` (tokens claros, accesibilidad con texto visible, confinamiento del token y regla C1; sin consultas nuevas a Context7 por APIs ya existentes) en [docs/skills-mcp/evidencias/C-33-skill-mcp.md](docs/skills-mcp/evidencias/C-33-skill-mcp.md).
 - **C-35**: consultas a Context7 (React Router v6 y CSS) en [docs/skills-mcp/evidencias/C-35-mcp-context7.md](docs/skills-mcp/evidencias/C-35-mcp-context7.md) y aplicación de la skill `appointment-frontend-ux` (tokens, accesibilidad y regla C1) en [docs/skills-mcp/evidencias/C-35-skill-appointment-frontend-ux.md](docs/skills-mcp/evidencias/C-35-skill-appointment-frontend-ux.md).
 - **C-36**: consultas a Context7 (CSS Container Queries, Scroll Snap y altura dinámica) en [docs/skills-mcp/evidencias/C-36-context7.md](docs/skills-mcp/evidencias/C-36-context7.md) y aplicación de la skill `appointment-frontend-ux` (tokens, accesibilidad móvil, regla C1 y verificación visual multi-resolución).
 
@@ -132,93 +134,161 @@ de un comando. Solo se define en el entorno de la máquina.
 | C-32 | Pantalla de horarios semanales y bloqueos por profesional, con turnos afectados |
 | C-33 | Pantallas de catálogos —profesionales, sillones y prestaciones— y pacientes, con alta, edición y desactivación según rol |
 
-## Requisitos
+
+## Alcance: completo y fuera de alcance
+
+### Completo
+
+- **Dominio**: 12 changes (C-01 a C-12) en Python puro sin I/O ni reloj del sistema; solapamientos por profesional y sillón, duración, grilla de 5 min, horarios, bloqueos, fecha en pasado con reloj inyectado, catálogos, estados, reprogramación e historial inmutable.
+- **Infraestructura y persistencia**: 5 changes (C-13 a C-17) con Docker Compose (PostgreSQL 16 y Redis 7), migraciones Alembic reversibles y persistencia de catálogos, horarios, bloqueos, turnos e historial protegido por triggers.
+- **API REST**: 7 changes (C-18 a C-24) con FastAPI, Pydantic, autenticación JWT con Argon2id, RBAC por rol, endpoints de catálogos, horarios, bloqueos, turnos, ciclo de vida y agenda con filtros.
+- **Frontend**: 12 changes (C-25 a C-36) en React 18, TypeScript strict y Vite; tokens de diseño Aqua, login translúcido, agenda diaria, semanal y por sillón con huecos libres, alta de turnos, reprogramación, cancelación, portada pública, adaptación móvil completa, horarios y bloqueos con turnos afectados, y catálogos y pacientes.
+- **Mantenimiento**: Change `specs-requisitos-concisos` para concisión y trazabilidad de las especificaciones vigentes.
+
+### Fuera del alcance de este TPI
+
+Las siguientes funcionalidades no forman parte del alcance de este TPI (no son changes pendientes):
+- Opciones de menú "Turnos" y "Usuarios y roles", que se muestran deliberadamente como "Próximamente" en la navegación.
+- Desactivar pacientes (el dominio y la API no disponen de endpoint para desactivación o baja de pacientes).
+- Deploy público (el proyecto está configurado para entorno local y desarrollo con Docker Compose).
+
+### Limitaciones conocidas
+
+- `Logout.test.tsx` (C-26) es intermitente en Linux y estable en Windows.
+
+## Inicio rápido
+
+### 1. Requisitos
 
 - Git
 - Python 3.12 o superior
+- Node.js 20 o superior
+- Docker Desktop
 
-## Puesta en marcha
+> **Nota sobre PostgreSQL local**: Si tenés un servicio PostgreSQL instalado y ejecutándose en el sistema operativo, detenelo antes de iniciar Docker Compose, ya que ambos compiten por el puerto `5432`.
 
-Los comandos usan el Python del entorno virtual directamente, así que no hace
-falta activarlo. Si `python` no apunta a 3.12 o superior, usá `py -3.12` (o la
-versión que tengas instalada) para crear el entorno.
-
-### Git Bash
+### 2. Clonar
 
 ```bash
 git clone https://github.com/ALucrecia-Pagano/turnos-odontologia-metodologia.git
-cd turnos-odontologia-metodologia/backend
-python -m venv .venv
-.venv/Scripts/python -m pip install -e ".[dev]"
-.venv/Scripts/python -m pytest
-.venv/Scripts/python -m mypy
+cd turnos-odontologia-metodologia
 ```
 
-### Base de datos local
+### 3. Variables de entorno
 
-Desde la raíz, copiá `.env.example` a `.env` y completalo con valores
-ficticios:
+Copiá `.env.example` a `.env` y cambiá los tres placeholders por valores locales propios (sin subir los valores reales al repositorio):
 
 ```bash
 cp .env.example .env
-docker compose up -d postgres redis
+```
+
+Los tres placeholders a cambiar son:
+- `cambiar-por-una-clave-local` (en `POSTGRES_PASSWORD` y en `DATABASE_URL`).
+- `cambiar-por-una-cadena-larga-y-aleatoria` (en `JWT_SECRET`).
+- `cambiar-por-una-clave-de-demo` (en `SEED_USER_PASSWORD`).
+
+### 4. Levantar servicios en Docker
+
+Desde la raíz:
+
+```bash
+docker compose up -d postgres redis backend
 docker compose ps
 ```
 
-Desde `backend/`, ejecutá los tests de integración:
+### 5. Backend en venv
+
+Crear venv, instalar dependencias, aplicar migraciones Alembic y ejecutar el seed de usuarios y catálogos:
+
+#### Git Bash (Windows)
 
 ```bash
-.venv/Scripts/python -m pytest -m integration
+cd backend
+python -m venv .venv
+.venv/Scripts/python -m pip install -e ".[dev]"
 .venv/Scripts/python -m alembic upgrade head
-.venv/Scripts/python -m alembic current
-python -m app.db.seed
+.venv/Scripts/python -m app.db.seed
 ```
 
-Las migraciones llegan hasta `20261105_05_historial_sin_truncate`.
-
-Al terminar, desde la raíz:
-
-```bash
-docker compose down
-```
-
-Si hay un PostgreSQL instalado en Windows, detenelo antes de levantar el
-compose: los dos usan el puerto 5432.
-
-### Levantar la API
-
-Con `.env` completo, desde la raíz:
-
-```bash
-docker compose up --build
-```
-
-`<API_PORT>` es el valor definido en `.env`:
-
-- Swagger: `http://localhost:<API_PORT>/api/docs`
-- Salud: `GET http://localhost:<API_PORT>/api/health`
-- Frontend: `http://localhost:5173`
-
-### PowerShell
+#### Variante PowerShell (Windows)
 
 ```powershell
-git clone https://github.com/ALucrecia-Pagano/turnos-odontologia-metodologia.git
-cd turnos-odontologia-metodologia\backend
+cd backend
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -e ".[dev]"
-.\.venv\Scripts\python -m pytest
-.\.venv\Scripts\python -m mypy
+.\.venv\Scripts\python -m alembic upgrade head
+.\.venv\Scripts\python -m app.db.seed
 ```
-### Linux / macOS
+
+#### Variante Linux / macOS
 
 ```bash
-git clone https://github.com/ALucrecia-Pagano/turnos-odontologia-metodologia.git
-cd turnos-odontologia-metodologia/backend
+cd backend
 python3 -m venv .venv
 .venv/bin/python -m pip install -e ".[dev]"
-.venv/bin/python -m pytest
-.venv/bin/python -m mypy
+.venv/bin/python -m alembic upgrade head
+.venv/bin/python -m app.db.seed
 ```
+
+### 6. Frontend local
+
+Desde la raíz, o abriendo otra terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+> **Aclaración**: Se recomienda ejecutar el frontend de forma local con `npm run dev` (aprovechando Vite y HMR nativo en el host) y no utilizar el contenedor `frontend` de Docker Compose.
+
+### 7. URLs
+
+- Aplicación web: [http://localhost:5173](http://localhost:5173)
+- Documentación Swagger de la API: [http://localhost:8000/api/docs](http://localhost:8000/api/docs)
+- Chequeo de salud: [http://localhost:8000/api/health](http://localhost:8000/api/health)
+
+### 8. Tests
+
+Totales actuales verificados: **895 de unidad**, **524 de integración** y **353 de frontend**.
+
+#### Backend (desde `backend/`, usando el python del venv)
+
+- **Unidad**: `pytest` (895 tests unitarios verificados).
+  - Git Bash / Linux / macOS: `.venv/Scripts/python -m pytest` (o `.venv/bin/python -m pytest`)
+  - PowerShell: `.\.venv\Scripts\python -m pytest`
+- **Integración**: `pytest -m integration` (524 tests de integración verificados; requiere servicios `postgres` y `redis` levantados).
+  - Git Bash / Linux / macOS: `.venv/Scripts/python -m pytest -m integration` (o `.venv/bin/python -m pytest -m integration`)
+  - PowerShell: `.\.venv\Scripts\python -m pytest -m integration`
+- **Tipos**: `mypy`.
+  - Git Bash / Linux / macOS: `.venv/Scripts/python -m mypy` (o `.venv/bin/python -m mypy`)
+  - PowerShell: `.\.venv\Scripts\python -m mypy`
+
+#### Frontend (desde `frontend/`)
+
+- **Tests unitarios y de componentes**:
+  ```bash
+  npm run test:run
+  ```
+  *(353 tests de frontend verificados en 93 archivos)*
+- **Tipos**:
+  ```bash
+  npm run typecheck
+  ```
+- **Build**:
+  ```bash
+  npm run build
+  ```
+
+### 9. Apagar
+
+- Detener frontend: `Ctrl+C` en la terminal de `npm run dev`.
+- Detener servicios de Docker: desde la raíz, ejecutar:
+  ```bash
+  docker compose stop
+  ```
+
+> ⚠️ **Advertencia**: `docker compose down -v` borra el volumen persistente y toda la base de datos (`turnos_pgdata`). Para apagar sin perder datos, utilizá `docker compose stop` o `docker compose down` sin la opción `-v`.
 
 Para ver los detalles del backend (módulos del dominio, un ejemplo de uso y
 cómo funciona la guardia de dependencias), leé
@@ -241,9 +311,15 @@ está en el repositorio.
 
 | Recurso | Ubicación | Crédito y licencia |
 |---|---|---|
-| Fotografías `hero-1-sala-de-espera.webp`, `hero-2-consultorio.webp`, `hero-3-dentista.webp`, `hero-4-instrumental.webp` y `hero-5-sillon.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Material de demostración provisto para este TP. No se identifican autores porque no se dispone de ese dato. |
+| Fotografía `hero-1-sala-de-espera.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Foto de Bipin Kumar Pal en Unsplash. |
+| Fotografía `hero-2-consultorio.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Foto de D Dental Office en Unsplash. |
+| Fotografía `hero-3-dentista.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Foto de Ozkan Guner en Unsplash. |
+| Fotografía `hero-4-instrumental.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Foto de Pavel Danilyuk en Pexels. |
+| Fotografía `hero-5-sillon.webp` | [frontend/src/assets/images/](frontend/src/assets/images/) | Foto de Ozkan Guner en Unsplash. |
 | Logo de Aqua (`logo-aqua-claro.png`, `logo-aqua-oscuro.png`, `isotipo-aqua.png` e `isotipo-aqua-claro.png`) | [frontend/src/assets/brand/](frontend/src/assets/brand/) | Provisto por la autora del TP. |
 | Tipografías Jost y Manrope | Paquetes `@fontsource-variable/jost` y `@fontsource-variable/manrope` | SIL Open Font License 1.1, distribuidas por Fontsource. |
+
+Las fotos de Unsplash se usan bajo la Licencia Unsplash (https://unsplash.com/license) y la de Pexels bajo la Licencia Pexels (https://www.pexels.com/license/). Ambas permiten el uso gratuito; la atribución es una cortesía.
 
 ## Dónde está cada entregable
 
@@ -256,6 +332,7 @@ está en el repositorio.
 | Instrucciones para agentes | [AGENTS.md](AGENTS.md) y [CLAUDE.md](CLAUDE.md) |
 | Skill registry | [.atl/skill-registry.md](.atl/skill-registry.md) |
 | Specs vigentes | [openspec/specs/](openspec/specs/) |
+| Change archivado de C-01 | [openspec/changes/archive/2026-10-08-fundacion-backend-y-dominio/](openspec/changes/archive/2026-10-08-fundacion-backend-y-dominio/) |
 | Change archivado de C-02 | [openspec/changes/archive/2026-10-08-crear-turno-sin-solapamientos/](openspec/changes/archive/2026-10-08-crear-turno-sin-solapamientos/) |
 | Change archivado de C-03 | [openspec/changes/archive/2026-10-22-validar-duracion-y-referencias/](openspec/changes/archive/2026-10-22-validar-duracion-y-referencias/) |
 | Change archivado de C-04 | [openspec/changes/archive/2026-10-23-hora-local-y-turno-en-un-dia/](openspec/changes/archive/2026-10-23-hora-local-y-turno-en-un-dia/) |
@@ -286,9 +363,12 @@ está en el repositorio.
 | Change archivado de C-28 | [openspec/changes/archive/2026-11-08-ui-agenda-semanal/](openspec/changes/archive/2026-11-08-ui-agenda-semanal/) |
 | Change archivado de C-29 | [openspec/changes/archive/2026-11-13-ui-dar-turno-con-errores/](openspec/changes/archive/2026-11-13-ui-dar-turno-con-errores/) |
 | Change archivado de C-30 | [openspec/changes/archive/2026-11-13-ui-reprogramar-cancelar-y-estados/](openspec/changes/archive/2026-11-13-ui-reprogramar-cancelar-y-estados/) |
+| Change archivado de C-31 | [openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/](openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/) |
+| Change archivado de C-32 | [openspec/changes/archive/2026-11-15-ui-horarios-y-bloqueos/](openspec/changes/archive/2026-11-15-ui-horarios-y-bloqueos/) |
+| Change archivado de C-33 | [openspec/changes/archive/2026-11-15-ui-catalogos-y-pacientes/](openspec/changes/archive/2026-11-15-ui-catalogos-y-pacientes/) |
+| Change archivado de C-34 | [openspec/changes/archive/2026-11-09-ui-identidad-visual/](openspec/changes/archive/2026-11-09-ui-identidad-visual/) |
 | Change archivado de C-35 | [openspec/changes/archive/2026-11-13-ui-portada-y-acceso/](openspec/changes/archive/2026-11-13-ui-portada-y-acceso/) |
 | Change archivado de C-36 | [openspec/changes/archive/2026-11-14-ui-tema-oscuro-y-movil/](openspec/changes/archive/2026-11-14-ui-tema-oscuro-y-movil/) |
-| Change archivado de C-31 | [openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/](openspec/changes/archive/2026-11-14-ui-vista-de-recepcion-por-sillon/) |
 | Implementación (equivale a `src/`) | [backend/app/domain/](backend/app/domain/) |
 | Tests (equivale a `tests/`) | [backend/tests/](backend/tests/) |
 | Evidencias (verify de C-02, explore, skills y capturas) | [docs/evidencias/](docs/evidencias/) |
@@ -321,9 +401,11 @@ está en el repositorio.
 | Evidencias de C-28 (explore, verify, baseline, tsc, eslint, vitest, mutaciones .py/.txt, trazabilidad .py/.txt, validate, las 7 capturas y RED) | [explore-C-28.md](docs/evidencias/explore-C-28.md), [verify-C-28.md](docs/evidencias/verify-C-28.md), [baseline-C-28.txt](docs/evidencias/baseline-C-28.txt), [tsc-C-28.txt](docs/evidencias/tsc-C-28.txt), [eslint-C-28.txt](docs/evidencias/eslint-C-28.txt), [vitest-C-28.txt](docs/evidencias/vitest-C-28.txt), [mutaciones-C-28.py](docs/evidencias/mutaciones-C-28.py), [mutaciones-C-28.txt](docs/evidencias/mutaciones-C-28.txt), [trazabilidad-C-28.py](docs/evidencias/trazabilidad-C-28.py), [trazabilidad-C-28.txt](docs/evidencias/trazabilidad-C-28.txt), [validate-C-28.txt](docs/evidencias/validate-C-28.txt), [validate-C-28-archive.txt](docs/evidencias/validate-C-28-archive.txt), [capturas/C-28-semana.png](docs/evidencias/capturas/C-28-semana.png), [capturas/C-28-hoy.png](docs/evidencias/capturas/C-28-hoy.png), [capturas/C-28-semana-vacia.png](docs/evidencias/capturas/C-28-semana-vacia.png), [capturas/C-28-filtro-sillon.png](docs/evidencias/capturas/C-28-filtro-sillon.png), [capturas/C-28-tablet.png](docs/evidencias/capturas/C-28-tablet.png), [capturas/C-28-alternancia-dia.png](docs/evidencias/capturas/C-28-alternancia-dia.png), [capturas/C-28-lista.png](docs/evidencias/capturas/C-28-lista.png), [red-C-28/](docs/evidencias/red-C-28/) |
 | Evidencias de C-29 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, validate y las 7 capturas) | [explore-C-29.md](docs/evidencias/explore-C-29.md), [verify-C-29.md](docs/evidencias/verify-C-29.md), [baseline-C-29.txt](docs/evidencias/baseline-C-29.txt), [red-C-29/](docs/evidencias/red-C-29/), [green-C-29/](docs/evidencias/green-C-29/), [mutaciones-C-29.py](docs/evidencias/mutaciones-C-29.py), [mutaciones-C-29.txt](docs/evidencias/mutaciones-C-29.txt), [trazabilidad-C-29.py](docs/evidencias/trazabilidad-C-29.py), [trazabilidad-C-29.txt](docs/evidencias/trazabilidad-C-29.txt), [tooling-C-29.txt](docs/evidencias/tooling-C-29.txt), [test-suite-C-29.txt](docs/evidencias/test-suite-C-29.txt), [build-C-29.txt](docs/evidencias/build-C-29.txt), [validate-C-29.txt](docs/evidencias/validate-C-29.txt), [capturas/C-29-form-1440.png](docs/evidencias/capturas/C-29-form-1440.png), [capturas/C-29-form-768.png](docs/evidencias/capturas/C-29-form-768.png), [capturas/C-29-form-390.png](docs/evidencias/capturas/C-29-form-390.png), [capturas/C-29-form-completo-1440.png](docs/evidencias/capturas/C-29-form-completo-1440.png), [capturas/C-29-alta-exitosa-1440.png](docs/evidencias/capturas/C-29-alta-exitosa-1440.png), [capturas/C-29-error-409-1440.png](docs/evidencias/capturas/C-29-error-409-1440.png) y [capturas/C-29-error-409-390.png](docs/evidencias/capturas/C-29-error-409-390.png) |
 | Evidencias de C-30 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate y las 14 capturas) | [explore-C-30.md](docs/evidencias/explore-C-30.md), [verify-C-30.md](docs/evidencias/verify-C-30.md), [baseline-C-30.txt](docs/evidencias/baseline-C-30.txt), [red-C-30/](docs/evidencias/red-C-30/), [green-C-30/](docs/evidencias/green-C-30/), [mutaciones-C-30.py](docs/evidencias/mutaciones-C-30.py), [mutaciones-C-30.txt](docs/evidencias/mutaciones-C-30.txt), [trazabilidad-C-30.py](docs/evidencias/trazabilidad-C-30.py), [trazabilidad-C-30.txt](docs/evidencias/trazabilidad-C-30.txt), [tooling-C-30.txt](docs/evidencias/tooling-C-30.txt), [test-suite-C-30.txt](docs/evidencias/test-suite-C-30.txt), [build-C-30.txt](docs/evidencias/build-C-30.txt), [diff-tests-existentes-C-30.txt](docs/evidencias/diff-tests-existentes-C-30.txt), [validate-C-30.txt](docs/evidencias/validate-C-30.txt), [capturas/C-30-detalle-1440.png](docs/evidencias/capturas/C-30-detalle-1440.png), [capturas/C-30-confirmar-cancelacion-1440.png](docs/evidencias/capturas/C-30-confirmar-cancelacion-1440.png), [capturas/C-30-cancelado-1440.png](docs/evidencias/capturas/C-30-cancelado-1440.png), [capturas/C-30-reprogramar-1440.png](docs/evidencias/capturas/C-30-reprogramar-1440.png), [capturas/C-30-reprogramar-409-1440.png](docs/evidencias/capturas/C-30-reprogramar-409-1440.png), [capturas/C-30-reprogramado-1440.png](docs/evidencias/capturas/C-30-reprogramado-1440.png), [capturas/C-30-historial-reprogramacion-1440.png](docs/evidencias/capturas/C-30-historial-reprogramacion-1440.png), [capturas/C-30-error-422-atendido-1440.png](docs/evidencias/capturas/C-30-error-422-atendido-1440.png), [capturas/C-30-odontologo-propio-1440.png](docs/evidencias/capturas/C-30-odontologo-propio-1440.png), [capturas/C-30-odontologo-ajeno-1440.png](docs/evidencias/capturas/C-30-odontologo-ajeno-1440.png), [capturas/C-30-lista-ver-turno-1440.png](docs/evidencias/capturas/C-30-lista-ver-turno-1440.png), [capturas/C-30-detalle-768.png](docs/evidencias/capturas/C-30-detalle-768.png), [capturas/C-30-detalle-390.png](docs/evidencias/capturas/C-30-detalle-390.png) y [capturas/C-30-reprogramar-409-390.png](docs/evidencias/capturas/C-30-reprogramar-409-390.png) |
+| Evidencias de C-31 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate y las 7 capturas) | [explore-C-31.md](docs/evidencias/explore-C-31.md), [verify-C-31.md](docs/evidencias/verify-C-31.md), [baseline-C-31.txt](docs/evidencias/baseline-C-31.txt), [red-C-31/](docs/evidencias/red-C-31/), [green-C-31/](docs/evidencias/green-C-31/), [mutaciones-C-31.py](docs/evidencias/mutaciones-C-31.py), [mutaciones-C-31.txt](docs/evidencias/mutaciones-C-31.txt), [mutaciones-check-C-31.txt](docs/evidencias/mutaciones-check-C-31.txt), [trazabilidad-C-31.py](docs/evidencias/trazabilidad-C-31.py), [trazabilidad-C-31.txt](docs/evidencias/trazabilidad-C-31.txt), [tooling-C-31.txt](docs/evidencias/tooling-C-31.txt), [test-suite-C-31.txt](docs/evidencias/test-suite-C-31.txt), [build-C-31.txt](docs/evidencias/build-C-31.txt), [diff-tests-existentes-C-31.txt](docs/evidencias/diff-tests-existentes-C-31.txt), [validate-C-31.txt](docs/evidencias/validate-C-31.txt), [capturas/C-31-sillones-1440.png](docs/evidencias/capturas/C-31-sillones-1440.png), [capturas/C-31-sillones-768.png](docs/evidencias/capturas/C-31-sillones-768.png), [capturas/C-31-sillones-390.png](docs/evidencias/capturas/C-31-sillones-390.png), [capturas/C-31-sillones-snap-390.png](docs/evidencias/capturas/C-31-sillones-snap-390.png), [capturas/C-31-sillones-detalle-1440.png](docs/evidencias/capturas/C-31-sillones-detalle-1440.png), [capturas/C-31-sillones-lista-1440.png](docs/evidencias/capturas/C-31-sillones-lista-1440.png) y [capturas/C-31-odontologo-sin-sillones-1440.png](docs/evidencias/capturas/C-31-odontologo-sin-sillones-1440.png) |
+| Evidencias de C-32 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate y las 13 capturas) | [explore-C-32.md](docs/evidencias/explore-C-32.md), [verify-C-32.md](docs/evidencias/verify-C-32.md), [baseline-C-32.txt](docs/evidencias/baseline-C-32.txt), [red-C-32/](docs/evidencias/red-C-32/), [green-C-32/](docs/evidencias/green-C-32/), [mutaciones-C-32.py](docs/evidencias/mutaciones-C-32.py), [mutaciones-C-32.txt](docs/evidencias/mutaciones-C-32.txt), [mutaciones-check-C-32.txt](docs/evidencias/mutaciones-check-C-32.txt), [trazabilidad-C-32.py](docs/evidencias/trazabilidad-C-32.py), [trazabilidad-C-32.txt](docs/evidencias/trazabilidad-C-32.txt), [tooling-C-32.txt](docs/evidencias/tooling-C-32.txt), [test-suite-C-32.txt](docs/evidencias/test-suite-C-32.txt), [build-C-32.txt](docs/evidencias/build-C-32.txt), [diff-tests-existentes-C-32.txt](docs/evidencias/diff-tests-existentes-C-32.txt), [validate-C-32.txt](docs/evidencias/validate-C-32.txt), [capturas/C-32-admin-selector-1440.png](docs/evidencias/capturas/C-32-admin-selector-1440.png), [capturas/C-32-appshell-390.png](docs/evidencias/capturas/C-32-appshell-390.png), [capturas/C-32-appshell-768.png](docs/evidencias/capturas/C-32-appshell-768.png), [capturas/C-32-bloqueo-eliminar-1440.png](docs/evidencias/capturas/C-32-bloqueo-eliminar-1440.png), [capturas/C-32-bloqueo-form-1440.png](docs/evidencias/capturas/C-32-bloqueo-form-1440.png), [capturas/C-32-bloqueo-hoja-390.png](docs/evidencias/capturas/C-32-bloqueo-hoja-390.png), [capturas/C-32-bloqueo-invalido-1440.png](docs/evidencias/capturas/C-32-bloqueo-invalido-1440.png), [capturas/C-32-guardado-1440.png](docs/evidencias/capturas/C-32-guardado-1440.png), [capturas/C-32-horarios-1440.png](docs/evidencias/capturas/C-32-horarios-1440.png), [capturas/C-32-horarios-390.png](docs/evidencias/capturas/C-32-horarios-390.png), [capturas/C-32-horarios-768.png](docs/evidencias/capturas/C-32-horarios-768.png), [capturas/C-32-solapamiento-1440.png](docs/evidencias/capturas/C-32-solapamiento-1440.png) y [capturas/C-32-turnos-afectados-1440.png](docs/evidencias/capturas/C-32-turnos-afectados-1440.png) |
+| Evidencias de C-33 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate, corte de fase y las 15 capturas) | [explore-C-33.md](docs/evidencias/explore-C-33.md), [verify-C-33.md](docs/evidencias/verify-C-33.md), [baseline-C-33.txt](docs/evidencias/baseline-C-33.txt), [red-C-33/](docs/evidencias/red-C-33/), [green-C-33/](docs/evidencias/green-C-33/), [mutaciones-C-33.py](docs/evidencias/mutaciones-C-33.py), [mutaciones-C-33.txt](docs/evidencias/mutaciones-C-33.txt), [trazabilidad-C-33.py](docs/evidencias/trazabilidad-C-33.py), [trazabilidad-C-33.txt](docs/evidencias/trazabilidad-C-33.txt), [tooling-C-33.txt](docs/evidencias/tooling-C-33.txt), [test-suite-C-33.txt](docs/evidencias/test-suite-C-33.txt), [build-C-33.txt](docs/evidencias/build-C-33.txt), [diff-tests-existentes-C-33.txt](docs/evidencias/diff-tests-existentes-C-33.txt), [validate-C-33.txt](docs/evidencias/validate-C-33.txt), [validate-propose-C-33.txt](docs/evidencias/validate-propose-C-33.txt), [corte-fase2-C-33.txt](docs/evidencias/corte-fase2-C-33.txt), [capturas/C-33-appshell-390.png](docs/evidencias/capturas/C-33-appshell-390.png), [capturas/C-33-appshell-768.png](docs/evidencias/capturas/C-33-appshell-768.png), [capturas/C-33-catalogos-390.png](docs/evidencias/capturas/C-33-catalogos-390.png), [capturas/C-33-catalogos-768.png](docs/evidencias/capturas/C-33-catalogos-768.png), [capturas/C-33-catalogos-inactivo-1440.png](docs/evidencias/capturas/C-33-catalogos-inactivo-1440.png), [capturas/C-33-paciente-409-1440.png](docs/evidencias/capturas/C-33-paciente-409-1440.png), [capturas/C-33-paciente-422-1440.png](docs/evidencias/capturas/C-33-paciente-422-1440.png), [capturas/C-33-paciente-dialogo-390.png](docs/evidencias/capturas/C-33-paciente-dialogo-390.png), [capturas/C-33-paciente-editado-1440.png](docs/evidencias/capturas/C-33-paciente-editado-1440.png), [capturas/C-33-pacientes-1440.png](docs/evidencias/capturas/C-33-pacientes-1440.png), [capturas/C-33-pacientes-390.png](docs/evidencias/capturas/C-33-pacientes-390.png), [capturas/C-33-pacientes-768.png](docs/evidencias/capturas/C-33-pacientes-768.png), [capturas/C-33-prestacion-409-1440.png](docs/evidencias/capturas/C-33-prestacion-409-1440.png), [capturas/C-33-prestacion-dialogo-390.png](docs/evidencias/capturas/C-33-prestacion-dialogo-390.png) y [capturas/C-33-sillon-confirmar-1440.png](docs/evidencias/capturas/C-33-sillon-confirmar-1440.png) |
 | Evidencias de C-35 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate y las 35 capturas) | [explore-portada-y-acceso.md](docs/evidencias/explore-portada-y-acceso.md), [verify-C-35.md](docs/evidencias/verify-C-35.md), [baseline-C-35.txt](docs/evidencias/baseline-C-35.txt), [red-C-35/](docs/evidencias/red-C-35/), [green-C-35/](docs/evidencias/green-C-35/), [mutaciones-C-35.py](docs/evidencias/mutaciones-C-35.py), [mutaciones-C-35.txt](docs/evidencias/mutaciones-C-35.txt), [trazabilidad-C-35.py](docs/evidencias/trazabilidad-C-35.py), [trazabilidad-C-35.txt](docs/evidencias/trazabilidad-C-35.txt), [tooling-C-35.txt](docs/evidencias/tooling-C-35.txt), [test-suite-C-35.txt](docs/evidencias/test-suite-C-35.txt), [build-C-35.txt](docs/evidencias/build-C-35.txt), [diff-tests-existentes-C-35.txt](docs/evidencias/diff-tests-existentes-C-35.txt), [validate-C-35.txt](docs/evidencias/validate-C-35.txt), [capturas/C-35-acceso-1440.png](docs/evidencias/capturas/C-35-acceso-1440.png), [capturas/C-35-acceso-390.png](docs/evidencias/capturas/C-35-acceso-390.png), [capturas/C-35-acceso-768.png](docs/evidencias/capturas/C-35-acceso-768.png), [capturas/C-35-acceso-foco-1440.png](docs/evidencias/capturas/C-35-acceso-foco-1440.png), [capturas/C-35-agenda-nav-1440.png](docs/evidencias/capturas/C-35-agenda-nav-1440.png), [capturas/C-35-agenda-nav-390.png](docs/evidencias/capturas/C-35-agenda-nav-390.png), [capturas/C-35-agenda-nav-768.png](docs/evidencias/capturas/C-35-agenda-nav-768.png), [capturas/C-35-login-autofill-1440.png](docs/evidencias/capturas/C-35-login-autofill-1440.png), [capturas/C-35-login-campos-1440.png](docs/evidencias/capturas/C-35-login-campos-1440.png), [capturas/C-35-login-error-credenciales-1440.png](docs/evidencias/capturas/C-35-login-error-credenciales-1440.png), [capturas/C-35-login-error-credenciales-390.png](docs/evidencias/capturas/C-35-login-error-credenciales-390.png), [capturas/C-35-login-error-credenciales-768.png](docs/evidencias/capturas/C-35-login-error-credenciales-768.png), [capturas/C-35-login-error-servidor.png](docs/evidencias/capturas/C-35-login-error-servidor.png), [capturas/C-35-login-recepcion-1440.png](docs/evidencias/capturas/C-35-login-recepcion-1440.png), [capturas/C-35-login-recepcion-390.png](docs/evidencias/capturas/C-35-login-recepcion-390.png), [capturas/C-35-login-recepcion-768.png](docs/evidencias/capturas/C-35-login-recepcion-768.png), [capturas/C-35-login-sin-rol-1440.png](docs/evidencias/capturas/C-35-login-sin-rol-1440.png), [capturas/C-35-modal-detalle-1440.png](docs/evidencias/capturas/C-35-modal-detalle-1440.png), [capturas/C-35-modal-detalle-390.png](docs/evidencias/capturas/C-35-modal-detalle-390.png), [capturas/C-35-modal-detalle-768.png](docs/evidencias/capturas/C-35-modal-detalle-768.png), [capturas/C-35-modal-nuevo-turno-1440.png](docs/evidencias/capturas/C-35-modal-nuevo-turno-1440.png), [capturas/C-35-modal-reprogramar-1440.png](docs/evidencias/capturas/C-35-modal-reprogramar-1440.png), [capturas/C-35-portada-1440.png](docs/evidencias/capturas/C-35-portada-1440.png), [capturas/C-35-portada-390.png](docs/evidencias/capturas/C-35-portada-390.png), [capturas/C-35-portada-768.png](docs/evidencias/capturas/C-35-portada-768.png), [capturas/C-35-portada-completa-1440.png](docs/evidencias/capturas/C-35-portada-completa-1440.png), [capturas/C-35-portada-completa-390.png](docs/evidencias/capturas/C-35-portada-completa-390.png), [capturas/C-35-portada-completa-768.png](docs/evidencias/capturas/C-35-portada-completa-768.png), [capturas/C-35-secciones-1440.png](docs/evidencias/capturas/C-35-secciones-1440.png), [capturas/C-35-secciones-390.png](docs/evidencias/capturas/C-35-secciones-390.png), [capturas/C-35-secciones-768.png](docs/evidencias/capturas/C-35-secciones-768.png), [capturas/C-35-secciones-b-1440.png](docs/evidencias/capturas/C-35-secciones-b-1440.png), [capturas/C-35-secciones-b-390.png](docs/evidencias/capturas/C-35-secciones-b-390.png), [capturas/C-35-secciones-b-768.png](docs/evidencias/capturas/C-35-secciones-b-768.png) y [capturas/C-35-secciones-reduced-motion-1440.png](docs/evidencias/capturas/C-35-secciones-reduced-motion-1440.png) |
 | Evidencias de C-36 (explore, verify, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate y las 15 capturas) | [explore-C-36.md](docs/evidencias/explore-C-36.md), [verify-C-36.md](docs/evidencias/verify-C-36.md), [red-C-36/](docs/evidencias/red-C-36/), [green-C-36/](docs/evidencias/green-C-36/), [mutaciones-C-36.py](docs/evidencias/mutaciones-C-36.py), [mutaciones-C-36.txt](docs/evidencias/mutaciones-C-36.txt), [trazabilidad-C-36.py](docs/evidencias/trazabilidad-C-36.py), [trazabilidad-C-36.txt](docs/evidencias/trazabilidad-C-36.txt), [tooling-C-36.txt](docs/evidencias/tooling-C-36.txt), [test-suite-C-36.txt](docs/evidencias/test-suite-C-36.txt), [build-C-36.txt](docs/evidencias/build-C-36.txt), [diff-tests-existentes-C-36.txt](docs/evidencias/diff-tests-existentes-C-36.txt), [validate-C-36.txt](docs/evidencias/validate-C-36.txt), [capturas/C-36-menu-abierto-390.png](docs/evidencias/capturas/C-36-menu-abierto-390.png), [capturas/C-36-agenda-dia-1440.png](docs/evidencias/capturas/C-36-agenda-dia-1440.png), [capturas/C-36-agenda-dia-768.png](docs/evidencias/capturas/C-36-agenda-dia-768.png), [capturas/C-36-agenda-dia-390.png](docs/evidencias/capturas/C-36-agenda-dia-390.png), [capturas/C-36-agenda-dia-snap-390.png](docs/evidencias/capturas/C-36-agenda-dia-snap-390.png), [capturas/C-36-agenda-semana-1440.png](docs/evidencias/capturas/C-36-agenda-semana-1440.png), [capturas/C-36-agenda-semana-768.png](docs/evidencias/capturas/C-36-agenda-semana-768.png), [capturas/C-36-agenda-semana-390.png](docs/evidencias/capturas/C-36-agenda-semana-390.png), [capturas/C-36-filtros-abiertos-390.png](docs/evidencias/capturas/C-36-filtros-abiertos-390.png), [capturas/C-36-detalle-1440.png](docs/evidencias/capturas/C-36-detalle-1440.png), [capturas/C-36-detalle-768.png](docs/evidencias/capturas/C-36-detalle-768.png), [capturas/C-36-detalle-390.png](docs/evidencias/capturas/C-36-detalle-390.png), [capturas/C-36-nuevo-turno-1440.png](docs/evidencias/capturas/C-36-nuevo-turno-1440.png), [capturas/C-36-nuevo-turno-768.png](docs/evidencias/capturas/C-36-nuevo-turno-768.png) y [capturas/C-36-nuevo-turno-390.png](docs/evidencias/capturas/C-36-nuevo-turno-390.png) |
-| Evidencias de C-31 (explore, verify, baseline, red/green, mutaciones .py/.txt, trazabilidad .py/.txt, tooling, test-suite, build, diff de tests existentes, validate y las 7 capturas) | [explore-C-31.md](docs/evidencias/explore-C-31.md), [verify-C-31.md](docs/evidencias/verify-C-31.md), [baseline-C-31.txt](docs/evidencias/baseline-C-31.txt), [red-C-31/](docs/evidencias/red-C-31/), [green-C-31/](docs/evidencias/green-C-31/), [mutaciones-C-31.py](docs/evidencias/mutaciones-C-31.py), [mutaciones-C-31.txt](docs/evidencias/mutaciones-C-31.txt), [mutaciones-check-C-31.txt](docs/evidencias/mutaciones-check-C-31.txt), [trazabilidad-C-31.py](docs/evidencias/trazabilidad-C-31.py), [trazabilidad-C-31.txt](docs/evidencias/trazabilidad-C-31.txt), [tooling-C-31.txt](docs/evidencias/tooling-C-31.txt), [test-suite-C-31.txt](docs/evidencias/test-suite-C-31.txt), [build-C-31.txt](docs/evidencias/build-C-31.txt), [diff-tests-existentes-C-31.txt](docs/evidencias/diff-tests-existentes-C-31.txt), [validate-C-31.txt](docs/evidencias/validate-C-31.txt), [capturas/C-31-sillones-1440.png](docs/evidencias/capturas/C-31-sillones-1440.png), [capturas/C-31-sillones-768.png](docs/evidencias/capturas/C-31-sillones-768.png), [capturas/C-31-sillones-390.png](docs/evidencias/capturas/C-31-sillones-390.png), [capturas/C-31-sillones-snap-390.png](docs/evidencias/capturas/C-31-sillones-snap-390.png), [capturas/C-31-sillones-detalle-1440.png](docs/evidencias/capturas/C-31-sillones-detalle-1440.png), [capturas/C-31-sillones-lista-1440.png](docs/evidencias/capturas/C-31-sillones-lista-1440.png) y [capturas/C-31-odontologo-sin-sillones-1440.png](docs/evidencias/capturas/C-31-odontologo-sin-sillones-1440.png) |
 | Reflexión final | [docs/reflexion.pdf](docs/reflexion.pdf) |
 
 Todos los datos de ejemplo y de prueba son ficticios, y el repositorio no

@@ -149,3 +149,138 @@ La evidencia documentada en `docs/skills-mcp/evidencias/04-uso-context7.md` sirv
      - Las transiciones de vista (alternar entre día y semana) y la navegación temporal se realizaron actualizando los parámetros de búsqueda mediante el callback de `setSearchParams(prev => ...)` o instanciando nuevos `URLSearchParams`, asegurando la preservación de los filtros activos (`date`, `professionalId`, `chairId`) y evitando desincronizaciones del historial del navegador.
 
 El change quedó verificado y archivado exitosamente el 2026-11-08; el reporte completo con sus métricas, trazabilidad y capturas de pantalla se encuentra en [docs/evidencias/verify-C-28.md](../evidencias/verify-C-28.md).
+
+---
+
+## 6. Uso en C-31
+
+En el change `ui-vista-de-recepcion-por-sillon` (C-31) se aplicó la skill propia `appointment-frontend-ux` para guiar el diseño, la implementación y las pruebas de la vista de recepción por sillón (`view=chair`).
+
+### 6.1. Qué se pidió
+La incorporación de la vista de recepción por sillón para recepcionistas y administradores, agrupando la agenda del día por columnas de sillón, con visualización accesible de los turnos asignados (destacando el profesional a cargo) y de las bandas de disponibilidad (huecos libres y tramos fuera de horario).
+
+### 6.2. Qué herramienta se utilizó
+Se aplicó la skill propia `appointment-frontend-ux` (`.agents/skills/appointment-frontend-ux/SKILL.md`) junto con las skills de apoyo resueltas en `.atl/skill-registry.md` (`tdd`, `frontend-design`, `vitest`, `vercel-react-best-practices`). **No se utilizó Context7**, ya que la funcionalidad reutilizó las primitivas y contratos del andamiaje frontend preexistente sin introducir APIs externas nuevas.
+
+### 6.3. Qué resultado se obtuvo
+- **Tokens únicamente**: Creación de tokens semánticos en `tokens.css` para bloques de disponibilidad (`--agenda-free-bg`, `--agenda-free-border`, `--agenda-free-color`, `--agenda-outside-bg`, `--agenda-outside-border`, `--agenda-outside-color`, `--agenda-card-chair-second-row-color`). Cero valores HEX o `rgb()` arbitrarios en código de producción.
+- **Accesibilidad estricta**: Estados con texto visible (`StatusBadge`); bandas de disponibilidad con horario en texto visible (`Libre HH:MM–HH:MM` o `Fuera de horario HH:MM–HH:MM`) y `aria-label` descriptivo; tarjetas de turno con `aria-label` completo (hora, paciente, prestación, profesional, sillón, estado) y foco visible `:focus-visible`.
+- **Prioridad hora/paciente y profesional**: En la columna de sillón se muestra el nombre del profesional a cargo en el cuerpo de la tarjeta (`.cardProfessional`), preservando la jerarquía hora > paciente > profesional > estado sin truncar en columnas angostas.
+- **Reutilización y responsive**: Reutilización de `AgendaGrid` con `scroll-snap-type: x mandatory` y canal horario sticky a la izquierda; reorganización de la barra de herramientas a 390 px para que los controles de navegación entren sin desborde horizontal de la página.
+- **Confinamiento del token**: El token de sesión vive únicamente en `tokenStore.ts`, probado mediante `createMemoryTokenStore`.
+- **Zona horaria de la API**: Conversión horaria centralizada bajo `America/Argentina/Buenos_Aires` (`DEFAULT_AGENDA_TIMEZONE`) y reloj inyectado mediante `createFixedClock`.
+- **Regla C1 de pruebas**: Suite de tests sin `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, `vi.useFakeTimers` ni MSW, inyectando `createApiClient`, `createFixedClock` y `createMemoryRouter`.
+
+### 6.4. Cómo se revisó y enlace a la evidencia
+Se validó con la suite completa de tests de frontend (13 escenarios de C-31), comprobación de tooling (`npm run lint`, `typecheck`, `build`) y verificación visual multi-resolución en 1440 px, 768 px y 390 px.
+Evidencia documentada en [docs/skills-mcp/evidencias/C-31-skill-appointment-frontend-ux.md](evidencias/C-31-skill-appointment-frontend-ux.md) y reporte de cierre en [docs/evidencias/verify-C-31.md](../evidencias/verify-C-31.md).
+
+---
+
+## 7. Uso en C-32
+
+En el change `ui-horarios-y-bloqueos` (C-32) se aplicaron tanto la skill propia `appointment-frontend-ux` como el servidor MCP `context7` para el desarrollo de la pantalla de configuración de horarios y bloqueos (`/horarios`).
+
+### 7.1. Qué se pidió
+Una pantalla para configurar los tramos semanales de atención por profesional y registrar o eliminar bloqueos de agenda puntuales, con visualización inmediata de los turnos afectados ante modificaciones que acorten el horario o bloqueos que pisen turnos existentes.
+
+### 7.2. Qué herramientas se utilizaron
+- **Skill propia `appointment-frontend-ux`**: marco rector de diseño accesible, tokens, confinamiento de credenciales y regla C1.
+- **MCP `context7`**: consulta oficial a la documentación de **React Router v6** (`react-router-dom@6.30.6`).
+
+### 7.3. Qué resultado se obtuvo
+- **De Context7**:
+  - `resolve-library-id` con `libraryName: "react-router-dom"` y `query: "useSearchParams and createMemoryRouter in React Router v6"`, seleccionando `/websites/reactrouter/6.30.3`.
+  - `query-docs` para confirmar la firma de `useSearchParams()` y el uso de `setSearchParams(nextInit, { replace: true })`, lo que permitió actualizar el query string `?professionalId=...` sincronizando la URL sin apilar entradas redundantes en el historial del navegador.
+  - Confirmación del uso de `createMemoryRouter(routes, { initialEntries })` con `<RouterProvider />` para evaluar rutas protegidas bajo la Regla C1.
+- **De la skill**:
+  - **Tokens de diseño**: Reutilización estricta de variables de `tokens.css`; `font-family: inherit` en inputs y selects; cero valores HEX o `rgb()` sueltos.
+  - **Accesibilidad**: Estados de turnos afectados comunicados con texto visible (`StatusBadge`); días de atención agrupados semánticamente con `<fieldset>` y `<legend>`; controles interactivos con área táctil ≥ 44×44 px y `:focus-visible`; alertas de error y de turnos afectados con `role="alert"` y traslado de foco; confirmaciones de éxito en región `role="status"`.
+  - **Zona horaria desde la API**: Lectura de `timezone` consultando una única vez `GET /api/agenda` al cargar la pantalla, formateando fechas y horas locales con `Intl.DateTimeFormat` y generando el offset ISO mediante `buildStartAtIso` para el envío de bloqueos.
+  - **Confinamiento del token**: Acceso al token exclusivamente a través de `features/auth/tokenStore.ts`.
+  - **Adaptabilidad móvil**: Distribución en 2 columnas en 1440 px y 1 columna en 768 px y 390 px; modales `BlockFormDialog` y `BlockDeleteDialog` como hoja inferior (*bottom sheet*) a ≤ 640 px mediante `Dialog.tsx`.
+  - **Regla C1 de pruebas**: Cero uso de mocks de módulo, espías o temporizadores falsos.
+
+### 7.4. Cómo se revisó y enlace a la evidencia
+Se comprobó mediante la suite de tests unitarios y de componentes de `features/horarios/`, ejecución de tooling y verificación responsive en 1440 px, 768 px y 390 px.
+Evidencia documentada en [docs/skills-mcp/evidencias/C-32-skill-mcp.md](evidencias/C-32-skill-mcp.md) y reporte de verificación en [docs/evidencias/verify-C-32.md](../evidencias/verify-C-32.md).
+
+---
+
+## 8. Uso en C-33
+
+En el change `ui-catalogos-y-pacientes` (C-33) se aplicó la skill propia `appointment-frontend-ux` para la construcción de las pantallas de gestión de catálogos y pacientes.
+
+### 8.1. Qué se pidió
+Implementar las pantallas de administración de pacientes (`/pacientes`, búsqueda en vivo por DNI/apellido, alta y edición) y de catálogos (`/catalogos`, pestañas para profesionales, sillones y prestaciones, con altas, edición y desactivación/reactivación según rol).
+
+### 8.2. Qué herramientas se utilizaron
+- **Skill propia `appointment-frontend-ux`** (con `tdd`, `frontend-design`, `vitest`, `vercel-react-best-practices`).
+- **MCP `context7`**: Tal como consta explícitamente en la evidencia, **no se requirieron consultas adicionales a Context7**, puesto que todas las APIs de React Router v6, React 18 y Testing Library necesarias ya estaban en uso comprobado en el proyecto.
+
+### 8.3. Qué resultado se obtuvo
+- **Tokens únicamente**: Consumo exclusivo de tokens de `tokens.css` para superficies claras, respetando la prohibición de tokens oscuros (`--color-ice`, `*-on-navy`); `font-family: inherit` en inputs y selects; cero colores arbitrarios.
+- **Accesibilidad estricta**: Estado de catálogo comunicado con texto visible mediante `ActiveBadge` ("Activo" / "Inactivo"); tablas semánticas con `<caption>` y `<th scope="col">`; controles táctiles ≥ 44×44 px con `:focus-visible`; alertas de error con `role="alert"` y foco trasladado; región de confirmación persistente con `role="status"`.
+- **Confinamiento del token**: Aislamiento estricto del token en `tokenStore.ts` y pruebas con `createMemoryTokenStore`.
+- **Regla C1 de pruebas**: Suite de tests sin `vi.mock`, `vi.spyOn`, `vi.stubGlobal`, `vi.useFakeTimers` ni MSW; inyección de dependencias mediante `createApiClient` y `createMemoryRouter`.
+- **Adaptabilidad responsive**: Tablas transformadas en tarjetas apiladas en celular con `data-label` a ≤ 640 px sin scroll horizontal; modales `PatientFormDialog` y `CatalogFormDialog` operando como hoja inferior (*bottom sheet*) sobre `Dialog.tsx`.
+
+### 8.4. Cómo se revisó y enlace a la evidencia
+Se validó con la suite completa de tests de pacientes y catálogos, ejecución de tooling (`npm run lint`, `typecheck`, `build`) y verificación visual multi-resolución en 1440 px, 768 px y 390 px.
+Evidencia documentada en [docs/skills-mcp/evidencias/C-33-skill-mcp.md](evidencias/C-33-skill-mcp.md) y reporte de cierre en [docs/evidencias/verify-C-33.md](../evidencias/verify-C-33.md).
+
+---
+
+## 9. Uso en C-35
+
+En el change `ui-portada-y-acceso` (C-35) se combinaron consultas específicas al MCP `context7` y la aplicación rigurosa de la skill `appointment-frontend-ux`.
+
+### 9.1. Qué se pidió
+Desarrollar la portada pública del consultorio (`/`), la pantalla de selección de rol (`/acceso`), el rediseño translúcido del formulario de login (`/login`) sobre el carrusel fotográfico y la estandarización de modales con fondo claro sobre la agenda.
+
+### 9.2. Qué herramientas se utilizaron
+- **MCP `context7`**: Consultas técnicas a la documentación de React Router v6 y MDN Web Docs CSS.
+- **Skill propia `appointment-frontend-ux`** (junto con `tdd`, `frontend-design`, `vercel-react-best-practices` y `vitest`).
+
+### 9.3. Qué resultado se obtuvo
+- **De Context7**:
+  - `resolve-library-id` (`libraryName: "React Router"`) → `/websites/reactrouter` (v6.30.3). `query-docs` sobre rutas de layout sin `path`, rutas índice, `createMemoryRouter` y `useSearchParams`. Se aplicó `useSearchParams()` estilo v6 para leer el parámetro `?rol` en `LoginPage.tsx` sin dependencias de APIs v7.
+  - `resolve-library-id` (`libraryName: "MDN Web Docs CSS"`) → `/mdn/content`. `query-docs` sobre `backdrop-filter` con fallback y `prefers-reduced-motion`. Se aplicó el bloque `@supports not (backdrop-filter: blur(1px))` para un fondo sólido alternativo y `@media (prefers-reduced-motion: reduce)` ubicado al final de los archivos CSS Modules para respetar el orden de cascada.
+- **De la skill**:
+  - **Tokens de diseño**: Nuevos tokens en `tokens.css` (`--surface-navy`, `--surface-ivory-ice`, elevaciones) sin valores HEX ni `rgb()` sueltos.
+  - **Accesibilidad**: Focos visibles `:focus-visible` diferenciados por superficie (`--color-ice` sobre navy, `--color-focus` sobre claro); áreas interactivas ≥ 44×44 px; tarjetas de rol con `aria-labelledby` y `aria-describedby`; flechas decorativas con `aria-hidden`.
+  - **Superficie propia en diálogos**: Siguiendo las lecciones de C-30, los modales poseen superficie propia (`--surface-ivory-ice`) y `Dialog.tsx` provee únicamente el backdrop, garantizando que el foco no caiga al `<body>`.
+  - **Regla C1**: Inyección de `fetch`, `Clock`, ticker del carrusel y observador de intersección mediante props, sin asignar ni alterar variables globales.
+
+### 9.4. Cómo se revisó y enlace a la evidencia
+Se comprobó mediante suite de tests unitarios y de integración de rutas, tooling completo y 35 capturas de pantalla cubriendo 1440 px, 768 px y 390 px en estados normales, de foco y de movimiento reducido.
+Evidencias documentadas en [docs/skills-mcp/evidencias/C-35-mcp-context7.md](evidencias/C-35-mcp-context7.md) y [docs/skills-mcp/evidencias/C-35-skill-appointment-frontend-ux.md](evidencias/C-35-skill-appointment-frontend-ux.md); reporte de cierre en [docs/evidencias/verify-C-35.md](../evidencias/verify-C-35.md).
+
+---
+
+## 10. Uso en C-36
+
+En el change `ui-tema-oscuro-y-movil` (C-36) se recurrió al MCP `context7` para investigar patrones CSS avanzados y a la skill `appointment-frontend-ux` para la adaptación móvil de la agenda.
+
+### 10.1. Qué se pidió
+Hacer que toda la aplicación sea plenamente usable en dispositivos móviles (pantallas ≤ 640 px), implementando menú colapsable tipo hamburguesa, barra de herramientas compacta en dos filas, grilla de agenda con desplazamiento horizontal fluido por columnas completas y modales desplegados como hoja inferior (*bottom sheet*).
+
+### 10.2. Qué herramientas se utilizaron
+- **MCP `context7`**: Consulta a la documentación oficial de MDN Web Docs (`/mdn/content`).
+- **Skill propia `appointment-frontend-ux`**: Directivas de tokens, accesibilidad móvil, prioridad de contenido y verificación obligatoria.
+
+### 10.3. Qué resultado se obtuvo
+- **De Context7**:
+  - Consulta sobre `scroll-snap-type mandatory with position sticky time gutter and dynamic viewport height dvh`.
+  - Aplicación de `scroll-snap-type: x mandatory` en `.gridScrollContainer` junto con `scroll-snap-align: start` en las columnas para que el desplazamiento móvil encaje exactamente en una columna completa (día o profesional).
+  - Aplicación de `scroll-padding-left: var(--agenda-time-gutter-width)` para que las columnas no queden ocultas debajo de la columna fija de horas (`position: sticky; left: 0`).
+  - Uso de unidades dinámicas `max-height: 90dvh` (con fallback de `90vh`) en `Dialog.module.css` para la hoja inferior, impidiendo que la barra de navegación del navegador móvil tape los botones de acción.
+- **De la skill**:
+  - **Tokens**: Token `--breakpoint-mobile: 640px` y variables de espaciado y tipografía sin dimensiones hardcodeadas.
+  - **Accesibilidad móvil**: Botones "Menú" y "Filtros" con atributos accesibles `aria-expanded` y `aria-controls`; controles táctiles con tamaño mínimo de 44×44 px; tecla `Escape` cerrando menús y modales retornando el foco al disparador.
+  - **Prioridad en tarjetas**: Formato en dos líneas priorizando hora y paciente cuando el ancho de columna es reducido.
+  - **Regla C1**: Pruebas sin mocks globales, validando el comportamiento móvil inyectando eventos y tamaños.
+
+### 10.4. Cómo se revisó y enlace a la evidencia
+Se comprobó mediante la suite de tests de componentes móviles, ejecución de tooling y 15 capturas en navegador real a 1440 px, 768 px y 390 px.
+Evidencia documentada en [docs/skills-mcp/evidencias/C-36-context7.md](evidencias/C-36-context7.md) y reporte de cierre en [docs/evidencias/verify-C-36.md](../evidencias/verify-C-36.md).
