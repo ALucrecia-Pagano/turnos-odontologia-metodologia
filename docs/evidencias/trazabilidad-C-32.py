@@ -590,7 +590,14 @@ def main() -> int:
     table_rows: list[str] = []
     for e in ENTRIES:
         if e.kind == "visual":
-            row = f"| {e.number} | `{e.spec}` | {e.scenario} | Visual | `{e.visual}` | — | — | — | — |"
+            if e.number == "V01":
+                links = "[C-32-horarios-1440.png](capturas/C-32-horarios-1440.png), [C-32-horarios-768.png](capturas/C-32-horarios-768.png), [C-32-horarios-390.png](capturas/C-32-horarios-390.png)"
+                row = f"| {e.number} | `{e.spec}` | {e.scenario} | Visual | {links} | — | — | — | — |"
+            elif e.number == "V02":
+                links = "[C-32-appshell-768.png](capturas/C-32-appshell-768.png), [C-32-appshell-390.png](capturas/C-32-appshell-390.png)"
+                row = f"| {e.number} | `{e.spec}` | {e.scenario} | Visual | {links} | — | — | — | — |"
+            else:
+                row = f"| {e.number} | `{e.spec}` | {e.scenario} | Visual | `{e.visual}` | — | — | — | — |"
             lines.append(f"  [{e.number}] ({e.spec}) {e.scenario} -> Visual ({e.visual})")
         else:
             tf_base = Path(e.test_file).name if e.test_file else "—"
