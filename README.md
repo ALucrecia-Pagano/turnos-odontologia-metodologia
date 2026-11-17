@@ -75,64 +75,47 @@ de un comando. Solo se define en el entorno de la máquina.
 
 ## Estado actual
 
-**36 changes archivados** (C-01 a C-36). El detalle de cada uno está en
-[CHANGES.md](CHANGES.md) y en su carpeta de [openspec/changes/archive/](openspec/changes/archive/).
+**36 de 36 changes archivados** (C-01 a C-36), más un change de mantenimiento. El detalle de cada uno está en [CHANGES.md](CHANGES.md) y en su carpeta de [openspec/changes/archive/](openspec/changes/archive/).
 
-### Dominio (reglas de negocio puras, sin base ni HTTP)
-
-| Change | Qué resuelve |
-|---|---|
-| C-01 | Fundación del backend y guardia de dependencias del dominio |
-| C-02 | Crear un turno sin solapamientos por profesional ni por sillón |
-| C-03 | Duración completa y paciente, profesional, sillón y prestación existentes y activos |
-| C-04 | Hora local: inicio en la grilla de 5 minutos y turno dentro de un solo día |
-| C-05 | El turno cae completo dentro del horario de atención del profesional |
-| C-06 | El turno no pisa ningún bloqueo de agenda del profesional |
-| C-07 | No se dan turnos en el pasado (reloj inyectado, nunca el del sistema) |
-| C-08 | Mensajes de error en español con nombres y rangos en hora local |
-| C-09 | Altas de catálogo y pacientes con validación de nombres y DNI |
-| C-10 | Transiciones de estado del turno con tabla única y permisos por rol |
-| C-11 | Reprogramación con revalidación completa y retorno a "reservado" |
-| C-12 | Historial inmutable de cambios de estado y reprogramaciones |
-
-### Infraestructura y persistencia
-
-| Change | Qué resuelve |
-|---|---|
-| C-13 | Docker Compose con PostgreSQL y Redis, configuración segura, sesión en UTC |
-| C-14 | Migraciones Alembic con ciclo reversible probado |
-| C-15 | Persistencia de catálogos y pacientes, con seed idempotente |
-| C-16 | Persistencia de horarios de atención y bloqueos |
-| C-17 | Persistencia de turnos e historial transaccional, protegido por triggers |
-
-### API REST (FastAPI)
-
-| Change | Qué resuelve |
-|---|---|
-| C-18 | API base: `/api/health`, errores uniformes (400, 403, 409, 422), CORS y Swagger |
-| C-19 | Login con JWT y Argon2id, `/api/auth/me` y matriz RBAC por rol |
-| C-20 | Endpoints de profesionales, sillones, prestaciones y pacientes |
-| C-21 | Endpoints de horarios de atención y bloqueos por profesional |
-| C-22 | `POST /api/appointments`: dar turnos con todas las violaciones del dominio |
-| C-23 | Cancelar, reprogramar, cambiar estado e historial del turno |
-| C-24 | `GET /api/agenda` con filtros y `GET /api/appointments/{id}` |
-
-### Frontend (React 18 + TypeScript + Vite)
-
-| Change | Qué resuelve |
-|---|---|
-| C-25 | Base del frontend: tokens de diseño, componentes de estado y cliente HTTP tipado |
-| C-26 | Login, sesión, rutas protegidas y menú por rol |
-| C-27 | Agenda diaria con horarios, bloqueos, filtros y vista de lista accesible |
-| C-28 | Agenda semanal por profesional |
-| C-34 | Identidad visual Aqua: paleta, tipografías, logo y carrusel del login |
-| C-29 | Dar turnos desde la agenda, con los errores del dominio en pantalla |
-| C-30 | Detalle e historial del turno; confirmar, atender, ausente, cancelar y reprogramar |
-| C-31 | Vista de recepción por sillón con huecos libres visibles |
-| C-35 | Portada pública, acceso por rol, login translúcido y modales claros |
-| C-36 | App usable en celular: menú, toolbar compacta, grilla deslizable y modales como hoja inferior |
-| C-32 | Pantalla de horarios semanales y bloqueos por profesional, con turnos afectados |
-| C-33 | Pantallas de catálogos —profesionales, sillones y prestaciones— y pacientes, con alta, edición y desactivación según rol |
+| Change | Bloque | Qué resuelve | Estado |
+|---|---|---|---|
+| C-01 | Dominio | Fundación del backend y guardia de dependencias del dominio | ✅ Archivado |
+| C-02 | Dominio | Crear un turno sin solapamientos por profesional ni por sillón | ✅ Archivado |
+| C-03 | Dominio | Duración completa y paciente, profesional, sillón y prestación existentes y activos | ✅ Archivado |
+| C-04 | Dominio | Hora local: inicio en la grilla de 5 minutos y turno dentro de un solo día | ✅ Archivado |
+| C-05 | Dominio | El turno cae completo dentro del horario de atención del profesional | ✅ Archivado |
+| C-06 | Dominio | El turno no pisa ningún bloqueo de agenda del profesional | ✅ Archivado |
+| C-07 | Dominio | No se dan turnos en el pasado (reloj inyectado, nunca el del sistema) | ✅ Archivado |
+| C-08 | Dominio | Mensajes de error en español con nombres y rangos en hora local | ✅ Archivado |
+| C-09 | Dominio | Altas de catálogo y pacientes con validación de nombres y DNI | ✅ Archivado |
+| C-10 | Dominio | Transiciones de estado del turno con tabla única y permisos por rol | ✅ Archivado |
+| C-11 | Dominio | Reprogramación con revalidación completa y retorno a "reservado" | ✅ Archivado |
+| C-12 | Dominio | Historial inmutable de cambios de estado y reprogramaciones | ✅ Archivado |
+| C-13 | Infraestructura | Docker Compose con PostgreSQL y Redis, configuración segura, sesión en UTC | ✅ Archivado |
+| C-14 | Infraestructura | Migraciones Alembic con ciclo reversible probado | ✅ Archivado |
+| C-15 | Infraestructura | Persistencia de catálogos y pacientes, con seed idempotente | ✅ Archivado |
+| C-16 | Infraestructura | Persistencia de horarios de atención y bloqueos | ✅ Archivado |
+| C-17 | Infraestructura | Persistencia de turnos e historial transaccional, protegido por triggers | ✅ Archivado |
+| C-18 | API | API base: `/api/health`, errores uniformes (400, 403, 409, 422), CORS y Swagger | ✅ Archivado |
+| C-19 | API | Login con JWT y Argon2id, `/api/auth/me` y matriz RBAC por rol | ✅ Archivado |
+| C-20 | API | Endpoints de profesionales, sillones, prestaciones y pacientes | ✅ Archivado |
+| C-21 | API | Endpoints de horarios de atención y bloqueos por profesional | ✅ Archivado |
+| C-22 | API | `POST /api/appointments`: dar turnos con todas las violaciones del dominio | ✅ Archivado |
+| C-23 | API | Cancelar, reprogramar, cambiar estado e historial del turno | ✅ Archivado |
+| C-24 | API | `GET /api/agenda` con filtros y `GET /api/appointments/{id}` | ✅ Archivado |
+| C-25 | Frontend | Base del frontend: tokens de diseño, componentes de estado y cliente HTTP tipado | ✅ Archivado |
+| C-26 | Frontend | Login, sesión, rutas protegidas y menú por rol | ✅ Archivado |
+| C-27 | Frontend | Agenda diaria con horarios, bloqueos, filtros y vista de lista accesible | ✅ Archivado |
+| C-28 | Frontend | Agenda semanal por profesional | ✅ Archivado |
+| C-29 | Frontend | Dar turnos desde la agenda, con los errores del dominio en pantalla | ✅ Archivado |
+| C-30 | Frontend | Detalle e historial del turno; confirmar, atender, ausente, cancelar y reprogramar | ✅ Archivado |
+| C-31 | Frontend | Vista de recepción por sillón con huecos libres visibles | ✅ Archivado |
+| C-32 | Frontend | Pantalla de horarios semanales y bloqueos por profesional, con turnos afectados | ✅ Archivado |
+| C-33 | Frontend | Pantallas de catálogos —profesionales, sillones y prestaciones— y pacientes, con alta, edición y desactivación según rol | ✅ Archivado |
+| C-34 | Frontend | Identidad visual Aqua: paleta, tipografías, logo y carrusel del login | ✅ Archivado |
+| C-35 | Frontend | Portada pública, acceso por rol, login translúcido y modales claros | ✅ Archivado |
+| C-36 | Frontend | App usable en celular: menú, toolbar compacta, grilla deslizable y modales como hoja inferior | ✅ Archivado |
+| — | Mantenimiento | `specs-requisitos-concisos`: concisión y trazabilidad de las specs vigentes | ✅ Archivado |
 
 
 ## Alcance: completo y fuera de alcance
@@ -155,6 +138,20 @@ Las siguientes funcionalidades no forman parte del alcance de este TPI (no son c
 ### Limitaciones conocidas
 
 - `Logout.test.tsx` (C-26) es intermitente en Linux y estable en Windows.
+
+### Mejoras futuras
+
+Ideas detectadas al probar el sistema. Cada una requiere su propio change con el ciclo SDD.
+
+| Mejora | Para qué |
+|---|---|
+| **Multi-clínica (multi-tenancy)** | Usar el sistema en una red de prestadores (por ejemplo, una obra social): cada dato llevaría un identificador de clínica, todas las consultas se filtrarían por él y PostgreSQL agregaría Row Level Security como segunda barrera. Es el primer paso para comercializarlo. |
+| **Turnos online para pacientes** | La portada pública está pensada como entrada para que los pacientes se registren y pidan turno. Requiere un rol `paciente` y reglas de confirmación. |
+| **Usuarios y roles** | Pantalla para dar de alta usuarios (hoy dice "Próximamente"); permitiría que los profesionales nuevos tengan acceso al sistema. |
+| **Horario general de la clínica** | Un límite (por ejemplo, de 8 a 20) que impida cargar horarios de profesionales fuera de ese rango. |
+| **Búsqueda de pacientes mientras se escribe** | Mostrar resultados sin pulsar "Buscar paciente". |
+| **Portada dinámica** | Que la portada muestre los profesionales cargados en el sistema en lugar de texto fijo. |
+| **Deploy público** | Publicar el frontend, la API y la base para usarlo fuera de la red local. |
 
 ## Inicio rápido
 
@@ -264,7 +261,7 @@ npm run dev
 
 ### 8. Tests
 
-Totales actuales verificados: **895 de unidad**, **524 de integración** y **353 de frontend**.
+Totales actuales verificados: **895 de unidad**, **524 de integración** y **355 de frontend**.
 
 #### Backend (desde `backend/`, usando el python del venv)
 
@@ -284,7 +281,7 @@ Totales actuales verificados: **895 de unidad**, **524 de integración** y **353
   ```bash
   npm run test:run
   ```
-  *(353 tests de frontend verificados en 93 archivos)*
+  *(355 tests de frontend verificados en 93 archivos)*
 - **Tipos**:
   ```bash
   npm run typecheck
